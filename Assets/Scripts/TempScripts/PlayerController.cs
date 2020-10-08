@@ -52,7 +52,18 @@ public class PlayerController : MonoBehaviour
         if (f_currentFireTimer <= 0)
         {
             GameObject _go_bullet = Instantiate(go_bulletPrefab, go_firePoint.transform.position, c_cam.transform.rotation);
-            _go_bullet.GetComponent<Rigidbody>().AddForce(c_cam.transform.forward * f_firePower, ForceMode.Impulse);
+
+            RaycastHit _hit;
+            if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit))
+            {
+                print("Firing at point");
+                _go_bullet.transform.LookAt(_hit.point);
+                _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePower, ForceMode.Impulse);
+            }
+            else
+            {
+                _go_bullet.GetComponent<Rigidbody>().AddForce(c_cam.transform.forward * f_firePower, ForceMode.Impulse);
+            }
             f_currentFireTimer = f_timeBetweenShots;
         }
     }
