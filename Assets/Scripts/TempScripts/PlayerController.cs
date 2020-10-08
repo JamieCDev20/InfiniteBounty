@@ -13,6 +13,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float f_walkSpeed;
     [SerializeField] private float f_useRange;
 
+    [Header("TEMP Gun Stats")]
+    [SerializeField] private float f_timeBetweenShots;
+    private float f_currentFireTimer;
+    [SerializeField] private float f_firePower;
+    [SerializeField] private GameObject go_firePoint;
+    [SerializeField] private GameObject go_bulletPrefab;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -35,7 +42,19 @@ public class PlayerController : MonoBehaviour
         go_camPivot.transform.localEulerAngles = new Vector3(go_camPivot.transform.localEulerAngles.x, go_camPivot.transform.localEulerAngles.y, 0);
 
         if (Input.GetButtonDown("Use")) AttemptUse();
+        if (Input.GetButton("Fire2")) FireRight();
 
+        f_currentFireTimer -= Time.deltaTime;
+    }
+
+    private void FireRight()
+    {
+        if (f_currentFireTimer <= 0)
+        {
+            GameObject _go_bullet = Instantiate(go_bulletPrefab, go_firePoint.transform.position, c_cam.transform.rotation);
+            _go_bullet.GetComponent<Rigidbody>().AddForce(c_cam.transform.forward * f_firePower, ForceMode.Impulse);
+            f_currentFireTimer = f_timeBetweenShots;
+        }
     }
 
     private void AttemptUse()

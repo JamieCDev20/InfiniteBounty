@@ -6,7 +6,7 @@ public class PlayButton : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        MenuController.x.ClickedPlay();
-        gameObject.SetActive(false);
+        MenuController.x.ClickedPlay();        
+        transform.localScale = new Vector3(1, 0.5f, 1);
     }
 }
