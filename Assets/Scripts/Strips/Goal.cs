@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Problem : MonoBehaviour
+public class Goal : MonoBehaviour
 {
 
     //Variables
