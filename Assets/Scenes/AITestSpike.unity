@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 1144806397}
   - component: {fileID: 1144806401}
   - component: {fileID: 1144806402}
+  - component: {fileID: 1144806403}
   m_Layer: 0
   m_Name: AIPlayer
   m_TagString: Player
@@ -547,6 +548,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6db0f684e0e8ae418364c35aec41859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1144806403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144806396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf348b9a73b714547aad08279a6f8565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionSet:
+    costedActionSet:
+      m_keys:
+      - {fileID: 11400000, guid: d07cc06806026674694289cd30b056ac, type: 2}
+      - {fileID: 11400000, guid: 547d8434049dbf34880492d24bf67d8d, type: 2}
+      m_values: 0100000001000000
+  goalSet:
+    prioritisedGoalSet:
+      m_keys:
+      - {fileID: 11400000, guid: 62347c71772fe6f478178769460a00e1, type: 2}
+      m_values: 64000000
 --- !u!1 &1510143396
 GameObject:
   m_ObjectHideFlags: 0

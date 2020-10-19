@@ -6,6 +6,7 @@ using UnityEngine;
 public class Action : ScriptableObject
 {
 
-
+    [SerializeField] public SBDictionary preconditions = null;
+    [SerializeField] public SBDictionary postconditions = null;
 
 }

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goal : MonoBehaviour
+public class GoapAgent : MonoBehaviour
 {
 
     //Variables
     #region Serialised
 
+    [SerializeField] ActionSet actionSet;
+    [SerializeField] GoalSet goalSet;
 
     #endregion
 
@@ -42,4 +44,18 @@ public class Goal : MonoBehaviour
 
     #endregion
 
+}
+
+[System.Serializable]
+public struct ActionSet
+{
+    [SerializeField]
+    public ActionIntDictionary costedActionSet;
+}
+
+[System.Serializable]
+public struct GoalSet
+{
+    [SerializeField]
+    public GoalIntDictionary prioritisedGoalSet;
 }
