@@ -17,11 +17,11 @@ public class WorldSpaceButton : MonoBehaviour, IUseable
         switch (bt_thisButtonType)
         {
             case ButtonType.LocationGas:
-                LocationController.x.SetLocation(Location.GasGiant, gameObject);
+                LocationController.x.SetLocation(Location.SmashGrab, gameObject);
                 break;
 
             case ButtonType.LocationVolcano:
-                LocationController.x.SetLocation(Location.Volcano, gameObject);
+                LocationController.x.SetLocation(Location.BossLevel, gameObject);
                 break;
 
             case ButtonType.ReturnToShip:

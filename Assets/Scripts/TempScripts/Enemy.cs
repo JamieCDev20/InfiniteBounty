@@ -5,26 +5,34 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Enemy Fields")]
+    [SerializeField] protected int i_maxHealth;
+    protected int i_currentHealth;
 
-    [SerializeField] private int i_maxHealth;
-    private int i_currentHealth;
 
-
-    private void Start()
+    protected virtual void Start()
     {
         i_currentHealth = i_maxHealth;
     }
 
-    internal void TakeDamage(int _i_damage)
+    internal virtual void TakeDamage(int _i_damage)
     {
-        print("Ouch!");
         i_currentHealth -= _i_damage;
         if (i_currentHealth <= 0) Death();
     }
 
-    private void Death()
+    internal virtual void Death()
     {
         gameObject.SetActive(false);
+        Invoke("BeamBackToShip", 2);
 
     }
+
+    private void BeamBackToShip()
+    {
+        for (int i = 0; i < LocationController.x.goA_playerObjects.Length; i++)
+            LocationController.x.goA_playerObjects[i].transform.position = new Vector3(0, 0, i * 1.5f);
+        LocationController.x.UnloadArea();
+    }
+
 }

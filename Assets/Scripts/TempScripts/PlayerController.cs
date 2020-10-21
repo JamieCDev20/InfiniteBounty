@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,16 +8,31 @@ public class PlayerController : MonoBehaviour
     private GameObject go_camPivot;
     private Rigidbody rb_rigidbody;
 
+    [Header("Controls")]
     [SerializeField] private float f_camSensitivity;
     [SerializeField] private float f_walkSpeed;
     [SerializeField] private float f_useRange;
+    [SerializeField] private float f_jumpForce;
+    [SerializeField] private float f_gravity;
+    private bool b_isGrounded;
 
-    [Header("TEMP Gun Stats")]
-    [SerializeField] private float f_timeBetweenShots;
-    private float f_currentFireTimer;
-    [SerializeField] private float f_firePower;
-    [SerializeField] private GameObject go_firePoint;
-    [SerializeField] private GameObject go_bulletPrefab;
+    [Header("Right Gun Stats")]
+    [SerializeField] private float f_timeBetweenShotsRight;
+    private float f_currentFireTimerRight;
+    [SerializeField] private float f_firePowerRight;
+    [SerializeField] private GameObject go_firePointRight;
+    [SerializeField] private GameObject go_bulletPrefabRight;
+    [SerializeField] private int i_bulletsPerShotRight;
+    [SerializeField] private GameObject[] goA_weaponsRight = new GameObject[0];
+
+    [Header("Left Gun Stats")]
+    [SerializeField] private float f_timeBetweenShotsLeft;
+    private float f_currentFireTimerLeft;
+    [SerializeField] private float f_firePowerLeft;
+    [SerializeField] private GameObject go_firePointLeft;
+    [SerializeField] private GameObject go_bulletPrefabLeft;
+    [SerializeField] private int i_bulletsPerShotLeft;
+    [SerializeField] private GameObject[] goA_weaponsLeft = new GameObject[0];
 
     private void Start()
     {
@@ -32,39 +46,94 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        rb_rigidbody.velocity = Vector3.Scale(((Input.GetAxis("Horizontal") * c_cam.transform.right) + (Input.GetAxis("Vertical") * c_cam.transform.forward)).normalized * f_walkSpeed, new Vector3(1, 0, 1));
+        b_isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, 0.11f, 0), 0.1f);
 
-        if (rb_rigidbody.velocity.magnitude > 0.1f)
-            transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(rb_rigidbody.velocity.normalized, new Vector3(1, 0, 1)), 0.5f);
+        rb_rigidbody.AddForce(Vector3.Scale((
+           ((Input.GetAxis("Horizontal") * c_cam.transform.right) + (Input.GetAxis("Vertical") * c_cam.transform.forward)).normalized * f_walkSpeed) //Walking inputs
+            , new Vector3(1, 0, 1)) + new Vector3(0, !b_isGrounded ? -f_gravity : 0, 0)); //Removing the vertical axis from walking & applying extra gravity
 
+        //Cam & looking
+        transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(go_camPivot.transform.forward, new Vector3(1, 0, 1)), 0.4f);
         go_camPivot.transform.position = transform.position + new Vector3(0, 1, 0);
         go_camPivot.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * f_camSensitivity);
         go_camPivot.transform.localEulerAngles = new Vector3(go_camPivot.transform.localEulerAngles.x, go_camPivot.transform.localEulerAngles.y, 0);
 
+        if (Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Use")) AttemptUse();
+        if (Input.GetButton("Fire1")) FireLeft();
         if (Input.GetButton("Fire2")) FireRight();
 
-        f_currentFireTimer -= Time.deltaTime;
+        f_currentFireTimerRight -= Time.deltaTime;
+        f_currentFireTimerLeft -= Time.deltaTime;
+    }
+
+    private void Jump()
+    {
+        if (b_isGrounded)
+            rb_rigidbody.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
     }
 
     private void FireRight()
     {
-        if (f_currentFireTimer <= 0)
+        RaycastHit _hit;
+        if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit, f_useRange))
         {
-            GameObject _go_bullet = Instantiate(go_bulletPrefab, go_firePoint.transform.position, c_cam.transform.rotation);
+            if (_hit.transform.tag == "Weapon")
+            {
+                WeaponBlock _wb_newWeapon = _hit.transform.GetComponent<WeaponBlock>();
+                f_timeBetweenShotsRight = _wb_newWeapon.f_timeBetweenShots;
+                f_firePowerRight = _wb_newWeapon.f_firePower;
+                go_bulletPrefabRight = _wb_newWeapon.go_bulletPrefab;
+                i_bulletsPerShotRight = _wb_newWeapon.i_bulletsPerShot;
+                for (int i = 0; i < goA_weaponsRight.Length; i++)
+                    goA_weaponsRight[i].SetActive(false);
+                goA_weaponsRight[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
+            }
+        }
+        else if (f_currentFireTimerRight <= 0)
+        {
+            for (int i = 0; i < i_bulletsPerShotRight; i++)
+            {
+                GameObject _go_bullet = Instantiate(go_bulletPrefabRight, go_firePointRight.transform.position, c_cam.transform.rotation);
+                _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
 
-            RaycastHit _hit;
-            if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit))
-            {
-                print("Firing at point");
-                _go_bullet.transform.LookAt(_hit.point);
-                _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePower, ForceMode.Impulse);
+                _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerRight, ForceMode.Impulse);
+                _go_bullet.SetActive(true);
+
+                f_currentFireTimerRight = f_timeBetweenShotsRight;
             }
-            else
+        }
+    }
+
+    private void FireLeft()
+    {
+        RaycastHit _hit;
+        if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit, f_useRange))
+        {
+            if (_hit.transform.tag == "Weapon")
             {
-                _go_bullet.GetComponent<Rigidbody>().AddForce(c_cam.transform.forward * f_firePower, ForceMode.Impulse);
+                WeaponBlock _wb_newWeapon = _hit.transform.GetComponent<WeaponBlock>();
+                f_timeBetweenShotsLeft = _wb_newWeapon.f_timeBetweenShots;
+                f_firePowerLeft = _wb_newWeapon.f_firePower;
+                go_bulletPrefabLeft = _wb_newWeapon.go_bulletPrefab;
+                i_bulletsPerShotLeft = _wb_newWeapon.i_bulletsPerShot;
+                for (int i = 0; i < goA_weaponsLeft.Length; i++)
+                    goA_weaponsLeft[i].SetActive(false);
+                goA_weaponsLeft[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
+
             }
-            f_currentFireTimer = f_timeBetweenShots;
+        }
+        else if (f_currentFireTimerLeft <= 0)
+        {
+            for (int i = 0; i < i_bulletsPerShotLeft; i++)
+            {
+                GameObject _go_bullet = Instantiate(go_bulletPrefabLeft, go_firePointLeft.transform.position, c_cam.transform.rotation);
+                _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
+                _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerLeft, ForceMode.Impulse);
+                _go_bullet.SetActive(true);
+
+                f_currentFireTimerLeft = f_timeBetweenShotsLeft;
+            }
         }
     }
 
