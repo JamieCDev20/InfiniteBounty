@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Camera c_cam;
     private GameObject go_camPivot;
     private Rigidbody rb_rigidbody;
+    private Animator a_anim;
     private int i_currentHealth;
     [SerializeField] private RectTransform rt_healthBar;
 
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        a_anim = GetComponentInChildren<Animator>();
+
         c_cam = Camera.main;
         go_camPivot = c_cam.transform.parent.gameObject;
         rb_rigidbody = GetComponent<Rigidbody>();
@@ -52,11 +55,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        bool _b_isSprinting = Input.GetButton("Sprint");
         b_isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, 0.11f, 0), 0.1f);
 
         rb_rigidbody.AddForce(Vector3.Scale((
-           ((Input.GetAxis("Horizontal") * c_cam.transform.right) + (Input.GetAxis("Vertical") * c_cam.transform.forward)).normalized * f_walkSpeed) //Walking inputs
+           ((Input.GetAxis("Horizontal") * c_cam.transform.right) + (Input.GetAxis("Vertical") * c_cam.transform.forward)).normalized * f_walkSpeed * (_b_isSprinting ? 2 : 1)) //Walking inputs
             , new Vector3(1, 0, 1)) + new Vector3(0, !b_isGrounded ? -f_gravity : 0, 0)); //Removing the vertical axis from walking & applying extra gravity
+
+        a_anim.SetFloat("Y", Input.GetAxis("Vertical") * (_b_isSprinting ? 2 : 1));
+        a_anim.SetFloat("X", Input.GetAxis("Horizontal") * (_b_isSprinting ? 2 : 1));
+
 
         //Cam & looking
         transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(go_camPivot.transform.forward, new Vector3(1, 0, 1)), 0.4f);
