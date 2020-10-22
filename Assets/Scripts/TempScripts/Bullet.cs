@@ -8,16 +8,16 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int i_damage;
     [SerializeField] private GameObject go_hitEffect;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.tag == "Enemy")
+        if (collision.transform.tag == "Hittable")
         {
-            other.GetComponent<Enemy>().TakeDamage(i_damage);
-            go_hitEffect.transform.parent = null;
-            go_hitEffect.transform.position = transform.position;
-            go_hitEffect.SetActive(true);
-            gameObject.SetActive(false);
+            collision.transform.GetComponent<Enemy>().TakeDamage(i_damage);
         }
+        go_hitEffect.transform.parent = null;
+        go_hitEffect.transform.position = transform.position;
+        go_hitEffect.SetActive(true);
+        gameObject.SetActive(false);
     }
 
 }

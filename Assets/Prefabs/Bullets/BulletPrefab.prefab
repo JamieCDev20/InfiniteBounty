@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3925040290526719067}
   - component: {fileID: 1431316619975427576}
   - component: {fileID: 1508697307360480455}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3355626298987255008}
   - component: {fileID: 15834745700504613}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,8 @@ GameObject:
   - component: {fileID: 6552215280730498157}
   - component: {fileID: 1058634247351117144}
   - component: {fileID: 4762224859139194053}
-  m_Layer: 0
+  - component: {fileID: 6009295706343141955}
+  m_Layer: 11
   m_Name: BulletPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +266,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!114 &1058634247351117144
@@ -290,11 +291,34 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6714505186059660760}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6009295706343141955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6714505186059660760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f1ed2c90928954e8f87e220136509a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  b_fire: 1
+  b_electric: 0
+  b_water: 0
+  b_goo: 0
+  b_gas: 0
+  ue_fireTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  ue_electricTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7448264560209491572
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +330,7 @@ GameObject:
   - component: {fileID: 6706649015166106061}
   - component: {fileID: 9010971236790695450}
   - component: {fileID: 5269128946712236195}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -6,14 +6,14 @@ using System;
 
 public enum Location
 {
-    GasGiant, Volcano
+    SmashGrab, BossLevel
 }
 
 public class LocationController : MonoBehaviour
 {
     public static LocationController x;
-    internal Location l_currentTarget = Location.GasGiant;
-    private GameObject[] goA_loadedAreaObjects = new GameObject[0];
+    internal Location l_currentTarget = Location.SmashGrab;
+    private GameObject go_loadedAreaObject;
 
     [SerializeField] private CannonController cc_cannon;
     [Space, SerializeField] private GameObject[] goA_planetButtons = new GameObject[0];
@@ -23,27 +23,33 @@ public class LocationController : MonoBehaviour
     [SerializeField] private TextMeshPro tmp_loadingText;
     [SerializeField] private Color c_readyColour;
     [SerializeField] private Color c_travellingColour;
+    [SerializeField] private TextMeshPro tmp_nuggetsCollectedtext;
+    private int i_nuggetTotal;
 
-    [Header("Gas Giant References")]
-    [SerializeField] private GameObject[] goA_gasAreas = new GameObject[0];
+    [Header("Smash Grab References")]
+    [SerializeField] private GameObject go_smashGrabArea;
+    [SerializeField] private GameObject[] goA_pathBlockers = new GameObject[0];
 
-    [Header("Gas Giant References")]
-    [SerializeField] private GameObject[] goA_volcanoAreas = new GameObject[0];
-
+    [Header("Boss References")]
+    [SerializeField] private GameObject go_bossArea;
 
     private void Start()
     {
         x = this;
 
-        for (int i = 0; i < goA_gasAreas.Length; i++)
-            goA_gasAreas[i].SetActive(false);
-
-        for (int i = 0; i < goA_volcanoAreas.Length; i++)
-            goA_volcanoAreas[i].SetActive(false);
+        go_smashGrabArea.SetActive(false);
+        go_bossArea.SetActive(false);
 
         cc_cannon.b_isReady = false;
 
+        SetLocation(Location.SmashGrab, goA_planetButtons[0]);
         StartCoroutine(LoadArea());
+    }
+
+    internal void PickedUpNugget(int _i_nuggetWorth)
+    {
+        i_nuggetTotal += _i_nuggetWorth;
+        tmp_nuggetsCollectedtext.text = "Nuggets Collected: " + i_nuggetTotal;
     }
 
     public void SetLocation(Location _l_target, GameObject _go_buttonPressed)
@@ -65,22 +71,18 @@ public class LocationController : MonoBehaviour
 
         switch (l_currentTarget)
         {
-            case Location.GasGiant:
-                for (int i = 0; i < goA_gasAreas.Length; i++)
-                {
-                    goA_gasAreas[i].SetActive(true);
-                    yield return new WaitForEndOfFrame();
-                }
-                goA_loadedAreaObjects = goA_gasAreas;
+            case Location.SmashGrab:
+                go_smashGrabArea.SetActive(true);
+                yield return new WaitForEndOfFrame();
+                go_loadedAreaObject = go_smashGrabArea;
+                goA_pathBlockers[UnityEngine.Random.Range(0, goA_pathBlockers.Length)].SetActive(false);
                 break;
 
-            case Location.Volcano:
-                for (int i = 0; i < goA_volcanoAreas.Length; i++)
-                {
-                    goA_volcanoAreas[i].SetActive(true);
-                    yield return new WaitForEndOfFrame();
-                }
-                goA_loadedAreaObjects = goA_volcanoAreas;
+            case Location.BossLevel:
+                go_bossArea.SetActive(true);
+                yield return new WaitForEndOfFrame();
+                go_bossArea.GetComponentInChildren<Enemy>().Begin();
+                go_loadedAreaObject = go_bossArea;
                 break;
         }
 
@@ -91,9 +93,13 @@ public class LocationController : MonoBehaviour
 
     internal void UnloadArea()
     {
-        for (int i = 0; i < goA_loadedAreaObjects.Length; i++)
-            goA_loadedAreaObjects[i].SetActive(false);
 
+        go_loadedAreaObject.SetActive(false);
+
+        for (int i = 0; i < goA_planetButtons.Length; i++)
+            goA_planetButtons[i].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+        cc_cannon.b_isReady = false;
     }
 }
 
