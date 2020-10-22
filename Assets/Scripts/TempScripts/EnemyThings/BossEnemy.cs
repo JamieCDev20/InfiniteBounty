@@ -103,17 +103,15 @@ public class BossEnemy : Enemy
 
     private void UseAttack()
     {
-        int _i_rando = Random.Range(0, 4);
-
-        if (_i_rando == 3)
-            RockWall();
-        else
+        if (Vector3.Distance(transform.position, goL_playerObjects[i_targetIndex].transform.position) > 15)
             RockThrow();
+        else
+            RockWall();
     }
 
     private void RockThrow()
     {
-        GameObject _go_rock = Instantiate(go_throwableRock, transform.position + (Vector3.up * 10), Quaternion.identity);
+        GameObject _go_rock = Instantiate(go_throwableRock, transform.position + (Vector3.up * 10), Quaternion.identity, transform.parent);
         _go_rock.transform.LookAt(goL_playerObjects[i_targetIndex].transform);
         _go_rock.transform.Rotate(new Vector3(-Vector3.Distance(transform.position, goL_playerObjects[i_targetIndex].transform.position) * 0.5f, 0, 0));
         _go_rock.GetComponent<Rigidbody>().AddForce(_go_rock.transform.forward * f_throwPower, ForceMode.Impulse);
