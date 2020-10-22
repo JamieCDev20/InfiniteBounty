@@ -65,6 +65,8 @@ public class PlayerController : MonoBehaviour
         a_anim.SetFloat("Y", Input.GetAxis("Vertical") * (_b_isSprinting ? 2 : 1));
         a_anim.SetFloat("X", Input.GetAxis("Horizontal") * (_b_isSprinting ? 2 : 1));
 
+        a_anim.SetBool("ShootingRight", Input.GetButton("Fire2"));
+        a_anim.SetBool("ShootingLeft", Input.GetButton("Fire1"));
 
         //Cam & looking
         transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(go_camPivot.transform.forward, new Vector3(1, 0, 1)), 0.4f);
@@ -72,13 +74,10 @@ public class PlayerController : MonoBehaviour
         go_camPivot.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * f_camSensitivity);
         go_camPivot.transform.localEulerAngles = new Vector3(go_camPivot.transform.localEulerAngles.x, go_camPivot.transform.localEulerAngles.y, 0);
 
-        go_weaponRightParent.transform.forward = c_cam.transform.forward;
-        go_weaponLeftParent.transform.forward = c_cam.transform.forward;
-
         if (Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Use")) AttemptUse();
-        if (Input.GetButton("Fire1")) FireLeft();
         if (Input.GetButton("Fire2")) FireRight();
+        if (Input.GetButton("Fire1")) FireLeft();
 
         f_currentFireTimerRight -= Time.deltaTime;
         f_currentFireTimerLeft -= Time.deltaTime;
