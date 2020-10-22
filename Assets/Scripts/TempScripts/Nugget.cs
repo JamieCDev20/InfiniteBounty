@@ -5,7 +5,12 @@ using UnityEngine;
 public class Nugget : MonoBehaviour
 {
     [SerializeField] private GameObject go_pickupParticles;
-    [SerializeField]private int i_nuggetWorth;
+    [SerializeField] private int i_nuggetWorth;
+
+    private void Start()
+    {
+        Invoke("TimeOut", 5);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,7 +20,12 @@ public class Nugget : MonoBehaviour
             go_pickupParticles.transform.parent = null;
             gameObject.SetActive(false);
             LocationController.x.PickedUpNugget(i_nuggetWorth);
-        }        
+        }
+    }
+
+    private void TimeOut()
+    {
+        gameObject.SetActive(false);
     }
 
 }

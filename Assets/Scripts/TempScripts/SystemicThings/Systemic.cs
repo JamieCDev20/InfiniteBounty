@@ -15,6 +15,7 @@ public class Systemic : MonoBehaviour
     [Header("Events")]
     [SerializeField] private UnityEvent ue_fireTrigger;
     [SerializeField] private UnityEvent ue_electricTrigger;
+    [SerializeField] private UnityEvent ue_waterTrigger;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,6 +25,7 @@ public class Systemic : MonoBehaviour
         {
             if (b_fire) _s.ue_fireTrigger.Invoke();
             if (b_electric) _s.ue_fireTrigger.Invoke();
+            if (b_water) _s.ue_waterTrigger.Invoke();
         }
     }
 
@@ -35,6 +37,7 @@ public class Systemic : MonoBehaviour
         {
             if (b_fire) _s.ue_fireTrigger.Invoke();
             if (b_electric) _s.ue_fireTrigger.Invoke();
+            if (b_water) _s.ue_waterTrigger.Invoke();
         }
     }
 }

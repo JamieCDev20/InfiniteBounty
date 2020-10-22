@@ -69,6 +69,9 @@ MonoBehaviour:
   ue_electricTrigger:
     m_PersistentCalls:
       m_Calls: []
+  ue_waterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5422952487490037467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6639089197611590098
 Transform:
   m_ObjectHideFlags: 0
@@ -315,13 +318,13 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       minColor: {r: 1, g: 1, b: 1, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.8627451}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}

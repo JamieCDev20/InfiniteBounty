@@ -8,11 +8,16 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Fields")]
     [SerializeField] protected int i_maxHealth;
     protected int i_currentHealth;
-
+    protected bool b_isHunting;
 
     protected virtual void Start()
     {
         i_currentHealth = i_maxHealth;
+    }
+
+    internal virtual void Begin()
+    {
+        b_isHunting = true;
     }
 
     internal virtual void TakeDamage(int _i_damage)

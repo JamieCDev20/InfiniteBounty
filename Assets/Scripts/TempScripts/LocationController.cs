@@ -13,7 +13,7 @@ public class LocationController : MonoBehaviour
 {
     public static LocationController x;
     internal Location l_currentTarget = Location.SmashGrab;
-    private GameObject[] goA_loadedAreaObjects = new GameObject[0];
+    private GameObject go_loadedAreaObject;
 
     [SerializeField] private CannonController cc_cannon;
     [Space, SerializeField] private GameObject[] goA_planetButtons = new GameObject[0];
@@ -27,24 +27,22 @@ public class LocationController : MonoBehaviour
     private int i_nuggetTotal;
 
     [Header("Smash Grab References")]
-    [SerializeField] private GameObject[] goA_smashGrabAreas = new GameObject[0];
+    [SerializeField] private GameObject go_smashGrabArea;
     [SerializeField] private GameObject[] goA_pathBlockers = new GameObject[0];
 
     [Header("Boss References")]
-    [SerializeField] private GameObject[] goA_bossAreas = new GameObject[0];
+    [SerializeField] private GameObject go_bossArea;
 
     private void Start()
     {
         x = this;
 
-        for (int i = 0; i < goA_smashGrabAreas.Length; i++)
-            goA_smashGrabAreas[i].SetActive(false);
-
-        for (int i = 0; i < goA_bossAreas.Length; i++)
-            goA_bossAreas[i].SetActive(false);
+        go_smashGrabArea.SetActive(false);
+        go_bossArea.SetActive(false);
 
         cc_cannon.b_isReady = false;
 
+        SetLocation(Location.SmashGrab, goA_planetButtons[0]);
         StartCoroutine(LoadArea());
     }
 
@@ -67,7 +65,6 @@ public class LocationController : MonoBehaviour
 
     internal IEnumerator LoadArea()
     {
-        UnloadArea();
         cc_cannon.b_isReady = false;
         tmp_loadingText.text = "Travelling";
         tmp_loadingText.color = c_travellingColour;
@@ -75,22 +72,17 @@ public class LocationController : MonoBehaviour
         switch (l_currentTarget)
         {
             case Location.SmashGrab:
-                for (int i = 0; i < goA_smashGrabAreas.Length; i++)
-                {
-                    goA_smashGrabAreas[i].SetActive(true);
-                    yield return new WaitForEndOfFrame();
-                }
-                goA_loadedAreaObjects = goA_smashGrabAreas;
-                goA_pathBlockers[UnityEngine.Random.Range(0, goA_pathBlockers.Length)].SetActive(true);
+                go_smashGrabArea.SetActive(true);
+                yield return new WaitForEndOfFrame();
+                go_loadedAreaObject = go_smashGrabArea;
+                goA_pathBlockers[UnityEngine.Random.Range(0, goA_pathBlockers.Length)].SetActive(false);
                 break;
 
             case Location.BossLevel:
-                for (int i = 0; i < goA_bossAreas.Length; i++)
-                {
-                    goA_bossAreas[i].SetActive(true);
-                    yield return new WaitForEndOfFrame();
-                }
-                goA_loadedAreaObjects = goA_bossAreas;
+                go_bossArea.SetActive(true);
+                yield return new WaitForEndOfFrame();
+                go_bossArea.GetComponentInChildren<Enemy>().Begin();
+                go_loadedAreaObject = go_bossArea;
                 break;
         }
 
@@ -101,9 +93,13 @@ public class LocationController : MonoBehaviour
 
     internal void UnloadArea()
     {
-        for (int i = 0; i < goA_loadedAreaObjects.Length; i++)
-            goA_loadedAreaObjects[i].SetActive(false);
 
+        go_loadedAreaObject.SetActive(false);
+
+        for (int i = 0; i < goA_planetButtons.Length; i++)
+            goA_planetButtons[i].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+        cc_cannon.b_isReady = false;
     }
 }
 

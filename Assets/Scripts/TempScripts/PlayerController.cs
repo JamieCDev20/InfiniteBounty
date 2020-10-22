@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private Camera c_cam;
     private GameObject go_camPivot;
     private Rigidbody rb_rigidbody;
+    private int i_currentHealth;
+    [SerializeField] private RectTransform rt_healthBar;
 
     [Header("Controls")]
     [SerializeField] private float f_camSensitivity;
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject go_firePointRight;
     [SerializeField] private GameObject go_bulletPrefabRight;
     [SerializeField] private int i_bulletsPerShotRight;
+    [SerializeField] private GameObject go_weaponRightParent;
     [SerializeField] private GameObject[] goA_weaponsRight = new GameObject[0];
 
     [Header("Left Gun Stats")]
@@ -32,6 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject go_firePointLeft;
     [SerializeField] private GameObject go_bulletPrefabLeft;
     [SerializeField] private int i_bulletsPerShotLeft;
+    [SerializeField] private GameObject go_weaponLeftParent;
     [SerializeField] private GameObject[] goA_weaponsLeft = new GameObject[0];
 
     private void Start()
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
         c_cam = Camera.main;
         go_camPivot = c_cam.transform.parent.gameObject;
         rb_rigidbody = GetComponent<Rigidbody>();
+        i_currentHealth = 5;
     }
 
     private void Update()
@@ -58,6 +64,9 @@ public class PlayerController : MonoBehaviour
         go_camPivot.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * f_camSensitivity);
         go_camPivot.transform.localEulerAngles = new Vector3(go_camPivot.transform.localEulerAngles.x, go_camPivot.transform.localEulerAngles.y, 0);
 
+        go_weaponRightParent.transform.forward = c_cam.transform.forward;
+        go_weaponLeftParent.transform.forward = c_cam.transform.forward;
+
         if (Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Use")) AttemptUse();
         if (Input.GetButton("Fire1")) FireLeft();
@@ -65,6 +74,40 @@ public class PlayerController : MonoBehaviour
 
         f_currentFireTimerRight -= Time.deltaTime;
         f_currentFireTimerLeft -= Time.deltaTime;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Systemic _s = collision.transform.GetComponent<Systemic>();
+        if (_s != null)
+        {
+            if (_s.b_fire) TakeDamage(1);
+            if (_s.b_electric) TakeDamage(1);
+        }
+    }
+
+    private void TakeDamage(int _i_incomingDamage)
+    {
+        i_currentHealth -= _i_incomingDamage;
+
+        if (i_currentHealth < 0)
+            i_currentHealth = 0;
+
+        rt_healthBar.localScale = new Vector3((float)i_currentHealth / 10, 1, 1);
+
+        print(_i_incomingDamage);
+        if (i_currentHealth == 0) Death();
+
+    }
+
+    private void Death()
+    {
+        i_currentHealth = 10;
+        rt_healthBar.localScale = new Vector3((float)i_currentHealth / 10, 1, 1);
+
+        for (int i = 0; i < LocationController.x.goA_playerObjects.Length; i++)
+            LocationController.x.goA_playerObjects[i].transform.position = new Vector3(0, 0, i * 1.5f);
+        LocationController.x.UnloadArea();
     }
 
     private void Jump()
@@ -90,7 +133,8 @@ public class PlayerController : MonoBehaviour
                 goA_weaponsRight[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
             }
         }
-        else if (f_currentFireTimerRight <= 0)
+
+        if (f_currentFireTimerRight <= 0)
         {
             for (int i = 0; i < i_bulletsPerShotRight; i++)
             {
@@ -123,7 +167,8 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        else if (f_currentFireTimerLeft <= 0)
+
+        if (f_currentFireTimerLeft <= 0)
         {
             for (int i = 0; i < i_bulletsPerShotLeft; i++)
             {

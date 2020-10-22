@@ -10,9 +10,16 @@ public class Goo : MonoBehaviour
     public void Ignite()
     {
         GetComponent<Systemic>().b_fire = true;
+        GetComponent<Collider>().isTrigger = true;
         go_fireEffect.SetActive(true);
     }
 
+    public void GetWashedAway()
+    {
+        GetComponent<Systemic>().b_fire = false;
+        GetComponent<Collider>().isTrigger = false;
+        go_fireEffect.SetActive(false);
+    }
 
 
 }
