@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 4308096341704676512}
   - component: {fileID: 5707692845772861641}
   - component: {fileID: 4468070524712238798}
-  - component: {fileID: 5099273111273740076}
   - component: {fileID: 6741355650731856494}
+  - component: {fileID: 5099273111273740076}
+  - component: {fileID: 6027898347439800099}
   m_Layer: 9
-  m_Name: Nugget
+  m_Name: HydroNug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +44,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2720207710688081759}
-  m_Material: {fileID: 13400000, guid: 9038d02dd3f237e40a274e899184e5bf, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -65,6 +66,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!135 &6741355650731856494
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720207710688081759}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5099273111273740076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,19 +93,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_pickupParticles: {fileID: 6321121273584555347}
   i_nuggetWorth: 1
---- !u!135 &6741355650731856494
-SphereCollider:
+--- !u!114 &6027898347439800099
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2720207710688081759}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f1ed2c90928954e8f87e220136509a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  b_fire: 0
+  b_electric: 0
+  b_water: 1
+  b_goo: 0
+  b_gas: 0
+  ue_fireTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  ue_electricTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  ue_waterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3610510006417795301
 GameObject:
   m_ObjectHideFlags: 0

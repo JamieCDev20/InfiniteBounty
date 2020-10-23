@@ -9,7 +9,7 @@ public class Nugget : MonoBehaviour
 
     private void Start()
     {
-        Invoke("TimeOut", 5);
+        Invoke("TimeOut", 15);
     }
 
     private void OnTriggerEnter(Collider other)

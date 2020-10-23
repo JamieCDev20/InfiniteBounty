@@ -13,9 +13,9 @@ public class Systemic : MonoBehaviour
     [SerializeField] internal bool b_gas;
 
     [Header("Events")]
-    [SerializeField] private UnityEvent ue_fireTrigger;
-    [SerializeField] private UnityEvent ue_electricTrigger;
-    [SerializeField] private UnityEvent ue_waterTrigger;
+    [SerializeField] internal UnityEvent ue_fireTrigger;
+    [SerializeField] internal UnityEvent ue_electricTrigger;
+    [SerializeField] internal UnityEvent ue_waterTrigger;
 
     private void OnTriggerEnter(Collider other)
     {
