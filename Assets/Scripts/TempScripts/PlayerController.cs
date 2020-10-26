@@ -150,31 +150,45 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (_hit.transform.tag == "Augment")
                 {
-                    Augment _a = _hit.transform.GetComponent<Augment>();
-                    switch (_a.GetAugment())
+                    if (atL_activeAugmentsRight.Count < 3)
                     {
-                        case AugmentType.Heavy:
-                            if (!atL_activeAugmentsRight.Contains(AugmentType.Heavy))
-                                f_timeBetweenShotsRight += 0.05f;
-                            break;
+                        Augment _a = _hit.transform.GetComponent<Augment>();
+                        switch (_a.GetAugment())
+                        {
+                            case AugmentType.Heavy:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Heavy))
+                                {
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                    f_timeBetweenShotsRight += 0.05f;
+                                }
+                                break;
 
-                        case AugmentType.Size:
-                            if (!atL_activeAugmentsRight.Contains(AugmentType.Size))
-                                f_timeBetweenShotsRight += 0.05f;
-                            break;
+                            case AugmentType.Size:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Size))
+                                {
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                    f_timeBetweenShotsRight += 0.05f;
+                                }
+                                break;
 
-                        case AugmentType.Speed:
-                            if (!atL_activeAugmentsRight.Contains(AugmentType.Speed))
-                                f_timeBetweenShotsRight -= 0.05f;
-                            break;
+                            case AugmentType.Speed:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Speed))
+                                {
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                    f_timeBetweenShotsRight -= 0.05f;
+                                }
+                                break;
 
-                        case AugmentType.Explosive:
-                            if (!atL_activeAugmentsRight.Contains(AugmentType.Explosive))
-                                f_timeBetweenShotsRight += 0.05f;
-                            break;
+                            case AugmentType.Explosive:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Explosive))
+                                {
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                    f_timeBetweenShotsRight += 0.05f;
+                                }
+                                break;
+                        }
+                        f_timeBetweenShotsRight = Mathf.Clamp(f_timeBetweenShotsRight, 0.05f, 0.7f);
                     }
-                    atL_activeAugmentsRight.Add(_a.GetAugment());
-                    f_timeBetweenShotsRight = Mathf.Clamp(f_timeBetweenShotsRight, 0.05f, 0.7f);
                     return;
                 }
             }
@@ -213,31 +227,46 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (_hit.transform.tag == "Augment")
                 {
-                    Augment _a = _hit.transform.GetComponent<Augment>();
-                    switch (_a.GetAugment())
+                    if (atL_activeAugmentsLeft.Count < 3)
                     {
-                        case AugmentType.Heavy:
-                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Heavy))
-                                f_timeBetweenShotsLeft += 0.05f;
-                            break;
+                        Augment _a = _hit.transform.GetComponent<Augment>();
+                        switch (_a.GetAugment())
+                        {
+                            case AugmentType.Heavy:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Heavy))
+                                {
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                    f_timeBetweenShotsLeft += 0.05f;
+                                }
+                                break;
 
-                        case AugmentType.Size:
-                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Size))
-                                f_timeBetweenShotsLeft += 0.05f;
-                            break;
+                            case AugmentType.Size:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Size))
+                                {
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                    f_timeBetweenShotsLeft += 0.05f;
+                                }
+                                break;
 
-                        case AugmentType.Speed:
-                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Speed))
-                                f_timeBetweenShotsLeft -= 0.05f;
-                            break;
+                            case AugmentType.Speed:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Speed))
+                                {
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                    f_timeBetweenShotsLeft -= 0.05f;
+                                }
+                                break;
 
-                        case AugmentType.Explosive:
-                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Explosive))
-                                f_timeBetweenShotsLeft += 0.05f;
-                            break;
+                            case AugmentType.Explosive:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Explosive))
+                                {
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                    f_timeBetweenShotsLeft += 0.05f;
+                                }
+                                break;
+                        }
+                        atL_activeAugmentsLeft.Add(_a.GetAugment());
+                        f_timeBetweenShotsLeft = Mathf.Clamp(f_timeBetweenShotsLeft, 0.05f, 0.7f);
                     }
-                    atL_activeAugmentsLeft.Add(_a.GetAugment());
-                    f_timeBetweenShotsLeft = Mathf.Clamp(f_timeBetweenShotsLeft, 0.05f, 0.7f);
                     return;
                 }
             }
