@@ -37,6 +37,11 @@ public class LocationController : MonoBehaviour
     [SerializeField] private GameObject go_standOffArea;
 
 
+    [Header("Universal Prefabs")]
+    [SerializeField] internal GameObject go_gooPatchPrefab;
+    [SerializeField] internal GameObject go_waterPuddlePrefab;
+    [SerializeField] internal GameObject go_explosionPrefab;
+
 
     private void Start()
     {

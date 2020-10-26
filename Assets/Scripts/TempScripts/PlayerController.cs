@@ -60,9 +60,9 @@ public class PlayerController : MonoBehaviour
         bool _b_isSprinting = Input.GetButton("Sprint");
         b_isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, 0.11f, 0), 0.1f);
 
-        rb_rigidbody.AddForce(Vector3.Scale((
+        rb_rigidbody.AddForce((Vector3.Scale((
            ((Input.GetAxis("Horizontal") * c_cam.transform.right) + (Input.GetAxis("Vertical") * c_cam.transform.forward)).normalized * f_walkSpeed * (_b_isSprinting ? 2 : 1)) //Walking inputs
-            , new Vector3(1, 0, 1)) + new Vector3(0, !b_isGrounded ? -f_gravity : 0, 0)); //Removing the vertical axis from walking & applying extra gravity
+            , new Vector3(1, 0, 1)) + new Vector3(0, !b_isGrounded ? -f_gravity : 0, 0)) * Time.deltaTime); //Removing the vertical axis from walking & applying extra gravity
 
         a_anim.SetFloat("Y", Input.GetAxis("Vertical") * (_b_isSprinting ? 2 : 1));
         a_anim.SetFloat("X", Input.GetAxis("Horizontal") * (_b_isSprinting ? 2 : 1));
@@ -76,13 +76,17 @@ public class PlayerController : MonoBehaviour
         go_camPivot.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * f_camSensitivity);
         go_camPivot.transform.localEulerAngles = new Vector3(go_camPivot.transform.localEulerAngles.x, go_camPivot.transform.localEulerAngles.y, 0);
 
-        if (Input.GetButtonDown("Jump")) Jump();
-        if (Input.GetButtonDown("Use")) AttemptUse();
-        if (Input.GetButton("Fire2")) FireRight();
-        if (Input.GetButton("Fire1")) FireLeft();
-
         f_currentFireTimerRight -= Time.deltaTime;
         f_currentFireTimerLeft -= Time.deltaTime;
+
+        if (Input.GetButtonDown("Jump")) Jump();
+        if (Input.GetButtonDown("Use")) AttemptUse();
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetButton("Fire2")) FireRight();
+        if (Input.GetButton("Fire1")) FireLeft();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -127,36 +131,61 @@ public class PlayerController : MonoBehaviour
 
     private void FireRight()
     {
-        RaycastHit _hit;
-        if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit, f_useRange))
-        {
-            if (_hit.transform.tag == "Weapon")
-            {
-                WeaponBlock _wb_newWeapon = _hit.transform.GetComponent<WeaponBlock>();
-                f_timeBetweenShotsRight = _wb_newWeapon.f_timeBetweenShots;
-                f_firePowerRight = _wb_newWeapon.f_firePower;
-                go_bulletPrefabRight = _wb_newWeapon.go_bulletPrefab;
-                i_bulletsPerShotRight = _wb_newWeapon.i_bulletsPerShot;
-                for (int i = 0; i < goA_weaponsRight.Length; i++)
-                    goA_weaponsRight[i].SetActive(false);
-                goA_weaponsRight[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
-            }
-            if(_hit.transform.tag == "Augment")
-            {
-                Augment _a = _hit.transform.GetComponent<Augment>();
-               
-            }
-        }
-
         if (f_currentFireTimerRight <= 0)
         {
+            RaycastHit _hit;
+            if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit, f_useRange))
+            {
+                if (_hit.transform.tag == "Weapon")
+                {
+                    WeaponBlock _wb_newWeapon = _hit.transform.GetComponent<WeaponBlock>();
+                    f_timeBetweenShotsRight = _wb_newWeapon.f_timeBetweenShots;
+                    f_firePowerRight = _wb_newWeapon.f_firePower;
+                    go_bulletPrefabRight = _wb_newWeapon.go_bulletPrefab;
+                    i_bulletsPerShotRight = _wb_newWeapon.i_bulletsPerShot;
+                    for (int i = 0; i < goA_weaponsRight.Length; i++)
+                        goA_weaponsRight[i].SetActive(false);
+                    goA_weaponsRight[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
+                    return;
+                }
+                else if (_hit.transform.tag == "Augment")
+                {
+                    Augment _a = _hit.transform.GetComponent<Augment>();
+                    switch (_a.GetAugment())
+                    {
+                        case AugmentType.Heavy:
+                            if (!atL_activeAugmentsRight.Contains(AugmentType.Heavy))
+                                f_timeBetweenShotsRight += 0.05f;
+                            break;
+
+                        case AugmentType.Size:
+                            if (!atL_activeAugmentsRight.Contains(AugmentType.Size))
+                                f_timeBetweenShotsRight += 0.05f;
+                            break;
+
+                        case AugmentType.Speed:
+                            if (!atL_activeAugmentsRight.Contains(AugmentType.Speed))
+                                f_timeBetweenShotsRight -= 0.05f;
+                            break;
+
+                        case AugmentType.Explosive:
+                            if (!atL_activeAugmentsRight.Contains(AugmentType.Explosive))
+                                f_timeBetweenShotsRight += 0.05f;
+                            break;
+                    }
+                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                    f_timeBetweenShotsRight = Mathf.Clamp(f_timeBetweenShotsRight, 0.05f, 0.7f);
+                    return;
+                }
+            }
+
             for (int i = 0; i < i_bulletsPerShotRight; i++)
             {
                 GameObject _go_bullet = Instantiate(go_bulletPrefabRight, go_firePointRight.transform.position, c_cam.transform.rotation);
                 _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
-
                 _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerRight, ForceMode.Impulse);
                 _go_bullet.SetActive(true);
+                _go_bullet.GetComponent<Bullet>().Setup(atL_activeAugmentsRight.ToArray());
 
                 f_currentFireTimerRight = f_timeBetweenShotsRight;
             }
@@ -165,31 +194,61 @@ public class PlayerController : MonoBehaviour
 
     private void FireLeft()
     {
-        RaycastHit _hit;
-        if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit, f_useRange))
-        {
-            if (_hit.transform.tag == "Weapon")
-            {
-                WeaponBlock _wb_newWeapon = _hit.transform.GetComponent<WeaponBlock>();
-                f_timeBetweenShotsLeft = _wb_newWeapon.f_timeBetweenShots;
-                f_firePowerLeft = _wb_newWeapon.f_firePower;
-                go_bulletPrefabLeft = _wb_newWeapon.go_bulletPrefab;
-                i_bulletsPerShotLeft = _wb_newWeapon.i_bulletsPerShot;
-                for (int i = 0; i < goA_weaponsLeft.Length; i++)
-                    goA_weaponsLeft[i].SetActive(false);
-                goA_weaponsLeft[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
-
-            }
-        }
-
         if (f_currentFireTimerLeft <= 0)
         {
+            RaycastHit _hit;
+            if (Physics.Raycast(c_cam.transform.position, c_cam.transform.forward, out _hit, f_useRange))
+            {
+                if (_hit.transform.tag == "Weapon")
+                {
+                    WeaponBlock _wb_newWeapon = _hit.transform.GetComponent<WeaponBlock>();
+                    f_timeBetweenShotsLeft = _wb_newWeapon.f_timeBetweenShots;
+                    f_firePowerLeft = _wb_newWeapon.f_firePower;
+                    go_bulletPrefabLeft = _wb_newWeapon.go_bulletPrefab;
+                    i_bulletsPerShotLeft = _wb_newWeapon.i_bulletsPerShot;
+                    for (int i = 0; i < goA_weaponsLeft.Length; i++)
+                        goA_weaponsLeft[i].SetActive(false);
+                    goA_weaponsLeft[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
+                    return;
+                }
+                else if (_hit.transform.tag == "Augment")
+                {
+                    Augment _a = _hit.transform.GetComponent<Augment>();
+                    switch (_a.GetAugment())
+                    {
+                        case AugmentType.Heavy:
+                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Heavy))
+                                f_timeBetweenShotsLeft += 0.05f;
+                            break;
+
+                        case AugmentType.Size:
+                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Size))
+                                f_timeBetweenShotsLeft += 0.05f;
+                            break;
+
+                        case AugmentType.Speed:
+                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Speed))
+                                f_timeBetweenShotsLeft -= 0.05f;
+                            break;
+
+                        case AugmentType.Explosive:
+                            if (!atL_activeAugmentsLeft.Contains(AugmentType.Explosive))
+                                f_timeBetweenShotsLeft += 0.05f;
+                            break;
+                    }
+                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                    f_timeBetweenShotsLeft = Mathf.Clamp(f_timeBetweenShotsLeft, 0.05f, 0.7f);
+                    return;
+                }
+            }
+
             for (int i = 0; i < i_bulletsPerShotLeft; i++)
             {
                 GameObject _go_bullet = Instantiate(go_bulletPrefabLeft, go_firePointLeft.transform.position, c_cam.transform.rotation);
                 _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
                 _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerLeft, ForceMode.Impulse);
                 _go_bullet.SetActive(true);
+                _go_bullet.GetComponent<Bullet>().Setup(atL_activeAugmentsLeft.ToArray());
 
                 f_currentFireTimerLeft = f_timeBetweenShotsLeft;
             }
