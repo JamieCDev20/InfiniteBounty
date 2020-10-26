@@ -6,13 +6,13 @@ using System;
 
 public enum Location
 {
-    SmashGrab, BossLevel
+    NuggetRun, MotherLode, Standoff
 }
 
 public class LocationController : MonoBehaviour
 {
     public static LocationController x;
-    internal Location l_currentTarget = Location.SmashGrab;
+    internal Location l_currentTarget = Location.NuggetRun;
     private GameObject go_loadedAreaObject;
 
     [SerializeField] private CannonController cc_cannon;
@@ -26,23 +26,28 @@ public class LocationController : MonoBehaviour
     [SerializeField] private TextMeshPro tmp_nuggetsCollectedtext;
     private int i_nuggetTotal;
 
-    [Header("Smash Grab References")]
-    [SerializeField] private GameObject go_smashGrabArea;
+    [Header("Nugget Run References")]
+    [SerializeField] private GameObject go_nuggetRunArea;
     [SerializeField] private GameObject[] goA_pathBlockers = new GameObject[0];
 
-    [Header("Boss References")]
-    [SerializeField] private GameObject go_bossArea;
+    [Header("Motherlode References")]
+    [SerializeField] private GameObject go_motherLodeArea;
+
+    [Header("Standoff References")]
+    [SerializeField] private GameObject go_standOffArea;
+
+
 
     private void Start()
     {
         x = this;
 
-        go_smashGrabArea.SetActive(false);
-        go_bossArea.SetActive(false);
+        go_nuggetRunArea.SetActive(false);
+        go_motherLodeArea.SetActive(false);
 
         cc_cannon.b_isReady = false;
 
-        SetLocation(Location.SmashGrab, goA_planetButtons[0]);
+        SetLocation(Location.NuggetRun, goA_planetButtons[0]);
         StartCoroutine(LoadArea());
     }
 
@@ -54,6 +59,9 @@ public class LocationController : MonoBehaviour
 
     public void SetLocation(Location _l_target, GameObject _go_buttonPressed)
     {
+        if (go_loadedAreaObject != null)
+            UnloadArea();
+
         l_currentTarget = _l_target;
         for (int i = 0; i < goA_planetButtons.Length; i++)
             goA_planetButtons[i].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
@@ -71,18 +79,25 @@ public class LocationController : MonoBehaviour
 
         switch (l_currentTarget)
         {
-            case Location.SmashGrab:
-                go_smashGrabArea.SetActive(true);
+            case Location.NuggetRun:
+                go_nuggetRunArea.SetActive(true);
                 yield return new WaitForEndOfFrame();
-                go_loadedAreaObject = go_smashGrabArea;
+                go_loadedAreaObject = go_nuggetRunArea;
                 goA_pathBlockers[UnityEngine.Random.Range(0, goA_pathBlockers.Length)].SetActive(false);
                 break;
 
-            case Location.BossLevel:
-                go_bossArea.SetActive(true);
+            case Location.MotherLode:
+                go_motherLodeArea.SetActive(true);
                 yield return new WaitForEndOfFrame();
-                go_bossArea.GetComponentInChildren<Enemy>().Begin();
-                go_loadedAreaObject = go_bossArea;
+                go_motherLodeArea.GetComponentInChildren<Enemy>().Begin();
+                go_loadedAreaObject = go_motherLodeArea;
+                break;
+
+            case Location.Standoff:
+                go_standOffArea.SetActive(true);
+                yield return new WaitForEndOfFrame();
+                //go_standOffArea.GetComponentInChildren<Enemy>().Begin();
+                go_loadedAreaObject = go_standOffArea;
                 break;
         }
 

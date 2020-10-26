@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int i_bulletsPerShotRight;
     [SerializeField] private GameObject go_weaponRightParent;
     [SerializeField] private GameObject[] goA_weaponsRight = new GameObject[0];
+    private List<AugmentType> atL_activeAugmentsRight = new List<AugmentType>();
 
     [Header("Left Gun Stats")]
     [SerializeField] private float f_timeBetweenShotsLeft;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int i_bulletsPerShotLeft;
     [SerializeField] private GameObject go_weaponLeftParent;
     [SerializeField] private GameObject[] goA_weaponsLeft = new GameObject[0];
+    private List<AugmentType> atL_activeAugmentsLeft = new List<AugmentType>();
 
     private void Start()
     {
@@ -138,6 +140,11 @@ public class PlayerController : MonoBehaviour
                 for (int i = 0; i < goA_weaponsRight.Length; i++)
                     goA_weaponsRight[i].SetActive(false);
                 goA_weaponsRight[_wb_newWeapon.i_weaponVisualIndex].SetActive(true);
+            }
+            if(_hit.transform.tag == "Augment")
+            {
+                Augment _a = _hit.transform.GetComponent<Augment>();
+               
             }
         }
 

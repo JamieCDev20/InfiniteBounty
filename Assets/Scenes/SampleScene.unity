@@ -5908,6 +5908,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230555781}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &232976845 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3501584392183828369, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+    type: 3}
+  m_PrefabInstance: {fileID: 3501584392244543068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &262815112
 GameObject:
   m_ObjectHideFlags: 0
@@ -17937,16 +17943,19 @@ MonoBehaviour:
   goA_planetButtons:
   - {fileID: 1605447336}
   - {fileID: 1744918037}
+  - {fileID: 7302784650857579831}
   goA_playerObjects:
   - {fileID: 699364886}
   tmp_loadingText: {fileID: 832343044}
   c_readyColour: {r: 1, g: 0, b: 0, a: 1}
   c_travellingColour: {r: 0, g: 0, b: 0, a: 1}
   tmp_nuggetsCollectedtext: {fileID: 7302784650857579830}
-  go_smashGrabArea: {fileID: 443633926}
+  go_nuggetRunArea: {fileID: 443633926}
   goA_pathBlockers:
   - {fileID: 1962210846}
-  go_bossArea: {fileID: 1813619848}
+  - {fileID: 2620272550925054978}
+  go_motherLodeArea: {fileID: 1813619848}
+  go_standOffArea: {fileID: 232976845}
 --- !u!4 &1827707749
 Transform:
   m_ObjectHideFlags: 0
@@ -19338,8 +19347,93 @@ PrefabInstance:
       propertyPath: m_Name
       value: IgnovusSmashGrab
       objectReference: {fileID: 0}
+    - target: {fileID: 2620272550829712647, guid: bd0f6c34ed875dd4e9fd547a13f1e651,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd0f6c34ed875dd4e9fd547a13f1e651, type: 3}
+--- !u!1 &2620272550925054978 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6009997074868575147, guid: bd0f6c34ed875dd4e9fd547a13f1e651,
+    type: 3}
+  m_PrefabInstance: {fileID: 2620272550925054977}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3501584392244543068
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3501584392183828369, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_Name
+      value: IgnovusStandOff
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828369, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501584392183828370, guid: 768c6aeb26c5aa342b1a58cdcbd51027,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 768c6aeb26c5aa342b1a58cdcbd51027, type: 3}
 --- !u!1001 &7302784650857579829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19466,6 +19560,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7302784650857579831 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2690419485684619707, guid: 8d4c61962c200f34287d6963462ac8cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 7302784650857579829}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7838796035847153736
 PrefabInstance:
   m_ObjectHideFlags: 0
