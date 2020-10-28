@@ -101,7 +101,7 @@ public class LocationController : MonoBehaviour
             case Location.Standoff:
                 go_standOffArea.SetActive(true);
                 yield return new WaitForEndOfFrame();
-                //go_standOffArea.GetComponentInChildren<Enemy>().Begin();
+                go_standOffArea.GetComponentInChildren<StockPile>().Begin();
                 go_loadedAreaObject = go_standOffArea;
                 break;
         }

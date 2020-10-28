@@ -29,8 +29,6 @@ public class Enemy : MonoBehaviour
     internal virtual void Death()
     {
         gameObject.SetActive(false);
-        Invoke("BeamBackToShip", 2);
-
     }
 
     private void BeamBackToShip()

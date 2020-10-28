@@ -49,6 +49,12 @@ public class BossEnemy : Enemy
         Invoke("UseAttack", 4);
     }
 
+    internal override void Death()
+    {
+        base.Death();
+        Invoke("BeamBackToShip", 2);
+    }
+
     internal override void TakeDamage(int _i_damage)
     {
         i_currentHealth -= _i_damage;
