@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private int i_damage;
     [SerializeField] private GameObject go_hitEffect;
+    [SerializeField] private LayerMask lm_placementLayer;
 
     [Header("TrailEffects")]
     [SerializeField] private GameObject go_flameTrails;
@@ -68,7 +69,7 @@ public class Bullet : MonoBehaviour
         if (b_explosive)
         {
             RaycastHit _hit;
-            if (Physics.Raycast(transform.position, transform.forward, out _hit))
+            if (Physics.Raycast(transform.position, transform.forward, out _hit, lm_placementLayer))
             {
                 GameObject _goo = Instantiate(LocationController.x.go_explosionPrefab, transform.position, Quaternion.identity);
                 _goo.transform.up = _hit.normal;
@@ -77,7 +78,7 @@ public class Bullet : MonoBehaviour
         if (b_gooey)
         {
             RaycastHit _hit;
-            if (Physics.Raycast(transform.position, transform.forward, out _hit))
+            if (Physics.Raycast(transform.position, transform.forward, out _hit, lm_placementLayer))
             {
                 GameObject _goo = Instantiate(LocationController.x.go_gooPatchPrefab, transform.position, Quaternion.identity);
                 _goo.transform.up = _hit.normal;
@@ -86,7 +87,7 @@ public class Bullet : MonoBehaviour
         if (b_soaked)
         {
             RaycastHit _hit;
-            if (Physics.Raycast(transform.position, transform.forward, out _hit))
+            if (Physics.Raycast(transform.position, transform.forward, out _hit, lm_placementLayer))
             {
                 GameObject _goo = Instantiate(LocationController.x.go_waterPuddlePrefab, transform.position, Quaternion.identity);
                 _goo.transform.up = _hit.normal;

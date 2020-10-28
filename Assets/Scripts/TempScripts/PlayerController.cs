@@ -155,11 +155,32 @@ public class PlayerController : MonoBehaviour
                         Augment _a = _hit.transform.GetComponent<Augment>();
                         switch (_a.GetAugment())
                         {
+                            case AugmentType.Flame:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Flame))
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                break;
+
+                            case AugmentType.Electric:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Electric))
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                break;
+
+                            case AugmentType.Gooey:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Gooey))
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                break;
+
+                            case AugmentType.Soaked:
+                                if (!atL_activeAugmentsRight.Contains(AugmentType.Soaked))
+                                    atL_activeAugmentsRight.Add(_a.GetAugment());
+                                break;
+
                             case AugmentType.Heavy:
                                 if (!atL_activeAugmentsRight.Contains(AugmentType.Heavy))
                                 {
                                     atL_activeAugmentsRight.Add(_a.GetAugment());
                                     f_timeBetweenShotsRight += 0.05f;
+                                    f_firePowerRight *= 0.3f;
                                 }
                                 break;
 
@@ -232,11 +253,32 @@ public class PlayerController : MonoBehaviour
                         Augment _a = _hit.transform.GetComponent<Augment>();
                         switch (_a.GetAugment())
                         {
+                            case AugmentType.Flame:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Flame))
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                break;
+
+                            case AugmentType.Electric:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Electric))
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                break;
+
+                            case AugmentType.Gooey:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Gooey))
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                break;
+
+                            case AugmentType.Soaked:
+                                if (!atL_activeAugmentsLeft.Contains(AugmentType.Soaked))
+                                    atL_activeAugmentsLeft.Add(_a.GetAugment());
+                                break;
+
                             case AugmentType.Heavy:
                                 if (!atL_activeAugmentsLeft.Contains(AugmentType.Heavy))
                                 {
                                     atL_activeAugmentsLeft.Add(_a.GetAugment());
                                     f_timeBetweenShotsLeft += 0.05f;
+                                    f_firePowerLeft *= 0.3f;
                                 }
                                 break;
 
@@ -264,7 +306,6 @@ public class PlayerController : MonoBehaviour
                                 }
                                 break;
                         }
-                        atL_activeAugmentsLeft.Add(_a.GetAugment());
                         f_timeBetweenShotsLeft = Mathf.Clamp(f_timeBetweenShotsLeft, 0.05f, 0.7f);
                     }
                     return;

@@ -24,7 +24,7 @@ public class Systemic : MonoBehaviour
         if (_s != null)
         {
             if (b_fire) _s.ue_fireTrigger.Invoke();
-            if (b_electric) _s.ue_fireTrigger.Invoke();
+            if (b_electric) _s.ue_electricTrigger.Invoke();
             if (b_water) _s.ue_waterTrigger.Invoke();
         }
     }
@@ -36,7 +36,7 @@ public class Systemic : MonoBehaviour
         if (_s != null)
         {
             if (b_fire) _s.ue_fireTrigger.Invoke();
-            if (b_electric) _s.ue_fireTrigger.Invoke();
+            if (b_electric) _s.ue_electricTrigger.Invoke();
             if (b_water) _s.ue_waterTrigger.Invoke();
         }
     }
