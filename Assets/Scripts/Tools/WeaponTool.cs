@@ -11,6 +11,7 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_speed;
     [SerializeField] protected float f_knockback;
     [SerializeField] protected float f_lodeScalar;
+
     [Header("Elemental Stats")]
     [SerializeField] Systemic sy_element;
     [SerializeField] protected int i_elementDamage;
@@ -29,6 +30,10 @@ public class WeaponTool : ToolBase
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+    public override void Use()
     {
         
     }
