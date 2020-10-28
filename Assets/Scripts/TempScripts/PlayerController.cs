@@ -42,6 +42,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject[] goA_weaponsLeft = new GameObject[0];
     private List<AugmentType> atL_activeAugmentsLeft = new List<AugmentType>();
 
+    [Header("Mobility")]
+    [SerializeField] private float f_jetPackForce;
+    [SerializeField] private RectTransform rt_jetpackHeat;
+    private float f_jetpackHeat = 10;
+    private bool b_flying;
+    [SerializeField] private GameObject go_jetPackEffects;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -60,12 +67,25 @@ public class PlayerController : MonoBehaviour
         bool _b_isSprinting = Input.GetButton("Sprint");
         b_isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, 0.11f, 0), 0.1f);
 
-        rb_rigidbody.AddForce((Vector3.Scale((
-           ((Input.GetAxis("Horizontal") * c_cam.transform.right) + (Input.GetAxis("Vertical") * c_cam.transform.forward)).normalized * f_walkSpeed * (_b_isSprinting ? 2 : 1)) //Walking inputs
+        if (Input.GetButton("Mobility")) Jetpack();
+        else JetpackOff();
+        rt_jetpackHeat.localScale = new Vector3((10 - (float)f_jetpackHeat) / 10, 1, 1);
+        //print(10 - ((float)f_jetpackHeat / 10));
+
+        rb_rigidbody.AddForce((Vector3.Scale(
+           ((Input.GetAxis("Horizontal") * c_cam.transform.right) + (Input.GetAxis("Vertical") * c_cam.transform.forward)).normalized * f_walkSpeed * (_b_isSprinting ? 2 : 1) //Walking inputs
             , new Vector3(1, 0, 1)) + new Vector3(0, !b_isGrounded ? -f_gravity : 0, 0)) * Time.deltaTime); //Removing the vertical axis from walking & applying extra gravity
 
-        a_anim.SetFloat("Y", Input.GetAxis("Vertical") * (_b_isSprinting ? 2 : 1));
-        a_anim.SetFloat("X", Input.GetAxis("Horizontal") * (_b_isSprinting ? 2 : 1));
+        if (!b_flying)
+        {
+            a_anim.SetFloat("Y", Input.GetAxis("Vertical") * (_b_isSprinting ? 2 : 1));
+            a_anim.SetFloat("X", Input.GetAxis("Horizontal") * (_b_isSprinting ? 2 : 1));
+        }
+        else
+        {
+            a_anim.SetFloat("Y", 0);
+            a_anim.SetFloat("X", 0);
+        }
 
         a_anim.SetBool("ShootingRight", Input.GetButton("Fire2"));
         a_anim.SetBool("ShootingLeft", Input.GetButton("Fire1"));
@@ -81,6 +101,30 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Use")) AttemptUse();
+    }
+
+
+    private void Jetpack()
+    {
+        if (f_jetpackHeat > 0)
+        {
+            b_flying = true;
+            if (Input.GetButtonDown("Mobility"))
+                rb_rigidbody.AddForce(Vector3.up * f_jetPackForce * (10 - f_jetpackHeat) * 0.5f, ForceMode.Impulse);
+
+            go_jetPackEffects.SetActive(true);
+            rb_rigidbody.AddForce(Vector3.up * f_jetPackForce, ForceMode.Force);
+            b_isGrounded = true;
+            f_jetpackHeat -= Time.deltaTime;
+        }
+        else JetpackOff();
+    }
+    private void JetpackOff()
+    {
+        b_flying = false;
+        f_jetpackHeat += Time.deltaTime;
+        if (f_jetpackHeat > 10) f_jetpackHeat = 10;
+        go_jetPackEffects.SetActive(false);
     }
 
     private void LateUpdate()
@@ -125,7 +169,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (b_isGrounded)
+        if (b_isGrounded && !b_flying)
             rb_rigidbody.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
     }
 
