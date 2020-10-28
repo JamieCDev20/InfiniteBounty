@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.XPath;
 using UnityEngine;
 
@@ -25,9 +26,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
     public void Setup(AugmentType[] _atA_activeAugments)
     {
-        go_hitEffect.SetActive(false);
-        go_hitEffect.transform.parent = transform;
-        go_hitEffect.transform.localPosition = Vector3.zero;
+        RemoveAugments(_atA_activeAugments);
 
         for (int i = 0; i < _atA_activeAugments.Length; i++)
         {
@@ -64,40 +63,67 @@ public class Bullet : MonoBehaviour, IPoolable
         }
     }
 
+    private void RemoveAugments(AugmentType[] _atA_activeAugments)
+    {
+        if (!_atA_activeAugments.Contains(AugmentType.Flame))
+            GetComponent<Systemic>().b_fire = false;
+
+        if (!_atA_activeAugments.Contains(AugmentType.Electric))
+            GetComponent<Systemic>().b_electric = false;
+
+        if (!_atA_activeAugments.Contains(AugmentType.Heavy))
+            GetComponent<Rigidbody>().useGravity = false;
+
+        if (!_atA_activeAugments.Contains(AugmentType.Size))
+            transform.localScale = Vector3.one;
+
+        if (!_atA_activeAugments.Contains(AugmentType.Explosive))
+            b_explosive = false;
+
+        if (!_atA_activeAugments.Contains(AugmentType.Gooey))
+            b_gooey = false;
+
+        if (!_atA_activeAugments.Contains(AugmentType.Soaked))
+            b_soaked = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Hittable")
             collision.transform.GetComponent<Enemy>().TakeDamage(i_damage);
 
-        go_hitEffect.transform.parent = null;
-        go_hitEffect.transform.position = transform.position;
+        go_hitEffect.SetActive(false);
+        go_hitEffect.transform.parent = transform;
+        go_hitEffect.transform.localPosition = Vector3.zero;
+        go_hitEffect.transform.parent = null;        
         go_hitEffect.SetActive(true);
+
         transform.LookAt(collision.transform);
 
         if (b_explosive)
         {
             RaycastHit _hit;
-            if (Physics.Raycast(transform.position, transform.forward, out _hit, lm_placementLayer))
+            if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
-                GameObject _goo = Instantiate(LocationController.x.go_explosionPrefab, transform.position, Quaternion.identity);
+                GameObject _goo = Instantiate(LocationController.x.go_explosionPrefab, _hit.point, Quaternion.identity);
                 _goo.transform.up = _hit.normal;
             }
         }
         if (b_gooey)
         {
             RaycastHit _hit;
-            if (Physics.Raycast(transform.position, transform.forward, out _hit, lm_placementLayer))
+            if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
-                GameObject _goo = Instantiate(LocationController.x.go_gooPatchPrefab, transform.position, Quaternion.identity);
+                GameObject _goo = Instantiate(LocationController.x.go_gooPatchPrefab, _hit.point, Quaternion.identity);
                 _goo.transform.up = _hit.normal;
             }
         }
         if (b_soaked)
         {
             RaycastHit _hit;
-            if (Physics.Raycast(transform.position, transform.forward, out _hit, lm_placementLayer))
+            if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
-                GameObject _goo = Instantiate(LocationController.x.go_waterPuddlePrefab, transform.position, Quaternion.identity);
+                GameObject _goo = Instantiate(LocationController.x.go_waterPuddlePrefab, _hit.point, Quaternion.identity);
                 _goo.transform.up = _hit.normal;
             }
         }
