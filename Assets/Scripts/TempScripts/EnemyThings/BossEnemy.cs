@@ -52,7 +52,7 @@ public class BossEnemy : Enemy
     internal override void Death()
     {
         base.Death();
-        Invoke("BeamBackToShip", 2);
+        Invoke("BeamBackToShip", 4);
     }
 
     internal override void TakeDamage(int _i_damage)

@@ -9,11 +9,13 @@ public class StockPile : MonoBehaviour
     [SerializeField] private GameObject go_enemy;
     [SerializeField] private float f_spawnDistance;
     private GameObject go_looker;
+    [SerializeField] private GameObject go_deathEffects;
 
     internal void Begin()
     {
         go_looker = new GameObject("StockPileLooker");
         InvokeRepeating("CreateWave", 0, 10);
+        go_deathEffects.SetActive(false);
     }
 
     private void CreateWave()
@@ -35,6 +37,16 @@ public class StockPile : MonoBehaviour
     private void Death()
     {
         gameObject.SetActive(false);
+        go_deathEffects.transform.parent = null;
+        go_deathEffects.SetActive(true);
+        Invoke("BeamBackToShip", 5);
+    }
+
+    private void BeamBackToShip()
+    {
+        for (int i = 0; i < LocationController.x.goA_playerObjects.Length; i++)
+            LocationController.x.goA_playerObjects[i].transform.position = new Vector3(0, 0, i * 1.5f);
+        LocationController.x.UnloadArea();
     }
 
 }

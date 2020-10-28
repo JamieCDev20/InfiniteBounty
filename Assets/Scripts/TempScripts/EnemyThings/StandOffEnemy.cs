@@ -7,7 +7,7 @@ public class StandOffEnemy : Enemy
 {
 
     [SerializeField] private float f_walkSpeed;
-
+    [SerializeField] private GameObject go_successEffects;
 
     protected override void Start()
     {
@@ -27,6 +27,8 @@ public class StandOffEnemy : Enemy
         if (collision.transform.CompareTag("Stockpile"))
         {
             Death();
+            go_successEffects.transform.parent = null;
+            go_successEffects.SetActive(true);
             collision.transform.GetComponent<StockPile>().TakeDamage();
         }
     }
