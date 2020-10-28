@@ -88,6 +88,9 @@ public class LocationController : MonoBehaviour
                 go_nuggetRunArea.SetActive(true);
                 yield return new WaitForEndOfFrame();
                 go_loadedAreaObject = go_nuggetRunArea;
+                for (int i = 0; i < goA_pathBlockers.Length; i++)                
+                    goA_pathBlockers[i].SetActive(true);
+                
                 goA_pathBlockers[UnityEngine.Random.Range(0, goA_pathBlockers.Length)].SetActive(false);
                 break;
 

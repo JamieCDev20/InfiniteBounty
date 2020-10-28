@@ -20,11 +20,14 @@ public class StockPile : MonoBehaviour
 
     private void CreateWave()
     {
-        go_looker.transform.position = transform.position;
-        for (int i = 0; i < 20 - i_hitsLeft; i++)
+        if (gameObject.activeSelf)
         {
-            go_looker.transform.Rotate(0, Random.value * 360, 0);
-            Instantiate(go_enemy, (transform.position + go_looker.transform.forward * f_spawnDistance) + new Vector3(0, -0.5f, 0), Quaternion.identity);
+            go_looker.transform.position = transform.position;
+            for (int i = 0; i < 20 - i_hitsLeft; i++)
+            {
+                go_looker.transform.Rotate(0, Random.value * 360, 0);
+                Instantiate(go_enemy, (transform.position + go_looker.transform.forward * f_spawnDistance) + new Vector3(0, -0.5f, 0), Quaternion.identity);
+            }
         }
     }
 
