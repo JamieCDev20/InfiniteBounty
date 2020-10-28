@@ -10,7 +10,7 @@ public class Goo : MonoBehaviour
     public void Ignite()
     {
         GetComponent<Systemic>().b_fire = true;
-        GetComponent<Collider>().isTrigger = true;
+        GetComponent<SphereCollider>().isTrigger = true;
         go_fireEffect.SetActive(true);
     }
 
