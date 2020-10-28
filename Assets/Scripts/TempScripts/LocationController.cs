@@ -58,8 +58,8 @@ public class LocationController : MonoBehaviour
 
     internal void PickedUpNugget(int _i_nuggetWorth)
     {
-        i_nuggetTotal += _i_nuggetWorth;
-        tmp_nuggetsCollectedtext.text = "Nuggets Collected: " + i_nuggetTotal;
+        //i_nuggetTotal += _i_nuggetWorth;
+        //tmp_nuggetsCollectedtext.text = "Nuggets Collected: " + i_nuggetTotal;
     }
 
     public void SetLocation(Location _l_target, GameObject _go_buttonPressed)

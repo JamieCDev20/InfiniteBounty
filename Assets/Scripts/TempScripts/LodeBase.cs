@@ -7,7 +7,6 @@ public class LodeBase : Enemy
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;
-    private List<GameObject> goL_nuggetPool = new List<GameObject>();
     [SerializeField] private int i_nuggetToSpawn;
     [SerializeField] private int i_nuggetsPerBurst;
     [SerializeField] private float f_nuggetForce;
@@ -17,11 +16,6 @@ public class LodeBase : Enemy
     protected override void Start()
     {
         base.Start();
-        for (int i = 0; i < i_nuggetToSpawn; i++)
-        {
-            goL_nuggetPool.Add(Instantiate(go_nuggetPrefab, transform));
-            goL_nuggetPool[i].SetActive(false);
-        }
     }
 
     internal override void TakeDamage(int _i_damage)
@@ -50,8 +44,7 @@ public class LodeBase : Enemy
     {
         for (int i = 0; i < i_nuggetsPerBurst; i++)
         {
-            GameObject _go_nugget = goL_nuggetPool[0];
-            goL_nuggetPool.RemoveAt(0);
+            GameObject _go_nugget = PoolManager.x.SpawnNewObject(go_nuggetPrefab, transform.position, transform.rotation);
             _go_nugget.SetActive(true);
             _go_nugget.transform.parent = null;
             _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2);

@@ -22,9 +22,9 @@ public class NugPlayer : SubjectBase
         if (collision.gameObject.GetComponent<NugGO>() != null)
         {
             Nug collectedNug = collision.gameObject.GetComponent<NugGO>().nug;
-            CurrencyEvent ce = new CurrencyEvent(collectedNug.i_worth, true);
+            //CurrencyEvent ce = new CurrencyEvent(collectedNug.i_worth, true);
             collision.gameObject.SetActive(false);
-            Notify(ce);
+            //Notify(ce);
         }
         else Debug.Log("Fugma");
             

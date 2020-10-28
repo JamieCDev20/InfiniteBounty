@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// The manager of all the pools the scene will need ABV: PM
 /// </summary>
-public class PoolManager : MonoBehaviour
+public class PoolManager : SubjectBase
 {
 
     /// <summary>

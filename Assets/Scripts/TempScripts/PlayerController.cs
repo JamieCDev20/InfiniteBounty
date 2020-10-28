@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
     private bool b_flying;
     [SerializeField] private GameObject go_jetPackEffects;
 
+    [Header("Networking")]
+    [SerializeField, Tooltip("Eventually every player will have an ID assigned by the network manager")] private int i_playerID;
+    public int ID { get{ return i_playerID; } set{ i_playerID = value; }  }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

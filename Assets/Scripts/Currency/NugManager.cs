@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class NugManager : SubjectBase, ObserverBase
 {
@@ -11,22 +12,15 @@ public class NugManager : SubjectBase, ObserverBase
     /// </summary>
     int i_nugsCollected = 0;
     public int i_playerID;
-    [SerializeField] Text t_nugText;
+    [SerializeField] TMP_Text t_nugText;
     // Start is called before the first frame update
     void Start()
     {
-        foreach (NugPlayer np in FindObjectsOfType<NugPlayer>())
-            if (i_playerID == np.i_playerID)
-            {
-                np.AddObserver(this);
-                Debug.Log("Got the player!" + np.name);
-            }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PoolManager.x.AddObserver(this);
+        foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
+        {
+            np.AddObserver(this);
+        }
     }
     public void OnNotify(ObserverEvent oe_event)
     {
@@ -38,14 +32,24 @@ public class NugManager : SubjectBase, ObserverBase
                 else
                     CollectNugs(-ce.AmountToChange);
                 break;
+            case PoolLoadEvent ple:
+                foreach (NugGO np in FindObjectsOfType<NugGO>())
+                {
+                    np.AddObserver(this);
+                    Debug.Log("Nugget Added");
+                }
+                break;
         }
     }
+    public void Init()
+    {
 
+    }
     public void CollectNugs(int _i_value)
     {
         i_currentNugs += _i_value;
         i_nugsCollected += _i_value;
-        t_nugText.text = i_currentNugs.ToString();
+        t_nugText.text = "Nuggets Collected: " + i_currentNugs.ToString();
     }
     public void SendNugs()
     {

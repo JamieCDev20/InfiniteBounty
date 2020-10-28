@@ -137,7 +137,8 @@ public class Bullet : MonoBehaviour, IPoolable
     {
         if (PoolManager.x != null) PoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
         SetInPool(true);
-        tr_bulletTrail.Clear();
+        if(tr_bulletTrail != null)
+            tr_bulletTrail.Clear();
         rb.velocity = Vector3.zero;
     }
 
