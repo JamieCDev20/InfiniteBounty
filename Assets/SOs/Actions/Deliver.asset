@@ -10,14 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a5668c8c6bd4ac4a9ad062aa8d3a71a, type: 3}
-  m_Name: GetThing
+  m_Name: Deliver
   m_EditorClassIdentifier: 
   preconditions:
-    m_keys:
-    - HasThing
-    - PathToThing
-    m_values: 0000
+  - prefix: 0
+    fill: ObjectOfValue
+    value: 1
+  - prefix: 1
+    fill: DropOff
+    value: 1
+  - prefix: 3
+    fill: DropOff
+    value: 0
   postconditions:
-    m_keys:
-    - HasThing
-    m_values: 01
+  - prefix: 3
+    fill: DropOff
+    value: 1
+  - prefix: 0
+    fill: Money
+    value: 1
+  - prefix: 0
+    fill: ObjectOfValue
+    value: 1
+  signatures:
+  - 3-1-DropOff

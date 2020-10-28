@@ -10,11 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a5668c8c6bd4ac4a9ad062aa8d3a71a, type: 3}
-  m_Name: GOAP Action
+  m_Name: TestAction
   m_EditorClassIdentifier: 
   preconditions:
-    m_keys: []
-    m_values: 
+  - prefix: 1
+    fill: DropOff
+    value: 1
+  - prefix: 1
+    fill: ObjectOfValue
+    value: 1
   postconditions:
-    m_keys: []
-    m_values: 
+  - prefix: 0
+    fill: A
+    value: 1
+  - prefix: 0
+    fill: B
+    value: 0
+  signatures: []

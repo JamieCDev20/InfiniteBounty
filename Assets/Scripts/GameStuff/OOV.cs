@@ -9,6 +9,7 @@ public class OOV : MonoBehaviour
     #region Serialised
 
     [SerializeField] private int i_pointVal = 1;
+    [SerializeField] private Spawner[] spawns;
 
     #endregion
 
@@ -25,6 +26,8 @@ public class OOV : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (go_heldBy != null)
+                go_heldBy.GetComponent<AIPlayer>().Drop();
             ContactPlayer(other.gameObject);
             return;
         }
@@ -37,7 +40,11 @@ public class OOV : MonoBehaviour
 
     private void OnDestroy()
     {
-        go_heldBy.SendMessage("Drop");
+        if(go_heldBy != null)
+        {
+            go_heldBy.GetComponent<AIPlayer>().Drop();
+
+        }
     }
 
     #endregion
@@ -46,15 +53,19 @@ public class OOV : MonoBehaviour
 
     private void ContactPlayer(GameObject _go_player)
     {
-        _go_player.SendMessage("Grab", gameObject);
+        TagManager.x.RemoveTaggedObject(GetComponent<TagableObject>());
+        _go_player.GetComponent<AIPlayer>().Grab(gameObject);
     }
 
     private void ContactTarget()
     {
         Destroy(gameObject);
-        go_heldBy.SendMessage("Drop");
+        go_heldBy.GetComponent<AIPlayer>().Drop();
         Points.x.AddPoints(i_pointVal);
-        Spawner.x.Respawn();
+        foreach (Spawner i in FindObjectsOfType<Spawner>())
+        {
+            i.Respawn();
+        }
     }
 
     private void Held(GameObject _go_heldBy)

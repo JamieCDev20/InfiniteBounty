@@ -14,18 +14,23 @@ public class AIPlayer : MonoBehaviour
     #region Private
 
     private bool b_holding = false;
+    private GoapAgent agent;
 
     #endregion
 
     //Methods
     #region Unity Standards
 
+    private void Start()
+    {
+        agent = GetComponent<GoapAgent>();
+    }
 
     #endregion
 
     #region Private Voids
 
-    private void Grab(GameObject _go_obj)
+    public void Grab(GameObject _go_obj)
     {
         if (b_holding)
             return;
@@ -33,11 +38,13 @@ public class AIPlayer : MonoBehaviour
         _go_obj.transform.localPosition = Vector3.zero;
         _go_obj.SendMessage("Held", gameObject);
         b_holding = true;
+        agent.UpdateDomain("ObjectOfValue", true);
     }
 
-    private void Drop()
+    public void Drop()
     {
         b_holding = false;
+        agent.UpdateDomain("ObjectOfValue", false);
     }
 
     #endregion

@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator Spawn()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         Instantiate(obj, transform.position + Vector3.up, Quaternion.identity);
     }
 

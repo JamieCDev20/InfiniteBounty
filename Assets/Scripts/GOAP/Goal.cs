@@ -6,6 +6,6 @@ using UnityEngine;
 public class Goal : ScriptableObject
 {
 
-    [SerializeField] public SBDictionary goalConditions;
+    [SerializeField] public Condition[] goalConditions;
 
 }
