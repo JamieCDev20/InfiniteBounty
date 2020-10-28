@@ -25,6 +25,10 @@ public class Bullet : MonoBehaviour, IPoolable
 
     public void Setup(AugmentType[] _atA_activeAugments)
     {
+        go_hitEffect.SetActive(false);
+        go_hitEffect.transform.parent = transform;
+        go_hitEffect.transform.localPosition = Vector3.zero;
+
         for (int i = 0; i < _atA_activeAugments.Length; i++)
         {
             switch (_atA_activeAugments[i])
@@ -109,7 +113,6 @@ public class Bullet : MonoBehaviour, IPoolable
         SetInPool(true);
         tr_bulletTrail.Clear();
         rb.velocity = Vector3.zero;
-
     }
 
     public int GetIndex()
