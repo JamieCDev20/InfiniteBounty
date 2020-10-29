@@ -11,6 +11,7 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_speed;
     [SerializeField] protected float f_knockback;
     [SerializeField] protected float f_lodeScalar;
+    [SerializeField] protected GameObject go_hitBox;
 
     [Header("Elemental Stats")]
     [SerializeField] Systemic sy_element;
@@ -35,6 +36,8 @@ public class WeaponTool : ToolBase
     }
     public override void Use()
     {
-        
+        go_hitBox.SetActive(true);
+
     }
+
 }

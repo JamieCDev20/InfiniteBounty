@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour, IPoolable
 {
 
     [SerializeField] private int i_damage;
+    [SerializeField] private float f_lifeTime;
     [SerializeField] private GameObject go_hitEffect;
     [SerializeField] private LayerMask lm_placementLayer;
 
@@ -27,7 +28,7 @@ public class Bullet : MonoBehaviour, IPoolable
     public void Setup(AugmentType[] _atA_activeAugments)
     {
         RemoveAugments(_atA_activeAugments);
-
+        transform.localScale = Vector3.one;
         for (int i = 0; i < _atA_activeAugments.Length; i++)
         {
             switch (_atA_activeAugments[i])
@@ -61,6 +62,7 @@ public class Bullet : MonoBehaviour, IPoolable
                     break;
             }
         }
+        StartCoroutine(DeathTimer(f_lifeTime));
     }
 
     private void RemoveAugments(AugmentType[] _atA_activeAugments)
@@ -73,9 +75,6 @@ public class Bullet : MonoBehaviour, IPoolable
 
         if (!_atA_activeAugments.Contains(AugmentType.Heavy))
             GetComponent<Rigidbody>().useGravity = false;
-
-        if (!_atA_activeAugments.Contains(AugmentType.Size))
-            transform.localScale = Vector3.one;
 
         if (!_atA_activeAugments.Contains(AugmentType.Explosive))
             b_explosive = false;
@@ -134,10 +133,17 @@ public class Bullet : MonoBehaviour, IPoolable
         Die();
     }
 
+    private IEnumerator DeathTimer(float _f_lifeTime)
+    {
+        yield return new WaitForSeconds(_f_lifeTime);
+        Die();
+    }
+
     #region Pooling
 
     public void Die()
     {
+        StopAllCoroutines();
         if (PoolManager.x != null) PoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
         SetInPool(true);
         if(tr_bulletTrail != null)
