@@ -48,10 +48,12 @@ public class PlayerController : MonoBehaviour
     private float f_jetpackHeat = 10;
     private bool b_flying;
     [SerializeField] private GameObject go_jetPackEffects;
+    [Space, SerializeField] private float f_jumpDelay;
 
     [Header("Networking")]
     [SerializeField, Tooltip("Eventually every player will have an ID assigned by the network manager")] private int i_playerID;
-    public int ID { get{ return i_playerID; } set{ i_playerID = value; }  }
+
+    public int ID { get { return i_playerID; } set { i_playerID = value; } }
 
     private void Start()
     {
@@ -103,8 +105,14 @@ public class PlayerController : MonoBehaviour
         f_currentFireTimerRight -= Time.deltaTime;
         f_currentFireTimerLeft -= Time.deltaTime;
 
+        a_anim.SetBool("JumpUp", false);
         if (Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Use")) AttemptUse();
+
+        if (b_flying || !b_isGrounded)
+            a_anim.SetBool("FlyingPose", true);
+        else
+            a_anim.SetBool("FlyingPose", false);
     }
 
 
@@ -168,6 +176,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Jump()
+    {
+        Invoke("TrueJump", f_jumpDelay);
+        a_anim.SetBool("JumpUp", true);
+    }
+
+    private void TrueJump()
     {
         if (b_isGrounded && !b_flying)
             rb_rigidbody.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
