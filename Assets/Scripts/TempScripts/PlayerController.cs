@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
     private void JetpackOff()
     {
         b_flying = false;
-        f_jetpackHeat += Time.deltaTime;
+        f_jetpackHeat += Time.deltaTime * 2;
         if (f_jetpackHeat > 10) f_jetpackHeat = 10;
         go_jetPackEffects.SetActive(false);
     }
@@ -153,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
         rt_healthBar.localScale = new Vector3((float)i_currentHealth / 10, 1, 1);
 
-        print(_i_incomingDamage);
         if (i_currentHealth == 0) Death();
 
     }

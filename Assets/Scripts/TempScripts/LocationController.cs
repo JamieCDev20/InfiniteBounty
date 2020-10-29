@@ -56,10 +56,29 @@ public class LocationController : MonoBehaviour
         StartCoroutine(LoadArea());
     }
 
+    internal void CompletedNuggetRun()
+    {
+        goA_planetButtons[0].SetActive(false);
+    }
+
+    internal void CompletedMotherlode()
+    {
+        PickedUpNugget(100);
+        goA_planetButtons[1].SetActive(false);
+    }
+
+    internal void CompletedStandoff(bool _b_victory)
+    {
+        if (_b_victory)
+            PickedUpNugget(100);
+        goA_planetButtons[2].SetActive(false);
+    }
+
+
     internal void PickedUpNugget(int _i_nuggetWorth)
     {
-        //i_nuggetTotal += _i_nuggetWorth;
-        //tmp_nuggetsCollectedtext.text = "Nuggets Collected: " + i_nuggetTotal;
+        i_nuggetTotal += _i_nuggetWorth;
+        tmp_nuggetsCollectedtext.text = "Nuggets Collected: " + i_nuggetTotal;
     }
 
     public void SetLocation(Location _l_target, GameObject _go_buttonPressed)
@@ -88,9 +107,9 @@ public class LocationController : MonoBehaviour
                 go_nuggetRunArea.SetActive(true);
                 yield return new WaitForEndOfFrame();
                 go_loadedAreaObject = go_nuggetRunArea;
-                for (int i = 0; i < goA_pathBlockers.Length; i++)                
+                for (int i = 0; i < goA_pathBlockers.Length; i++)
                     goA_pathBlockers[i].SetActive(true);
-                
+
                 goA_pathBlockers[UnityEngine.Random.Range(0, goA_pathBlockers.Length)].SetActive(false);
                 break;
 

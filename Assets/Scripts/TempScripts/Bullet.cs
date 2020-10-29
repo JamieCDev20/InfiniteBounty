@@ -89,7 +89,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Hittable")
+        if (collision.transform.CompareTag("Hittable"))
             collision.transform.GetComponent<Enemy>().TakeDamage(i_damage);
 
         go_hitEffect.SetActive(false);
@@ -105,7 +105,7 @@ public class Bullet : MonoBehaviour, IPoolable
             RaycastHit _hit;
             if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
-                GameObject _goo = Instantiate(LocationController.x.go_explosionPrefab, _hit.point, Quaternion.identity);
+                GameObject _goo = Instantiate(LocationController.x.go_explosionPrefab, _hit.point, Quaternion.identity, _hit.transform.root);
                 _goo.transform.localScale = transform.localScale;
                 _goo.transform.up = _hit.normal;
             }
@@ -115,7 +115,7 @@ public class Bullet : MonoBehaviour, IPoolable
             RaycastHit _hit;
             if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
-                GameObject _goo = Instantiate(LocationController.x.go_gooPatchPrefab, _hit.point, Quaternion.identity);
+                GameObject _goo = Instantiate(LocationController.x.go_gooPatchPrefab, _hit.point, Quaternion.identity, _hit.transform.root);
                 _goo.transform.localScale = transform.localScale;
                 _goo.transform.up = _hit.normal;
             }
@@ -125,7 +125,7 @@ public class Bullet : MonoBehaviour, IPoolable
             RaycastHit _hit;
             if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
-                GameObject _goo = Instantiate(LocationController.x.go_waterPuddlePrefab, _hit.point, Quaternion.identity);
+                GameObject _goo = Instantiate(LocationController.x.go_waterPuddlePrefab, _hit.point, Quaternion.identity, _hit.transform.root);
                 _goo.transform.localScale = transform.localScale;
                 _goo.transform.up = _hit.normal;
             }

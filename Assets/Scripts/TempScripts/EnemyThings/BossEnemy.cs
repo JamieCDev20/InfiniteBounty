@@ -11,6 +11,7 @@ public class BossEnemy : Enemy
     private GameObject go_looker;
     [SerializeField] private float f_walkSpeed;
     private Rigidbody rb_rigidbody;
+    [SerializeField] private GameObject go_shipButton;
 
     [Header("Boss-Lode Stats")]
     [SerializeField] private GameObject go_nuggetPrefab;
@@ -52,7 +53,7 @@ public class BossEnemy : Enemy
     internal override void Death()
     {
         base.Death();
-        Invoke("BeamBackToShip", 4);
+        go_shipButton.SetActive(true);
     }
 
     internal override void TakeDamage(int _i_damage)
@@ -117,13 +118,16 @@ public class BossEnemy : Enemy
 
     private void RockThrow()
     {
-        GameObject _go_rock = Instantiate(go_throwableRock, transform.position + (Vector3.up * 10), Quaternion.identity, transform.parent);
-        _go_rock.transform.LookAt(goL_playerObjects[i_targetIndex].transform);
-        _go_rock.transform.Rotate(new Vector3(-Vector3.Distance(transform.position, goL_playerObjects[i_targetIndex].transform.position) * 0.5f, 0, 0));
-        _go_rock.GetComponent<Rigidbody>().AddForce(_go_rock.transform.forward * f_throwPower, ForceMode.Impulse);
-        _go_rock.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
+        if (gameObject.activeSelf)
+        {
+            GameObject _go_rock = Instantiate(go_throwableRock, transform.position + (Vector3.up * 10), Quaternion.identity, transform.parent);
+            _go_rock.transform.LookAt(goL_playerObjects[i_targetIndex].transform);
+            _go_rock.transform.Rotate(new Vector3(-Vector3.Distance(transform.position, goL_playerObjects[i_targetIndex].transform.position) * 0.5f, 0, 0));
+            _go_rock.GetComponent<Rigidbody>().AddForce(_go_rock.transform.forward * f_throwPower, ForceMode.Impulse);
+            _go_rock.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
 
-        Invoke("UseAttack", 4);
+            Invoke("UseAttack", 4);
+        }
     }
 
     private void RockWall()
@@ -132,10 +136,11 @@ public class BossEnemy : Enemy
 
         for (int i = 0; i < i_rocksToSpawn; i++)
         {
-            _goA_chunks[i] = Instantiate(go_smallLodePrefab, (transform.position + (transform.forward * ((i + 1) * f_spaceBetweenChunks))) - new Vector3(0, 5, 0), new Quaternion(0, Random.value, 0, Random.value));
+            _goA_chunks[i] = Instantiate(go_smallLodePrefab, (transform.position + (transform.forward * ((i + 1) * f_spaceBetweenChunks))) - new Vector3(0, 5, 0), new Quaternion(0, Random.value, 0, Random.value), transform.root);
         }
 
-        StartCoroutine(MoveWallChunks(_goA_chunks, 10));
+        if (gameObject.activeSelf)
+            StartCoroutine(MoveWallChunks(_goA_chunks, 10));
     }
 
     private IEnumerator MoveWallChunks(GameObject[] _goA_chunks, int _i_timesToMove)
