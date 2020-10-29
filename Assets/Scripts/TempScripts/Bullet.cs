@@ -106,6 +106,7 @@ public class Bullet : MonoBehaviour, IPoolable
             if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
                 GameObject _goo = Instantiate(LocationController.x.go_explosionPrefab, _hit.point, Quaternion.identity);
+                _goo.transform.localScale = transform.localScale;
                 _goo.transform.up = _hit.normal;
             }
         }
@@ -115,6 +116,7 @@ public class Bullet : MonoBehaviour, IPoolable
             if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
                 GameObject _goo = Instantiate(LocationController.x.go_gooPatchPrefab, _hit.point, Quaternion.identity);
+                _goo.transform.localScale = transform.localScale;
                 _goo.transform.up = _hit.normal;
             }
         }
@@ -124,6 +126,7 @@ public class Bullet : MonoBehaviour, IPoolable
             if (Physics.Raycast(transform.position - (transform.forward * 5), transform.forward, out _hit, 10, gameObject.layer, QueryTriggerInteraction.Ignore))
             {
                 GameObject _goo = Instantiate(LocationController.x.go_waterPuddlePrefab, _hit.point, Quaternion.identity);
+                _goo.transform.localScale = transform.localScale;
                 _goo.transform.up = _hit.normal;
             }
         }

@@ -113,11 +113,8 @@ public class PlayerController : MonoBehaviour
         if (f_jetpackHeat > 0)
         {
             b_flying = true;
-            if (Input.GetButtonDown("Mobility"))
-                rb_rigidbody.AddForce(Vector3.up * f_jetPackForce * (10 - f_jetpackHeat) * 0.5f, ForceMode.Impulse);
-
             go_jetPackEffects.SetActive(true);
-            rb_rigidbody.AddForce(Vector3.up * f_jetPackForce, ForceMode.Force);
+            rb_rigidbody.AddForce(Vector3.up * f_jetPackForce * Time.deltaTime, ForceMode.Acceleration);
             b_isGrounded = true;
             f_jetpackHeat -= Time.deltaTime;
         }
