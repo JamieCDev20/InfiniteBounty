@@ -14,6 +14,7 @@ public class Nugget : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.transform.tag == "Player")
         {
             go_pickupParticles.SetActive(true);

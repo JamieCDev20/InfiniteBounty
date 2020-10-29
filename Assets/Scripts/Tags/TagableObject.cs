@@ -12,12 +12,20 @@ public class TagableObject : MonoBehaviour
         return objectTag;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        TagManager.x.AddTaggedObject(this);
+        try
+        {
+            TagManager.x.AddTaggedObject(this);
+
+        }
+        catch
+        {
+            FindObjectOfType<TagManager>().AddTaggedObject(this);
+        }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         TagManager.x.RemoveTaggedObject(this);
     }

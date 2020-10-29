@@ -8,11 +8,12 @@ public class AStar
     private int maxChainLength = 5;
     private Node[] nodes;
     private List<Node> open = new List<Node>();
+    private List<Node> tempOpen = new List<Node>();
 
     public void Init(Action[] actions)
     {
         nodes = ConvertToNode(actions).ToArray();
-        for (int i = nodes.Length-1; i > 0; i--)
+        for (int i = nodes.Length - 1; i > 0; i--)
         {
             nodes[i] = nodes[i].GenerateSuccessors(nodes, i);
         }
@@ -30,10 +31,28 @@ public class AStar
         List<Node> closed = new List<Node>();
 
         SetClosedList(out closed, ref valid);
+        Debug.Log("closed Size: " + closed.Count);
         if (closed.Count < 1)
             return new Action[0];
-        if (CheckSuccessors(closed[0], _end, 0))
-            open.Add(closed[0]);
+
+        int shortestPath = maxChainLength + 1;
+
+        for (int i = 0; i < closed.Count; i++)
+        {
+            tempOpen = new List<Node>();
+
+            if (CheckSuccessors(closed[i], _end, 0))
+            {
+                if(!tempOpen.Contains(closed[i]))
+                    tempOpen.Add(closed[i]);
+                Debug.Log("path length : " + tempOpen.Count);
+                if (tempOpen.Count < shortestPath)
+                {
+                    open = tempOpen;
+                    shortestPath = tempOpen.Count;
+                }
+            }
+        }
 
         open.Reverse();
 
@@ -51,15 +70,17 @@ public class AStar
     {
         if (chainLength >= maxChainLength)
             return false;
+
         int index = 0;
         int curCost = 100;
+
         if (parent.successors.Length == 0)
         {
             if (!(parent.reference > goal))
                 return false;
             else
             {
-                open.Add(parent);
+                tempOpen.Add(parent);
                 return true;
             }
 
@@ -68,10 +89,10 @@ public class AStar
         {
             if (nodes[parent.successors[i]].reference > goal)
             {
-                open.Add(nodes[parent.successors[i]]);
+                tempOpen.Add(nodes[parent.successors[i]]);
                 return true;
             }
-            else if (open.Contains(nodes[parent.successors[i]]))
+            else if (tempOpen.Contains(nodes[parent.successors[i]]))
                 continue;
             int c = Condition.Compare(goal, nodes[parent.successors[i]].reference.postconditions);
             if (c < curCost)
@@ -82,7 +103,7 @@ public class AStar
         }
         if (CheckSuccessors(nodes[parent.successors[index]], goal, chainLength + 1))
         {
-            open.Add(parent);
+            tempOpen.Add(parent);
             return true;
         }
         return false;
@@ -91,6 +112,7 @@ public class AStar
     private void SetClosedList(out List<Node> _closedList, ref Validator valid)
     {
         _closedList = new List<Node>();
+
         for (int i = 0; i < nodes.Length; i++)
         {
             if (valid.CheckActionValid(nodes[i].reference))

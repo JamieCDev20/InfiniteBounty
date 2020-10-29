@@ -15,6 +15,7 @@ public class GoapAgent : MonoBehaviour
     [SerializeField] private int actionChainLengthLimit = 5;
     [SerializeField] private ActionIntDictionary costedActionSet;
     [SerializeField] private GoalIntDictionary prioritisedGoalSet;
+    [SerializeField] private GameObject bulletPrefab;
 
     [Space]
     [Header("Test")]
@@ -29,6 +30,8 @@ public class GoapAgent : MonoBehaviour
     private AStar astar = new AStar();
     private Action currentAction;
     private GameObject target;
+
+    private bool canShoot = true;
 
     private delegate void InstantActionDelegate();
     private delegate void LongActionDelegate(Vector3 targ);
@@ -54,12 +57,7 @@ public class GoapAgent : MonoBehaviour
 
         astar.Init(costedActionSet.Keys.ToArray());
 
-        foreach (Goal g in prioritisedGoalSet.Keys)
-        {
-            float tim = Time.realtimeSinceStartup;
-            path = astar.GeneratePath(g.goalConditions, ref validator, 5);
-            Debug.Log("time taken: " + (Time.realtimeSinceStartup - tim));
-        }
+        Replan();
 
     }
 
@@ -67,7 +65,8 @@ public class GoapAgent : MonoBehaviour
     {
 
         bool did = false;
-
+        if (path == null)
+            Replan();
         for (int i = 0; i < path.Length; i++)
         {
             if (validator.CheckActionValid(path[i]))
@@ -79,12 +78,12 @@ public class GoapAgent : MonoBehaviour
 
         }
         if (!did)
-            foreach (Goal g in prioritisedGoalSet.Keys)
-            {
-                float tim = Time.realtimeSinceStartup;
-                path = astar.GeneratePath(g.goalConditions, ref validator, 5);
-                Debug.Log("time taken: " + (Time.realtimeSinceStartup - tim));
-            }
+        {
+            longPerform = null;
+            perform = null;
+            currentAction = null;
+            Replan();
+        }
 
         if (target != null)
             longPerform?.Invoke(target.transform.position);
@@ -106,7 +105,7 @@ public class GoapAgent : MonoBehaviour
 
     private void StartPerformingAction(Action action)
     {
-
+        //Debug.Log("started performing: " + action.name);
         perform = null;
         longPerform = null;
         currentAction = action;
@@ -128,6 +127,13 @@ public class GoapAgent : MonoBehaviour
                         longPerform += Goto;
                     }
                     break;
+                case "4": // Hit
+                    if(currentSignature[1] == "1")
+                    {
+                        target = validator.FindClosest(TagManager.x.GetTagSet(currentSignature[2]), transform.position);
+                        longPerform += Shoot;
+                    }
+                    break;
                 default:
                     break;
             }
@@ -135,6 +141,37 @@ public class GoapAgent : MonoBehaviour
         }
 
         perform?.Invoke();
+
+    }
+
+    private void Shoot(Vector3 _target)
+    {
+        if (!canShoot)
+            return;
+        transform.LookAt(_target);
+
+        GameObject b = PoolManager.x.SpawnNewObject(bulletPrefab, transform.position + transform.forward + Vector3.up, transform.rotation);
+        b.GetComponent<Rigidbody>().AddForce(transform.forward * 15, ForceMode.Impulse);
+        StartCoroutine(ShootCooldown());
+        Replan();
+
+    }
+
+    private void Replan()
+    {
+        foreach (Goal g in prioritisedGoalSet.Keys)
+        {
+            float tim = Time.realtimeSinceStartup;
+            path = astar.GeneratePath(g.goalConditions, ref validator, 5);
+            //Debug.Log("time taken: " + (Time.realtimeSinceStartup - tim));
+        }
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(1);
+        canShoot = true;
 
     }
 
@@ -162,6 +199,11 @@ public class GoapAgent : MonoBehaviour
 
     #region Public Returns
 
+    public NavMeshPath Path()
+    {
+        return validator.path;
+    }
+
     #endregion
 
 }
@@ -170,7 +212,7 @@ public struct Validator
 {
 
     private RaycastHit hitInfo;
-    private NavMeshPath path;
+    public NavMeshPath path;
     private Transform t;
     public Dictionary<string, bool> domain;
 
@@ -206,12 +248,17 @@ public struct Validator
 
     public bool CheckCanSee(Vector3 _start, GameObject _target)
     {
-        Physics.Raycast(_start, (_target.transform.position - _start), out hitInfo, 100, (int)QueryTriggerInteraction.Ignore);
+        //Debug.DrawRay(_start, (_target.transform.position - _start) * 10, Color.red);
+        if (!Physics.Raycast(_start, (_target.transform.position - _start), out hitInfo, 100))
+            return false;
+        
         return hitInfo.collider.gameObject == _target;
     }
 
     public bool CheckCanSee(Vector3 _start, HashSet<GameObject> set)
     {
+        if (set == null)
+            return false;
         foreach (GameObject i in set)
         {
             if (CheckCanSee(_start, i))
@@ -227,6 +274,8 @@ public struct Validator
 
     public bool CheckNextTo(Vector3 _start, HashSet<GameObject> set)
     {
+        if (set == null)
+            return false;
         foreach (GameObject i in set)
         {
             if (CheckNextTo(_start, i))
@@ -306,6 +355,9 @@ public struct Validator
                 break;
             case Prefix.nextTo:
                 met = CheckNextTo(t.position, TagManager.x.GetTagSet(con.fill)) == con.value;
+                break;
+            case Prefix.hit:
+                met = true;
                 break;
             default:
                 Debug.LogErrorFormat("\"{0}\" prefix has not been implemented yet \n Please log a work order with your local AI programmer so that he can add it to his growing work load. \n Oh my Gary that is a big work load... \n Maybe he can split it up with the other programmer? \n Wait he has a huge workload too? \n Shit... \n Oh well, it's probably fine.", con.prefix);

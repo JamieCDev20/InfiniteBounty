@@ -110,5 +110,6 @@ public enum Prefix
     has,
     pathTo,
     canSee,
-    nextTo
+    nextTo,
+    hit
 }
