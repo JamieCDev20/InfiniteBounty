@@ -10,21 +10,26 @@ public class StockPile : MonoBehaviour
     [SerializeField] private float f_spawnDistance;
     private GameObject go_looker;
     [SerializeField] private GameObject go_deathEffects;
+    [SerializeField] private int i_secondsToSuccess;
 
     internal void Begin()
     {
         go_looker = new GameObject("StockPileLooker");
         InvokeRepeating("CreateWave", 0, 10);
         go_deathEffects.SetActive(false);
+        Invoke("Success", i_secondsToSuccess);
     }
 
     private void CreateWave()
     {
-        go_looker.transform.position = transform.position;
-        for (int i = 0; i < 20 - i_hitsLeft; i++)
+        if (gameObject.activeSelf)
         {
-            go_looker.transform.Rotate(0, Random.value * 360, 0);
-            Instantiate(go_enemy, (transform.position + go_looker.transform.forward * f_spawnDistance) + new Vector3(0, -0.5f, 0), Quaternion.identity);
+            go_looker.transform.position = transform.position;
+            for (int i = 0; i < 20 - i_hitsLeft; i++)
+            {
+                go_looker.transform.Rotate(0, Random.value * 360, 0);
+                Instantiate(go_enemy, (transform.position + go_looker.transform.forward * f_spawnDistance) + new Vector3(0, -0.5f, 0), Quaternion.identity);
+            }
         }
     }
 
@@ -39,7 +44,17 @@ public class StockPile : MonoBehaviour
         gameObject.SetActive(false);
         go_deathEffects.transform.parent = null;
         go_deathEffects.SetActive(true);
+        CancelInvoke();
         Invoke("BeamBackToShip", 5);
+        LocationController.x.CompletedStandoff(false);
+    }
+
+    private void Success()
+    {
+        LocationController.x.CompletedStandoff(true);
+        BeamBackToShip();
+        gameObject.SetActive(false);
+        CancelInvoke();
     }
 
     private void BeamBackToShip()

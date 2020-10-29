@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ButtonType
 {
-    LocationNuggetRun, LocationMotherlode, ReturnToShip, LocationStandoff
+    LocationNuggetRun, LocationMotherlode, ReturnToShipRun, LocationStandoff, ReturnToShipMotherlode
 }
 
 public class WorldSpaceButton : MonoBehaviour, IUseable
@@ -24,14 +24,22 @@ public class WorldSpaceButton : MonoBehaviour, IUseable
                 LocationController.x.SetLocation(Location.MotherLode, gameObject);
                 break;
 
-            case ButtonType.ReturnToShip:
+            case ButtonType.ReturnToShipRun:
                 for (int i = 0; i < LocationController.x.goA_playerObjects.Length; i++)                
                     LocationController.x.goA_playerObjects[i].transform.position = new Vector3(0, 0, i * 1.5f);
                 LocationController.x.UnloadArea();
+                LocationController.x.CompletedNuggetRun();
                 break;
 
             case ButtonType.LocationStandoff:
                 LocationController.x.SetLocation(Location.Standoff, gameObject);
+                break;
+
+            case ButtonType.ReturnToShipMotherlode:
+                for (int i = 0; i < LocationController.x.goA_playerObjects.Length; i++)
+                    LocationController.x.goA_playerObjects[i].transform.position = new Vector3(0, 0, i * 1.5f);
+                LocationController.x.UnloadArea();
+                LocationController.x.CompletedMotherlode();
                 break;
         }
     }

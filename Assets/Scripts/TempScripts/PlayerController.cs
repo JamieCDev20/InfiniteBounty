@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
     private bool b_flying;
     [SerializeField] private GameObject go_jetPackEffects;
 
+    [Header("Networking")]
+    [SerializeField, Tooltip("Eventually every player will have an ID assigned by the network manager")] private int i_playerID;
+    public int ID { get{ return i_playerID; } set{ i_playerID = value; }  }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -109,11 +113,8 @@ public class PlayerController : MonoBehaviour
         if (f_jetpackHeat > 0)
         {
             b_flying = true;
-            if (Input.GetButtonDown("Mobility"))
-                rb_rigidbody.AddForce(Vector3.up * f_jetPackForce * (10 - f_jetpackHeat) * 0.5f, ForceMode.Impulse);
-
             go_jetPackEffects.SetActive(true);
-            rb_rigidbody.AddForce(Vector3.up * f_jetPackForce, ForceMode.Force);
+            rb_rigidbody.AddForce(Vector3.up * f_jetPackForce * Time.deltaTime, ForceMode.Acceleration);
             b_isGrounded = true;
             f_jetpackHeat -= Time.deltaTime;
         }
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour
     private void JetpackOff()
     {
         b_flying = false;
-        f_jetpackHeat += Time.deltaTime;
+        f_jetpackHeat += Time.deltaTime * 2;
         if (f_jetpackHeat > 10) f_jetpackHeat = 10;
         go_jetPackEffects.SetActive(false);
     }
@@ -152,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
         rt_healthBar.localScale = new Vector3((float)i_currentHealth / 10, 1, 1);
 
-        print(_i_incomingDamage);
         if (i_currentHealth == 0) Death();
 
     }

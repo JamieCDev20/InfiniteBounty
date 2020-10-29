@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4308096341704676512}
   - component: {fileID: 5707692845772861641}
   - component: {fileID: 4468070524712238798}
-  - component: {fileID: 5099273111273740076}
   - component: {fileID: 6741355650731856494}
   - component: {fileID: 5635009554756808323}
   - component: {fileID: 4677673497919303459}
+  - component: {fileID: -7589078583647061740}
   m_Layer: 9
   m_Name: GooNug
   m_TagString: Untagged
@@ -68,20 +68,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &5099273111273740076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 514a38d735b05e44ab4a867448c40fb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  go_pickupParticles: {fileID: 6321121273584555347}
-  i_nuggetWorth: 1
 --- !u!135 &6741355650731856494
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -145,6 +131,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_fireEffect: {fileID: 7355227557820035907}
+--- !u!114 &-7589078583647061740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720207710688081759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf830ba356120c343bbf587e88118e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nug: {fileID: 11400000, guid: 2593a7676827c124bb68440b6185eaaf, type: 2}
+  f_nugTimeout: 15
+  go_pickupParticles: {fileID: 8171977408564372660, guid: 62f03ff7375b33b47a596b735ea899ec,
+    type: 3}
 --- !u!1 &3610510006417795301
 GameObject:
   m_ObjectHideFlags: 0
