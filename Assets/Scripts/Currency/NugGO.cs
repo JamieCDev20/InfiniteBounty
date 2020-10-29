@@ -24,16 +24,19 @@ public class NugGO : SubjectBase, IPoolable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.tag == "Player")
+        if (other.transform.tag == "Player")
         {
             GameObject particlesToPlay = PoolManager.x.SpawnNewObject(go_pickupParticles, transform.position, transform.rotation);
-            CurrencyEvent ce = new CurrencyEvent(other.GetComponent<PlayerController>().ID, nug.i_worth, true);
-            Notify(ce);
+            if (other.GetComponent<PlayerController>() != null)
+            {
+                CurrencyEvent ce = new CurrencyEvent(other.GetComponent<PlayerController>().ID, nug.i_worth, true);
+                Notify(ce);
+            }
             Die();
         }
     }

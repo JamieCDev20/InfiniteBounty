@@ -128,7 +128,7 @@ public class GoapAgent : MonoBehaviour
                     }
                     break;
                 case "4": // Hit
-                    if(currentSignature[1] == "1")
+                    if (currentSignature[1] == "1")
                     {
                         target = validator.FindClosest(TagManager.x.GetTagSet(currentSignature[2]), transform.position);
                         longPerform += Shoot;
@@ -177,8 +177,20 @@ public class GoapAgent : MonoBehaviour
 
     private void Goto(Vector3 _target)
     {
+        Debug.Log("GOTO");
+        if(validator.path == null)
+        {
+            Debug.Log("going back to mesh");
+            NavMeshHit hit;
+            NavMesh.SamplePosition(transform.position, out hit, 5, -1);
+            transform.rotation = Quaternion.LookRotation((hit.position  - transform.position), Vector3.up);
+            transform.Translate((hit.position - transform.position).normalized * 15 * Time.deltaTime);
+        }
         if (Vector3.Distance(transform.position, _target) > 0.25f)
-            transform.Translate((_target - transform.position).normalized * 15 * Time.deltaTime);
+        {
+            transform.rotation = Quaternion.LookRotation((validator.path.corners[1] - transform.position), Vector3.up);
+            transform.Translate((validator.path.corners[1] - transform.position).normalized * 15 * Time.deltaTime);
+        }
     }
 
     #endregion
@@ -232,7 +244,13 @@ public struct Validator
 
         NavMesh.CalculatePath(_start, _destination, -1, path);
 
-        return path.status == NavMeshPathStatus.PathComplete;
+        if (path.status != NavMeshPathStatus.PathComplete)
+        {
+            path = null;
+            return false;
+        }
+
+        return true;
 
     }
 
@@ -251,7 +269,7 @@ public struct Validator
         //Debug.DrawRay(_start, (_target.transform.position - _start) * 10, Color.red);
         if (!Physics.Raycast(_start, (_target.transform.position - _start), out hitInfo, 100))
             return false;
-        
+
         return hitInfo.collider.gameObject == _target;
     }
 

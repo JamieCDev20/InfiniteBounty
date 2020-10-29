@@ -31,7 +31,6 @@ public class AStar
         List<Node> closed = new List<Node>();
 
         SetClosedList(out closed, ref valid);
-        Debug.Log("closed Size: " + closed.Count);
         if (closed.Count < 1)
             return new Action[0];
 
@@ -45,7 +44,6 @@ public class AStar
             {
                 if(!tempOpen.Contains(closed[i]))
                     tempOpen.Add(closed[i]);
-                Debug.Log("path length : " + tempOpen.Count);
                 if (tempOpen.Count < shortestPath)
                 {
                     open = tempOpen;
@@ -58,7 +56,6 @@ public class AStar
 
         for (int i = 0; i < open.Count; i++)
         {
-            Debug.Log(open[i].reference.name);
             path.Add(open[i].reference);
         }
 
