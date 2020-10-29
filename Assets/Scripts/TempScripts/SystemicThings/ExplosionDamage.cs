@@ -10,7 +10,7 @@ public class ExplosionDamage : MonoBehaviour
     void Start()
     {
 
-        Collider[] _cA = Physics.OverlapSphere(transform.position, 10);
+        Collider[] _cA = Physics.OverlapSphere(transform.position, 3);
 
         for (int i = 0; i < _cA.Length; i++)
         {
