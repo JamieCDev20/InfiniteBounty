@@ -21,6 +21,7 @@ public class NugManager : SubjectBase, ObserverBase
         {
             np.AddObserver(this);
         }
+        //foreach()
     }
     public void OnNotify(ObserverEvent oe_event)
     {
