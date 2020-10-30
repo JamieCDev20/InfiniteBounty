@@ -101,9 +101,9 @@ public class PlayerInputManager : MonoBehaviour
         toolBools.b_LToolDown = Input.GetButtonDown(s_leftToolUse);
         toolBools.b_LToolHold = Input.GetButton(s_leftToolUse);
         toolBools.b_LToolUp = Input.GetButtonUp(s_leftToolUse);
-        toolBools.b_LToolDown = Input.GetButtonDown(s_rightToolUse);
-        toolBools.b_LToolHold = Input.GetButton(s_rightToolUse);
-        toolBools.b_LToolUp = Input.GetButtonUp(s_rightToolUse);
+        toolBools.b_RToolDown = Input.GetButtonDown(s_rightToolUse);
+        toolBools.b_RToolHold = Input.GetButton(s_rightToolUse);
+        toolBools.b_RToolUp = Input.GetButtonUp(s_rightToolUse);
 
     }
 

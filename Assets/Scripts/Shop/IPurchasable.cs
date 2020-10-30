@@ -11,6 +11,7 @@ public interface IPurchasable
     /// <param name="_i_purchaseParams">All interger parameters, always startintg with player ID and any more info needed</param>
     void Purchase(GameObject _go_owner, params int[] _A_params);
     bool CheckShopType(ShopType _st_itemType);
+    bool CheckPurchaseStatus();
 
     GameObject GetGameObject();
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public enum ToolSlot
@@ -11,23 +12,30 @@ public enum ToolSlot
 
 public class ToolHandler : SubjectBase
 {
-    ToolBase[] A_tools = new ToolBase[2];
-    List<ToolBase> L_allTools = new List<ToolBase>();
-    NetworkedPlayer np_network;
-    Transform t_camTransform;
+    [SerializeField] private ToolBase[] A_tools = new ToolBase[3];
+    private List<ToolBase> L_allTools = new List<ToolBase>();
+    private NetworkedPlayer np_network;
+    private Transform t_camTransform;
     private void Start()
     {
         np_network = GetComponent<NetworkedPlayer>();
     }
 
-    private bool CheckIfBuying()
+    /// <summary>
+    /// Whatcha buyin'?
+    /// </summary>
+    /// <returns>true if you have purchased something</returns>
+    private bool CheckIfBuying(ToolSlot ts)
     {
+        // Check for hitting a weapon
         RaycastHit hit;
-        Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
-        if (Physics.Raycast(ray, out hit, 1.5f))
+        Ray ray = new Ray(t_camTransform.GetChild(0).position, t_camTransform.forward);
+        Debug.DrawRay(ray.origin, ray.direction, Color.red);
+        if (Physics.Raycast(ray, out hit, 7f))
         {
-            if (hit.transform.GetComponent<WeaponTool>())
+            if (hit.transform.GetComponent<ToolBase>())
             {
+                hit.transform.GetComponent<ToolBase>().Purchase(gameObject, np_network.PlayerID, (int)ts);
                 return true;
             }
         }
@@ -53,6 +61,22 @@ public class ToolHandler : SubjectBase
         // Cast weapons to correct types and assign to correct slot
         switch (_ts_slot)
         {
+            case ToolSlot.leftHand:
+                switch (_tb_tool)
+                {
+                    case WeaponTool wt:
+                        A_tools[(int)_ts_slot] = wt;
+                        break;
+                }
+                break;
+            case ToolSlot.rightHand:
+                switch (_tb_tool)
+                {
+                    case WeaponTool wt:
+                        A_tools[(int)_ts_slot] = wt;
+                        break;
+                }
+                break;
             case ToolSlot.moblility:
                 switch (_tb_tool)
                 {
@@ -62,12 +86,6 @@ public class ToolHandler : SubjectBase
                 }
                 break;
             default:
-                switch (_tb_tool)
-                {
-                    case WeaponTool wt:
-                        A_tools[(int)_ts_slot] = wt;
-                        break;
-                }
                 break;
         }
     }
@@ -77,15 +95,15 @@ public class ToolHandler : SubjectBase
     /// <param name="_tbo_inputs">inputs</param>
     public void RecieveInputs(ToolBools _tbo_inputs)
     {
+        // Left hand weapon checks
         CheckPressOrHoldUse(ToolSlot.leftHand, _tbo_inputs.b_LToolDown, _tbo_inputs.b_LToolHold);
+        CheckReleaseUse(ToolSlot.leftHand, _tbo_inputs.b_LToolUp );
+        // Right hand weapon checks
         CheckPressOrHoldUse(ToolSlot.rightHand, _tbo_inputs.b_RToolDown, _tbo_inputs.b_RToolHold);
+        CheckReleaseUse(ToolSlot.rightHand, _tbo_inputs.b_RToolUp);
+        // Mobility checks
         CheckPressOrHoldUse(ToolSlot.moblility, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold);
-        if(A_tools.Length < 0)
-        {
-            CheckReleaseUse(ToolSlot.leftHand, _tbo_inputs.b_LToolUp, A_tools[(int)ToolSlot.leftHand].ReleaseActivated);
-            CheckReleaseUse(ToolSlot.rightHand, _tbo_inputs.b_RToolUp, A_tools[(int)ToolSlot.rightHand].ReleaseActivated);
-            CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_RToolUp, A_tools[(int)ToolSlot.moblility].ReleaseActivated);
-        }
+        CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_RToolUp);
 
     }
 
@@ -102,9 +120,9 @@ public class ToolHandler : SubjectBase
         {
             // You want to buy something, not shoot
             if(ts == ToolSlot.leftHand || ts == ToolSlot.rightHand)
-                if (CheckIfBuying()) return;
+                if (CheckIfBuying(ts)) return;
             // You only want to shoot when the tool isn't release activated
-            if(A_tools.Length < 0)
+            if(A_tools[(int)ts] != null)
                 if (!A_tools[(int)ts].ReleaseActivated)
                     A_tools[(int)ts].Use();
         }
@@ -115,11 +133,12 @@ public class ToolHandler : SubjectBase
     /// <param name="ts">Tool slot</param>
     /// <param name="_b_released">Release button status</param>
     /// <param name="_b_releaseActivated">Weapon release activation</param>
-    private void CheckReleaseUse(ToolSlot ts, bool _b_released, bool _b_releaseActivated)
+    private void CheckReleaseUse(ToolSlot ts, bool _b_released)
     {
         // Use release activated tool when the button is released
-        if (_b_released && _b_releaseActivated)
-            A_tools[(int)ts].Use();
+        if (A_tools[(int)ts] != null)
+            if (_b_released && A_tools[(int)ts].ReleaseActivated)
+                A_tools[(int)ts].Use();
     }
     /// <summary>
     /// Obtain the camera transforms

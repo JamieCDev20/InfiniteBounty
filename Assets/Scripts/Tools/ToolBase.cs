@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class ToolBase : MonoBehaviour, IPurchasable
 {
     #region Private Vars
-    const ShopType st = ShopType.weapon;
 
     #endregion
 
@@ -19,9 +18,11 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     [SerializeField] protected AudioClip ac_activationSound;
     [SerializeField] protected AudioClip ac_hitSound;
     [SerializeField] protected AudioClip ac_diegeticAudio;
+    [SerializeField] protected ShopType st = ShopType.weapon;
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
     protected bool b_purchased = false;
+    protected Shop s_shopRef;
     public bool Purchased { get { return b_purchased; } }
     public bool ReleaseActivated { get { return b_releaseActivated; } }
     #endregion
@@ -44,8 +45,12 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     public virtual bool CheckShopType(ShopType _st_itemType)
     {
+        Debug.Log("Oops... 500");
         if (st == _st_itemType)
+        {
+            Debug.Log("Gottem");
             return true;
+        }
         return false;
     }
 
@@ -56,9 +61,11 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     public void Purchase(GameObject _go_owner, params int[] _i_purchaseParams)
     {
-        if (_go_owner.GetComponent<PlayerController>())
+        if (_go_owner.GetComponent<ToolHandler>())
         {
             _go_owner.GetComponent<ToolHandler>().SwapWeapon((ToolSlot)_i_purchaseParams[1], this);
+            s_shopRef.RemoveFromDisplay(this);
+            b_purchased = true;
         }
     }
 
@@ -69,5 +76,14 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     public Transform GetRaycastTransform()
     {
         return t_raycastPoint;
+    }
+    public void SetShopRef(Shop _s_shopRef)
+    {
+        s_shopRef = _s_shopRef;
+    }
+
+    public bool CheckPurchaseStatus()
+    {
+        return Purchased;
     }
 }
