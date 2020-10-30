@@ -16,6 +16,7 @@ public class PlayerMover : MonoBehaviour
     [Header("Physics")]
     [SerializeField] private float f_gravityScale = 10; // The force of gravity on the player
     [SerializeField] private float f_plummetPoint = 5; //the velocity at which below, gravity will increase
+    [SerializeField] private float f_plummetMultiplier = 3; //the velocity at which below, gravity will increase
     [SerializeField] private Vector3 v_dragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
 
     #endregion
@@ -45,6 +46,7 @@ public class PlayerMover : MonoBehaviour
     private void Update()
     {
         Jump();
+        //Debug.Log(rb.velocity.y);
     }
 
     private void FixedUpdate()
@@ -76,7 +78,6 @@ public class PlayerMover : MonoBehaviour
 
     private void HandleAllInputs()
     {
-        v_movementVector = v_movementVector.normalized;
     }
 
     /// <summary>
@@ -84,7 +85,13 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyMovement()
     {
-        rb.AddForce(v_movementVector * f_moveSpeed * Time.deltaTime, ForceMode.Impulse);
+        Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up);
+        if(v_movementVector.sqrMagnitude > 0.25f)
+        {
+            rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime, ForceMode.Impulse);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
+
+        }
     }
 
     /// <summary>
@@ -111,7 +118,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyGravity()
     {
-        rb.velocity -= Vector3.up * f_gravityScale * (rb.velocity.y < f_plummetPoint ? 2 : 1) * Time.deltaTime;
+        rb.velocity -= Vector3.up * f_gravityScale * (rb.velocity.y < f_plummetPoint ? f_plummetMultiplier : 1) * Time.deltaTime;
     }
 
     private bool CheckGrounded()
@@ -159,7 +166,7 @@ public class PlayerMover : MonoBehaviour
 
     public void SetCameraTranfsorm(Transform _t_camTransform)
     {
-
+        t_camTransform = _t_camTransform;
     }
 
     #endregion

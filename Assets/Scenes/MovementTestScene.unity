@@ -321,6 +321,8 @@ GameObject:
   - component: {fileID: 1059575985}
   - component: {fileID: 1059575986}
   - component: {fileID: 1059575984}
+  - component: {fileID: 1059575987}
+  - component: {fileID: 1059575988}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -371,9 +373,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   f_moveSpeed: 100
-  f_jumpForce: 10
-  f_gravityScale: 10
-  f_plummetPoint: 5
+  f_jumpForce: 23
+  f_gravityScale: 20
+  f_plummetPoint: 20
+  f_plummetMultiplier: 4.13
   v_dragVector: {x: 0.1, y: 0, z: 0.1}
 --- !u!54 &1059575985
 Rigidbody:
@@ -407,6 +410,43 @@ MonoBehaviour:
   s_verticalMovement: Vertical
   s_jumpButton: Jump
   s_sprintButton: Sprint
+  s_cameraLookLR: Mouse X
+  s_cameraLookUD: Mouse Y
+  s_mobilityUse: Mobility
+  s_leftToolUse: LeftTool
+  s_rightToolUse: RightTool
+--- !u!114 &1059575987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059575981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364c607e3a9bcb248b9ced1c7b9df362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1059575988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059575981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999c9bf6c43b51848afa82dc34ccde17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armR: {fileID: 1168610210}
+  armL: {fileID: 1897350248}
+--- !u!4 &1168610210 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -92884469948215862, guid: 9b9125b967ebf6648b50adeab42c0759,
+    type: 3}
+  m_PrefabInstance: {fileID: 1891707351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1315550841
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63402c952ce31f14a9baf00dd46e6379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  f_cameraSensitivity: 180
 --- !u!1 &1756531428
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,12 +831,23 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 42af11ebe141805438df7960a96217b2, type: 2}
+      objectReference: {fileID: 9100000, guid: 086a4e727bc09044fa389dbe10af828c, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 9b9125b967ebf6648b50adeab42c0759,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b9125b967ebf6648b50adeab42c0759, type: 3}
 --- !u!4 &1891707352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9b9125b967ebf6648b50adeab42c0759,
+    type: 3}
+  m_PrefabInstance: {fileID: 1891707351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1897350248 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8754965392401712484, guid: 9b9125b967ebf6648b50adeab42c0759,
     type: 3}
   m_PrefabInstance: {fileID: 1891707351}
   m_PrefabAsset: {fileID: 0}

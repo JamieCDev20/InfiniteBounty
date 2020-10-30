@@ -38,6 +38,7 @@ public class PlayerInputManager : MonoBehaviour
     private PlayerMover mover;
     private CameraController camControl;
     private ToolHandler toolHandler;
+    private PlayerAnimator animator;
 
     #endregion
 
@@ -61,14 +62,20 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Init()
     {
-        camControl = GetComponent<CameraController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        camControl = GetComponentInChildren<CameraController>();
         camControl.SetFollow(transform);
 
         mover = GetComponent<PlayerMover>();
         mover.SetCameraTranfsorm(camControl.transform);
 
         toolHandler = GetComponent<ToolHandler>();
+        toolHandler.RecieveCameraTransform(camControl.transform);
 
+        animator = GetComponent<PlayerAnimator>();
+        animator.SetCam(camControl.transform);
     }
 
     private void GetInputs()
@@ -90,7 +97,7 @@ public class PlayerInputManager : MonoBehaviour
 
         toolBools.b_MToolDown = Input.GetButtonDown(s_mobilityUse);
         toolBools.b_MToolHold = Input.GetButton(s_mobilityUse);
-        toolBools.b_MToolUp =     Input.GetButtonUp(s_mobilityUse);
+        toolBools.b_MToolUp = Input.GetButtonUp(s_mobilityUse);
         toolBools.b_LToolDown = Input.GetButtonDown(s_leftToolUse);
         toolBools.b_LToolHold = Input.GetButton(s_leftToolUse);
         toolBools.b_LToolUp = Input.GetButtonUp(s_leftToolUse);
