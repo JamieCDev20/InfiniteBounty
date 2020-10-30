@@ -39,8 +39,8 @@ public class PlayerAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
-        //MakeAnArmDoTheRightThing(armR, -1);
-        //MakeAnArmDoTheRightThing(armL, 1);
+        MakeAnArmDoTheRightThing(armR, -1);
+        MakeAnArmDoTheRightThing(armL, 1);
     }
 
     #endregion
