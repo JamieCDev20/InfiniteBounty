@@ -52,7 +52,7 @@ public class ToolHandler : SubjectBase
         }
     }
 
-    public void RecieveInputs(params bool[] _b_inputs)
+    public void RecieveInputs(ToolBools _tbo_inputs)
     {
         
     }
