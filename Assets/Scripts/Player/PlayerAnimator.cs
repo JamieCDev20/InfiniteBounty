@@ -10,6 +10,9 @@ public class PlayerAnimator : MonoBehaviour
 
     [SerializeField] private Transform armR;
     [SerializeField] private Transform armL;
+    [Space]
+    [Header("Tester")]
+    [SerializeField] private bool doDemoIK = true;
 
     #endregion
 
@@ -39,8 +42,12 @@ public class PlayerAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
-        MakeAnArmDoTheRightThing(armR, -1);
-        MakeAnArmDoTheRightThing(armL, 1);
+        if (doDemoIK)
+        {
+            MakeAnArmDoTheRightThing(armR, -1);
+            MakeAnArmDoTheRightThing(armL, 1);
+
+        }
     }
 
     #endregion
