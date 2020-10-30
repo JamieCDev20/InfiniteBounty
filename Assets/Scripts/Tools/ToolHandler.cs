@@ -77,15 +77,15 @@ public class ToolHandler : SubjectBase
     /// <param name="_tbo_inputs">inputs</param>
     public void RecieveInputs(ToolBools _tbo_inputs)
     {
-        // Use left hand item or buy something
         CheckPressOrHoldUse(ToolSlot.leftHand, _tbo_inputs.b_LToolDown, _tbo_inputs.b_LToolHold);
-        CheckReleaseUse(ToolSlot.leftHand, _tbo_inputs.b_LToolUp, A_tools[(int)ToolSlot.leftHand].ReleaseActivated);
-        // Use right hand item or buy something
         CheckPressOrHoldUse(ToolSlot.rightHand, _tbo_inputs.b_RToolDown, _tbo_inputs.b_RToolHold);
-        CheckReleaseUse(ToolSlot.rightHand, _tbo_inputs.b_RToolUp, A_tools[(int)ToolSlot.rightHand].ReleaseActivated);
-        // Use the mobility tool
         CheckPressOrHoldUse(ToolSlot.moblility, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold);
-        CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_RToolUp, A_tools[(int)ToolSlot.moblility].ReleaseActivated);
+        if(A_tools.Length < 0)
+        {
+            CheckReleaseUse(ToolSlot.leftHand, _tbo_inputs.b_LToolUp, A_tools[(int)ToolSlot.leftHand].ReleaseActivated);
+            CheckReleaseUse(ToolSlot.rightHand, _tbo_inputs.b_RToolUp, A_tools[(int)ToolSlot.rightHand].ReleaseActivated);
+            CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_RToolUp, A_tools[(int)ToolSlot.moblility].ReleaseActivated);
+        }
 
     }
 
@@ -104,10 +104,9 @@ public class ToolHandler : SubjectBase
             if(ts == ToolSlot.leftHand || ts == ToolSlot.rightHand)
                 if (CheckIfBuying()) return;
             // You only want to shoot when the tool isn't release activated
-            if (!A_tools[(int)ts].ReleaseActivated)
-            {
-                A_tools[(int)ts].Use();
-            }
+            if(A_tools.Length < 0)
+                if (!A_tools[(int)ts].ReleaseActivated)
+                    A_tools[(int)ts].Use();
         }
     }
     /// <summary>
@@ -122,7 +121,10 @@ public class ToolHandler : SubjectBase
         if (_b_released && _b_releaseActivated)
             A_tools[(int)ts].Use();
     }
-
+    /// <summary>
+    /// Obtain the camera transforms
+    /// </summary>
+    /// <param name="_t_cam"></param>
     public void RecieveCameraTransform(Transform _t_cam)
     {
         t_camTransform = _t_cam;
