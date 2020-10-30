@@ -36,7 +36,6 @@ public class WeaponTool : ToolBase
     }
     public override void Use()
     {
-        go_hitBox.SetActive(true);
 
     }
 

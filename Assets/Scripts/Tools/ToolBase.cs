@@ -10,7 +10,7 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     #endregion
 
     #region Protected Vars
-
+    protected AugmentType[] at_augments;
     #endregion
 
     #region Serialized Vars
@@ -19,8 +19,8 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     [SerializeField] protected AudioClip ac_activationSound;
     [SerializeField] protected AudioClip ac_hitSound;
     [SerializeField] protected AudioClip ac_diegeticAudio;
-
-
+    protected bool b_purchased = false;
+    public bool Purchased { get { return b_purchased; } }
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -45,13 +45,22 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
             return true;
         return false;
     }
-    /// <summary>
-    /// Purchase Weapons
-    /// </summary>
-    /// <param name="_i_cost">Cost of weapon</param>
-    /// <param name="_i_purchaseParams">player id, tool slot id</param>
-    public virtual void Purchase(int _i_cost, params int[] _i_purchaseParams)
+
+    public void Attach()
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    public void Purchase(GameObject _go_owner, params int[] _i_purchaseParams)
+    {
+        if (_go_owner.GetComponent<PlayerController>())
+        {
+            _go_owner.GetComponent<ToolHandler>().SwapWeapon((ToolSlot)_i_purchaseParams[1], this);
+        }
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 }

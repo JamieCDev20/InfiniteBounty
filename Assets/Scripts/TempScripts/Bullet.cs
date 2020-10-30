@@ -133,6 +133,15 @@ public class Bullet : MonoBehaviour, IPoolable
         Die();
     }
 
+    public void MoveBullet(Vector3 _v_dir, float _f_force)
+    {
+        rb.AddForce(_v_dir * _f_force, ForceMode.Impulse);
+    }
+    public void MoveBullet(Vector3 _v_dir, float _f_force, ForceMode fm_force)
+    {
+        rb.AddForce(_v_dir * _f_force, fm_force);
+    }
+
     private IEnumerator DeathTimer(float _f_lifeTime)
     {
         yield return new WaitForSeconds(_f_lifeTime);
