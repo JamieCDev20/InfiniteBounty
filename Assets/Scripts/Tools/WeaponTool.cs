@@ -22,6 +22,7 @@ public class WeaponTool : ToolBase
     [SerializeField] GameObject go_explosion;
     [SerializeField] float f_radius;
     [SerializeField] float f_explosionKnockback;
+
     // Detonation is if it explodes immediately, on impact or on a timer
     // Start is called before the first frame update
     void Start()

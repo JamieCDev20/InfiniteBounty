@@ -19,8 +19,11 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     [SerializeField] protected AudioClip ac_activationSound;
     [SerializeField] protected AudioClip ac_hitSound;
     [SerializeField] protected AudioClip ac_diegeticAudio;
+    [SerializeField] Transform t_raycastPoint;
+    [SerializeField] protected bool b_releaseActivated;
     protected bool b_purchased = false;
     public bool Purchased { get { return b_purchased; } }
+    public bool ReleaseActivated { get { return b_releaseActivated; } }
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -62,5 +65,9 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+    public Transform GetRaycastTransform()
+    {
+        return t_raycastPoint;
     }
 }
