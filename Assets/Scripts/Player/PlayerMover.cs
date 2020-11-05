@@ -30,6 +30,7 @@ public class PlayerMover : MonoBehaviour
     private bool b_sprintHold;
     private bool b_sprintUp;
     private Vector3 v_movementVector; // The direction the player is inputting
+    private Vector3 v_startPos;
     private Rigidbody rb;
     private Transform t_camTransform;
 
@@ -46,6 +47,7 @@ public class PlayerMover : MonoBehaviour
     private void Update()
     {
         Jump();
+        ResetIfOffMap();
         //Debug.Log(rb.velocity.y);
     }
 
@@ -73,8 +75,8 @@ public class PlayerMover : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        v_startPos = transform.position;
     }
-
 
     private void HandleAllInputs()
     {
@@ -121,9 +123,14 @@ public class PlayerMover : MonoBehaviour
         rb.velocity -= Vector3.up * f_gravityScale * (rb.velocity.y < f_plummetPoint ? f_plummetMultiplier : 1) * Time.deltaTime;
     }
 
-    private bool CheckGrounded()
+    private void ResetIfOffMap()
     {
-        return true;
+        
+        if(transform.position.y< -25)
+        {
+            transform.position = v_startPos;
+        }
+
     }
 
     #endregion
@@ -173,6 +180,10 @@ public class PlayerMover : MonoBehaviour
 
     #region Private Returns
 
+    private bool CheckGrounded()
+    {
+        return true;
+    }
 
     #endregion
 
