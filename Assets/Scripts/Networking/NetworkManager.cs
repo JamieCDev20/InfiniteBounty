@@ -4,10 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     //Variables
     public static NetworkManager x;
+    public static char separator = '|';
 
     #region Serialised
 
@@ -38,6 +39,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     #region Private Voids
 
+    private void DoSomethingToSomeone(object[] streamRead)
+    {
+
+        switch ((int)streamRead[0])
+        {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+
+    }
 
     #endregion
 
@@ -78,10 +97,29 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.LogWarning("The banhammer has spoken");
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+        object[] currentStream;
+
+        while(stream.Count > 0)
+        {
+
+            currentStream = BreakdownText(stream.ReceiveNext().ToString());
+
+
+        }
+
+    }
+
     #endregion
 
     #region Private Returns
 
+    private object[] BreakdownText(string text)
+    {
+        return text.Split(separator);
+    }
 
     #endregion
 
