@@ -45,10 +45,10 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     public virtual bool CheckShopType(ShopType _st_itemType)
     {
-        Debug.Log("Oops... 500");
+        //Debug.Log("Oops... 500");
         if (st == _st_itemType)
         {
-            Debug.Log("Gottem");
+            //Debug.Log("Gottem");
             return true;
         }
         return false;

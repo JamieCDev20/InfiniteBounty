@@ -38,7 +38,7 @@ public class AStar
 
         for (int i = 0; i < closed.Count; i++)
         {
-            tempOpen = new List<Node>();
+            tempOpen.Clear();
 
             if (CheckSuccessors(closed[i], _end, 0))
             {

@@ -33,9 +33,10 @@ public class ToolHandler : SubjectBase
         Debug.DrawRay(ray.origin, ray.direction, Color.red);
         if (Physics.Raycast(ray, out hit, 7f))
         {
-            if (hit.transform.GetComponent<ToolBase>())
+            ToolBase tb = hit.transform.GetComponent<ToolBase>();
+            if (tb)
             {
-                hit.transform.GetComponent<ToolBase>().Purchase(gameObject, np_network.PlayerID, (int)ts);
+                tb.Purchase(gameObject, np_network.PlayerID, (int)ts);
                 return true;
             }
         }

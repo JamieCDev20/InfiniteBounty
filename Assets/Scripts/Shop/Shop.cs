@@ -32,7 +32,9 @@ public class Shop : MonoBehaviour
         ip_itemsOnDisplay = new IPurchasable[A_spawnPoints.Length];
         for (int i = 0; i < A_spawnPoints.Length; i++)
         {
-            ip_itemsOnDisplay[i] = L_allItems[Random.Range(0, L_allItems.Count)];
+            int r = Random.Range(0, L_allItems.Count);
+            ip_itemsOnDisplay[i] = L_allItems[r];
+            L_allItems.RemoveAt(r);
             ip_itemsOnDisplay[i].GetGameObject().transform.position = A_spawnPoints[i].position;
             ip_itemsOnDisplay[i].GetGameObject().transform.rotation = A_spawnPoints[i].rotation;
             ip_itemsOnDisplay[i].GetGameObject().GetComponent<ToolBase>().SetShopRef(this);
