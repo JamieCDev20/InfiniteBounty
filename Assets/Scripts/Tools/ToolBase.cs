@@ -9,7 +9,7 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     #endregion
 
     #region Protected Vars
-    protected AugmentType[] at_augments;
+    protected AugmentType[] at_augments = new AugmentType[0];
     #endregion
 
     #region Serialized Vars

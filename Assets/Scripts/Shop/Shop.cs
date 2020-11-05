@@ -16,11 +16,6 @@ public class Shop : MonoBehaviour
     [SerializeField] ShopType st;
     List<IPurchasable> L_allItems = new List<IPurchasable>();
     IPurchasable[] ip_itemsOnDisplay;
-    private void Start()
-    {
-
-        
-    }
 
     private void OnEnable()
     {
@@ -47,7 +42,8 @@ public class Shop : MonoBehaviour
         {
             if(_i_itemRemoved == ip_itemsOnDisplay[i])
             {
-                ip_itemsOnDisplay[i] = L_allItems[Random.Range(0, L_allItems.Count)];
+                if(L_allItems.Count > 0)
+                    ip_itemsOnDisplay[i] = L_allItems[Random.Range(0, L_allItems.Count)];
             }
         }
     }

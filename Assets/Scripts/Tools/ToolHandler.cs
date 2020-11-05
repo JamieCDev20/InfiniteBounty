@@ -14,7 +14,8 @@ public class ToolHandler : SubjectBase
 {
     [SerializeField] private Transform[] A_toolTransforms;
     [SerializeField] private ToolBase[] A_tools = new ToolBase[3];
-    private List<ToolBase> L_allTools = new List<ToolBase>();
+    [SerializeField] private LayerMask lm_shoppingMask;
+    private List<ToolBase> L_ownedTools = new List<ToolBase>();
     private NetworkedPlayer np_network;
     private Transform t_camTransform;
     private void Start()
@@ -30,9 +31,9 @@ public class ToolHandler : SubjectBase
     {
         // Check for hitting a weapon
         RaycastHit hit;
-        Ray ray = new Ray(t_camTransform.GetChild(0).position, t_camTransform.forward);
-        Debug.DrawRay(ray.origin, ray.direction, Color.red);
-        if (Physics.Raycast(ray, out hit, 7f))
+        Ray ray = new Ray(t_camTransform.GetChild(0).position, t_camTransform.GetChild(0).forward);
+        Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red);
+        if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
             if (tb)
@@ -67,7 +68,8 @@ public class ToolHandler : SubjectBase
                 switch (_tb_tool)
                 {
                     case WeaponTool wt:
-                        A_tools[(int)_ts_slot] = wt;
+                        RemoveTool(_ts_slot);
+                        AddTool(_ts_slot, wt);
                         break;
                 }
                 break;
@@ -75,7 +77,8 @@ public class ToolHandler : SubjectBase
                 switch (_tb_tool)
                 {
                     case WeaponTool wt:
-                        A_tools[(int)_ts_slot] = wt;
+                        RemoveTool(_ts_slot);
+                        AddTool(_ts_slot, wt);
                         break;
                 }
                 break;
@@ -83,7 +86,8 @@ public class ToolHandler : SubjectBase
                 switch (_tb_tool)
                 {
                     case MobilityTool mt:
-                        A_tools[(int)_ts_slot] = mt;
+                        RemoveTool(_ts_slot);
+                        AddTool(_ts_slot, mt);
                         break;
                 }
                 break;
@@ -104,6 +108,10 @@ public class ToolHandler : SubjectBase
     {
         A_tools[(int)_ts_] = _tb_;
         _tb_.transform.parent = A_toolTransforms[(int)_ts_];
+        _tb_.transform.localPosition = Vector3.zero;
+        _tb_.transform.localRotation = Quaternion.identity;
+        if (!L_ownedTools.Contains(_tb_))
+            L_ownedTools.Add(_tb_);
     }
 
     /// <summary>
