@@ -11,13 +11,17 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Transform t_targetCamPos;
     [SerializeField] private Vector3 v_finalCamLocalPos;
     [Space, SerializeField] private PlayerController pc_player;
+    [SerializeField] private PlayerMover pm_player;
     [SerializeField] private Canvas c_playerCanvas;
     private int i_camLerps;
 
     void Awake()
     {
         x = this;
-        pc_player.enabled = false;
+        if(pc_player != null)
+            pc_player.enabled = false;
+        else
+            pm_player.enabled = false;
         c_playerCanvas.enabled = false;
         Camera.main.transform.position = t_startCamPos.position;
         Camera.main.transform.localEulerAngles = t_startCamPos.localEulerAngles;
@@ -45,10 +49,21 @@ public class MenuController : MonoBehaviour
 
     private void EnablePlayer()
     {
-        Camera.main.transform.localPosition = v_finalCamLocalPos;
-        Camera.main.transform.localEulerAngles = Vector3.zero;
+        if(pm_player != null)
+        {
+            Camera.main.transform.localPosition = v_finalCamLocalPos;
+            Camera.main.transform.localEulerAngles = Vector3.zero;
 
-        pc_player.enabled = true;
-        c_playerCanvas.enabled = true;
+            pm_player.enabled = true;
+        }
+        else
+        {
+            Camera.main.transform.localPosition = v_finalCamLocalPos;
+            Camera.main.transform.localEulerAngles = Vector3.zero;
+
+            pc_player.enabled = true;
+            c_playerCanvas.enabled = true;
+        }
+
     }
 }

@@ -12,6 +12,7 @@ public enum ToolSlot
 
 public class ToolHandler : SubjectBase
 {
+    [SerializeField] private Transform[] A_toolTransforms;
     [SerializeField] private ToolBase[] A_tools = new ToolBase[3];
     private List<ToolBase> L_allTools = new List<ToolBase>();
     private NetworkedPlayer np_network;
@@ -90,6 +91,21 @@ public class ToolHandler : SubjectBase
                 break;
         }
     }
+    private void RemoveTool(ToolSlot _ts_)
+    {
+        if(A_tools[(int)_ts_] != null)
+        {
+            A_tools[(int)_ts_].transform.parent = null;
+            A_tools[(int)_ts_].gameObject.SetActive(false);
+        }
+    }
+
+    private void AddTool(ToolSlot _ts_, ToolBase _tb_)
+    {
+        A_tools[(int)_ts_] = _tb_;
+        _tb_.transform.parent = A_toolTransforms[(int)_ts_];
+    }
+
     /// <summary>
     /// Get inputs via tool booleans
     /// </summary>
