@@ -50,7 +50,7 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
-        if (!view.IsMine || b_networked)
+        if (!view.IsMine && b_networked)
             return;
         Jump();
         ResetIfOffMap();
@@ -59,7 +59,7 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!view.IsMine || !b_networked)
+        if (!view.IsMine && b_networked)
             return;
 
         HandleAllInputs();

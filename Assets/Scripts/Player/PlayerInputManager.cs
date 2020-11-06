@@ -56,7 +56,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
-        if (!view.IsMine || b_networked)
+        if (!view.IsMine && b_networked)
             return;
         GetInputs();
         TellStuffWhatToDo();
