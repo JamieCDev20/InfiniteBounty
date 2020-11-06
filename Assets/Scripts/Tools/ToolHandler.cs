@@ -37,7 +37,7 @@ public class ToolHandler : SubjectBase
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
             if (tb)
             {
-                tb.Purchase(gameObject, np_network.PlayerID, (int)ts);
+                tb.Purchase(gameObject, 0, (int)ts);
                 return true;
             }
         }
@@ -152,7 +152,7 @@ public class ToolHandler : SubjectBase
         if(_b_press || _b_hold)
         {
             // You want to buy something, not shoot
-            if(ts == ToolSlot.leftHand || ts == ToolSlot.rightHand)
+            if(ts == ToolSlot.leftHand && _b_press || ts == ToolSlot.rightHand && _b_press)
                 if (CheckIfBuying(ts)) return;
             // You only want to shoot when the tool isn't release activated
             if(A_tools[(int)ts] != null)

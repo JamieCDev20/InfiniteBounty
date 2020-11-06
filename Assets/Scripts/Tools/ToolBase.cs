@@ -10,7 +10,7 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     #region Protected Vars
     protected AugmentType[] at_augments = new AugmentType[0];
-    protected bool b_purchased = false;
+    [SerializeField] protected bool b_purchased;
     protected bool b_usable = true;
     protected Shop s_shopRef;
     #endregion
