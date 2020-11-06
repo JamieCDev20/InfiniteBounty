@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ public class PlayerMover : MonoBehaviour
     private Vector3 v_startPos;
     private Rigidbody rb;
     private Transform t_camTransform;
+    private PhotonView view;
 
     #endregion
 
@@ -46,6 +48,8 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
+        if (!view.IsMine)
+            return;
         Jump();
         ResetIfOffMap();
         //Debug.Log(rb.velocity.y);
@@ -53,6 +57,8 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!view.IsMine)
+            return;
 
         HandleAllInputs();
 
@@ -76,6 +82,9 @@ public class PlayerMover : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         v_startPos = transform.position;
+
+        view = GetComponent<PhotonView>();
+
     }
 
     private void HandleAllInputs()
