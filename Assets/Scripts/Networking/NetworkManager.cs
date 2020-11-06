@@ -70,6 +70,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
     }
 
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("You da man!");
+    }
+
     public override void OnJoinedRoom()
     {
         Debug.Log("YAY! You're in a room");
