@@ -9,6 +9,8 @@ public class PlayerInputManager : MonoBehaviour
     //Variables
     #region Serialised
 
+    [SerializeField] private bool b_networked = false;
+
     [Header("Input Axes")]
     [SerializeField] private string s_horizontalMovement = "Horizontal";
     [SerializeField] private string s_verticalMovement = "Vertical";
@@ -54,7 +56,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
-        if (!view.IsMine)
+        if (!view.IsMine || b_networked)
             return;
         GetInputs();
         TellStuffWhatToDo();

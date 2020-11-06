@@ -9,6 +9,8 @@ public class PlayerMover : MonoBehaviour
     //Variables
     #region Serialised
 
+    [SerializeField] private bool b_networked = false;
+
     [Header("Motion Variables")]
     [SerializeField] private float f_moveSpeed = 10; // How fast the player moves
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
@@ -48,7 +50,7 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
-        if (!view.IsMine)
+        if (!view.IsMine || b_networked)
             return;
         Jump();
         ResetIfOffMap();
@@ -57,7 +59,7 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!view.IsMine)
+        if (!view.IsMine || !b_networked)
             return;
 
         HandleAllInputs();
