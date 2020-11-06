@@ -39,5 +39,6 @@ public enum NetworkDataType
     rot,
     anim,
     boole,
+    skin
 
 }

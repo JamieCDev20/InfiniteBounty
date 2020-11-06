@@ -13,12 +13,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     #region Serialised
 
     [SerializeField] private byte maxPlayersPerRoom = 4;
+    [SerializeField] private string roomName;
 
     #endregion
 
     #region Private
 
-    private string gameVersion = "1";
+    private string gameVersion = "0.1";
 
     #endregion
 
@@ -39,24 +40,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Private Voids
 
-    private void DoSomethingToSomeone(object[] streamRead)
-    {
 
-        switch ((int)streamRead[0])
-        {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:
-                break;
-        }
-
-    }
 
     #endregion
 
@@ -64,21 +48,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Connect()
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.JoinRandomRoom();
-        }
-        else
-        {
-            PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.GameVersion = gameVersion;
-        }
+
+        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.GameVersion = gameVersion;
+
+    }
+
+    public void CreateRoom()
+    {
+        PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to the fucking masta");
-        PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -102,7 +85,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
         object[] currentStream;
 
-        while(stream.Count > 0)
+        while (stream.Count > 0)
         {
 
             currentStream = BreakdownText(stream.ReceiveNext().ToString());
