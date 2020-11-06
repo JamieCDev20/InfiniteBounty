@@ -71,6 +71,11 @@ public class ToolHandler : SubjectBase
                         RemoveTool(_ts_slot);
                         AddTool(_ts_slot, wt);
                         break;
+                    case MobilityTool mt:
+                        RemoveTool(ToolSlot.moblility);
+                        AddTool(ToolSlot.moblility, mt);
+                        Debug.Log("Boop");
+                        break;
                 }
                 break;
             case ToolSlot.rightHand:
@@ -79,6 +84,10 @@ public class ToolHandler : SubjectBase
                     case WeaponTool wt:
                         RemoveTool(_ts_slot);
                         AddTool(_ts_slot, wt);
+                        break;
+                    case MobilityTool mt:
+                        RemoveTool(ToolSlot.moblility);
+                        AddTool(ToolSlot.moblility, mt);
                         break;
                 }
                 break;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponTool : ToolBase
 {
+
+    #region Serialized Fields
     [Header("Weapon Stats")]
     [SerializeField] protected int i_damage;
     [SerializeField] protected int i_weight;
@@ -12,7 +14,6 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_knockback;
     [SerializeField] protected float f_lodeScalar;
     [SerializeField] protected GameObject go_hitBox;
-
     [Header("Elemental Stats")]
     [SerializeField] Systemic sy_element;
     [SerializeField] protected int i_elementDamage;
@@ -22,18 +23,22 @@ public class WeaponTool : ToolBase
     [SerializeField] GameObject go_explosion;
     [SerializeField] float f_radius;
     [SerializeField] float f_explosionKnockback;
+    #endregion
 
     // Detonation is if it explodes immediately, on impact or on a timer
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region Protected
+    protected Camera c_cam;
+    protected bool b_rackUpgrade = false;
+    #endregion
 
-    // Update is called once per frame
-    void Update()
+    #region Get/Sets
+    public bool RackUpgrade { get{ return b_rackUpgrade; } set{ b_rackUpgrade = value; } }
+    #endregion
+
+    protected void OnEnable()
     {
-        
+        // Figure out a nicer way of doing this
+        c_cam = Camera.main;
     }
     public override void Use()
     {

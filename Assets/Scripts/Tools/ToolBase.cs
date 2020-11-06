@@ -10,10 +10,14 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     #region Protected Vars
     protected AugmentType[] at_augments = new AugmentType[0];
+    protected bool b_purchased = false;
+    protected bool b_usable = true;
+    protected Shop s_shopRef;
     #endregion
 
     #region Serialized Vars
     [SerializeField] protected EnergyGauge eg_gauge;
+    [SerializeField] protected float f_timeBetweenUsage;
     [Header("Audio")]
     [SerializeField] protected AudioClip ac_activationSound;
     [SerializeField] protected AudioClip ac_hitSound;
@@ -21,11 +25,14 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     [SerializeField] protected ShopType st = ShopType.weapon;
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
-    protected bool b_purchased = false;
-    protected Shop s_shopRef;
+    #endregion
+
+    #region get/set
     public bool Purchased { get { return b_purchased; } }
     public bool ReleaseActivated { get { return b_releaseActivated; } }
+
     #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,12 +52,8 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     public virtual bool CheckShopType(ShopType _st_itemType)
     {
-        //Debug.Log("Oops... 500");
         if (st == _st_itemType)
-        {
-            //Debug.Log("Gottem");
             return true;
-        }
         return false;
     }
 
@@ -61,9 +64,11 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     public void Purchase(GameObject _go_owner, params int[] _i_purchaseParams)
     {
-        if (_go_owner.GetComponent<ToolHandler>())
+        // Get the tool handler and swap the tool
+        ToolHandler th = _go_owner.GetComponent<ToolHandler>();
+        if (th)
         {
-            _go_owner.GetComponent<ToolHandler>().SwapWeapon((ToolSlot)_i_purchaseParams[1], this);
+            th.SwapWeapon((ToolSlot)_i_purchaseParams[1], this);
             s_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
         }
@@ -85,5 +90,11 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     public bool CheckPurchaseStatus()
     {
         return Purchased;
+    }
+
+    protected IEnumerator TimeBetweenUsage()
+    {
+        yield return new WaitForSeconds(f_timeBetweenUsage);
+        b_usable = true;
     }
 }

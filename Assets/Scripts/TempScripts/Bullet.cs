@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private float f_lifeTime;
     [SerializeField] private GameObject go_hitEffect;
     [SerializeField] private LayerMask lm_placementLayer;
+    [SerializeField] private Rigidbody rb;
 
     [Header("TrailEffects")]
     [SerializeField] private TrailRenderer tr_bulletTrail;
@@ -20,7 +21,6 @@ public class Bullet : MonoBehaviour, IPoolable
     private bool b_explosive;
     private bool b_gooey;
     private bool b_soaked;
-    [SerializeField] private Rigidbody rb;
 
     protected bool b_inPool;
     protected int i_poolIndex;
@@ -29,6 +29,7 @@ public class Bullet : MonoBehaviour, IPoolable
     {
         RemoveAugments(_atA_activeAugments);
         transform.localScale = Vector3.one;
+        transform.rotation = Quaternion.identity;
         for (int i = 0; i < _atA_activeAugments.Length; i++)
         {
             switch (_atA_activeAugments[i])
@@ -135,7 +136,8 @@ public class Bullet : MonoBehaviour, IPoolable
 
     public void MoveBullet(Vector3 _v_dir, float _f_force)
     {
-        rb.AddForce(_v_dir * _f_force, ForceMode.Impulse);
+        transform.forward = _v_dir;
+        rb.AddForce(transform.forward * _f_force, ForceMode.Impulse);
     }
     public void MoveBullet(Vector3 _v_dir, float _f_force, ForceMode fm_force)
     {

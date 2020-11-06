@@ -12,9 +12,14 @@ public class ProjectileTool : WeaponTool
 
     public override void Use()
     {
-        GameObject newProj = PoolManager.x.SpawnNewObject(go_hitBox, t_firePoint.position, t_firePoint.rotation);
-        Bullet newBullet = newProj.GetComponent<Bullet>();
-        newBullet.Setup(at_augments);
-        newBullet.MoveBullet(t_firePoint.forward, f_shotSpeed);
+        if (b_usable)
+        {
+            GameObject newProj = PoolManager.x.SpawnNewObject(go_hitBox, t_firePoint.position, t_firePoint.rotation);
+            Bullet newBullet = newProj.GetComponent<Bullet>();
+            newBullet.Setup(at_augments);
+            newBullet.MoveBullet(c_cam.transform.forward, f_shotSpeed);
+            b_usable = false;
+            StartCoroutine(TimeBetweenUsage());
+        }
     }
 }

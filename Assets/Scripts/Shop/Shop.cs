@@ -6,6 +6,7 @@ using UnityEngine;
 public enum ShopType
 {
     weapon,
+    mobility,
     augment,
     skill
 }
@@ -27,6 +28,8 @@ public class Shop : MonoBehaviour
         ip_itemsOnDisplay = new IPurchasable[A_spawnPoints.Length];
         for (int i = 0; i < A_spawnPoints.Length; i++)
         {
+            if (L_allItems.Count <= 0)
+                return;
             int r = Random.Range(0, L_allItems.Count);
             ip_itemsOnDisplay[i] = L_allItems[r];
             L_allItems.RemoveAt(r);
