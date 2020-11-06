@@ -14,12 +14,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     [SerializeField] private byte maxPlayersPerRoom = 4;
     [SerializeField] private string roomName;
+    [SerializeField] private GameObject UI;
 
     #endregion
 
     #region Private
 
     private string gameVersion = "0.1";
+    private NetworkedPlayer[] networkedPlayers;
 
     #endregion
 
@@ -33,6 +35,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Start()
     {
+        networkedPlayers = FindObjectsOfType<NetworkedPlayer>();
         Connect();
     }
 
@@ -40,7 +43,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Private Voids
 
+    private void FindNetworkPlayers()
+    {
 
+
+
+    }
 
     #endregion
 
@@ -57,6 +65,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     public void CreateRoom()
     {
         PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
+        UI.SetActive(false);
     }
 
     public override void OnConnectedToMaster()
@@ -94,7 +103,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
         {
 
             currentStream = BreakdownText(stream.ReceiveNext().ToString());
-
+            //do something to someone
 
         }
 

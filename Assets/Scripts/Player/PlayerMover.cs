@@ -26,6 +26,8 @@ public class PlayerMover : MonoBehaviour
 
     #region Private
 
+
+    private bool b_grounded;
     private bool b_jumpPress;
     private bool b_jumpHold;
     private bool b_jumpUp;
@@ -52,6 +54,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (!view.IsMine && b_networked)
             return;
+        b_grounded = CheckGrounded();
         Jump();
         ResetIfOffMap();
         //Debug.Log(rb.velocity.y);
@@ -59,16 +62,18 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        if(!b_grounded)
+            ApplyGravity();
+
+        ApplyDrag();
+
         if (!view.IsMine && b_networked)
             return;
 
         HandleAllInputs();
 
         ApplyMovement();
-
-        ApplyGravity();
-
-        ApplyDrag();
 
     }
 
@@ -114,7 +119,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (!b_jumpPress)
             return;
-        if (CheckGrounded())
+        if (b_grounded)
             rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
     }
 
@@ -193,7 +198,7 @@ public class PlayerMover : MonoBehaviour
 
     private bool CheckGrounded()
     {
-        return true;
+        return Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, 0.5f);
     }
 
     #endregion

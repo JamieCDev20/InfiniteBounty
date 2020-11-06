@@ -19,7 +19,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         for (int i = 0; i < dataToSend.Count; i++)
         {
-            stream.SendNext(dataToSend[i]);
+            //stream.SendNext(dataToSend[i]);
         }
 
     }
@@ -47,6 +47,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         player.GetComponent<PlayerInputManager>().SetCamera(Instantiate(playerInfo.go_camPrefab).GetComponent<CameraController>());
 
         Debug.Log("Spawned Player Prefab");
+
     }
 
 }
