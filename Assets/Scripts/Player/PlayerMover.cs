@@ -144,7 +144,7 @@ public class PlayerMover : MonoBehaviour
         
         if(transform.position.y< -25)
         {
-            transform.position = v_startPos;
+            transform.position = v_startPos + (Vector3.up * 5);
         }
 
     }
