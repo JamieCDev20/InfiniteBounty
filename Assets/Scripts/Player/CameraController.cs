@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        Detach();
+        //Detach();
     }
 
     private void LateUpdate()

@@ -9,6 +9,7 @@ public struct PlayerInfo
 
     public int playerID;
     public GameObject go_playerPrefab;
+    public GameObject go_camPrefab;
     public GameObject go_head;
     public GameObject go_toolR;
     public GameObject go_toolL;

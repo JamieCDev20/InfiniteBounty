@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,6 +40,7 @@ public class PlayerInputManager : MonoBehaviour
     private CameraController camControl;
     private ToolHandler toolHandler;
     private PlayerAnimator animator;
+    private PhotonView view;
 
     #endregion
 
@@ -52,6 +54,8 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
+        if (!view.IsMine)
+            return;
         GetInputs();
         TellStuffWhatToDo();
     }
@@ -65,17 +69,13 @@ public class PlayerInputManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        camControl = GetComponentInChildren<CameraController>();
-        camControl.SetFollow(transform);
-
         mover = GetComponent<PlayerMover>();
-        mover.SetCameraTranfsorm(camControl.transform);
 
         toolHandler = GetComponent<ToolHandler>();
-        toolHandler.RecieveCameraTransform(camControl.transform);
 
         animator = GetComponent<PlayerAnimator>();
-        animator.SetCam(camControl.transform);
+
+        view = GetComponent<PhotonView>();
     }
 
     private void GetInputs()
@@ -124,6 +124,15 @@ public class PlayerInputManager : MonoBehaviour
 
     #region Public Voids
 
+    public void SetCamera(CameraController _cam)
+    {
+        camControl = _cam;
+        camControl.SetFollow(transform);
+
+        mover.SetCameraTranfsorm(camControl.transform);
+        toolHandler.RecieveCameraTransform(camControl.transform);
+        animator.SetCam(camControl.transform);
+    }
 
     #endregion
 

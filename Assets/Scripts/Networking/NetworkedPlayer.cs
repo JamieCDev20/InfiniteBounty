@@ -9,6 +9,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_spawnPoint;
     [SerializeField]
     private PlayerInfo playerInfo;
+    private Transform t_thisPlayer;
     public int PlayerID{ get{ return i_playerID; } set { i_playerID = value; } }
 
     private List<string> dataToSend = new List<string>();
@@ -25,8 +26,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     private void FixedUpdate()
     {
-        PrepareSendData(NetworkDataType.pos, transform.position.ToString());
-        PrepareSendData(NetworkDataType.rot, transform.rotation.ToString());
+        //PrepareSendData(NetworkDataType.pos, t_thisPlayer.position.ToString());
+        //PrepareSendData(NetworkDataType.rot, t_thisPlayer.rotation.ToString());
     }
 
     public void PrepareSendData(NetworkDataType type, string data)
@@ -37,7 +38,14 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnJoinedRoom()
     {
         Debug.Log("You Joined");
-        PhotonNetwork.Instantiate("NetworkPrefabs/"+playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
+        playerInfo.playerID = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+        Debug.Log("You are player: " + (playerInfo.playerID + 1));
+        GameObject player = PhotonNetwork.Instantiate("NetworkPrefabs/"+playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
+        player.GetComponent<PhotonView>().ObservedComponents.Add(this);
+        t_thisPlayer = player.transform;
+
+        player.GetComponent<PlayerInputManager>().SetCamera(Instantiate(playerInfo.go_camPrefab).GetComponent<CameraController>());
+
         Debug.Log("Spawned Player Prefab");
     }
 
