@@ -19,15 +19,15 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         for (int i = 0; i < dataToSend.Count; i++)
         {
-            stream.SendNext(dataToSend[i]);
+            //stream.SendNext(dataToSend[i]);
         }
 
     }
 
     private void FixedUpdate()
     {
-        //PrepareSendData(NetworkDataType.pos, t_thisPlayer.position.ToString());
-        //PrepareSendData(NetworkDataType.rot, t_thisPlayer.rotation.ToString());
+        PrepareSendData(NetworkDataType.pos, t_thisPlayer.position.ToString());
+        PrepareSendData(NetworkDataType.rot, t_thisPlayer.rotation.ToString());
     }
 
     public void PrepareSendData(NetworkDataType type, string data)
@@ -57,6 +57,6 @@ public enum NetworkDataType
     rot,
     anim,
     boole,
-    skin
-
+    skin,
+    vel
 }

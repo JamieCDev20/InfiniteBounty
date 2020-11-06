@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        if (networkedCamera)
+        if (!networkedCamera)
         {
             transform.root.GetComponentInChildren<PlayerInputManager>().SetCamera(this);
             Detach();
