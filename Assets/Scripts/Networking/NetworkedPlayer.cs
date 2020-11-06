@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkedPlayer : MonoBehaviour, IPunObservable
+public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 {
     private int i_playerID;
+    private Vector3 v_spawnPoint;
+    [SerializeField]
+    private PlayerInfo playerInfo;
     public int PlayerID{ get{ return i_playerID; } set { i_playerID = value; } }
 
     private List<string> dataToSend = new List<string>();
@@ -29,6 +32,13 @@ public class NetworkedPlayer : MonoBehaviour, IPunObservable
     public void PrepareSendData(NetworkDataType type, string data)
     {
         dataToSend.Add(string.Format("{1}{0}{2}{0}{3}", NetworkManager.separator, i_playerID, (int)type, data));
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("You Joined");
+        PhotonNetwork.Instantiate("NetworkPrefabs/"+playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
+        Debug.Log("Spawned Player Prefab");
     }
 
 }
