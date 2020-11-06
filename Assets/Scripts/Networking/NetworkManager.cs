@@ -20,7 +20,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     #region Private
 
     private string gameVersion = "0.1";
-    //private NetworkedPlayer
 
     #endregion
 
@@ -98,11 +97,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
 
         }
-
-    }
-
-    public void UpdateNetworkedPlayers()
-    {
 
     }
 
