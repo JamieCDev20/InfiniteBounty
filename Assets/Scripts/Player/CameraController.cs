@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     #region Serialised
 
     [SerializeField] private float f_cameraSensitivity = 180;
+    [SerializeField] private bool networkedCamera = false;
 
     #endregion
 
@@ -25,7 +26,11 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        //Detach();
+        if (networkedCamera)
+        {
+            transform.root.GetComponentInChildren<PlayerInputManager>().SetCamera(this);
+            Detach();
+        }
     }
 
     private void LateUpdate()
