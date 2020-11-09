@@ -27,12 +27,13 @@ public class PoolManager : MonoBehaviour
     {
         foreach (Pool p in pools.Values)
         {
-            p.InitializePool(transform);
+            p.InitializePool();
         }
     }
 
     public GameObject SpawnObject(GameObject toSpawn)
     {
+        Debug.Log(toSpawn.name);
         if (pools.ContainsKey(toSpawn.name))
         {
             return pools[toSpawn.name].SpawnObject();

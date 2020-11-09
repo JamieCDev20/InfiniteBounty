@@ -7,7 +7,6 @@ public struct Pool
 {
     [SerializeField] private GameObject go_poolType;
     [SerializeField] private int i_initialSize;
-    Transform t_spawnPoint;
     private HashSet<IPoolable> p_objects;
     private int i_aliveObjects;
 
@@ -15,10 +14,9 @@ public struct Pool
     {
         go_poolType = type;
         i_initialSize = size;
-        t_spawnPoint = PoolManager.x.transform;
         p_objects = new HashSet<IPoolable>();
-        i_aliveObjects = 0;
-        InitializePool(t_spawnPoint);
+        i_aliveObjects = size;
+        InitializePool();
     }
 
     /// <summary>
@@ -28,11 +26,10 @@ public struct Pool
     /// <param name="_p_pooledObjects">If the object is poolable</param>
     /// <param name="_i_size">The initial size of the pool</param>
     /// <param name="_t_spawnPoint">The pools transform</param>
-    public void InitializePool(Transform _t_spawnPoint)
+    public void InitializePool()
     {
         p_objects = new HashSet<IPoolable>();
         i_aliveObjects = i_initialSize;
-        t_spawnPoint = _t_spawnPoint;
         for(int i = 0; i < i_initialSize; i++)
         {
             AddNewObject();
@@ -45,7 +42,12 @@ public struct Pool
         {
             GameObject returnable = GetFromPool();
             if (returnable != null)
+            {
+                i_aliveObjects--;
+                Debug.Log(i_aliveObjects);
+                returnable.transform.parent = null;
                 return returnable;
+            }
         }
         GameObject newGo = AddNewObject();
         newGo.SetActive(true);
@@ -70,16 +72,20 @@ public struct Pool
 
     public void ReturnToPool(GameObject go_objectToPool)
     {
-        go_objectToPool.transform.position = t_spawnPoint.position;
-        go_objectToPool.transform.parent = t_spawnPoint;
+        go_objectToPool.transform.position = PoolManager.x.transform.position;
+        go_objectToPool.transform.parent = PoolManager.x.transform;
         go_objectToPool.SetActive(false);
         i_aliveObjects++;
+        Debug.Log(i_aliveObjects);
     }
 
     private GameObject AddNewObject()
     {
+        if (p_objects == null)
+            p_objects = new HashSet<IPoolable>();
         GameObject newGo = GameObject.Instantiate(go_poolType);
         newGo.name = newGo.name.Replace("(Clone)", "");
+        newGo.transform.parent = PoolManager.x.transform;
         IPoolable poo = newGo.GetComponent<IPoolable>();
         Debug.Log(poo.GetGameObject().name);
         if (poo != null)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml.XPath;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour, OldIPoolable
+public class Bullet : MonoBehaviour, IPoolable
 {
 
     [SerializeField] private int i_damage;
@@ -155,41 +155,17 @@ public class Bullet : MonoBehaviour, OldIPoolable
     public void Die()
     {
         StopAllCoroutines();
-        if (OldPoolManager.x != null) OldPoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
-        SetInPool(true);
+        if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
         if(tr_bulletTrail != null)
             tr_bulletTrail.Clear();
         rb.velocity = Vector3.zero;
     }
 
-    public int GetIndex()
-    {
-        return i_poolIndex;
-    }
 
-    public bool GetInPool()
-    {
-        return b_inPool;
-    }
-
-    public GameObject GetObject()
+    public GameObject GetGameObject()
     {
         return gameObject;
     }
 
-    public void OnSpawn()
-    {
-        // Set position, play sounds, some other stuff maybe.
-    }
-
-    public void SetIndex(int _i_index)
-    {
-        i_poolIndex = _i_index;
-    }
-
-    public void SetInPool(bool _b_delta)
-    {
-        b_inPool = _b_delta;
-    }
     #endregion
 }
