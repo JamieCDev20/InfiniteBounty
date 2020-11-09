@@ -31,7 +31,7 @@ public class NugGO : SubjectBase, IPoolable
     {
         if (other.transform.tag == "Player")
         {
-            GameObject particlesToPlay = PoolManager.x.SpawnNewObject(go_pickupParticles, transform.position, transform.rotation);
+            GameObject particlesToPlay = OldPoolManager.x.SpawnNewObject(go_pickupParticles, transform.position, transform.rotation);
             if (other.GetComponent<PlayerController>() != null)
             {
                 CurrencyEvent ce = new CurrencyEvent(other.GetComponent<PlayerController>().ID, nug.i_worth, true);
@@ -46,39 +46,13 @@ public class NugGO : SubjectBase, IPoolable
         Die();
     }
 
-    public bool GetInPool()
-    {
-        return b_inPool;
-    }
-
-    public GameObject GetObject()
-    {
-        return gameObject;
-    }
-
-    public int GetIndex()
-    {
-        return i_poolIndex;
-    }
-
-    public void SetIndex(int _i_index)
-    {
-        i_poolIndex = _i_index;
-    }
-
-    public void SetInPool(bool _b_delta)
-    {
-        b_inPool = _b_delta;
-    }
-
-    public void OnSpawn()
-    {
-        Invoke("TimeOut", f_nugTimeout);
-    }
-
     public void Die()
     {
-        if (PoolManager.x != null) PoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
-        SetInPool(true);
+        PoolManager.x.ReturnObjectToPool(gameObject);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 }

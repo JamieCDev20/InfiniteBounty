@@ -11,3 +11,6 @@ public class ActionIntDictionary : SerializableDictionary<Action, int> { }
 
 [Serializable]
 public class GoalIntDictionary : SerializableDictionary<Goal, int> { }
+
+[Serializable] 
+public class StringPoolDictionary : SerializableDictionary<string, Pool> { }

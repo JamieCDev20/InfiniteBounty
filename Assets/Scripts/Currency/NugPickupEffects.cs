@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NugPickupEffects : MonoBehaviour, IPoolable
+public class NugPickupEffects : MonoBehaviour, OldIPoolable
 {
     private bool b_inPool;
     private int i_poolIndex;
     public void Die()
     {
-        if (PoolManager.x != null) PoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
+        if (OldPoolManager.x != null) OldPoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
         SetInPool(true);
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPoolable
+public interface OldIPoolable
 {
     bool GetInPool();
     GameObject GetObject();

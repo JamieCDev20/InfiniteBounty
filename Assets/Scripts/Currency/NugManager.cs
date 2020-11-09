@@ -16,7 +16,6 @@ public class NugManager : SubjectBase, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
-        PoolManager.x.AddObserver(this);
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
         {
             np.AddObserver(this);

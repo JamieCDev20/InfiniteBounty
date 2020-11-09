@@ -274,7 +274,7 @@ public class PlayerController : MonoBehaviour
 
             for (int i = 0; i < i_bulletsPerShotRight; i++)
             {
-                GameObject _go_bullet = PoolManager.x.SpawnNewObject(go_bulletPrefabRight, go_firePointRight.transform.position, c_cam.transform.rotation);
+                GameObject _go_bullet = OldPoolManager.x.SpawnNewObject(go_bulletPrefabRight, go_firePointRight.transform.position, c_cam.transform.rotation);
                 _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
                 _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerRight, ForceMode.Impulse);
                 _go_bullet.SetActive(true);
@@ -372,7 +372,7 @@ public class PlayerController : MonoBehaviour
 
             for (int i = 0; i < i_bulletsPerShotLeft; i++)
             {
-                GameObject _go_bullet = PoolManager.x.SpawnNewObject(go_bulletPrefabLeft, go_firePointLeft.transform.position, c_cam.transform.rotation);
+                GameObject _go_bullet = OldPoolManager.x.SpawnNewObject(go_bulletPrefabLeft, go_firePointLeft.transform.position, c_cam.transform.rotation);
                 _go_bullet.transform.rotation = c_cam.transform.rotation;
                 _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
                 _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerLeft, ForceMode.Impulse);

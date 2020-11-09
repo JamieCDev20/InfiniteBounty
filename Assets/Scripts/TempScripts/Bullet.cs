@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml.XPath;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour, IPoolable
+public class Bullet : MonoBehaviour, OldIPoolable
 {
 
     [SerializeField] private int i_damage;
@@ -155,7 +155,7 @@ public class Bullet : MonoBehaviour, IPoolable
     public void Die()
     {
         StopAllCoroutines();
-        if (PoolManager.x != null) PoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
+        if (OldPoolManager.x != null) OldPoolManager.x.ReturnInactiveToPool(gameObject, i_poolIndex);
         SetInPool(true);
         if(tr_bulletTrail != null)
             tr_bulletTrail.Clear();

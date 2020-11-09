@@ -44,7 +44,7 @@ public class LodeBase : Enemy
     {
         for (int i = 0; i < i_nuggetsPerBurst; i++)
         {
-            GameObject _go_nugget = PoolManager.x.SpawnNewObject(go_nuggetPrefab, transform.position, transform.rotation);
+            GameObject _go_nugget = OldPoolManager.x.SpawnNewObject(go_nuggetPrefab, transform.position, transform.rotation);
             _go_nugget.SetActive(true);
             _go_nugget.transform.parent = null;
             _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2);
