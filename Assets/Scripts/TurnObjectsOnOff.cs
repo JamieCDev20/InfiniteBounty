@@ -7,6 +7,11 @@ public class TurnObjectsOnOff : MonoBehaviour
     [Header("Object References")]
     [SerializeField] private PathBlockades[] pbA_blockades = new PathBlockades[0];
 
+    [Header("Lode Placements")]
+    [SerializeField] private GameObject[] goA_lodePrefabs = new GameObject[6];
+    [SerializeField] private List<Transform> tL_lodePositions = new List<Transform>();
+    [SerializeField] private int i_lodesToSpawn;
+
     private void Start()
     {
         for (int i = 0; i < pbA_blockades.Length; i++)
@@ -18,6 +23,14 @@ public class TurnObjectsOnOff : MonoBehaviour
                 pbA_blockades[i].goL_Obstacles.RemoveAt(_i_rando);
             }
         }
+
+        for (int i = 0; i < i_lodesToSpawn; i++)
+        {
+            int _i_rando = Random.Range(0, tL_lodePositions.Count);
+            Instantiate(goA_lodePrefabs[Random.Range(0, goA_lodePrefabs.Length)], tL_lodePositions[_i_rando].transform.position, new Quaternion(Random.value, Random.value, Random.value, Random.value));
+            tL_lodePositions.RemoveAt(_i_rando);
+        }
+
     }
 }
 
