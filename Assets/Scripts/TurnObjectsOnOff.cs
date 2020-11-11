@@ -16,9 +16,9 @@ public class TurnObjectsOnOff : MonoBehaviour
     {
         for (int i = 0; i < pbA_blockades.Length; i++)
         {
-            for (int x = 0; x < Random.Range(1, pbA_blockades[i].i_maxNumberToTurnOff + 1); x++)
+            for (int x = 0; x < Random.Range(1, pbA_blockades[i].i_maxNumberToTurnOff); x++)
             {
-                int _i_rando = Random.Range(0, pbA_blockades[i].goL_Obstacles.Count);
+                int _i_rando = Random.Range(0, pbA_blockades[i].goL_Obstacles.Count);                
                 pbA_blockades[i].goL_Obstacles[_i_rando].SetActive(false);
                 pbA_blockades[i].goL_Obstacles.RemoveAt(_i_rando);
             }
