@@ -33,12 +33,13 @@ public class PoolManager : MonoBehaviour
 
     public GameObject SpawnObject(GameObject toSpawn)
     {
-        Debug.Log(toSpawn.name);
+        Debug.Log("attempting to spawn: " + toSpawn.name);
         if (pools.ContainsKey(toSpawn.name))
         {
+            Debug.Log("Contains key: " + toSpawn.name);
             return pools[toSpawn.name].SpawnObject();
         }
-
+        Debug.Log("did not contain key: " + toSpawn.name + " creating new pool");
         CreateNewPool(toSpawn);
         return SpawnObject(toSpawn);
 
@@ -77,12 +78,21 @@ public class PoolManager : MonoBehaviour
     private void CreateNewPool(GameObject type)
     {
         pools.Add(type.name, new Pool(5, type));
+        Debug.Log("New pool of type: " + type.name + " added");
     }
 
     public void ReturnObjectToPool(GameObject type)
     {
+        Debug.Log("returning object to pool");
         if (pools.ContainsKey(type.name))
+        {
+            Debug.Log("Containts key: " + type.name);
             pools[type.name].ReturnToPool(type);
+        }
+        else
+        {
+            Debug.Log("did not contain key: " + type.name);
+        }
     }
 
 }

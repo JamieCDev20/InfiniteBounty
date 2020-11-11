@@ -14,6 +14,11 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     private List<string> dataToSend = new List<string>();
 
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 

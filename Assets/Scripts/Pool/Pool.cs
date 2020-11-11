@@ -30,6 +30,7 @@ public struct Pool
     {
         p_objects = new HashSet<IPoolable>();
         i_aliveObjects = i_initialSize;
+        Debug.Log("initial pool size: " + i_aliveObjects);
         for(int i = 0; i < i_initialSize; i++)
         {
             AddNewObject();
@@ -38,6 +39,7 @@ public struct Pool
 
     public GameObject SpawnObject()
     {
+        Debug.Log("number of alive objects: " + i_aliveObjects + " init size: " + i_initialSize);
         if (i_aliveObjects > 0)
         {
             GameObject returnable = GetFromPool();
@@ -87,12 +89,12 @@ public struct Pool
         newGo.name = newGo.name.Replace("(Clone)", "");
         newGo.transform.parent = PoolManager.x.transform;
         IPoolable poo = newGo.GetComponent<IPoolable>();
-        Debug.Log(poo.GetGameObject().name);
         if (poo != null)
             p_objects.Add(poo);
         else
             Debug.Log("Oops... 500!");
         newGo.SetActive(false);
+        i_aliveObjects++;
         return newGo;
     }
 

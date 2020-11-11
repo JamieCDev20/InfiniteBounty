@@ -26,6 +26,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         if (!networkedCamera)
         {
             transform.root.GetComponentInChildren<PlayerInputManager>().SetCamera(this);

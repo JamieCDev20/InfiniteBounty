@@ -35,6 +35,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         networkedPlayers = FindObjectsOfType<NetworkedPlayer>();
         Connect();
     }

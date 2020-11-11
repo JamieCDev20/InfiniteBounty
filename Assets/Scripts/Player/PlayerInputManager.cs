@@ -21,6 +21,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private string s_mobilityUse = "Mobility";
     [SerializeField] private string s_leftToolUse = "LeftTool";
     [SerializeField] private string s_rightToolUse = "RightTool";
+    [SerializeField] private string s_interactButton = "Use";
 
     #endregion
 
@@ -71,6 +72,8 @@ public class PlayerInputManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        DontDestroyOnLoad(gameObject);
+
         mover = GetComponent<PlayerMover>();
 
         toolHandler = GetComponent<ToolHandler>();
@@ -107,6 +110,9 @@ public class PlayerInputManager : MonoBehaviour
         toolBools.b_RToolHold = Input.GetButton(s_rightToolUse);
         toolBools.b_RToolUp = Input.GetButtonUp(s_rightToolUse);
 
+        if (Input.GetButtonDown(s_interactButton))
+            Interact();
+
     }
 
     private void TellStuffWhatToDo()
@@ -120,6 +126,16 @@ public class PlayerInputManager : MonoBehaviour
 
         toolHandler.RecieveInputs(toolBools);
 
+    }
+
+    private void Interact()
+    {
+        RaycastHit hitInfo;
+        if(Physics.Raycast(camControl.transform.GetChild(0).position, camControl.transform.GetChild(0).forward, out hitInfo, 10))
+        {
+            IInteractible inter = hitInfo.collider.GetComponent<IInteractible>();
+            inter?.Interacted();
+        }
     }
 
     #endregion
