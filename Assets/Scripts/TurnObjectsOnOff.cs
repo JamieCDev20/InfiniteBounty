@@ -11,7 +11,12 @@ public class TurnObjectsOnOff : MonoBehaviour
     {
         for (int i = 0; i < pbA_blockades.Length; i++)
         {
-            pbA_blockades[i].goA_Obstacles[Random.Range(0, pbA_blockades[i].goA_Obstacles.Length)].SetActive(false);
+            for (int x = 0; x < Random.Range(1, pbA_blockades[i].i_maxNumberToTurnOff + 1); x++)
+            {
+                int _i_rando = Random.Range(0, pbA_blockades[i].goL_Obstacles.Count);
+                pbA_blockades[i].goL_Obstacles[_i_rando].SetActive(false);
+                pbA_blockades[i].goL_Obstacles.RemoveAt(_i_rando);
+            }
         }
     }
 }
@@ -19,5 +24,6 @@ public class TurnObjectsOnOff : MonoBehaviour
 [System.Serializable]
 public struct PathBlockades
 {
-    public GameObject[] goA_Obstacles;
+    public int i_maxNumberToTurnOff;
+    public List<GameObject> goL_Obstacles;
 }
