@@ -36,8 +36,7 @@ public class WeaponTool : ToolBase
 
     protected void OnEnable()
     {
-        // Figure out a nicer way of doing this
-        c_cam = Camera.main;
+        
     }
     public override void Use()
     {
