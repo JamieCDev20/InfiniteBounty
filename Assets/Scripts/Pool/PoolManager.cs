@@ -20,7 +20,7 @@ public class PoolManager : MonoBehaviour
     {
         // SINGLETOOOOOON
         x = this;
-
+        DontDestroyOnLoad(gameObject);
         InitialisePools();
 
     }
