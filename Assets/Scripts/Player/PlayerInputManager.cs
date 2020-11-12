@@ -27,6 +27,8 @@ public class PlayerInputManager : MonoBehaviour
 
     #region Private
 
+    private int i_playerIndex;
+
     private bool b_jumpPress;
     private bool b_jumpHold;
     private bool b_jumpRelease;
@@ -142,6 +144,14 @@ public class PlayerInputManager : MonoBehaviour
 
     #region Public Voids
 
+    public void GoToSpawnPoint()
+    {
+        foreach (GameObject spawn in TagManager.x.GetTagSet("Spawn"))
+        {
+            transform.position = spawn.transform.GetChild(i_playerIndex).position;
+        }
+    }
+
     public void SetCamera(CameraController _cam)
     {
         camControl = _cam;
@@ -150,6 +160,11 @@ public class PlayerInputManager : MonoBehaviour
         mover.SetCameraTranfsorm(camControl.transform);
         toolHandler.RecieveCameraTransform(camControl.transform);
         animator.SetCam(camControl.transform);
+    }
+
+    public void SetPlayerNumber(int _i_index)
+    {
+        i_playerIndex = _i_index;
     }
 
     #endregion
