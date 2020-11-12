@@ -16,7 +16,7 @@ public class ProjectileTool : WeaponTool
         {
             Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
             newBullet.Setup(at_augments);
-            newBullet.MoveBullet(c_cam.transform.forward, f_shotSpeed);
+            newBullet.MoveBullet(t_cam.forward, f_shotSpeed);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
         }

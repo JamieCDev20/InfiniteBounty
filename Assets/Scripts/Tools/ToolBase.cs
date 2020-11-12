@@ -13,6 +13,7 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     [SerializeField] protected bool b_purchased;
     protected bool b_usable = true;
     protected Shop s_shopRef;
+    protected Transform t_cam;
     #endregion
 
     #region Serialized Vars
@@ -62,7 +63,7 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     }
 
-    public void Purchase(GameObject _go_owner, params int[] _i_purchaseParams)
+    public void Purchase(GameObject _go_owner, Transform _t_camera, params int[] _i_purchaseParams)
     {
         // Get the tool handler and swap the tool
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
@@ -71,6 +72,7 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
             th.SwapTool((ToolSlot)_i_purchaseParams[1], this);
             s_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
+            t_cam = _t_camera;
         }
     }
 

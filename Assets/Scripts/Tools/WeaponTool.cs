@@ -27,7 +27,6 @@ public class WeaponTool : ToolBase
 
     // Detonation is if it explodes immediately, on impact or on a timer
     #region Protected
-    protected Camera c_cam;
     protected bool b_rackUpgrade = false;
     #endregion
 

@@ -37,7 +37,7 @@ public class ToolHandler : SubjectBase
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
             if (tb)
             {
-                tb.Purchase(gameObject, 0, (int)ts);
+                tb.Purchase(gameObject, t_camTransform, 0, (int)ts);
                 return true;
             }
         }
