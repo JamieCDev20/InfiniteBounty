@@ -58,8 +58,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         player.GetComponent<PhotonView>().ObservedComponents.Add(this);
         t_thisPlayer = player.transform;
         playerIM = player.GetComponent<PlayerInputManager>();
-        playerIM.GoToSpawnPoint();
         playerIM.SetPlayerNumber(playerInfo.playerID);
+        playerIM.GoToSpawnPoint();
         playerIM.SetCamera(Instantiate(playerInfo.go_camPrefab).GetComponent<CameraController>());
 
         //Debug.Log("Spawned Player Prefab");
