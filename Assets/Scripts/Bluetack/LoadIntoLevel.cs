@@ -35,7 +35,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void LoadLevel()
     {
-        if (PhotonNetwork.IsMasterClient)
+        //if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(NuggetRunName);
         }
