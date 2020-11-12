@@ -27,7 +27,7 @@ public class TurnObjectsOnOff : MonoBehaviour
         for (int i = 0; i < i_lodesToSpawn; i++)
         {
             int _i_rando = Random.Range(0, tL_lodePositions.Count);
-            Instantiate(goA_lodePrefabs[Random.Range(0, goA_lodePrefabs.Length)], tL_lodePositions[_i_rando].transform.position, new Quaternion(Random.value, Random.value, Random.value, Random.value));
+            Instantiate(goA_lodePrefabs[Random.Range(0, goA_lodePrefabs.Length)], tL_lodePositions[_i_rando].transform.position, new Quaternion(0, Random.value, 0, Random.value));
             tL_lodePositions.RemoveAt(_i_rando);
         }
 
