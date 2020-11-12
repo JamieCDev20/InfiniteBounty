@@ -9,7 +9,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     //Variables
     #region Serialised
 
-    [SerializeField] private string LobbySceneName = "Lobby Scene";
+    [SerializeField] private string LobbySceneName = "LobbyScene";
     [SerializeField] private string NuggetRunName = "Nugget Run";
 
     #endregion
