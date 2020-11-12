@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TagableObject : MonoBehaviour
+public class TaggableObject : MonoBehaviour
 {
 
     [SerializeField] private string objectTag;
