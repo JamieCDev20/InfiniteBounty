@@ -27,7 +27,7 @@ public class PlayerInputManager : MonoBehaviour
 
     #region Private
 
-    private int i_playerIndex;
+    private int playerID;
 
     private bool b_jumpPress;
     private bool b_jumpHold;
@@ -148,7 +148,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         foreach (GameObject spawn in TagManager.x.GetTagSet("Spawn"))
         {
-            transform.position = spawn.transform.GetChild(i_playerIndex).position;
+            transform.position = spawn.transform.GetChild(playerID).position;
         }
     }
 
@@ -164,7 +164,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void SetPlayerNumber(int _i_index)
     {
-        i_playerIndex = _i_index;
+        playerID = _i_index;
     }
 
     #endregion
