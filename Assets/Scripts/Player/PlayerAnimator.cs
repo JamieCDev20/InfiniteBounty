@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,6 +41,7 @@ public class PlayerAnimator : MonoBehaviour
     private void Update()
     {
         GetMovementSpeed();
+        CheckJumpAnims();
     }
 
     private void LateUpdate()
@@ -56,9 +58,15 @@ public class PlayerAnimator : MonoBehaviour
 
     #region Private Voids
 
+    private void CheckJumpAnims()
+    {
+        anim.SetBool("JumpUp", pm_inputs.b_jumpPress);
+        anim.SetBool("FlyingPose", !pm_inputs.b_grounded);
+    }
+
     private void GetMovementSpeed()
     {
-        Vector3 vec = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);        
+        Vector3 vec = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
         anim.SetFloat("X", pm_inputs.v_movementVector.x * (pm_inputs.b_sprintHold ? 2 : 1));
         anim.SetFloat("Y", pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1));
     }

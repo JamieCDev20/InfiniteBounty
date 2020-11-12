@@ -107,8 +107,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   b_networked: 1
   f_moveSpeed: 50
-  f_jumpForce: 23
   f_sprintMult: 3.5
+  f_jumpForce: 23
+  f_jumpDelay: 0
   f_gravityScale: 20
   f_plummetPoint: 20
   f_plummetMultiplier: 4.13
@@ -235,10 +236,10 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: ShootingLeft
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: JumpUp
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: FlyingPose
   m_SynchronizeLayers:
   - SynchronizeType: 2

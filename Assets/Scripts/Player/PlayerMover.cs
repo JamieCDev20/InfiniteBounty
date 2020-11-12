@@ -13,8 +13,9 @@ public class PlayerMover : MonoBehaviour
 
     [Header("Motion Variables")]
     [SerializeField] private float f_moveSpeed = 10; // How fast the player moves
-    [SerializeField] private float f_jumpForce = 10; // How high the player jumps
     [SerializeField] private float f_sprintMult = 2; // The multiplier applied to the base speed whilst sprinting;
+    [SerializeField] private float f_jumpForce = 10; // How high the player jumps
+    [SerializeField]private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
 
     [Space]
     [Header("Physics")]
@@ -28,8 +29,8 @@ public class PlayerMover : MonoBehaviour
     #region Private
 
 
-    private bool b_grounded;
-    private bool b_jumpPress;
+    internal bool b_grounded;
+    internal bool b_jumpPress;
     private bool b_jumpHold;
     private bool b_jumpUp;
     private bool b_sprintPress;
@@ -121,7 +122,13 @@ public class PlayerMover : MonoBehaviour
         if (!b_jumpPress)
             return;
         if (b_grounded)
-            rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
+            StartCoroutine(DelayedJump());
+    }
+
+    private IEnumerator DelayedJump()
+    {
+        yield return new WaitForSeconds(f_jumpDelay);
+        rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
     }
 
     /// <summary>
