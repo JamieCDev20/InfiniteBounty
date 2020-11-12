@@ -11,13 +11,13 @@ public class MainMenuController : MonoBehaviour
     private void Start()
     {
         b_onlineButton.interactable = false;
-        Invoke("EnableButtons", 2);
+        //Invoke("EnableButtons", 2);
     }
 
     internal void EnableButtons()
     {
         Debug.LogError("Did this get called when the server was reached? Probably not.");
-        b_onlineButton.interactable = true;
+        //b_onlineButton.interactable = true;
     }
 
 

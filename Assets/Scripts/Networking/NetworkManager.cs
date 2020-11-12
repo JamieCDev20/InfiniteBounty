@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -15,6 +16,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private byte maxPlayersPerRoom = 4;
     [SerializeField] private string roomName;
     [SerializeField] private GameObject UI;
+    [SerializeField] private Button PlayButton;
 
     #endregion
 
@@ -71,28 +73,29 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to the fucking masta");
+        //Debug.Log("Connected to the fucking masta");
+        PlayButton.interactable = true;
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("Lol you have no friends, Let's see if they come to you");
+        //Debug.Log("Lol you have no friends, Let's see if they come to you");
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
     }
 
     public override void OnCreatedRoom()
     {
-        Debug.Log("You da man!");
+        //Debug.Log("You da man!");
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("YAY! You're in a room");
+        //Debug.Log("YAY! You're in a room");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarning("The banhammer has spoken");
+        //Debug.LogWarning("The banhammer has spoken");
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

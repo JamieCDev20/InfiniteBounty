@@ -9,6 +9,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     //Variables
     #region Serialised
 
+    [SerializeField] private string LobbySceneName = "Lobby Scene";
     [SerializeField] private string NuggetRunName = "Nugget Run";
 
     #endregion
@@ -22,7 +23,11 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     //Methods
     #region Unity Standards
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            ReturnToShip();
+    }
 
     #endregion
 
@@ -50,6 +55,12 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
 
 
+    }
+
+    public void ReturnToShip()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel(LobbySceneName);
     }
 
     #endregion
