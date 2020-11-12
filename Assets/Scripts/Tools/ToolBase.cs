@@ -68,7 +68,7 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
         {
-            th.SwapWeapon((ToolSlot)_i_purchaseParams[1], this);
+            th.SwapTool((ToolSlot)_i_purchaseParams[1], this);
             s_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
         }
