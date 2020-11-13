@@ -40,8 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        if (PhotonNetwork.IsMasterClient)
-            PoolManager.x.InitialisePools();
+        PoolManager.x.InitialisePools();
 
     }
 
