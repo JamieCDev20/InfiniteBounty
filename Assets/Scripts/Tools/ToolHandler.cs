@@ -167,7 +167,10 @@ public class ToolHandler : SubjectBase
             // You only want to shoot when the tool isn't release activated
             if(A_tools[(int)ts] != null)
                 if (!A_tools[(int)ts].ReleaseActivated)
+                {
+                    view.RPC("UseTool", RpcTarget.Others, ts);
                     A_tools[(int)ts].Use();
+                }
         }
     }
     /// <summary>
