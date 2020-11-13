@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ToolBase : MonoBehaviour, IPurchasable
+public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 {
     #region Private Vars
 

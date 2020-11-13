@@ -61,7 +61,6 @@ public class ToolHandler : SubjectBase
     public void UseTool(ToolSlot _ts_tool)
     {
         A_tools[(int)_ts_tool].Use();
-        view.RPC("UseTool", RpcTarget.All);
     }
 
     /// <summary>
