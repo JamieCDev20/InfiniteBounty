@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 
 public class LodeBase : Enemy, IPoolable
 {
@@ -28,6 +28,10 @@ public class LodeBase : Enemy, IPoolable
 
     internal override void TakeDamage(int _i_damage)
     {
+
+        if (!photonView.IsMine)
+            return;
+
         i_currentHealth -= _i_damage;
         for (int i = 0; i < iA_healthIntervals.Length; i++)
         {
@@ -39,7 +43,11 @@ public class LodeBase : Enemy, IPoolable
             }
         }
 
+
+
         if (i_currentHealth <= 0) Death();
+
+
     }
 
     internal override void Death()
@@ -82,4 +90,16 @@ public class LodeBase : Enemy, IPoolable
     {
         return s_path;
     }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+        if (stream.IsWriting)
+            stream.SendNext(i_currentHealth);
+
+        else
+            i_currentHealth = (int)stream.ReceiveNext();
+
+    }
+
 }

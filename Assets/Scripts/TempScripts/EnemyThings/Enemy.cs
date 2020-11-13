@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviourPun, IPunObservable
 {
     [Header("Enemy Fields")]
     [SerializeField] protected int i_maxHealth;
@@ -29,6 +30,13 @@ public class Enemy : MonoBehaviour
     internal virtual void Death()
     {
         gameObject.SetActive(false);
+    }
+
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+
+
     }
 
     /*
