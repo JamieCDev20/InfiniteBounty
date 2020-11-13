@@ -9,8 +9,7 @@ public interface IPurchasable
     /// </summary>
     /// <param name="_i_cost">the const of the item</param>
     /// <param name="_i_purchaseParams">All interger parameters, always startintg with player ID and any more info needed</param>
-    void Purchase(GameObject _go_owner, Transform _t_camera, params int[] _A_params);
-    bool CheckShopType(ShopType _st_itemType);
+    void Purchase(GameObject _go_owner, Transform _t_camera, AugmentShop _sh_shopReference, params int[] _A_params);
     bool CheckPurchaseStatus();
 
     GameObject GetGameObject();

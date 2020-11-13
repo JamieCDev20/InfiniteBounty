@@ -12,7 +12,6 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     protected AugmentType[] at_augments = new AugmentType[0];
     [SerializeField] protected bool b_purchased;
     protected bool b_usable = true;
-    protected Shop s_shopRef;
     protected Transform t_cam;
     #endregion
 
@@ -23,7 +22,6 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     [SerializeField] protected AudioClip ac_activationSound;
     [SerializeField] protected AudioClip ac_hitSound;
     [SerializeField] protected AudioClip ac_diegeticAudio;
-    [SerializeField] protected ShopType st = ShopType.weapon;
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
     #endregion
@@ -51,28 +49,21 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     }
 
-    public virtual bool CheckShopType(ShopType _st_itemType)
-    {
-        if (st == _st_itemType)
-            return true;
-        return false;
-    }
-
     public void Attach()
     {
 
     }
 
-    public void Purchase(GameObject _go_owner, Transform _t_camera, params int[] _i_purchaseParams)
+    public void Purchase(GameObject _go_owner, Transform _t_camera, AugmentShop _sh_shopReference, params int[] _i_purchaseParams)
     {
         // Get the tool handler and swap the tool
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
         {
             th.SwapTool((ToolSlot)_i_purchaseParams[1], this);
-            s_shopRef.RemoveFromDisplay(this);
+            _sh_shopReference.RemoveFromDisplay(this);
             b_purchased = true;
-            t_cam = _t_camera;
+            t_cam = _t_camera.GetChild(0);
         }
     }
 
@@ -83,10 +74,6 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
     public Transform GetRaycastTransform()
     {
         return t_raycastPoint;
-    }
-    public void SetShopRef(Shop _s_shopRef)
-    {
-        s_shopRef = _s_shopRef;
     }
 
     public bool CheckPurchaseStatus()

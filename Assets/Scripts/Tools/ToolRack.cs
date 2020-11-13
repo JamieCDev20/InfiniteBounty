@@ -12,25 +12,22 @@ public class ToolRack : MonoBehaviour
 
     private void OnEnable()
     {
-        int id = FindObjectOfType<NetworkedPlayer>().PlayerID;
-        int index = 0;
-        foreach(WeaponTool tool in L_weaponTools)
+        for(int i = 0; i < L_weaponTools.Count; i++)
         {
-            tool.transform.position = L_weaponToolPos[index].transform.position;
-            if(!tool.Purchased)
-                tool.gameObject.GetComponent<MeshRenderer>().sharedMaterial = m_silhouette;
-            if (tool.RackUpgrade)
-                Instantiate(tool, L_weaponToolPos[index + 1]);
+            Debug.Log(i);
+            WeaponTool wt = Instantiate(L_weaponTools[i]);
+            wt.transform.position = L_weaponToolPos[i].position;
+            wt.transform.rotation = L_weaponToolPos[i].rotation;
+            wt.transform.parent = transform;
+            wt.gameObject.SetActive(true);
 
-            index += 2;
-        }
-        index = 0;
-        foreach(MobilityTool mtool in L_mobTools)
-        {
-            mtool.transform.position = L_mobToolPos[index].position;
-            if (!mtool.Purchased)
-                mtool.gameObject.GetComponent<MeshRenderer>().sharedMaterial = m_silhouette;
-            index++;
+            if (wt.RackUpgrade)
+            {
+                WeaponTool dupeTool = Instantiate(L_weaponTools[i]);
+                dupeTool.transform.position = L_weaponToolPos[i + 1].position;
+                dupeTool.transform.rotation = L_weaponToolPos[i + 1].rotation;
+                dupeTool.transform.parent = transform;
+            }
         }
     }
 

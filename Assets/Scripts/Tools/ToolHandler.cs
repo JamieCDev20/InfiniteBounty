@@ -31,13 +31,13 @@ public class ToolHandler : SubjectBase
         // Check for hitting a weapon
         RaycastHit hit;
         Ray ray = new Ray(t_camTransform.GetChild(0).position, t_camTransform.GetChild(0).forward);
-        Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
-            if (tb)
+            AugmentShop sr = hit.transform.root.GetComponent<AugmentShop>();
+            if (tb && sr)
             {
-                tb.Purchase(gameObject, t_camTransform, 0, (int)ts);
+                tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
                 return true;
             }
         }
