@@ -136,7 +136,6 @@ public class ToolHandler : SubjectBase
             L_ownedTools.Add(_tb_);
     }
 
-    [PunRPC]
     /// <summary>
     /// Get inputs via tool booleans
     /// </summary>
@@ -151,10 +150,23 @@ public class ToolHandler : SubjectBase
         CheckReleaseUse(ToolSlot.rightHand, _tbo_inputs.b_RToolUp);
         // Mobility checks
         CheckPressOrHoldUse(ToolSlot.moblility, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold);
-        CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_RToolUp);
+        CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_MToolUp);
 
-        view.RPC("RecieveInputs", RpcTarget.Others, _tbo_inputs);
+        view.RPC("RecieveInputs", RpcTarget.Others, _tbo_inputs.b_LToolDown, _tbo_inputs.b_LToolHold, _tbo_inputs.b_LToolUp, _tbo_inputs.b_RToolDown, _tbo_inputs.b_RToolHold, _tbo_inputs.b_RToolUp, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold, _tbo_inputs.b_MToolUp)
 
+    }
+
+    [PunRPC]
+    public void RecieveInputs(bool b_LToolDown, bool b_LToolHold, bool b_LTooUp, bool b_RToolDown, bool b_RToolHold, bool b_RTooUp, bool b_MToolDown, bool b_MToolHold, bool b_MTooUp)
+    {
+        CheckPressOrHoldUse(ToolSlot.leftHand, b_LToolDown, b_LToolHold);
+        CheckReleaseUse(ToolSlot.leftHand, b_LTooUp);
+
+        CheckPressOrHoldUse(ToolSlot.rightHand, b_RToolDown, b_RToolHold);
+        CheckReleaseUse(ToolSlot.rightHand, b_RTooUp);
+
+        CheckPressOrHoldUse(ToolSlot.moblility, b_MToolDown, b_MToolHold);
+        CheckReleaseUse(ToolSlot.moblility, b_MTooUp);
     }
 
     /// <summary>
@@ -180,6 +192,7 @@ public class ToolHandler : SubjectBase
                 }
         }
     }
+
     /// <summary>
     /// Use release based weapons
     /// </summary>
