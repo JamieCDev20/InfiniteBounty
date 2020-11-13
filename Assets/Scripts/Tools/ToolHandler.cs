@@ -18,9 +18,12 @@ public class ToolHandler : SubjectBase
     private List<ToolBase> L_ownedTools = new List<ToolBase>();
     private NetworkedPlayer np_network;
     private Transform t_camTransform;
+    private PhotonView view;
+
     private void Start()
     {
         np_network = GetComponent<NetworkedPlayer>();
+        view = GetComponent<PhotonView>();
     }
 
     /// <summary>
@@ -58,7 +61,7 @@ public class ToolHandler : SubjectBase
     public void UseTool(ToolSlot _ts_tool)
     {
         A_tools[(int)_ts_tool].Use();
-        photonView.RPC("UseTool", RpcTarget.All);
+        view.RPC("UseTool", RpcTarget.All);
     }
 
     /// <summary>
