@@ -21,14 +21,13 @@ public class PoolManager : MonoBehaviour
         // SINGLETOOOOOON
         x = this;
         DontDestroyOnLoad(gameObject);
-        InitialisePools();
 
     }
 
     /// <summary>
     /// Make all the pools spawn load their assigned number of objects
     /// </summary>
-    private void InitialisePools()
+    public void InitialisePools()
     {
         // Each pool is initialised during loading
         foreach (Pool p in pools.Values)

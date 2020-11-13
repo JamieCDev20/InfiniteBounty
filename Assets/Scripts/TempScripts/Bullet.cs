@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private GameObject go_hitEffect;
     [SerializeField] private LayerMask lm_placementLayer;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private bool b_isNetworkedObject = true;
+    [SerializeField] private string s_resourcePath;
 
     [Header("TrailEffects")]
     [SerializeField] private TrailRenderer tr_bulletTrail;
@@ -165,6 +167,16 @@ public class Bullet : MonoBehaviour, IPoolable
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    public bool IsNetworkedObject()
+    {
+        return b_isNetworkedObject;
+    }
+
+    public string ResourcePath()
+    {
+        return s_resourcePath;
     }
 
     #endregion

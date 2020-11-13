@@ -6,4 +6,8 @@ public interface IPoolable
 {
     GameObject GetGameObject();
     void Die();
+    bool IsNetworkedObject();
+
+    string ResourcePath();
+
 }

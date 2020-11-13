@@ -536,6 +536,8 @@ GameObject:
   - component: {fileID: 1058634247351117144}
   - component: {fileID: 4762224859139194053}
   - component: {fileID: 6009295706343141955}
+  - component: {fileID: -6206665838947740780}
+  - component: {fileID: -4290140436496095333}
   m_Layer: 11
   m_Name: GrenadePrefab
   m_TagString: Untagged
@@ -595,10 +597,12 @@ MonoBehaviour:
   lm_placementLayer:
     serializedVersion: 2
     m_Bits: 6144
+  rb: {fileID: 6552215280730498157}
+  b_isNetworkedObject: 1
+  s_resourcePath: NetworkPrefabs\Bullets\
   tr_bulletTrail: {fileID: 0}
   go_flameTrails: {fileID: 4379954801780690509}
   go_electricTrails: {fileID: 3888709349261589116}
-  rb: {fileID: 6552215280730498157}
 --- !u!135 &4762224859139194053
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -638,6 +642,43 @@ MonoBehaviour:
   ue_waterTrigger:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-6206665838947740780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6714505186059660760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-4290140436496095333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6714505186059660760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &7448264560209491572
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class Pool
 {
     [SerializeField] private GameObject go_poolType;
     [SerializeField] private int i_initialSize;
+    private bool b_isNetworkedPool;
+    private string s_path;
     private HashSet<IPoolable> p_objects;
     private int i_aliveObjects;
 
@@ -35,6 +38,8 @@ public class Pool
     {
         // Create a new pool
         p_objects = new HashSet<IPoolable>();
+        b_isNetworkedPool = go_poolType.GetComponent<IPoolable>().IsNetworkedObject();
+        s_path = go_poolType.GetComponent<IPoolable>().ResourcePath();
         i_aliveObjects = i_initialSize;
         // Create as many objects as your initial size
         for (int i = 0; i < i_initialSize; i++)
@@ -113,7 +118,12 @@ public class Pool
         if (p_objects == null)
             p_objects = new HashSet<IPoolable>();
         // Create a new object
-        GameObject newGo = GameObject.Instantiate(go_poolType);
+        GameObject newGo;
+        //If the object is a networked object then spawn it across the network. Otherwise, don't
+        if (b_isNetworkedPool)
+            newGo = PhotonNetwork.Instantiate(string.Format("{0}{1}", s_path, go_poolType.name), PoolManager.x.transform.position, Quaternion.identity);
+        else
+            newGo = GameObject.Instantiate(go_poolType);
         newGo.transform.parent = PoolManager.x.transform;
         // Make the object searchable
         newGo.name = newGo.name.Replace("(Clone)", "");

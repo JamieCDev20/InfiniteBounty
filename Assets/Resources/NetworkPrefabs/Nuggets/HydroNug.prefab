@@ -12,11 +12,13 @@ GameObject:
   - component: {fileID: 5707692845772861641}
   - component: {fileID: 4468070524712238798}
   - component: {fileID: 6741355650731856494}
-  - component: {fileID: 8969409093736459329}
-  - component: {fileID: 5953175006165985244}
-  - component: {fileID: -1201165320458629289}
+  - component: {fileID: 6027898347439800099}
+  - component: {fileID: 452049150387631478}
+  - component: {fileID: -2929627952763993648}
+  - component: {fileID: 3070578045775393148}
+  - component: {fileID: 7596710111673693110}
   m_Layer: 9
-  m_Name: ThunderNug
+  m_Name: HydroNug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +50,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.4, z: 0.1}
+  m_Size: {x: 0.3, y: 0.4, z: 0.1}
   m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!54 &4468070524712238798
 Rigidbody:
@@ -79,7 +81,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8969409093736459329
+--- !u!114 &6027898347439800099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,8 +94,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   b_fire: 0
-  b_electric: 1
-  b_water: 0
+  b_electric: 0
+  b_water: 1
   b_goo: 0
   b_gas: 0
   ue_fireTrigger:
@@ -105,7 +107,7 @@ MonoBehaviour:
   ue_waterTrigger:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5953175006165985244
+--- !u!114 &452049150387631478
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,11 +119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf830ba356120c343bbf587e88118e0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nug: {fileID: 11400000, guid: 6b7a861f624e02344b188ac3d6d4c59f, type: 2}
+  nug: {fileID: 11400000, guid: 30d2edfaea867914c91a7e3b872e43f3, type: 2}
   f_nugTimeout: 15
-  go_pickupParticles: {fileID: 8395573495710605274, guid: df3485e73776be24ba91cd864c8a6284,
+  go_pickupParticles: {fileID: 5997212070526660645, guid: 7b86f58662341cb449d34d608e4c85c5,
     type: 3}
---- !u!114 &-1201165320458629289
+  b_isNetworkedObject: 1
+  s_resourcePath: NetworkPrefabs\Nuggets\
+--- !u!114 &-2929627952763993648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,6 +138,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTag: Nug
+--- !u!114 &3070578045775393148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720207710688081759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &7596710111673693110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720207710688081759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &3610510006417795301
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +214,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3610510006417795301}
-  m_Mesh: {fileID: 7872534335570606024, guid: 5ecf4609c4eb6e14f97474716f75338c, type: 3}
+  m_Mesh: {fileID: -86609934849095889, guid: 01a00c97ffe419a48a2d18d89df1268c, type: 3}
 --- !u!23 &9139580537270592938
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -192,7 +233,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 535598b91562ecf409649ac35eefe347, type: 2}
+  - {fileID: 2100000, guid: fc08448a8cdbe574f8b6e6e7dfe72b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

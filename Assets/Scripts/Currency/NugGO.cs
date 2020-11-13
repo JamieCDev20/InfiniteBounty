@@ -7,7 +7,9 @@ public class NugGO : SubjectBase, IPoolable
     #region Serialized Variables
     [SerializeField] public Nug nug;
     [SerializeField] private float f_nugTimeout;
-    [SerializeField] GameObject go_pickupParticles;
+    [SerializeField] private GameObject go_pickupParticles;
+    [SerializeField] private bool b_isNetworkedObject = true;
+    [SerializeField] private string s_resourcePath;
     #endregion
 
     #region Private Variables
@@ -55,4 +57,15 @@ public class NugGO : SubjectBase, IPoolable
     {
         return gameObject;
     }
+
+    public bool IsNetworkedObject()
+    {
+        return b_isNetworkedObject;
+    }
+
+    public string ResourcePath()
+    {
+        return s_resourcePath;
+    }
+
 }
