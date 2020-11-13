@@ -109,7 +109,7 @@ public class PlayerMover : MonoBehaviour
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
             rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime * (b_sprintHold ? f_sprintMult : 1), ForceMode.Impulse);
-            transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(Camera.main.transform.forward, Vector3.one - Vector3.up), 0.3f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
+            transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.3f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
 
         }
     }
