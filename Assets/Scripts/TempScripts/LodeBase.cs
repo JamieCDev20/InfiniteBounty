@@ -43,10 +43,13 @@ public class LodeBase : Enemy, IPoolable
             }
         }
 
+        CheckHealth();
 
+    }
 
+    private void CheckHealth()
+    {
         if (i_currentHealth <= 0) Death();
-
 
     }
 
@@ -98,7 +101,10 @@ public class LodeBase : Enemy, IPoolable
             stream.SendNext(i_currentHealth);
 
         else
+        {
             i_currentHealth = (int)stream.ReceiveNext();
+            CheckHealth();
+        }
 
     }
 

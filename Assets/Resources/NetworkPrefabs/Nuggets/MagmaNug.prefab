@@ -15,8 +15,6 @@ GameObject:
   - component: {fileID: 4673393733225711484}
   - component: {fileID: 126883402041327267}
   - component: {fileID: -2242082669688494291}
-  - component: {fileID: 4519640027043659613}
-  - component: {fileID: -5535183070989708671}
   m_Layer: 9
   m_Name: MagmaNug
   m_TagString: Untagged
@@ -124,7 +122,7 @@ MonoBehaviour:
   f_nugTimeout: 15
   go_pickupParticles: {fileID: 1541808828927792969, guid: cdc17f2457bcbc642897424289c0d674,
     type: 3}
-  b_isNetworkedObject: 1
+  b_isNetworkedObject: 0
   s_resourcePath: NetworkPrefabs\Nuggets\
 --- !u!114 &-2242082669688494291
 MonoBehaviour:
@@ -139,44 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTag: Nug
---- !u!114 &4519640027043659613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: -5535183070989708671}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &-5535183070989708671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 0
-  m_SynchronizeScale: 0
 --- !u!1 &3610510006417795301
 GameObject:
   m_ObjectHideFlags: 0

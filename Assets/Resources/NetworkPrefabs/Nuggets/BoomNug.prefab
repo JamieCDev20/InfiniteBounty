@@ -16,8 +16,6 @@ GameObject:
   - component: {fileID: 4754802290386555026}
   - component: {fileID: -727818558461798133}
   - component: {fileID: 861829473884755539}
-  - component: {fileID: 8386252679664594360}
-  - component: {fileID: 8423262796485257844}
   m_Layer: 9
   m_Name: BoomNug
   m_TagString: Untagged
@@ -149,7 +147,7 @@ MonoBehaviour:
   f_nugTimeout: 15
   go_pickupParticles: {fileID: 1628413102660172872, guid: 9ed3220cbf3e5724088510e359b8ebab,
     type: 3}
-  b_isNetworkedObject: 1
+  b_isNetworkedObject: 0
   s_resourcePath: NetworkPrefabs\Nuggets\
 --- !u!114 &861829473884755539
 MonoBehaviour:
@@ -164,43 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTag: Nug
---- !u!114 &8386252679664594360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &8423262796485257844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!1 &3610510006417795301
 GameObject:
   m_ObjectHideFlags: 0
