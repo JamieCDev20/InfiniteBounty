@@ -28,8 +28,6 @@ public class Randomness : MonoBehaviour
     private void Start()
     {
 
-        PoolManager.x.InitialisePools();
-
         if(randomSeed)
             seed = Random.Range(0, 1000000);
         Random.InitState(seed);
