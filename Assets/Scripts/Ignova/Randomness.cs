@@ -55,7 +55,7 @@ public class Randomness : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int num = Mathf.RoundToInt(Lt_lodeSpawns.Count - 1);
-            PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(RandomValue(lodes.Length - 1))], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
+            PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(RandomValue(lodes.Length - 1))], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up)).GetComponent<PhotonTransformView>().enabled = false;
             Lt_lodeSpawns.RemoveAt(num);
         }
     }
