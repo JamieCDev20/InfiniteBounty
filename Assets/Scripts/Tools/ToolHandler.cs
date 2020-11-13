@@ -37,6 +37,11 @@ public class ToolHandler : SubjectBase
             Shop sr = hit.transform.root.GetComponent<Shop>();
             if (tb != null)
             {
+                if (tb.CheckPurchaseStatus())
+                {
+                    SwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>());
+                    return true;
+                }
                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
                 return true;
             }
@@ -180,5 +185,9 @@ public class ToolHandler : SubjectBase
     public void RecieveCameraTransform(Transform _t_cam)
     {
         t_camTransform = _t_cam;
+    }
+    public bool CheckInTools(ToolBase _tb_checker)
+    {
+        return L_ownedTools.Contains(_tb_checker);
     }
 }

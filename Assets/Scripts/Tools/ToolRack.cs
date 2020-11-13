@@ -12,20 +12,38 @@ public class ToolRack : Shop
 
     private void OnEnable()
     {
+        ToolHandler playerRef = null;
+        if (FindObjectOfType<NetworkedPlayer>())
+        {
+            playerRef = FindObjectOfType<NetworkedPlayer>().GetComponent<ToolHandler>();
+        }
         for(int i = 0; i < L_weaponTools.Count; i++)
         {
-            WeaponTool wt = Instantiate(L_weaponTools[i]);
-            wt.transform.position = L_weaponToolPos[i*2].position;
-            wt.transform.rotation = L_weaponToolPos[i*2].rotation;
-            wt.transform.parent = transform;
-            wt.gameObject.SetActive(true);
-
-            if (wt.RackUpgrade)
+            if (playerRef)
             {
-                WeaponTool dupeTool = Instantiate(L_weaponTools[i]);
-                dupeTool.transform.position = L_weaponToolPos[i*2 + 1].position;
-                dupeTool.transform.rotation = L_weaponToolPos[i*2 + 1].rotation;
-                dupeTool.transform.parent = transform;
+                if (playerRef.CheckInTools(L_weaponTools[i]))
+                {
+                    WeaponTool wt = Instantiate(L_weaponTools[i]);
+                    wt.transform.position = L_weaponToolPos[i*2].position;
+                    wt.transform.rotation = L_weaponToolPos[i*2].rotation;
+                    wt.transform.parent = transform;
+                    wt.gameObject.SetActive(true);
+                    if (wt.RackUpgrade)
+                    {
+                        WeaponTool dupeTool = Instantiate(L_weaponTools[i]);
+                        dupeTool.transform.position = L_weaponToolPos[i*2 + 1].position;
+                        dupeTool.transform.rotation = L_weaponToolPos[i*2 + 1].rotation;
+                        dupeTool.transform.parent = transform;
+                    }
+                }
+            }
+            else
+            {
+                WeaponTool wt = Instantiate(L_weaponTools[i]);
+                wt.transform.position = L_weaponToolPos[i * 2].position;
+                wt.transform.rotation = L_weaponToolPos[i * 2].rotation;
+                wt.transform.parent = transform;
+                wt.gameObject.SetActive(true);
             }
         }
     }
