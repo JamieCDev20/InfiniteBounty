@@ -21,13 +21,10 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private string s_mobilityUse = "Mobility";
     [SerializeField] private string s_leftToolUse = "LeftTool";
     [SerializeField] private string s_rightToolUse = "RightTool";
-    [SerializeField] private string s_interactButton = "Use";
 
     #endregion
 
     #region Private
-
-    private int playerID;
 
     private bool b_jumpPress;
     private bool b_jumpHold;
@@ -74,8 +71,6 @@ public class PlayerInputManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        DontDestroyOnLoad(gameObject);
-
         mover = GetComponent<PlayerMover>();
 
         toolHandler = GetComponent<ToolHandler>();
@@ -112,9 +107,6 @@ public class PlayerInputManager : MonoBehaviour
         toolBools.b_RToolHold = Input.GetButton(s_rightToolUse);
         toolBools.b_RToolUp = Input.GetButtonUp(s_rightToolUse);
 
-        if (Input.GetButtonDown(s_interactButton))
-            Interact();
-
     }
 
     private void TellStuffWhatToDo()
@@ -130,27 +122,9 @@ public class PlayerInputManager : MonoBehaviour
 
     }
 
-    private void Interact()
-    {
-        RaycastHit hitInfo;
-        if(Physics.Raycast(camControl.transform.GetChild(0).position, camControl.transform.GetChild(0).forward, out hitInfo, 10))
-        {
-            IInteractible inter = hitInfo.collider.GetComponent<IInteractible>();
-            inter?.Interacted();
-        }
-    }
-
     #endregion
 
     #region Public Voids
-
-    public void GoToSpawnPoint()
-    {
-        foreach (GameObject spawn in TagManager.x.GetTagSet("Spawn"))
-        {
-            transform.position = spawn.transform.GetChild(playerID).position;
-        }
-    }
 
     public void SetCamera(CameraController _cam)
     {
@@ -160,11 +134,6 @@ public class PlayerInputManager : MonoBehaviour
         mover.SetCameraTranfsorm(camControl.transform);
         toolHandler.RecieveCameraTransform(camControl.transform);
         animator.SetCam(camControl.transform);
-    }
-
-    public void SetPlayerNumber(int _i_index)
-    {
-        playerID = _i_index;
     }
 
     #endregion

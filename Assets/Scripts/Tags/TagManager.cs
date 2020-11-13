@@ -39,7 +39,7 @@ public class TagManager : MonoBehaviour
     private void GetAllTaggedObjects()
     {
 
-        foreach (TaggableObject t in FindObjectsOfType<TaggableObject>())
+        foreach (TagableObject t in FindObjectsOfType<TagableObject>())
         {
             AddTaggedObject(t);
         }
@@ -50,7 +50,7 @@ public class TagManager : MonoBehaviour
 
     #region Public Voids
 
-    public void AddTaggedObject(TaggableObject _t)
+    public void AddTaggedObject(TagableObject _t)
     {
         if (taggedObjects.ContainsKey(_t.GetTag()))
         {
@@ -62,7 +62,7 @@ public class TagManager : MonoBehaviour
         }
     }
 
-    public void RemoveTaggedObject(TaggableObject _t)
+    public void RemoveTaggedObject(TagableObject _t)
     {
         if (taggedObjects.ContainsKey(_t.GetTag()))
         {

@@ -12,7 +12,6 @@ public class ToolRack : MonoBehaviour
 
     private void OnEnable()
     {
-        int id = FindObjectOfType<NetworkedPlayer>().PlayerID;
         int index = 0;
         foreach(WeaponTool tool in L_weaponTools)
         {

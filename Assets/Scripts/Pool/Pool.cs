@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Pool
+public struct Pool
 {
     [SerializeField] private GameObject go_poolType;
     [SerializeField] private int i_initialSize;
+    Transform t_spawnPoint;
     private HashSet<IPoolable> p_objects;
     private int i_aliveObjects;
 
-    /// <summary>
-    /// Set the pools initial values and then initialise the pool
-    /// </summary>
-    /// <param name="size">Heft of the pool</param>
-    /// <param name="type">Object of the pool</param>
     public Pool(int size, GameObject type)
     {
         go_poolType = type;
         i_initialSize = size;
+        t_spawnPoint = PoolManager.x.transform;
         p_objects = new HashSet<IPoolable>();
-        i_aliveObjects = size;
-        InitializePool();
+        i_aliveObjects = 0;
+        InitializePool(t_spawnPoint);
     }
 
     /// <summary>
@@ -31,97 +28,64 @@ public class Pool
     /// <param name="_p_pooledObjects">If the object is poolable</param>
     /// <param name="_i_size">The initial size of the pool</param>
     /// <param name="_t_spawnPoint">The pools transform</param>
-    public void InitializePool()
+    public void InitializePool(Transform _t_spawnPoint)
     {
-        // Create a new pool
         p_objects = new HashSet<IPoolable>();
         i_aliveObjects = i_initialSize;
-        // Create as many objects as your initial size
-        for (int i = 0; i < i_initialSize; i++)
+        t_spawnPoint = _t_spawnPoint;
+        for(int i = 0; i < i_initialSize; i++)
         {
             AddNewObject();
         }
     }
 
-    /// <summary>
-    /// Pull an object from a pool or create a new one
-    /// </summary>
-    /// <returns>An object of the pools type</returns>
     public GameObject SpawnObject()
     {
-        // Objects need to be alive to be spawned
         if (i_aliveObjects > 0)
         {
-            // Objects need to exist in order to spawn
             GameObject returnable = GetFromPool();
             if (returnable != null)
-            {
-                // Remove the object from the pool
-                i_aliveObjects--;
-                returnable.transform.parent = null;
                 return returnable;
-            }
         }
-        // Create a new object because you haven't found one
         GameObject newGo = AddNewObject();
         newGo.SetActive(true);
         return newGo;
     }
 
-    /// <summary>
-    /// Find an available object
-    /// </summary>
-    /// <returns>Next available object</returns>
     private GameObject GetFromPool()
     {
-        // Check each object to see if it's currently active
         foreach (IPoolable poo in p_objects)
         {
             if (!poo.GetGameObject().activeInHierarchy)
             {
-                // Pop that bidness from the pool
-                poo.GetGameObject().SetActive(true);
-                poo.GetGameObject().transform.parent = null;
-                return poo.GetGameObject();
+                i_aliveObjects--;
+                GameObject pooGo = poo.GetGameObject();
+                pooGo.SetActive(true);
+                pooGo.transform.parent = null;
+                return pooGo;
             }
         }
-        // If ya here you didn't find anything
         return null;
     }
 
-    /// <summary>
-    /// Send objects to bed (Throw it back into the pool)
-    /// </summary>
-    /// <param name="go_objectToPool">Object to be set back into the pool</param>
     public void ReturnToPool(GameObject go_objectToPool)
     {
-        // The object gets sent back to the pool
-        go_objectToPool.transform.position = PoolManager.x.transform.position;
-        go_objectToPool.transform.parent = PoolManager.x.transform;
+        go_objectToPool.transform.position = t_spawnPoint.position;
+        go_objectToPool.transform.parent = t_spawnPoint;
         go_objectToPool.SetActive(false);
-        // Iterate the objects back up
         i_aliveObjects++;
     }
 
-    /// <summary>
-    /// Add a new object to the pool
-    /// </summary>
-    /// <returns>a new game object</returns>
     private GameObject AddNewObject()
     {
-        // Create a new pool when one doesn't exist
-        if (p_objects == null)
-            p_objects = new HashSet<IPoolable>();
-        // Create a new object
         GameObject newGo = GameObject.Instantiate(go_poolType);
-        newGo.transform.parent = PoolManager.x.transform;
-        // Make the object searchable
         newGo.name = newGo.name.Replace("(Clone)", "");
         IPoolable poo = newGo.GetComponent<IPoolable>();
-        // Store the object in the pool
+        Debug.Log(poo.GetGameObject().name);
         if (poo != null)
             p_objects.Add(poo);
-        // Disable it
+        else
+            Debug.Log("Oops... 500!");
         newGo.SetActive(false);
         return newGo;
     }

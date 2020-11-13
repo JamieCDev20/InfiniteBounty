@@ -31,7 +31,7 @@ public class NugGO : SubjectBase, IPoolable
     {
         if (other.transform.tag == "Player")
         {
-            GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles);
+            GameObject particlesToPlay = OldPoolManager.x.SpawnNewObject(go_pickupParticles, transform.position, transform.rotation);
             if (other.GetComponent<PlayerController>() != null)
             {
                 CurrencyEvent ce = new CurrencyEvent(other.GetComponent<PlayerController>().ID, nug.i_worth, true);

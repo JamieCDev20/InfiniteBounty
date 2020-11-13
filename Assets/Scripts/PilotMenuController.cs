@@ -4,27 +4,6 @@ using UnityEngine;
 
 public class PilotMenuController : MonoBehaviour
 {
-
-    [SerializeField] private GameObject[] goA_pilotCanvases = new GameObject[2];
-
-
-    private void Start()
-    {
-        for (int i = 0; i < goA_pilotCanvases.Length; i++)
-        {
-            goA_pilotCanvases[i].SetActive(false);
-        }
-    }
-
-    internal void BeginPiloting()
-    {
-        print("How did you trigger this, cause I didn't?");
-        for (int i = 0; i < goA_pilotCanvases.Length; i++)
-        {
-            goA_pilotCanvases[i].SetActive(true);
-        }
-    }
-
     #region Gamemodes
 
     public void SelectedNuggetRun()
@@ -35,11 +14,6 @@ public class PilotMenuController : MonoBehaviour
     public void SelectedMotherlode()
     {
         print("Should've selected Motherlode");
-    }
-
-    public void SelectedUhhh()
-    {
-        print("Uhh...");
     }
 
     #endregion

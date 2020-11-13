@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +20,6 @@ public class PlayerAnimator : MonoBehaviour
 
     private bool b_doIK = true; //Pronounced like palpatine says "Do it" but with a 'K' not a 'T'
 
-    private PlayerMover pm_inputs;
     private Transform camTransform;
     private Animator anim;
     private Rigidbody rb;
@@ -35,13 +33,11 @@ public class PlayerAnimator : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        pm_inputs = GetComponent<PlayerMover>();
     }
 
     private void Update()
     {
         GetMovementSpeed();
-        CheckJumpAnims();
     }
 
     private void LateUpdate()
@@ -58,17 +54,11 @@ public class PlayerAnimator : MonoBehaviour
 
     #region Private Voids
 
-    private void CheckJumpAnims()
-    {
-        anim.SetBool("JumpUp", pm_inputs.b_jumpPress);
-        anim.SetBool("FlyingPose", !pm_inputs.b_grounded);
-    }
-
     private void GetMovementSpeed()
     {
         Vector3 vec = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
-        anim.SetFloat("X", pm_inputs.v_movementVector.x * (pm_inputs.b_sprintHold ? 2 : 1));
-        anim.SetFloat("Y", pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1));
+        anim.SetFloat("X", transform.InverseTransformDirection(vec).x * 10);
+        anim.SetFloat("Y", transform.InverseTransformDirection(vec).z * 10);
     }
 
     private void MakeAnArmDoTheRightThing(Transform arm, int fix)

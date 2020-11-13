@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2171003126382099}
-  - component: {fileID: 1687011530}
+  - component: {fileID: 8783428939019154988}
+  - component: {fileID: 2171003126382098}
   m_Layer: 0
   m_Name: PoolManager
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1687011530
+--- !u!114 &8783428939019154988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,45 +41,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2171003126382093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24fedaa268fa6d84cbfcd1e70961a12f, type: 3}
+  m_Script: {fileID: 11500000, guid: c51f0bffcb7f73444afd2f5b27178c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pools:
-    m_keys:
-    - BoomNug
-    - GooNug
-    - HydroNug
-    - MagmaNug
-    - TastyNug
-    - ThunderNug
-    - Bullet
-    - GrenadePrefab
-    - PelletPrefab
-    m_values:
-    - go_poolType: {fileID: 2720207710688081759, guid: 134c4967d8d4c93428fbef74d9d0417f,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 2720207710688081759, guid: e5e31d8ee6d731043b3acfbcc3989f05,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 2720207710688081759, guid: 645891066d588dc45855f95c68dfa9ce,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 2720207710688081759, guid: 24039ae7894c78440a81ecdcfdadf45b,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 2720207710688081759, guid: 30118d63e9297df4e8a836c2d56b9967,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 2720207710688081759, guid: 6e51cf1360c62b44b8ceaffb885a2a82,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 6714505186059660760, guid: 28584f6847a727945aeef6508171489a,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 6714505186059660760, guid: df2655f931c3d344cb7eca347f81f1e4,
-        type: 3}
-      i_initialSize: 15
-    - go_poolType: {fileID: 6714505186059660760, guid: 170710955e5c7cc4eaa4cff43e3d9ac7,
-        type: 3}
-      i_initialSize: 15
+  i_playerID: 0
+  t_nugText: {fileID: 0}
+--- !u!114 &2171003126382098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2171003126382093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65b4524d7943f644bf84ec1ece1c087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pA_pools:
+  - i_size: 50
+    type: {fileID: 6714505186059660760, guid: 28584f6847a727945aeef6508171489a, type: 3}
+  - i_size: 50
+    type: {fileID: 6714505186059660760, guid: df2655f931c3d344cb7eca347f81f1e4, type: 3}
+  - i_size: 50
+    type: {fileID: 6714505186059660760, guid: 170710955e5c7cc4eaa4cff43e3d9ac7, type: 3}

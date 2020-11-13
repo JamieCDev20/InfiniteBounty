@@ -37,7 +37,7 @@ public class ToolHandler : SubjectBase
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
             if (tb)
             {
-                tb.Purchase(gameObject, t_camTransform, 0, (int)ts);
+                tb.Purchase(gameObject, 0, (int)ts);
                 return true;
             }
         }
@@ -58,7 +58,7 @@ public class ToolHandler : SubjectBase
     /// </summary>
     /// <param name="_b_left">Left or right hand</param>
     /// <param name="_tb_tool">Tool to attach</param>
-    public void SwapTool(ToolSlot _ts_slot, ToolBase _tb_tool)
+    public void SwapWeapon(ToolSlot _ts_slot, ToolBase _tb_tool)
     {
         // Cast weapons to correct types and assign to correct slot
         switch (_ts_slot)
