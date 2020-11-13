@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 4762224859139194053}
   - component: {fileID: 6009295706343141955}
   - component: {fileID: 913022606293594103}
-  - component: {fileID: 4737618095416148051}
+  - component: {fileID: -8818236612072523832}
   m_Layer: 11
   m_Name: PelletPrefab
   m_TagString: Untagged
@@ -354,11 +354,12 @@ MonoBehaviour:
   observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4737618095416148051
+--- !u!114 &-8818236612072523832
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,12 +368,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6714505186059660760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &6904237961815776542
 GameObject:
   m_ObjectHideFlags: 0
