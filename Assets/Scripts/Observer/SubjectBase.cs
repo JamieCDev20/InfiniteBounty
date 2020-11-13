@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubjectBase : MonoBehaviour
+public class SubjectBase : MonoBehaviourPun
 {
     private List<ObserverBase> L_observers = new List<ObserverBase>();
     
