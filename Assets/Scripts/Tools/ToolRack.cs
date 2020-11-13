@@ -24,6 +24,7 @@ public class ToolRack : Shop
                 if (playerRef.CheckInTools(L_weaponTools[i]))
                 {
                     WeaponTool wt = Instantiate(L_weaponTools[i]);
+                    wt.RackUpgrade = playerRef.CheckIfRackUpgraded(wt);
                     wt.transform.position = L_weaponToolPos[i*2].position;
                     wt.transform.rotation = L_weaponToolPos[i*2].rotation;
                     wt.transform.parent = transform;
