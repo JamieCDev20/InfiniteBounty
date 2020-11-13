@@ -63,6 +63,7 @@ public class ToolHandler : SubjectBase
         A_tools[(int)_ts_tool].Use();
     }
 
+    [PunRPC]
     /// <summary>
     /// Swap weapons based on which type it is and/or what hand it should be in
     /// </summary>
@@ -112,6 +113,9 @@ public class ToolHandler : SubjectBase
             default:
                 break;
         }
+
+        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _tb_tool);
+
     }
     private void RemoveTool(ToolSlot _ts_)
     {
@@ -122,7 +126,6 @@ public class ToolHandler : SubjectBase
         }
     }
 
-    [PunRPC]
     private void AddTool(ToolSlot _ts_, ToolBase _tb_)
 
     {
