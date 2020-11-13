@@ -150,7 +150,7 @@ public class GoapAgent : MonoBehaviour
             return;
         transform.LookAt(_target);
 
-        GameObject b = OldPoolManager.x.SpawnNewObject(bulletPrefab, transform.position + transform.forward + Vector3.up, transform.rotation);
+        GameObject b = PoolManager.x.SpawnObject(bulletPrefab, transform.position + transform.forward + Vector3.up, transform.rotation);
         b.GetComponent<Rigidbody>().AddForce(transform.forward * 15, ForceMode.Impulse);
         StartCoroutine(ShootCooldown());
         Replan();

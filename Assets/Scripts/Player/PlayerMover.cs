@@ -13,7 +13,9 @@ public class PlayerMover : MonoBehaviour
 
     [Header("Motion Variables")]
     [SerializeField] private float f_moveSpeed = 10; // How fast the player moves
+    [SerializeField] private float f_sprintMult = 2; // The multiplier applied to the base speed whilst sprinting;
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
+    [SerializeField]private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
 
     [Space]
     [Header("Physics")]
@@ -27,14 +29,14 @@ public class PlayerMover : MonoBehaviour
     #region Private
 
 
-    private bool b_grounded;
-    private bool b_jumpPress;
+    internal bool b_grounded;
+    internal bool b_jumpPress;
     private bool b_jumpHold;
     private bool b_jumpUp;
     private bool b_sprintPress;
-    private bool b_sprintHold;
+    internal bool b_sprintHold;
     private bool b_sprintUp;
-    private Vector3 v_movementVector; // The direction the player is inputting
+    internal Vector3 v_movementVector; // The direction the player is inputting
     private Vector3 v_startPos;
     private Rigidbody rb;
     private Transform t_camTransform;
@@ -63,7 +65,7 @@ public class PlayerMover : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if(!b_grounded)
+        if (!b_grounded)
             ApplyGravity();
 
         ApplyDrag();
@@ -104,10 +106,10 @@ public class PlayerMover : MonoBehaviour
     private void ApplyMovement()
     {
         Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up);
-        if(v_movementVector.sqrMagnitude > 0.25f)
+        if (v_movementVector.sqrMagnitude > 0.25f)
         {
-            rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime, ForceMode.Impulse);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
+            rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime * (b_sprintHold ? f_sprintMult : 1), ForceMode.Impulse);
+            transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(Camera.main.transform.forward, Vector3.one - Vector3.up), 0.3f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
 
         }
     }
@@ -120,7 +122,13 @@ public class PlayerMover : MonoBehaviour
         if (!b_jumpPress)
             return;
         if (b_grounded)
-            rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
+            StartCoroutine(DelayedJump());
+    }
+
+    private IEnumerator DelayedJump()
+    {
+        yield return new WaitForSeconds(f_jumpDelay);
+        rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
     }
 
     /// <summary>
@@ -141,8 +149,8 @@ public class PlayerMover : MonoBehaviour
 
     private void ResetIfOffMap()
     {
-        
-        if(transform.position.y< -25)
+
+        if (transform.position.y < -25)
         {
             transform.position = v_startPos + (Vector3.up * 5);
         }
