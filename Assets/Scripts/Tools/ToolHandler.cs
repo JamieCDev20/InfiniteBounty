@@ -63,7 +63,6 @@ public class ToolHandler : SubjectBase
         A_tools[(int)_ts_tool].Use();
     }
 
-    [PunRPC]
     /// <summary>
     /// Swap weapons based on which type it is and/or what hand it should be in
     /// </summary>
@@ -137,6 +136,7 @@ public class ToolHandler : SubjectBase
             L_ownedTools.Add(_tb_);
     }
 
+    [PunRPC]
     /// <summary>
     /// Get inputs via tool booleans
     /// </summary>
@@ -152,6 +152,8 @@ public class ToolHandler : SubjectBase
         // Mobility checks
         CheckPressOrHoldUse(ToolSlot.moblility, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold);
         CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_RToolUp);
+
+        view.RPC("RecieveInputs", RpcTarget.Others, _tbo_inputs);
 
     }
 
