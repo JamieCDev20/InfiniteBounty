@@ -54,14 +54,14 @@ public abstract class ToolBase : MonoBehaviour, IPurchasable
 
     }
 
-    public void Purchase(GameObject _go_owner, Transform _t_camera, AugmentShop _sh_shopReference, params int[] _i_purchaseParams)
+    public void Purchase(GameObject _go_owner, Transform _t_camera, Shop _sh_shopRef, params int[] _i_purchaseParams)
     {
         // Get the tool handler and swap the tool
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
         {
             th.SwapTool((ToolSlot)_i_purchaseParams[1], this);
-            _sh_shopReference.RemoveFromDisplay(this);
+            _sh_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
             t_cam = _t_camera.GetChild(0);
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class AugmentShop : MonoBehaviour
+public class AugmentShop : Shop
 {
     [SerializeField] Transform[] A_spawnPoints;
     [SerializeField] List<GameObject> L_allItems;
@@ -40,7 +40,7 @@ public class AugmentShop : MonoBehaviour
         }
     }
 
-    public void RemoveFromDisplay(IPurchasable _i_itemRemoved)
+    public override void RemoveFromDisplay(IPurchasable _i_itemRemoved)
     {
         for(int i = 0; i < A_spawnPoints.Length; i++)
         {

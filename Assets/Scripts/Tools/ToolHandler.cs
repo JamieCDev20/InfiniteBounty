@@ -33,9 +33,9 @@ public class ToolHandler : SubjectBase
         Ray ray = new Ray(t_camTransform.GetChild(0).position, t_camTransform.GetChild(0).forward);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
-            ToolBase tb = hit.transform.GetComponent<ToolBase>();
-            AugmentShop sr = hit.transform.root.GetComponent<AugmentShop>();
-            if (tb && sr)
+            IPurchasable tb = hit.transform.GetComponent<IPurchasable>();
+            Shop sr = hit.transform.root.GetComponent<Shop>();
+            if (tb != null)
             {
                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
                 return true;
