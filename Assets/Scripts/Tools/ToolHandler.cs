@@ -135,7 +135,6 @@ public class ToolHandler : SubjectBase
         _tb_.transform.localRotation = Quaternion.identity;
         if (!L_ownedTools.Contains(_tb_))
             L_ownedTools.Add(_tb_);
-        view.RPC("AddTool", RpcTarget.Others, _ts_, _tb_);
     }
 
     /// <summary>

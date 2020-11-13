@@ -21,7 +21,6 @@ public class ProjectileTool : WeaponTool
         }
     }
 
-    [PunRPC]
     public void SpawnBullet()
     {
         Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
