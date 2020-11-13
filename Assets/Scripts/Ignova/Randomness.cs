@@ -58,7 +58,7 @@ public class Randomness : MonoBehaviour
             int num = Mathf.RoundToInt(Lt_lodeSpawns.Count - 1);
             GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(RandomValue(lodes.Length - 1))], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
             ob.name += Lt_lodeSpawns[num].position;
-            Lt_lodeSpawns.RemoveAt(num);
+            //Lt_lodeSpawns.RemoveAt(num);
         }
     }
 
