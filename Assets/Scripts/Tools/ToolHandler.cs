@@ -195,4 +195,16 @@ public class ToolHandler : SubjectBase
     {
         return L_ownedTools.Contains(_tb_checker);
     }
+
+    public bool CheckIfRackUpgraded(ToolBase _tb_checker)
+    {
+        foreach(WeaponTool wt in L_ownedTools)
+        {
+            if(wt == _tb_checker)
+            {
+                return wt.RackUpgrade;
+            }
+        }
+        return false;
+    }
 }
