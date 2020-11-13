@@ -16,7 +16,7 @@ public class ProjectileTool : WeaponTool
         if (b_usable)
         {
             SpawnBullet();
-            PhotonView.Get(t_firePoint).RPC("SpawnBullet", RpcTarget.Others);
+            PhotonView.Get(t_firePoint).RPC("UseTool", RpcTarget.Others);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
         }
