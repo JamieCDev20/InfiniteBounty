@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+
         PoolManager.x.InitialisePools();
 
     }
