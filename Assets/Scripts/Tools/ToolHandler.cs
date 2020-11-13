@@ -122,7 +122,9 @@ public class ToolHandler : SubjectBase
         }
     }
 
+    [PunRPC]
     private void AddTool(ToolSlot _ts_, ToolBase _tb_)
+
     {
         A_tools[(int)_ts_] = _tb_;
         _tb_.transform.parent = A_toolTransforms[(int)_ts_];
@@ -130,6 +132,7 @@ public class ToolHandler : SubjectBase
         _tb_.transform.localRotation = Quaternion.identity;
         if (!L_ownedTools.Contains(_tb_))
             L_ownedTools.Add(_tb_);
+        view.RPC("AddTool", RpcTarget.Others, _ts_, _tb_);
     }
 
     /// <summary>
