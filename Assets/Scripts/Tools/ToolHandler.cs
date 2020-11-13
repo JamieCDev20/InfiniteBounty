@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public enum ToolSlot
 {
@@ -49,6 +50,7 @@ public class ToolHandler : SubjectBase
         return false;
     }
 
+    [PunRPC]
     /// <summary>
     /// Use the tool based on slot
     /// </summary>
@@ -56,6 +58,7 @@ public class ToolHandler : SubjectBase
     public void UseTool(ToolSlot _ts_tool)
     {
         A_tools[(int)_ts_tool].Use();
+        photonView.RPC("UseTool", RpcTarget.All);
     }
 
     /// <summary>
