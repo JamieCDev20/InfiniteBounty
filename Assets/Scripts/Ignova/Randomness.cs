@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Randomness : MonoBehaviour
 {
@@ -27,7 +28,8 @@ public class Randomness : MonoBehaviour
 
     private void Start()
     {
-
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if(randomSeed)
             seed = Random.Range(0, 1000000);
         Random.InitState(seed);
