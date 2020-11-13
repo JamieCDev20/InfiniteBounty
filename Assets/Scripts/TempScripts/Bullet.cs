@@ -138,7 +138,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
     public void MoveBullet(Vector3 _v_dir, float _f_force)
     {
-        transform.forward = _v_dir;
+        transform.rotation = Quaternion.LookRotation(_v_dir, Vector3.up);
         rb.AddForce(transform.forward * _f_force, ForceMode.Impulse);
     }
     public void MoveBullet(Vector3 _v_dir, float _f_force, ForceMode fm_force)
