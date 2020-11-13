@@ -20,6 +20,12 @@ public class LodeBase : Enemy, IPoolable
         base.Start();
     }
 
+    protected void OnEnable()
+    {
+        transform.position += Vector3.one;
+        transform.position -= Vector3.one;
+    }
+
     internal override void TakeDamage(int _i_damage)
     {
         i_currentHealth -= _i_damage;

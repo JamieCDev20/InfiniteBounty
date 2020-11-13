@@ -30,6 +30,7 @@ public class Randomness : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
+
         if(randomSeed)
             seed = Random.Range(0, 1000000);
         Random.InitState(seed);
