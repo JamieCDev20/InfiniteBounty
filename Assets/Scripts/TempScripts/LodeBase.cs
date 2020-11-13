@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class LodeBase : Enemy
+public class LodeBase : Enemy, IPoolable
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;
@@ -12,6 +12,8 @@ public class LodeBase : Enemy
     [SerializeField] private float f_nuggetForce;
     [SerializeField] private int[] iA_healthIntervals = new int[3];
     [SerializeField] private GameObject[] goA_damageMeshes = new GameObject[3];
+    [Space, SerializeField] private bool b_isNetworkedObject;
+    [SerializeField] private string s_path;
 
     protected override void Start()
     {
@@ -53,5 +55,25 @@ public class LodeBase : Enemy
             _rb.AddForce(new Vector3(-1 + Random.value * 2, Random.value * 2, -1 + Random.value * 2) * f_nuggetForce, ForceMode.Impulse);
             _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
         }
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public void Die()
+    {
+        Death();
+    }
+
+    public bool IsNetworkedObject()
+    {
+        return b_isNetworkedObject;
+    }
+
+    public string ResourcePath()
+    {
+        return s_path;
     }
 }
