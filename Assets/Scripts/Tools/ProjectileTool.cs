@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,11 +15,19 @@ public class ProjectileTool : WeaponTool
     {
         if (b_usable)
         {
-            Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
-            newBullet.Setup(at_augments);
-            newBullet.MoveBullet(t_cam.forward, f_shotSpeed);
+            SpawnBullet();
+            PhotonView.Get(t_firePoint).RPC("SpawnBullet", RpcTarget.Others);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
         }
     }
+
+    [PunRPC]
+    public void SpawnBullet()
+    {
+        Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
+        newBullet.Setup(at_augments);
+        newBullet.MoveBullet(t_cam.forward, f_shotSpeed);
+    }
+
 }
