@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     //Variables
     #region Serialised
 
+    [SerializeField] private GameObject[] goA_toSpawnOnStart;
 
     #endregion
 
@@ -32,6 +33,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Init()
     {
         DontDestroyOnLoad(gameObject);
+
+        if (PhotonNetwork.IsConnectedAndReady)
+            Destroy(gameObject);
+        else
+        {
+            for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
+            {
+                Instantiate(goA_toSpawnOnStart[i]);
+            }
+        }
+
     }
 
     #endregion

@@ -68,13 +68,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     public void CreateRoom()
     {
         PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
+
         UI.SetActive(false);
     }
 
     public override void OnConnectedToMaster()
     {
         //Debug.Log("Connected to the fucking masta");
-        PlayButton.interactable = true;
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
