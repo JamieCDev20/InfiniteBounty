@@ -86,9 +86,9 @@ public class ToolHandler : SubjectBase
     /// Use the tool based on slot
     /// </summary>
     /// <param name="_ts_tool">Slot to use</param>
-    public void UseTool(ToolSlot _ts_tool)
+    public void UseTool(ToolSlot _ts_tool, Vector3 dir)
     {
-        A_tools[(int)_ts_tool].Use(t_camTransform.GetChild(0).forward);
+        A_tools[(int)_ts_tool].Use(dir);
     }
 
     /// <summary>
@@ -153,11 +153,11 @@ public class ToolHandler : SubjectBase
         CheckPressOrHoldUse(ToolSlot.moblility, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold);
         CheckReleaseUse(ToolSlot.moblility, _tbo_inputs.b_MToolUp);
 
-        view.RPC("RecieveInputs", RpcTarget.Others, _tbo_inputs.b_LToolDown, _tbo_inputs.b_LToolHold, _tbo_inputs.b_LToolUp, _tbo_inputs.b_RToolDown, _tbo_inputs.b_RToolHold, _tbo_inputs.b_RToolUp, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold, _tbo_inputs.b_MToolUp);
+        //view.RPC("RecieveInputs", RpcTarget.Others, _tbo_inputs.b_LToolDown, _tbo_inputs.b_LToolHold, _tbo_inputs.b_LToolUp, _tbo_inputs.b_RToolDown, _tbo_inputs.b_RToolHold, _tbo_inputs.b_RToolUp, _tbo_inputs.b_MToolDown, _tbo_inputs.b_MToolHold, _tbo_inputs.b_MToolUp);
 
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void RecieveInputs(bool b_LToolDown, bool b_LToolHold, bool b_LTooUp, bool b_RToolDown, bool b_RToolHold, bool b_RTooUp, bool b_MToolDown, bool b_MToolHold, bool b_MTooUp)
     {
         CheckPressOrHoldUse(ToolSlot.leftHand, b_LToolDown, b_LToolHold);
@@ -188,7 +188,7 @@ public class ToolHandler : SubjectBase
             if(A_tools[(int)ts] != null)
                 if (!A_tools[(int)ts].ReleaseActivated)
                 {
-                    view.RPC("UseTool", RpcTarget.Others, ts);
+                    view.RPC("UseTool", RpcTarget.Others, ts, t_camTransform.forward);
                     A_tools[(int)ts].Use(t_camTransform.forward);
                 }
         }
