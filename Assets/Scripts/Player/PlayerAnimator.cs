@@ -67,8 +67,9 @@ public class PlayerAnimator : MonoBehaviour
     private void GetMovementSpeed()
     {
         Vector3 vec = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
-        anim.SetFloat("X", pm_inputs.v_movementVector.x * (pm_inputs.b_sprintHold ? 2 : 1));
-        anim.SetFloat("Y", pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1));
+        anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), pm_inputs.v_movementVector.x * (pm_inputs.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
+        anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
+        //anim.SetFloat("Y", pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1));
     }
 
     private void MakeAnArmDoTheRightThing(Transform arm, int fix)
