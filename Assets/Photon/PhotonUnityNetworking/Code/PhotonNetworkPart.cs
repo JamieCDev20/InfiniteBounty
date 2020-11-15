@@ -1014,7 +1014,7 @@ namespace Photon.Pun
 
             if (PhotonNetwork.LogLevel >= PunLogLevel.Full)
             {
-                Debug.Log("Registered PhotonView: " + netView.ViewID);
+                //Debug.Log("Registered PhotonView: " + netView.ViewID);
             }
         }
 
@@ -2415,7 +2415,7 @@ namespace Photon.Pun
 
                         if (PhotonNetwork.LogLevel >= PunLogLevel.Informational)
                         {
-                            Debug.Log("PUN got region list. Going to ping minimum regions, based on this previous result summary: " + previousBestRegionSummary);
+                            //Debug.Log("PUN got region list. Going to ping minimum regions, based on this previous result summary: " + previousBestRegionSummary);
                         }
                         NetworkingClient.RegionHandler.PingMinimumOfRegions(OnRegionsPinged, previousBestRegionSummary);
                     }
@@ -2453,7 +2453,7 @@ namespace Photon.Pun
         {
             if (PhotonNetwork.LogLevel >= PunLogLevel.Informational)
             {
-                Debug.Log(regionHandler.GetResults());
+                //Debug.Log(regionHandler.GetResults());
             }
 
             _cachedRegionHandler = regionHandler;
