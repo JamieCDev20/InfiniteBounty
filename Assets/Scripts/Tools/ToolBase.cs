@@ -63,7 +63,8 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
         {
-            th.SwapTool((ToolSlot)_i_purchaseParams[1], i_toolId);
+            th.CallSwapTool((ToolSlot)_i_purchaseParams[1], i_toolId);
+            
             _sh_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
             t_cam = _t_camera;

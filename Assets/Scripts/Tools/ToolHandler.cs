@@ -54,7 +54,7 @@ public class ToolHandler : SubjectBase
             {
                 if (tb.CheckPurchaseStatus())
                 {
-                    SwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>().ToolID);
+                    CallSwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>().ToolID);
                     return true;
                 }
                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
@@ -92,6 +92,13 @@ public class ToolHandler : SubjectBase
         A_tools[(int)_ts_tool].Use(dir);
     }
 
+    public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID)
+    {
+        SwapTool(_ts_slot, _i_toolID);
+        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
+
+    }
+
     [PunRPC]
     /// <summary>
     /// Swap weapons based on which type it is and/or what hand it should be in
@@ -119,7 +126,6 @@ public class ToolHandler : SubjectBase
                 break;
         }
 
-        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
 
     }
     private void RemoveTool(ToolSlot _ts_)
