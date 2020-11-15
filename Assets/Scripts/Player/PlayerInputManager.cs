@@ -22,6 +22,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private string s_leftToolUse = "LeftTool";
     [SerializeField] private string s_rightToolUse = "RightTool";
     [SerializeField] private string s_interactButton = "Use";
+    [Space]
+    [SerializeField] private bool offline = false;
 
     #endregion
 
@@ -63,6 +65,9 @@ public class PlayerInputManager : MonoBehaviour
             return;
         GetInputs();
         TellStuffWhatToDo();
+
+        PhotonNetwork.OfflineMode = offline;
+
     }
 
     #endregion
