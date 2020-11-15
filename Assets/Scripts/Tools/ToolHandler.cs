@@ -133,8 +133,6 @@ public class ToolHandler : SubjectBase
         Debug.Log(A_tools[(int)_ts_]);
         A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
         A_tools[(int)_ts_].gameObject.SetActive(true);
-        Debug.Log(A_tools[(int)_ts_], A_tools[(int)_ts_]);
-        // A_tools[(int)_ts_]
         if (!A_tools[(int)_ts_].Purchased)
             L_ownedTools.Add(A_tools[(int)_ts_]);
     }
@@ -191,7 +189,7 @@ public class ToolHandler : SubjectBase
                 if (!A_tools[(int)ts].ReleaseActivated)
                 {
                     view.RPC("UseTool", RpcTarget.Others, ts);
-                    A_tools[(int)ts].Use();
+                    A_tools[(int)ts].Use(t_camTransform.forward);
                 }
         }
     }
@@ -207,7 +205,7 @@ public class ToolHandler : SubjectBase
         // Use release activated tool when the button is released
         if (A_tools[(int)ts] != null)
             if (_b_released && A_tools[(int)ts].ReleaseActivated)
-                A_tools[(int)ts].Use();
+                A_tools[(int)ts].Use(t_camTransform.forward);
     }
 
     /// <summary>
