@@ -117,6 +117,8 @@ public class ToolHandler : SubjectBase
                 break;
         }
 
+        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
+
     }
     private void RemoveTool(ToolSlot _ts_)
     {
