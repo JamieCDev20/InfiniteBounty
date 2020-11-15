@@ -91,6 +91,7 @@ public class ToolHandler : SubjectBase
         A_tools[(int)_ts_tool].Use(dir);
     }
 
+    [PunRPC]
     /// <summary>
     /// Swap weapons based on which type it is and/or what hand it should be in
     /// </summary>
