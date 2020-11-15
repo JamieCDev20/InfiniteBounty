@@ -88,7 +88,7 @@ public class ToolHandler : SubjectBase
     /// <param name="_ts_tool">Slot to use</param>
     public void UseTool(ToolSlot _ts_tool, Vector3 dir)
     {
-        A_tools[(int)_ts_tool].NetUse(dir);
+        A_tools[(int)_ts_tool].Use(dir);
     }
 
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID)

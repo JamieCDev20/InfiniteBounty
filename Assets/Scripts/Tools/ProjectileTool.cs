@@ -18,9 +18,10 @@ public class ProjectileTool : WeaponTool
             SpawnBullet(_v_forwards);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
+
         }
     }
-
+    
     public override void NetUse(Vector3 _v_forwards)
     {
         SpawnBullet(_v_forwards);
