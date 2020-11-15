@@ -66,7 +66,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
             th.SwapTool((ToolSlot)_i_purchaseParams[1], i_toolId);
             _sh_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
-            t_cam = _t_camera.GetChild(0);
+            t_cam = _t_camera;
         }
     }
 

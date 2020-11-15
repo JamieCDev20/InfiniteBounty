@@ -45,7 +45,7 @@ public class ToolHandler : SubjectBase
     {
         // Check for hitting a weapon
         RaycastHit hit;
-        Ray ray = new Ray(t_camTransform.GetChild(0).position, t_camTransform.GetChild(0).forward);
+        Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
             IPurchasable tb = hit.transform.GetComponent<IPurchasable>();
@@ -88,6 +88,7 @@ public class ToolHandler : SubjectBase
     /// <param name="_ts_tool">Slot to use</param>
     public void UseTool(ToolSlot _ts_tool, Vector3 dir)
     {
+        Debug.Log("Called use tool remotely");
         A_tools[(int)_ts_tool].Use(dir);
     }
 
@@ -123,7 +124,7 @@ public class ToolHandler : SubjectBase
     }
     private void RemoveTool(ToolSlot _ts_)
     {
-        Debug.Log("Removing Tool");
+        //Debug.Log("Removing Tool");
         if(A_tools[(int)_ts_] != null)
         {
             A_tools[(int)_ts_].gameObject.SetActive(false);
@@ -133,7 +134,7 @@ public class ToolHandler : SubjectBase
 
     private void AddTool(ToolSlot _ts_, int _i_toolID)
     {
-        Debug.Log(A_tools[(int)_ts_]);
+        //Debug.Log(A_tools[(int)_ts_]);
         A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
         A_tools[(int)_ts_].gameObject.SetActive(true);
         if (!A_tools[(int)_ts_].Purchased)

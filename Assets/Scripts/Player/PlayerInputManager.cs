@@ -162,9 +162,9 @@ public class PlayerInputManager : MonoBehaviour
         camControl = _cam;
         camControl.SetFollow(transform);
 
-        mover.SetCameraTranfsorm(camControl.transform);
-        toolHandler.RecieveCameraTransform(camControl.transform);
-        animator.SetCam(camControl.transform);
+        mover.SetCameraTranfsorm(camControl.transform.GetChild(0));
+        toolHandler.RecieveCameraTransform(camControl.transform.GetChild(0));
+        animator.SetCam(camControl.transform.GetChild(0));
     }
 
     public void SetPlayerNumber(int _i_index)
