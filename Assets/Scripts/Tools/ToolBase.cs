@@ -10,10 +10,11 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     #endregion
 
     #region Protected Vars
-    protected AugmentType[] at_augments = new AugmentType[0];
-    [SerializeField] protected bool b_purchased;
+    protected int i_toolId;
     protected bool b_usable = true;
     protected Transform t_cam;
+    protected AugmentType[] at_augments = new AugmentType[0];
+    [SerializeField] protected bool b_purchased;
     #endregion
 
     #region Serialized Vars
@@ -30,6 +31,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     #region get/set
     public bool Purchased { get { return b_purchased; } }
     public bool ReleaseActivated { get { return b_releaseActivated; } }
+    public int ToolID { get { return i_toolId; } set { i_toolId = value; } }
 
     #endregion
 
@@ -50,7 +52,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     }
 
-    public void Attach()
+    public virtual void Use(Vector3 _v_forwards)
     {
 
     }
@@ -61,7 +63,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
         {
-            th.SwapTool((ToolSlot)_i_purchaseParams[1], this);
+            th.SwapTool((ToolSlot)_i_purchaseParams[1], i_toolId);
             _sh_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
             t_cam = _t_camera.GetChild(0);
@@ -80,6 +82,11 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     public bool CheckPurchaseStatus()
     {
         return Purchased;
+    }
+
+    public void SetCamera(Transform _t_cam)
+    {
+        t_cam = _t_cam;
     }
 
     protected IEnumerator TimeBetweenUsage()

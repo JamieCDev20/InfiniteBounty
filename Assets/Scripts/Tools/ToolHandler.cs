@@ -7,23 +7,34 @@ public enum ToolSlot
 {
     leftHand,
     rightHand,
-    moblility
+    moblility,
+    rack
 }
 
 public class ToolHandler : SubjectBase
 {
+
+    #region Serialized Fields
+    
     [SerializeField] private Transform[] A_toolTransforms;
     [SerializeField] private ToolBase[] A_tools = new ToolBase[3];
+    [SerializeField] private ToolLoader[] A_toolLoaders;
     [SerializeField] private LayerMask lm_shoppingMask;
+
+    #endregion
+
+    #region Private
     private List<ToolBase> L_ownedTools = new List<ToolBase>();
     private NetworkedPlayer np_network;
     private Transform t_camTransform;
     private PhotonView view;
+    #endregion
 
     private void Start()
     {
         np_network = GetComponent<NetworkedPlayer>();
         view = GetComponent<PhotonView>();
+        InitialiseTools();
     }
 
     /// <summary>
@@ -43,7 +54,7 @@ public class ToolHandler : SubjectBase
             {
                 if (tb.CheckPurchaseStatus())
                 {
-                    SwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>());
+                    SwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>().ToolID);
                     return true;
                 }
                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
@@ -53,6 +64,23 @@ public class ToolHandler : SubjectBase
         return false;
     }
 
+    private void InitialiseTools()
+    {
+        foreach(ToolLoader tl in A_toolLoaders)
+            switch (tl.Slot)
+            {
+                case ToolSlot.leftHand:
+                    tl.LoadTools(A_toolTransforms[(int)ToolSlot.leftHand]);
+                    break;
+                case ToolSlot.rightHand:
+                    tl.LoadTools(A_toolTransforms[(int)ToolSlot.rightHand]);
+                    break;
+                case ToolSlot.moblility:
+                    tl.LoadTools(A_toolTransforms[(int)ToolSlot.moblility]);
+                    break;
+            }
+    }
+
     [PunRPC]
     /// <summary>
     /// Use the tool based on slot
@@ -60,7 +88,7 @@ public class ToolHandler : SubjectBase
     /// <param name="_ts_tool">Slot to use</param>
     public void UseTool(ToolSlot _ts_tool)
     {
-        A_tools[(int)_ts_tool].Use();
+        A_tools[(int)_ts_tool].Use(t_camTransform.GetChild(0).forward);
     }
 
     /// <summary>
@@ -68,46 +96,22 @@ public class ToolHandler : SubjectBase
     /// </summary>
     /// <param name="_b_left">Left or right hand</param>
     /// <param name="_tb_tool">Tool to attach</param>
-    public void SwapTool(ToolSlot _ts_slot, ToolBase _tb_tool)
+    public void SwapTool(ToolSlot _ts_slot, int _i_toolID)
     {
         // Cast weapons to correct types and assign to correct slot
         switch (_ts_slot)
         {
             case ToolSlot.leftHand:
-                switch (_tb_tool)
-                {
-                    case WeaponTool wt:
-                        RemoveTool(_ts_slot);
-                        AddTool(_ts_slot, wt);
-                        break;
-                    case MobilityTool mt:
-                        RemoveTool(ToolSlot.moblility);
-                        AddTool(ToolSlot.moblility, mt);
-                        Debug.Log("Boop");
-                        break;
-                }
+                RemoveTool(ToolSlot.leftHand);
+                AddTool(ToolSlot.leftHand, _i_toolID);
                 break;
             case ToolSlot.rightHand:
-                switch (_tb_tool)
-                {
-                    case WeaponTool wt:
-                        RemoveTool(_ts_slot);
-                        AddTool(_ts_slot, wt);
-                        break;
-                    case MobilityTool mt:
-                        RemoveTool(ToolSlot.moblility);
-                        AddTool(ToolSlot.moblility, mt);
-                        break;
-                }
+                RemoveTool(ToolSlot.rightHand);
+                AddTool(ToolSlot.rightHand, _i_toolID);
                 break;
             case ToolSlot.moblility:
-                switch (_tb_tool)
-                {
-                    case MobilityTool mt:
-                        RemoveTool(_ts_slot);
-                        AddTool(_ts_slot, mt);
-                        break;
-                }
+                RemoveTool(ToolSlot.moblility);
+                AddTool(ToolSlot.moblility, _i_toolID);
                 break;
             default:
                 break;
@@ -116,22 +120,23 @@ public class ToolHandler : SubjectBase
     }
     private void RemoveTool(ToolSlot _ts_)
     {
+        Debug.Log("Removing Tool");
         if(A_tools[(int)_ts_] != null)
         {
-            A_tools[(int)_ts_].transform.parent = null;
             A_tools[(int)_ts_].gameObject.SetActive(false);
+            A_tools[(int)_ts_] = null;
         }
     }
 
-    private void AddTool(ToolSlot _ts_, ToolBase _tb_)
-
+    private void AddTool(ToolSlot _ts_, int _i_toolID)
     {
-        A_tools[(int)_ts_] = _tb_;
-        _tb_.transform.parent = A_toolTransforms[(int)_ts_];
-        _tb_.transform.localPosition = Vector3.zero;
-        _tb_.transform.localRotation = Quaternion.identity;
-        if (!L_ownedTools.Contains(_tb_))
-            L_ownedTools.Add(_tb_);
+        Debug.Log(A_tools[(int)_ts_]);
+        A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
+        A_tools[(int)_ts_].gameObject.SetActive(true);
+        Debug.Log(A_tools[(int)_ts_], A_tools[(int)_ts_]);
+        // A_tools[(int)_ts_]
+        if (!A_tools[(int)_ts_].Purchased)
+            L_ownedTools.Add(A_tools[(int)_ts_]);
     }
 
     /// <summary>
@@ -204,6 +209,7 @@ public class ToolHandler : SubjectBase
             if (_b_released && A_tools[(int)ts].ReleaseActivated)
                 A_tools[(int)ts].Use();
     }
+
     /// <summary>
     /// Obtain the camera transforms
     /// </summary>
@@ -212,6 +218,7 @@ public class ToolHandler : SubjectBase
     {
         t_camTransform = _t_cam;
     }
+
     public bool CheckInTools(ToolBase _tb_checker)
     {
         return L_ownedTools.Contains(_tb_checker);

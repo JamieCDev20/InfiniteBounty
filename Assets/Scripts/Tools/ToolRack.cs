@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ToolRack : Shop
 {
-    [SerializeField] private List<WeaponTool> L_weaponTools;
-    [SerializeField] private List<MobilityTool> L_mobTools;
+    [SerializeField] private ToolLoader tl_weaponTools;
+    [SerializeField] private ToolLoader tl_mobTools;
     [SerializeField] private List<Transform> L_weaponToolPos;
     [SerializeField] private List<Transform> L_mobToolPos;
     [SerializeField] private Material m_silhouette;
@@ -17,36 +17,34 @@ public class ToolRack : Shop
         {
             playerRef = FindObjectOfType<NetworkedPlayer>().GetComponent<ToolHandler>();
         }
-        for(int i = 0; i < L_weaponTools.Count; i++)
+        SetToolInRack(tl_weaponTools, L_weaponToolPos);
+        SetToolInRack(tl_mobTools, L_mobToolPos);
+    }
+
+    private void SetToolInRack(ToolLoader _tl_loader, List<Transform> _t_toolTransform)
+    {
+        int tlLength = _tl_loader.ToolCount();
+        bool isWeapon = true;
+        try
         {
-            if (playerRef)
+
+            WeaponTool weaponTesting = (WeaponTool)_tl_loader.GetPrefabTool(0);
+        }
+        catch (System.InvalidCastException) { isWeapon = false; }
+        for (int i = 0; i < tlLength; i++)
+        {
+            Transform parent = isWeapon ? _t_toolTransform[i * 2] : _t_toolTransform[i];
+            ToolBase tb = _tl_loader.LoadTool(i, parent);
+            tb.gameObject.SetActive(true);
+            if (isWeapon)
             {
-                if (playerRef.CheckInTools(L_weaponTools[i]))
+                WeaponTool wt = (WeaponTool)tb;
+                if (wt.RackUpgrade)
                 {
-                    WeaponTool wt = Instantiate(L_weaponTools[i]);
-                    wt.RackUpgrade = playerRef.CheckIfRackUpgraded(wt);
-                    wt.transform.position = L_weaponToolPos[i*2].position;
-                    wt.transform.rotation = L_weaponToolPos[i*2].rotation;
-                    wt.transform.parent = transform;
-                    wt.gameObject.SetActive(true);
-                    if (wt.RackUpgrade)
-                    {
-                        WeaponTool dupeTool = Instantiate(L_weaponTools[i]);
-                        dupeTool.transform.position = L_weaponToolPos[i*2 + 1].position;
-                        dupeTool.transform.rotation = L_weaponToolPos[i*2 + 1].rotation;
-                        dupeTool.transform.parent = transform;
-                    }
+                    ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1]);
+                    dupe.gameObject.SetActive(true);
                 }
-            }
-            else
-            {
-                WeaponTool wt = Instantiate(L_weaponTools[i]);
-                wt.transform.position = L_weaponToolPos[i * 2].position;
-                wt.transform.rotation = L_weaponToolPos[i * 2].rotation;
-                wt.transform.parent = transform;
-                wt.gameObject.SetActive(true);
             }
         }
     }
-
 }

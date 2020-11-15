@@ -93,6 +93,7 @@ MonoBehaviour:
   s_leftToolUse: LeftTool
   s_rightToolUse: RightTool
   s_interactButton: Use
+  offline: 0
 --- !u!114 &5097147677987189594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +135,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  A_toolLoaders:
+  - {fileID: 7695777533516648626}
+  - {fileID: 1005617334925742298}
+  - {fileID: 2465579493917572213}
   lm_shoppingMask:
     serializedVersion: 2
     m_Bits: 8192
@@ -257,6 +262,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1957395755991821079}
+  - component: {fileID: 2465579493917572213}
   m_Layer: 10
   m_Name: BackTool
   m_TagString: Untagged
@@ -278,6 +284,22 @@ Transform:
   m_Father: {fileID: 1645351735495215941}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2465579493917572213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5768610029833893305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724694e22a568744a98b4a185c8d4eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tb_tools:
+  - {fileID: 8475918829631547553, guid: 2db503dbf755f374c803e70613ea52c8, type: 3}
+  - {fileID: 412060642827296047, guid: 6df461d26918388479073a08136cb657, type: 3}
+  ts_slot: 2
 --- !u!1 &7951382167855240591
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2027014157728291651}
+  - component: {fileID: 1005617334925742298}
   m_Layer: 10
   m_Name: RightTool
   m_TagString: Untagged
@@ -308,6 +331,22 @@ Transform:
   m_Father: {fileID: 7687442235723178279}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 28.879002, y: 98.49901, z: -72.80801}
+--- !u!114 &1005617334925742298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7951382167855240591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724694e22a568744a98b4a185c8d4eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tb_tools:
+  - {fileID: 925497461101488345, guid: 1eb9fa541d1c67c4e9ab778e04cb276c, type: 3}
+  - {fileID: 7744473008332969848, guid: c2d674e3276c8064d969699a8307e0f8, type: 3}
+  ts_slot: 1
 --- !u!1 &8357234975083765018
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8011837669700873063}
+  - component: {fileID: 7695777533516648626}
   m_Layer: 10
   m_Name: LeftTool
   m_TagString: Untagged
@@ -338,6 +378,22 @@ Transform:
   m_Father: {fileID: 6666286172090726294}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -28.879002, y: -98.49901, z: -72.80801}
+--- !u!114 &7695777533516648626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8357234975083765018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724694e22a568744a98b4a185c8d4eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tb_tools:
+  - {fileID: 925497461101488345, guid: 1eb9fa541d1c67c4e9ab778e04cb276c, type: 3}
+  - {fileID: 7744473008332969848, guid: c2d674e3276c8064d969699a8307e0f8, type: 3}
+  ts_slot: 0
 --- !u!1001 &5097147678987698749
 PrefabInstance:
   m_ObjectHideFlags: 0
