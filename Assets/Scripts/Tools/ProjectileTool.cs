@@ -21,6 +21,11 @@ public class ProjectileTool : WeaponTool
         }
     }
 
+    public override void NetUse(Vector3 _v_forwards)
+    {
+        SpawnBullet(_v_forwards);
+    }
+
     public void SpawnBullet(Vector3 _v_direction)
     {
         Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();

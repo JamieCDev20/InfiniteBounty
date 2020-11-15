@@ -88,8 +88,7 @@ public class ToolHandler : SubjectBase
     /// <param name="_ts_tool">Slot to use</param>
     public void UseTool(ToolSlot _ts_tool, Vector3 dir)
     {
-        Debug.Log("Called use tool remotely");
-        A_tools[(int)_ts_tool].Use(dir);
+        A_tools[(int)_ts_tool].NetUse(dir);
     }
 
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID)

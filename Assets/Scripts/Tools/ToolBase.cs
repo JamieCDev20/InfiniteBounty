@@ -52,6 +52,11 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     }
 
+    public virtual void NetUse(Vector3 _v_forwards)
+    {
+
+    }
+
     public virtual void Use(Vector3 _v_forwards)
     {
 
