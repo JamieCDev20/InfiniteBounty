@@ -24,6 +24,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private string gameVersion = "0.1";
     private PhotonView[] networkedPlayers = new PhotonView[4];
+    private PhotonView view;
 
     #endregion
 
@@ -40,6 +41,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
         DontDestroyOnLoad(gameObject);
         x = this;
         Connect();
+        view = GetComponent<PhotonView>();
     }
 
     #endregion
