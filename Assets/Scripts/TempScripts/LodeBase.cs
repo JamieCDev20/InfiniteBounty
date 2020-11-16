@@ -55,7 +55,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
         }
 
         //LodeSynchroniser.x.SyncHealth(i_currentHealth, index);
-
+        Debug.Log("lode health: " + i_currentHealth);
         CheckHealth();
 
     }
