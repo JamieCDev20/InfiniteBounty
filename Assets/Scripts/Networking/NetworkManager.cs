@@ -23,7 +23,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     #region Private
 
     private string gameVersion = "0.1";
-    private NetworkedPlayer[] networkedPlayers;
+    private GameObject[] networkedPlayers = new GameObject[4];
 
     #endregion
 
@@ -38,7 +38,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        networkedPlayers = FindObjectsOfType<NetworkedPlayer>();
         Connect();
     }
 
@@ -56,6 +55,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     #region Public Voids
+
+    public void AddPlayer(GameObject player, int id)
+    {
+        networkedPlayers[id] = player;
+    }
 
     public void Connect()
     {
@@ -126,6 +130,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Public Returns
 
+    public GameObject[] Players()
+    {
+        return networkedPlayers;
+    }
 
     #endregion
 
