@@ -176,7 +176,7 @@ public class PlayerInputManager : MonoBehaviour
     [PunRPC]
     public void JoinedRoom()
     {
-        Debug.Log("I HAVE JOINED");
+        NetworkManager.x.TellClientToSync();
     }
 
     #endregion

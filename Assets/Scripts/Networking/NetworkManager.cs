@@ -23,8 +23,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     #region Private
 
     private string gameVersion = "0.1";
-    private PhotonView[] networkedPlayers = new PhotonView[4];
     private PhotonView view;
+    private NetworkedPlayer netPlayer;
 
     #endregion
 
@@ -42,6 +42,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
         x = this;
         Connect();
         view = GetComponent<PhotonView>();
+        netPlayer = FindObjectOfType<NetworkedPlayer>();
     }
 
     #endregion
@@ -61,7 +62,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void AddPlayer(PhotonView player, int id)
     {
-        networkedPlayers[id] = player;
+        //networkedPlayers[id] = player;
     }
 
     public void Connect()
@@ -95,19 +96,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
         //Debug.Log("You da man!");
     }
 
-    public override void OnJoinedRoom()
-    {
-        //Debug.Log("YAY! You're in a room");
-        view.RPC("NewPlayerJoined", RpcTarget.Others);
-
-    }
-
-    [PunRPC]
-    public void NewPlayerJoined()
-    {
-        Debug.Log("A new player has entered the arena");
-    }
-
     public override void OnDisconnected(DisconnectCause cause)
     {
         //Debug.LogWarning("The banhammer has spoken");
@@ -128,6 +116,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
+    public void TellClientToSync()
+    {
+        netPlayer.SyncWeapons();
+    }
+
     #endregion
 
     #region Private Returns
@@ -143,7 +136,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public PhotonView[] Players()
     {
-        return networkedPlayers;
+        //return networkedPlayers;
+        return null;
     }
 
     #endregion

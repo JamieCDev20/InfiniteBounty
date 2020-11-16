@@ -82,7 +82,10 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
-
+    public void SyncWeapons()
+    {
+        handler.SyncToolOverNetwork();
+    }
 
 }
 
