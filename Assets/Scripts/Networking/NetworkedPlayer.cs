@@ -68,20 +68,6 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //Make it fast
         //Make it nice
 
-        ToolHandler[] handles = FindObjectsOfType<ToolHandler>();
-
-        for (int i = 0; i < handles.Length; i++)
-        {
-            PhotonView.Get(handles[i]).RPC("SyncToolsOverNetwork", RpcTarget.Others);
-        }
-
-        //PhotonView[] views = FindObjectsOfType<PhotonView>();
-
-        //for (int i = 0; i < views.Length; i++)
-        //{
-        //    views[i].RPC("SyncToolOverNetwork", RpcTarget.Others);
-        //}
-
         NetworkManager.x.AddPlayer(view, playerInfo.playerID);
 
         t_thisPlayer = player.transform;
