@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class LodeSynchroniser : MonoBehaviourPunCallbacks, IPunObservable
+public class LodeSynchroniser : MonoBehaviourPunCallbacks
 {
 
     public static LodeSynchroniser x;

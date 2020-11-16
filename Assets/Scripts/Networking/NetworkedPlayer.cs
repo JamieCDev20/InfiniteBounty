@@ -70,4 +70,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         handler.SyncToolOverNetwork();
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 }
