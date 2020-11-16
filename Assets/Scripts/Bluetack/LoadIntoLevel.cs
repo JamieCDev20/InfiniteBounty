@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,10 +36,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void LoadLevel()
     {
-        //if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.LoadLevel(NuggetRunName);
-        }
+        PhotonNetwork.LoadLevel(NuggetRunName);
     }
 
     #endregion

@@ -21,42 +21,30 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Start()
     {
+        //make players go to spawn points on scene loads and persist
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
+        //players go to spawn on scene load
         playerIM.GoToSpawnPoint();
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-        
-
-    }
-
-    private void FixedUpdate()
-    {
-        //PrepareSendData(NetworkDataType.pos, t_thisPlayer.position.ToString());
-        //PrepareSendData(NetworkDataType.rot, t_thisPlayer.rotation.ToString());
-    }
-
-    public void PrepareSendData(NetworkDataType type, string data)
-    {
-        dataToSend.Add(string.Format("{1}{0}{2}{0}{3}", NetworkManager.separator, PlayerID, (int)type, data));
     }
 
     public override void OnJoinedRoom()
     {
-        //Debug.Log("You Joined");
+
+        //Make it work <-------
+        //Make it fast
+        //Make it nice
+
+        //set player ID
         playerInfo.playerID = PhotonNetwork.CurrentRoom.PlayerCount - 1;
-        //Debug.Log("You are player: " + (playerInfo.playerID + 1));
+
+        //Initialise player info and stuff
         GameObject player = PhotonNetwork.Instantiate("NetworkPrefabs/" + playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
         t_thisPlayer = player.transform;
-
-
 
         PhotonView view = player.GetComponent<PhotonView>();
 
@@ -64,37 +52,22 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         view.ObservedComponents.Add(this);
 
-        //Make it work <-------
-        //Make it fast
-        //Make it nice
-
-        NetworkManager.x.AddPlayer(view, playerInfo.playerID);
 
         view.RPC("JoinedRoom", RpcTarget.Others);
 
+        //set player pos, cam and IM
         t_thisPlayer = player.transform;
         playerIM = player.GetComponent<PlayerInputManager>();
         playerIM.SetPlayerNumber(playerInfo.playerID);
         playerIM.GoToSpawnPoint();
         playerIM.SetCamera(Instantiate(playerInfo.go_camPrefab).GetComponent<CameraController>());
 
-        //Debug.Log("Spawned Player Prefab");
-
     }
 
     public void SyncWeapons()
     {
+        //sync weapons for when new player joins
         handler.SyncToolOverNetwork();
     }
-
-}
-
-public enum NetworkDataType
-{
-    pos,
-    rot,
-    anim,
-    boole,
-    skin
 
 }

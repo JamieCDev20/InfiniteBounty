@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     //Variables
     #region Serialised
 
-    [SerializeField] private GameObject[] goA_toSpawnOnStart;
+    //The managers that will be spawned on start
+    [SerializeField] private GameObject[] goA_toSpawnOnStart; 
 
     #endregion
 
@@ -30,16 +31,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #region Private Voids
 
+    /// <summary>
+    /// Init function for the Game Manager, handles all the start functions
+    /// </summary>
     private void Init()
     {
+        //GM persist through scenes
         DontDestroyOnLoad(gameObject);
 
-
+        //Make sure that on return to lobby, the gm isnt duplicated
         if (PhotonNetwork.IsConnectedAndReady)
             Destroy(gameObject);
         else
         {
-            //PhotonNetwork.Instantiate(string.Format("{0}{1}", "NetworkPrefabs/", goA_toSpawnOnStart[0].name), Vector3.zero, Quaternion.identity);
+            //spawn all managers
             for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
             {
                 Instantiate(goA_toSpawnOnStart[i]);
@@ -54,7 +59,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-
+        //initialise the pools in pool manager when you join a room
         PoolManager.x.InitialisePools();
 
     }

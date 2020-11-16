@@ -40,6 +40,7 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks, IPunObservable
 
     public void InitialiseLodeArrayLength(int length)
     {
+        //Set how many lodes we are spawning
         allLodes = new LodeBase[length];
     }
 
@@ -47,37 +48,6 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks, IPunObservable
     {
         allLodes[index] = lode;
         lode.SetIndex(index);
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-        if (stream.IsWriting)
-        {
-            if(toSends.Count > 0)
-            {
-                stream.SendNext(toSends[0]);
-                toSends.RemoveAt(0);
-            }
-        }
-        else
-        {
-            if(stream.Count > 0)
-            {
-                string[] read = ((string)stream.ReceiveNext()).Split(',');
-                int index = int.Parse(read[0]);
-                int health = int.Parse(read[1]);
-
-                allLodes[index].SetHealth(health);
-
-            }
-        }
-
-    }
-
-    public void SyncHealth(int health, int index)
-    {
-        toSends.Add(string.Format("{0},{1}", index, health));
     }
 
     #endregion

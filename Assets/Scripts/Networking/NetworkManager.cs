@@ -16,14 +16,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private byte maxPlayersPerRoom = 4;
     [SerializeField] private string roomName;
     [SerializeField] private GameObject UI;
-    [SerializeField] private Button PlayButton;
 
     #endregion
 
     #region Private
 
     private string gameVersion = "0.1";
-    private PhotonView view;
     private NetworkedPlayer netPlayer;
 
     #endregion
@@ -33,15 +31,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
+        //sync the scene for anyone joining the game
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     private void Start()
     {
+        //singleton and persist
         DontDestroyOnLoad(gameObject);
         x = this;
+        //connect to the network and store reference to the players networked
         Connect();
-        view = GetComponent<PhotonView>();
         netPlayer = FindObjectOfType<NetworkedPlayer>();
     }
 
@@ -49,21 +49,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Private Voids
 
-    private void FindNetworkPlayers()
-    {
-
-
-
-    }
-
     #endregion
 
     #region Public Voids
-
-    public void AddPlayer(PhotonView player, int id)
-    {
-        //networkedPlayers[id] = player;
-    }
 
     public void Connect()
     {
@@ -80,40 +68,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
         UI.SetActive(false);
     }
 
-    public override void OnConnectedToMaster()
-    {
-        //Debug.Log("Connected to the fucking masta");
-    }
-
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        //Debug.Log("Lol you have no friends, Let's see if they come to you");
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
-    }
-
-    public override void OnCreatedRoom()
-    {
-        //Debug.Log("You da man!");
-    }
-
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        //Debug.LogWarning("The banhammer has spoken");
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-        object[] currentStream;
-
-        while (stream.Count > 0)
-        {
-
-            currentStream = BreakdownText(stream.ReceiveNext().ToString());
-            //do something to someone
-
-        }
-
     }
 
     public void TellClientToSync()
@@ -125,20 +82,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Private Returns
 
-    private object[] BreakdownText(string text)
-    {
-        return text.Split(separator);
-    }
-
     #endregion
 
     #region Public Returns
-
-    public PhotonView[] Players()
-    {
-        //return networkedPlayers;
-        return null;
-    }
 
     #endregion
 

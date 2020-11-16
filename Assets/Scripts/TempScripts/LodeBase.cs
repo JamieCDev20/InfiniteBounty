@@ -20,19 +20,14 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     protected override void Start()
     {
+        
         base.Start();
         view = GetComponent<PhotonView>();
     }
 
-    protected void OnEnable()
-    {
-        transform.position += Vector3.one;
-        transform.position -= Vector3.one;
-    }
-
     internal override void TakeDamage(int _i_damage)
     {
-
+        //only take damage if you are the master client
         if (!PhotonNetwork.IsMasterClient)
             return;
 
@@ -42,6 +37,8 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     internal override void TakeDamage(int _i_damage, bool networked)
     {
+
+        //this is the networked take damage func, this is called by the host to sync health
 
         i_currentHealth -= _i_damage;
         for (int i = 0; i < iA_healthIntervals.Length; i++)
@@ -54,15 +51,14 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
             }
         }
 
-        //LodeSynchroniser.x.SyncHealth(i_currentHealth, index);
-        //Debug.Log("lode health: " + i_currentHealth);
+        //check if dead and stuff
         CheckHealth();
 
     }
 
     public void SetHealth(int health)
     {
-
+        //it's a psuedo set health func so that thresholds are still respected
         TakeDamage(i_currentHealth - health);
 
     }
@@ -81,7 +77,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
     [PunRPC]
     internal override void Death()
     {
-        //Debug.LogFormat("Setting {0} to inactive", name);
+        //RPC death function so that all instances of a lode die together
         gameObject.SetActive(false);
         NuggetBurst();
 
@@ -92,6 +88,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     private void NuggetBurst()
     {
+        //Nick and byron did this
         for (int i = 0; i < i_nuggetsPerBurst; i++)
         {
             GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
@@ -127,7 +124,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
+        //Sync your health
         if (stream.IsWriting)
         {
             stream.SendNext(i_currentHealth);

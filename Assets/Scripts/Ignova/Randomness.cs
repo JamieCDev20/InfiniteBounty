@@ -28,16 +28,22 @@ public class Randomness : MonoBehaviour
 
     private void Start()
     {
+        //if the you're not the master client then don't spawn anything
         if (!PhotonNetwork.IsMasterClient)
             return;
 
+        //generate a random seed
         if(randomSeed)
             seed = Random.Range(0, 1000000);
+
+        //sow that seed into the fabrik of reality
         Random.InitState(seed);
         Debug.Log("Seed: " + seed);
 
+        //generate how many lodes we want
         i_lodeCount = Mathf.RoundToInt(RandomValue(v2_lodeCountRange.y - v2_lodeCountRange.x) + v2_lodeCountRange.x);
 
+        //spawn the lodes
         SpawnLodes(i_lodeCount);
 
     }
@@ -48,11 +54,14 @@ public class Randomness : MonoBehaviour
 
     private float RandomValue(float range)
     {
+        //generate a random value between 0-range
         return Random.value * range;
     }
 
     private void SpawnLodes(int count)
     {
+        //spwan a random lode at a random spawn point at a random rotation and add it to lists
+        //spawn points are removed from the list to prevent duplicate spawning
         LodeSynchroniser.x.InitialiseLodeArrayLength(count);
         for (int i = 0; i < count; i++)
         {
