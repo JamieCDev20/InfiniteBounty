@@ -16,10 +16,12 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
     [SerializeField] private string s_path;
 
     private int index;
+    private PhotonView view;
 
     protected override void Start()
     {
         base.Start();
+        view = GetComponent<PhotonView>();
     }
 
     protected void OnEnable()
@@ -76,10 +78,15 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     }
 
+    [PunRPC]
     internal override void Death()
     {
         gameObject.SetActive(false);
         NuggetBurst();
+
+        if (!PhotonNetwork.IsMasterClient)
+            view.RPC("Death", RpcTarget.Others);
+
     }
 
     private void NuggetBurst()
