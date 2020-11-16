@@ -60,6 +60,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         view.ObservedComponents.Add(this);
 
+        Debug.Log(NetworkManager.x.Players().Length);
         for (int i = 0; i < NetworkManager.x.Players().Length; i++)
         {
             if(NetworkManager.x.Players()[i] != null)
