@@ -12,7 +12,7 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks, IPunObservable
     #region Serialised
 
     private LodeBase[] allLodes;
-    private List<string> toSends;
+    private List<string> toSends = new List<string>();
 
     #endregion
 
