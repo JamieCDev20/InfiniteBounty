@@ -23,7 +23,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     #region Private
 
     private string gameVersion = "0.1";
-    private GameObject[] networkedPlayers = new GameObject[4];
+    private PhotonView[] networkedPlayers = new PhotonView[4];
 
     #endregion
 
@@ -57,7 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Public Voids
 
-    public void AddPlayer(GameObject player, int id)
+    public void AddPlayer(PhotonView player, int id)
     {
         networkedPlayers[id] = player;
     }
@@ -131,7 +131,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Public Returns
 
-    public GameObject[] Players()
+    public PhotonView[] Players()
     {
         return networkedPlayers;
     }
