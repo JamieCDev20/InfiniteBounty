@@ -27,6 +27,12 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         if (i_currentHealth <= 0) Death();
     }
 
+    internal virtual void TakeDamage(int _i_damage, bool networked)
+    {
+        i_currentHealth -= _i_damage;
+        if (i_currentHealth <= 0) Death();
+    }
+
     internal virtual void Death()
     {
         gameObject.SetActive(false);

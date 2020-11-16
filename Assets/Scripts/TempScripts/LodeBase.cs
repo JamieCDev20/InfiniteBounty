@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class LodeBase : Enemy, IPoolable
+public class LodeBase : Enemy, IPoolable, IPunObservable
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;
@@ -34,6 +34,13 @@ public class LodeBase : Enemy, IPoolable
         if (!PhotonNetwork.IsMasterClient)
             return;
 
+        TakeDamage(_i_damage, true);
+
+    }
+
+    internal override void TakeDamage(int _i_damage, bool networked)
+    {
+
         i_currentHealth -= _i_damage;
         for (int i = 0; i < iA_healthIntervals.Length; i++)
         {
@@ -45,7 +52,7 @@ public class LodeBase : Enemy, IPoolable
             }
         }
 
-        LodeSynchroniser.x.SyncHealth(i_currentHealth, index);
+        //LodeSynchroniser.x.SyncHealth(i_currentHealth, index);
 
         CheckHealth();
 
@@ -108,6 +115,21 @@ public class LodeBase : Enemy, IPoolable
     public string ResourcePath()
     {
         return s_path;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+        if (stream.IsWriting)
+        {
+            stream.SendNext(i_currentHealth);
+        }
+        else
+        {
+            if (stream.Count > 0)
+                TakeDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
+        }
+
     }
 
 }
