@@ -94,26 +94,15 @@ public class ToolHandler : SubjectBase
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID)
     {
         SwapTool(_ts_slot, _i_toolID);
-        view.RPC("SwapTool", RpcTarget.OthersBuffered, _ts_slot, _i_toolID);
+        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
 
     }
 
     [PunRPC]
-    public void SyncToolsOverNetwork()
+    public void SyncToolOverNetwork()
     {
 
-        Debug.Log("Syncing weapons : " + A_tools.Length + " " + gameObject.name);
-        for (int i = 0; i < A_tools.Length; i++)
-        {
-
-            Debug.Log(A_tools[i]);
-            if (A_tools[i] != null)
-            {
-                SwapTool((ToolSlot)i, A_tools[i].ToolID);
-                view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
-            }
-        }
-
+        Debug.Log("Syncing tools");
 
     }
 

@@ -54,6 +54,9 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerInfo.playerID = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //Debug.Log("You are player: " + (playerInfo.playerID + 1));
         GameObject player = PhotonNetwork.Instantiate("NetworkPrefabs/" + playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
+        t_thisPlayer = player.transform;
+
+
 
         PhotonView view = player.GetComponent<PhotonView>();
 
@@ -71,6 +74,13 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         {
             PhotonView.Get(handles[i]).RPC("SyncToolsOverNetwork", RpcTarget.Others);
         }
+
+        //PhotonView[] views = FindObjectsOfType<PhotonView>();
+
+        //for (int i = 0; i < views.Length; i++)
+        //{
+        //    views[i].RPC("SyncToolOverNetwork", RpcTarget.Others);
+        //}
 
         NetworkManager.x.AddPlayer(view, playerInfo.playerID);
 

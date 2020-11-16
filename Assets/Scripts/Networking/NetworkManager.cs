@@ -96,6 +96,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnJoinedRoom()
     {
         //Debug.Log("YAY! You're in a room");
+        photonView.RPC("NewPlayerJoined", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    public void NewPlayerJoined()
+    {
+        Debug.Log("A new player has entered the arena");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
