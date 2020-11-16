@@ -102,7 +102,7 @@ public class ToolHandler : SubjectBase
     public void SyncToolsOverNetwork()
     {
 
-        Debug.Log("Syncing weapons");
+        Debug.Log("Syncing weapons : " + A_tools.Length);
         for (int i = 0; i < A_tools.Length; i++)
         {
             if (A_tools[i] != null)
