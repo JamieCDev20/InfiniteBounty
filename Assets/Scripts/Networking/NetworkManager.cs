@@ -99,6 +99,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         //Debug.Log("YAY! You're in a room");
         view.RPC("NewPlayerJoined", RpcTarget.Others);
+
     }
 
     [PunRPC]

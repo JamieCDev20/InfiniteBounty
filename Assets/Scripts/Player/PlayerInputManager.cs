@@ -173,6 +173,12 @@ public class PlayerInputManager : MonoBehaviour
         playerID = _i_index;
     }
 
+    [PunRPC]
+    public void JoinedRoom()
+    {
+        Debug.Log("I HAVE JOINED");
+    }
+
     #endregion
 
     #region Private Returns

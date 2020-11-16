@@ -70,6 +70,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         NetworkManager.x.AddPlayer(view, playerInfo.playerID);
 
+        view.RPC("JoinedRoom", RpcTarget.Others);
+
         t_thisPlayer = player.transform;
         playerIM = player.GetComponent<PlayerInputManager>();
         playerIM.SetPlayerNumber(playerInfo.playerID);

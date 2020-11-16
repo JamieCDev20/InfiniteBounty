@@ -39,9 +39,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         else
         {
-            if(PhotonNetwork.IsMasterClient)
-                PhotonNetwork.Instantiate(string.Format("{0}{1}", "NetworkPrefabs/", goA_toSpawnOnStart[0].name), Vector3.zero, Quaternion.identity);
-            for (int i = 1; i < goA_toSpawnOnStart.Length; i++)
+            //PhotonNetwork.Instantiate(string.Format("{0}{1}", "NetworkPrefabs/", goA_toSpawnOnStart[0].name), Vector3.zero, Quaternion.identity);
+            for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
             {
                 Instantiate(goA_toSpawnOnStart[i]);
             }
