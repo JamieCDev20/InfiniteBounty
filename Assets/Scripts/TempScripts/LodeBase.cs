@@ -81,6 +81,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
     [PunRPC]
     internal override void Death()
     {
+        Debug.LogFormat("Setting {0} to inactive", name);
         gameObject.SetActive(false);
         NuggetBurst();
 
