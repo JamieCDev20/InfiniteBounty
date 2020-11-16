@@ -33,19 +33,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
-        string toSend = string.Format("{0},{1}", wepSync, handler.GetTool(wepSync));
+        
 
-        if (stream.IsWriting)
-        {
-            stream.SendNext(toSend);
-        }
-        else
-        {
-            string[] read = ((string)stream.ReceiveNext()).Split(',');
-            handler.SwapTool((ToolSlot)int.Parse(read[0]), int.Parse(read[1]));
-        }
-
-        wepSync = (wepSync >= 2 ? wepSync = 0 : wepSync + 1);
     }
 
     private void FixedUpdate()

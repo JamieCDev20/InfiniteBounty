@@ -101,8 +101,8 @@ public class ToolHandler : SubjectBase
     [PunRPC]
     public void SyncToolsOverNetwork()
     {
-        return;
-        Debug.Log("Syncing weapons : " + A_tools.Length);
+
+        Debug.Log("Syncing weapons : " + A_tools.Length + " " + gameObject.name);
         for (int i = 0; i < A_tools.Length; i++)
         {
 
