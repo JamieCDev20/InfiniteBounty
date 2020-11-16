@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
+public class NetworkManager : MonoBehaviourPunCallbacks
 {
     //Variables
     public static NetworkManager x;
