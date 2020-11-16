@@ -60,9 +60,9 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         view.ObservedComponents.Add(this);
 
-        Debug.Log(NetworkManager.x.Players().Length);
         for (int i = 0; i < NetworkManager.x.Players().Length; i++)
         {
+            Debug.Log(NetworkManager.x.Players()[i]);
             if(NetworkManager.x.Players()[i] != null)
                 NetworkManager.x.Players()[i].RPC("SyncToolsOverNetwork", RpcTarget.All);
         }
