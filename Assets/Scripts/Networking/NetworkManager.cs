@@ -38,6 +38,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        x = this;
         Connect();
     }
 
