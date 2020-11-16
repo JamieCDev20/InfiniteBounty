@@ -60,11 +60,15 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         view.ObservedComponents.Add(this);
 
-        for (int i = 0; i < NetworkManager.x.Players().Length; i++)
+        //Make it work <-------
+        //Make it fast
+        //Make it nice
+
+        ToolHandler[] handles = FindObjectsOfType<ToolHandler>();
+
+        for (int i = 0; i < handles.Length; i++)
         {
-            Debug.Log(NetworkManager.x.Players()[i]);
-            if(NetworkManager.x.Players()[i] != null)
-                NetworkManager.x.Players()[i].RPC("SyncToolsOverNetwork", RpcTarget.All);
+            PhotonView.Get(handles[i]).RPC("SyncToolsOverNetwork", RpcTarget.Others);
         }
 
         NetworkManager.x.AddPlayer(view, playerInfo.playerID);
