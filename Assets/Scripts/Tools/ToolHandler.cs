@@ -94,7 +94,7 @@ public class ToolHandler : SubjectBase
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID)
     {
         SwapTool(_ts_slot, _i_toolID);
-        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
+        view.RPC("SwapTool", RpcTarget.OthersBuffered, _ts_slot, _i_toolID);
 
     }
 
