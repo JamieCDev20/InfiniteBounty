@@ -53,10 +53,12 @@ public class Randomness : MonoBehaviour
 
     private void SpawnLodes(int count)
     {
+        LodeSynchroniser.x.InitialiseLodeArrayLength(count);
         for (int i = 0; i < count; i++)
         {
             int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
             GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(RandomValue(lodes.Length - 1))], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
+            LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
             ob.name += Lt_lodeSpawns[num].position;
             Lt_lodeSpawns.RemoveAt(num);
         }

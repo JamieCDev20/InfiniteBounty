@@ -47,6 +47,13 @@ public class LodeBase : Enemy, IPoolable
 
     }
 
+    public void SetHealth(int health)
+    {
+
+        TakeDamage(i_currentHealth - health);
+
+    }
+
     private void CheckHealth()
     {
         if (i_currentHealth <= 0) Death();
@@ -92,20 +99,6 @@ public class LodeBase : Enemy, IPoolable
     public string ResourcePath()
     {
         return s_path;
-    }
-
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-        if (stream.IsWriting)
-            stream.SendNext(i_currentHealth);
-
-        else
-        {
-            i_currentHealth = (int)stream.ReceiveNext();
-            CheckHealth();
-        }
-
     }
 
 }
