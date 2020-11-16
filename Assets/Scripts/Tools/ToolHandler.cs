@@ -101,10 +101,17 @@ public class ToolHandler : SubjectBase
     [PunRPC]
     public void SyncToolsOverNetwork()
     {
-        for (int i = 0; i < A_tools.Length; i++)
+        if (view.IsMine)
         {
-            if(A_tools[i] != null)
-                SwapTool((ToolSlot)i, A_tools[i].ToolID);
+            for (int i = 0; i < A_tools.Length; i++)
+            {
+                if(A_tools[i] != null)
+                {
+                    SwapTool((ToolSlot)i, A_tools[i].ToolID);
+                    view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
+                }
+            }
+
         }
     }
 
