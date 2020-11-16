@@ -98,11 +98,14 @@ public class ToolHandler : SubjectBase
 
     }
 
-    [PunRPC]
     public void SyncToolOverNetwork()
     {
 
-        Debug.Log("Syncing tools");
+        for (int i = 0; i < A_tools.Length; i++)
+        {
+            if (A_tools[i] != null)
+                view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i]);
+        }
 
     }
 
