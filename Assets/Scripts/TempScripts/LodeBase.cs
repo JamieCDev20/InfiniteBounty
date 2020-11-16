@@ -15,6 +15,8 @@ public class LodeBase : Enemy, IPoolable
     [Space, SerializeField] private bool b_isNetworkedObject;
     [SerializeField] private string s_path;
 
+    private int index;
+
     protected override void Start()
     {
         base.Start();
@@ -29,7 +31,7 @@ public class LodeBase : Enemy, IPoolable
     internal override void TakeDamage(int _i_damage)
     {
 
-        if (!photonView.IsMine)
+        if (!PhotonNetwork.IsMasterClient)
             return;
 
         i_currentHealth -= _i_damage;
@@ -43,6 +45,8 @@ public class LodeBase : Enemy, IPoolable
             }
         }
 
+        LodeSynchroniser.x.SyncHealth(i_currentHealth, index);
+
         CheckHealth();
 
     }
@@ -52,6 +56,11 @@ public class LodeBase : Enemy, IPoolable
 
         TakeDamage(i_currentHealth - health);
 
+    }
+
+    public void SetIndex(int i)
+    {
+        index = i;
     }
 
     private void CheckHealth()

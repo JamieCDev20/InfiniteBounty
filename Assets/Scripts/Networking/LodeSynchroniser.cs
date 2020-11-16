@@ -46,6 +46,7 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks, IPunObservable
     public void AddLode(LodeBase lode, int index)
     {
         allLodes[index] = lode;
+        lode.SetIndex(index);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
