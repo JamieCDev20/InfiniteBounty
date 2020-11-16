@@ -2971,6 +2971,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 858493860}
+  - component: {fileID: 858493861}
   m_Layer: 0
   m_Name: MissionSummaryScreen
   m_TagString: Untagged
@@ -2993,6 +2994,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &858493861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858493859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931dd2a072f103343a9cf93a8982753c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iA_playerFaceImages:
+  - {fileID: 597641380}
+  - {fileID: 2054889736}
+  - {fileID: 2038119897}
+  - {fileID: 1756107564}
+  tA_nuggetCollectedTexts:
+  - {fileID: 471063856}
+  - {fileID: 80375734}
+  - {fileID: 1557400475}
+  - {fileID: 451541873}
+  t_randomTaxTextOneHeader: {fileID: 1239117320}
+  tA_randomTaxTextsOne:
+  - {fileID: 1520851674}
+  - {fileID: 273788625}
+  - {fileID: 1641153937}
+  - {fileID: 1254053435}
+  t_randomTaxTextTwoHeader: {fileID: 1676969949}
+  tA_randomTaxTextsTwo:
+  - {fileID: 2069339826}
+  - {fileID: 2094276696}
+  - {fileID: 1662090628}
+  - {fileID: 1711489659}
+  sA_randomTaxTitles:
+  - Aubergine Expenses
+  - Diet Water Costs
+  - Hamster Throwing
+  - Buttered Toast
+  - 
+  tA_totalsVert:
+  - {fileID: 477687130}
+  - {fileID: 1176028521}
+  - {fileID: 647124264}
+  - {fileID: 1698629459}
+  tA_totalsHori:
+  - {fileID: 1825048111}
+  - {fileID: 540392981}
+  - {fileID: 868163977}
+  t_absoluteTotal: {fileID: 817375640}
+  TEMP_sA_playerFaces:
+  - {fileID: 21300000, guid: 47db3a4bee90bb741b01d92d7183d8d2, type: 3}
+  - {fileID: 21300000, guid: 5805ea82fbab2394b974c4954b236f0d, type: 3}
+  - {fileID: 21300000, guid: 09023d9543577ff4c83276c0389c2b07, type: 3}
+  - {fileID: 21300000, guid: 14c0357c7d29afb43bd7179f5ef203e5, type: 3}
+  TEMP_iA_nuggetsCollectedPerPlayer: 96000000a3b4000002000000f1ffffff
+  TEMP_iA_randomTaxPerPlayerOne: c80000002c01000028000000f4010000
+  TEMP_iA_randomTaxPerPlayerTwo: 01000000020000000300000004000000
 --- !u!1 &868163975
 GameObject:
   m_ObjectHideFlags: 0
