@@ -105,9 +105,10 @@ public class ToolHandler : SubjectBase
         Debug.Log("Syncing weapons : " + A_tools.Length);
         for (int i = 0; i < A_tools.Length; i++)
         {
+
+            Debug.Log(A_tools[i]);
             if (A_tools[i] != null)
             {
-                Debug.Log(A_tools[i]);
                 SwapTool((ToolSlot)i, A_tools[i].ToolID);
                 view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
             }
