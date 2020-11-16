@@ -15,7 +15,7 @@ public class ToolHandler : SubjectBase
 {
 
     #region Serialized Fields
-    
+
     [SerializeField] private Transform[] A_toolTransforms;
     [SerializeField] private ToolBase[] A_tools = new ToolBase[3];
     [SerializeField] private ToolLoader[] A_toolLoaders;
@@ -66,7 +66,7 @@ public class ToolHandler : SubjectBase
 
     private void InitialiseTools()
     {
-        foreach(ToolLoader tl in A_toolLoaders)
+        foreach (ToolLoader tl in A_toolLoaders)
             switch (tl.Slot)
             {
                 case ToolSlot.leftHand:
@@ -101,18 +101,17 @@ public class ToolHandler : SubjectBase
     [PunRPC]
     public void SyncToolsOverNetwork()
     {
-        if (view.IsMine)
+        Debug.Log("Syncing weapons");
+        for (int i = 0; i < A_tools.Length; i++)
         {
-            for (int i = 0; i < A_tools.Length; i++)
+            if (A_tools[i] != null)
             {
-                if(A_tools[i] != null)
-                {
-                    SwapTool((ToolSlot)i, A_tools[i].ToolID);
-                    view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
-                }
+                SwapTool((ToolSlot)i, A_tools[i].ToolID);
+                view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
             }
-
         }
+
+
     }
 
     [PunRPC]
@@ -147,7 +146,7 @@ public class ToolHandler : SubjectBase
     private void RemoveTool(ToolSlot _ts_)
     {
         //Debug.Log("Removing Tool");
-        if(A_tools[(int)_ts_] != null)
+        if (A_tools[(int)_ts_] != null)
         {
             A_tools[(int)_ts_].gameObject.SetActive(false);
             A_tools[(int)_ts_] = null;
@@ -171,7 +170,7 @@ public class ToolHandler : SubjectBase
     {
         // Left hand weapon checks
         CheckPressOrHoldUse(ToolSlot.leftHand, _tbo_inputs.b_LToolDown, _tbo_inputs.b_LToolHold);
-        CheckReleaseUse(ToolSlot.leftHand, _tbo_inputs.b_LToolUp );
+        CheckReleaseUse(ToolSlot.leftHand, _tbo_inputs.b_LToolUp);
         // Right hand weapon checks
         CheckPressOrHoldUse(ToolSlot.rightHand, _tbo_inputs.b_RToolDown, _tbo_inputs.b_RToolHold);
         CheckReleaseUse(ToolSlot.rightHand, _tbo_inputs.b_RToolUp);
@@ -205,13 +204,13 @@ public class ToolHandler : SubjectBase
     private void CheckPressOrHoldUse(ToolSlot ts, bool _b_press, bool _b_hold)
     {
         // Do nothing when you're not pressing or holding the button
-        if(_b_press || _b_hold)
+        if (_b_press || _b_hold)
         {
             // You want to buy something, not shoot
-            if(ts == ToolSlot.leftHand && _b_press || ts == ToolSlot.rightHand && _b_press)
+            if (ts == ToolSlot.leftHand && _b_press || ts == ToolSlot.rightHand && _b_press)
                 if (CheckIfBuying(ts)) return;
             // You only want to shoot when the tool isn't release activated
-            if(A_tools[(int)ts] != null)
+            if (A_tools[(int)ts] != null)
                 if (!A_tools[(int)ts].ReleaseActivated)
                 {
                     view.RPC("UseTool", RpcTarget.Others, ts, t_camTransform.forward);
@@ -250,9 +249,9 @@ public class ToolHandler : SubjectBase
 
     public bool CheckIfRackUpgraded(ToolBase _tb_checker)
     {
-        foreach(WeaponTool wt in L_ownedTools)
+        foreach (WeaponTool wt in L_ownedTools)
         {
-            if(wt == _tb_checker)
+            if (wt == _tb_checker)
             {
                 return wt.RackUpgrade;
             }
