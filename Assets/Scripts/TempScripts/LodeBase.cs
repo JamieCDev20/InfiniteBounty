@@ -55,7 +55,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
         }
 
         //LodeSynchroniser.x.SyncHealth(i_currentHealth, index);
-        Debug.Log("lode health: " + i_currentHealth);
+        //Debug.Log("lode health: " + i_currentHealth);
         CheckHealth();
 
     }
@@ -85,7 +85,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
         gameObject.SetActive(false);
         NuggetBurst();
 
-        if (!PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
             view.RPC("Death", RpcTarget.Others);
 
     }
