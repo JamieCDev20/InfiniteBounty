@@ -107,6 +107,7 @@ public class ToolHandler : SubjectBase
         {
             if (A_tools[i] != null)
             {
+                Debug.Log(A_tools[i]);
                 SwapTool((ToolSlot)i, A_tools[i].ToolID);
                 view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
             }
