@@ -99,6 +99,16 @@ public class ToolHandler : SubjectBase
     }
 
     [PunRPC]
+    public void SyncToolsOverNetwork()
+    {
+        for (int i = 0; i < A_tools.Length; i++)
+        {
+            if(A_tools[i] != null)
+                SwapTool((ToolSlot)i, A_tools[i].ToolID);
+        }
+    }
+
+    [PunRPC]
     /// <summary>
     /// Swap weapons based on which type it is and/or what hand it should be in
     /// </summary>
