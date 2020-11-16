@@ -13,9 +13,11 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private PlayerInfo playerInfo;
     private Transform t_thisPlayer;
     private PlayerInputManager playerIM;
-    public int PlayerID{ get{ return playerInfo.playerID; } set { playerInfo.playerID = value; } }
+    private ToolHandler handler;
+    public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
     private List<string> dataToSend = new List<string>();
+    private int wepSync = 0;
 
     private void Start()
     {
@@ -31,11 +33,19 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
-        for (int i = 0; i < dataToSend.Count; i++)
+        string toSend = string.Format("{0},{1}", wepSync, handler.GetTool(wepSync));
+
+        if (stream.IsWriting)
         {
-            //stream.SendNext(dataToSend[i]);
+            stream.SendNext(toSend);
+        }
+        else
+        {
+            string[] read = ((string)stream.ReceiveNext()).Split(',');
+            handler.SwapTool((ToolSlot)int.Parse(read[0]), int.Parse(read[1]));
         }
 
+        wepSync = (wepSync >= 2 ? wepSync = 0 : wepSync + 1);
     }
 
     private void FixedUpdate()
@@ -54,9 +64,11 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //Debug.Log("You Joined");
         playerInfo.playerID = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         //Debug.Log("You are player: " + (playerInfo.playerID + 1));
-        GameObject player = PhotonNetwork.Instantiate("NetworkPrefabs/"+playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate("NetworkPrefabs/" + playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
 
         PhotonView view = player.GetComponent<PhotonView>();
+
+        handler = player.GetComponent<ToolHandler>();
 
         view.ObservedComponents.Add(this);
 
@@ -83,7 +95,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
-    
+
 
 }
 

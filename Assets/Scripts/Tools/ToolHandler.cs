@@ -101,7 +101,7 @@ public class ToolHandler : SubjectBase
     [PunRPC]
     public void SyncToolsOverNetwork()
     {
-
+        return;
         Debug.Log("Syncing weapons : " + A_tools.Length);
         for (int i = 0; i < A_tools.Length; i++)
         {
@@ -146,6 +146,12 @@ public class ToolHandler : SubjectBase
 
 
     }
+
+    public int GetTool(int index)
+    {
+        return A_tools[index].ToolID;
+    }
+
     private void RemoveTool(ToolSlot _ts_)
     {
         //Debug.Log("Removing Tool");
