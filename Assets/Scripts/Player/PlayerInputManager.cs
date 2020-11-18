@@ -92,8 +92,6 @@ public class PlayerInputManager : MonoBehaviour
 
         nugMan = GetComponent<NugManager>();
 
-        nugMan.SetNugTextRef(camControl.GetNugCountText());
-
     }
 
     private void GetInputs()
@@ -173,6 +171,8 @@ public class PlayerInputManager : MonoBehaviour
         mover.SetCameraTranfsorm(camControl.transform.GetChild(0));
         toolHandler.RecieveCameraTransform(camControl.transform.GetChild(0));
         animator.SetCam(camControl.transform.GetChild(0));
+        nugMan.SetNugTextRef(camControl.GetNugCountText());
+
     }
 
     public void SetPlayerNumber(int _i_index)

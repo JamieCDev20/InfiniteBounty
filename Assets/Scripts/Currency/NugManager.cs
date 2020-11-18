@@ -49,7 +49,7 @@ public class NugManager : SubjectBase, ObserverBase
     {
         i_currentNugs += _i_value;
         i_nugsCollected += _i_value;
-        t_nugText.text = "Nuggets Collected: " + i_currentNugs.ToString();
+        t_nugText.text = i_currentNugs.ToString();
     }
     public void SendNugs()
     {
