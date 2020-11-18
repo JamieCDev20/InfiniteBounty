@@ -7,7 +7,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;
-    [SerializeField] private int i_nuggetToSpawn;
+    //[SerializeField] private int i_nuggetToSpawn;
     [SerializeField] private int i_nuggetsPerBurst;
     [SerializeField] private float f_nuggetForce;
     [SerializeField] private int[] iA_healthIntervals = new int[3];
@@ -95,7 +95,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
             _go_nugget.SetActive(true);
             _go_nugget.transform.parent = null;
             _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2);
-            _go_nugget.transform.localScale = Vector3.one;
+            //_go_nugget.transform.localScale = Vector3.one;
             Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
             _rb.AddForce(new Vector3(-1 + Random.value * 2, Random.value * 2, -1 + Random.value * 2) * f_nuggetForce, ForceMode.Impulse);
             _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
