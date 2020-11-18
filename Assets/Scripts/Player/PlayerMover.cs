@@ -30,6 +30,7 @@ public class PlayerMover : MonoBehaviour
 
 
     internal bool b_grounded;
+    private bool b_applyGravity;
     internal bool b_jumpPress;
     private bool b_jumpHold;
     private bool b_jumpUp;
@@ -66,8 +67,7 @@ public class PlayerMover : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if (!b_grounded)
-            ApplyGravity();
+        ApplyGravity();
 
         ApplyDrag();
 
@@ -145,7 +145,10 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyGravity()
     {
-        rb.velocity -= Vector3.up * f_gravityScale * (rb.velocity.y < f_plummetPoint ? f_plummetMultiplier : 1) * Time.deltaTime;
+        if (b_applyGravity)
+            rb.velocity -= Vector3.up * f_gravityScale * (rb.velocity.y < f_plummetPoint ? f_plummetMultiplier : 1) * Time.deltaTime;
+        else
+            rb.velocity -= Vector3.up * 1f * Time.deltaTime;
     }
 
     private void ResetIfOffMap()
@@ -225,7 +228,16 @@ public class PlayerMover : MonoBehaviour
 
     private bool CheckGrounded()
     {
-        return Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, 0.5f);
+        RaycastHit hit;
+        Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.5f);
+        if(hit.collider != null)
+        {
+            b_applyGravity = hit.distance > 0.15f;
+            return true;
+
+        }
+        b_applyGravity = true;
+        return false;
     }
 
     #endregion
