@@ -17,7 +17,11 @@ public class NugManager : SubjectBase, ObserverBase
     {
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
         {
-            np.AddObserver(this);
+            NugGO ngo = np.GetComponent<NugGO>();
+            if(ngo != null)
+            {
+                ngo.AddObserver(this);
+            }
         }
 
     }
@@ -36,7 +40,6 @@ public class NugManager : SubjectBase, ObserverBase
                 foreach (NugGO np in FindObjectsOfType<NugGO>())
                 {
                     np.AddObserver(this);
-                    Debug.Log("Nugget Added");
                 }
                 break;
         }
