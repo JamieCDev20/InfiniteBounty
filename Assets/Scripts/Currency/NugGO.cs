@@ -34,11 +34,8 @@ public class NugGO : SubjectBase, IPoolable
         if (other.transform.tag == "Player")
         {
             GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles);
-            if (other.GetComponent<NetworkedPlayer>() != null)
-            {
-                CurrencyEvent ce = new CurrencyEvent(other.GetComponent<PlayerController>().ID, nug.i_worth, true);
-                Notify(ce);
-            }
+            CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true);
+            Notify(ce);
             Die();
         }
     }
