@@ -15,7 +15,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_moveSpeed = 10; // How fast the player moves
     [SerializeField] private float f_sprintMult = 2; // The multiplier applied to the base speed whilst sprinting;
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
-    [SerializeField]private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
+    [SerializeField] private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
 
     [Space]
     [Header("Physics")]
@@ -41,6 +41,7 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody rb;
     private Transform t_camTransform;
     private PhotonView view;
+    private int i_timesJumpedOff;
 
     #endregion
 
@@ -152,9 +153,23 @@ public class PlayerMover : MonoBehaviour
 
         if (transform.position.y < -25)
         {
-            transform.position = v_startPos + (Vector3.up * 5);
+            if (i_timesJumpedOff < 4)
+            {
+                transform.position = v_startPos + (Vector3.up);// * 5);
+                i_timesJumpedOff++;
+            }
+            else
+            {
+                rb.isKinematic = true;
+                Invoke("Quit", 3);
+            }
         }
 
+    }
+
+    private void Quit()
+    {
+        Application.Quit();
     }
 
     #endregion
