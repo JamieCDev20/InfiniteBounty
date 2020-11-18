@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class NugManager : SubjectBase, ObserverBase
 {
@@ -12,7 +11,7 @@ public class NugManager : SubjectBase, ObserverBase
     /// </summary>
     int i_nugsCollected = 0;
     public int i_playerID;
-    private TMP_Text t_nugText;
+    private Text t_nugText;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,7 +63,7 @@ public class NugManager : SubjectBase, ObserverBase
         i_currentNugs += _i_value;
     }
     
-    public void SetNugTextRef(TMP_Text _txt_)
+    public void SetNugTextRef(Text _txt_)
     {
         t_nugText = _txt_;
     }
