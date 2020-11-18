@@ -24,10 +24,10 @@ public class ToolRack : Shop
     private void SetToolInRack(ToolLoader _tl_loader, List<Transform> _t_toolTransform)
     {
         int tlLength = _tl_loader.ToolCount();
+        int toolRackID = 0;
         bool isWeapon = true;
         try
         {
-
             WeaponTool weaponTesting = (WeaponTool)_tl_loader.GetPrefabTool(0);
         }
         catch (System.InvalidCastException) { isWeapon = false; }
@@ -35,6 +35,9 @@ public class ToolRack : Shop
         {
             Transform parent = isWeapon ? _t_toolTransform[i * 2] : _t_toolTransform[i];
             ToolBase tb = _tl_loader.LoadTool(i, parent);
+            if (!tb.Purchased)
+                tb.GetComponent<MeshRenderer>().sharedMaterial = m_silhouette;
+            tb.RackID = toolRackID;
             tb.gameObject.SetActive(true);
             if (isWeapon)
             {
@@ -42,9 +45,32 @@ public class ToolRack : Shop
                 if (wt.RackUpgrade)
                 {
                     ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1]);
+                    toolRackID++;
+                    dupe.RackID = toolRackID;
                     dupe.gameObject.SetActive(true);
                 }
             }
+            toolRackID++;
         }
+    }
+
+    public void SetRackID(ToolBase _tb_, int _i_ID)
+    {
+        _tb_.RackID = tl_weaponTools.GetToolAt(_i_ID).RackID;
+    }
+
+    public int GetRackID(int _i_ID)
+    {
+        return tl_weaponTools.GetToolAt(_i_ID).RackID;
+    }
+
+    public void ReturnToRack(int _i_ID)
+    {
+        tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+    }
+
+    public void RemoveFromRack(int _i_ID)
+    {
+        tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(false);
     }
 }

@@ -11,6 +11,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     #region Protected Vars
     protected int i_toolId;
+    protected int i_rackId;
     protected bool b_usable = true;
     protected Transform t_cam;
     protected AugmentType[] at_augments = new AugmentType[0];
@@ -32,6 +33,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     public bool Purchased { get { return b_purchased; } }
     public bool ReleaseActivated { get { return b_releaseActivated; } }
     public int ToolID { get { return i_toolId; } set { i_toolId = value; } }
+    public int RackID { get { return i_rackId; } set { i_rackId = value; } }
 
     #endregion
 
@@ -70,7 +72,15 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         if (th)
         {
             th.CallSwapTool((ToolSlot)_i_purchaseParams[1], i_toolId);
-            
+
+            ToolRack tr = (ToolRack)_sh_shopRef;
+            if (tr)
+            {
+                i_rackId = tr.GetRackID(i_toolId);
+                Debug.Log(i_rackId);
+
+            }
+
             _sh_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
             t_cam = _t_camera;

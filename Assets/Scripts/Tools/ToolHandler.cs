@@ -52,13 +52,18 @@ public class ToolHandler : SubjectBase
             Shop sr = hit.transform.root.GetComponent<Shop>();
             if (tb != null)
             {
-                if (tb.CheckPurchaseStatus())
+                switch (sr)
                 {
-                    CallSwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>().ToolID);
-                    return true;
+                    case ToolRack tr:
+                        if (tb.CheckPurchaseStatus())
+                        {
+                            ReturnToRack(ts, tr);
+                            CallSwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>().ToolID);
+                            return true;
+                        }
+                        tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
+                        return true;
                 }
-                tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
-                return true;
             }
         }
         return false;
@@ -79,6 +84,16 @@ public class ToolHandler : SubjectBase
                     tl.LoadTools(A_toolTransforms[(int)ToolSlot.moblility]);
                     break;
             }
+    }
+
+    public void ReturnToRack(ToolSlot ts, ToolRack tr)
+    {
+        if (A_tools[(int)ts] != null)
+        {
+            Debug.Log(A_tools[(int)ts].RackID);
+
+            tr.ReturnToRack(A_tools[(int)ts].RackID);
+        }
     }
 
     [PunRPC]
@@ -164,6 +179,10 @@ public class ToolHandler : SubjectBase
             L_ownedTools.Add(A_tools[(int)_ts_]);
     }
 
+    private ToolBase GetToolInHand(ToolSlot _ts_)
+    {
+        return A_tools[(int)_ts_];
+    }
     /// <summary>
     /// Get inputs via tool booleans
     /// </summary>
