@@ -96,9 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6337758a221fee64fb5778c20dcea41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lm_playerMask:
-    serializedVersion: 2
-    m_Bits: 15159
 --- !u!1 &104550082803790745
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +143,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   f_cameraSensitivity: 180
   networkedCamera: 1
+  f_rightWardOffset: 0.4
+  f_leftWardOffset: -0.4
+  v_firingBothOffset: {x: 0, y: 0.5, z: 0}
+  f_cameraLerpFiring: 0.95
 --- !u!1 &306561797066024241
 GameObject:
   m_ObjectHideFlags: 0

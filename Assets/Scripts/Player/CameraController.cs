@@ -12,9 +12,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool networkedCamera = false;
 
     [Header("Firing Cam Positions")]
-    [SerializeField] private Vector3 v_firingLeftOffset;
-    [SerializeField] private Vector3 v_firingRightOffset;
+    [SerializeField] private float f_rightWardOffset;
+    [SerializeField] private float f_leftWardOffset;
     [SerializeField] private Vector3 v_firingBothOffset;
+    [SerializeField] private float f_cameraLerpFiring;
 
     #endregion
 
@@ -44,8 +45,8 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         //DoStuff
-        Follow();
         Look();
+        Follow();
     }
 
     #endregion
@@ -59,14 +60,14 @@ public class CameraController : MonoBehaviour
 
     private void Follow()
     {
-        if (pim_inputs.GetToolBools().b_LToolHold)
-            transform.position = t_follow.position + v_firingLeftOffset;
+        if (pim_inputs.GetToolBools().b_LToolHold && pim_inputs.GetToolBools().b_RToolHold)
+            transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + v_firingBothOffset, f_cameraLerpFiring);
+
+        else if (pim_inputs.GetToolBools().b_LToolHold)
+            transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_leftWardOffset), f_cameraLerpFiring);
 
         else if (pim_inputs.GetToolBools().b_RToolHold)
-            transform.position = t_follow.position + v_firingRightOffset;
-
-        else if (pim_inputs.GetToolBools().b_LToolHold && pim_inputs.GetToolBools().b_RToolHold)
-            transform.position = t_follow.position + v_firingBothOffset;
+            transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_rightWardOffset), f_cameraLerpFiring);
 
         else
             transform.position = t_follow.position + v_offset;
@@ -101,6 +102,11 @@ public class CameraController : MonoBehaviour
     public void SetOffset(Vector3 _v_newOffset)
     {
         v_offset = _v_newOffset;
+    }
+
+    public void SetPIM(PlayerInputManager _pim_newPIM)
+    {
+        pim_inputs = _pim_newPIM;
     }
 
     #endregion
