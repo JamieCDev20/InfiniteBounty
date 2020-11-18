@@ -64,6 +64,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void Purchase(GameObject _go_owner, Transform _t_camera, Shop _sh_shopRef, params int[] _i_purchaseParams)
     {
+        GetComponent<Collider>().isTrigger = true;
         // Get the tool handler and swap the tool
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
