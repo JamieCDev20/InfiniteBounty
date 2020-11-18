@@ -188,6 +188,10 @@ public class PlayerInputManager : MonoBehaviour
 
     #region Public Returns
 
+    public ToolBools GetToolBools()
+    {
+        return toolBools;
+    }
 
     #endregion
 

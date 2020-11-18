@@ -22,6 +22,7 @@ public class PlayerAnimator : MonoBehaviour
     private bool b_doIK = true; //Pronounced like palpatine says "Do it" but with a 'K' not a 'T'
 
     private PlayerMover pm_inputs;
+    private PlayerInputManager pim_inputManager;
     private Transform camTransform;
     private Animator anim;
     private Rigidbody rb;
@@ -36,12 +37,14 @@ public class PlayerAnimator : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         pm_inputs = GetComponent<PlayerMover>();
+        pim_inputManager = GetComponent<PlayerInputManager>();
     }
 
     private void Update()
     {
         GetMovementSpeed();
         CheckJumpAnims();
+        SetShootingBools();
     }
 
     private void LateUpdate()
@@ -70,6 +73,12 @@ public class PlayerAnimator : MonoBehaviour
         anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), pm_inputs.v_movementVector.x * (pm_inputs.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
         anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
         //anim.SetFloat("Y", pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1));
+    }
+
+    private void SetShootingBools()
+    {
+        anim.SetBool("ShootingLeft", pim_inputManager.GetToolBools().b_LToolHold);
+        anim.SetBool("ShootingRight", pim_inputManager.GetToolBools().b_RToolHold);
     }
 
     private void MakeAnArmDoTheRightThing(Transform arm, int fix)
