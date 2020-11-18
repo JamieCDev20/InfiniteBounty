@@ -16,7 +16,7 @@ public class CameraRespectWalls : MonoBehaviour
 
     private float f_targetDistance;
     private Vector3 v_targetPos;
-    [SerializeField] private LayerMask lm_playerMask;
+    private LayerMask lm_playerMask;
     private Transform t_root;
 
     #endregion
