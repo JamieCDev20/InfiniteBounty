@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -10,6 +11,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float f_cameraSensitivity = 180;
     [SerializeField] private bool networkedCamera = false;
+    [SerializeField] private TMP_Text nugCountText;
 
     [Header("Firing Cam Positions")]
     [SerializeField] private float f_rightWardOffset;
@@ -130,6 +132,10 @@ public class CameraController : MonoBehaviour
 
     #region Public Returns
 
+    public TMP_Text GetNugCountText()
+    {
+        return nugCountText;
+    }
 
     #endregion
 
