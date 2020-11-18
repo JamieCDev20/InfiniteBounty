@@ -16,23 +16,24 @@ public class ScoreBoardInfoSetter : MonoBehaviour
     [SerializeField] private Text[] tA_randomTaxTextsOne = new Text[0];
     [SerializeField] private Text t_randomTaxTextTwoHeader;
     [SerializeField] private Text[] tA_randomTaxTextsTwo = new Text[0];
-    [Space, SerializeField] private string[] sA_randomTaxTitles = new string[0];
+    [Space, SerializeField] private string[] sA_randomTaxStarts = new string[0];
+    [SerializeField] private string[] sA_randomTaxEnds = new string[0];
 
     [Header("Total Texts")]
     [SerializeField] private Text[] tA_totalsVert = new Text[0];
     [SerializeField] private Text[] tA_totalsHori = new Text[0];
     [SerializeField] private Text t_absoluteTotal;
 
-    
+
     [Header("TEST VALUES")]
     [SerializeField] private Sprite[] TEMP_sA_playerFaces = new Sprite[0];
-    [SerializeField] private int[] TEMP_iA_nuggetsCollectedPerPlayer = new int[0];
-    [SerializeField] private int[] TEMP_iA_randomTaxPerPlayerOne = new int[0];
-    [SerializeField] private int[] TEMP_iA_randomTaxPerPlayerTwo = new int[0];
 
     private void Start()
     {
-        GainStats(TEMP_sA_playerFaces, TEMP_iA_nuggetsCollectedPerPlayer, TEMP_iA_randomTaxPerPlayerOne, TEMP_iA_randomTaxPerPlayerTwo);
+        GainStats(TEMP_sA_playerFaces,
+            new int[] { Random.Range(0, 10000), Random.Range(0, 10000), Random.Range(0, 10000), Random.Range(0, 10000) },
+            new int[] { Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000) },
+            new int[] { Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000) });
         SetTaxOneHeader();
         SetTaxTwoHeader();
     }
@@ -59,11 +60,15 @@ public class ScoreBoardInfoSetter : MonoBehaviour
             tA_nuggetCollectedTexts[i].text = "£" + _iA_nuggetsCollectedPerPlayer[i];
 
             _iA_totalCostPerPlayer[i] += _iA_nuggetsCollectedPerPlayer[i];
+            _i_totalHarvest += _iA_nuggetsCollectedPerPlayer[i];
+
             _iA_totalCostPerPlayer[i] -= _iA_randomTaxPerPlayerOne[i];
             _iA_totalCostPerPlayer[i] -= _iA_randomTaxPerPlayerTwo[i];
 
             tA_randomTaxTextsOne[i].text = "-£" + _iA_randomTaxPerPlayerOne[i];
+            _i_totalTaxOne -= _iA_randomTaxPerPlayerOne[i];
             tA_randomTaxTextsTwo[i].text = "-£" + _iA_randomTaxPerPlayerTwo[i];
+            _i_totalTaxTwo -= _iA_randomTaxPerPlayerTwo[i];
 
             tA_totalsVert[i].text = "£" + _iA_totalCostPerPlayer[i];
 
@@ -82,7 +87,7 @@ public class ScoreBoardInfoSetter : MonoBehaviour
     }
     public void SetTaxOneHeader()
     {
-        t_randomTaxTextOneHeader.text = sA_randomTaxTitles[Random.Range(0, sA_randomTaxTitles.Length)];
+        t_randomTaxTextOneHeader.text = sA_randomTaxStarts[Random.Range(0, sA_randomTaxStarts.Length)] + " " + sA_randomTaxEnds[Random.Range(0, sA_randomTaxEnds.Length)];
     }
 
     public void SetTaxTwoHeader(string _s_taxHeader)
@@ -91,6 +96,6 @@ public class ScoreBoardInfoSetter : MonoBehaviour
     }
     public void SetTaxTwoHeader()
     {
-        t_randomTaxTextTwoHeader.text = sA_randomTaxTitles[Random.Range(0, sA_randomTaxTitles.Length)];
+        t_randomTaxTextTwoHeader.text = sA_randomTaxStarts[Random.Range(0, sA_randomTaxStarts.Length)] + " " + sA_randomTaxEnds[Random.Range(0, sA_randomTaxEnds.Length)];
     }
 }

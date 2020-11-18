@@ -3028,26 +3028,19 @@ MonoBehaviour:
   - {fileID: 2094276696}
   - {fileID: 1662090628}
   - {fileID: 1711489659}
-  sA_randomTaxTitles:
-  - Aubergine Expenses
-  - Diet Water Costs
-  - Hamster Throwing
-  - Buttered Toast
-  - Garbage Collection
-  - Literally Nothing
-  - A Sourdough
-  - Dinosaur Restoration
-  - Putting Brett in the Airlock
-  - Pure Gold
-  - Pure Titanium
-  - Boats
-  - Goldfish Walkers
-  - Pasties
-  - Pizza Crust
-  - Hard Drugs
-  - Kanye West Albums
-  - A metric ton of Weetabix
+  sA_randomTaxStarts:
+  - Pizza
   - Brett
+  - Hamster
+  - Aubergine
+  - Buttered Toast
+  - Diet Water
+  sA_randomTaxEnds:
+  - Tax
+  - Expense
+  - Throwing
+  - Flailing
+  - Making
   tA_totalsVert:
   - {fileID: 477687130}
   - {fileID: 1176028521}
@@ -3063,9 +3056,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 47db3a4bee90bb741b01d92d7183d8d2, type: 3}
   - {fileID: 21300000, guid: 09023d9543577ff4c83276c0389c2b07, type: 3}
   - {fileID: 21300000, guid: 5805ea82fbab2394b974c4954b236f0d, type: 3}
-  TEMP_iA_nuggetsCollectedPerPlayer: 01000000020000000300000004000000
-  TEMP_iA_randomTaxPerPlayerOne: 03000000040000000200000001000000
-  TEMP_iA_randomTaxPerPlayerTwo: 01000000020000000100000074170000
 --- !u!1 &868163975
 GameObject:
   m_ObjectHideFlags: 0
@@ -9228,8 +9218,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.35}
-  m_SizeDelta: {x: 6, y: 1.1}
+  m_AnchoredPosition: {x: 0, y: 1.25}
+  m_SizeDelta: {x: 6, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1239117320
 MonoBehaviour:
@@ -9254,14 +9244,14 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Aubergine Expenses
 --- !u!222 &1239117321
@@ -10328,8 +10318,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.2, y: 1.35}
-  m_SizeDelta: {x: 6, y: 1.1}
+  m_AnchoredPosition: {x: 1.2, y: 1.25}
+  m_SizeDelta: {x: 6, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1676969949
 MonoBehaviour:
@@ -10354,14 +10344,14 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Diet Water Costs
 --- !u!222 &1676969950
