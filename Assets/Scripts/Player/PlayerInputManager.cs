@@ -48,6 +48,7 @@ public class PlayerInputManager : MonoBehaviour
     private ToolHandler toolHandler;
     private PlayerAnimator animator;
     private PhotonView view;
+    private NugManager nugMan;
 
     #endregion
 
@@ -88,6 +89,11 @@ public class PlayerInputManager : MonoBehaviour
         animator = GetComponent<PlayerAnimator>();
 
         view = GetComponent<PhotonView>();
+
+        nugMan = GetComponent<NugManager>();
+
+        nugMan.SetNugTextRef(camControl.GetNugCountText());
+
     }
 
     private void GetInputs()
