@@ -161,7 +161,11 @@ public class PlayerMover : MonoBehaviour
             else
             {
                 rb.isKinematic = true;
-                Invoke("Quit", 3);
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+             Invoke("Quit", 3);
+#endif
             }
         }
 
