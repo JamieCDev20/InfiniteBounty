@@ -229,7 +229,7 @@ public class PlayerMover : MonoBehaviour
     private bool CheckGrounded()
     {
         RaycastHit hit;
-        Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.5f);
+        Physics.SphereCast(transform.position + (Vector3.up * 0.1f), 0.5f, Vector3.down, out hit, 0.5f);
         if(hit.collider != null)
         {
             b_applyGravity = hit.distance > 0.15f;
