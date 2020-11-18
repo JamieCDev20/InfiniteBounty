@@ -11,6 +11,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float f_cameraSensitivity = 180;
     [SerializeField] private bool networkedCamera = false;
 
+    [Header("Firing Cam Positions")]
+    [SerializeField] private Vector3 v_firingLeftOffset;
+    [SerializeField] private Vector3 v_firingRightOffset;
+    [SerializeField] private Vector3 v_firingBothOffset;
+
     #endregion
 
     #region Private
@@ -18,6 +23,7 @@ public class CameraController : MonoBehaviour
     private Vector2 v2_lookInputs;
     private Vector3 v_offset = Vector3.up * 3;
     private Transform t_follow;
+    private PlayerInputManager pim_inputs;
 
     #endregion
 
@@ -29,7 +35,8 @@ public class CameraController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         if (!networkedCamera)
         {
-            transform.root.GetComponentInChildren<PlayerInputManager>().SetCamera(this);
+            pim_inputs = transform.root.GetComponentInChildren<PlayerInputManager>();
+            pim_inputs.SetCamera(this);
             Detach();
         }
     }
@@ -52,7 +59,17 @@ public class CameraController : MonoBehaviour
 
     private void Follow()
     {
-        transform.position = t_follow.position + v_offset;
+        if (pim_inputs.GetToolBools().b_LToolHold)
+            transform.position = t_follow.position + v_firingLeftOffset;
+
+        else if (pim_inputs.GetToolBools().b_RToolHold)
+            transform.position = t_follow.position + v_firingRightOffset;
+
+        else if (pim_inputs.GetToolBools().b_LToolHold && pim_inputs.GetToolBools().b_RToolHold)
+            transform.position = t_follow.position + v_firingBothOffset;
+
+        else
+            transform.position = t_follow.position + v_offset;
     }
 
     private void Look()
