@@ -48,22 +48,39 @@ public class ToolHandler : SubjectBase
         Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
-            IPurchasable tb = hit.transform.GetComponent<IPurchasable>();
+            ToolBase tb = hit.transform.GetComponent<ToolBase>();
             Shop sr = hit.transform.root.GetComponent<Shop>();
-            if (tb != null)
+            switch (sr)
             {
-                switch (sr)
-                {
-                    case ToolRack tr:
-                        if (tb.CheckPurchaseStatus())
+                case ToolRack tr:
+                    if (tb.CheckPurchaseStatus())
+                    {
+                        switch (tb)
                         {
-                            ReturnToRack(ts, tr);
-                            CallSwapTool(ts, tb.GetGameObject().GetComponent<ToolBase>().ToolID);
-                            return true;
+                            case WeaponTool wt:
+                                ReturnToRack(ts, tr, true);
+                                CallSwapTool(ts, tb.ToolID);
+                                tr.SetRackID(A_tools[(int)ts], true);
+                                return true;
+                            case MobilityTool mt:
+                                ReturnToRack(ts, tr, false);
+                                CallSwapTool(ToolSlot.moblility, tb.ToolID);
+                                tr.SetRackID(A_tools[(int)ts], false);
+                                return true;
                         }
-                        tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
-                        return true;
-                }
+                    }
+                    switch (tb)
+                    {
+                        case WeaponTool wt:
+                            tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
+                            CallSwapTool(ts, tb.ToolID);
+                            return true;
+                        case MobilityTool mt:
+                            tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
+                            CallSwapTool(ToolSlot.moblility, tb.ToolID);
+                            return true;
+                    }
+                    return false;
             }
         }
         return false;
@@ -86,13 +103,13 @@ public class ToolHandler : SubjectBase
             }
     }
 
-    public void ReturnToRack(ToolSlot ts, ToolRack tr)
+    public void ReturnToRack(ToolSlot ts, ToolRack tr, bool _b_rackType)
     {
         if (A_tools[(int)ts] != null)
         {
             Debug.Log(A_tools[(int)ts].RackID);
 
-            tr.ReturnToRack(A_tools[(int)ts].RackID);
+            tr.ReturnToRack(A_tools[(int)ts].RackID, _b_rackType);
         }
     }
 
@@ -172,11 +189,14 @@ public class ToolHandler : SubjectBase
 
     private void AddTool(ToolSlot _ts_, int _i_toolID)
     {
+        // Check here if you have enough nugs.
         //Debug.Log(A_tools[(int)_ts_]);
         A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
         A_tools[(int)_ts_].gameObject.SetActive(true);
         if (!A_tools[(int)_ts_].Purchased)
+        {
             L_ownedTools.Add(A_tools[(int)_ts_]);
+        }
     }
 
     private ToolBase GetToolInHand(ToolSlot _ts_)

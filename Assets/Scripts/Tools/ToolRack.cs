@@ -54,23 +54,35 @@ public class ToolRack : Shop
         }
     }
 
-    public void SetRackID(ToolBase _tb_, int _i_ID)
+    public void SetRackID(ToolBase _tb_, bool _b_rackType)
     {
-        _tb_.RackID = tl_weaponTools.GetToolAt(_i_ID).RackID;
+        if (_b_rackType)
+            _tb_.RackID = tl_weaponTools.GetToolAt(_tb_.ToolID).RackID;
+        else
+            _tb_.RackID = tl_mobTools.GetToolAt(_tb_.ToolID).RackID;
     }
 
-    public int GetRackID(int _i_ID)
+    public int GetRackID(int _i_ID, bool _b_rackType)
     {
-        return tl_weaponTools.GetToolAt(_i_ID).RackID;
+        if (_b_rackType)
+            return tl_weaponTools.GetToolAt(_i_ID).RackID;
+        else
+            return tl_mobTools.GetToolAt(_i_ID).RackID;
     }
 
-    public void ReturnToRack(int _i_ID)
+    public void ReturnToRack(int _i_ID, bool _b_rackType)
     {
-        tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+        if (_b_rackType)
+            tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+        else
+            tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(true);
     }
 
-    public void RemoveFromRack(int _i_ID)
+    public void RemoveFromRack(int _i_ID, bool _b_rackType)
     {
-        tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(false);
+        if (_b_rackType)
+            tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(false);
+        else
+            tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(false);
     }
 }

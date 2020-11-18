@@ -12,7 +12,7 @@ public class NugManager : SubjectBase, ObserverBase
     /// </summary>
     int i_nugsCollected = 0;
     public int i_playerID;
-    [SerializeField] TMP_Text t_nugText;
+    private TMP_Text t_nugText;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +20,9 @@ public class NugManager : SubjectBase, ObserverBase
         {
             np.AddObserver(this);
         }
-        //foreach()
+
     }
+
     public void OnNotify(ObserverEvent oe_event)
     {
         switch (oe_event)
@@ -63,4 +64,9 @@ public class NugManager : SubjectBase, ObserverBase
         i_currentNugs += _i_value;
     }
     
+    public void SetNugTextRef(TMP_Text _txt_)
+    {
+        t_nugText = _txt_;
+    }
+
 }
