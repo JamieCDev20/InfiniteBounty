@@ -200,6 +200,11 @@ public class PlayerInputManager : MonoBehaviour
         return toolBools;
     }
 
+    public int GetID()
+    {
+        return playerID;
+    }
+
     #endregion
 
 }
