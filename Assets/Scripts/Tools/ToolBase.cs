@@ -11,7 +11,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     #region Protected Vars
     protected int i_toolId;
-    protected List<int> i_rackId = new List<int>();
+    protected int i_rackId;
     protected bool b_usable = true;
     protected Transform t_cam;
     protected AugmentType[] at_augments = new AugmentType[0];
@@ -33,7 +33,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     public bool Purchased { get { return b_purchased; } }
     public bool ReleaseActivated { get { return b_releaseActivated; } }
     public int ToolID { get { return i_toolId; } set { i_toolId = value; } }
-    public List<int> RackID { get { return i_rackId; } set { i_rackId = value; } }
+    public int RackID { get { return i_rackId; } set { i_rackId = value; } }
 
     #endregion
 
@@ -79,18 +79,18 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
                     switch (this)
                     {
                         case WeaponTool wt:
-                            Debug.Log("Wep");
-                            tr.RemoveFromRack(RackID, true);
+                            //i_rackId = tr.RemoveFromRack(RackID, true);
+                            Debug.Log(i_rackId);
                             break;
                         case MobilityTool mt:
-                            Debug.Log("Mob");
-                            tr.RemoveFromRack(RackID, false);
+                            //i_rackId = tr.RemoveFromRack(RackID, false);
+                            Debug.Log(i_rackId);
                             break;
                     }
                     break;
             }
 
-            _sh_shopRef.RemoveFromDisplay(this);
+            //_sh_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
             t_cam = _t_camera;
         }

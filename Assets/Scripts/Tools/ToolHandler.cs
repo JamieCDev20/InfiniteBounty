@@ -58,12 +58,12 @@ public class ToolHandler : SubjectBase
                         switch (tb)
                         {
                             case WeaponTool wt:
-                                ReturnToRack(ts, tr, true);
-                                CallSwapTool(ts, tb.ToolID);
+                                CallSwapTool(ts, tb.ToolID, tr, true);
+                                A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
                                 return true;
                             case MobilityTool mt:
-                                ReturnToRack(ts, tr, false);
-                                CallSwapTool(ToolSlot.moblility, tb.ToolID);
+                                CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                                A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, false);
                                 return true;
                         }
                     }
@@ -71,11 +71,13 @@ public class ToolHandler : SubjectBase
                     {
                         case WeaponTool wt:
                             tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
-                            CallSwapTool(ts, tb.ToolID);
+                            CallSwapTool(ts, tb.ToolID, tr, true);
+                            A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
                             return true;
                         case MobilityTool mt:
                             tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
-                            CallSwapTool(ToolSlot.moblility, tb.ToolID);
+                            CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                            A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, false);
                             return true;
                     }
                     return false;
@@ -105,7 +107,8 @@ public class ToolHandler : SubjectBase
     {
         if (A_tools[(int)ts] != null)
         {
-            tr.ReturnToRack(A_tools[(int)ts].ToolID, _b_rackType);
+            Debug.Log("Rack going in: " + A_tools[(int)ts].RackID);
+            tr.ReturnToRack(A_tools[(int)ts].RackID, _b_rackType);
         }
     }
 
@@ -120,9 +123,9 @@ public class ToolHandler : SubjectBase
             A_tools[(int)_ts_tool].Use(dir);
     }
 
-    public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID)
+    public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)
     {
-        SwapTool(_ts_slot, _i_toolID);
+        SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
         view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
 
     }
@@ -144,21 +147,21 @@ public class ToolHandler : SubjectBase
     /// </summary>
     /// <param name="_b_left">Left or right hand</param>
     /// <param name="_tb_tool">Tool to attach</param>
-    public void SwapTool(ToolSlot _ts_slot, int _i_toolID)
+    public void SwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackID)
     {
         // Cast weapons to correct types and assign to correct slot
         switch (_ts_slot)
         {
             case ToolSlot.leftHand:
-                RemoveTool(ToolSlot.leftHand);
+                RemoveTool(ToolSlot.leftHand, tr, _b_rackID);
                 AddTool(ToolSlot.leftHand, _i_toolID);
                 break;
             case ToolSlot.rightHand:
-                RemoveTool(ToolSlot.rightHand);
+                RemoveTool(ToolSlot.rightHand, tr, _b_rackID);
                 AddTool(ToolSlot.rightHand, _i_toolID);
                 break;
             case ToolSlot.moblility:
-                RemoveTool(ToolSlot.moblility);
+                RemoveTool(ToolSlot.moblility, tr, _b_rackID);
                 AddTool(ToolSlot.moblility, _i_toolID);
                 break;
             default:
@@ -173,11 +176,11 @@ public class ToolHandler : SubjectBase
         return A_tools[index].ToolID;
     }
 
-    private void RemoveTool(ToolSlot _ts_)
+    private void RemoveTool(ToolSlot _ts_, ToolRack tr, bool _b_rackType)
     {
-        //Debug.Log("Removing Tool");
         if (A_tools[(int)_ts_] != null)
         {
+            ReturnToRack(_ts_, tr, _b_rackType);
             A_tools[(int)_ts_].gameObject.SetActive(false);
             A_tools[(int)_ts_] = null;
         }
@@ -186,7 +189,6 @@ public class ToolHandler : SubjectBase
     private void AddTool(ToolSlot _ts_, int _i_toolID)
     {
         // Check here if you have enough nugs.
-        //Debug.Log(A_tools[(int)_ts_]);
         A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
         A_tools[(int)_ts_].gameObject.SetActive(true);
         if (!A_tools[(int)_ts_].Purchased)
@@ -199,6 +201,7 @@ public class ToolHandler : SubjectBase
     {
         return A_tools[(int)_ts_];
     }
+
     /// <summary>
     /// Get inputs via tool booleans
     /// </summary>
