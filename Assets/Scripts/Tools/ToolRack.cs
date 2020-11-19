@@ -13,15 +13,17 @@ public class ToolRack : Shop
     private void OnEnable()
     {
         ToolHandler playerRef = null;
+        ToolLoader playerTools = null;
         if (FindObjectOfType<NetworkedPlayer>())
         {
             playerRef = FindObjectOfType<NetworkedPlayer>().GetComponent<ToolHandler>();
+            playerTools = playerRef.GetComponent<ToolLoader>();
         }
-        SetToolInRack(tl_weaponTools, L_weaponToolPos);
-        SetToolInRack(tl_mobTools, L_mobToolPos);
+        SetToolInRack(tl_weaponTools, L_weaponToolPos, playerTools);
+        SetToolInRack(tl_mobTools, L_mobToolPos, playerTools);
     }
 
-    private void SetToolInRack(ToolLoader _tl_loader, List<Transform> _t_toolTransform)
+    private void SetToolInRack(ToolLoader _tl_loader, List<Transform> _t_toolTransform, ToolLoader _tl_playerTools)
     {
         int tlLength = _tl_loader.ToolCount();
         int toolRackID = 0;
@@ -37,7 +39,7 @@ public class ToolRack : Shop
             ToolBase tb = _tl_loader.LoadTool(i, parent);
             if (!tb.Purchased)
                 tb.GetComponent<MeshRenderer>().sharedMaterial = m_silhouette;
-            tb.RackID = toolRackID;
+            tb.RackID.Add(toolRackID);
             tb.gameObject.SetActive(true);
             if (isWeapon)
             {
@@ -46,7 +48,7 @@ public class ToolRack : Shop
                 {
                     ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1]);
                     toolRackID++;
-                    dupe.RackID = toolRackID;
+                    dupe.RackID.Add(toolRackID);
                     dupe.gameObject.SetActive(true);
                 }
             }
@@ -62,7 +64,7 @@ public class ToolRack : Shop
             _tb_.RackID = tl_mobTools.GetToolAt(_tb_.ToolID).RackID;
     }
 
-    public int GetRackID(int _i_ID, bool _b_rackType)
+    public List<int> GetRackID(int _i_ID, bool _b_rackType)
     {
         if (_b_rackType)
             return tl_weaponTools.GetToolAt(_i_ID).RackID;

@@ -23,7 +23,7 @@ public class NugManager : SubjectBase, ObserverBase
                 ngo.AddObserver(this);
             }
         }
-
+        i_playerID = GetComponent<PlayerInputManager>().GetID();
     }
 
     public void OnNotify(ObserverEvent oe_event)
