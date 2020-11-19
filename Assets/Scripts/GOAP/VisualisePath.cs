@@ -7,8 +7,7 @@ public class VisualisePath : MonoBehaviour
 {
 
     [SerializeField] private LineRenderer lr;
-    [SerializeField] private Transform t;
-    [SerializeField] private GoapAgent agent;
+    [SerializeField] private NGoapAgent agent;
 
     private void Update()
     {

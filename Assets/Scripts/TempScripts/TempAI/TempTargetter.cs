@@ -23,6 +23,16 @@ public class TempTargetter : MonoBehaviour
     //Methods
     #region Unity Standards
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity);
+            hit.collider.GetComponent<IHitable>()?.TakeDamage(1);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (transformFollow)

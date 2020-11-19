@@ -94,6 +94,8 @@ public class Bullet : MonoBehaviour, IPoolable
         if (collision.transform.CompareTag("Hittable"))
             collision.transform.GetComponent<Enemy>().TakeDamage(i_damage);
 
+        collision.gameObject.GetComponent<IHitable>()?.TakeDamage(i_damage);
+
         go_hitEffect.SetActive(false);
         go_hitEffect.transform.parent = transform;
         go_hitEffect.transform.localPosition = Vector3.zero;

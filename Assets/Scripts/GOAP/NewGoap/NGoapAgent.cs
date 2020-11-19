@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class NGoapAgent : MonoBehaviour
+public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 {
 
     //Variables
@@ -11,10 +13,19 @@ public class NGoapAgent : MonoBehaviour
     [SerializeField] private AIMovementType movementType;
     [SerializeField] private AIMovementStats movementStats;
 
+    [Space]
+    [Header("Living")]
+    [SerializeField] private int i_maxHealth;
+
+    [Space]
+    [Header("Combat")]
+    [SerializeField] private AITargetting targetting;
+
     #endregion
 
     #region Private
 
+    private int i_currentHealth;
     private AIGroundMover mover;
 
     #endregion
@@ -25,6 +36,14 @@ public class NGoapAgent : MonoBehaviour
     private void Start()
     {
         Init();
+    }
+
+    private void Update()
+    {
+        if (!mover.HasPath())
+        {
+            mover.Retarget(targetting.GetTarget(), true);
+        }
     }
 
     private void FixedUpdate()
@@ -38,6 +57,10 @@ public class NGoapAgent : MonoBehaviour
 
     private void Init()
     {
+
+        i_currentHealth = i_maxHealth;
+        targetting.SetTransform(transform);
+
         switch (movementType)
         {
             case AIMovementType.ground:
@@ -65,6 +88,15 @@ public class NGoapAgent : MonoBehaviour
         mover.Retarget(target, true);
     }
 
+    public void TakeDamage(int damage)
+    {
+        i_currentHealth -= damage;
+        if(i_currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
     #endregion
 
     #region Private Returns
@@ -74,6 +106,36 @@ public class NGoapAgent : MonoBehaviour
 
     #region Public Returns
 
+    public NavMeshPath Path()
+    {
+        return mover.Path();
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public void Die()
+    {
+        gameObject.SetActive(false);
+        PoolManager.x.ReturnObjectToPool(gameObject);
+    }
+
+    public bool IsNetworkedObject()
+    {
+        return true;
+    }
+
+    public string ResourcePath()
+    {
+        return null;
+    }
 
     #endregion
 
