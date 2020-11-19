@@ -39,6 +39,7 @@ public class PlayerMover : MonoBehaviour
     private bool b_sprintUp;
     internal Vector3 v_movementVector; // The direction the player is inputting
     private Vector3 v_startPos;
+    private Vector3 v_groundNormal;
     private Rigidbody rb;
     private Transform t_camTransform;
     private PhotonView view;
@@ -48,7 +49,7 @@ public class PlayerMover : MonoBehaviour
 
     //Methods
     #region Unity Standards
-
+        
     private void Start()
     {
         Init();
@@ -106,7 +107,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyMovement()
     {
-        Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up);
+        Vector3 dir = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up), v_groundNormal);
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
             rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime * (b_sprintHold ? f_sprintMult : 1), ForceMode.Impulse);
@@ -233,9 +234,11 @@ public class PlayerMover : MonoBehaviour
         if(hit.collider != null)
         {
             b_applyGravity = hit.distance > 0.15f;
+            v_groundNormal = hit.normal;
             return true;
 
         }
+        v_groundNormal = Vector3.up;
         b_applyGravity = true;
         return false;
     }
