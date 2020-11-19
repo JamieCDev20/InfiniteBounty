@@ -122,12 +122,6 @@ public class ToolHandler : SubjectBase
             A_tools[(int)_ts_tool].Use(dir);
     }
 
-    public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)
-    {
-        SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
-        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
-
-    }
 
     public void SyncToolOverNetwork()
     {
@@ -139,8 +133,32 @@ public class ToolHandler : SubjectBase
         }
 
     }
+    public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)
+    {
+        SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
+        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
+
+    }
 
     [PunRPC]
+    public void SwapTool(ToolSlot _ts_slot, int _i_toolID)
+    {
+        switch (_ts_slot)
+        {
+            case ToolSlot.leftHand:
+                RemoveTool(_ts_slot);
+                AddTool(_ts_slot, _i_toolID);
+                break;
+            case ToolSlot.rightHand:
+                RemoveTool(_ts_slot);
+                AddTool(_ts_slot, _i_toolID);
+                break;
+            case ToolSlot.moblility:
+                RemoveTool(ToolSlot.moblility);
+                AddTool(ToolSlot.moblility, _i_toolID);
+                break;
+        }
+    }
     /// <summary>
     /// Swap weapons based on which type it is and/or what hand it should be in
     /// </summary>
@@ -173,6 +191,15 @@ public class ToolHandler : SubjectBase
     public int GetTool(int index)
     {
         return A_tools[index].ToolID;
+    }
+
+    private void RemoveTool(ToolSlot _ts_slot)
+    {
+        if(A_tools[(int)_ts_slot] != null)
+        {
+            A_tools[(int)_ts_slot].gameObject.SetActive(false);
+            A_tools[(int)_ts_slot] = null;
+        }
     }
 
     private void RemoveTool(ToolSlot _ts_, ToolRack tr, bool _b_rackType)
