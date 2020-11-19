@@ -60,6 +60,7 @@ public class Randomness : MonoBehaviour
 
     private void SpawnLodes(int count)
     {
+        GameObject parent = new GameObject("Lodes");
         //spwan a random lode at a random spawn point at a random rotation and add it to lists
         //spawn points are removed from the list to prevent duplicate spawning
         LodeSynchroniser.x.InitialiseLodeArrayLength(count);
@@ -67,6 +68,7 @@ public class Randomness : MonoBehaviour
         {
             int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
             GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(RandomValue(lodes.Length - 1))], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
+            ob.transform.parent = parent.transform;
             LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
             ob.name += Lt_lodeSpawns[num].position;
             Lt_lodeSpawns.RemoveAt(num);

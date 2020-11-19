@@ -22,7 +22,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     protected override void Start()
     {
-        nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 1)];
+        nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 2)];
         base.Start();
         view = GetComponent<PhotonView>();
     }
@@ -49,7 +49,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
             {
                 NuggetBurst();
                 goA_damageMeshes[i].SetActive(false);
-                iA_healthIntervals[i] = 0;
+                iA_healthIntervals[i] = -10;
             }
         }
 
@@ -94,6 +94,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
         for (int i = 0; i < i_nuggetsPerBurst; i++)
         {
             GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
+            Debug.Log(nugCount + " | " + nuggets.Length);
             nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
             nuggets[nugCount].SetLodeInfo(nugCount, this);
             nugCount += 1;
