@@ -80,11 +80,9 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
                     {
                         case WeaponTool wt:
                             //i_rackId = tr.RemoveFromRack(RackID, true);
-                            Debug.Log(i_rackId);
                             break;
                         case MobilityTool mt:
                             //i_rackId = tr.RemoveFromRack(RackID, false);
-                            Debug.Log(i_rackId);
                             break;
                     }
                     break;
