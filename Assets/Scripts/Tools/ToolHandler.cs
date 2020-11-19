@@ -63,7 +63,7 @@ public class ToolHandler : SubjectBase
                                 return true;
                             case MobilityTool mt:
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                                A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
                                 return true;
                         }
                     }
@@ -77,7 +77,7 @@ public class ToolHandler : SubjectBase
                         case MobilityTool mt:
                             tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
                             CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                            A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, false);
+                            A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
                             return true;
                     }
                     return false;
@@ -107,7 +107,6 @@ public class ToolHandler : SubjectBase
     {
         if (A_tools[(int)ts] != null)
         {
-            Debug.Log("Rack going in: " + A_tools[(int)ts].RackID);
             tr.ReturnToRack(A_tools[(int)ts].RackID, _b_rackType);
         }
     }

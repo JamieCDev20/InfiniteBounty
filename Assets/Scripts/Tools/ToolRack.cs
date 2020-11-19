@@ -42,6 +42,7 @@ public class ToolRack : Shop
             if (!tb.Purchased)
                 tb.GetComponent<MeshRenderer>().sharedMaterial = m_silhouette;
             tb.RackID = toolRackID;
+            Debug.Log(tb.name + " " + tb.RackID);
             tb.gameObject.SetActive(true);
             if (isWeapon)
             {
@@ -82,6 +83,7 @@ public class ToolRack : Shop
 
     public void ReturnToRack(int _i_ID, bool _b_rackType)
     {
+        Debug.Log(_b_rackType == true ? "Weapon: " : "Mobility: " + _i_ID);
         if (_b_rackType)
             tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
         else
