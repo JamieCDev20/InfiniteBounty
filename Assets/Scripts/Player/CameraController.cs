@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float f_cameraSensitivity = 180;
     [SerializeField] private bool networkedCamera = false;
     [SerializeField] private Text nugCountText;
+    [SerializeField] private Vector3 v_offset = Vector3.up * 3;
 
     [Header("Firing Cam Positions")]
     [SerializeField] private float f_rightWardOffset;
@@ -24,7 +25,6 @@ public class CameraController : MonoBehaviour
     #region Private
 
     private Vector2 v2_lookInputs;
-    private Vector3 v_offset = Vector3.up * 3;
     private Transform t_follow;
     private PlayerInputManager pim_inputs;
     private float f_firingTime;
@@ -63,28 +63,28 @@ public class CameraController : MonoBehaviour
 
     private void Follow()
     {
-        if (pim_inputs.GetToolBools().b_LToolHold || pim_inputs.GetToolBools().b_RToolHold)
-        {
-            f_firingTime += Time.deltaTime;
-            if (f_firingTime > 0.17f)
-            {
-                if (pim_inputs.GetToolBools().b_LToolHold && pim_inputs.GetToolBools().b_RToolHold)
-                    transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + v_firingBothOffset, f_cameraLerpFiring);
+        /*  if (pim_inputs.GetToolBools().b_LToolHold || pim_inputs.GetToolBools().b_RToolHold)
+          {
+              f_firingTime += Time.deltaTime;
+              if (f_firingTime > 0.17f)
+              {
+                  if (pim_inputs.GetToolBools().b_LToolHold && pim_inputs.GetToolBools().b_RToolHold)
+                      transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + v_firingBothOffset, f_cameraLerpFiring);
 
-                else if (pim_inputs.GetToolBools().b_LToolHold)
-                    transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_leftWardOffset), f_cameraLerpFiring);
+                  else if (pim_inputs.GetToolBools().b_LToolHold)
+                      transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_leftWardOffset), f_cameraLerpFiring);
 
-                else if (pim_inputs.GetToolBools().b_RToolHold)
-                    transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_rightWardOffset), f_cameraLerpFiring);
-            }
-            else
-                transform.position = t_follow.position + v_offset;
-        }
-        else
-        {
-            transform.position = t_follow.position + v_offset;
-            f_firingTime = 0;
-        }
+                  else if (pim_inputs.GetToolBools().b_RToolHold)
+                      transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_rightWardOffset), f_cameraLerpFiring);
+              }
+              else
+                  transform.position = t_follow.position + v_offset;
+          }
+          else
+          {*/
+        transform.position = t_follow.position + v_offset;
+        f_firingTime = 0;
+        //}
     }
 
     private void Look()
