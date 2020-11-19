@@ -14,27 +14,20 @@ public class NugGO : SubjectBase, IPoolable
 
     #region Private Variables
     private int i_poolIndex;
+    private int i_lodeID;
     private bool b_inPool;
+    private LodeBase myLode;
     #endregion
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Player")
         {
+            if (!other.GetComponent<PlayerInputManager>().CanPickUpNugs())
+                return;
             GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles);
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true);
+            myLode.NugCollected(i_lodeID);
             Notify(ce);
             Die();
         }
@@ -63,6 +56,12 @@ public class NugGO : SubjectBase, IPoolable
     public string ResourcePath()
     {
         return s_resourcePath;
+    }
+
+    public void SetLodeInfo(int id, LodeBase lode)
+    {
+        i_lodeID = id;
+        myLode = lode;
     }
 
 }

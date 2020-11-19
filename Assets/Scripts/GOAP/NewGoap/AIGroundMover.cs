@@ -18,6 +18,7 @@ public class AIGroundMover : AIMover
     //Methods
     #region Unity Standards
 
+    
 
     #endregion
 
@@ -39,7 +40,7 @@ public class AIGroundMover : AIMover
         Vector3 mTarget = b_transformTracking? t_moveTarget.position : v_moveTarget;
         Vector3 lTarget = b_targetLooking ? mTarget : Vector3.zero;
 
-        rb.AddForce((rb.position - mTarget) * stats.f_movementSpeed * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce((mTarget - rb.position).normalized * stats.f_movementSpeed * Time.deltaTime, ForceMode.Impulse);
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - stats.v_drag);
 
     }

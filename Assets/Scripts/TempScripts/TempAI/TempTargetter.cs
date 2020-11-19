@@ -27,7 +27,11 @@ public class TempTargetter : MonoBehaviour
     {
         if (transformFollow)
         {
-            //agent.
+            agent.SetTarget(target);
+        }
+        else
+        {
+            agent.SetTarget(target.position);
         }
     }
 

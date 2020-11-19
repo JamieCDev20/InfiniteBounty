@@ -58,6 +58,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //set player pos, cam and IM
         t_thisPlayer = player.transform;
         playerIM = player.GetComponent<PlayerInputManager>();
+        playerIM.SetCanPickUpNugs(true);
         playerIM.SetPlayerNumber(playerInfo.playerID);
         playerIM.GoToSpawnPoint();
         playerIM.SetCamera(Instantiate(playerInfo.go_camPrefab).GetComponent<CameraController>());

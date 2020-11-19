@@ -38,7 +38,7 @@ public class CameraRespectWalls : MonoBehaviour
     {
         RaycastHit hit;
         if (Physics.Raycast(t_root.position, t_root.TransformPoint(v_targetPos) - t_root.position, out hit, f_targetDistance, lm_playerMask))
-            transform.localPosition = Vector3.Lerp(transform.localPosition, v_targetPos.normalized * hit.distance, 0.9f);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, v_targetPos.normalized * (hit.distance - 0.35f), 0.9f);
         else
             transform.localPosition = v_targetPos;
     }

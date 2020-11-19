@@ -40,6 +40,7 @@ public class AIMover
 
     public void Retarget(Transform moveTarget, bool lookAtTarget)
     {
+        b_doMovement = true;
         b_transformTracking = true;
         t_moveTarget = moveTarget;
 
@@ -51,6 +52,8 @@ public class AIMover
 
     public void Retarget(Transform moveTarget, Transform lookTarget)
     {
+        b_doMovement = true;
+
         b_transformTracking = true;
         t_moveTarget = moveTarget;
 
@@ -60,6 +63,8 @@ public class AIMover
 
     public void Retarget(Vector3 moveTarget, bool lookAtTarget)
     {
+        b_doMovement = true;
+
         b_transformTracking = false;
         v_moveTarget = moveTarget;
 
@@ -71,6 +76,8 @@ public class AIMover
 
     public void Retarget(Vector3 moveTarget, Vector3 lookTarget)
     {
+        b_doMovement = true;
+
         b_targetLooking = false;
         v_moveTarget = moveTarget;
 

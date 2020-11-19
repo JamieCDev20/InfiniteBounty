@@ -55,7 +55,15 @@ public class NGoapAgent : MonoBehaviour
 
     #region Public Voids
 
-    //public void SetTarget()
+    public void SetTarget(Transform target)
+    {
+        mover.Retarget(target, true);
+    }
+
+    public void SetTarget(Vector3 target)
+    {
+        mover.Retarget(target, true);
+    }
 
     #endregion
 

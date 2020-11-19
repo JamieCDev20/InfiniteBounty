@@ -38,6 +38,8 @@ public class PlayerInputManager : MonoBehaviour
     private bool b_sprintHold;
     private bool b_sprintRelease;
 
+    private bool b_canPickUpNugs;
+
     private ToolBools toolBools;
 
     private Vector2 v2_lookVector;
@@ -186,6 +188,11 @@ public class PlayerInputManager : MonoBehaviour
         NetworkManager.x.TellClientToSync();
     }
 
+    public void SetCanPickUpNugs(bool val)
+    {
+        b_canPickUpNugs = val;
+    }
+
     #endregion
 
     #region Private Returns
@@ -203,6 +210,11 @@ public class PlayerInputManager : MonoBehaviour
     public int GetID()
     {
         return playerID;
+    }
+
+    public bool CanPickUpNugs()
+    {
+        return CanPickUpNugs();
     }
 
     #endregion
