@@ -214,7 +214,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public bool CanPickUpNugs()
     {
-        return b_canPickUpNugs();
+        return b_canPickUpNugs;
     }
 
     #endregion
