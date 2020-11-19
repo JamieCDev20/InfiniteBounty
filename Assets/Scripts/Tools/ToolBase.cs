@@ -11,7 +11,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     #region Protected Vars
     protected int i_toolId;
-    protected int i_rackId;
+    protected List<int> i_rackId = new List<int>();
     protected bool b_usable = true;
     protected Transform t_cam;
     protected AugmentType[] at_augments = new AugmentType[0];
@@ -33,7 +33,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     public bool Purchased { get { return b_purchased; } }
     public bool ReleaseActivated { get { return b_releaseActivated; } }
     public int ToolID { get { return i_toolId; } set { i_toolId = value; } }
-    public int RackID { get { return i_rackId; } set { i_rackId = value; } }
+    public List<int> RackID { get { return i_rackId; } set { i_rackId = value; } }
 
     #endregion
 
