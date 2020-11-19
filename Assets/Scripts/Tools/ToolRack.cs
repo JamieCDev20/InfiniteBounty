@@ -72,19 +72,19 @@ public class ToolRack : Shop
             return tl_mobTools.GetToolAt(_i_ID).RackID;
     }
 
-    public void ReturnToRack(int _i_ID, bool _b_rackType)
+    public void ReturnToRack(List<int> _i_ID, bool _b_rackType)
     {
         if (_b_rackType)
-            tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+            tl_weaponTools.GetToolAt(_i_ID[0]).gameObject.SetActive(true);
         else
-            tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+            tl_mobTools.GetToolAt(_i_ID[0]).gameObject.SetActive(true);
     }
 
-    public void RemoveFromRack(int _i_ID, bool _b_rackType)
+    public void RemoveFromRack(List<int> _i_ID, bool _b_rackType)
     {
         if (_b_rackType)
-            tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(false);
+            tl_weaponTools.GetToolAt(_i_ID[0]).gameObject.SetActive(false);
         else
-            tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(false);
+            tl_mobTools.GetToolAt(_i_ID[0]).gameObject.SetActive(false);
     }
 }
