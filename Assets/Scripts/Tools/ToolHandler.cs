@@ -60,12 +60,10 @@ public class ToolHandler : SubjectBase
                             case WeaponTool wt:
                                 ReturnToRack(ts, tr, true);
                                 CallSwapTool(ts, tb.ToolID);
-                                tr.SetRackID(A_tools[(int)ts], true);
                                 return true;
                             case MobilityTool mt:
                                 ReturnToRack(ts, tr, false);
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID);
-                                tr.SetRackID(A_tools[(int)ts], false);
                                 return true;
                         }
                     }
@@ -107,9 +105,7 @@ public class ToolHandler : SubjectBase
     {
         if (A_tools[(int)ts] != null)
         {
-            Debug.Log(A_tools[(int)ts].RackID);
-
-            tr.ReturnToRack(A_tools[(int)ts].RackID, _b_rackType);
+            tr.ReturnToRack(A_tools[(int)ts].ToolID, _b_rackType);
         }
     }
 

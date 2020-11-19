@@ -17,7 +17,7 @@ public class ToolRack : Shop
         if (FindObjectOfType<NetworkedPlayer>())
         {
             playerRef = FindObjectOfType<NetworkedPlayer>().GetComponent<ToolHandler>();
-            playerTools = playerRef.GetComponent<ToolLoader>();
+            playerTools = FindObjectOfType<NetworkedPlayer>().GetComponent<ToolLoader>();
         }
         SetToolInRack(tl_weaponTools, L_weaponToolPos, playerTools);
         SetToolInRack(tl_mobTools, L_mobToolPos, playerTools);
@@ -72,12 +72,18 @@ public class ToolRack : Shop
             return tl_mobTools.GetToolAt(_i_ID).RackID;
     }
 
-    public void ReturnToRack(List<int> _i_ID, bool _b_rackType)
+    public void ReturnToRack(int _i_ID, bool _b_rackType)
     {
         if (_b_rackType)
-            tl_weaponTools.GetToolAt(_i_ID[0]).gameObject.SetActive(true);
+        {
+            tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+
+        }
         else
-            tl_mobTools.GetToolAt(_i_ID[0]).gameObject.SetActive(true);
+        {
+            tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+
+        }
     }
 
     public void RemoveFromRack(List<int> _i_ID, bool _b_rackType)
