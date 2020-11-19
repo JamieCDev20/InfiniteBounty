@@ -144,13 +144,14 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     public void NugCollected(int id)
     {
-
+        view.RPC("DestroyNug", RpcTarget.All, id);
     }
 
     [PunRPC]
     public void DestroyNug(int id)
     {
-
+        nuggets[id].Die();
+        nuggets[id] = null;
     }
 
 }

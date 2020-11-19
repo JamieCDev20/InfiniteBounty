@@ -29,7 +29,6 @@ public class NugGO : SubjectBase, IPoolable
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true);
             myLode.NugCollected(i_lodeID);
             Notify(ce);
-            Die();
         }
     }
 
