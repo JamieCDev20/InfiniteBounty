@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 {
 
+    public static NetworkedPlayer x;
+
     private Vector3 v_spawnPoint;
     [SerializeField]
     private PlayerInfo playerInfo;
@@ -21,6 +23,12 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Start()
     {
+
+        if (x == null)
+            x = this;
+        else
+            Destroy(gameObject);
+
         //make players go to spawn points on scene loads and persist
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoad;
