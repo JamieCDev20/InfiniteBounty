@@ -13,12 +13,13 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     protected int i_toolId;
     protected int i_rackId;
     protected bool b_usable = true;
+    protected bool b_active = false;
     protected Transform t_cam;
     protected AugmentType[] at_augments = new AugmentType[0];
-    [SerializeField] protected bool b_purchased;
     #endregion
 
     #region Serialized Vars
+    [SerializeField] protected bool b_purchased;
     [SerializeField] protected EnergyGauge eg_gauge;
     [SerializeField] protected float f_timeBetweenUsage;
     [Header("Audio")]
@@ -118,4 +119,15 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         yield return new WaitForSeconds(f_timeBetweenUsage);
         b_usable = true;
     }
+
+    public virtual void SetActive(bool val)
+    {
+
+    }
+
+    public bool GetActive()
+    {
+        return b_active;
+    }
+
 }

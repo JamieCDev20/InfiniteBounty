@@ -11,8 +11,16 @@ public class ProjectileTool : WeaponTool
     [SerializeField] private Transform t_firePoint;
     private Ray r_flightPath;
 
+    public override void SetActive(bool val)
+    {
+        b_active = val;
+    }
+
     public override void Use(Vector3 _v_forwards)
     {
+        if (!b_active)
+            return;
+
         if (b_usable)
         {
             SpawnBullet(_v_forwards);

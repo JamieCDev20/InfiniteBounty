@@ -231,6 +231,7 @@ public class ToolHandler : SubjectBase
         {
             ReturnToRack(_ts_, tr, _b_rackType);
             A_tools[(int)_ts_].gameObject.SetActive(false);
+            A_tools[(int)_ts_].SetActive(false);
             A_tools[(int)_ts_] = null;
         }
     }
@@ -321,8 +322,13 @@ public class ToolHandler : SubjectBase
     {
         // Use release activated tool when the button is released
         if (A_tools[(int)ts] != null)
-            if (_b_released && A_tools[(int)ts].ReleaseActivated)
-                A_tools[(int)ts].Use(t_camTransform.forward);
+        {
+        if(_b_released)
+            A_tools[(int)ts].SetActive(true);
+        if (_b_released && A_tools[(int)ts].ReleaseActivated)
+            A_tools[(int)ts].Use(t_camTransform.forward);
+
+        }
     }
 
     /// <summary>
