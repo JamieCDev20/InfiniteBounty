@@ -170,6 +170,8 @@ public class PlayerInputManager : MonoBehaviour
         camControl.SetFollow(transform);
         camControl.SetPIM(this);
 
+        mover.SetHUDController(camControl.GetComponent<HUDController>());
+
         mover.SetCameraTranfsorm(camControl.transform.GetChild(0));
         toolHandler.RecieveCameraTransform(camControl.transform.GetChild(0));
         animator.SetCam(camControl.transform.GetChild(0));

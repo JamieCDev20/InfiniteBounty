@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private int i_currentHealth;
     private PhotonView view;
+    internal HUDController hudControl;
 
     private void Start()
     {
@@ -22,7 +23,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
         i_currentHealth -= damage;
 
-        if(i_currentHealth <= 0)
+        hudControl.SetHealthBarValue(i_currentHealth, i_maxHealth);
+
+        if (i_currentHealth <= 0)
         {
             Die();
         }

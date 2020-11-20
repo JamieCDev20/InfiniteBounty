@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,13 +44,13 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody rb;
     private Transform t_camTransform;
     private PhotonView view;
-    private int i_timesJumpedOff;
+    private int i_timesJumpedOff;    
 
     #endregion
 
     //Methods
     #region Unity Standards
-        
+
     private void Start()
     {
         Init();
@@ -82,7 +83,7 @@ public class PlayerMover : MonoBehaviour
     }
 
     #endregion
-
+    
     #region Private Voids
 
     /// <summary>
@@ -173,6 +174,11 @@ public class PlayerMover : MonoBehaviour
             }
         }
 
+    }
+
+    internal void SetHUDController(HUDController _HUDController)
+    {
+       GetComponent<PlayerHealth>().hudControl = _HUDController;
     }
 
     private void Quit()
