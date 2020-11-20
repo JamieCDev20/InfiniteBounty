@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NugManager : SubjectBase, ObserverBase
@@ -15,6 +16,9 @@ public class NugManager : SubjectBase, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
         {
             NugGO ngo = np.GetComponent<NugGO>();
@@ -24,6 +28,12 @@ public class NugManager : SubjectBase, ObserverBase
             }
         }
         i_playerID = GetComponent<PlayerInputManager>().GetID();
+    }
+
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        PlayerPrefs.SetInt($"{i_playerID}NugCount", i_currentNugs);
+        SendNugs();
     }
 
     public void OnNotify(ObserverEvent oe_event)

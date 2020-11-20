@@ -50,6 +50,8 @@ public class ToolHandler : SubjectBase
         Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
+            if (A_tools[(int)ts])
+                A_tools[(int)ts].SetActive(false);
             // Are we getting a tool, an augment or something else?
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
             Augment am = hit.transform.GetComponent<Augment>();

@@ -36,6 +36,15 @@ public class ScoreBoardInfoSetter : MonoBehaviour
             new int[] { Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000) });
         SetTaxOneHeader();
         SetTaxTwoHeader();
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (PlayerPrefs.HasKey($"{i}NugCount"))
+                SetPlayerNuggetYield(i, PlayerPrefs.GetInt($"{i}NugCount"));
+            else
+                SetPlayerNuggetYield(i, 0);
+        }
+
     }
 
     /// <summary>
@@ -98,4 +107,10 @@ public class ScoreBoardInfoSetter : MonoBehaviour
     {
         t_randomTaxTextTwoHeader.text = sA_randomTaxStarts[Random.Range(0, sA_randomTaxStarts.Length)] + " " + sA_randomTaxEnds[Random.Range(0, sA_randomTaxEnds.Length)];
     }
+
+    public void SetPlayerNuggetYield(int index, int yield)
+    {
+        tA_nuggetCollectedTexts[index].text = "£" + yield;
+    }
+
 }
