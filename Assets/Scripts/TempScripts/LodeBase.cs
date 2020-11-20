@@ -150,7 +150,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
     [PunRPC]
     public void DestroyNug(int id)
     {
-        nuggets[id].Die();
+        nuggets[id]?.Die();
         nuggets[id] = null;
     }
 

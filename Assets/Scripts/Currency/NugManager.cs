@@ -17,7 +17,7 @@ public class NugManager : SubjectBase, ObserverBase
     void Start()
     {
 
-        SceneManager.sceneLoaded += OnSceneLoad;
+        //SceneManager.sceneLoaded += OnSceneLoad;
 
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
         {
