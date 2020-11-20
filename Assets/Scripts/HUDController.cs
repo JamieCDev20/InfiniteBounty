@@ -25,7 +25,7 @@ public class HUDController : MonoBehaviour
     public void SetHealthBarValue(int _i_currentHealth, int _i_maxHealth)
     {
         i_faceBackgroundImage.color = g_healthBarGradient.Evaluate(_i_currentHealth / _i_maxHealth);
-        i_faceImage.sprite = sA_faceSprites[Mathf.RoundToInt((_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count)];
+        //i_faceImage.sprite = sA_faceSprites[Mathf.RoundToInt((_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count)];
     }
 
     public void SetLeftHeatGuage(int _i_currentHeat, int _i_maxHeat)

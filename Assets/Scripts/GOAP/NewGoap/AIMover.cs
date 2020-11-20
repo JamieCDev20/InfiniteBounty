@@ -97,6 +97,11 @@ public class AIMover
         rb = _rb;
     }
 
+    public void SetCanMove(bool val)
+    {
+        b_doMovement = val;
+    }
+
     #endregion
 
     #region Private Returns

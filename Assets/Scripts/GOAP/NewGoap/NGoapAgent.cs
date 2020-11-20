@@ -72,11 +72,8 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     {
         if (b_canAttack)
             return;
-        foreach (ContactPoint c in collision.contacts)
-        {
-            if (Vector3.Angle(c.normal, Vector3.up) > 45)
-                Explode();
-        }
+        if (rb.velocity.sqrMagnitude > 25)
+            Explode();
     }
 
     #endregion
@@ -105,6 +102,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     private void Attack()
     {
+        mover.SetCanMove(false);
         rb.AddForce(((targetting.GetTarget().position + (Vector3.up * 2)) - transform.position).normalized * f_lungeForce, ForceMode.Impulse);
         b_canAttack = false;
     }
@@ -196,7 +194,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     public string ResourcePath()
     {
-        return null;
+        return "NetworkPrefabs\\";
     }
 
     #endregion

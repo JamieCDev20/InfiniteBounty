@@ -7,18 +7,17 @@ public class KillBox : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private Vector3 v_unitsPerSecond;
 
-    
+
     private void Update()
     {
-        transform.position += v_unitsPerSecond;
+        transform.position += v_unitsPerSecond * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
-        {
-            other.GetComponent<PlayerHealth>().TakeDamage(10000);
-        }
+        //other.GetComponent<PlayerHealth>().TakeDamage(10000);
+        other.GetComponent<IHitable>()?.TakeDamage(10000);
+
     }
 
 }
