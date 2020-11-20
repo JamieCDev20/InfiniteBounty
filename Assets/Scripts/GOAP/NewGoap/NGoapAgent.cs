@@ -20,17 +20,23 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     [Space]
     [Header("Combat")]
     [SerializeField] private AITargetting targetting;
+    [SerializeField] private int i_damage = 5;
+    [SerializeField] private float f_attackRange = 3;
+    [SerializeField] private float f_lungeForce = 10;
 
     [Header("Particles")]
     [SerializeField] private GameObject go_aggroParticles;
     [SerializeField] private GameObject go_deathParticles;
+    [SerializeField] private GameObject go_exploParticles;
 
     #endregion
 
     #region Private
 
     private int i_currentHealth;
+    private bool b_canAttack = true;
     private AIGroundMover mover;
+    private Rigidbody rb;
 
     #endregion
 
@@ -52,12 +58,25 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         {
             if (!go_aggroParticles.activeInHierarchy)
                 go_aggroParticles.SetActive(true);
+            if (b_canAttack && targetting.GetTarget() != null && (targetting.GetTarget().position - transform.position).magnitude < f_attackRange)
+                Attack();
         }
     }
 
     private void FixedUpdate()
     {
         mover.Move();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (b_canAttack)
+            return;
+        foreach (ContactPoint c in collision.contacts)
+        {
+            if (Vector3.Angle(c.normal, Vector3.up) > 45)
+                Explode();
+        }
     }
 
     #endregion
@@ -67,6 +86,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     private void Init()
     {
 
+        rb = GetComponent<Rigidbody>();
         i_currentHealth = i_maxHealth;
         targetting.SetTransform(transform);
 
@@ -74,13 +94,19 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         {
             case AIMovementType.ground:
                 mover = new AIGroundMover(movementStats);
-                mover.SetRB(GetComponent<Rigidbody>());
+                mover.SetRB(rb);
                 break;
             case AIMovementType.air:
                 break;
             default:
                 break;
         }
+    }
+
+    private void Attack()
+    {
+        rb.AddForce(((targetting.GetTarget().position + (Vector3.up * 2)) - transform.position).normalized * f_lungeForce, ForceMode.Impulse);
+        b_canAttack = false;
     }
 
     #endregion
@@ -106,10 +132,33 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         }
     }
 
+    public void Explode()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, 1);
+        foreach  (Collider c in hits)
+        {
+            c.GetComponent<IHitable>()?.TakeDamage(i_damage);
+        }
+        go_exploParticles?.SetActive(true);
+        Die();
+    }
+
     #endregion
 
     #region Private Returns
 
+    private float PathLength(NavMeshPath path)
+    {
+
+        float distance = 0;
+
+        for (int i = 1; i < path.corners.Length; i++)
+        {
+            distance += (path.corners[i - 1] - path.corners[i]).magnitude;
+        }
+
+        return distance;
+    }
 
     #endregion
 
