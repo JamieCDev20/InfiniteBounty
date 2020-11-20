@@ -7,7 +7,7 @@ public class KillBox : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private Vector3 v_unitsPerSecond;
 
-
+    
     private void Update()
     {
         transform.position += v_unitsPerSecond;
