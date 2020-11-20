@@ -29,6 +29,7 @@ public class ToolHandler : SubjectBase
     private Transform t_camTransform;
     private PhotonView view;
     private ToolSlot ts_removeToolSlot;
+    private int i_removableRackSlot;
     #endregion
 
     private void Start()
@@ -59,10 +60,15 @@ public class ToolHandler : SubjectBase
             ts_removeToolSlot = ts;
             if(ets != null)
             {
-                //CallSwapTool(ToolSlot.rack, ets.ToolID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
-                //ToolRack tr = (ToolRack)sr;
-                //tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
-                //return true;
+                if (A_tools[(int)ts] == null)
+                    return true;
+                if(A_tools[(int)ts].RackID == ets.RackID)
+                {
+                    CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                    ToolRack tr = (ToolRack)sr;
+                    tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                    return true;
+                }
             }
             switch (sr)
             {
@@ -196,8 +202,7 @@ public class ToolHandler : SubjectBase
                 AddTool(ToolSlot.moblility, _i_toolID);
                 break;
             case ToolSlot.rack:
-                //if (_i_toolID == A_tools[_i_toolID].ToolID)
-                //    RemoveTool(ts_removeToolSlot);
+                RemoveTool(ts_removeToolSlot);
                 break;
             default:
                 break;

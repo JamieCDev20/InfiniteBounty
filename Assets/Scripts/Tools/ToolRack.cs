@@ -54,6 +54,8 @@ public class ToolRack : Shop
                     toolRackID++;
                     dupe.RackID = toolRackID;
                     dupe.gameObject.SetActive(true);
+                    L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
+                    L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
                     L_weaponToolPos[i * 2 + 1].gameObject.SetActive(false);
                     L_weaponRackIDs.Add(toolRackID);
                 }
