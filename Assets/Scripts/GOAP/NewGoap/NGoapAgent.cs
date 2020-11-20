@@ -140,6 +140,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
             c.GetComponent<IHitable>()?.TakeDamage(i_damage);
         }
         go_exploParticles?.SetActive(true);
+        go_exploParticles.transform.parent = null;
         Die();
     }
 

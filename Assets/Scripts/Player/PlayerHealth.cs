@@ -16,6 +16,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private void Start()
     {
         view = GetComponent<PhotonView>();
+        i_currentHealth = i_maxHealth;
     }
 
     public void TakeDamage(int damage)
@@ -27,7 +28,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
         if (i_currentHealth <= 0)
         {
-            Die();
+            StartCoroutine(Dieath());
         }
 
     }
@@ -43,6 +44,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
          Application.Quit();
 #endif
 
+    }
+
+    IEnumerator Dieath()
+    {
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(2);
+        Die();
     }
 
 }
