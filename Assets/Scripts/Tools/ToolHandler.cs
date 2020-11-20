@@ -28,6 +28,7 @@ public class ToolHandler : SubjectBase
     private NetworkedPlayer np_network;
     private Transform t_camTransform;
     private PhotonView view;
+    private ToolSlot ts_removeToolSlot;
     #endregion
 
     private void Start()
@@ -43,13 +44,26 @@ public class ToolHandler : SubjectBase
     /// <returns>true if you have purchased something</returns>
     private bool CheckIfBuying(ToolSlot ts)
     {
-        // Check for hitting a weapon
+        // Hit something
         RaycastHit hit;
         Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
+            // Are we getting a tool, an augment or something else?
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
+            Augment am = hit.transform.GetComponent<Augment>();
+            // Which shop is it?
             Shop sr = hit.transform.root.GetComponent<Shop>();
+            // Put a tool back;
+            EmptyToolSlot ets = hit.transform.GetComponent<EmptyToolSlot>();
+            ts_removeToolSlot = ts;
+            if(ets != null)
+            {
+                //CallSwapTool(ToolSlot.rack, ets.ToolID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                //ToolRack tr = (ToolRack)sr;
+                //tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                //return true;
+            }
             switch (sr)
             {
                 case ToolRack tr:
@@ -181,6 +195,10 @@ public class ToolHandler : SubjectBase
                 RemoveTool(ToolSlot.moblility, tr, _b_rackID);
                 AddTool(ToolSlot.moblility, _i_toolID);
                 break;
+            case ToolSlot.rack:
+                //if (_i_toolID == A_tools[_i_toolID].ToolID)
+                //    RemoveTool(ts_removeToolSlot);
+                break;
             default:
                 break;
         }
@@ -216,10 +234,13 @@ public class ToolHandler : SubjectBase
     {
         // Check here if you have enough nugs.
         A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
-        A_tools[(int)_ts_].gameObject.SetActive(true);
-        if (!A_tools[(int)_ts_].Purchased)
+        if(A_tools[(int)_ts_] != null)
         {
-            L_ownedTools.Add(A_tools[(int)_ts_]);
+            A_tools[(int)_ts_].gameObject.SetActive(true);
+            if (!A_tools[(int)_ts_].Purchased)
+            {
+                L_ownedTools.Add(A_tools[(int)_ts_]);
+            }
         }
     }
 
