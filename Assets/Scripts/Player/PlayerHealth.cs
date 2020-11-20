@@ -36,14 +36,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         if (!view.IsMine)
             return;
-        PhotonNetwork.Disconnect();
-        SceneManager.LoadScene("LobbyScene");
 
-        GameObject go = new GameObject("Sacrificial Lamb");
-        DontDestroyOnLoad(go);
-
-        foreach (var root in go.scene.GetRootGameObjects())
-            Destroy(root);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
 
     }
 
