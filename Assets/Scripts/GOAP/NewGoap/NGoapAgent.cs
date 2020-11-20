@@ -21,6 +21,10 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     [Header("Combat")]
     [SerializeField] private AITargetting targetting;
 
+    [Header("Particles")]
+    [SerializeField] private GameObject go_aggroParticles;
+    [SerializeField] private GameObject go_deathParticles;
+
     #endregion
 
     #region Private
@@ -43,6 +47,11 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         if (!mover.HasPath())
         {
             mover.Retarget(targetting.GetTarget(), true);
+        }
+        else
+        {
+            if (go_aggroParticles.activeInHierarchy)
+                go_aggroParticles.SetActive(true);
         }
     }
 
@@ -91,7 +100,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     public void TakeDamage(int damage)
     {
         i_currentHealth -= damage;
-        if(i_currentHealth <= 0)
+        if (i_currentHealth <= 0)
         {
             Die();
         }
@@ -123,6 +132,9 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     public void Die()
     {
+        go_deathParticles.SetActive(true);
+        go_deathParticles.transform.parent = null;
+
         gameObject.SetActive(false);
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
