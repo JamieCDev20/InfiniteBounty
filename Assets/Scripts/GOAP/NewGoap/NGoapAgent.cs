@@ -50,7 +50,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         }
         else
         {
-            if (go_aggroParticles.activeInHierarchy)
+            if (!go_aggroParticles.activeInHierarchy)
                 go_aggroParticles.SetActive(true);
         }
     }
