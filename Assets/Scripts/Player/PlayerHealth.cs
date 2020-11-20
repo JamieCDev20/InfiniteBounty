@@ -10,6 +10,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private int i_maxHealth = 10;
 
     private int i_currentHealth;
+    private PhotonView view;
+
+    private void Start()
+    {
+        view = GetComponent<PhotonView>();
+    }
 
     public void TakeDamage(int damage)
     {
@@ -25,6 +31,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void Die()
     {
+        if (!view.IsMine)
+            return;
         PhotonNetwork.Disconnect();
         SceneManager.LoadScene("LobbyScene");
 
