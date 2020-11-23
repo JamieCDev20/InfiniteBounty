@@ -60,11 +60,11 @@ public class ToolHandler : SubjectBase
             // Put a tool back;
             EmptyToolSlot ets = hit.transform.GetComponent<EmptyToolSlot>();
             ts_removeToolSlot = ts;
-            if(ets != null)
+            if (ets != null)
             {
                 if (A_tools[(int)ts] == null)
                     return true;
-                if(A_tools[(int)ts].RackID == ets.RackID)
+                if (A_tools[(int)ts].RackID == ets.RackID)
                 {
                     CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                     ToolRack tr = (ToolRack)sr;
@@ -140,8 +140,8 @@ public class ToolHandler : SubjectBase
     /// <param name="_ts_tool">Slot to use</param>
     public void UseTool(ToolSlot _ts_tool, Vector3 dir)
     {
-        if(A_tools[(int)_ts_tool] != null)
-            A_tools[(int)_ts_tool].Use(dir);
+        Debug.Log("Should be shooting")
+        A_tools[(int)_ts_tool]?.Use(dir);
     }
 
 
@@ -220,7 +220,7 @@ public class ToolHandler : SubjectBase
 
     private void RemoveTool(ToolSlot _ts_slot)
     {
-        if(A_tools[(int)_ts_slot] != null)
+        if (A_tools[(int)_ts_slot] != null)
         {
             A_tools[(int)_ts_slot].gameObject.SetActive(false);
             A_tools[(int)_ts_slot] = null;
@@ -242,7 +242,7 @@ public class ToolHandler : SubjectBase
     {
         // Check here if you have enough nugs.
         A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
-        if(A_tools[(int)_ts_] != null)
+        if (A_tools[(int)_ts_] != null)
         {
             A_tools[(int)_ts_].gameObject.SetActive(true);
             if (!A_tools[(int)_ts_].Purchased)
@@ -325,10 +325,10 @@ public class ToolHandler : SubjectBase
         // Use release activated tool when the button is released
         if (A_tools[(int)ts] != null)
         {
-        if(_b_released)
-            A_tools[(int)ts].SetActive(true);
-        if (_b_released && A_tools[(int)ts].ReleaseActivated)
-            A_tools[(int)ts].Use(t_camTransform.forward);
+            if (_b_released)
+                A_tools[(int)ts].SetActive(true);
+            if (_b_released && A_tools[(int)ts].ReleaseActivated)
+                A_tools[(int)ts].Use(t_camTransform.forward);
 
         }
     }

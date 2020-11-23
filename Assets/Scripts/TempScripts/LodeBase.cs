@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class LodeBase : Enemy, IPoolable, IPunObservable
+public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;
@@ -22,7 +22,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
 
     protected override void Start()
     {
-        nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 2)];
+        nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
     }
