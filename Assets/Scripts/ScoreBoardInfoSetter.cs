@@ -30,21 +30,22 @@ public class ScoreBoardInfoSetter : MonoBehaviour
 
     private void Start()
     {
-        GainStats(TEMP_sA_playerFaces,
-            new int[] { Random.Range(0, 10000), Random.Range(0, 10000), Random.Range(0, 10000), Random.Range(0, 10000) },
-            new int[] { Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000) },
-            new int[] { Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000), Random.Range(0, 5000) });
-        SetTaxOneHeader();
-        SetTaxTwoHeader();
-
+        int[] _iA = new int[4];
         for (int i = 0; i < 4; i++)
         {
             if (PlayerPrefs.HasKey($"{i}NugCount"))
-                SetPlayerNuggetYield(i, PlayerPrefs.GetInt($"{i}NugCount"));
+                _iA[i] = PlayerPrefs.GetInt($"{i}NugCount");
             else
-                SetPlayerNuggetYield(i, 0);
+                _iA[i] = 0;
         }
 
+
+        GainStats(TEMP_sA_playerFaces,
+            _iA,
+            new int[] { Random.Range(0, 100), Random.Range(0, 100), Random.Range(0, 100), Random.Range(0, 100) },
+            new int[] { Random.Range(0, 100), Random.Range(0, 100), Random.Range(0, 100), Random.Range(0, 100) });
+        SetTaxOneHeader();
+        SetTaxTwoHeader();
     }
 
     /// <summary>

@@ -140,7 +140,7 @@ public class ToolHandler : SubjectBase
     /// <param name="_ts_tool">Slot to use</param>
     public void UseTool(ToolSlot _ts_tool, Vector3 dir)
     {
-        Debug.Log("Should be shooting")
+        Debug.Log("Should be shooting");
         A_tools[(int)_ts_tool]?.Use(dir);
     }
 
