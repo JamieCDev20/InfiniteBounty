@@ -33,7 +33,7 @@ public class Randomness : MonoBehaviour
             return;
 
         //generate a random seed
-        if(randomSeed)
+        if (randomSeed)
             seed = Random.Range(0, 1000000);
 
         //sow that seed into the fabrik of reality
@@ -60,18 +60,29 @@ public class Randomness : MonoBehaviour
 
     private void SpawnLodes(int count)
     {
+
         GameObject parent = new GameObject("Lodes");
         //spwan a random lode at a random spawn point at a random rotation and add it to lists
         //spawn points are removed from the list to prevent duplicate spawning
         LodeSynchroniser.x.InitialiseLodeArrayLength(count);
         for (int i = 0; i < count; i++)
         {
-            int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
-            GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(RandomValue(lodes.Length - 1))], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
-            ob.transform.parent = parent.transform;
-            LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
-            ob.name += Lt_lodeSpawns[num].position;
-            Lt_lodeSpawns.RemoveAt(num);
+            float rand = RandomValue(lodes.Length - 1);
+            try
+            {
+                int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
+                GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(rand)], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
+                ob.transform.parent = parent.transform;
+                LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
+                ob.name += Lt_lodeSpawns[num].position;
+                Lt_lodeSpawns.RemoveAt(num);
+
+            }
+            catch
+            {
+                Debug.LogError(rand + " | " + (lodes.Length - 1));
+
+            }
         }
     }
 
