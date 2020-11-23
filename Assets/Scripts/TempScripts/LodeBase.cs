@@ -49,7 +49,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             {
                 NuggetBurst();
                 goA_damageMeshes[i].SetActive(false);
-                iA_healthIntervals[i] = -10;
+                iA_healthIntervals[i] = -10000000;
             }
         }
 

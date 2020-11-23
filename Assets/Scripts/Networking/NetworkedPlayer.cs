@@ -9,7 +9,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 {
 
     public static NetworkedPlayer x;
-
+    
     private Vector3 v_spawnPoint;
     [SerializeField]
     private PlayerInfo playerInfo;
@@ -38,6 +38,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         //players go to spawn on scene load
         playerIM.GoToSpawnPoint();
+        playerIM.gameObject.SetActive(true);
     }
 
     public override void OnJoinedRoom()
