@@ -31,10 +31,10 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     {
         spawnCount += Time.deltaTime;
 
-        if(spawnCount >= (f_timeBetweenSpawns + Random.Range(-(f_timeBetweenSpawns * 0.1f), (f_timeBetweenSpawns*0.1f))))
+        if (spawnCount >= (f_timeBetweenSpawns + Random.Range(-(f_timeBetweenSpawns * 0.1f), (f_timeBetweenSpawns * 0.1f))))
         {
             spawnCount = 0;
-            SpawnEnemy(goA_enemy[Random.Range(0, goA_enemy.Length)], tA_spawnPoints[Random.Range(0, tA_spawnPoints.Length)].position);
+            SpawnEnemy(goA_enemy[Random.Range(0, goA_enemy.Length)], tA_spawnPoints[Random.Range(0, tA_spawnPoints.Length)].position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
         }
 
     }
