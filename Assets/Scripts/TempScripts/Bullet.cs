@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour, IPoolable
 {
 
     [SerializeField] private int i_damage;
+    [SerializeField] private int i_lodeDamage;
     [SerializeField] private float f_lifeTime;
     [SerializeField] private GameObject go_hitEffect;
     [SerializeField] private LayerMask lm_placementLayer;
@@ -27,8 +28,10 @@ public class Bullet : MonoBehaviour, IPoolable
     protected bool b_inPool;
     protected int i_poolIndex;
 
-    public void Setup(AugmentType[] _atA_activeAugments)
+    public void Setup(int _i_damage, int _i_lodeDamage, AugmentType[] _atA_activeAugments)
     {
+        i_damage = _i_damage;
+        i_lodeDamage = _i_lodeDamage;
         RemoveAugments(_atA_activeAugments);
         transform.localScale = Vector3.one;
         transform.rotation = Quaternion.identity;
@@ -91,10 +94,19 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Hittable"))
-            collision.transform.GetComponent<Enemy>().TakeDamage(i_damage);
-
-        collision.gameObject.GetComponent<IHitable>()?.TakeDamage(i_damage);
+        IHitable test = collision.gameObject.GetComponent<IHitable>();
+        switch (test)
+        {
+            case NGoapAgent ngo:
+                ngo.TakeDamage(i_damage);
+                break;
+            case LodeBase lb:
+                lb.TakeDamage(i_lodeDamage);
+                break;
+            case Enemy enmy:
+                enmy.TakeDamage(i_damage);
+                break;
+        }
 
         go_hitEffect.SetActive(false);
         go_hitEffect.transform.parent = transform;

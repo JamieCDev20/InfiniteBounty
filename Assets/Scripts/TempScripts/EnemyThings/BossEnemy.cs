@@ -56,7 +56,7 @@ public class BossEnemy : Enemy
         go_shipButton.SetActive(true);
     }
 
-    internal override void TakeDamage(int _i_damage)
+    public override void TakeDamage(int _i_damage)
     {
         i_currentHealth -= _i_damage;
 

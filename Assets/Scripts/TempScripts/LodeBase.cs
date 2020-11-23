@@ -27,17 +27,17 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
         view = GetComponent<PhotonView>();
     }
 
-    internal override void TakeDamage(int _i_damage)
+    public override void TakeDamage(int _i_damage)
     {
         //only take damage if you are the master client
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        TakeDamage(_i_damage, true);
+        TakeTrueDamage(_i_damage, true);
 
     }
 
-    internal override void TakeDamage(int _i_damage, bool networked)
+    public void TakeTrueDamage(int _i_damage, bool networked)
     {
 
         //this is the networked take damage func, this is called by the host to sync health
@@ -137,7 +137,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable
         else
         {
             if (stream.Count > 0)
-                TakeDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
+                TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
         }
 
     }

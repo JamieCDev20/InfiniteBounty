@@ -9,10 +9,10 @@ public class WeaponTool : ToolBase
     [Header("Weapon Stats")]
     [SerializeField] protected int i_damage;
     [SerializeField] protected int i_weight;
+    [SerializeField] protected int i_lodeDamage;
     [SerializeField] protected float f_recoil;
     [SerializeField] protected float f_speed;
     [SerializeField] protected float f_knockback;
-    [SerializeField] protected float f_lodeScalar;
     [SerializeField] protected GameObject go_hitBox;
     [Header("Elemental Stats")]
     [SerializeField] Systemic sy_element;

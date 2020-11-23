@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Enemy : MonoBehaviourPun, IPunObservable
+public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
 {
     [Header("Enemy Fields")]
     [SerializeField] protected int i_maxHealth;
@@ -21,13 +21,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable
         b_isHunting = true;
     }
 
-    internal virtual void TakeDamage(int _i_damage)
-    {
-        i_currentHealth -= _i_damage;
-        if (i_currentHealth <= 0) Death();
-    }
-
-    internal virtual void TakeDamage(int _i_damage, bool networked)
+    public virtual void TakeDamage(int _i_damage)
     {
         i_currentHealth -= _i_damage;
         if (i_currentHealth <= 0) Death();

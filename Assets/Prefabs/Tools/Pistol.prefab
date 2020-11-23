@@ -55,6 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1088916557946355228
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +140,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -162,6 +165,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &8830829223539301515
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -201,10 +205,10 @@ MonoBehaviour:
   b_releaseActivated: 0
   i_damage: 20
   i_weight: 1
+  i_lodeDamage: 10
   f_recoil: 2
   f_speed: 45
   f_knockback: 1
-  f_lodeScalar: 10
   go_hitBox: {fileID: 6714505186059660760, guid: 28584f6847a727945aeef6508171489a,
     type: 3}
   sy_element: {fileID: 0}

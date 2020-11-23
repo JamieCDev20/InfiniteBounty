@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
                 _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
                 _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerRight, ForceMode.Impulse);
                 _go_bullet.SetActive(true);
-                _go_bullet.GetComponent<Bullet>().Setup(atL_activeAugmentsRight.ToArray());
+                //_go_bullet.GetComponent<Bullet>().Setup(atL_activeAugmentsRight.ToArray());
 
                 f_currentFireTimerRight = f_timeBetweenShotsRight;
             }
@@ -377,7 +377,7 @@ public class PlayerController : MonoBehaviour
                 _go_bullet.transform.Rotate(new Vector3(-1 + Random.value * 2, -1 + Random.value * 2, -1 + Random.value * 2) * (i + 1));
                 _go_bullet.GetComponent<Rigidbody>().AddForce(_go_bullet.transform.forward * f_firePowerLeft, ForceMode.Impulse);
                 _go_bullet.SetActive(true);
-                _go_bullet.GetComponent<Bullet>().Setup(atL_activeAugmentsLeft.ToArray());
+                //_go_bullet.GetComponent<Bullet>().Setup(atL_activeAugmentsLeft.ToArray());
 
                 f_currentFireTimerLeft = f_timeBetweenShotsLeft;
             }
