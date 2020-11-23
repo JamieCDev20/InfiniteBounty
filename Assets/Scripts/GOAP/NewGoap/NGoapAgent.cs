@@ -72,7 +72,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     {
         if (b_canAttack)
             return;
-        if (rb.velocity.sqrMagnitude > 25)
+        if (rb.velocity.sqrMagnitude > 15)
             Explode();
     }
 

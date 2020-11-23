@@ -6,6 +6,6 @@ public class TractorBeam : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        other.attachedRigidbody.velocity = new Vector3(0, other.attachedRigidbody.velocity.sqrMagnitude, 0);
+        other.attachedRigidbody.velocity = new Vector3(0, other.attachedRigidbody.velocity.sqrMagnitude, 0) * 0.5f;
     }
 }
