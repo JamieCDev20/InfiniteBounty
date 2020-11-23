@@ -20,7 +20,6 @@ public class ProjectileTool : WeaponTool
     {
         if (!b_active)
             return;
-
         if (b_usable)
         {
             SpawnBullet(_v_forwards);
