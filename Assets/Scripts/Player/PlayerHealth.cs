@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public void TakeDamage(int damage)
     {
         i_currentHealth -= damage;
-
+        Debug.Log("I TOOK DMAGF");
         hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
 
         if (i_currentHealth <= 0)
