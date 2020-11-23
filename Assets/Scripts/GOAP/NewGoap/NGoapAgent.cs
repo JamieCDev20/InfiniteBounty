@@ -103,7 +103,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     private void Attack()
     {
         mover.SetCanMove(false);
-        rb.AddForce(((targetting.GetTarget().position + (Vector3.up * 2)) - transform.position).normalized * f_lungeForce, ForceMode.Impulse);
+        rb.AddForce(((targetting.GetTarget().position + (Vector3.up * 1.2f)) - transform.position).normalized * f_lungeForce, ForceMode.Impulse);
         b_canAttack = false;
     }
 
@@ -133,7 +133,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     public void Explode()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, 1);
-        foreach  (Collider c in hits)
+        foreach (Collider c in hits)
         {
             c.GetComponent<IHitable>()?.TakeDamage(i_damage);
         }
