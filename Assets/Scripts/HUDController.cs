@@ -17,15 +17,16 @@ public class HUDController : MonoBehaviour
 
     private void Start()
     {
-        SetHealthBarValue(0, 1);
-        SetLeftHeatGuage(0, 1);
-        SetRightHeatGuage(0, 1);
+        SetHealthBarValue(1, 1);
+        SetLeftHeatGuage(1, 1);
+        SetRightHeatGuage(1, 1);
     }
 
     public void SetHealthBarValue(int _i_currentHealth, int _i_maxHealth)
     {
-        i_faceBackgroundImage.color = g_healthBarGradient.Evaluate(_i_currentHealth / _i_maxHealth);
-        //i_faceImage.sprite = sA_faceSprites[Mathf.RoundToInt((_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count)];
+        //print((float)_i_currentHealth / _i_maxHealth + "/" + Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count));
+        i_faceBackgroundImage.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
+        i_faceImage.sprite = sA_faceSprites[Mathf.Clamp(Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count), 0, 4)];
     }
 
     public void SetLeftHeatGuage(int _i_currentHeat, int _i_maxHeat)

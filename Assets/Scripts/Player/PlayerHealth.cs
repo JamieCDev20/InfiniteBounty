@@ -19,10 +19,14 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         i_currentHealth = i_maxHealth;
     }
 
+    /*private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) TakeDamage(1);
+    }*/
+
     public void TakeDamage(int damage)
     {
-
-        i_currentHealth -= damage;
+        i_currentHealth -= damage;        
 
         hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
 

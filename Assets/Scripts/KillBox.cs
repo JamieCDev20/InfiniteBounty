@@ -6,11 +6,14 @@ public class KillBox : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private Vector3 v_unitsPerSecond;
-
+    [SerializeField] private bool b_shouldSinBackToStart;
 
     private void Update()
     {
-        transform.position += v_unitsPerSecond * Time.deltaTime;
+        if (b_shouldSinBackToStart)
+            transform.position += (v_unitsPerSecond * Mathf.Sin(Time.realtimeSinceStartup));
+        else
+            transform.position += v_unitsPerSecond * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)

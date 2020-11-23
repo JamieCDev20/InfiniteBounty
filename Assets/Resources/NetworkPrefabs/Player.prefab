@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5097147677987189572}
   - component: {fileID: 5097147677987189595}
   - component: {fileID: 5097147677987189592}
+  - component: {fileID: 1834883202107126509}
   - component: {fileID: 5097147677987189594}
   - component: {fileID: 5097147677987189593}
   - component: {fileID: 5097147677987189598}
@@ -20,7 +21,6 @@ GameObject:
   - component: {fileID: 5097147677987189597}
   - component: {fileID: 6958340482421344952}
   - component: {fileID: -516972341943780644}
-  - component: {fileID: 1834883202107126509}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -97,6 +97,19 @@ MonoBehaviour:
   s_rightToolUse: RightTool
   s_interactButton: Use
   offline: 0
+--- !u!114 &1834883202107126509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097147677987189575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f24fc29dfee51418dbbc975e4cd221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  i_maxHealth: 25
 --- !u!114 &5097147677987189594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,19 +255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectTag: Player
---- !u!114 &1834883202107126509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5097147677987189575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f24fc29dfee51418dbbc975e4cd221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  i_maxHealth: 25
 --- !u!114 &7783716808706458437
 MonoBehaviour:
   m_ObjectHideFlags: 0
