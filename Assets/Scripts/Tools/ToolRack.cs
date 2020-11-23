@@ -34,9 +34,11 @@ public class ToolRack : Shop
             EmptyToolSlot parent = isWeapon ? _t_toolTransform[i * 2] : _t_toolTransform[i];
             ToolBase tb = _tl_loader.LoadTool(i, parent.transform.root);
             tb.transform.position = parent.transform.position;
+
             // Unpurchased weapons set their material to a silhouette
             if (!tb.Purchased)
                 tb.GetComponent<MeshRenderer>().sharedMaterial = m_silhouette;
+
             tb.RackID = toolRackID;
             tb.gameObject.SetActive(true);
 
