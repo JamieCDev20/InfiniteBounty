@@ -24,15 +24,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (Input.GetKeyDown(KeyCode.Escape)) TakeDamage(1);
     }*/
 
-    private void OnDisable()
-    {
-        Debug.Log("am disabled");
-    }
-
     public void TakeDamage(int damage)
     {
         i_currentHealth -= damage;
-        Debug.Log("I TOOK DMAGF");
         hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
 
         if (i_currentHealth <= 0)
