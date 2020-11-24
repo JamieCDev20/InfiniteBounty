@@ -128,14 +128,14 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+            
         //Sync your health
         if (stream.IsWriting)
         {
             stream.SendNext(i_currentHealth);
             for (int i = 0; i < nuggets.Length; i++)
             {
-                if(nuggets[i] != null)
-                    stream.SendNext($"{i}#{nuggets[i].transform.position.ToString().Replace("(", "").Replace(")", "")}");
+                stream.SendNext($"{i}#{(nuggets[i]? nuggets[i].transform.position : transform.position).ToString().Replace("(", "").Replace(")", "")}");
             }
         }
         else
