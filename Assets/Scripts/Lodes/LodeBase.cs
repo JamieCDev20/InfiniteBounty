@@ -134,7 +134,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             stream.SendNext(i_currentHealth);
             for (int i = 0; i < nuggets.Length; i++)
             {
-                if(nuggets[i])
+                if(nuggets[i] != null)
                     stream.SendNext($"{i}#{nuggets[i].transform.position.ToString().Replace("(", "").Replace(")", "")}");
             }
         }
@@ -145,7 +145,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             while(stream.Count > 0)
             {
                 Debug.Log(stream.Count);
-                string t = stream.ReceiveNext().ToString();
+                string t = (string)stream.ReceiveNext();
                 Debug.Log(t);
                 string[] tB = t.Split('#');
                 string[] tA = tB[1].Split(',');
