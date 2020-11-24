@@ -128,7 +128,6 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        Debug.Log("serializing");
         //Sync your health
         if (stream.IsWriting)
         {
