@@ -129,4 +129,9 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         return b_active;
     }
 
+    public virtual void SetInfo(object[] infos)
+    {
+
+    }
+
 }
