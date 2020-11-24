@@ -33,11 +33,11 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        TakeTrueDamage(_i_damage, true);
+        TakeTrueDamage(_i_damage);
 
     }
 
-    public void TakeTrueDamage(int _i_damage, bool networked)
+    public void TakeTrueDamage(int _i_damage)
     {
 
         //this is the networked take damage func, this is called by the host to sync health
@@ -54,14 +54,18 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         }
 
         //check if dead and stuff
+        if(PhotonNetwork.IsMasterClient)
+            photonView.RPC("SetHealth", RpcTarget.Others, i_currentHealth);
         CheckHealth();
 
     }
 
+    [PunRPC]
     public void SetHealth(int health)
     {
         //it's a psuedo set health func so that thresholds are still respected
-        TakeDamage(i_currentHealth - health);
+        TakeTrueDamage(i_currentHealth - health);
+        CheckHealth();
 
     }
 
@@ -131,12 +135,12 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         //Sync your health
         if (stream.IsWriting)
         {
-            stream.SendNext(i_currentHealth);
+            //stream.SendNext(i_currentHealth);
         }
         else
         {
-            if(stream.Count > 0)
-                TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
+            //if(stream.Count > 0)
+                //TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
         }
 
     }
