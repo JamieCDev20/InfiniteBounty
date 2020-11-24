@@ -30,7 +30,6 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("joined lobby");
-        PhotonNetwork.JoinOrCreateRoom("roomname", new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
@@ -40,12 +39,18 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     public void OnClickJoin()
     {
+        PhotonNetwork.JoinRoom(if_gameTitleInput.text);
 
+    }
+
+    public void OnClickLeave()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 
     public void OnClickCreate()
     {
-
+        PhotonNetwork.CreateRoom(if_gameTitleInput.text, new RoomOptions { MaxPlayers = 4 }, TypedLobby.Default);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
