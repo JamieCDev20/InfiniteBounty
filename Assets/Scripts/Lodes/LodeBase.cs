@@ -75,7 +75,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
+                    float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value , Random.value};
                     NuggetBurst(v);
                     view.RPC("NuggetBurst", RpcTarget.Others, v);
                 }
