@@ -63,6 +63,7 @@ public class Randomness : MonoBehaviourPunCallbacks
     public void RecieveSeed(int seed)
     {
         Random.InitState(seed);
+        Debug.Log(seed);
     }
 
     private void SpawnLodes(int count)

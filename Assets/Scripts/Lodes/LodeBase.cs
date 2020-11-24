@@ -144,6 +144,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             Vector3 v = Vector3.zero;
             while(stream.Count > 0)
             {
+                Debug.Log(stream.Count);
                 string[] t = (stream.ReceiveNext().ToString()).Split('#');
                 string[] tA = t[1].Split(',');
                 v.x = float.Parse(tA[0]);
