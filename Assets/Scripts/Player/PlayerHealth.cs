@@ -26,7 +26,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void TakeDamage(int damage)
     {
-        i_currentHealth -= damage;
+        if (!view.IsMine)
+            return;
+            i_currentHealth -= damage;
         hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
 
         if (i_currentHealth <= 0)

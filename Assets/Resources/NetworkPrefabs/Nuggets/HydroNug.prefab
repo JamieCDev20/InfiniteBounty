@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5707692845772861641}
   - component: {fileID: 4468070524712238798}
   - component: {fileID: 6741355650731856494}
-  - component: {fileID: 6027898347439800099}
   - component: {fileID: 452049150387631478}
   - component: {fileID: -2929627952763993648}
   m_Layer: 9
@@ -79,32 +78,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6027898347439800099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f1ed2c90928954e8f87e220136509a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  b_fire: 0
-  b_electric: 0
-  b_water: 1
-  b_goo: 0
-  b_gas: 0
-  ue_fireTrigger:
-    m_PersistentCalls:
-      m_Calls: []
-  ue_electricTrigger:
-    m_PersistentCalls:
-      m_Calls: []
-  ue_waterTrigger:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &452049150387631478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +164,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -215,3 +189,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}

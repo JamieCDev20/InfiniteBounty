@@ -25,8 +25,10 @@ public class NugGO : SubjectBase, IPoolable
         {
             if (!other.GetComponent<PlayerInputManager>().CanPickUpNugs())
                 return;
-            GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles);
+
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true);
+            GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles, transform.position, Quaternion.identity);
+
             myLode.NugCollected(i_lodeID);
             Notify(ce);
         }

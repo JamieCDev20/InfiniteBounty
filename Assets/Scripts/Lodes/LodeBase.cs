@@ -168,6 +168,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
     public void NugCollected(int id)
     {
+
         view.RPC("DestroyNug", RpcTarget.All, id);
     }
 
