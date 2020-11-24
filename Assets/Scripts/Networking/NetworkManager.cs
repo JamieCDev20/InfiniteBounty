@@ -63,7 +63,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
+        Debug.Log("joinedLobby!");
 
     }
 
