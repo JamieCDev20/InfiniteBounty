@@ -41,7 +41,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     {
 
         //this is the networked take damage func, this is called by the host to sync health
-
+        Debug.Log("lode taking damage");
         i_currentHealth -= _i_damage;
         for (int i = 0; i < iA_healthIntervals.Length; i++)
         {
