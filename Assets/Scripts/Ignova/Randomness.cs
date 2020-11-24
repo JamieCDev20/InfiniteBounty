@@ -78,24 +78,17 @@ public class Randomness : MonoBehaviourPunCallbacks
         LodeSynchroniser.x.InitialiseLodeArrayLength(count);
         for (int i = 0; i < count; i++)
         {
+            if (Lt_lodeSpawns.Count <= 0)
+                return;
             float rand = RandomValue(lodes.Length - 1);
             int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
-            try
-            {
-                GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(rand)], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
-                ob.transform.parent = parent.transform;
-                ob.GetComponent<PhotonView>().ViewID = 6000 + i;
-                PhotonNetwork.RegisterPhotonView(ob.GetComponent<PhotonView>());
-                LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
-                ob.name += Lt_lodeSpawns[num].position;
-                Lt_lodeSpawns.RemoveAt(num);
-
-            }
-            catch
-            {
-                Debug.LogError(rand + " | " + (lodes.Length - 1) + " ||| " + num + " | " + Lt_lodeSpawns.Count);
-
-            }
+            GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(rand)], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
+            ob.transform.parent = parent.transform;
+            ob.GetComponent<PhotonView>().ViewID = 6000 + i;
+            PhotonNetwork.RegisterPhotonView(ob.GetComponent<PhotonView>());
+            LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
+            ob.name += Lt_lodeSpawns[num].position;
+            Lt_lodeSpawns.RemoveAt(num);
         }
     }
 
