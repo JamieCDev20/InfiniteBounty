@@ -142,7 +142,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         {
             TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
             Vector3 v = Vector3.zero;
-            for (int i = 0; i < stream.Count; i++)
+            while(stream.Count > 0)
             {
                 string[] t = (stream.ReceiveNext().ToString()).Split('#');
                 string[] tA = t[1].Split(',');
