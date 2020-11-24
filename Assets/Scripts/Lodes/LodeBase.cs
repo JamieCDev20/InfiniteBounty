@@ -75,9 +75,13 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-                    NuggetBurst(v);
-                    view.RPC("NuggetBurst", RpcTarget.Others, v);
+                    for (int j = 0; j < i_nuggetsPerBurst; j++)
+                    {
+                        float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
+                        NuggetBurst(v);
+                        view.RPC("NuggetBurst", RpcTarget.Others, v);
+
+                    }
                 }
                 goA_damageMeshes[i].SetActive(false);
                 iA_healthIntervals[i] = -10000000;
@@ -95,9 +99,13 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
         if (PhotonNetwork.IsMasterClient)
         {
-            float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-            NuggetBurst(v);
-            view.RPC("NuggetBurst", RpcTarget.Others, v);
+            for (int i = 0; i < i_nuggetsPerBurst; i++)
+            {
+                float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
+                NuggetBurst(v);
+                view.RPC("NuggetBurst", RpcTarget.Others, v);
+
+            }
             view.RPC("Death", RpcTarget.Others);
 
         }
@@ -108,20 +116,19 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     private void NuggetBurst(params float[] v)
     {
         //Nick and byron did this
-        for (int i = 0; i < i_nuggetsPerBurst; i++)
-        {
-            GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
-            nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
-            nuggets[nugCount].SetLodeInfo(nugCount, this);
-            nugCount += 1;
-            _go_nugget.SetActive(true);
-            _go_nugget.transform.parent = null;
-            _go_nugget.transform.position = transform.position + transform.localScale * (-1 + v[0] * 2);
-            //_go_nugget.transform.localScale = Vector3.one;
-            Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
-            _rb.AddForce(new Vector3(-1 + v[1] * 2, v[2] * 2, -1 + v[3] * 2) * f_nuggetForce, ForceMode.Impulse);
-            _go_nugget.transform.rotation = new Quaternion(v[4], v[5], v[6], v[7]);
-        }
+
+        GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
+        nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
+        nuggets[nugCount].SetLodeInfo(nugCount, this);
+        nugCount += 1;
+        _go_nugget.SetActive(true);
+        _go_nugget.transform.parent = null;
+        _go_nugget.transform.position = transform.position + transform.localScale * (-1 + v[0] * 2);
+        //_go_nugget.transform.localScale = Vector3.one;
+        Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
+        _rb.AddForce(new Vector3(-1 + v[1] * 2, v[2] * 2, -1 + v[3] * 2) * f_nuggetForce, ForceMode.Impulse);
+        _go_nugget.transform.rotation = new Quaternion(v[4], v[5], v[6], v[7]);
+
     }
 
     public GameObject GetGameObject()
