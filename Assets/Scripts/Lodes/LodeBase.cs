@@ -85,7 +85,6 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
         if (PhotonNetwork.IsMasterClient)
             view.RPC("Death", RpcTarget.Others);
-
     }
 
     private void NuggetBurst()
@@ -133,11 +132,24 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         if (stream.IsWriting)
         {
             stream.SendNext(i_currentHealth);
+            for (int i = 0; i < nuggets.Length; i++)
+            {
+                stream.SendNext($"{i}#{nuggets[i].transform.position.ToString().Replace("(", "").Replace(")", "")}");
+            }
         }
         else
         {
-            if (stream.Count > 0)
-                TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
+            TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
+            Vector3 v = Vector3.zero;
+            for (int i = 0; i < stream.Count; i++)
+            {
+                string[] t = ((string)stream.ReceiveNext()).Split('#');
+                string[] tA = t[1].Split(',');
+                v.x = float.Parse(tA[0]);
+                v.y = float.Parse(tA[1]);
+                v.z = float.Parse(tA[2]);
+                nuggets[int.Parse(t[0])].transform.position = v;
+            }
         }
 
     }
