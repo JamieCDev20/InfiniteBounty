@@ -30,7 +30,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("joined lobby");
-        //PhotonNetwork.JoinOrCreateRoom("roomname", new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom("roomname", new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()
