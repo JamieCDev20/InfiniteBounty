@@ -126,7 +126,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         return s_path;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
             
         //Sync your health
