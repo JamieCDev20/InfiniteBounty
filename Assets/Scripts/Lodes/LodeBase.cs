@@ -43,15 +43,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         //this is the networked take damage func, this is called by the host to sync health
         Debug.Log("lode taking damage");
         i_currentHealth -= _i_damage;
-        for (int i = 0; i < iA_healthIntervals.Length; i++)
-        {
-            if (i_currentHealth <= iA_healthIntervals[i])
-            {
-                NuggetBurst();
-                goA_damageMeshes[i].SetActive(false);
-                iA_healthIntervals[i] = -10000000;
-            }
-        }
+        
 
         //check if dead and stuff
         if(PhotonNetwork.IsMasterClient)
@@ -64,6 +56,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     public void SetHealth(int health)
     {
         //it's a psuedo set health func so that thresholds are still respected
+        Debug.Log("SettingHealth");
         TakeTrueDamage(i_currentHealth - health);
         CheckHealth();
 
@@ -76,6 +69,15 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
     private void CheckHealth()
     {
+        for (int i = 0; i < iA_healthIntervals.Length; i++)
+        {
+            if (i_currentHealth <= iA_healthIntervals[i])
+            {
+                NuggetBurst();
+                goA_damageMeshes[i].SetActive(false);
+                iA_healthIntervals[i] = -10000000;
+            }
+        }
         if (i_currentHealth <= 0) Death();
 
     }
