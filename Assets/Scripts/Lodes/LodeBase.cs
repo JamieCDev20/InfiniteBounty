@@ -133,27 +133,10 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         if (stream.IsWriting)
         {
             stream.SendNext(i_currentHealth);
-            for (int i = 0; i < nuggets.Length; i++)
-            {
-                stream.SendNext($"{i}#{(nuggets[i]? nuggets[i].transform.position : transform.position).ToString().Replace("(", "").Replace(")", "")}");
-            }
         }
         else
         {
             TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
-            Vector3 v = Vector3.zero;
-            while(stream.Count > 0)
-            {
-                Debug.Log(stream.Count);
-                string t = (string)stream.ReceiveNext();
-                Debug.Log(t);
-                string[] tB = t.Split('#');
-                string[] tA = tB[1].Split(',');
-                v.x = float.Parse(tA[0]);
-                v.y = float.Parse(tA[1]);
-                v.z = float.Parse(tA[2]);
-                nuggets[int.Parse(tB[0])].transform.position = v;
-            }
         }
 
     }
