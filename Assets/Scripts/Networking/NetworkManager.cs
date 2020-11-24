@@ -57,6 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
 
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.JoinLobby();
         PhotonNetwork.GameVersion = gameVersion;
 
     }
