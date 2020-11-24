@@ -29,13 +29,13 @@ public class Randomness : MonoBehaviourPunCallbacks
     private void Start()
     {
         //if the you're not the master client then don't spawn anything
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (randomSeed)
-                seed = Random.Range(0, 1000000);
-            photonView.RPC("RecieveSeed", RpcTarget.Others, seed);
-        }
-            
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        if (randomSeed)
+            seed = Random.Range(0, 1000000);
+        photonView.RPC("RecieveSeed", RpcTarget.Others, seed);
+
 
         //sew that seed into the fabrik of reality
         Random.InitState(seed);
@@ -46,6 +46,7 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         //spawn the lodes
         SpawnLodes(i_lodeCount);
+        photonView.RPC("SpawnLodes", RpcTarget.Others, i_lodeCount);
 
     }
 
@@ -63,9 +64,11 @@ public class Randomness : MonoBehaviourPunCallbacks
     public void RecieveSeed(int seed)
     {
         Random.InitState(seed);
+        float burnTheFirst = Random.value;
         Debug.Log(seed);
     }
 
+    [PunRPC]
     private void SpawnLodes(int count)
     {
 
