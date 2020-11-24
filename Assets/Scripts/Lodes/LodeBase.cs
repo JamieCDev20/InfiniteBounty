@@ -145,12 +145,14 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             while(stream.Count > 0)
             {
                 Debug.Log(stream.Count);
-                string[] t = (stream.ReceiveNext().ToString()).Split('#');
-                string[] tA = t[1].Split(',');
+                string t = stream.ReceiveNext().ToString();
+                Debug.Log(t);
+                string[] tB = t.Split('#');
+                string[] tA = tB[1].Split(',');
                 v.x = float.Parse(tA[0]);
                 v.y = float.Parse(tA[1]);
                 v.z = float.Parse(tA[2]);
-                nuggets[int.Parse(t[0])].transform.position = v;
+                nuggets[int.Parse(tB[0])].transform.position = v;
             }
         }
 
