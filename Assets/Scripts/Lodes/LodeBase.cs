@@ -136,7 +136,8 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         }
         else
         {
-            TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
+            if(stream.Count > 0)
+                TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
         }
 
     }
