@@ -57,8 +57,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
 
         PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.JoinLobby();
         PhotonNetwork.GameVersion = gameVersion;
+
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
 
     }
 
