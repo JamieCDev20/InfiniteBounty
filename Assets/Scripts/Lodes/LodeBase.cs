@@ -134,7 +134,8 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             stream.SendNext(i_currentHealth);
             for (int i = 0; i < nuggets.Length; i++)
             {
-                stream.SendNext($"{i}#{nuggets[i].transform.position.ToString().Replace("(", "").Replace(")", "")}");
+                if(nuggets[i])
+                    stream.SendNext($"{i}#{nuggets[i].transform.position.ToString().Replace("(", "").Replace(")", "")}");
             }
         }
         else
