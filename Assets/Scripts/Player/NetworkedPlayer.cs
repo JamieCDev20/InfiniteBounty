@@ -16,6 +16,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private Transform t_thisPlayer;
     private PlayerInputManager playerIM;
     private ToolHandler handler;
+
     public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
     private List<string> dataToSend = new List<string>();

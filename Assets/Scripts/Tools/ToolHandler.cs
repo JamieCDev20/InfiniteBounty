@@ -325,7 +325,10 @@ public class ToolHandler : SubjectBase
         if (A_tools[(int)ts] != null)
         {
             if (_b_released)
+            {
+                A_tools[(int)ts].PlayParticles(false);
                 A_tools[(int)ts].SetActive(true);
+            }
             if (_b_released && A_tools[(int)ts].ReleaseActivated)
                 A_tools[(int)ts].Use(t_camTransform.forward);
 

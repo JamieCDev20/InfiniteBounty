@@ -6,16 +6,24 @@ public class Jetpack : MobilityTool
 {
 
     [SerializeField] private float f_force = 5;
-    private Rigidbody rb;
+    [SerializeField] private GameObject go_particles;
+    [SerializeField] private Rigidbody rb;
 
-    public override void SetInfo(object[] infos)
+    private void Start()
     {
-        rb = (Rigidbody)infos[0];
+        rb = transform.root.GetComponent<Rigidbody>();
     }
 
     public override void Use()
     {
-        rb.AddForce(Vector3.up * f_force);
+        rb?.AddForce(Vector3.up * f_force);
+        PlayParticles(true);
+    }
+
+    public override void PlayParticles(bool val)
+    {
+        go_particles.SetActive(val);
+
     }
 
 }
