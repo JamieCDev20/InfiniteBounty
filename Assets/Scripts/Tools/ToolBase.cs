@@ -15,7 +15,6 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     protected bool b_usable = true;
     protected bool b_active = false;
     protected Transform t_cam;
-    protected AugmentType[] at_augments = new AugmentType[0];
     #endregion
 
     #region Serialized Vars

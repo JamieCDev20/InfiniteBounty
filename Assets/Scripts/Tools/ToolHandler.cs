@@ -54,7 +54,6 @@ public class ToolHandler : SubjectBase
                 A_tools[(int)ts].SetActive(false);
             // Are we getting a tool, an augment or something else?
             ToolBase tb = hit.transform.GetComponent<ToolBase>();
-            Augment am = hit.transform.GetComponent<Augment>();
             // Which shop is it?
             Shop sr = hit.transform.root.GetComponent<Shop>();
             // Put a tool back;

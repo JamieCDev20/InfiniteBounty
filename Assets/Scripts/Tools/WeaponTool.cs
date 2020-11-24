@@ -15,7 +15,6 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_knockback;
     [SerializeField] protected GameObject go_hitBox;
     [Header("Elemental Stats")]
-    [SerializeField] Systemic sy_element;
     [SerializeField] protected int i_elementDamage;
     [SerializeField] protected float f_elementDuration;
     [SerializeField] protected float f_elementFrequency;

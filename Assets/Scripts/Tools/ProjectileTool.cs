@@ -37,7 +37,7 @@ public class ProjectileTool : WeaponTool
     public void SpawnBullet(Vector3 _v_direction)
     {
         Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
-        newBullet.Setup(i_damage, i_lodeDamage, at_augments);
+        newBullet.Setup(i_damage, i_lodeDamage);
         newBullet.MoveBullet(_v_direction, f_shotSpeed);
     }
 
