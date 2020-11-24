@@ -86,7 +86,6 @@ public class Randomness : MonoBehaviourPunCallbacks
                 ob.transform.parent = parent.transform;
                 ob.GetComponent<PhotonView>().ViewID = 6000 + i;
                 PhotonNetwork.RegisterPhotonView(ob.GetComponent<PhotonView>());
-                Debug.Log(PhotonView.Find(6000 + i));
                 LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
                 ob.name += Lt_lodeSpawns[num].position;
                 Lt_lodeSpawns.RemoveAt(num);

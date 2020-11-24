@@ -43,10 +43,10 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         //this is the networked take damage func, this is called by the host to sync health
         Debug.Log("lode taking damage");
         i_currentHealth -= _i_damage;
-        
+
 
         //check if dead and stuff
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
             photonView.RPC("SetHealth", RpcTarget.Others, i_currentHealth);
         CheckHealth();
 
@@ -73,7 +73,12 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         {
             if (i_currentHealth <= iA_healthIntervals[i])
             {
-                NuggetBurst();
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
+                    NuggetBurst(v);
+                    view.RPC("NuggetBurst", RpcTarget.Others, v);
+                }
                 goA_damageMeshes[i].SetActive(false);
                 iA_healthIntervals[i] = -10000000;
             }
@@ -87,13 +92,19 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     {
         //RPC death function so that all instances of a lode die together
         gameObject.SetActive(false);
-        NuggetBurst();
 
         if (PhotonNetwork.IsMasterClient)
-            view.RPC("Death", RpcTarget.Others);
+        {
+            float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
+            NuggetBurst(v);
+            view.RPC("Death", RpcTarget.Others, v);
+
+        }
+
     }
 
-    private void NuggetBurst()
+    [PunRPC]
+    private void NuggetBurst(params float[] v)
     {
         //Nick and byron did this
         for (int i = 0; i < i_nuggetsPerBurst; i++)
@@ -104,11 +115,11 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             nugCount += 1;
             _go_nugget.SetActive(true);
             _go_nugget.transform.parent = null;
-            _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2);
+            _go_nugget.transform.position = transform.position + transform.localScale * (-1 + v[0] * 2);
             //_go_nugget.transform.localScale = Vector3.one;
             Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
-            _rb.AddForce(new Vector3(-1 + Random.value * 2, Random.value * 2, -1 + Random.value * 2) * f_nuggetForce, ForceMode.Impulse);
-            _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
+            _rb.AddForce(new Vector3(-1 + v[1] * 2, v[2] * 2, -1 + v[3] * 2) * f_nuggetForce, ForceMode.Impulse);
+            _go_nugget.transform.rotation = new Quaternion(v[4], v[5], v[6], v[7]);
         }
     }
 
@@ -142,7 +153,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
         else
         {
             //if(stream.Count > 0)
-                //TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
+            //TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
         }
 
     }
