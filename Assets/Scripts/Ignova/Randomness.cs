@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Randomness : MonoBehaviour
+public class Randomness : MonoBehaviourPunCallbacks
 {
 
     //Variables
@@ -29,14 +29,15 @@ public class Randomness : MonoBehaviour
     private void Start()
     {
         //if the you're not the master client then don't spawn anything
-        if (!PhotonNetwork.IsMasterClient)
-            return;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (randomSeed)
+                seed = Random.Range(0, 1000000);
+            photonView.RPC("RecieveSeed", RpcTarget.Others, seed);
+        }
+            
 
-        //generate a random seed
-        if (randomSeed)
-            seed = Random.Range(0, 1000000);
-
-        //sow that seed into the fabrik of reality
+        //sew that seed into the fabrik of reality
         Random.InitState(seed);
         Debug.Log("Seed: " + seed);
 
@@ -56,6 +57,12 @@ public class Randomness : MonoBehaviour
     {
         //generate a random value between 0-range
         return Random.value * range;
+    }
+
+    [PunRPC]
+    public void RecieveSeed(int seed)
+    {
+        Random.InitState(seed);
     }
 
     private void SpawnLodes(int count)
@@ -84,6 +91,11 @@ public class Randomness : MonoBehaviour
 
             }
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
     }
 
     #endregion

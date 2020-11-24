@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class GameManager : MonoBehaviourPunCallbacks
+public class UniversalOverlord : MonoBehaviourPunCallbacks
 {
 
     //Variables
