@@ -16,7 +16,6 @@ public class Jetpack : MobilityTool
 
     public override void Use(Vector3 _v)
     {
-        Debug.Log("using!");
         rb?.AddForce(Vector3.up * f_force);
         PlayParticles(true);
     }
