@@ -27,19 +27,22 @@ public class Lunchbox : MobilityTool
         b_isOpen = false;
     }
 
-    public override void Use()
+    public override void Use(Vector3 _v)
     {
-        base.Use();
-
-        for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
+        if (!b_isOpen)
         {
-            GameObject _go_sandwich = Instantiate(go_sandwichPrefab, transform.position, Quaternion.identity);
-            _go_sandwich.GetComponent<Rigidbody>().AddForce(transform.forward + new Vector3(0, -60 + (i * 30), 0), ForceMode.Impulse);
-        }
-        go_lidObject.transform.localEulerAngles = v_lidOpenRotation;
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject _go_sandwich = Instantiate(go_sandwichPrefab, transform.position + transform.forward, Quaternion.identity);
+                _go_sandwich.GetComponent<Rigidbody>().AddForce(transform.forward + new Vector3(0, -60 + (i * 30), 0), ForceMode.Impulse);
+            }
+            go_lidObject.transform.localEulerAngles = v_lidOpenRotation;
 
-        f_coolDown = f_timeBetweenUsage;
-        b_isOpen = true;
+            f_coolDown = f_timeBetweenUsage;
+            b_isOpen = true;
+        }
     }
+
+    public override void PlayParticles(bool val) { }
 
 }
