@@ -25,10 +25,10 @@ public class ProjectileTool : WeaponTool
             SpawnBullet(_v_forwards);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
-
+            PlayParticles(true);
         }
     }
-    
+
     public override void NetUse(Vector3 _v_forwards)
     {
         SpawnBullet(_v_forwards);
@@ -39,6 +39,15 @@ public class ProjectileTool : WeaponTool
         Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
         newBullet.Setup(i_damage, i_lodeDamage);
         newBullet.MoveBullet(_v_direction, f_shotSpeed);
+    }
+
+    public override void PlayParticles(bool val)
+    {
+        if (go_particles)
+        {
+            go_particles.SetActive(false);
+            go_particles.SetActive(true);
+        }
     }
 
 }

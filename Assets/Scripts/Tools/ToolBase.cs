@@ -42,13 +42,13 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public virtual void Use()
@@ -138,7 +138,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public virtual void PlayParticles(bool val)
     {
-
+        go_particles.SetActive(val);
     }
 
 }
