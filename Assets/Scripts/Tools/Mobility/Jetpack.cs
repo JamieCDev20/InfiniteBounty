@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Jetpack : MobilityTool
 {
-
+    [Header("Jetpack Info")]
     [SerializeField] private float f_force = 5;
-    [SerializeField] private Rigidbody rb;
+    private Rigidbody rb;
+    [SerializeField] private AnimationCurve ac_jetPackForce;
+    private float f_timeHeld;
 
     private void Start()
     {
@@ -15,14 +17,15 @@ public class Jetpack : MobilityTool
 
     public override void Use(Vector3 _v)
     {
-        rb?.AddForce(Vector3.up * f_force);
+        rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(rb.velocity.x, f_force * ac_jetPackForce.Evaluate(f_timeHeld), rb.velocity.z), 0.3f);
         PlayParticles(true);
+        f_timeHeld += Time.deltaTime;
     }
 
     public override void PlayParticles(bool val)
     {
         go_particles.SetActive(val);
-
+        if (!val) f_timeHeld = 0;
     }
 
 }
