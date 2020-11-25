@@ -27,6 +27,8 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     [SerializeField] protected AudioClip ac_diegeticAudio;
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
+    [SerializeField] protected GameObject go_particles;
+
     #endregion
 
     #region get/set

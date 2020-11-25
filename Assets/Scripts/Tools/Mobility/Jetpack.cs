@@ -6,7 +6,6 @@ public class Jetpack : MobilityTool
 {
 
     [SerializeField] private float f_force = 5;
-    [SerializeField] private GameObject go_particles;
     [SerializeField] private Rigidbody rb;
 
     private void Start()
