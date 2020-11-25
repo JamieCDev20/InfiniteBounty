@@ -8,6 +8,7 @@ public class NugGO : SubjectBase, IPoolable
     [SerializeField] public Nug nug;
     [SerializeField] private float f_nugTimeout;
     [SerializeField] private GameObject go_pickupParticles;
+    [SerializeField] private AudioClip ac_pickupSound;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
     #endregion
@@ -27,7 +28,6 @@ public class NugGO : SubjectBase, IPoolable
                 return;
 
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true);
-            GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles, transform.position, Quaternion.identity);
 
             myLode.NugCollected(i_lodeID);
             Notify(ce);
@@ -41,6 +41,9 @@ public class NugGO : SubjectBase, IPoolable
 
     public void Die()
     {
+        GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles, transform.position, Quaternion.identity);
+        if (ac_pickupSound)
+            AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
