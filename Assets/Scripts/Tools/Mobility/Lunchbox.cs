@@ -11,6 +11,7 @@ public class Lunchbox : MobilityTool
     [SerializeField] private Vector3 v_lidOpenRotation;
     [SerializeField] private GameObject go_lidObject;
     private bool b_isOpen;
+    [SerializeField] private Transform[] tA_sandWichFirePoints = new Transform[4];
 
     private void Update()
     {
@@ -33,8 +34,8 @@ public class Lunchbox : MobilityTool
         {
             for (int i = 0; i < 4; i++)
             {
-                GameObject _go_sandwich = Instantiate(go_sandwichPrefab, transform.position + transform.forward, Quaternion.identity);
-                _go_sandwich.GetComponent<Rigidbody>().AddForce(transform.forward + new Vector3(0, -60 + (i * 30), 0), ForceMode.Impulse);
+                GameObject _go_sandwich = PoolManager.x.SpawnObject(go_sandwichPrefab, tA_sandWichFirePoints[i].transform.position + transform.forward, Quaternion.identity);
+                _go_sandwich.GetComponent<Rigidbody>().AddForce(tA_sandWichFirePoints[i].transform.forward, ForceMode.Impulse);
             }
             go_lidObject.transform.localEulerAngles = v_lidOpenRotation;
 

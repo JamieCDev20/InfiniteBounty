@@ -2,17 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sandwich : MonoBehaviour
+public class Sandwich : MonoBehaviour, IPoolable
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int i_healthGain;
+    [SerializeField] private GameObject go_pickedUpEffect;
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<IHitable>().TakeDamage(-i_healthGain);
+
+            go_pickedUpEffect.transform.parent = null;
+            go_pickedUpEffect.transform.position = transform.position;
+            go_pickedUpEffect.SetActive(false);
+            go_pickedUpEffect.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Die()
     {
-        
+        gameObject.SetActive(false);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public bool IsNetworkedObject()
+    {
+        return false;
+    }
+
+    public string ResourcePath()
+    {
+        return "NetworkedObjects\\PlayerMade";
     }
 }
