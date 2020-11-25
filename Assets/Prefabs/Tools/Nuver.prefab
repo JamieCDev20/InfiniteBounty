@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 1002333024079284335}
   - component: {fileID: 2102207162649518890}
   - component: {fileID: -3503754623988813978}
+  - component: {fileID: 5017027104225955398}
   m_Layer: 13
   m_Name: Nuver
   m_TagString: Untagged
@@ -446,6 +447,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5017027104225955398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547322647095116221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417cfafb7a32f7d4784cd1bb03c3cba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  b_purchased: 0
+  eg_gauge:
+    f_capacity: 0
+    f_coolDownRate: 0
+    f_heatingSpeed: 0
+    can_Gauge: {fileID: 0}
+  f_timeBetweenUsage: 0
+  ac_activationSound: {fileID: 0}
+  ac_hitSound: {fileID: 0}
+  ac_diegeticAudio: {fileID: 0}
+  t_raycastPoint: {fileID: 0}
+  b_releaseActivated: 0
+  go_particles: {fileID: 0}
+  i_damage: 0
+  i_weight: 0
+  i_lodeDamage: 0
+  f_recoil: 0
+  f_speed: 0
+  f_knockback: 0
+  go_hitBox: {fileID: 0}
+  i_elementDamage: 0
+  f_elementDuration: 0
+  f_elementFrequency: 0
+  go_explosion: {fileID: 0}
+  f_radius: 0
+  f_explosionKnockback: 0
+  b_rackUpgrade: 0
+  f_angle: 75
+  f_radius: 3
+  t_conePoint: {fileID: 8694590336160786432}
 --- !u!1 &8220174204682026623
 GameObject:
   m_ObjectHideFlags: 0

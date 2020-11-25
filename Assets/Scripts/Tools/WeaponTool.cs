@@ -20,7 +20,7 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_elementFrequency;
     [Header("Explosion Stats")]
     [SerializeField] GameObject go_explosion;
-    [SerializeField] float f_radius;
+    [SerializeField] float f_explosionRadius;
     [SerializeField] float f_explosionKnockback;
     #endregion
 
