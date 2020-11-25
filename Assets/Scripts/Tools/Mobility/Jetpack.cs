@@ -8,7 +8,7 @@ public class Jetpack : MobilityTool
     [SerializeField] private float f_force = 5;
     private Rigidbody rb;
     [SerializeField] private AnimationCurve ac_jetPackForce;
-    private float f_timeHeld;
+    [Space, SerializeField] private float f_timeHeld;
 
     private void Start()
     {
