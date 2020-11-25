@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,9 @@ public class Teleporter : MobilityTool
     [Space, SerializeField] private GameObject go_chargeEffects;
     [SerializeField] private GameObject go_leavingEffect;
     [SerializeField] private GameObject go_arrivalEffect;
-
+    [SerializeField] private Material redMat;
+    [SerializeField] private Material greenMat;
+    [SerializeField] private Renderer lightRenderer;
 
 
     private void Update()
@@ -26,18 +29,23 @@ public class Teleporter : MobilityTool
 
     public override void Use(Vector3 _v_lookDirection)
     {
-        go_leavingEffect.transform.parent = transform;
-        go_leavingEffect.transform.localPosition = Vector3.zero;
-        go_leavingEffect.SetActive(false);
-        go_leavingEffect.SetActive(true);
+        if (b_isActive)
+        {
+            go_leavingEffect.transform.parent = transform;
+            go_leavingEffect.transform.localPosition = Vector3.zero;
+            go_leavingEffect.SetActive(false);
+            go_leavingEffect.SetActive(true);
 
-        StartCoroutine(DoTheTeleport(_v_lookDirection));
+            StartCoroutine(DoTheTeleport(_v_lookDirection));
+
+        }
     }
 
     private IEnumerator DoTheTeleport(Vector3 _v_lookDirection)
     {
         if (b_isActive)
         {
+            lightRenderer.material = redMat;
             yield return new WaitForSeconds(f_teleportDelay);
             go_leavingEffect.transform.parent = null;
             RaycastHit _hit;
@@ -60,6 +68,7 @@ public class Teleporter : MobilityTool
     private void ComeOffCooldown()
     {
         go_chargeEffects.SetActive(true);
+        lightRenderer.material = greenMat;
         b_isActive = true;
     }
 
