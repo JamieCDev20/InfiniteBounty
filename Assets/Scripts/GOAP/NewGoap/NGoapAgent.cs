@@ -194,7 +194,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     public string ResourcePath()
     {
-        return "NetworkPrefabs/";
+        return "";
     }
 
     #endregion
