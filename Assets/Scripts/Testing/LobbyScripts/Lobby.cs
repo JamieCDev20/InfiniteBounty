@@ -18,7 +18,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     private void Start()
     {
         sb_bar.value = 1;
-        PhotonNetwork.ConnectUsingSettings();
+        //PhotonNetwork.ConnectUsingSettings();
         if (PlayerPrefs.HasKey("roomName"))
             if_gameTitleInput.text = PlayerPrefs.GetString("roomName");
     }
@@ -31,7 +31,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected");
-        PhotonNetwork.JoinLobby(TypedLobby.Default);
+        //PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby() 
