@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class NugSucker : ConeTool
 {
+    [SerializeField] private float f_suckForce;
     public override void Use(Vector3 _v_forwards)
     {
         foreach(GameObject hit in GetAllObjectsInCone())
         {
-            //hit.GetComponent<IPullable>()?.
-            Debug.Log(hit.name);
+            hit.GetComponent<ISuckable>()?.GetRigidbody().AddForce((t_conePoint.position - hit.transform.position).normalized * f_suckForce, ForceMode.Impulse);
         }
     }
 }

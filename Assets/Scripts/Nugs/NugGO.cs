@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NugGO : SubjectBase, IPoolable
+public class NugGO : SubjectBase, IPoolable, ISuckable
 {
     #region Serialized Variables
     [SerializeField] public Nug nug;
@@ -18,8 +18,13 @@ public class NugGO : SubjectBase, IPoolable
     private int i_lodeID;
     private bool b_inPool;
     private LodeBase myLode;
+    private Rigidbody rb;
     #endregion
 
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Player")
@@ -44,6 +49,7 @@ public class NugGO : SubjectBase, IPoolable
         GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles, transform.position, Quaternion.identity);
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
+        rb.velocity = Vector3.zero;
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
@@ -68,4 +74,8 @@ public class NugGO : SubjectBase, IPoolable
         myLode = lode;
     }
 
+    public Rigidbody GetRigidbody()
+    {
+        return rb;
+    }
 }

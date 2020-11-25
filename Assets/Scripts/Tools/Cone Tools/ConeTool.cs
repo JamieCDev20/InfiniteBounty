@@ -10,19 +10,24 @@ public class ConeTool : WeaponTool
 
     private bool CheckInCone(Transform _t_objectToCheck)
     {
-        if ((Mathf.Acos(Vector3.Dot(t_conePoint.position, _t_objectToCheck.position)) * Mathf.Rad2Deg) <= f_angle)
+        if ((Mathf.Acos(Vector3.Dot(t_conePoint.forward, (_t_objectToCheck.position - t_conePoint.position).normalized)) * Mathf.Rad2Deg) <= f_angle*0.5f)
+        {
             return true;
+        }
         return false;
     }
 
     protected virtual GameObject[] GetAllObjectsInCone()
     {
-        Ray r_rad = new Ray();
+        Ray r_rad = new Ray(t_conePoint.position, t_conePoint.up);
         RaycastHit[] hitObjects = Physics.SphereCastAll(r_rad, f_radius);
         List<GameObject> objInCone = new List<GameObject>();
         foreach (RaycastHit hit in hitObjects)
+        {
             if (CheckInCone(hit.transform))
                 objInCone.Add(hit.transform.gameObject);
+
+        }
         return objInCone.ToArray();
     }
 }
