@@ -12,13 +12,20 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private Scrollbar sb_bar;
     [SerializeField] private GameObject go_roomListing;
     [SerializeField] private Transform t_roomListParent;
-    
+
     private List<Listing> goL_listings = new List<Listing>();
 
     private void Start()
     {
-        sb_bar.value = 0;
+        sb_bar.value = 1;
         PhotonNetwork.ConnectUsingSettings();
+        if (PlayerPrefs.HasKey("roomName"))
+            if_gameTitleInput.text = PlayerPrefs.GetString("roomName");
+    }
+
+    public void OnNameChange()
+    {
+        PlayerPrefs.SetString("roomName", if_gameTitleInput.text);
     }
 
     public override void OnConnectedToMaster()
@@ -27,7 +34,7 @@ public class Lobby : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
-    public override void OnJoinedLobby()
+    public override void OnJoinedLobby() 
     {
         Debug.Log("joined lobby");
     }
@@ -53,6 +60,16 @@ public class Lobby : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(if_gameTitleInput.text, new RoomOptions { MaxPlayers = 4 }, TypedLobby.Default);
     }
     
+    public void OnClickQuit()
+    {
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
+    }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
