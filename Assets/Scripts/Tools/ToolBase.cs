@@ -126,7 +126,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public virtual void PlayParticles(bool val)
     {
-
+        go_particles?.SetActive(true);
     }
 
 }
