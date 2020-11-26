@@ -15,8 +15,10 @@ public class Jetpack : MobilityTool
     private float f_currentFuel;
     private bool b_isBeingUsed;
     [SerializeField] private float f_rechargeRate;
-    [SerializeField] private GameObject go_steamEffect;
+    [Space, SerializeField] private GameObject go_steamEffect;
     private bool b_isSteaming;
+    [SerializeField] private Material m_readyMat;
+    [SerializeField] private Material m_steamingMat;
 
     private void Start()
     {
@@ -84,12 +86,14 @@ public class Jetpack : MobilityTool
     {
         b_isSteaming = true;
         go_steamEffect.SetActive(true);
+        go_fuelPool.GetComponent<Renderer>().material = m_steamingMat;
     }
 
     private void EndSteaming()
     {
         b_isSteaming = false;
         go_steamEffect.SetActive(false);
+        go_fuelPool.GetComponent<Renderer>().material = m_readyMat;
     }
 
 }
