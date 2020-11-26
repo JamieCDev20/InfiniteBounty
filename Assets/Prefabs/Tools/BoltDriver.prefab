@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 8830829223539301515}
   - component: {fileID: 925497461101488345}
   - component: {fileID: -7405939618288606373}
+  - component: {fileID: 8243464051363583657}
   m_Layer: 13
   m_Name: BoltDriver
   m_TagString: Untagged
@@ -147,8 +148,8 @@ MonoBehaviour:
     f_coolDownRate: 0
     f_heatingSpeed: 0
     can_Gauge: {fileID: 0}
-  f_timeBetweenUsage: 0.7
-  ac_activationSound: {fileID: 0}
+  f_timeBetweenUsage: 0.3
+  ac_activationSound: {fileID: 8300000, guid: 8a888ffb3cd4e8641bd7d02e284c40f9, type: 3}
   ac_hitSound: {fileID: 0}
   ac_diegeticAudio: {fileID: 0}
   t_raycastPoint: {fileID: 2236180128371251105}
@@ -156,11 +157,11 @@ MonoBehaviour:
   go_particles: {fileID: 6559715803998442033}
   i_damage: 20
   i_weight: 2
-  i_lodeDamage: 20
+  i_lodeDamage: 40
   f_recoil: 2
   f_speed: 45
   f_knockback: 1
-  go_hitBox: {fileID: 6714505186059660760, guid: 28584f6847a727945aeef6508171489a,
+  go_hitBox: {fileID: 6714505186059660760, guid: 170710955e5c7cc4eaa4cff43e3d9ac7,
     type: 3}
   i_elementDamage: 0
   f_elementDuration: 0
@@ -168,8 +169,10 @@ MonoBehaviour:
   go_explosion: {fileID: 0}
   f_explosionRadius: 0
   f_explosionKnockback: 0
+  s_meleeAnim: 
+  a_playerAnims: {fileID: 0}
   b_rackUpgrade: 1
-  f_shotSpeed: 160
+  f_shotSpeed: 1000
   i_shotsPerRound: 1
   pm_physicsMat: {fileID: 0}
   t_firePoint: {fileID: 2236180128371251105}
@@ -214,6 +217,102 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!82 &8243464051363583657
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088916557946355228}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1563328246481011166
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563328246481011166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.027, z: 0.609}
+  m_LocalPosition: {x: 0, y: -0.027, z: 1.123}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4251400648211805439}
@@ -623,7 +722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4251400648211805439
 Transform:
   m_ObjectHideFlags: 0
@@ -632,7 +731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6559715803998442033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.489}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2236180128371251105}
@@ -827,8 +926,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.0878987, b: 0, a: 0.6862745}
-      maxColor: {r: 1, g: 0.0956518, b: 0, a: 1}
+      minColor: {r: 0, g: 0.46712375, b: 1, a: 0.6862745}
+      maxColor: {r: 0, g: 0.8993242, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

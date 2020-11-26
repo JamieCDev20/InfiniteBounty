@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour, IPoolable
         transform.localScale = Vector3.one;
         transform.rotation = Quaternion.identity;
         StartCoroutine(DeathTimer(f_lifeTime));
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,11 +54,16 @@ public class Bullet : MonoBehaviour, IPoolable
                 break;
         }
 
+
         go_hitEffect.SetActive(false);
         go_hitEffect.transform.parent = transform;
         go_hitEffect.transform.localPosition = Vector3.zero;
-        go_hitEffect.transform.parent = null;        
+        go_hitEffect.transform.forward = collision.contacts[0].normal;
+        go_hitEffect.transform.parent = null;
         go_hitEffect.SetActive(true);
+
+        if (tr_bulletTrail)
+            tr_bulletTrail.gameObject.transform.parent = null;
 
         transform.LookAt(collision.transform);
 
@@ -68,6 +74,13 @@ public class Bullet : MonoBehaviour, IPoolable
     {
         transform.rotation = Quaternion.LookRotation(_v_dir, Vector3.up);
         rb.AddForce(transform.forward * _f_force, ForceMode.Impulse);
+
+        if (tr_bulletTrail)
+        {
+            tr_bulletTrail.transform.parent = transform;
+            tr_bulletTrail.transform.localPosition = Vector3.zero;
+            tr_bulletTrail.Clear();
+        }
     }
     public void MoveBullet(Vector3 _v_dir, float _f_force, ForceMode fm_force)
     {
@@ -86,7 +99,7 @@ public class Bullet : MonoBehaviour, IPoolable
     {
         StopAllCoroutines();
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
-        if(tr_bulletTrail != null)
+        if (tr_bulletTrail != null)
             tr_bulletTrail.Clear();
         rb.velocity = Vector3.zero;
     }

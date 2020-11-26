@@ -15,7 +15,7 @@ public class Jetpack : MobilityTool
     private float f_currentFuel;
     private bool b_isBeingUsed;
     [SerializeField] private float f_rechargeRate;
-    [Space, SerializeField] private GameObject go_steamEffect;
+    [Space, SerializeField] private ParticleSystem ps_steamEffect;
     private bool b_isSteaming;
     [SerializeField] private Material m_readyMat;
     [SerializeField] private Material m_steamingMat;
@@ -24,6 +24,7 @@ public class Jetpack : MobilityTool
     {
         rb = transform.root.GetComponent<Rigidbody>();
         f_currentFuel = f_maxFuel;
+        EndSteaming();
     }
 
     public override void Use(Vector3 _v)
@@ -85,14 +86,14 @@ public class Jetpack : MobilityTool
     private void BecomeSteaming()
     {
         b_isSteaming = true;
-        go_steamEffect.SetActive(true);
+        ps_steamEffect.Play();
         go_fuelPool.GetComponent<Renderer>().material = m_steamingMat;
     }
 
     private void EndSteaming()
     {
         b_isSteaming = false;
-        go_steamEffect.SetActive(false);
+        ps_steamEffect.Stop();
         go_fuelPool.GetComponent<Renderer>().material = m_readyMat;
     }
 
