@@ -20,6 +20,8 @@ Material:
   disabledShaderPasses:
   - MOTIONVECTORS
   - TransparentBackface
+  - TransparentDepthPrepass
+  - TransparentDepthPostpass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -126,6 +128,8 @@ Material:
     - _SurfaceType: 0
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
+    - _TransparentDepthPostpassEnable: 0
+    - _TransparentDepthPrepassEnable: 0
     - _TransparentSortPriority: 0
     - _TransparentZWrite: 0
     - _UVSec: 0
@@ -146,6 +150,7 @@ Material:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
     - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
 --- !u!114 &9186228567673470030
 MonoBehaviour:
   m_ObjectHideFlags: 11
