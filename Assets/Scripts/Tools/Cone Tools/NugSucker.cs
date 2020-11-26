@@ -10,8 +10,7 @@ public class NugSucker : ConeTool
         ParticleSystem.ShapeModule sm = go_particles.GetComponentInChildren<ParticleSystem>().shape;
         sm.angle = f_angle * 0.5f;
         Debug.Log(sm.angle);
-        if(ac_activationSound != null)
-            AudioSource.PlayClipAtPoint(ac_activationSound, transform.position);
+        PlayAudio(ac_activationSound);
         PlayParticles(true);
         foreach(GameObject hit in GetAllObjectsInCone(_v_forwards))
         {

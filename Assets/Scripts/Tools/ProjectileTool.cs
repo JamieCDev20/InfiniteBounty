@@ -20,8 +20,7 @@ public class ProjectileTool : WeaponTool
     {
         if (!b_active)
             return;
-        if (ac_activationSound != null)
-            AudioSource.PlayClipAtPoint(ac_activationSound, transform.position);
+        PlayAudio(ac_activationSound);
         if (b_usable)
         {
             SpawnBullet(_v_forwards);

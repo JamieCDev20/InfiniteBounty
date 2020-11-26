@@ -109,6 +109,12 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         b_usable = true;
     }
 
+    public void PlayAudio(AudioClip _ac_aud)
+    {
+        if(_ac_aud != null)
+            GetComponent<AudioSource>()?.PlayOneShot(_ac_aud);
+    }
+
     public virtual void SetActive(bool val)
     {
 
