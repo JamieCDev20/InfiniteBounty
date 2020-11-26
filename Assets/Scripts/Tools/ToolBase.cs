@@ -111,7 +111,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void PlayAudio(AudioClip _ac_aud)
     {
-        if(_ac_aud != null)
+        if(_ac_aud != null && !GetComponent<AudioSource>().isPlaying)
             GetComponent<AudioSource>()?.PlayOneShot(_ac_aud);
     }
 
