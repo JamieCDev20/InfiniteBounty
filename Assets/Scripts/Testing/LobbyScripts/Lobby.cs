@@ -42,6 +42,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room!!");
+        GUI.FocusControl(null);
     }
 
     public void OnClickJoin()

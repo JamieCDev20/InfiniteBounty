@@ -19,15 +19,21 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_elementDuration;
     [SerializeField] protected float f_elementFrequency;
     [Header("Explosion Stats")]
-    [SerializeField] GameObject go_explosion;
-    [SerializeField] float f_explosionRadius;
-    [SerializeField] float f_explosionKnockback;
+    [SerializeField] protected GameObject go_explosion;
+    [SerializeField] protected float f_explosionRadius;
+    [SerializeField] protected float f_explosionKnockback;
+    #endregion
+
+    #region Serialized Privates
+    [SerializeField] private string s_meleeAnim;
+    [SerializeField] private Animator a_playerAnims;
     #endregion
 
     // Detonation is if it explodes immediately, on impact or on a timer
     #region Protected
     [SerializeField] protected bool b_rackUpgrade;
     #endregion
+
 
     #region Get/Sets
     public bool RackUpgrade { get{ return b_rackUpgrade; } set{ b_rackUpgrade = value; } }
@@ -40,6 +46,16 @@ public class WeaponTool : ToolBase
     public override void Use()
     {
 
+    }
+
+    public override void Use(Vector3 _v_forwards)
+    {
+        SetAnimBool(true);
+    }
+
+    public void SetAnimBool(bool _b_)
+    {
+        a_playerAnims.SetBool(s_meleeAnim, _b_);
     }
 
 }
