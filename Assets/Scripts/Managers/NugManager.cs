@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 public class NugManager : SubjectBase, ObserverBase
 {
-    int i_totalNugs = 0;
+    private int i_totalNugs = 0;
     /// <summary>
     /// The amount of nugs collected since last network update
     /// </summary>
-    int i_inLevelNugs = 0;
-    public int i_playerID;
+    private int i_inLevelNugs = 0;
+    private int i_playerID;
     private Text t_nugText;
     // Start is called before the first frame update
     void Start()
@@ -34,10 +34,16 @@ public class NugManager : SubjectBase, ObserverBase
 
     public void EndedLevel()
     {
-        if (!photonView.IsMine)
-            return;
-        photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
+        photonView.RPC("Bridge", RpcTarget.All);
         //SendNugs();
+    }
+
+    [PunRPC]
+    public void Bridge()
+    {
+        if (i_inLevelNugs != 0)
+            photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
+
     }
 
     public void OnNotify(ObserverEvent oe_event)
@@ -85,7 +91,7 @@ public class NugManager : SubjectBase, ObserverBase
         i_inLevelNugs = nugs;
         PlayerPrefs.SetInt($"{i_playerID}NugCount", i_inLevelNugs);
         i_inLevelNugs = 0;
-
+        CollectNugs(0);
     }
 
     public void ReceiveNugs(int _i_value)
