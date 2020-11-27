@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviourPunCallbacks
 {
+    public static EnemySpawner x;
 
     [SerializeField] private GameObject[] goA_enemiesToSpawnAtStart;
     [SerializeField] private GameObject[] goA_enemiesToSpawnDuringAWave;
@@ -17,11 +18,13 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [SerializeField] private int i_secondsBetweenWave;
     [SerializeField] private int i_enemiesPerWave;
     [SerializeField] private bool b_spawnWaveAtStart;
+    private int i_numberOfEnemies;
 
     private void Start()
     {
         if (!PhotonNetwork.IsMasterClient)
             Destroy(gameObject);
+        else x = this;
 
         for (int i = 0; i < i_enemiesAtStart; i++)
         {
@@ -45,16 +48,16 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     private void SpawnEnemyWave()
     {
         spawnCount += Time.deltaTime;
-        print("Attempting to Spawn a wave");
 
         if (spawnCount >= i_secondsBetweenWave)
         {
-            print("Have spawned a wave");
-
-            for (int i = 0; i < i_enemiesPerWave; i++)
-                SpawnEnemy(goA_enemiesToSpawnDuringAWave[0], tA_spawnPoints[Random.Range(0, tA_spawnPoints.Length)].position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
-
             spawnCount = 0;
+
+            if (i_numberOfEnemies < 20)
+            {
+                for (int i = 0; i < i_enemiesPerWave; i++)
+                    SpawnEnemy(goA_enemiesToSpawnDuringAWave[0], tA_spawnPoints[Random.Range(0, tA_spawnPoints.Length)].position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
+            }
         }
 
     }
@@ -62,7 +65,11 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     private void SpawnEnemy(GameObject toSpawn, Vector3 spawnPos)
     {
         GameObject ob = PhotonNetwork.Instantiate($"NetworkPrefabs\\{toSpawn.name}", spawnPos, Quaternion.identity);
-
+        i_numberOfEnemies++;
     }
 
+    internal void EnemyDied()
+    {
+        i_numberOfEnemies--;
+    }
 }
