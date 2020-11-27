@@ -45,6 +45,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //players go to spawn on scene load
         playerIM.GoToSpawnPoint();
         playerIM.gameObject.SetActive(true);
+        playerIM.ResetCamFollow();
     }
 
     public override void OnJoinedRoom()

@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private int i_maxHealth = 10;
     [SerializeField] private float f_healthPerSecond = 0.5f;
     [SerializeField] private float f_afterHitRegenTime = 5;
+    private CameraController cc_cam;
+    public CameraController Cam { set { cc_cam = value; } }
 
     private float i_currentHealth;
     private float f_currentCount;
@@ -72,6 +74,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     IEnumerator Dieath()
     {
         gameObject.SetActive(false);
+        PlayerInputManager newCam = FindObjectOfType<PlayerInputManager>();
+        if(newCam != null)
+            cc_cam.SetFollow(newCam.transform);
         yield return new WaitForSeconds(2);
         Die();
     }

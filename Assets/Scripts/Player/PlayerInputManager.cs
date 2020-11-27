@@ -54,6 +54,7 @@ public class PlayerInputManager : MonoBehaviour
     private PlayerAnimator animator;
     private PhotonView view;
     private NugManager nugMan;
+    private PlayerHealth ph_health;
 
     #endregion
 
@@ -63,6 +64,8 @@ public class PlayerInputManager : MonoBehaviour
     private void Awake()
     {
         Init();
+        ph_health.Cam = camControl;
+        //camControl.SetFollow(transform);
     }
 
     private void Update()
@@ -136,6 +139,7 @@ public class PlayerInputManager : MonoBehaviour
 
         nugMan = GetComponent<NugManager>();
 
+        ph_health = GetComponent<PlayerHealth>();
     }
 
     private void GetInputs()
@@ -218,7 +222,12 @@ public class PlayerInputManager : MonoBehaviour
         toolHandler.RecieveCameraTransform(camControl.transform.GetChild(0));
         animator.SetCam(camControl.transform.GetChild(0));
         nugMan.SetNugTextRef(camControl.GetNugCountText());
+        ph_health.Cam = camControl;
+    }
 
+    public void ResetCamFollow()
+    {
+        camControl.SetFollow(transform);
     }
 
     public void SetPlayerNumber(int _i_index)
