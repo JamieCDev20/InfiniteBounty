@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private CameraController cc_cam;
     public CameraController Cam { set { cc_cam = value; } }
 
+    private bool isDead;
     private float i_currentHealth;
     private float f_currentCount;
     private bool b_canRegen = true;
@@ -22,7 +23,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private void Start()
     {
         view = GetComponent<PhotonView>();
-        i_currentHealth = i_maxHealth;
+        SetMaxHealth();
     }
 
 
@@ -46,7 +47,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         if (!view.IsMine)
             return;
-        i_currentHealth -= damage;
+        i_currentHealth = Mathf.Clamp(i_currentHealth - damage, -1, i_maxHealth);
         hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
 
         if (i_currentHealth <= 0)
@@ -56,6 +57,16 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
         
+    }
+
+    public void SetMaxHealth()
+    {
+        i_currentHealth = i_maxHealth;
+    }
+
+    public bool IsDead()
+    {
+        return i_currentHealth <= 0;
     }
 
     private void Die()
@@ -73,7 +84,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     IEnumerator Dieath()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        GetComponent<Rigidbody>().isKinematic = true;
+        transform.GetChild(0).gameObject.SetActive(false);
+        GetComponent<PlayerMover>().enabled = false;
+        isDead = true;
         PlayerInputManager newCam = FindObjectOfType<PlayerInputManager>();
         if(newCam != null)
             cc_cam.SetFollow(newCam.transform);

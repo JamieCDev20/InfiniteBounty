@@ -44,7 +44,11 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         //players go to spawn on scene load
         playerIM.GoToSpawnPoint();
-        playerIM.gameObject.SetActive(true);
+        //playerIM.gameObject.SetActive(true);
+        t_thisPlayer.GetComponent<Rigidbody>().isKinematic = false;
+        t_thisPlayer.GetChild(0).gameObject.SetActive(true);
+        t_thisPlayer.GetComponent<PlayerMover>().enabled = true;
+        t_thisPlayer.GetComponent<PlayerHealth>().SetMaxHealth;
         playerIM.ResetCamFollow();
     }
 

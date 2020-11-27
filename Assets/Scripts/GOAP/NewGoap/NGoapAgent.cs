@@ -185,7 +185,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
         gameObject.SetActive(false);
         PoolManager.x.ReturnObjectToPool(gameObject);
-        EnemySpawner.x.EnemyDied();
+        EnemySpawner.x?.EnemyDied();
     }
 
     public bool IsNetworkedObject()
