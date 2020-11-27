@@ -241,6 +241,11 @@ public class PlayerInputManager : MonoBehaviour
         nameText.text = nickName;
     }
 
+    public void SyncNameOverNetwork()
+    {
+        GetComponentInChildren<TextMeshPro>().text = PhotonNetwork.NickName;
+    }
+
     public void SetCanPickUpNugs(bool val)
     {
         b_canPickUpNugs = val;

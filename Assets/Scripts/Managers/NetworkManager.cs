@@ -81,7 +81,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void TellClientToSync()
     {
-        netPlayer.SyncWeapons();
+        netPlayer.SyncInfo();
     }
 
     #endregion
