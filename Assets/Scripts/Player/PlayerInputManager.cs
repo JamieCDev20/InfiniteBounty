@@ -89,7 +89,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void NicksTemporaryChangeHead()
     {
-        print(GetID());
+        //print(GetID());
         switch (GetID())
         {
             case 0:
