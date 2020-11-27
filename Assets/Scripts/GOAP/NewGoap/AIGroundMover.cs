@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.Burst;
 
 [System.Serializable]
 public class AIGroundMover : AIMover
@@ -43,6 +44,7 @@ public class AIGroundMover : AIMover
         path = new NavMeshPath();
     }
 
+    [BurstCompile]
     public override void Move()
     {
         base.Move();
