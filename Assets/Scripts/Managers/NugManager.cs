@@ -28,12 +28,13 @@ public class NugManager : SubjectBase, ObserverBase
                 ngo.AddObserver(this);
             }
         }
-        i_playerID = GetComponent<PlayerInputManager>().GetID();
     }
 
 
     public void EndedLevel()
     {
+        i_playerID = GetComponent<PlayerInputManager>().GetID();
+
         photonView.RPC("Bridge", RpcTarget.All);
         //SendNugs();
     }
