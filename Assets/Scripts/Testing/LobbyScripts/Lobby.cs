@@ -34,6 +34,8 @@ public class Lobby : MonoBehaviourPunCallbacks
     public void OnPlayerNameChange()
     {
         PlayerPrefs.SetString("playerName", if_playerName.text);
+        PhotonNetwork.NickName = if_playerName.text;
+
     }
 
     public override void OnConnectedToMaster()
@@ -57,7 +59,6 @@ public class Lobby : MonoBehaviourPunCallbacks
     public void OnClickJoin()
     {
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
-        PhotonNetwork.NickName = if_playerName.text;
 
     }
 

@@ -237,6 +237,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         playerID = id;
         playerNickname = nickName;
+        Debug.Log($"Nickname: {nickName}");
         nameText.text = nickName;
     }
 
