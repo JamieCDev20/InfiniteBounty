@@ -114,4 +114,12 @@ public class ScoreBoardInfoSetter : MonoBehaviour
         tA_nuggetCollectedTexts[index].text = "£" + yield;
     }
 
+    private void OnDestroy()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            PlayerPrefs.DeleteKey($"{i}NugCount");
+        }
+    }
+
 }
