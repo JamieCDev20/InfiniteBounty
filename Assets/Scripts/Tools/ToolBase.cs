@@ -7,6 +7,8 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 {
     #region Private Vars
 
+    private bool b_audioable = true;
+
     #endregion
 
     #region Protected Vars
@@ -111,8 +113,14 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void PlayAudio(AudioClip _ac_aud)
     {
-        if(_ac_aud != null && !GetComponent<AudioSource>().isPlaying)
-            GetComponent<AudioSource>()?.PlayOneShot(_ac_aud);
+        if(_ac_aud != null && b_audioable)
+        {
+            AudioSource.PlayClipAtPoint(_ac_aud, transform.position);
+            b_audioable = false;
+            StartCoroutine(AudioDelay(_ac_aud.length));
+        }
+
+            
     }
 
     public virtual void SetActive(bool val)
@@ -135,4 +143,9 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         go_particles?.SetActive(val);
     }
 
+    private IEnumerator AudioDelay(float _f_audioDelay)
+    {
+        yield return new WaitForSeconds(_f_audioDelay);
+        b_audioable = true;
+    }
 }
