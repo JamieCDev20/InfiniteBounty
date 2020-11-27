@@ -88,6 +88,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         GetComponent<Rigidbody>().isKinematic = true;
         transform.GetChild(0).gameObject.SetActive(false);
         GetComponent<PlayerMover>().enabled = false;
+        GetComponent<ToolHandler>().enabled = false;
+
         isDead = true;
         PlayerInputManager newCam = FindObjectOfType<PlayerInputManager>();
         if(newCam != null)
