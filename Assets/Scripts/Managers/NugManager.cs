@@ -42,8 +42,7 @@ public class NugManager : SubjectBase, ObserverBase
     [PunRPC]
     public void Bridge()
     {
-        if (i_inLevelNugs != 0)
-            photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
+        photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
 
     }
 
@@ -89,10 +88,16 @@ public class NugManager : SubjectBase, ObserverBase
     [PunRPC]
     public void SetRemoteNugs(int nugs)
     {
-        i_inLevelNugs = nugs;
-        PlayerPrefs.SetInt($"{i_playerID}NugCount", i_inLevelNugs);
+        i_inLevelNugs += nugs;
         i_inLevelNugs = 0;
         CollectNugs(0);
+        photonView.RPC("SetPrefs", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void SetPrefs()
+    {
+        PlayerPrefs.SetInt($"{i_playerID}NugCount", i_inLevelNugs);
     }
 
     public void ReceiveNugs(int _i_value)
