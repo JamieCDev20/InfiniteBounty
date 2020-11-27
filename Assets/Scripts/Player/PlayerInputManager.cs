@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
@@ -22,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private string s_leftToolUse = "LeftTool";
     [SerializeField] private string s_rightToolUse = "RightTool";
     [SerializeField] private string s_interactButton = "Use";
+    [SerializeField] private TextMeshPro nameText;
     [Space]
     [SerializeField] private bool offline = false;
 
@@ -235,6 +237,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         playerID = id;
         playerNickname = nickName;
+        nameText.text = nickName;
     }
 
     public void SetCanPickUpNugs(bool val)
