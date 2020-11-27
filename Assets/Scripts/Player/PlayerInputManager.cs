@@ -30,6 +30,7 @@ public class PlayerInputManager : MonoBehaviour
     #region Private
 
     private int playerID;
+    private string playerNickname;
 
     private bool b_jumpPress;
     private bool b_jumpHold;
@@ -230,9 +231,10 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void SetPlayerID(int id)
+    public void SetPlayerID(int id, string nickName)
     {
         playerID = id;
+        playerNickname = nickName;
     }
 
     public void SetCanPickUpNugs(bool val)

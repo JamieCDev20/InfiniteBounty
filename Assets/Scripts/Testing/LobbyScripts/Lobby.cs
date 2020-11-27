@@ -9,6 +9,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] private InputField if_gameTitleInput;
+    [SerializeField] private InputField if_playerName;
     [SerializeField] private Scrollbar sb_bar;
     [SerializeField] private GameObject go_roomListing;
     [SerializeField] private Transform t_roomListParent;
@@ -24,9 +25,14 @@ public class Lobby : MonoBehaviourPunCallbacks
             if_gameTitleInput.text = PlayerPrefs.GetString("roomName");
     }
 
-    public void OnNameChange()
+    public void OnRoomNameChange()
     {
         PlayerPrefs.SetString("roomName", if_gameTitleInput.text);
+    }
+
+    public void OnPlayerNameChange()
+    {
+        PlayerPrefs.SetString("playerName", if_playerName.text);
     }
 
     public override void OnConnectedToMaster()
@@ -49,6 +55,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public void OnClickJoin()
     {
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
+        PhotonNetwork.NickName = if_playerName.text;
 
     }
 
