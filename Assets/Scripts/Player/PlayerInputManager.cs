@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
-
+    public static PlayerInputManager x;
     //Variables
     #region Serialised
 
@@ -23,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private string s_leftToolUse = "LeftTool";
     [SerializeField] private string s_rightToolUse = "RightTool";
     [SerializeField] private string s_interactButton = "Use";
+    [SerializeField] private string s_pauseButton = "Pause";
     [SerializeField] private TextMeshPro nameText;
     [Space]
     [SerializeField] private bool offline = false;
@@ -42,6 +43,7 @@ public class PlayerInputManager : MonoBehaviour
     private bool b_sprintRelease;
 
     private bool b_canPickUpNugs;
+    private bool b_pausePressed;
 
     private ToolBools toolBools;
 
@@ -81,6 +83,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Start()
     {
+        x = this;
         NicksTemporaryChangeHead();
     }
 
@@ -169,6 +172,8 @@ public class PlayerInputManager : MonoBehaviour
         toolBools.b_RToolHold = Input.GetButton(s_rightToolUse);
         toolBools.b_RToolUp = Input.GetButtonUp(s_rightToolUse);
 
+        b_pausePressed = Input.GetButtonDown(s_pauseButton);
+
         if (Input.GetButtonDown(s_interactButton))
             Interact();
 
@@ -245,9 +250,14 @@ public class PlayerInputManager : MonoBehaviour
     public void SetPlayerID(int id, string nickName)
     {
         playerID = id;
-        playerNickname = nickName;
-        Debug.Log($"Nickname: {nickName}");
-        nameText.text = nickName;
+
+        if (id == 0)
+            playerNickname = nickName + " (Host)";
+        else
+            playerNickname = nickName;
+
+        //Debug.Log($"Nickname: {playerNickname} / {id}");
+        nameText.text = playerNickname;
     }
 
     public void SyncNameOverNetwork()
@@ -288,6 +298,11 @@ public class PlayerInputManager : MonoBehaviour
     public bool CanPickUpNugs()
     {
         return b_canPickUpNugs;
+    }
+
+    public bool GetIsPaused()
+    {
+        return b_pausePressed;
     }
 
     #endregion
