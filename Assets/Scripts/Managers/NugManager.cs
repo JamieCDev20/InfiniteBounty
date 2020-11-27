@@ -35,7 +35,7 @@ public class NugManager : SubjectBase, ObserverBase
     {
         i_playerID = GetComponent<PlayerInputManager>().GetID();
 
-        photonView.RPC("Bridge", RpcTarget.All);
+        photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
         //SendNugs();
     }
 
@@ -90,7 +90,7 @@ public class NugManager : SubjectBase, ObserverBase
     {
         i_inLevelNugs += nugs;
         CollectNugs(0);
-        photonView.RPC("SetPrefs", RpcTarget.All);
+        SetPrefs();
     }
 
     [PunRPC]
