@@ -44,8 +44,9 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         else
         {
+            PhotonNetwork.Instantiate(goA_toSpawnOnStart[0].name, Vector3.zero, Quaternion.identity);
             //spawn all managers
-            for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
+            for (int i = 1; i < goA_toSpawnOnStart.Length; i++)
             {
                 Instantiate(goA_toSpawnOnStart[i]);
             }
