@@ -9,13 +9,24 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] private Canvas c_playCanvas;
     [SerializeField] private Canvas c_pauseCanvas;
     [SerializeField] private Canvas c_optionsMenu;
-
+    private bool b_isPaused;
 
     private void Start()
     {
         c_optionsMenu.enabled = false;
         c_pauseCanvas.enabled = false;
-        c_playCanvas.enabled = true;        
+        c_playCanvas.enabled = true;
+    }
+
+    private void Update()
+    {
+        if (PlayerInputManager.x.GetIsPaused())
+        {
+            if (!b_isPaused)
+                Pause();
+            else
+                Resume();
+        }
     }
 
     public void Resume()
@@ -24,6 +35,7 @@ public class PauseMenuController : MonoBehaviour
         c_playCanvas.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         Debug.LogError("Should've resumed, but I don't know how");
     }
 
@@ -33,6 +45,7 @@ public class PauseMenuController : MonoBehaviour
         c_pauseCanvas.enabled = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
         Debug.LogError("Should've paused, but I don't know how");
     }
 
@@ -63,4 +76,5 @@ public class PauseMenuController : MonoBehaviour
     }
 
     #endregion
+
 }
