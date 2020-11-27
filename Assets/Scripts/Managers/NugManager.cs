@@ -89,7 +89,6 @@ public class NugManager : SubjectBase, ObserverBase
     public void SetRemoteNugs(int nugs)
     {
         i_inLevelNugs += nugs;
-        i_inLevelNugs = 0;
         CollectNugs(0);
         photonView.RPC("SetPrefs", RpcTarget.All);
     }
