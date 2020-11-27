@@ -8,8 +8,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 {
 
     [SerializeField] private int i_maxHealth = 10;
+    [SerializeField] private float f_healthPerSecond = 0.5f;
+    [SerializeField] private float f_afterHitRegenTime = 5;
 
-    private int i_currentHealth;
+    private float i_currentHealth;
+    private float f_currentCount;
+    private bool b_canRegen = true;
     private PhotonView view;
     internal HUDController hudControl;
 
@@ -20,10 +24,21 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     }
 
 
-    /*private void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) TakeDamage(1);
-    }*/
+
+        if (b_canRegen)
+        {
+            i_currentHealth = Mathf.Clamp(i_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
+        }
+        else
+        {
+            f_currentCount -= Time.deltaTime;
+            if (f_currentCount <= 0)
+                b_canRegen = true;
+        }
+
+    }
 
     public void TakeDamage(int damage)
     {
@@ -36,7 +51,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         {
             StartCoroutine(Dieath());
         }
-
+        b_canRegen = false;
+        f_currentCount = f_afterHitRegenTime;
+        
     }
 
     private void Die()
