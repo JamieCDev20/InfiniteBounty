@@ -73,7 +73,46 @@ public class PlayerInputManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        NicksTemporaryChangeHead();
+    }
+
     #endregion
+
+    #region Nick's Temporary Change Head Stuff
+
+    [Header("Face Things")]
+    [SerializeField] private GameObject[] goA_firstHead = new GameObject[0];
+    [SerializeField] private GameObject[] goA_secondHead = new GameObject[0];
+
+    private void NicksTemporaryChangeHead()
+    {
+        print(GetID());
+        switch (GetID())
+        {
+            case 0:
+                for (int i = 0; i < goA_firstHead.Length; i++)
+                    goA_firstHead[i].SetActive(true);
+                break;
+            case 1:
+                for (int i = 0; i < goA_secondHead.Length; i++)
+                    goA_secondHead[i].SetActive(true);
+                break;
+            case 2:
+                for (int i = 0; i < goA_firstHead.Length; i++)
+                    goA_firstHead[i].SetActive(true);
+                break;
+            case 3:
+                for (int i = 0; i < goA_secondHead.Length; i++)
+                    goA_secondHead[i].SetActive(true);
+                break;
+
+        }
+    }
+
+    #endregion
+
 
     #region Private Voids
 
