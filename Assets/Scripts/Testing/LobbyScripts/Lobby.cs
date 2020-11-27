@@ -19,6 +19,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         sb_bar.value = 1;
         //PhotonNetwork.ConnectUsingSettings();
+        
         if (PlayerPrefs.HasKey("roomName"))
             if_gameTitleInput.text = PlayerPrefs.GetString("roomName");
     }
@@ -42,7 +43,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room!!");
-        GUI.FocusControl(null);
+        if_gameTitleInput.interactable = false;
     }
 
     public void OnClickJoin()
