@@ -68,8 +68,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         view.ObservedComponents.Add(this);
 
 
-        view.RPC("JoinedRoom", RpcTarget.Others);
         view.RPC("SetPlayerID", RpcTarget.All, playerInfo.playerID, PhotonNetwork.NickName);
+        view.RPC("JoinedRoom", RpcTarget.Others);
 
         //set player pos, cam and IM
         t_thisPlayer = player.transform;
