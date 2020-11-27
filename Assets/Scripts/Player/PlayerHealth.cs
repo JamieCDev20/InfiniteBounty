@@ -48,7 +48,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         if (!view.IsMine)
             return;
-        AudioSource.PlayClipAtPoint(acA_hurtClips[acA_hurtClips.Length], transform.position);
+        if (acA_hurtClips.Length > 0)
+            AudioSource.PlayClipAtPoint(acA_hurtClips[acA_hurtClips.Length], transform.position);
         i_currentHealth = Mathf.Clamp(i_currentHealth - damage, -1, i_maxHealth);
         hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
 
@@ -58,7 +59,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         }
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
-        
+
     }
 
     public void SetMaxHealth()
@@ -95,7 +96,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         isDead = true;
         NetworkManager.x.PlayerDied();
         PlayerInputManager newCam = FindObjectOfType<PlayerInputManager>();
-        if(newCam != null)
+        if (newCam != null)
             cc_cam.SetFollow(newCam.transform);
         yield return new WaitForSeconds(2);
         Die();

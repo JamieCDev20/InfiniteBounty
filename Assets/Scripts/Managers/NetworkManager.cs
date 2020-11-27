@@ -86,11 +86,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LoadLevel(string levelName)
     {
-        PhotonNetwork.LoadLevel(name);
+        PhotonNetwork.LoadLevel(levelName);
     }
 
     [PunRPC]
-    public void HostLevelLoad(string name)
+    public void HostLevelLoad(string _name)
     {
         if (!PhotonNetwork.IsMasterClient)
             return;

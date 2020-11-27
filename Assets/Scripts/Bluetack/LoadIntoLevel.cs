@@ -45,7 +45,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void Interacted()
     {
-        LoadLevel(NuggetRunName);
+        PhotonNetwork.LoadLevel(NuggetRunName);
     }
 
     public void Interacted(Transform interactor)
