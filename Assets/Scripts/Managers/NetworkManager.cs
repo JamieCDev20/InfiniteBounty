@@ -86,7 +86,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LoadLevel(string levelName)
     {
-        photonView.RPC("HostLevelLoad", RpcTarget.AllViaServer, levelName);
+        PhotonNetwork.LoadLevel(name);
     }
 
     [PunRPC]
@@ -94,7 +94,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
-        PhotonNetwork.LoadLevel(name);
 
     }
 

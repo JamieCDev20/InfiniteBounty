@@ -93,6 +93,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         GetComponent<ToolHandler>().enabled = false;
 
         isDead = true;
+        NetworkManager.x.PlayerDied();
         PlayerInputManager newCam = FindObjectOfType<PlayerInputManager>();
         if(newCam != null)
             cc_cam.SetFollow(newCam.transform);
