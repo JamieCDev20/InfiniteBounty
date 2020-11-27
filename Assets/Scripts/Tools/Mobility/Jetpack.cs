@@ -20,10 +20,16 @@ public class Jetpack : MobilityTool
     [SerializeField] private Material m_readyMat;
     [SerializeField] private Material m_steamingMat;
 
+    [Header("Jetpack Sound")]
+    [SerializeField] private AudioClip ac_steamingSound;
+    private AudioSource as_source;
+
     private void Start()
     {
         rb = transform.root.GetComponent<Rigidbody>();
         f_currentFuel = f_maxFuel;
+        as_source = GetComponent<AudioSource>();
+        as_source.clip = ac_activationSound;
         EndSteaming();
     }
 
@@ -73,6 +79,16 @@ public class Jetpack : MobilityTool
         {
             b_isBeingUsed = false;
             f_timeHeld = 0;
+            if (as_source.clip == ac_activationSound)
+                as_source.Stop();
+        }
+        else
+        {
+            if (!as_source.isPlaying)
+            {
+                as_source.clip = ac_activationSound;
+                as_source.Play();
+            }
         }
     }
 
@@ -87,6 +103,10 @@ public class Jetpack : MobilityTool
         b_isSteaming = true;
         ps_steamEffect.Play();
         go_fuelPool.GetComponent<Renderer>().material = m_steamingMat;
+
+        as_source.Stop();
+        as_source.clip = ac_steamingSound;
+        as_source.Play();
     }
 
     private void EndSteaming()
@@ -94,6 +114,8 @@ public class Jetpack : MobilityTool
         b_isSteaming = false;
         ps_steamEffect.Stop();
         go_fuelPool.GetComponent<Renderer>().material = m_readyMat;
+
+        as_source.clip = ac_activationSound;
     }
 
 }

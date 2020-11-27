@@ -13,6 +13,15 @@ public class Lunchbox : MobilityTool
     private bool b_isOpen;
     [SerializeField] private Transform[] tA_sandWichFirePoints = new Transform[4];
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip ac_closingSound;
+    private AudioSource as_source;
+
+    private void Start()
+    {
+        as_source = GetComponent<AudioSource>();
+    }
+
     private void Update()
     {
         if (b_isOpen)
@@ -25,6 +34,7 @@ public class Lunchbox : MobilityTool
     private void CloseLid()
     {
         go_lidObject.transform.localEulerAngles = Vector3.zero;
+        as_source.PlayOneShot(ac_closingSound);
         b_isOpen = false;
     }
 
@@ -38,6 +48,7 @@ public class Lunchbox : MobilityTool
                 _go_sandwich.GetComponent<Rigidbody>().AddForce(tA_sandWichFirePoints[i].transform.forward, ForceMode.Impulse);
             }
             go_lidObject.transform.localEulerAngles = v_lidOpenRotation;
+            as_source.PlayOneShot(ac_activationSound);
 
             f_coolDown = f_timeBetweenUsage;
             b_isOpen = true;
