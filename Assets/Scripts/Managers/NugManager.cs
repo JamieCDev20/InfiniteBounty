@@ -18,7 +18,7 @@ public class NugManager : SubjectBase, ObserverBase
     void Start()
     {
 
-        SceneManager.sceneLoaded += OnSceneLoad;
+        //SceneManager.sceneLoaded += OnSceneLoad;
 
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
         {
@@ -32,7 +32,7 @@ public class NugManager : SubjectBase, ObserverBase
     }
 
 
-    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    public void EndedLevel()
     {
         if (!photonView.IsMine)
             return;

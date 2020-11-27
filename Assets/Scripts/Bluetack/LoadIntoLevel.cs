@@ -57,6 +57,12 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void ReturnToShip()
     {
+
+        foreach (NugManager n in FindObjectsOfType<NugManager>())
+        {
+            n.EndedLevel();
+        }
+
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.LoadLevel(LobbySceneName);
     }
