@@ -20,7 +20,8 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         sb_bar.value = 1;
         //PhotonNetwork.ConnectUsingSettings();
-        
+        if (PlayerPrefs.HasKey("playerName"))
+            if_playerName.text = PlayerPrefs.GetString("playerName");
         if (PlayerPrefs.HasKey("roomName"))
             if_gameTitleInput.text = PlayerPrefs.GetString("roomName");
     }
