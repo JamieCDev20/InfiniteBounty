@@ -16,7 +16,12 @@ public class Teleporter : MobilityTool
     [SerializeField] private Material redMat;
     [SerializeField] private Material greenMat;
     [SerializeField] private Renderer lightRenderer;
+    private AudioSource as_source;
 
+    private void Start()
+    {
+        as_source = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -38,6 +43,7 @@ public class Teleporter : MobilityTool
 
             StartCoroutine(DoTheTeleport(_v_lookDirection));
 
+            as_source.PlayOneShot(ac_activationSound);
         }
     }
 
@@ -70,6 +76,8 @@ public class Teleporter : MobilityTool
         go_chargeEffects.SetActive(true);
         lightRenderer.material = greenMat;
         b_isActive = true;
+
+        as_source.PlayOneShot(ac_hitSound);
     }
 
     private void BeginCooldown()
