@@ -63,28 +63,8 @@ public class CameraController : MonoBehaviour
 
     private void Follow()
     {
-        /*  if (pim_inputs.GetToolBools().b_LToolHold || pim_inputs.GetToolBools().b_RToolHold)
-          {
-              f_firingTime += Time.deltaTime;
-              if (f_firingTime > 0.17f)
-              {
-                  if (pim_inputs.GetToolBools().b_LToolHold && pim_inputs.GetToolBools().b_RToolHold)
-                      transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + v_firingBothOffset, f_cameraLerpFiring);
-
-                  else if (pim_inputs.GetToolBools().b_LToolHold)
-                      transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_leftWardOffset), f_cameraLerpFiring);
-
-                  else if (pim_inputs.GetToolBools().b_RToolHold)
-                      transform.position = Vector3.Lerp(transform.position, t_follow.position + v_offset + (transform.right * f_rightWardOffset), f_cameraLerpFiring);
-              }
-              else
-                  transform.position = t_follow.position + v_offset;
-          }
-          else
-          {*/
         transform.position = t_follow.position + v_offset;
-        f_firingTime = 0;
-        //}
+
     }
 
     private void Look()
@@ -106,6 +86,7 @@ public class CameraController : MonoBehaviour
     public void SetFollow(Transform _t_newFollow)
     {
         t_follow = _t_newFollow;
+        t_follow.GetComponentInChildren<Billboard>()?.gameObject.SetActive(false);
     }
     public void SetFollow(Transform _t_newFollow, Vector3 _v_newOffset)
     {
@@ -121,6 +102,7 @@ public class CameraController : MonoBehaviour
     public void SetPIM(PlayerInputManager _pim_newPIM)
     {
         pim_inputs = _pim_newPIM;
+
     }
 
     #endregion
