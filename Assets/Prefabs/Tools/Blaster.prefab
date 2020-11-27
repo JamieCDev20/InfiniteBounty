@@ -252,8 +252,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0, b: 0, a: 0}
-      maxColor: {r: 1, g: 0, b: 0, a: 1}
+      minColor: {r: 1, g: 0.976174, b: 0, a: 0}
+      maxColor: {r: 1, g: 0.57489336, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2106,7 +2106,7 @@ ParticleSystem:
         m_RotationOrder: 4
     speedModifier:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -2122,13 +2122,13 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          time: 0.21588686
+          value: 0
+          inSlope: -33.413395
+          outSlope: -33.413395
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.075475626
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -4980,7 +4980,7 @@ MonoBehaviour:
   s_meleeAnim: 
   a_playerAnims: {fileID: 0}
   b_rackUpgrade: 0
-  f_shotSpeed: 150
+  f_shotSpeed: 450
   i_shotsPerRound: 1
   pm_physicsMat: {fileID: 0}
   t_firePoint: {fileID: 8694590336160786432}
