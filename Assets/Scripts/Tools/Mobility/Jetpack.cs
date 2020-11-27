@@ -10,6 +10,7 @@ public class Jetpack : MobilityTool
     private Rigidbody rb;
     [SerializeField] private AnimationCurve ac_jetPackForce;
     private float f_timeHeld;
+    [SerializeField] private float f_yVelocityKickStart;
     [Space, SerializeField] private GameObject go_fuelPool;
     [SerializeField] private float f_maxFuel;
     private float f_currentFuel;
@@ -40,7 +41,7 @@ public class Jetpack : MobilityTool
             if (!b_isSteaming)
             {
                 b_isBeingUsed = true;
-                rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(rb.velocity.x, rb.velocity.y + (f_force * ac_jetPackForce.Evaluate(f_timeHeld) * Time.deltaTime), rb.velocity.z), 0.3f);
+                rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(rb.velocity.x, f_yVelocityKickStart + (f_force * ac_jetPackForce.Evaluate(f_timeHeld) * Time.deltaTime), rb.velocity.z), 0.3f);
                 PlayParticles(true);
                 f_timeHeld += Time.deltaTime;
 
