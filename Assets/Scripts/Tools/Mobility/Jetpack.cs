@@ -56,7 +56,6 @@ public class Jetpack : MobilityTool
         {
             if (f_currentFuel < f_maxFuel)
             {
-                print("Regaining fuel");
                 f_currentFuel += Time.deltaTime * f_rechargeRate;
                 UpdateFuelMeter();
             }
