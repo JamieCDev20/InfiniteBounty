@@ -34,7 +34,7 @@ public class Jetpack : MobilityTool
             if (!b_isSteaming)
             {
                 b_isBeingUsed = true;
-                rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(rb.velocity.x, f_force * ac_jetPackForce.Evaluate(f_timeHeld) * Time.deltaTime, rb.velocity.z), 0.3f);
+                rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(rb.velocity.x, f_force * ac_jetPackForce.Evaluate(f_timeHeld), rb.velocity.z) * Time.deltaTime, 0.3f);
                 PlayParticles(true);
                 f_timeHeld += Time.deltaTime;
 
