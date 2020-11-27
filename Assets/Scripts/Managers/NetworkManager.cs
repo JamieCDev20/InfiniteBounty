@@ -84,6 +84,30 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         netPlayer.SyncInfo();
     }
 
+    public void LoadLevel(string levelName)
+    {
+        photonView.RPC("HostLevelLoad", RpcTarget.AllViaServer, levelName);
+    }
+
+    [PunRPC]
+    public void HostLevelLoad(string name)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+        PhotonNetwork.LoadLevel(name);
+
+    }
+
+    public void PlayerDied()
+    {
+        foreach (PlayerHealth h in FindObjectsOfType<PlayerHealth>())
+        {
+            if (!h.IsDead())
+                return;
+        }
+        LoadLevel("LobbyScene");
+    }
+
     #endregion
 
     #region Private Returns

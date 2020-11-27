@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private int i_maxHealth = 10;
     [SerializeField] private float f_healthPerSecond = 0.5f;
     [SerializeField] private float f_afterHitRegenTime = 5;
+    [SerializeField] private AudioClip[] acA_hurtClips;
     private CameraController cc_cam;
     public CameraController Cam { set { cc_cam = value; } }
 
@@ -47,6 +48,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         if (!view.IsMine)
             return;
+        AudioSource.PlayClipAtPoint(acA_hurtClips[acA_hurtClips.Length], transform.position);
         i_currentHealth = Mathf.Clamp(i_currentHealth - damage, -1, i_maxHealth);
         hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
 

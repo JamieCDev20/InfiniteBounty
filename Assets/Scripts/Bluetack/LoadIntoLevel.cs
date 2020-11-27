@@ -34,9 +34,9 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     #region Private Voids
 
-    private void LoadLevel()
+    private void LoadLevel(string levelname)
     {
-        PhotonNetwork.LoadLevel(NuggetRunName);
+        NetworkManager.x.LoadLevel(levelname);
     }
 
     #endregion
@@ -45,7 +45,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void Interacted()
     {
-        LoadLevel();
+        LoadLevel(NuggetRunName);
     }
 
     public void Interacted(Transform interactor)
@@ -63,8 +63,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
             n.EndedLevel();
         }
 
-        if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel(LobbySceneName);
+        LoadLevel(LobbySceneName);
     }
 
     #endregion
