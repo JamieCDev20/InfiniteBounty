@@ -77,11 +77,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (!view.IsMine)
             return;
 
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-         Application.Quit();
-#endif
+        PhotonNetwork.LoadLevel("LobbyScene");
 
     }
 
