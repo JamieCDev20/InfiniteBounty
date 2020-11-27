@@ -22,13 +22,49 @@ public class NugManager : SubjectBase, ObserverBase
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
         {
             NugGO ngo = np.GetComponent<NugGO>();
-            if(ngo != null)
+            if (ngo != null)
             {
                 ngo.AddObserver(this);
             }
         }
         i_playerID = GetComponent<PlayerInputManager>().GetID();
+
+        NicksTemporaryChangeHead();
     }
+
+    #region Nick's Temporary Change Head Stuff
+
+    [Header("Face Things")]
+    [SerializeField] private GameObject[] goA_firstHead = new GameObject[0];
+    [SerializeField] private GameObject[] goA_secondHead = new GameObject[0];
+
+    private void NicksTemporaryChangeHead()
+    {
+        print(NetworkedPlayer.x.PlayerID);
+        switch (NetworkedPlayer.x.PlayerID)
+        {
+            case 0:
+                for (int i = 0; i < goA_firstHead.Length; i++)
+                    goA_firstHead[i].SetActive(true);
+                break;
+            case 1:
+                for (int i = 0; i < goA_secondHead.Length; i++)
+                    goA_secondHead[i].SetActive(true);
+                break;
+            case 2:
+                for (int i = 0; i < goA_firstHead.Length; i++)
+                    goA_firstHead[i].SetActive(true);
+                break;
+            case 3:
+                for (int i = 0; i < goA_secondHead.Length; i++)
+                    goA_secondHead[i].SetActive(true);
+                break;
+
+        }
+    }
+
+    #endregion
+
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
@@ -64,12 +100,12 @@ public class NugManager : SubjectBase, ObserverBase
             return;
         i_currentNugs += _i_value;
         i_nugsCollected += _i_value;
-            t_nugText.text = i_currentNugs.ToString();
+        t_nugText.text = i_currentNugs.ToString();
     }
     public void SendNugs()
     {
         // Send Total nugs and nugs collected
-        
+
         // Send nugs
         i_nugsCollected = 0;
     }
@@ -77,7 +113,7 @@ public class NugManager : SubjectBase, ObserverBase
     {
         i_currentNugs += _i_value;
     }
-    
+
     public void SetNugTextRef(Text _txt_)
     {
         t_nugText = _txt_;

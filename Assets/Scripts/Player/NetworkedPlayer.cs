@@ -9,7 +9,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 {
 
     public static NetworkedPlayer x;
-    
+
     private Vector3 v_spawnPoint;
     [SerializeField]
     private PlayerInfo playerInfo;
@@ -21,6 +21,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     private List<string> dataToSend = new List<string>();
     private int wepSync = 0;
+
+
 
     private void Start()
     {
@@ -34,6 +36,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoad;
     }
+
+
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
