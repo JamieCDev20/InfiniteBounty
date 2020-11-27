@@ -27,7 +27,7 @@ public class HUDController : MonoBehaviour
         //print((float)_i_currentHealth / _i_maxHealth + "/" + Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count));
         //i_faceBackgroundImage.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
 
-        rt_healthBar.localScale = new Vector3((_i_currentHealth / _i_currentHealth), 1, 1);
+        rt_healthBar.localScale = new Vector3((float)(_i_currentHealth / _i_currentHealth), 1, 1);
         i_faceImage.sprite = sA_faceSprites[Mathf.Clamp(Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count), 0, 4)];
     }
 

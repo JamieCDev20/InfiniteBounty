@@ -44,7 +44,6 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody rb;
     private Transform t_camTransform;
     private PhotonView view;
-    private int i_timesJumpedOff;    
 
     #endregion
 
@@ -83,7 +82,7 @@ public class PlayerMover : MonoBehaviour
     }
 
     #endregion
-    
+
     #region Private Voids
 
     /// <summary>
@@ -155,30 +154,15 @@ public class PlayerMover : MonoBehaviour
 
     private void ResetIfOffMap()
     {
-
         if (transform.position.y < -25)
         {
-            if (i_timesJumpedOff < 4)
-            {
-                transform.position = v_startPos + (Vector3.up);// * 5);
-                i_timesJumpedOff++;
-            }
-            else
-            {
-                rb.isKinematic = true;
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-             Invoke("Quit", 3);
-#endif
-            }
+            transform.position = v_startPos + (Vector3.up);// * 5);                      
         }
-
     }
 
     internal void SetHUDController(HUDController _HUDController)
     {
-       GetComponent<PlayerHealth>().hudControl = _HUDController;
+        GetComponent<PlayerHealth>().hudControl = _HUDController;
     }
 
     private void Quit()
@@ -237,7 +221,7 @@ public class PlayerMover : MonoBehaviour
     {
         RaycastHit hit;
         Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.5f);
-        if(hit.collider != null)
+        if (hit.collider != null)
         {
             b_applyGravity = hit.distance > 0.15f;
             v_groundNormal = hit.normal;
