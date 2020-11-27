@@ -16,6 +16,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private Transform t_thisPlayer;
     private PlayerInputManager playerIM;
     private ToolHandler handler;
+    private PhotonView view;
 
     public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
@@ -60,7 +61,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         GameObject player = PhotonNetwork.Instantiate("NetworkPrefabs/" + playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
         t_thisPlayer = player.transform;
 
-        PhotonView view = player.GetComponent<PhotonView>();
+        view = player.GetComponent<PhotonView>();
 
         handler = player.GetComponent<ToolHandler>();
 
@@ -84,7 +85,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         //sync weapons for when new player joins
         handler.SyncToolOverNetwork();
-        playerIM.SyncNameOverNetwork();
+        view.RPC("SyncNameOverNetwork", RpcTarget.Others);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

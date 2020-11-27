@@ -241,6 +241,7 @@ public class PlayerInputManager : MonoBehaviour
         nameText.text = nickName;
     }
 
+    [PunRPC]
     public void SyncNameOverNetwork()
     {
         GetComponentInChildren<TextMeshPro>().text = PhotonNetwork.NickName;
