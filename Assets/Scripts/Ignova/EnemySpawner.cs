@@ -64,7 +64,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private void SpawnEnemy(GameObject toSpawn, Vector3 spawnPos)
     {
-        GameObject ob = PoolManager.x.SpawnObject(toSpawn, spawnPos, Quaternion.identity);
+        //GameObject ob = PoolManager.x.SpawnObject(toSpawn, spawnPos, Quaternion.identity);
+        GameObject ob = PhotonNetwork.Instantiate(toSpawn.name, spawnPos, Quaternion.identity);
         i_numberOfEnemies++;
     }
 
