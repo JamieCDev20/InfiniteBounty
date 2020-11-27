@@ -1449,7 +1449,7 @@ namespace Photon.Pun
             {
 
                 int key = removeKeys[index];
-                Debug.LogError("NewScene Clean " + key);
+                //Debug.LogError("NewScene Clean " + key);
                 photonViewList.Remove(key);
             }
 
