@@ -229,6 +229,12 @@ public class PlayerInputManager : MonoBehaviour
         NetworkManager.x.TellClientToSync();
     }
 
+    [PunRPC]
+    public void SetPlayerID(int id)
+    {
+        playerID = id;
+    }
+
     public void SetCanPickUpNugs(bool val)
     {
         b_canPickUpNugs = val;
