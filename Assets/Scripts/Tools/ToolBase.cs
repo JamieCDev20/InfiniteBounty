@@ -142,10 +142,4 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     {
         go_particles?.SetActive(val);
     }
-
-    private IEnumerator AudioDelay(float _f_audioDelay)
-    {
-        yield return new WaitForSeconds(_f_audioDelay);
-        b_audioable = true;
-    }
 }
