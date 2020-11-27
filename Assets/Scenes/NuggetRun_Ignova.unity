@@ -3535,8 +3535,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d291cda654dd0147a6077f82bcc4c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goA_enemy:
-  - {fileID: 3893965790758993077, guid: d49f46863ef19464a9aa54e825406977, type: 3}
+  goA_enemiesToSpawnAtStart:
+  - {fileID: 3893965790758993077, guid: 43733e73a8478b447872e96d752b3b83, type: 3}
+  goA_enemiesToSpawnDuringAWave:
+  - {fileID: 3893965790758993077, guid: 7d85fb0ebab24e048a53b76216748d82, type: 3}
   tA_spawnPoints:
   - {fileID: 3997563}
   - {fileID: 1583002743}
@@ -3591,7 +3593,10 @@ MonoBehaviour:
   - {fileID: 354985262}
   - {fileID: 743849053}
   - {fileID: 773913544}
-  f_timeBetweenSpawns: 1.5
+  i_enemiesAtStart: 10
+  i_secondsBetweenWave: 10
+  i_enemiesPerWave: 10
+  b_spawnWaveAtStart: 1
 --- !u!4 &2089458427
 Transform:
   m_ObjectHideFlags: 0
