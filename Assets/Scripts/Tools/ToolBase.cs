@@ -63,24 +63,6 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
         {
-            //th.CallSwapTool((ToolSlot)_i_purchaseParams[1], i_toolId);
-
-            switch (_sh_shopRef)
-            {
-                case ToolRack tr:
-                    switch (this)
-                    {
-                        case WeaponTool wt:
-                            //i_rackId = tr.RemoveFromRack(RackID, true);
-                            break;
-                        case MobilityTool mt:
-                            //i_rackId = tr.RemoveFromRack(RackID, false);
-                            break;
-                    }
-                    break;
-            }
-
-            //_sh_shopRef.RemoveFromDisplay(this);
             b_purchased = true;
             t_cam = _t_camera;
         }
