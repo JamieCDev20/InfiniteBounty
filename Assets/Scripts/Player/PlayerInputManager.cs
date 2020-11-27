@@ -241,10 +241,15 @@ public class PlayerInputManager : MonoBehaviour
         nameText.text = nickName;
     }
 
-    [PunRPC]
     public void SyncNameOverNetwork()
     {
-        GetComponentInChildren<TextMeshPro>().text = playerNickname;
+        view.RPC("SetName", RpcTarget.Others, PhotonNetwork.NickName);
+    }
+
+    [PunRPC]
+    public void SetName(string _Name)
+    {
+        GetComponentInChildren<TextMeshPro>().text = _Name;
     }
 
     public void SetCanPickUpNugs(bool val)

@@ -85,7 +85,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         //sync weapons for when new player joins
         handler.SyncToolOverNetwork();
-        view.RPC("SyncNameOverNetwork", RpcTarget.Others);
+        playerIM.SyncNameOverNetwork();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
