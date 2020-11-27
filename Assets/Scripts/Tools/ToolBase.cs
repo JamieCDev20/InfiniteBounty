@@ -113,11 +113,11 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void PlayAudio(AudioClip _ac_aud)
     {
-        if(_ac_aud != null && b_audioable)
+        if(_ac_aud != null && !GetComponent<AudioSource>().isPlaying)
         {
-            AudioSource.PlayClipAtPoint(_ac_aud, transform.position);
-            b_audioable = false;
-            StartCoroutine(AudioDelay(_ac_aud.length));
+            AudioSource ass = GetComponent<AudioSource>();
+            ass.clip = _ac_aud;
+            ass.Play();
         }
 
             
