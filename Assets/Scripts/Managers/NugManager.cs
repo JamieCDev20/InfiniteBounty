@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,18 +7,18 @@ using UnityEngine.UI;
 
 public class NugManager : SubjectBase, ObserverBase
 {
-    int i_currentNugs = 0;
+    int i_totalNugs = 0;
     /// <summary>
     /// The amount of nugs collected since last network update
     /// </summary>
-    int i_nugsCollected = 0;
+    int i_inLevelNugs = 0;
     public int i_playerID;
     private Text t_nugText;
     // Start is called before the first frame update
     void Start()
     {
 
-        //SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneLoaded += OnSceneLoad;
 
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
         {
@@ -33,8 +34,10 @@ public class NugManager : SubjectBase, ObserverBase
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        PlayerPrefs.SetInt($"{i_playerID}NugCount", i_currentNugs);
-        SendNugs();
+        if (!photonView.IsMine)
+            return;
+        photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
+        //SendNugs();
     }
 
     public void OnNotify(ObserverEvent oe_event)
@@ -63,20 +66,31 @@ public class NugManager : SubjectBase, ObserverBase
     {
         if (t_nugText == null)
             return;
-        i_currentNugs += _i_value;
-        i_nugsCollected += _i_value;
-        t_nugText.text = i_currentNugs.ToString();
+        i_totalNugs += _i_value;
+        i_inLevelNugs += _i_value;
+        t_nugText.text = i_totalNugs.ToString();
     }
     public void SendNugs()
     {
         // Send Total nugs and nugs collected
 
         // Send nugs
-        i_nugsCollected = 0;
+        ReceiveNugs(i_inLevelNugs);
+
     }
+
+    [PunRPC]
+    public void SetRemoteNugs(int nugs)
+    {
+        i_inLevelNugs = nugs;
+        PlayerPrefs.SetInt($"{i_playerID}NugCount", i_inLevelNugs);
+        i_inLevelNugs = 0;
+
+    }
+
     public void ReceiveNugs(int _i_value)
     {
-        i_currentNugs += _i_value;
+        i_totalNugs += _i_value;
     }
 
     public void SetNugTextRef(Text _txt_)
