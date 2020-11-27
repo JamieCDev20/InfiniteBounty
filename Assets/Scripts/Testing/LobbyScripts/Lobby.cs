@@ -51,6 +51,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         Debug.Log("Joined a room!!");
         if_gameTitleInput.interactable = false;
+        if_playerName.interactable = false;
     }
 
     public void OnClickJoin()
