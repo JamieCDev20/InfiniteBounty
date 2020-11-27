@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.33333853, g: 0.49926066, b: 0.8330084, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -790,7 +790,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 181047294}
         m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
-        m_MethodName: OnNameChange
+        m_MethodName: OnRoomNameChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1282,7 +1282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   if_gameTitleInput: {fileID: 121225180}
-  if_playerName: {fileID: 0}
+  if_playerName: {fileID: 497184089}
   sb_bar: {fileID: 461796993}
   go_roomListing: {fileID: 1178607553391115815, guid: 5d8004ff28ea51841b7b37a62370de78,
     type: 3}
@@ -2594,7 +2594,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 181047294}
         m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
-        m_MethodName: OnNameChange
+        m_MethodName: OnPlayerNameChange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
