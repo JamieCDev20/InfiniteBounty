@@ -57,6 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
 
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.ConnectToRegion("eu");
         PhotonNetwork.GameVersion = gameVersion;
 
     }
