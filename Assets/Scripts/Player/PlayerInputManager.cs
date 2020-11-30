@@ -269,7 +269,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (playerID == 0)
             _Name += " (Host)";
-        GetComponentInChildren<TextMeshPro>().text = _Name;
+        nameText.text = _Name;
     }
 
     public void SetCanPickUpNugs(bool val)
