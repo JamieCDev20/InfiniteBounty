@@ -48,6 +48,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         view.RPC("Respawn", RpcTarget.All);
 
         playerIM.ResetCamFollow();
+        FindObjectOfType<CameraController>().SetFollow(t_thisPlayer);
 
         NetworkManager.x.SetCanLoad(true);
 
