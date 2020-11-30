@@ -71,8 +71,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public bool IsDead()
     {
-        Debug.Log((i_currentHealth <= 0) + " | " + name);
-        return i_currentHealth <= 0;
+        //Debug.Log((i_currentHealth) + " | " + name);
+        return !transform.GetChild(0).gameObject.activeInHierarchy;
     }
 
     private void Die()
