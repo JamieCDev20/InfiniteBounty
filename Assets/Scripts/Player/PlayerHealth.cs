@@ -78,7 +78,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             return;
 
         //PhotonNetwork.LoadLevel("LobbyScene");
-
+        PlayerInputManager _pim_newCam = FindObjectOfType<PlayerInputManager>();
+        if (_pim_newCam != null)
+            cc_cam.SetFollow(_pim_newCam.transform);
     }
 
     [PunRPC]
@@ -96,9 +98,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         //gameObject.SetActive(false);
         view.RPC("RemoteDie", RpcTarget.All);
 
-        PlayerInputManager newCam = FindObjectOfType<PlayerInputManager>();
-        if (newCam != null)
-            cc_cam.SetFollow(newCam.transform);
         yield return new WaitForSeconds(2);
         Die();
     }
