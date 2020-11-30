@@ -99,6 +99,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         {
             AudioSource ass = GetComponent<AudioSource>();
             ass.clip = _ac_aud;
+            ass.pitch = Random.Range(0.95f, 1.05f);
             ass.Play();
         }
     }
