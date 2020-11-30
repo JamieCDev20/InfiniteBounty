@@ -36,12 +36,12 @@ public class WeaponTool : ToolBase
 
 
     #region Get/Sets
-    public bool RackUpgrade { get{ return b_rackUpgrade; } set{ b_rackUpgrade = value; } }
+    public bool RackUpgrade { get { return b_rackUpgrade; } set { b_rackUpgrade = value; } }
     #endregion
 
     protected void OnEnable()
     {
-        
+
     }
     public override void Use()
     {
@@ -50,7 +50,8 @@ public class WeaponTool : ToolBase
 
     public override void Use(Vector3 _v_forwards)
     {
-        SetAnimBool(true);
+        //SetAnimBool(true);        
+        transform.root.forward = _v_forwards;
     }
 
     public void SetAnimBool(bool _b_)
