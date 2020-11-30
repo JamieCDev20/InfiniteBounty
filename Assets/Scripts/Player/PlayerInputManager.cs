@@ -267,6 +267,8 @@ public class PlayerInputManager : MonoBehaviour
     [PunRPC]
     public void SetName(string _Name)
     {
+        if (playerID == 0)
+            _Name += " (Host)";
         GetComponentInChildren<TextMeshPro>().text = _Name;
     }
 
