@@ -87,6 +87,11 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        playerIM.SyncNameOverNetwork();
+    }
+
     public void SyncInfo()
     {
         //sync weapons for when new player joins
