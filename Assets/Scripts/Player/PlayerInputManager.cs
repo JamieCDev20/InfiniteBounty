@@ -231,6 +231,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void ResetCamFollow()
     {
+        Debug.Log("I AM BEING RESET");
         camControl.SetFollow(transform);
     }
 
