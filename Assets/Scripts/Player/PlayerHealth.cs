@@ -89,6 +89,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [PunRPC]
     private void RemoteDie()
     {
+        i_currentHealth = -5000000;
         GetComponent<Rigidbody>().isKinematic = true;
         transform.GetChild(0).gameObject.SetActive(false);
         GetComponent<PlayerMover>().enabled = false;
