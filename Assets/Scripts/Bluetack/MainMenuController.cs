@@ -20,6 +20,10 @@ public class MainMenuController : MonoBehaviourPunCallbacks
             mainMenu.SetActive(false);
             camera.SetActive(false);
         }
+        foreach (PlayerInputManager pim in FindObjectsOfType<PlayerInputManager>())
+        {
+            pim.ResetCamFollow();
+        }
         //Invoke("EnableButtons", 2);
     }
 

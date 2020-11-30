@@ -51,7 +51,7 @@ public class WeaponTool : ToolBase
     public override void Use(Vector3 _v_forwards)
     {
         //SetAnimBool(true);        
-        transform.root.forward = _v_forwards;
+        transform.root.forward = Vector3.Scale(_v_forwards, Vector3.one - Vector3.up);
     }
 
     public void SetAnimBool(bool _b_)
