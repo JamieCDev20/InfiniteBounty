@@ -261,14 +261,16 @@ public class PlayerInputManager : MonoBehaviour
 
     public void SyncNameOverNetwork()
     {
-        view.RPC("SetName", RpcTarget.Others, PhotonNetwork.NickName);
+        view.RPC("SetName", RpcTarget.Others, playerID, PhotonNetwork.NickName);
     }
 
     [PunRPC]
-    public void SetName(string _Name)
+    public void SetName(int id, string _Name)
     {
-        if (playerID == 0)
+        if (id == 0)
+        {
             _Name += " (Host)";
+        }
         nameText.text = _Name;
     }
 
