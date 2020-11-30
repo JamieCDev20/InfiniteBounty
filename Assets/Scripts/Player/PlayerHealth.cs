@@ -64,9 +64,22 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     }
 
+    [PunRPC]
     public void SetMaxHealth()
     {
         i_currentHealth = i_maxHealth;
+        hudControl?.SetHealthBarValue(i_currentHealth, i_maxHealth);
+    }
+
+    [PunRPC]
+    public void Respawn()
+    {
+        SetMaxHealth();
+        GetComponent<Rigidbody>().isKinematic = false;
+        transform.GetChild(0).gameObject.SetActive(true);
+        GetComponent<PlayerMover>().enabled = true;
+        GetComponent<ToolHandler>().enabled = true;
+
     }
 
     public bool IsDead()

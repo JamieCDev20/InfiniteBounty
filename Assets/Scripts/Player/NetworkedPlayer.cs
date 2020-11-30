@@ -45,12 +45,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //players go to spawn on scene load
         playerIM.GoToSpawnPoint();
         //playerIM.gameObject.SetActive(true);
-        t_thisPlayer.GetComponent<Rigidbody>().isKinematic = false;
-        t_thisPlayer.GetChild(0).gameObject.SetActive(true);
-        t_thisPlayer.GetComponent<PlayerMover>().enabled = true;
-        t_thisPlayer.GetComponent<PlayerHealth>().SetMaxHealth();
-        t_thisPlayer.GetComponent<ToolHandler>().enabled = true;
-        playerIM.ResetCamFollow();
+        view.RPC("Respawn", RpcTarget.All);
 
         NetworkManager.x.SetCanLoad(true);
 
