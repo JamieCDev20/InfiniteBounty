@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    public static PlayerInputManager x;
+
     //Variables
     #region Serialised
 
@@ -83,7 +83,6 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Start()
     {
-        x = this;
         NicksTemporaryChangeHead();
     }
 

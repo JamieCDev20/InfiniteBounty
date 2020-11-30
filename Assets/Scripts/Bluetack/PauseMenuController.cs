@@ -20,13 +20,13 @@ public class PauseMenuController : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerInputManager.x.GetIsPaused())
-        {
-            if (!b_isPaused)
-                Pause();
-            else
-                Resume();
-        }
+        //if (PlayerInputManager.x.GetIsPaused())
+        //{
+        //    if (!b_isPaused)
+        //        Pause();
+        //    else
+        //        Resume();
+        //}
     }
 
     public void Resume()
