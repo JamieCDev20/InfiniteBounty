@@ -46,6 +46,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void TakeDamage(int damage)
     {
+        if (IsDead())
+            return;
         if (!view.IsMine)
             return;
         if (acA_hurtClips.Length > 0)
@@ -69,6 +71,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public bool IsDead()
     {
+        Debug.Log((i_currentHealth <= 0) + " | " + name);
         return i_currentHealth <= 0;
     }
 

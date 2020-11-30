@@ -22,6 +22,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Private
 
     private string gameVersion = "0.1";
+    private bool b_canLoad = true;
     private NetworkedPlayer netPlayer;
 
     #endregion
@@ -87,6 +88,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LoadLevel(string levelName)
     {
+        Debug.Log("Loading level");
         PhotonNetwork.LoadLevel(levelName);
     }
 
@@ -100,12 +102,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void PlayerDied()
     {
+        if (!b_canLoad)
+            return;
+        Debug.Log("Checking all dead");
         foreach (PlayerHealth h in FindObjectsOfType<PlayerHealth>())
         {
             if (!h.IsDead())
                 return;
         }
+        b_canLoad = false;
         LoadLevel("LobbyScene");
+    }
+
+    public void SetCanLoad(bool _val)
+    {
+        b_canLoad = _val;
     }
 
     #endregion

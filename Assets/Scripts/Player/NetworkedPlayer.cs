@@ -51,6 +51,9 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         t_thisPlayer.GetComponent<PlayerHealth>().SetMaxHealth();
         t_thisPlayer.GetComponent<ToolHandler>().enabled = true;
         playerIM.ResetCamFollow();
+
+        NetworkManager.x.SetCanLoad(true);
+
     }
 
     public override void OnJoinedRoom()
