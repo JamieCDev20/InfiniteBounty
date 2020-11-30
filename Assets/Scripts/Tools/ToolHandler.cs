@@ -147,6 +147,7 @@ public class ToolHandler : SubjectBase
     public void StopUsingTool(ToolSlot ts)
     {
         A_tools[(int)ts]?.PlayParticles(false);
+        A_tools[(int)ts]?.StopAudio();
     }
 
     public void SyncToolOverNetwork()
@@ -333,7 +334,7 @@ public class ToolHandler : SubjectBase
             {
                 A_tools[(int)ts].SetActive(true);
                 view.RPC("StopUsingTool", RpcTarget.All, ts);
-                
+
             }
             if (_b_released && A_tools[(int)ts].ReleaseActivated)
                 A_tools[(int)ts].Use(t_camTransform.forward);

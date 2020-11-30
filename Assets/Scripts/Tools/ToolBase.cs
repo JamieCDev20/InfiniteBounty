@@ -95,14 +95,18 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void PlayAudio(AudioClip _ac_aud)
     {
-        if(_ac_aud != null && !GetComponent<AudioSource>().isPlaying)
+        if (_ac_aud != null && !GetComponent<AudioSource>().isPlaying)
         {
             AudioSource ass = GetComponent<AudioSource>();
             ass.clip = _ac_aud;
             ass.Play();
         }
+    }
 
-            
+    public void StopAudio()
+    {
+        AudioSource ass = GetComponent<AudioSource>();
+        ass.Stop();
     }
 
     public virtual void SetActive(bool val)
