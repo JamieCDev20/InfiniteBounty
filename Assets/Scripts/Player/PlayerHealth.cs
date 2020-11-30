@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private CameraController cc_cam;
     public CameraController Cam { set { cc_cam = value; } }
 
-    private bool isDead;
+    private bool isDead = false;
     private float i_currentHealth;
     private float f_currentCount;
     private bool b_canRegen = true;
@@ -77,20 +77,25 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (!view.IsMine)
             return;
 
-        PhotonNetwork.LoadLevel("LobbyScene");
+        //PhotonNetwork.LoadLevel("LobbyScene");
 
+    }
+
+    [PunRPC]
+    private void RemoteDie()
+    {
+        GetComponent<Rigidbody>().isKinematic = true;
+        transform.GetChild(0).gameObject.SetActive(false);
+        GetComponent<PlayerMover>().enabled = false;
+        GetComponent<ToolHandler>().enabled = false;
+        NetworkManager.x.PlayerDied();
     }
 
     IEnumerator Dieath()
     {
         //gameObject.SetActive(false);
-        GetComponent<Rigidbody>().isKinematic = true;
-        transform.GetChild(0).gameObject.SetActive(false);
-        GetComponent<PlayerMover>().enabled = false;
-        GetComponent<ToolHandler>().enabled = false;
+        view.RPC("RemoteDie", RpcTarget.All);
 
-        isDead = true;
-        NetworkManager.x.PlayerDied();
         PlayerInputManager newCam = FindObjectOfType<PlayerInputManager>();
         if (newCam != null)
             cc_cam.SetFollow(newCam.transform);
