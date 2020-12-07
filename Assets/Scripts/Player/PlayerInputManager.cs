@@ -281,6 +281,14 @@ public class PlayerInputManager : MonoBehaviour
         b_canPickUpNugs = val;
     }
 
+
+    public void ChangedScene()
+    {
+        animator.PlayerRevived();
+        ResetCamFollow();
+        view.RPC("SetMaxHealth", RpcTarget.All);
+    }
+
     #endregion
 
     #region Private Returns
