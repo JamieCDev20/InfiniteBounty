@@ -7,19 +7,34 @@ public class ToolTipper : MonoBehaviour
 {
     [SerializeField] Transform t_cam;
     [SerializeField] Text ta_canvasText;
+    [SerializeField] Image i_buttonPrompt;
     private RaycastHit hit;
+
+    private void Start()
+    {
+
+        i_buttonPrompt.color = Color.clear;
+    }
+
     // Update is called once per frame
     void Update()
     {
         Debug.DrawRay(t_cam.position, t_cam.forward);
-        if(Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10.0f))
+        if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10.0f))
         {
-            if (hit.transform.GetComponent<ToolTip>())
-                ta_canvasText.text = hit.transform.GetComponent<ToolTip>().Tip;
+            ToolTip _tt_ = hit.transform.GetComponent<ToolTip>();
+            if (_tt_)
+            {
+                ta_canvasText.text = _tt_.Tip;
+                i_buttonPrompt.sprite = _tt_.buttonSprite;
+                i_buttonPrompt.color = Color.white;
+
+            }
         }
         else
         {
             ta_canvasText.text = "";
+            i_buttonPrompt.color = Color.clear;
         }
     }
 }
