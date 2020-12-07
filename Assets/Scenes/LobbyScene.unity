@@ -409,6 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   s_toolTip: 'HOST: Press E to play!'
   buttonSprite: {fileID: 21300000, guid: a60106fc34b8cfc42bd8e2d8282c9654, type: 3}
+  b_hostOnly: 1
 --- !u!1 &80375732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,6 +1268,7 @@ Transform:
   m_Children:
   - {fileID: 1515347787}
   - {fileID: 1818481026}
+  - {fileID: 268256501}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1473,6 +1475,141 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 986ac2a982adb0d42921b2ae23b349e0, type: 3}
+--- !u!1001 &268256500
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 181047293}
+    m_Modifications:
+    - target: {fileID: 8727973937869340689, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 948482414}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.852
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.035317156
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.4656736
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.080656454
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.88056546
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.082
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.393
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340717, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_Name
+      value: TutorialCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727973937869340717, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8d05161c35f163d48a5d1c4f32295305, type: 3}
+--- !u!224 &268256501 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+    type: 3}
+  m_PrefabInstance: {fileID: 268256500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &273788623
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,6 +3854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   s_toolTip: Press LMB or RMB to pickup a Tool
   buttonSprite: {fileID: 21300000, guid: 052a9836cd6a66443a6ae6d940672d91, type: 3}
+  b_hostOnly: 0
 --- !u!65 &782573705
 BoxCollider:
   m_ObjectHideFlags: 0
