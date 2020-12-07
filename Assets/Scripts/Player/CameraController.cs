@@ -85,7 +85,6 @@ public class CameraController : MonoBehaviour
 
     public void SetFollow(Transform _t_newFollow)
     {
-        Debug.Log("AM BEING TOLD TO FOLLOW");
         t_follow = _t_newFollow;
         t_follow.GetComponentInChildren<Billboard>()?.gameObject.SetActive(false);
     }
