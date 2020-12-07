@@ -15,11 +15,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public CameraController Cam { set { cc_cam = value; } }
 
     private bool isDead = false;
+    private bool b_canBeRevived = false;
     private float i_currentHealth;
     private float f_currentCount;
     private bool b_canRegen = true;
     private PhotonView view;
     internal HUDController hudControl;
+    private PlayerAnimator pa_anim;
 
     private void Start()
     {
@@ -46,9 +48,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void TakeDamage(int damage)
     {
-        if (IsDead())
-            return;
-        if (!view.IsMine)
+        if (!view.IsMine || isDead)
             return;
         if (acA_hurtClips.Length > 0)
             AudioSource.PlayClipAtPoint(acA_hurtClips[acA_hurtClips.Length], transform.position);
@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
         if (i_currentHealth <= 0)
         {
-            StartCoroutine(Dieath());
+            ClientDie();
         }
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
@@ -82,41 +82,42 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     }
 
-    public bool IsDead()
+    private void ClientDie()
     {
-        //Debug.Log((i_currentHealth) + " | " + name);
-        return !transform.GetChild(0).gameObject.activeInHierarchy;
-    }
-
-    private void Die()
-    {
-        if (!view.IsMine)
-            return;
-
-        //PhotonNetwork.LoadLevel("LobbyScene");
-        PlayerInputManager _pim_newCam = FindObjectOfType<PlayerInputManager>();
-        if (_pim_newCam != null)
-            cc_cam.SetFollow(_pim_newCam.transform);
-    }
-
-    [PunRPC]
-    private void RemoteDie()
-    {
-        i_currentHealth = -5000000;
-        GetComponent<Rigidbody>().isKinematic = true;
-        transform.GetChild(0).gameObject.SetActive(false);
-        GetComponent<PlayerMover>().enabled = false;
-        GetComponent<ToolHandler>().enabled = false;
+        view.RPC("RemoteDie", RpcTarget.All);
+        pa_anim.PlayerDied();
         NetworkManager.x.PlayerDied();
     }
 
-    IEnumerator Dieath()
+    [PunRPC]
+    public void RemoteDie()
     {
-        //gameObject.SetActive(false);
-        view.RPC("RemoteDie", RpcTarget.All);
+        isDead = true;
+        b_canBeRevived = true;
+    }
 
-        yield return new WaitForSeconds(2);
-        Die();
+    private void ClientRevive()
+    {
+        view.RPC("RemoteRevive", RpcTarget.All);
+        pa_anim.PlayerRevived();
+    }
+
+    [PunRPC]
+    public void RemoteRevive()
+    {
+        isDead = false;
+        b_canBeRevived = false;
+
+    }
+
+    public void SetAnimator(PlayerAnimator anim)
+    {
+        pa_anim = anim;
+    }
+
+    public bool GetIsDead()
+    {
+        return isDead;
     }
 
 }

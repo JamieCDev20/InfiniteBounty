@@ -107,7 +107,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log("Checking all dead");
         foreach (PlayerHealth h in FindObjectsOfType<PlayerHealth>())
         {
-            if (!h.IsDead())
+            if (!h.GetIsDead())
                 return;
         }
         b_canLoad = false;

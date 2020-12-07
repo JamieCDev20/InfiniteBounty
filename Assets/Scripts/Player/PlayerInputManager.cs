@@ -142,6 +142,8 @@ public class PlayerInputManager : MonoBehaviour
         nugMan = GetComponent<NugManager>();
 
         ph_health = GetComponent<PlayerHealth>();
+
+        ph_health.SetAnimator(animator);
     }
 
     private void GetInputs()

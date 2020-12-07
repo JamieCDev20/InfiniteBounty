@@ -21,7 +21,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private bool b_doIK = true; //Pronounced like palpatine says "Do it" but with a 'K' not a 'T'
 
-    private PlayerMover pm_inputs;
+    private PlayerMover pm_mover;
     private PlayerInputManager pim_inputManager;
     private Transform camTransform;
     private Animator anim;
@@ -36,7 +36,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        pm_inputs = GetComponent<PlayerMover>();
+        pm_mover = GetComponent<PlayerMover>();
         pim_inputManager = GetComponent<PlayerInputManager>();
     }
 
@@ -63,15 +63,15 @@ public class PlayerAnimator : MonoBehaviour
 
     private void CheckJumpAnims()
     {
-        anim.SetBool("JumpUp", pm_inputs.b_jumpPress);
-        anim.SetBool("FlyingPose", !pm_inputs.b_grounded);
+        anim.SetBool("JumpUp", pm_mover.b_jumpPress);
+        anim.SetBool("FlyingPose", !pm_mover.b_grounded);
     }
 
     private void GetMovementSpeed()
     {
         Vector3 vec = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
-        anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), pm_inputs.v_movementVector.x * (pm_inputs.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
-        anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
+        anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), pm_mover.v_movementVector.x * (pm_mover.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
+        anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), pm_mover.v_movementVector.z * (pm_mover.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
         //anim.SetFloat("Y", pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1));
     }
 
@@ -94,6 +94,19 @@ public class PlayerAnimator : MonoBehaviour
     public void SetCam(Transform cam)
     {
         camTransform = cam;
+    }
+
+    public void PlayerDied()
+    {
+        anim.SetTrigger("GetKnockedDown");
+        anim.SetBool("Knockdown", true);
+        pm_mover.SetDown(true);
+    }
+
+    public void PlayerRevived()
+    {
+        anim.SetBool("Knockdown", false);
+        pm_mover.SetDown(false);
     }
 
     #endregion

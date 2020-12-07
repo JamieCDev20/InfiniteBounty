@@ -15,6 +15,7 @@ public class PlayerMover : MonoBehaviour
     [Header("Motion Variables")]
     [SerializeField] private float f_moveSpeed = 10; // How fast the player moves
     [SerializeField] private float f_sprintMult = 2; // The multiplier applied to the base speed whilst sprinting;
+    [SerializeField] private float f_downMult = 0.3f; // The multiplier applied to the base speed whilst down;
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
     [SerializeField] private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
 
@@ -31,6 +32,7 @@ public class PlayerMover : MonoBehaviour
 
 
     internal bool b_grounded;
+    private bool b_down;
     private bool b_applyGravity;
     internal bool b_jumpPress;
     private bool b_jumpHold;
@@ -110,7 +112,7 @@ public class PlayerMover : MonoBehaviour
         Vector3 dir = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up), v_groundNormal);
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
-            rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime * (b_sprintHold ? f_sprintMult : 1), ForceMode.Impulse);
+            rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime * (b_down? f_downMult :( b_sprintHold ? f_sprintMult : 1)), ForceMode.Impulse);
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.3f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
     }
@@ -120,7 +122,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if (!b_jumpPress)
+        if (!b_jumpPress || b_down)
             return;
         if (b_grounded)
             StartCoroutine(DelayedJump());
@@ -210,6 +212,11 @@ public class PlayerMover : MonoBehaviour
     public void SetCameraTranfsorm(Transform _t_camTransform)
     {
         t_camTransform = _t_camTransform;
+    }
+
+    public void SetDown(bool _b_val)
+    {
+        b_down = _b_val;
     }
 
     #endregion
