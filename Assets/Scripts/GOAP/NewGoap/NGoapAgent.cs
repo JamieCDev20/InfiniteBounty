@@ -50,21 +50,16 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     private void Update()
     {
-        if (!mover.HasPath())
-        {
-            mover.Retarget(targetting.GetTarget(), true);
-        }
-        else
-        {
-            if (!go_aggroParticles.activeInHierarchy)
-                go_aggroParticles.SetActive(true);
-            if (b_canAttack && targetting.GetTarget() != null && (targetting.GetTarget().position - transform.position).magnitude < f_attackRange)
-                Attack();
-        }
+        if (b_canAttack && targetting.GetTarget() != null && (targetting.GetTarget().position - transform.position).magnitude < f_attackRange)
+            Attack();
+
     }
 
     private void FixedUpdate()
     {
+        if (!mover.HasPath())
+            mover.Retarget(targetting.GetTarget(), true);
+        go_aggroParticles.SetActive(mover.HasPath());
         mover.Move();
     }
 
