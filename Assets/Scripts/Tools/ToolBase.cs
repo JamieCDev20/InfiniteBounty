@@ -95,12 +95,12 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void PlayAudio(AudioClip _ac_aud)
     {
-        if (_ac_aud != null && !GetComponent<AudioSource>().isPlaying)
+        if (_ac_aud != null /*&& !GetComponent<AudioSource>().isPlaying*/)
         {
             AudioSource ass = GetComponent<AudioSource>();
-            ass.clip = _ac_aud;
+            //ass.clip = _ac_aud;
             ass.pitch = Random.Range(0.95f, 1.05f);
-            ass.Play();
+            ass.PlayOneShot(_ac_aud);
         }
     }
 

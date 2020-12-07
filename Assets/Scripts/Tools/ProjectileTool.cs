@@ -21,9 +21,9 @@ public class ProjectileTool : WeaponTool
         if (!b_active)
             return;
         base.Use(_v_forwards);
-        PlayAudio(ac_activationSound);
         if (b_usable)
         {
+            PlayAudio(ac_activationSound);
             SpawnBullet(_v_forwards);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());

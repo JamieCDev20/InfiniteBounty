@@ -74,7 +74,7 @@ public class ToolHandler : SubjectBase
             switch (sr)
             {
                 case ToolRack tr:
-                    if (tb.CheckPurchaseStatus())
+                    if ((bool)tb?.CheckPurchaseStatus())
                     {
                         switch (tb)
                         {
