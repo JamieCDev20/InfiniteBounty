@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
 
     private Vector2 v2_lookInputs;
     private Transform t_follow;
-    private PlayerInputManager pim_inputs;
+    internal PlayerInputManager pim_inputs;
     private float f_firingTime;
 
     #endregion

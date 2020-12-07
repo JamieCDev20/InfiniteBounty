@@ -12,9 +12,7 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
     [SerializeField] private GameObject go_uiStuff;
     private bool b_isBeingUsed;
 
-    public void Interacted()
-    {
-    }
+    public void Interacted() { }
 
     public void Interacted(Transform interactor)
     {
@@ -29,6 +27,8 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
             c_mirrorCam.gameObject.SetActive(true);
             go_uiStuff.SetActive(true);
 
+            ac_user.GetComponent<Rigidbody>().isKinematic = true;
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
@@ -38,14 +38,15 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
 
     public void EndInteract()
     {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
         pim.b_shouldPassInputs = true;
-
+        ac_user.GetComponent<Rigidbody>().isKinematic = false;
         go_uiStuff.SetActive(false);
         cc_cam.gameObject.SetActive(true);
         c_mirrorCam.gameObject.SetActive(false);
         b_isBeingUsed = false;
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
 
 

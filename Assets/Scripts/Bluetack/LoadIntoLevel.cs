@@ -45,14 +45,12 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void Interacted()
     {
-        PhotonNetwork.LoadLevel(NuggetRunName);
     }
 
     public void Interacted(Transform interactor)
     {
-
-
-
+        if (interactor.GetComponent<PlayerInputManager>().GetID() == 0)
+            PhotonNetwork.LoadLevel(NuggetRunName);
     }
 
     public void ReturnToShip()

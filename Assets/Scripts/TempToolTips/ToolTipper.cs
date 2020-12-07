@@ -9,10 +9,11 @@ public class ToolTipper : MonoBehaviour
     [SerializeField] Text ta_canvasText;
     [SerializeField] Image i_buttonPrompt;
     private RaycastHit hit;
+    private PlayerInputManager pim;
 
     private void Start()
     {
-
+        pim = GetComponent<CameraController>().pim_inputs;
         i_buttonPrompt.color = Color.clear;
     }
 
@@ -25,10 +26,12 @@ public class ToolTipper : MonoBehaviour
             ToolTip _tt_ = hit.transform.GetComponent<ToolTip>();
             if (_tt_)
             {
+                if ((_tt_.b_hostOnly && pim.GetID() > 0))
+                    return;
+
                 ta_canvasText.text = _tt_.Tip;
                 i_buttonPrompt.sprite = _tt_.buttonSprite;
                 i_buttonPrompt.color = Color.white;
-
             }
         }
         else
