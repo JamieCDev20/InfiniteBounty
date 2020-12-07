@@ -37,6 +37,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     private bool b_canAttack = true;
     private AIGroundMover mover;
     private Rigidbody rb;
+    private Transform target;
 
     #endregion
 
@@ -50,7 +51,9 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     private void Update()
     {
-        if (b_canAttack && targetting.GetTarget() != null && (targetting.GetTarget().position - transform.position).magnitude < f_attackRange)
+        if (!CanSeeTarget())
+            target = targetting.GetTarget();
+        if (b_canAttack && target != null && (target.position - transform.position).magnitude < f_attackRange)
             Attack();
 
     }
@@ -58,8 +61,8 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     private void FixedUpdate()
     {
         if (!mover.HasPath())
-            mover.Retarget(targetting.GetTarget(), true);
-        go_aggroParticles.SetActive(mover.HasPath());
+            mover.Retarget(target, true);
+        go_aggroParticles.SetActive(target != null);
         mover.Move();
     }
 
@@ -141,6 +144,18 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     #region Private Returns
 
+    private bool CanSeeTarget()
+    {
+        if (target == null)
+            return false;
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, target.position - transform.position, out hit))
+        {
+            return hit.collider.transform == target;
+        }
+        return false;
+    }
+
     private float PathLength(NavMeshPath path)
     {
 
@@ -157,11 +172,6 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     #endregion
 
     #region Public Returns
-
-    public NavMeshPath Path()
-    {
-        return mover.Path();
-    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

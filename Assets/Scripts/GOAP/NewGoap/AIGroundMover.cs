@@ -12,18 +12,25 @@ public class AIGroundMover : AIMover
 
     private AIMovementStats stats;
     private Vector3 v_groundNormal;
-    private NavMeshPath path;
     private bool b_hasPath;
+
+    private int pathCount;
+    private NavMeshPath path = new NavMeshPath();
+
+    private int pathmasterID = 0;
 
     #endregion
 
     //Methods
     #region Unity Standards
 
-
+    private void Start()
+    {
+        pathCount = Random.Range(0, 101);
+    }
 
     #endregion
-        
+
     #region Private Voids
 
     private void GroundCheck()
@@ -34,6 +41,16 @@ public class AIGroundMover : AIMover
         v_groundNormal = hit.normal;
     }
 
+    private void BakePath()
+    {
+        if (pathCount >= 100)
+        {
+            NavMesh.CalculatePath(rb.position, t_moveTarget.position, NavMesh.AllAreas, path);
+            pathCount = 0;
+        }
+        pathCount++;
+    }
+
     #endregion
 
     #region Public Voids
@@ -41,10 +58,8 @@ public class AIGroundMover : AIMover
     public AIGroundMover(AIMovementStats _stats)
     {
         stats = _stats;
-        path = new NavMeshPath();
     }
 
-    [BurstCompile]
     public override void Move()
     {
         base.Move();
@@ -53,19 +68,11 @@ public class AIGroundMover : AIMover
             b_hasPath = false;
             return;
         }
-        NavMesh.CalculatePath(rb.position, b_transformTracking ? t_moveTarget.position : v_moveTarget, NavMesh.AllAreas, path);
-        if (path.status == NavMeshPathStatus.PathComplete)
-        {
-            b_hasPath = true;
-            Vector3 mTarget = path.corners[1];
-            Vector3 lTarget = b_targetLooking ? mTarget : Vector3.zero;
 
-            rb.AddForce(Vector3.ProjectOnPlane((mTarget - rb.position), Vector3.up).normalized * stats.f_movementSpeed * Time.deltaTime, ForceMode.Impulse);
-            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - stats.v_drag);
-        }
-        else
-            b_hasPath = false;
+        rb.AddForce((t_moveTarget.position - rb.position).normalized * stats.f_movementSpeed * Time.deltaTime, ForceMode.Impulse);
+        rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - stats.v_drag);
 
+        //PathfindingMaster.x.AddToList(rb.position, v_moveTarget, out pathmasterID);
     }
 
     #endregion
@@ -76,11 +83,6 @@ public class AIGroundMover : AIMover
     #endregion
 
     #region Public Returns
-
-    public NavMeshPath Path()
-    {
-        return path;
-    }
 
     public bool HasPath()
     {
