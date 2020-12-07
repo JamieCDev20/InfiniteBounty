@@ -12,6 +12,7 @@ public class Lunchbox : MobilityTool
     [SerializeField] private GameObject go_lidObject;
     private bool b_isOpen;
     [SerializeField] private Transform[] tA_sandWichFirePoints = new Transform[4];
+    [SerializeField] private float f_sandwichForce;
 
     [Header("Audio Settings")]
     [SerializeField] private AudioClip ac_closingSound;
@@ -45,7 +46,7 @@ public class Lunchbox : MobilityTool
             for (int i = 0; i < 4; i++)
             {
                 GameObject _go_sandwich = PoolManager.x.SpawnObject(go_sandwichPrefab, tA_sandWichFirePoints[i].transform.position + transform.forward, Quaternion.identity);
-                _go_sandwich.GetComponent<Rigidbody>().AddForce(tA_sandWichFirePoints[i].transform.forward, ForceMode.Impulse);
+                _go_sandwich.GetComponent<Rigidbody>().AddForce(tA_sandWichFirePoints[i].transform.forward * f_sandwichForce, ForceMode.Impulse);
             }
             go_lidObject.transform.localEulerAngles = v_lidOpenRotation;
             as_source.PlayOneShot(ac_activationSound);
