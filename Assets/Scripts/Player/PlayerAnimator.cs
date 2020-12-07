@@ -99,6 +99,7 @@ public class PlayerAnimator : MonoBehaviour
     public void PlayerDied()
     {
         anim.SetTrigger("GetKnockedDown");
+        anim.SetBool("GetRevived", false);
         anim.SetBool("Knockdown", true);
         pm_mover.SetDown(true);
     }
@@ -106,6 +107,7 @@ public class PlayerAnimator : MonoBehaviour
     public void PlayerRevived()
     {
         anim.SetBool("Knockdown", false);
+        anim.SetBool("GetRevived", true);
         pm_mover.SetDown(false);
     }
 
