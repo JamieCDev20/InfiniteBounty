@@ -57,6 +57,7 @@ public class PlayerInputManager : MonoBehaviour
     private PhotonView view;
     private NugManager nugMan;
     private PlayerHealth ph_health;
+    internal bool b_shouldPassInputs = true;
 
     #endregion
 
@@ -75,52 +76,15 @@ public class PlayerInputManager : MonoBehaviour
         if (!view.IsMine && b_networked)
             return;
         GetInputs();
-        TellStuffWhatToDo();
+
+        if (b_shouldPassInputs)
+            TellStuffWhatToDo();
 
         PhotonNetwork.OfflineMode = offline;
 
     }
 
-    private void Start()
-    {
-        NicksTemporaryChangeHead();
-    }
-
     #endregion
-
-    #region Nick's Temporary Change Head Stuff
-
-    [Header("Face Things")]
-    [SerializeField] private GameObject[] goA_firstHead = new GameObject[0];
-    [SerializeField] private GameObject[] goA_secondHead = new GameObject[0];
-
-    private void NicksTemporaryChangeHead()
-    {
-        //print(GetID());
-        switch (GetID())
-        {
-            case 0:
-                for (int i = 0; i < goA_firstHead.Length; i++)
-                    goA_firstHead[i].SetActive(true);
-                break;
-            case 1:
-                for (int i = 0; i < goA_secondHead.Length; i++)
-                    goA_secondHead[i].SetActive(true);
-                break;
-            case 2:
-                for (int i = 0; i < goA_firstHead.Length; i++)
-                    goA_firstHead[i].SetActive(true);
-                break;
-            case 3:
-                for (int i = 0; i < goA_secondHead.Length; i++)
-                    goA_secondHead[i].SetActive(true);
-                break;
-
-        }
-    }
-
-    #endregion
-
 
     #region Private Voids
 
@@ -201,6 +165,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             IInteractible inter = hitInfo.collider.GetComponent<IInteractible>();
             inter?.Interacted();
+            inter?.Interacted(transform);
         }
     }
 
@@ -316,6 +281,11 @@ public class PlayerInputManager : MonoBehaviour
     public bool GetIsPaused()
     {
         return b_pausePressed;
+    }
+
+    public CameraController GetCamera()
+    {
+        return camControl;
     }
 
     #endregion
