@@ -27,14 +27,14 @@ public class PlayerLevelSpawnController : MonoBehaviour
     }
 
     [PunRPC]
-    private void PlayerImpact()
+    public void PlayerImpact()
     {
         go_impactEffects.SetActive(true);
         pim.b_shouldPassInputs = true;
         if (!b_hasDid)
         {
             b_hasDid = true;
-            view.RPC("PlayerImpact", RpcTarget.Others);
+            view.RPC("PlayerImpact", RpcTarget.All);
         }
     }
 
