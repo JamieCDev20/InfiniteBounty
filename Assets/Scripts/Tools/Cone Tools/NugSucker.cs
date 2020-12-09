@@ -13,7 +13,7 @@ public class NugSucker : ConeTool
         sm.angle = f_angle * 0.5f;
         PlayAudio(ac_activationSound);
         PlayParticles(true);
-        foreach (GameObject hit in GetAllObjectsInCone(_v_forwards))
+        foreach (GameObject hit in GetAllObjectsInCone(t_conePoint.forward))
         {
             hit.GetComponent<ISuckable>()?.GetRigidbody().AddForce((t_conePoint.position - hit.transform.position).normalized * f_suckForce, ForceMode.Impulse);
         }
