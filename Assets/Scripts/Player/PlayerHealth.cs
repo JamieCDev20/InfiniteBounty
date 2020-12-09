@@ -86,7 +86,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         view.RPC("RemoteDie", RpcTarget.All);
         pa_anim.PlayerDied();
-        NetworkManager.x.PlayerDied();
     }
 
     [PunRPC]
@@ -94,6 +93,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         isDead = true;
         b_canBeRevived = true;
+        NetworkManager.x.PlayerDied();
     }
 
     private void ClientRevive()
