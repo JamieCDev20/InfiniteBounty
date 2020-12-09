@@ -34,7 +34,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void Update()
     {
-
         if (b_canRegen)
         {
             i_currentHealth = Mathf.Clamp(i_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
@@ -95,7 +94,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         isDead = true;
         b_canBeRevived = true;
-
+        go_reviveObject.SetActive(true);
         NetworkManager.x.PlayerDied();
     }
 
@@ -117,6 +116,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         isDead = false;
         b_canBeRevived = false;
         pa_anim?.PlayerRevived();
+        go_reviveObject.SetActive(false);
 
     }
 
