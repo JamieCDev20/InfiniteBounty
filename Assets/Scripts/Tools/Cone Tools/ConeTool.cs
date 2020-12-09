@@ -17,10 +17,11 @@ public class ConeTool : WeaponTool
 
     protected virtual GameObject[] GetAllObjectsInCone(Vector3 _t_camPos)
     {
-        Ray r_rad = new Ray(t_conePoint.position, t_conePoint.up);
-        RaycastHit[] hitObjects = Physics.SphereCastAll(r_rad, f_radius);
+        //Ray r_rad = new Ray(t_conePoint.position, t_conePoint.up);
+        //RaycastHit[] hitObjects = Physics.SphereCastAll(r_rad, f_radius);
+        Collider[] hitObjects = Physics.OverlapSphere(t_conePoint.position, f_radius);
         List<GameObject> objInCone = new List<GameObject>();
-        foreach (RaycastHit hit in hitObjects)
+        foreach (Collider hit in hitObjects)
             if (CheckInCone(hit.transform, _t_camPos))
                 objInCone.Add(hit.transform.gameObject);
         return objInCone.ToArray();

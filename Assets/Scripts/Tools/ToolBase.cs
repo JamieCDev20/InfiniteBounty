@@ -98,7 +98,6 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     {
         if (_ac_aud != null)
         {
-            print("Being called");
             AudioSource ass = GetComponent<AudioSource>();
             //ass.clip = _ac_aud;
             ass.pitch = Random.Range(0.95f, 1.05f);
