@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,7 +65,6 @@ public class CameraController : MonoBehaviour
     private void Follow()
     {
         transform.position = t_follow.position + v_offset;
-
     }
 
     private void Look()
@@ -77,6 +77,17 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region Public Voids
+
+    internal void Recoil(float _f_recoilSeverity)
+    {
+        transform.Rotate(-_f_recoilSeverity, UnityEngine.Random.Range(-_f_recoilSeverity * 0.7f, _f_recoilSeverity * 0.7f), 0);
+        Invoke("BackToNoRoll", 0.1f);
+    }
+    private void BackToNoRoll()
+    {
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+    }
+
 
     public void SetLookInput(Vector2 _v2_newLookInput)
     {

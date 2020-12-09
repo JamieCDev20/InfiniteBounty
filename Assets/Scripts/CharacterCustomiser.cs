@@ -45,7 +45,7 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
         c_mirrorCam.gameObject.SetActive(false);
         b_isBeingUsed = false;
 
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 

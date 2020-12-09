@@ -27,6 +27,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     [SerializeField] protected AudioClip ac_activationSound;
     [SerializeField] protected AudioClip ac_hitSound;
     [SerializeField] protected AudioClip ac_diegeticAudio;
+    [SerializeField] private bool b_oneTimeAudio;
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
     [SerializeField] protected GameObject go_particles;
@@ -95,8 +96,9 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void PlayAudio(AudioClip _ac_aud)
     {
-        if (_ac_aud != null /*&& !GetComponent<AudioSource>().isPlaying*/)
+        if (_ac_aud != null)
         {
+            print("Being called");
             AudioSource ass = GetComponent<AudioSource>();
             //ass.clip = _ac_aud;
             ass.pitch = Random.Range(0.95f, 1.05f);
@@ -106,6 +108,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void StopAudio()
     {
+        if (b_oneTimeAudio) return;
         AudioSource ass = GetComponent<AudioSource>();
         ass.Stop();
     }

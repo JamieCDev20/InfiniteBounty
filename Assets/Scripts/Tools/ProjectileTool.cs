@@ -10,24 +10,27 @@ public class ProjectileTool : WeaponTool
     [SerializeField] private PhysicMaterial pm_physicsMat;
     [SerializeField] private Transform t_firePoint;
     private Ray r_flightPath;
+    private CameraController cc_cam;
 
     public override void SetActive(bool val)
     {
         b_active = val;
+        cc_cam = transform.root.GetComponent<PlayerInputManager>().GetCamera();
     }
 
     public override void Use(Vector3 _v_forwards)
     {
         if (!b_active)
             return;
-        base.Use(_v_forwards);
         if (b_usable)
         {
-            PlayAudio(ac_activationSound);
+            base.Use(_v_forwards);
             SpawnBullet(_v_forwards);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
             PlayParticles(true);
+            //cc_cam.Recoil(f_recoil);
+            PlayAudio(ac_activationSound);
         }
     }
 
