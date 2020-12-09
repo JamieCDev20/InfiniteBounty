@@ -252,6 +252,7 @@ public class PlayerInputManager : MonoBehaviour
         animator.PlayerRevived();
         ResetCamFollow();
         view.RPC("SetMaxHealth", RpcTarget.All);
+        Debug.Log("CHANGED SCENE");
     }
 
     #endregion

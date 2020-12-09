@@ -313,8 +313,15 @@ public class ToolHandler : SubjectBase
             if (A_tools[(int)ts] != null)
                 if (!A_tools[(int)ts].ReleaseActivated)
                 {
-                    view.RPC("UseTool", RpcTarget.Others, ts, t_camTransform.forward);
-                    A_tools[(int)ts].Use(t_camTransform.forward);
+                    RaycastHit hit;
+                    LayerMask mask = ~LayerMask.NameToLayer("Player");
+                    Vector3 dir = t_camTransform.forward;
+                    if (Physics.Raycast(t_camTransform.position, t_camTransform.forward, out hit, 10000, mask))
+                    {
+                        dir = hit.point - A_toolTransforms[(int)ts].position;
+                    }
+                    view.RPC("UseTool", RpcTarget.Others, ts, dir);
+                    A_tools[(int)ts].Use(dir);
                 }
         }
     }
