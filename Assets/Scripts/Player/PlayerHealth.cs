@@ -117,6 +117,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_canBeRevived = false;
         pa_anim?.PlayerRevived();
         go_reviveObject.SetActive(false);
+        SetMaxHealth();
 
     }
 
