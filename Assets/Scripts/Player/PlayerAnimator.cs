@@ -26,7 +26,7 @@ public class PlayerAnimator : MonoBehaviour
     private Transform camTransform;
     private Animator anim;
     private Rigidbody rb;
-    private bool b_canShoot;
+    private bool b_canShoot = true;
 
     #endregion
 
