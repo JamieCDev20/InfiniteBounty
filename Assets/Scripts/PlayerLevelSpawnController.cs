@@ -10,6 +10,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
     [SerializeField] private GameObject go_impactEffects;
     [SerializeField] private float f_fireForce = 10;
     private PhotonView view;
+    private bool b_hasDid;
 
     public void SetupPlayer(GameObject _go_playerToSetup)
     {
@@ -30,7 +31,11 @@ public class PlayerLevelSpawnController : MonoBehaviour
     {
         go_impactEffects.SetActive(true);
         pim.b_shouldPassInputs = true;
-        view.RPC("PlayerImpact", RpcTarget.Others);
+        if (!b_hasDid)
+        {
+            b_hasDid = true;
+            view.RPC("PlayerImpact", RpcTarget.Others);
+        }
     }
 
 
