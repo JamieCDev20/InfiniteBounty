@@ -26,6 +26,7 @@ public class PlayerAnimator : MonoBehaviour
     private Transform camTransform;
     private Animator anim;
     private Rigidbody rb;
+    private bool b_canShoot;
 
     #endregion
 
@@ -77,8 +78,16 @@ public class PlayerAnimator : MonoBehaviour
 
     private void SetShootingBools()
     {
-        anim.SetBool("ShootingLeft", pim_inputManager.GetToolBools().b_LToolHold);
-        anim.SetBool("ShootingRight", pim_inputManager.GetToolBools().b_RToolHold);
+        if (b_canShoot)
+        {
+            anim.SetBool("ShootingLeft", pim_inputManager.GetToolBools().b_LToolHold);
+            anim.SetBool("ShootingRight", pim_inputManager.GetToolBools().b_RToolHold);
+        }
+        else
+        {
+            anim.SetBool("ShootingLeft", false);
+            anim.SetBool("ShootingRight", false);
+        }
     }
 
     private void MakeAnArmDoTheRightThing(Transform arm, int fix)
@@ -91,6 +100,11 @@ public class PlayerAnimator : MonoBehaviour
 
     #region Public Voids
 
+    public void SetShootability(bool _b_shouldBeAbleToShoot)
+    {
+        b_canShoot = _b_shouldBeAbleToShoot;
+    }
+
     public void SetCam(Transform cam)
     {
         camTransform = cam;
@@ -98,6 +112,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void PlayerDied()
     {
+        SetShootability(false);
         anim.SetTrigger("GetKnockedDown");
         anim.SetBool("GetRevived", false);
         anim.SetBool("Knockdown", true);
@@ -106,6 +121,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void PlayerRevived()
     {
+        SetShootability(true);
         anim.SetBool("Knockdown", false);
         anim.SetBool("GetRevived", true);
         pm_mover.SetDown(false);

@@ -20,6 +20,7 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
         {
             ac_user = interactor.GetComponent<AppearanceChanger>();
             pim = interactor.GetComponent<PlayerInputManager>();
+            pim.GetComponent<PlayerAnimator>().SetShootability(false);
             pim.b_shouldPassInputs = false;
 
             cc_cam = pim.GetCamera();
@@ -40,6 +41,7 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
     {
         pim.b_shouldPassInputs = true;
         ac_user.GetComponent<Rigidbody>().isKinematic = false;
+        pim.GetComponent<PlayerAnimator>().SetShootability(true);
         go_uiStuff.SetActive(false);
         cc_cam.gameObject.SetActive(true);
         c_mirrorCam.gameObject.SetActive(false);
