@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PoolManager : MonoBehaviour
 {
@@ -21,6 +22,21 @@ public class PoolManager : MonoBehaviour
         x = this;
         DontDestroyOnLoad(gameObject);
 
+        SceneManager.sceneLoaded += SceneChange;
+
+    }
+
+    private void SceneChange(Scene scene, LoadSceneMode mode)
+    {
+        ResetPools();
+    }
+
+    private void ResetPools()
+    {
+        foreach (Pool p in pools.Values)
+        {
+            p.ResetPool();
+        }
     }
 
     /// <summary>

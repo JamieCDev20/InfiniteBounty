@@ -136,4 +136,12 @@ public class Pool
         return newGo;
     }
 
+    public void ResetPool()
+    {
+        foreach (IPoolable ip in p_objects)
+        {
+            ip.Die();
+        }
+    }
+
 }
