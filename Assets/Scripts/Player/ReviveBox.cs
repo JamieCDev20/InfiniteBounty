@@ -19,6 +19,7 @@ public class ReviveBox : MonoBehaviour, IInteractible
 
     public void Interacted(Transform interactor)
     {
+        Debug.Log("I HAVE BEEN TOUCHED");
         //throw new System.NotImplementedException();
         interactor.GetComponent<PhotonView>().RPC("DoRevive", RpcTarget.All);
         ph_health.photonView.RPC("GetRevived", RpcTarget.All);
