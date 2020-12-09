@@ -108,6 +108,8 @@ public class PlayerInputManager : MonoBehaviour
         ph_health = GetComponent<PlayerHealth>();
 
         ph_health.SetAnimator(animator);
+
+        toolHandler.SetPlayerHealth(ph_health);
     }
 
     private void GetInputs()

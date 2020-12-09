@@ -27,6 +27,7 @@ public class ToolHandler : SubjectBase
     private List<ToolBase> L_ownedTools = new List<ToolBase>();
     private NetworkedPlayer np_network;
     private Transform t_camTransform;
+    private PlayerHealth ph_health;
     private PhotonView view;
     private ToolSlot ts_removeToolSlot;
     private int i_removableRackSlot;
@@ -303,6 +304,8 @@ public class ToolHandler : SubjectBase
     /// <param name="_b_hold">Button Held</param>
     private void CheckPressOrHoldUse(ToolSlot ts, bool _b_press, bool _b_hold)
     {
+        if (ph_health.GetIsDead())
+            return;
         // Do nothing when you're not pressing or holding the button
         if (_b_press || _b_hold)
         {
@@ -334,6 +337,8 @@ public class ToolHandler : SubjectBase
     /// <param name="_b_releaseActivated">Weapon release activation</param>
     private void CheckReleaseUse(ToolSlot ts, bool _b_released)
     {
+        if (ph_health.GetIsDead())
+            return;
         // Use release activated tool when the button is released
         if (A_tools[(int)ts] != null)
         {
@@ -373,5 +378,10 @@ public class ToolHandler : SubjectBase
             }
         }
         return false;
+    }
+
+    public void SetPlayerHealth(PlayerHealth health)
+    {
+        ph_health = health;
     }
 }
