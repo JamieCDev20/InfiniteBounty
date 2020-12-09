@@ -30,7 +30,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
     {
         go_impactEffects.SetActive(true);
         pim.b_shouldPassInputs = true;
-        view.RPC("PlacyerImpact", RpcTarget.Others);
+        view.RPC("PlayerImpact", RpcTarget.Others);
     }
 
 
