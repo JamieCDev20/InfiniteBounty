@@ -34,6 +34,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+            TakeDamage(1000);
         if (b_canRegen)
         {
             i_currentHealth = Mathf.Clamp(i_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
@@ -95,7 +97,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         isDead = true;
         b_canBeRevived = true;
         go_reviveObject.SetActive(true);
-        NetworkManager.x.PlayerDied();
+        StartCoroutine(DeathDelay());
     }
 
     [PunRPC]
@@ -141,6 +143,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public void SetID(int id)
     {
         playerID = id;
+    }
+
+    public IEnumerator DeathDelay()
+    {
+        yield return new WaitForSeconds(2);
+        NetworkManager.x.PlayerDied();
+
     }
 
 }
