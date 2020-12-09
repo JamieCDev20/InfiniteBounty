@@ -18,7 +18,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
         _go_playerToSetup.transform.forward = transform.forward;
         pim.GetCamera().transform.forward = transform.forward;
 
-        Invoke("PlayerImpact", 1.1f);
+        Invoke("PlayerImpact", 1f);
     }
 
     private void PlayerImpact()
