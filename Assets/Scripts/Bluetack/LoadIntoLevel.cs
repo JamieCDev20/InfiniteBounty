@@ -11,7 +11,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     #region Serialised
 
     [SerializeField] private string LobbySceneName = "LobbyScene";
-    [SerializeField] private string NuggetRunName = "Nugget Run";
+    [SerializeField] private string NuggetRunName = "NuggetRun_Ignova";
 
     #endregion
 
