@@ -49,7 +49,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable
         GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles, transform.position, Quaternion.identity);
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
-        rb.velocity = Vector3.zero;
+        if(rb != null)
+            rb.velocity = Vector3.zero;
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
