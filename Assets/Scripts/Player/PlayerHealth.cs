@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private int i_maxHealth = 10;
     [SerializeField] private float f_healthPerSecond = 0.5f;
     [SerializeField] private float f_afterHitRegenTime = 5;
+    [SerializeField] private GameObject go_reviveObject;
     [SerializeField] private AudioClip[] acA_hurtClips;
     private CameraController cc_cam;
     public CameraController Cam { set { cc_cam = value; } }
@@ -19,6 +20,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private float i_currentHealth;
     private float f_currentCount;
     private bool b_canRegen = true;
+    private int playerID;
     private PhotonView view;
     internal HUDController hudControl;
     private PlayerAnimator pa_anim;
@@ -93,13 +95,20 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         isDead = true;
         b_canBeRevived = true;
+
         NetworkManager.x.PlayerDied();
+    }
+
+    [PunRPC]
+    private void GetRevived()
+    {
+        if (NetworkedPlayer.x.PlayerID == playerID)
+            ClientRevive();
     }
 
     private void ClientRevive()
     {
         view.RPC("RemoteRevive", RpcTarget.All);
-        pa_anim.PlayerRevived();
     }
 
     [PunRPC]
@@ -107,7 +116,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         isDead = false;
         b_canBeRevived = false;
+        pa_anim?.PlayerRevived();
 
+    }
+
+    [PunRPC]
+    private void DoRevive()
+    {
+        if (NetworkedPlayer.x.PlayerID == playerID)
+            pa_anim.DoReviveAnim();
     }
 
     public void SetAnimator(PlayerAnimator anim)
@@ -118,6 +135,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public bool GetIsDead()
     {
         return isDead;
+    }
+
+    public void SetID(int id)
+    {
+        playerID = id;
     }
 
 }

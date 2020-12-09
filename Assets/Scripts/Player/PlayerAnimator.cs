@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -125,6 +126,18 @@ public class PlayerAnimator : MonoBehaviour
         anim.SetBool("Knockdown", false);
         anim.SetBool("GetRevived", true);
         pm_mover.SetDown(false);
+    }
+
+    public void DoReviveAnim()
+    {
+        anim.SetBool("Revive", true);
+        StartCoroutine(ReviveOffness());
+    }
+
+    public IEnumerator ReviveOffness()
+    {
+        yield return new WaitForSeconds(0.1f);
+        anim.SetBool("Revive", false);
     }
 
     #endregion

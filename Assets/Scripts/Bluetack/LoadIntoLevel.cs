@@ -49,7 +49,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void Interacted(Transform interactor)
     {
-        //if (interactor.GetComponent<PlayerInputManager>().GetID() == 0)
+        if (interactor.GetComponent<PlayerInputManager>().GetID() == 0)
             PhotonNetwork.LoadLevel(NuggetRunName);
     }
 

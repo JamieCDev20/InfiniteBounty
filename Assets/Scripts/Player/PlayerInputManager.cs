@@ -219,6 +219,8 @@ public class PlayerInputManager : MonoBehaviour
     {
         playerID = id;
 
+        ph_health.SetID(id);
+
         if (id == 0)
             playerNickname = nickName + " (Host)";
         else
