@@ -95,7 +95,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     internal override void Death()
     {
         //RPC death function so that all instances of a lode die together
-        gameObject.SetActive(false);
+        gameObject?.SetActive(false);
 
         if (PhotonNetwork.IsMasterClient)
         {

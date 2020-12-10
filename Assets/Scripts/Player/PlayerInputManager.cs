@@ -207,7 +207,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void ResetCamFollow()
     {
-        camControl.SetFollow(transform);
+        camControl?.SetFollow(transform);
     }
 
     public void SetPlayerNumber(int _i_index)
