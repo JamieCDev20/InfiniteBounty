@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private Rigidbody rb;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
+    [SerializeField] private Collider c_myCollider;
 
     [Header("TrailEffects")]
     [SerializeField] private TrailRenderer tr_bulletTrail;
@@ -30,13 +31,14 @@ public class Bullet : MonoBehaviour, IPoolable
 
     public void Setup(int _i_damage, int _i_lodeDamage)
     {
+        c_myCollider.isTrigger = true;
         i_damage = _i_damage;
         i_lodeDamage = _i_lodeDamage;
         transform.localScale = Vector3.one;
         transform.rotation = Quaternion.identity;
         StartCoroutine(DeathTimer(f_lifeTime));
-
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -89,6 +91,9 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private IEnumerator DeathTimer(float _f_lifeTime)
     {
+        yield return new WaitForEndOfFrame();
+        c_myCollider.isTrigger = false;
+
         yield return new WaitForSeconds(_f_lifeTime);
         Die();
     }
