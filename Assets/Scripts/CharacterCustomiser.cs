@@ -29,6 +29,7 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
             go_uiStuff.SetActive(true);
 
             ac_user.GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<ToolTip>().enabled = false;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -46,6 +47,7 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
         cc_cam.gameObject.SetActive(true);
         c_mirrorCam.gameObject.SetActive(false);
         b_isBeingUsed = false;
+        GetComponent<ToolTip>().enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
