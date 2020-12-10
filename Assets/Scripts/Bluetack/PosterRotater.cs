@@ -19,11 +19,12 @@ public class PosterRotater : MonoBehaviour
         rtL_adParents.RemoveAt(0);
         rtL_adParents.Add(_rt);
 
-        for (int i = 0; i < 13; i++)
+        UnMove();
+        for (int i = 0; i < 14; i++)
         {
             Invoke("MoveLerp", i * Time.deltaTime);
         }
-        Invoke("UnMove", Time.deltaTime * 14);
+        Invoke("UnMove", Time.deltaTime * 15);
 
         Invoke("SetNewOrder", 1);
     }

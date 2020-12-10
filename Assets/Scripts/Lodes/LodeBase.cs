@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
+public class LodeBase : Enemy, IPunObservable, IHitable
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;
@@ -95,7 +95,6 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     internal override void Death()
     {
         gameObject?.SetActive(false);
-        Destroy(GetComponent<PhotonView>());
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -115,6 +114,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             view.RPC("Death", RpcTarget.Others);
         }
 
+        Destroy(gameObject);
     }
 
     [PunRPC]
