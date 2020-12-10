@@ -14,7 +14,6 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
     public void SetupPlayer(GameObject _go_playerToSetup)
     {
-        view = GetComponent<PhotonView>();
 
         pim = _go_playerToSetup.GetComponent<PlayerInputManager>();
         pim.b_shouldPassInputs = false;
@@ -26,16 +25,10 @@ public class PlayerLevelSpawnController : MonoBehaviour
         Invoke("PlayerImpact", 1f);
     }
 
-    [PunRPC]
     public void PlayerImpact()
     {
         go_impactEffects.SetActive(true);
         pim.b_shouldPassInputs = true;
-        if (!b_hasDid)
-        {
-            b_hasDid = true;
-            view.RPC("PlayerImpact", RpcTarget.All);
-        }
     }
 
 
