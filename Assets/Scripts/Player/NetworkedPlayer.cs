@@ -53,6 +53,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         NetworkManager.x.SetCanLoad(true);
 
+
     }
 
     public override void OnJoinedRoom()

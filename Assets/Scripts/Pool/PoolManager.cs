@@ -29,6 +29,7 @@ public class PoolManager : MonoBehaviour
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
         ResetPools();
+        
     }
 
     private void ResetPools()
