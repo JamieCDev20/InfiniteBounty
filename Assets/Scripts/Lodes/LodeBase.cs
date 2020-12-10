@@ -95,6 +95,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     internal override void Death()
     {
         gameObject?.SetActive(false);
+        Destroy(GetComponent<PhotonView>());
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -112,10 +113,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             burst = true;
             //RPC death function so that all instances of a lode die together
             view.RPC("Death", RpcTarget.Others);
-
-
         }
-        Destroy(GetComponent<PhotonView>());
 
     }
 

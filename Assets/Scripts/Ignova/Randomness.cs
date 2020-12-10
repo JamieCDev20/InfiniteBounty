@@ -59,7 +59,7 @@ public class Randomness : MonoBehaviourPunCallbacks
         //generate a random value between 0-range
         return Random.value * range;
     }
-
+    
     [PunRPC]
     public void RecieveSeed(int seed)
     {
@@ -67,7 +67,7 @@ public class Randomness : MonoBehaviourPunCallbacks
         float burnTheFirst = Random.value;
         Debug.Log(seed);
     }
-
+    
     [PunRPC]
     private void SpawnLodes(int count)
     {
@@ -84,7 +84,7 @@ public class Randomness : MonoBehaviourPunCallbacks
             int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
             GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(rand)], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
             ob.transform.parent = PoolManager.x.transform;
-            PhotonView view = ob.AddComponent<PhotonView>();
+            PhotonView view = ob.GetComponent<PhotonView>();
             view.ViewID = 6000 + i;
             PhotonNetwork.RegisterPhotonView(view);
             LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);

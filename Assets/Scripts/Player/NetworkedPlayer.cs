@@ -55,8 +55,6 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         FindObjectOfType<CameraController>().SetFollow(x.t_thisPlayer);
 
         NetworkManager.x.SetCanLoad(true);
-
-
     }
 
     public override void OnJoinedRoom()
