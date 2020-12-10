@@ -94,7 +94,6 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     [PunRPC]
     internal override void Death()
     {
-
         if (PhotonNetwork.IsMasterClient)
         {
             if (burst)
@@ -113,7 +112,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
             view.RPC("Death", RpcTarget.Others);
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     [PunRPC]
@@ -173,7 +172,6 @@ public class LodeBase : Enemy, IPunObservable, IHitable
 
     public void NugCollected(int id)
     {
-
         view.RPC("DestroyNug", RpcTarget.All, id);
     }
 
