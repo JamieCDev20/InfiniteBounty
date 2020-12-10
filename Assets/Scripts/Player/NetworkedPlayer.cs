@@ -43,6 +43,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         //players go to spawn on scene load
+        playerIM = t_thisPlayer.GetComponent<PlayerInputManager>();
         playerIM.GoToSpawnPoint();
         //playerIM.gameObject.SetActive(true);
         view.RPC("Respawn", RpcTarget.All);
