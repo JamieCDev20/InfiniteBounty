@@ -57,6 +57,7 @@ public class PlayerInputManager : MonoBehaviour
     private PhotonView view;
     private NugManager nugMan;
     private PlayerHealth ph_health;
+    private Rigidbody rb;
     internal bool b_shouldPassInputs = true;
 
     #endregion
@@ -90,6 +91,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Init()
     {
+        rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -262,6 +264,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         animator.PlayerRevived();
         ResetCamFollow();
+        rb.velocity = Vector3.zero;
         view.RPC("SetMaxHealth", RpcTarget.All);
         view.RPC("RemoteRevive", RpcTarget.All);
         Debug.Log("CHANGED SCENE");

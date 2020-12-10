@@ -17,6 +17,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
     private int index;
     private int nugCount;
+    private bool burst = true;
     private PhotonView view;
     private NugGO[] nuggets;
 
@@ -94,18 +95,23 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     [PunRPC]
     internal override void Death()
     {
-        //RPC death function so that all instances of a lode die together
         gameObject?.SetActive(false);
 
         if (PhotonNetwork.IsMasterClient)
         {
-            for (int i = 0; i < i_nuggetsPerBurst; i++)
+            if (burst)
             {
-                float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-                NuggetBurst(v);
-                view.RPC("NuggetBurst", RpcTarget.Others, v);
+                for (int i = 0; i < i_nuggetsPerBurst; i++)
+                {
+                    float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
+                    NuggetBurst(v);
+                    view.RPC("NuggetBurst", RpcTarget.Others, v);
+
+                }
 
             }
+            burst = true;
+            //RPC death function so that all instances of a lode die together
             view.RPC("Death", RpcTarget.Others);
 
         }
@@ -138,6 +144,7 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
 
     public void Die()
     {
+        burst = false;
         Death();
     }
 
