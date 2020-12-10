@@ -84,8 +84,9 @@ public class Randomness : MonoBehaviourPunCallbacks
             int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
             GameObject ob = PoolManager.x.SpawnObject(lodes[Mathf.RoundToInt(rand)], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
             ob.transform.parent = PoolManager.x.transform;
-            ob.GetComponent<PhotonView>().ViewID = 6000 + i;
-            PhotonNetwork.RegisterPhotonView(ob.GetComponent<PhotonView>());
+            PhotonView view = ob.AddComponent<PhotonView>();
+            view.ViewID = 6000 + i;
+            PhotonNetwork.RegisterPhotonView(view);
             LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
             ob.name += Lt_lodeSpawns[num].position;
             Lt_lodeSpawns.RemoveAt(num);

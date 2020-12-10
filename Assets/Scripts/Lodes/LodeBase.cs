@@ -42,7 +42,6 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
     {
 
         //this is the networked take damage func, this is called by the host to sync health
-        Debug.Log("lode taking damage");
         i_currentHealth -= _i_damage;
 
 
@@ -114,7 +113,9 @@ public class LodeBase : Enemy, IPoolable, IPunObservable, IHitable
             //RPC death function so that all instances of a lode die together
             view.RPC("Death", RpcTarget.Others);
 
+
         }
+        Destroy(GetComponent<PhotonView>());
 
     }
 
