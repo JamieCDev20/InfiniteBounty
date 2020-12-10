@@ -29,7 +29,10 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
 
         if (x == null)
+        {
             x = this;
+            name += " (Singleton)";
+        }
         else
             Destroy(gameObject);
 
@@ -43,13 +46,13 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         //players go to spawn on scene load
-        playerIM = t_thisPlayer.GetComponent<PlayerInputManager>();
-        playerIM.GoToSpawnPoint();
+        //playerIM = view.GetComponent<PlayerInputManager>();
+        x.playerIM.GoToSpawnPoint();
         //playerIM.gameObject.SetActive(true);
-        view.RPC("Respawn", RpcTarget.All);
+        x.view.RPC("Respawn", RpcTarget.All);
 
-        playerIM.ChangedScene();
-        FindObjectOfType<CameraController>().SetFollow(t_thisPlayer);
+        x.playerIM.ChangedScene();
+        FindObjectOfType<CameraController>().SetFollow(x.t_thisPlayer);
 
         NetworkManager.x.SetCanLoad(true);
 
