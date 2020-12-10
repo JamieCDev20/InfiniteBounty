@@ -94,7 +94,6 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     [PunRPC]
     internal override void Death()
     {
-        gameObject?.SetActive(false);
 
         if (PhotonNetwork.IsMasterClient)
         {
