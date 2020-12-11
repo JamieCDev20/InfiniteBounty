@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class LobbyCamera : MonoBehaviour
 {
+
+    private void Start()
+    {
+        if (PhotonNetwork.IsConnected)
+            gameObject.SetActive(false);
+    }
 
     public void SwitchToLobbyCam(Transform _t_newPos)
     {
