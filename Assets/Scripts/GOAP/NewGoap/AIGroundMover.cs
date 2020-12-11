@@ -70,7 +70,7 @@ public class AIGroundMover : AIMover
         }
         if ((t_moveTarget.position - rb.position).magnitude > 100)
             return;
-        rb.AddForce((t_moveTarget.position - rb.position).normalized * stats.f_movementSpeed * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce((Vector3.ProjectOnPlane(t_moveTarget.position - rb.position, Vector3.up)).normalized * stats.f_movementSpeed * Time.deltaTime, ForceMode.Impulse);
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - stats.v_drag);
 
         //PathfindingMaster.x.AddToList(rb.position, v_moveTarget, out pathmasterID);
