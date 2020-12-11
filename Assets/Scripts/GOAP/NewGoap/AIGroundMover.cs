@@ -68,7 +68,8 @@ public class AIGroundMover : AIMover
             b_hasPath = false;
             return;
         }
-
+        if ((t_moveTarget.position - rb.position).magnitude > 100)
+            return;
         rb.AddForce((t_moveTarget.position - rb.position).normalized * stats.f_movementSpeed * Time.deltaTime, ForceMode.Impulse);
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - stats.v_drag);
 
