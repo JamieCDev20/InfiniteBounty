@@ -8,6 +8,7 @@ public class LobbyCamera : MonoBehaviour
     public void SwitchToLobbyCam(Transform _t_newPos)
     {
         gameObject.transform.position = _t_newPos.position;
+        gameObject.transform.rotation = _t_newPos.rotation;
         gameObject.SetActive(true);
         NetworkedPlayer.x.SetCameraActive(false);
     }
