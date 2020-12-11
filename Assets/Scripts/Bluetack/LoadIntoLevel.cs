@@ -55,7 +55,13 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void CheckPlayers()
     {
-        if (i_playersCount >= PhotonNetwork.CurrentRoom.PlayerCount)
+        int cCount = i_playersCount;
+        foreach (PlayerHealth ph in FindObjectsOfType<PlayerHealth>())
+        {
+            if (ph.GetIsDead())
+                cCount += 1;
+        }
+        if (cCount >= PhotonNetwork.CurrentRoom.PlayerCount)
             LoadLevel(levelToLoad);
             
     }
