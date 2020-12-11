@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [SerializeField] private int i_enemiesPerWave;
     [SerializeField] private bool b_spawnWaveAtStart;
     private int i_numberOfEnemies;
+    [SerializeField] private int i_maxNumberOfEnemies;
 
     private void Start()
     {
@@ -53,7 +54,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         {
             spawnCount = 0;
 
-            if (i_numberOfEnemies < 20)
+            if (i_numberOfEnemies < i_maxNumberOfEnemies)
             {
                 for (int i = 0; i < i_enemiesPerWave; i++)
                     SpawnEnemy(goA_enemiesToSpawnDuringAWave[0], tA_spawnPoints[Random.Range(0, tA_spawnPoints.Length)].position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
