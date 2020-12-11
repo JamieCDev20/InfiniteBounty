@@ -14,6 +14,7 @@ public class AugmentWindow : EditorWindow
     private int i_dropDownIndex = 0;
     bool b_displayBaseAugments = true;
     AugmentCreator ac_creator = new AugmentCreator();
+    Vector2 scrollPos;
     #endregion
 
     Augment a_melee;
@@ -89,17 +90,17 @@ public class AugmentWindow : EditorWindow
         EditorGUILayout.Space();
         GUILayout.Label("Augment Name", EditorStyles.label);
         s_augName = EditorGUILayout.TextArea(s_augName);
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
         DisplayGameObjectArgs();
         EditorGUILayout.Space();
         if (i_dropDownIndex != 0)
         {
-
             b_displayBaseAugments = EditorGUILayout.Toggle("Show Base Augments", b_displayBaseAugments);
-
         }
 
         ShowAugmentToCreate(i_dropDownIndex);
         EditorGUILayout.Space();
+        EditorGUILayout.EndScrollView();
         SaveAugment();
     }
 
@@ -194,7 +195,7 @@ public class AugmentWindow : EditorWindow
             else
                 augmentData += "{\"Material\":null}";
             if (m_mesh)
-                augmentData += "{\"Mesh\":" + rs + "Augments/" + m_mesh.name + ".fbx" + "}";
+                augmentData += "{\"Mesh\":" + rs + "Augments/Meshs/" + m_mesh.name + ".fbx" + "}";
             else
                 augmentData += "{\"Mesh\":null}";
             augmentData += "}~";
@@ -210,6 +211,7 @@ public class AugmentWindow : EditorWindow
 
     private bool CheckIfNameUsed(string sr, string _s_name)
     {
+        // Grab the first parameter of each new line and compare its name
         string[] newLine = sr.Split('\n');
         for (int i = 0; i < newLine.Length; i++)
             if (newLine[i].Split('=')[0] == _s_name)
@@ -219,6 +221,7 @@ public class AugmentWindow : EditorWindow
 
     private void ShowAugmentToCreate(int _i_augmentType)
     {
+        // Display the augment data relevent to the augment type
         switch (_i_augmentType)
         {
             case 0:
@@ -239,15 +242,18 @@ public class AugmentWindow : EditorWindow
 
     private void DisplayGameObjectArgs()
     {
+        // Display a mesh and material field
         GUILayout.Label("Augment mesh", EditorStyles.boldLabel);
         m_mesh = (Mesh)EditorGUILayout.ObjectField(m_mesh, typeof(Mesh), true);
         mat_material = (Material)EditorGUILayout.ObjectField(mat_material, typeof(Material), true);
     }
 
+    /// <summary>
+    /// Display each editable parameter with its lable
+    /// </summary>
     private void DisplayBaseAugments()
     {
         GUILayout.Label("Base Augments", EditorStyles.boldLabel);
-        // Physical Properties
         GUILayout.Label("Physical Properties", EditorStyles.boldLabel);
         GUILayout.Label("Weapon Speed", EditorStyles.label);
         ap_toolProperties.f_speed = EditorGUILayout.FloatField(ap_toolProperties.f_speed);
@@ -303,17 +309,15 @@ public class AugmentWindow : EditorWindow
 
 
     }
+
     private void DisplayConeAugments()
     {
         GUILayout.Label("Cone Augments", EditorStyles.boldLabel);
+        // Width and length of the cone
         GUILayout.Label("Cone", EditorStyles.label);
         acone.f_angle = EditorGUILayout.FloatField(acone.f_angle);
         GUILayout.Label("Length", EditorStyles.label);
         acone.f_radius = EditorGUILayout.FloatField(acone.f_radius);
     }
 
-    private void DisplayCurrentAugments()
-    {
-        GUILayout.Label("No Current Augments", EditorStyles.boldLabel);
-    }
 }
