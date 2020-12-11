@@ -108,7 +108,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     public void SetCameraActive(bool val)
     {
-        playerCamera.SetActive(val);
+        x.playerCamera?.SetActive(val);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
