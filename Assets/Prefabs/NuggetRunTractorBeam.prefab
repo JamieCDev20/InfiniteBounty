@@ -63,6 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   v_spin: {x: 0, y: 6, z: 0}
+  b_shouldSinBackToStart: 0
+  v_unitsPerSecond: {x: 0, y: 0, z: 0}
 --- !u!114 &1382621123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf623dfbd2cd324ca466978cfca9706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LobbySceneName: LobbyScene
-  NuggetRunName: NuggetRun_Ignova
+  levelToLoad: LobbyScene
+  loadOnButtonPress: 0
 --- !u!1 &6507805702676413443
 GameObject:
   m_ObjectHideFlags: 0
