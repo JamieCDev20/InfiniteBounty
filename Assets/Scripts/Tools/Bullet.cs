@@ -91,7 +91,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private IEnumerator DeathTimer(float _f_lifeTime)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForEndOfFrame();
         c_myCollider.isTrigger = false;
 
         yield return new WaitForSeconds(_f_lifeTime);
