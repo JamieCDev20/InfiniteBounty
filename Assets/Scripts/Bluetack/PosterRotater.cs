@@ -43,6 +43,13 @@ public class PosterRotater : MonoBehaviour
     {
         rtL_adParents[rtL_adParents.Count - 1].localPosition = new Vector3(0, 120 * (rtL_adParents.Count + i_timesMoved), 0);
         i_timesMoved++;
+
+        if (i_timesMoved > 10)
+        {
+            rt_overallParent.position = Vector3.zero;
+            for (int i = 0; i < rtL_adParents.Count; i++)
+                rtL_adParents[i].position = new Vector3(0, 120 * i, 0);
+        }
     }
 
 
