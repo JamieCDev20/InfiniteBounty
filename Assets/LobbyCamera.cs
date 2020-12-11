@@ -8,8 +8,8 @@ public class LobbyCamera : MonoBehaviour
 
     private void Start()
     {
-        if (PhotonNetwork.IsConnected)
-            gameObject.SetActive(false);
+        //if (PhotonNetwork.IsConnected)
+        //    gameObject.SetActive(false);
     }
 
     public void SwitchToLobbyCam(Transform _t_newPos)
