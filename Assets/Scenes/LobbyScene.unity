@@ -2095,6 +2095,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 948482414}
+    - target: {fileID: 8727973937869340689, guid: 8d05161c35f163d48a5d1c4f32295305,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2215,6 +2220,18 @@ PrefabInstance:
 --- !u!224 &268256501 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8727973937869340690, guid: 8d05161c35f163d48a5d1c4f32295305,
+    type: 3}
+  m_PrefabInstance: {fileID: 268256500}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &268256502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8727973937869340717, guid: 8d05161c35f163d48a5d1c4f32295305,
+    type: 3}
+  m_PrefabInstance: {fileID: 268256500}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &268256503 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1507933552, guid: 8d05161c35f163d48a5d1c4f32295305,
     type: 3}
   m_PrefabInstance: {fileID: 268256500}
   m_PrefabAsset: {fileID: 0}
@@ -18243,9 +18260,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Options
-
-'
+  m_Text: How to play
 --- !u!222 &1077192168
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21911,7 +21926,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1530014261}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 948482416}
+        m_TargetAssemblyTypeName: LobbyCamera, Assembly-CSharp
+        m_MethodName: SwitchToLobbyCam
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 268256503}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 268256502}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1530014261
 MonoBehaviour:
   m_ObjectHideFlags: 0
