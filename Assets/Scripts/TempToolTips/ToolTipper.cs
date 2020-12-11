@@ -20,8 +20,7 @@ public class ToolTipper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(t_cam.position, t_cam.forward);
-        if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10.0f))
+        if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 5, ~LayerMask.NameToLayer("Player"), QueryTriggerInteraction.Ignore))
         {
             ToolTip _tt_ = hit.transform.GetComponent<ToolTip>();
             if (_tt_)
