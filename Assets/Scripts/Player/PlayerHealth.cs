@@ -34,8 +34,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-            TakeDamage(1000);
+        //if (Input.GetKeyDown(KeyCode.Alpha9))
+        //    TakeDamage(1000);
         if (b_canRegen)
         {
             i_currentHealth = Mathf.Clamp(i_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
