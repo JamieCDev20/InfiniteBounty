@@ -17,6 +17,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private PlayerInputManager playerIM;
     private ToolHandler handler;
     private PhotonView view;
+    private GameObject playerCamera;
 
     public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
@@ -87,8 +88,9 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerIM.SetCanPickUpNugs(true);
         playerIM.SetPlayerNumber(playerInfo.playerID);
         playerIM.GoToSpawnPoint();
-        playerIM.SetCamera(Instantiate(playerInfo.go_camPrefab).GetComponent<CameraController>());
-
+        GameObject cam = Instantiate(playerInfo.go_camPrefab);
+        playerIM.SetCamera(cam.GetComponent<CameraController>());
+        playerCamera = cam.transform.GetChild(0).gameObject;
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -101,6 +103,12 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //sync weapons for when new player joins
         handler.SyncToolOverNetwork();
         playerIM.SyncNameOverNetwork();
+
+    }
+
+    public void SetCameraActive(bool val)
+    {
+        playerCamera.SetActive(val);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
