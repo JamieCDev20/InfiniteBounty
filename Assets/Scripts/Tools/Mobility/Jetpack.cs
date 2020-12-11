@@ -25,6 +25,9 @@ public class Jetpack : MobilityTool
     [SerializeField] private AudioClip ac_steamingSound;
     private AudioSource as_source;
 
+    private Vector3 v_targetV;
+    private float t;
+
     private void Start()
     {
         rb = transform.root.GetComponent<Rigidbody>();
@@ -36,16 +39,21 @@ public class Jetpack : MobilityTool
 
     public override void Use(Vector3 _v)
     {
+        t = Time.deltaTime;
         if (f_currentFuel > 0)
         {
             if (!b_isSteaming)
             {
                 b_isBeingUsed = true;
-                rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(rb.velocity.x, f_yVelocityKickStart + (f_force * ac_jetPackForce.Evaluate(f_timeHeld) * Time.deltaTime), rb.velocity.z), 30 * Time.deltaTime);
+                v_targetV.x = rb.velocity.x;
+                v_targetV.y = ac_jetPackForce.Evaluate(f_timeHeld) * f_force;
+                v_targetV.z = rb.velocity.z;
+                rb.velocity = Vector3.Lerp(rb.velocity, v_targetV, .5f);
                 PlayParticles(true);
-                f_timeHeld += Time.deltaTime;
+                f_timeHeld += t;
+                Debug.Log(v_targetV.y);
 
-                f_currentFuel -= Time.deltaTime;
+                f_currentFuel -= t;
                 UpdateFuelMeter();
             }
         }

@@ -10,7 +10,7 @@ public class MainMenuController : MonoBehaviourPunCallbacks
 
     [SerializeField] private Button b_onlineButton;
     [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject camera;
+    [SerializeField] private GameObject menuCam;
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class MainMenuController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnectedAndReady)
         {
             mainMenu.SetActive(false);
-            camera.SetActive(false);
+            menuCam.SetActive(false);
         }
         foreach (PlayerInputManager pim in FindObjectsOfType<PlayerInputManager>())
         {
@@ -42,7 +42,7 @@ public class MainMenuController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinOrCreateRoom("New Room", new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
         mainMenu.SetActive(false);
-        camera.SetActive(false);
+        menuCam.SetActive(false);
     }
 
     public void Quit()

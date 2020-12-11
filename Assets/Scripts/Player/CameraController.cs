@@ -69,8 +69,8 @@ public class CameraController : MonoBehaviour
 
     private void Look()
     {
-        transform.Rotate(transform.right.normalized * v2_lookInputs.y * Time.deltaTime * f_cameraSensitivity, Space.World);
-        transform.Rotate(transform.up.normalized * v2_lookInputs.x * Time.deltaTime * f_cameraSensitivity, Space.World);
+        transform.Rotate(transform.right.normalized * v2_lookInputs.y * f_cameraSensitivity, Space.World);
+        transform.Rotate(transform.up.normalized * v2_lookInputs.x * f_cameraSensitivity, Space.World);
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, Vector3.one - Vector3.forward);
     }
 

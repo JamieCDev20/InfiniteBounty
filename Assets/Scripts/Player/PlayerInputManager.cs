@@ -156,7 +156,7 @@ public class PlayerInputManager : MonoBehaviour
         mover.UpdateJumpBools(b_jumpPress, b_jumpHold, b_jumpRelease);
         mover.UpdateSprintBools(b_sprintPress, b_sprintHold, b_sprintRelease);
 
-        camControl.SetLookInput(v2_lookVector);
+        camControl.SetLookInput(v2_lookVector * Time.deltaTime);
 
         toolHandler.RecieveInputs(toolBools);
 
