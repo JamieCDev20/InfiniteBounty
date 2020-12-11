@@ -44,6 +44,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private bool b_canPickUpNugs;
     private bool b_pausePressed;
+    private bool b_inCannon = false;
 
     private ToolBools toolBools;
 
@@ -261,7 +262,6 @@ public class PlayerInputManager : MonoBehaviour
         b_canPickUpNugs = val;
     }
 
-
     public void ChangedScene()
     {
         animator.PlayerRevived();
@@ -269,7 +269,7 @@ public class PlayerInputManager : MonoBehaviour
         rb.velocity = Vector3.zero;
         view.RPC("SetMaxHealth", RpcTarget.All);
         view.RPC("RemoteRevive", RpcTarget.All);
-        Debug.Log("CHANGED SCENE");
+        b_inCannon = false;
     }
 
     #endregion

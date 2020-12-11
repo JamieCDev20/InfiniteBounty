@@ -10,14 +10,14 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     //Variables
     #region Serialised
 
-    [SerializeField] private string LobbySceneName = "LobbyScene";
-    [SerializeField] private string NuggetRunName = "NuggetRun_Ignova";
+    [SerializeField] private string levelToLoad = "LobbyScene";
+    [SerializeField] private bool loadOnButtonPress = true;
 
     #endregion
 
     #region Private
 
-    private int i_playersInCannon = 0;
+    private int i_playersCount = 0;
 
     #endregion
 
@@ -27,7 +27,20 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            ReturnToShip();
+        {
+            i_playersCount += 1;
+            if(!loadOnButtonPress)
+                CheckPlayers();
+        }
+            //ReturnToShip();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            i_playersCount += -1;
+        }
     }
 
     #endregion
@@ -36,7 +49,15 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void LoadLevel(string levelname)
     {
+        i_playersCount = 0;
         NetworkManager.x.LoadLevel(levelname);
+    }
+
+    private void CheckPlayers()
+    {
+        if (i_playersCount >= PhotonNetwork.CurrentRoom.PlayerCount)
+            LoadLevel(levelToLoad);
+            
     }
 
     #endregion
@@ -45,12 +66,11 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void Interacted()
     {
+        CheckPlayers();
     }
 
     public void Interacted(Transform interactor)
     {
-        if (interactor.GetComponent<PlayerInputManager>().GetID() == 0)
-            PhotonNetwork.LoadLevel(NuggetRunName);
     }
 
     public void ReturnToShip()
@@ -61,7 +81,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
             n.EndedLevel();
         }
 
-        LoadLevel(LobbySceneName);
+        //LoadLevel(lobbySceneName);
     }
 
     #endregion
