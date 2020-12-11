@@ -166,7 +166,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         RaycastHit hitInfo;
         LayerMask mask = ~LayerMask.GetMask("Player");
-        if (Physics.Raycast(camControl.transform.GetChild(0).position, camControl.transform.GetChild(0).forward, out hitInfo, 10, mask))
+        if (Physics.Raycast(camControl.transform.GetChild(0).position, camControl.transform.GetChild(0).forward, out hitInfo, 10, mask, QueryTriggerInteraction.Ignore))
         {
             IInteractible inter = hitInfo.collider.GetComponent<IInteractible>();
             inter?.Interacted();
