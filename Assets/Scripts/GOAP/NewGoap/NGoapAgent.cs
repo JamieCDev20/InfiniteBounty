@@ -35,6 +35,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     private int i_currentHealth;
     private bool b_canAttack = true;
+    private Animator anim;
     private AIGroundMover mover;
     private Rigidbody rb;
     private Transform target;
@@ -62,6 +63,9 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     {
         if (!mover.HasPath())
             mover.Retarget(target, true);
+        anim.SetBool("Running", rb.velocity.magnitude >= 0.1f);
+        if(rb.velocity.magnitude > 0.1f)
+            transform.rotation = Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up);
         go_aggroParticles.SetActive(target != null);
         mover.Move();
     }
@@ -80,7 +84,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     private void Init()
     {
-
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         i_currentHealth = i_maxHealth;
         targetting.SetTransform(transform);
@@ -101,6 +105,8 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     private void Attack()
     {
         mover.SetCanMove(false);
+        anim.SetBool("Jump", true);
+        anim.SetBool("Spin", true);
         rb.AddForce(((targetting.GetTarget().position + (Vector3.up * 1.2f)) - transform.position).normalized * f_lungeForce, ForceMode.Impulse);
         b_canAttack = false;
     }
