@@ -18,6 +18,7 @@ public class AugmentParser
         string projectileData = _s_jsonData.Split('=', '~')[11];
         string coneData = _s_jsonData.Split('=', '~')[13];
         string meshData = _s_jsonData.Split('=', '~')[15];
+        // Store the parsed versions into their own array slot.
         string[] arrayedData = new string[9];
         arrayedData[0] = augName;
         arrayedData[1] = augClassType;
