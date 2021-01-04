@@ -40,9 +40,9 @@ public class MainMenuController : MonoBehaviourPunCallbacks
 
     public void Clicked()
     {
+        menuCam.SetActive(false);
         PhotonNetwork.JoinOrCreateRoom("New Room", new RoomOptions() { MaxPlayers = 4 }, TypedLobby.Default);
         mainMenu.SetActive(false);
-        menuCam.SetActive(false);
     }
 
     public void Quit()

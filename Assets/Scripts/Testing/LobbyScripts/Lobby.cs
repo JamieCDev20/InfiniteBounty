@@ -13,6 +13,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private Scrollbar sb_bar;
     [SerializeField] private GameObject go_roomListing;
     [SerializeField] private Transform t_roomListParent;
+    [SerializeField] private Transform t_camera;
 
     private List<Listing> goL_listings = new List<Listing>();
 
@@ -59,7 +60,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public void OnClickJoin()
     {
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
-
+        t_camera.gameObject.SetActive(false);
     }
 
     public void OnClickLeave()
@@ -70,6 +71,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public void OnClickCreate()
     {
         PhotonNetwork.CreateRoom(if_gameTitleInput.text, new RoomOptions { MaxPlayers = 4 }, TypedLobby.Default);
+        t_camera.gameObject.SetActive(false);
     }
     
     public void OnClickQuit()
