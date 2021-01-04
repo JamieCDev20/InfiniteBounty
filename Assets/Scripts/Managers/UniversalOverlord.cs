@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Rendering;
 
 public class UniversalOverlord : MonoBehaviourPunCallbacks
 {
@@ -36,6 +37,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     /// </summary>
     private void Init()
     {
+        GraphicsSettings.useScriptableRenderPipelineBatching = true;
         //GM persist through scenes
         DontDestroyOnLoad(gameObject);
 
