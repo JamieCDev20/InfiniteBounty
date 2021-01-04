@@ -9965,6 +9965,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   v_unitsPerSecond: {x: 0, y: 0.01, z: 0}
   b_shouldSinBackToStart: 1
+  i_damageToDeal: 1000
+  f_timeBetweenDamages: 0.1
 --- !u!1001 &1444047213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14035,11 +14037,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AshCloud
       objectReference: {fileID: 0}
-    - target: {fileID: 2598242122448904192, guid: 5afce570b2ebff14cb6c58bc0fcbe0e4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2598242122448904193, guid: 5afce570b2ebff14cb6c58bc0fcbe0e4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14094,11 +14091,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942693821360555243, guid: 5afce570b2ebff14cb6c58bc0fcbe0e4,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5afce570b2ebff14cb6c58bc0fcbe0e4, type: 3}
