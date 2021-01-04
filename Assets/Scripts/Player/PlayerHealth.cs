@@ -53,6 +53,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         if (!view.IsMine || isDead)
             return;
+        print(damage + " DMG taken");
+
         if (acA_hurtClips.Length > 0)
             AudioSource.PlayClipAtPoint(acA_hurtClips[acA_hurtClips.Length], transform.position);
         i_currentHealth = Mathf.Clamp(i_currentHealth - damage, -1, i_maxHealth);
