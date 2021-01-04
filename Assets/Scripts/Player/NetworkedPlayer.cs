@@ -69,7 +69,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerInfo.playerID = PhotonNetwork.CurrentRoom.PlayerCount - 1;
 
         //Initialise player info and stuff
-        GameObject player = PhotonNetwork.Instantiate("NetworkPrefabs/" + playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate(playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
         t_thisPlayer = player.transform;
 
         view = player.GetComponent<PhotonView>();

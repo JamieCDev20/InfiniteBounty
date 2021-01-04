@@ -182,8 +182,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         foreach (GameObject spawn in TagManager.x.GetTagSet("Spawn"))
         {
-            transform.position = spawn.transform.GetChild(playerID).position;
-            /*
+            transform.position = spawn.transform.GetChild(playerID).position;            
             try
             {
                 spawn.transform.GetChild(playerID).GetComponent<PlayerLevelSpawnController>().SetupPlayer(gameObject);
@@ -191,7 +190,7 @@ public class PlayerInputManager : MonoBehaviour
             catch
             {
             }
-            */
+            
         }
     }
 
