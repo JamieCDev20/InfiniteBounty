@@ -20,6 +20,8 @@ public class PlayerLevelSpawnController : MonoBehaviour
     {
         go_cameraParent.SetActive(true);
 
+        _go_playerToSetup.GetComponentInChildren<Animator>().SetTrigger("LevelStart");
+
         pim = _go_playerToSetup.GetComponent<PlayerInputManager>();
         pim.b_shouldPassInputs = false;
         pim.GetCamera().enabled = false;
