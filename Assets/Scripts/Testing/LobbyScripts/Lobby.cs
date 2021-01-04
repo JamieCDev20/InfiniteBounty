@@ -14,6 +14,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject go_roomListing;
     [SerializeField] private Transform t_roomListParent;
     [SerializeField] private Transform t_camera;
+    [SerializeField] private Button HostButton;
 
     private List<Listing> goL_listings = new List<Listing>();
 
@@ -21,6 +22,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         sb_bar.value = 1;
         //PhotonNetwork.ConnectUsingSettings();
+        HostButton.interactable = false;
         if (PlayerPrefs.HasKey("playerName"))
             if_playerName.text = PlayerPrefs.GetString("playerName");
         if (PlayerPrefs.HasKey("roomName"))
@@ -42,6 +44,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected");
+        HostButton.interactable = true;
         //PhotonNetwork.JoinLobby();
     }
 
