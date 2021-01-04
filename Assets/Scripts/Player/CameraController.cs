@@ -69,8 +69,8 @@ public class CameraController : MonoBehaviour
 
     private void Look()
     {
-        transform.Rotate(transform.right.normalized * v2_lookInputs.y * f_cameraSensitivity, Space.World);
-        transform.Rotate(transform.up.normalized * v2_lookInputs.x * f_cameraSensitivity, Space.World);
+        transform.Rotate(transform.right.normalized * v2_lookInputs.y * f_cameraSensitivity * Time.deltaTime, Space.World);
+        transform.Rotate(transform.up.normalized * v2_lookInputs.x * f_cameraSensitivity * Time.deltaTime, Space.World);
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, Vector3.one - Vector3.forward);
     }
 
@@ -83,11 +83,11 @@ public class CameraController : MonoBehaviour
         transform.Rotate(-_f_recoilSeverity, UnityEngine.Random.Range(-_f_recoilSeverity * 0.7f, _f_recoilSeverity * 0.7f), 0);
         Invoke("BackToNoRoll", 0.1f);
     }
+
     private void BackToNoRoll()
     {
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
     }
-
 
     public void SetLookInput(Vector2 _v2_newLookInput)
     {
