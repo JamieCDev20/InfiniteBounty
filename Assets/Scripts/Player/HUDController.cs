@@ -16,11 +16,17 @@ public class HUDController : MonoBehaviour
     [Space, SerializeField] private Image i_faceBackgroundImage;
     [SerializeField] private Gradient g_healthBarGradient;
 
+    [Header("Nug Counter")]
+    [SerializeField] private GameObject go_particle;
+    private List<GameObject> goL_parts = new List<GameObject>();
+
     private void Start()
     {
         SetHealthBarValue(1, 1);
         //SetLeftHeatGuage(1, 1);
         //SetRightHeatGuage(1, 1);
+        for (int i = 0; i < 100; i++)
+            goL_parts.Add(Instantiate(go_particle, go_particle.transform.parent));
     }
 
     public void SetHealthBarValue(float _i_currentHealth, int _i_maxHealth)
@@ -43,5 +49,17 @@ public class HUDController : MonoBehaviour
         //rt_rightHeatGuage.localScale = new Vector3(1 - (_i_currentHeat / _i_maxHeat), 1, 1);
     }
 
+    public void GainNug()
+    {
+        GameObject _go = goL_parts[0];
+        goL_parts.RemoveAt(0);
+        _go.SetActive(true);
+    }
+    private IEnumerator ReturnNugSignToPool(GameObject _go)
+    {
+        yield return new WaitForSeconds(1);
+        _go.SetActive(false);
+        goL_parts.Add(_go);
+    }
 
 }

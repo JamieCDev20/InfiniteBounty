@@ -14,10 +14,12 @@ public class NugManager : SubjectBase, ObserverBase
     private int i_inLevelNugs = 0;
     private int i_playerID;
     private Text t_nugText;
+    private HUDController hud;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        hud = gameObject.GetComponent<PlayerHealth>().hudControl;
         //SceneManager.sceneLoaded += OnSceneLoad;
 
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
@@ -75,6 +77,9 @@ public class NugManager : SubjectBase, ObserverBase
         i_totalNugs += _i_value;
         i_inLevelNugs += _i_value;
         t_nugText.text = i_totalNugs.ToString();
+
+        for (int i = 0; i < _i_value; i++)
+            hud.GainNug();
     }
     public void SendNugs()
     {
