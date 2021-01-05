@@ -9,6 +9,7 @@ public class Sofa : MonoBehaviour, IInteractible
     [SerializeField] private bool b_isRightSide;
     [SerializeField] private Transform t_sitPosition;
     [SerializeField] private GameObject go_audioSourceObject;
+    private bool b_isBeingUsed;
 
     public void Interacted()
     {
@@ -17,19 +18,24 @@ public class Sofa : MonoBehaviour, IInteractible
 
     public void Interacted(Transform interactor)
     {
-        PlayerMover pm = interactor.GetComponent<PlayerMover>();
-
-        if (pm)
+        if (!b_isBeingUsed)
         {
-            pm.enabled = false;
-            pm.GetComponent<Rigidbody>().isKinematic = true;
+            PlayerMover pm = interactor.GetComponent<PlayerMover>();
 
-            pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
-            pm.transform.position = t_sitPosition.position;
-            pm.transform.forward = t_sitPosition.forward;
+            if (pm)
+            {
+                pm.enabled = false;
+                pm.GetComponent<Rigidbody>().isKinematic = true;
 
-            if (go_audioSourceObject)
-                go_audioSourceObject.SetActive(true);
+                pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
+                pm.transform.parent = t_sitPosition;
+                pm.transform.localPosition = Vector3.zero;
+                pm.transform.forward = t_sitPosition.forward;
+
+                if (go_audioSourceObject)
+                    go_audioSourceObject.SetActive(true);
+                b_isBeingUsed = true;
+            }
         }
     }
 
@@ -37,5 +43,6 @@ public class Sofa : MonoBehaviour, IInteractible
     {
         if (go_audioSourceObject)
             go_audioSourceObject.SetActive(false);
+        b_isBeingUsed = false;
     }
 }
