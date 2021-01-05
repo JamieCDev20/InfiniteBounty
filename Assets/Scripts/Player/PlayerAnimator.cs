@@ -30,6 +30,7 @@ public class PlayerAnimator : MonoBehaviour
     private Animator anim;
     private Rigidbody rb;
     private bool b_canShoot = true;
+    private Sofa s_currentSofa;
 
     #endregion
 
@@ -59,12 +60,14 @@ public class PlayerAnimator : MonoBehaviour
                     anim.SetBool("SofaLeft", false);
                     rb.isKinematic = false;
                     pm_mover.enabled = true;
+                    s_currentSofa.EndSit();
                 }
                 if (anim.GetBool("SofaRight"))
                 {
                     anim.SetBool("SofaRight", false);
                     rb.isKinematic = false;
                     pm_mover.enabled = true;
+                    s_currentSofa.EndSit();
                 }
             }
         }
@@ -117,8 +120,10 @@ public class PlayerAnimator : MonoBehaviour
         arm.Rotate(transform.up * fix, 90);
     }
 
-    internal void DoSitDown(bool b_isRightSide)
+    internal void DoSitDown(bool b_isRightSide, Sofa _s_newSofa)
     {
+        s_currentSofa = _s_newSofa;
+
         if (b_isRightSide)
             anim.SetBool("SofaRight", true);
         else
