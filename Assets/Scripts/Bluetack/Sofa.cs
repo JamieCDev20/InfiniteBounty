@@ -24,7 +24,6 @@ public class Sofa : MonoBehaviour, IInteractible
 
             if (pm)
             {
-                pm.enabled = false;
                 pm.GetComponent<Rigidbody>().isKinematic = true;
 
                 pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
@@ -32,6 +31,7 @@ public class Sofa : MonoBehaviour, IInteractible
                 pm.transform.localPosition = Vector3.zero;
                 pm.transform.forward = t_sitPosition.forward;
 
+                pm.enabled = false;
                 if (go_audioSourceObject)
                     go_audioSourceObject.SetActive(true);
                 b_isBeingUsed = true;

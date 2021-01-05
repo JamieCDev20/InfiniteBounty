@@ -61,6 +61,8 @@ public class PlayerAnimator : MonoBehaviour
                     rb.isKinematic = false;
                     pm_mover.enabled = true;
                     s_currentSofa.EndSit();
+                    s_currentSofa = null;
+                    transform.parent = null;
                 }
                 if (anim.GetBool("SofaRight"))
                 {
@@ -68,6 +70,8 @@ public class PlayerAnimator : MonoBehaviour
                     rb.isKinematic = false;
                     pm_mover.enabled = true;
                     s_currentSofa.EndSit();
+                    s_currentSofa = null;
+                    transform.parent = null;
                 }
             }
         }
