@@ -24,13 +24,14 @@ public class Sofa : MonoBehaviour, IInteractible
 
             if (pm.transform.parent == null && pm.transform != transform.root)
             {
-                pm.GetComponent<Rigidbody>().isKinematic = true;
                 pm.GetComponent<Collider>().enabled = false;
 
                 pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
                 pm.transform.parent = t_sitPosition;
                 pm.transform.localPosition = Vector3.zero;
                 pm.transform.forward = t_sitPosition.forward;
+                pm.GetComponent<Rigidbody>().rotation = t_sitPosition.rotation;
+                pm.GetComponent<Rigidbody>().isKinematic = true;
 
                 pm.enabled = false;
                 if (go_audioSourceObject)
@@ -44,5 +45,6 @@ public class Sofa : MonoBehaviour, IInteractible
     {
         if (go_audioSourceObject)
             go_audioSourceObject.SetActive(false);
+        b_isBeingUsed = false;
     }
 }

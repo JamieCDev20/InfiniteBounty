@@ -39,41 +39,43 @@ public class Bullet : MonoBehaviour, IPoolable
         StartCoroutine(DeathTimer(f_lifeTime));
     }
 
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        IHitable test = collision.gameObject.GetComponent<IHitable>();
-        switch (test)
+        IHitable temp = other.gameObject.GetComponent<IHitable>();
+        switch (temp)
         {
-            case NGoapAgent ngo:
-                ngo.TakeDamage(i_damage);
+            case NGoapAgent nga:
+                nga.TakeDamage(i_damage);
                 break;
             case LodeBase lb:
                 lb.TakeDamage(i_lodeDamage);
                 break;
-            case Enemy enmy:
-                enmy.TakeDamage(i_damage);
+            case Enemy e:
+                e.TakeDamage(i_damage);
+                break;
+            default:
                 break;
         }
-
 
         go_hitEffect.SetActive(false);
         go_hitEffect.transform.parent = transform;
         go_hitEffect.transform.localPosition = Vector3.zero;
-        go_hitEffect.transform.forward = collision.contacts[0].normal;
+        go_hitEffect.transform.forward = transform.position - other.transform.position;
         go_hitEffect.transform.parent = null;
         go_hitEffect.SetActive(true);
 
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
 
-        transform.LookAt(collision.transform);
+        transform.LookAt(other.transform);
 
         Die();
+
     }
 
     public void MoveBullet(Vector3 _v_dir, float _f_force)
     {
+        c_myCollider.isTrigger = true;
         transform.rotation = Quaternion.LookRotation(_v_dir, Vector3.up);
         rb.AddForce(transform.forward * _f_force, ForceMode.Impulse);
 
@@ -92,7 +94,7 @@ public class Bullet : MonoBehaviour, IPoolable
     private IEnumerator DeathTimer(float _f_lifeTime)
     {
         yield return new WaitForEndOfFrame();
-        c_myCollider.isTrigger = false;
+        //c_myCollider.isTrigger = false;
 
         yield return new WaitForSeconds(_f_lifeTime);
         Die();
