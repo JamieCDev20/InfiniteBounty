@@ -22,7 +22,7 @@ public class Sofa : MonoBehaviour, IInteractible
         {
             PlayerMover pm = interactor.GetComponent<PlayerMover>();
 
-            if (pm)
+            if (pm.transform.parent == null && pm.transform != transform.root)
             {
                 pm.GetComponent<Rigidbody>().isKinematic = true;
 
