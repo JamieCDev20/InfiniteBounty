@@ -25,17 +25,31 @@ public class Sofa : MonoBehaviour, IInteractible
             if (pm.transform.parent == null && pm.transform != transform.root)
             {
                 pm.enabled = false;
+                pm.GetComponent<Rigidbody>().isKinematic = true;
+
+                pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
+                pm.transform.position = t_sitPosition.position;
+                pm.transform.forward = t_sitPosition.forward;
+
+                if (go_audioSourceObject)
+                    go_audioSourceObject.SetActive(true);
+
+                /*
+                pm.enabled = false;
                 pm.GetComponent<Collider>().enabled = false;
 
                 pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
+
                 pm.transform.parent = t_sitPosition;
                 pm.transform.localPosition = Vector3.zero;
                 pm.transform.forward = t_sitPosition.forward;
+
                 pm.GetComponent<Rigidbody>().rotation = t_sitPosition.rotation;
                 pm.GetComponent<Rigidbody>().isKinematic = true;
 
                 if (go_audioSourceObject)
                     go_audioSourceObject.SetActive(true);
+                */
                 b_isBeingUsed = true;
             }
         }
