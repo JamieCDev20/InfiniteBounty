@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EmptyToolSlot : MonoBehaviour
 {
-    private int i_toolID;
-    private int i_rackID;
+    [SerializeField] private int i_toolID;
+    [SerializeField] private int i_rackID;
     private ToolSlot ts_slot;
 
     public int ToolID { get { return i_toolID; } set { i_toolID = value; } }

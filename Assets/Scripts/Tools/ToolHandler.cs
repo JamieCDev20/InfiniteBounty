@@ -51,10 +51,13 @@ public class ToolHandler : SubjectBase
         Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
-            if (A_tools[(int)ts])
-                A_tools[(int)ts].SetActive(false);
+            ToolBase tb = null;
+            AugmentGo ab = null;
             // Are we getting a tool, an augment or something else?
-            ToolBase tb = hit.transform.GetComponent<ToolBase>();
+            try { tb = hit.transform.GetComponent<ToolBase>(); }
+            catch (System.InvalidCastException e) { }
+            try { ab = hit.transform.GetComponent<AugmentGo>(); }
+            catch (System.InvalidCastException e) { }
             // Which shop is it?
             Shop sr = hit.transform.root.GetComponent<Shop>();
             // Put a tool back;
@@ -64,6 +67,7 @@ public class ToolHandler : SubjectBase
             {
                 if (A_tools[(int)ts] == null)
                     return true;
+                Debug.Log(string.Format("Tool Slot: {0} Empty Rack Slot: {1}", A_tools[(int)ts].RackID, ets.RackID));
                 if (A_tools[(int)ts].RackID == ets.RackID)
                 {
                     CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
@@ -71,6 +75,7 @@ public class ToolHandler : SubjectBase
                     tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                     return true;
                 }
+                return false;
             }
             switch (sr)
             {
@@ -89,18 +94,42 @@ public class ToolHandler : SubjectBase
                                 return true;
                         }
                     }
-                    switch (tb)
+                    if(GetComponent<NugManager>().Nugs >= tb.Cost)
                     {
-                        case WeaponTool wt:
-                            tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
-                            CallSwapTool(ts, tb.ToolID, tr, true);
-                            A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
-                            return true;
-                        case MobilityTool mt:
-                            tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
-                            CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                            A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
-                            return true;
+
+                        switch (tb)
+                        {
+                            case WeaponTool wt:
+                                tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
+                                GetComponent<NugManager>().CollectNugs(-tb.Cost);
+                                CallSwapTool(ts, tb.ToolID, tr, true);
+                                A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+                                return true;
+                            case MobilityTool mt:
+                                tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
+                                GetComponent<NugManager>().CollectNugs(-mt.Cost);
+                                CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                                A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                return true;
+                        }
+                    }
+                    else
+                    {
+                        switch (sr)
+                        {
+                            case ToolRack toolRackRef:
+                                switch (tb)
+                                {
+                                    case WeaponTool wt:
+                                        toolRackRef.UnableToBuy(wt.RackID, true);
+                                        break;
+                                    case MobilityTool mt:
+                                        toolRackRef.UnableToBuy(mt.RackID, false);
+                                        break;
+                                }
+                                break;
+
+                        }
                     }
                     return false;
             }

@@ -15,6 +15,7 @@ public class NugManager : SubjectBase, ObserverBase
     private int i_playerID;
     private Text t_nugText;
     private HUDController hud;
+    public int Nugs { get { return i_totalNugs; } }
 
     // Start is called before the first frame update
     void Start()

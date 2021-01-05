@@ -20,6 +20,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     #endregion
 
     #region Serialized Vars
+    [SerializeField] protected int i_cost;
     [SerializeField] protected bool b_purchased;
     [SerializeField] protected EnergyGauge eg_gauge;
     [SerializeField] protected float f_timeBetweenUsage;
@@ -39,6 +40,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     public bool ReleaseActivated { get { return b_releaseActivated; } }
     public int ToolID { get { return i_toolId; } set { i_toolId = value; } }
     public int RackID { get { return i_rackId; } set { i_rackId = value; } }
+    public int Cost { get { return i_cost; } }
 
     #endregion
 
@@ -59,7 +61,6 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public void Purchase(GameObject _go_owner, Transform _t_camera, Shop _sh_shopRef, params int[] _i_purchaseParams)
     {
-        GetComponent<Collider>().isTrigger = true;
         // Get the tool handler and swap the tool
         ToolHandler th = _go_owner.GetComponent<ToolHandler>();
         if (th)
