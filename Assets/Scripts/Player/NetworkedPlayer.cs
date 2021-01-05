@@ -54,7 +54,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         x.playerIM.ChangedScene();
         FindObjectOfType<CameraController>().SetFollow(x.t_thisPlayer);
-
+        t_thisPlayer.SendMessage("FullRespawn");
         NetworkManager.x.SetCanLoad(true);
     }
 
