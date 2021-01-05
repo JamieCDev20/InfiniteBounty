@@ -24,6 +24,8 @@ public class PlayerAnimator : MonoBehaviour
 
     private PlayerMover pm_mover;
     private PlayerInputManager pim_inputManager;
+
+
     private Transform camTransform;
     private Animator anim;
     private Rigidbody rb;
@@ -47,6 +49,25 @@ public class PlayerAnimator : MonoBehaviour
         GetMovementSpeed();
         CheckJumpAnims();
         SetShootingBools();
+
+        if (Input.anyKeyDown)
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright"))
+            {
+                if (anim.GetBool("SofaLeft"))
+                {
+                    anim.SetBool("SofaLeft", false);
+                    rb.isKinematic = false;
+                    pm_mover.enabled = true;
+                }
+                if (anim.GetBool("SofaRight"))
+                {
+                    anim.SetBool("SofaRight", false);
+                    rb.isKinematic = false;
+                    pm_mover.enabled = true;
+                }
+            }
+        }
     }
 
     private void LateUpdate()
@@ -55,7 +76,6 @@ public class PlayerAnimator : MonoBehaviour
         {
             MakeAnArmDoTheRightThing(armR, -1);
             MakeAnArmDoTheRightThing(armL, 1);
-
         }
     }
 
@@ -97,6 +117,13 @@ public class PlayerAnimator : MonoBehaviour
         arm.Rotate(transform.up * fix, 90);
     }
 
+    internal void DoSitDown(bool b_isRightSide)
+    {
+        if (b_isRightSide)
+            anim.SetBool("SofaRight", true);
+        else
+            anim.SetBool("SofaLeft", true);
+    }
     #endregion
 
     #region Public Voids
