@@ -194,7 +194,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public IEnumerator DeathDelay()
     {
         yield return new WaitForSeconds(2);
-        //NetworkManager.x.PlayerDied();
+        NetworkManager.x.PlayerDied();
 
     }
 

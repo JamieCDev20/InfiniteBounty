@@ -9,8 +9,12 @@ public class ToolRack : Shop
     [SerializeField] private List<EmptyToolSlot> L_weaponToolPos;
     [SerializeField] private List<EmptyToolSlot> L_mobToolPos;
     [SerializeField] private Material m_silhouette;
+    [SerializeField] private float f_maxShake;
+    [SerializeField] private float f_minShake;
+    [SerializeField] private float f_shakeTime;
     private List<int> L_weaponRackIDs = new List<int>();
     private List<int> L_mobilityRackIDs = new List<int>();
+    private bool b_currentlyShaking = false;
 
     private void OnEnable()
     {
@@ -18,9 +22,15 @@ public class ToolRack : Shop
         SetToolInRack(tl_mobTools, L_mobToolPos);
     }
 
+    /// <summary>
+    /// Takes a list of tools and places them on the rack
+    /// </summary>
+    /// <param name="_tl_loader">Type of tools to load</param>
+    /// <param name="_t_toolTransform">Transforms to load them at</param>
     private void SetToolInRack(ToolLoader _tl_loader, List<EmptyToolSlot> _t_toolTransform)
     {
         int tlLength = _tl_loader.ToolCount();
+        // Weapon tools are iterated through differently
         int toolRackID = 0;
         bool isWeapon = true;
         try
@@ -28,6 +38,7 @@ public class ToolRack : Shop
             WeaponTool weaponTesting = (WeaponTool)_tl_loader.GetPrefabTool(0);
         }
         catch (System.InvalidCastException) { isWeapon = false; }
+
         for (int i = 0; i < tlLength; i++)
         {
             // Mobility and weapon transforms are set to different transforms
@@ -37,13 +48,15 @@ public class ToolRack : Shop
 
             // Unpurchased weapons set their material to a silhouette
             if (!tb.Purchased)
-                tb.GetComponent<MeshRenderer>().sharedMaterial = m_silhouette;
+                foreach(MeshRenderer mr in tb.GetComponentsInChildren<MeshRenderer>())
+                    mr.sharedMaterial = m_silhouette;
 
             tb.RackID = toolRackID;
             tb.gameObject.SetActive(true);
 
             parent.ToolID = tb.ToolID;
-            parent.RackID = tb.RackID;
+            parent.RackID = toolRackID;
+            Debug.Log(string.Format("Tool Rack: {0} | Parent: {1}", toolRackID, parent.RackID));
             parent.gameObject.SetActive(false);
             if (isWeapon)
             {
@@ -101,7 +114,12 @@ public class ToolRack : Shop
         {
             ToolBase tb = tl_weaponTools.GetToolAt(_i_ID);
             tb.gameObject.SetActive(false);
-            L_weaponToolPos[_i_ID].gameObject.SetActive(true);
+            foreach (EmptyToolSlot ts in L_weaponToolPos)
+                if (ts.RackID == _i_ID && ts.ToolID == tb.ToolID)
+                {
+                    ts.gameObject.SetActive(true);
+                    Debug.Log(string.Format("ID: {0} | Object: {1}", _i_ID, ts.gameObject.name));
+                }
             return tb.RackID;
         }
         else
@@ -111,5 +129,32 @@ public class ToolRack : Shop
             L_mobToolPos[_i_ID].gameObject.SetActive(true);
             return tb.RackID;
         }
+    }
+
+    public void UnableToBuy(int _i_rackID, bool _b_rackType)
+    {
+        ToolBase toolRef = _b_rackType ? tl_weaponTools.GetToolAt(_i_rackID) : tl_mobTools.GetToolAt(_i_rackID);
+        toolRef = tl_weaponTools.GetToolAt(_i_rackID);
+        Transform toolOrigin = toolRef.transform;
+        if (!b_currentlyShaking)
+        {
+            b_currentlyShaking = true;
+            StartCoroutine(ShakeTool(toolRef, toolOrigin.position));
+        }
+    }
+
+    private IEnumerator ShakeTool(ToolBase _tb_toolToShake, Vector3 _v_origin)
+    {
+        float timr = 0;
+        float str = Random.Range(f_minShake, f_maxShake);
+        while (timr < f_shakeTime)
+        {
+            _tb_toolToShake.transform.position = new Vector3(_v_origin.x + Mathf.Sin(str * Time.deltaTime),
+                _v_origin.y, _v_origin.z);
+                timr += Time.deltaTime;
+        }
+        yield return new WaitForEndOfFrame();
+        _tb_toolToShake.transform.position = _v_origin;
+        b_currentlyShaking = false;
     }
 }
