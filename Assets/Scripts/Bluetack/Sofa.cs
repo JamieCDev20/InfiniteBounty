@@ -41,6 +41,11 @@ public class Sofa : MonoBehaviour, IInteractible
         }
     }
 
+    public Transform GetChairTrasnsform()
+    {
+        return t_sitPosition;
+    }
+
     internal void EndSit()
     {
         if (go_audioSourceObject)

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator : MonoBehaviourPun
 {
 
     //Variables
@@ -129,12 +129,21 @@ public class PlayerAnimator : MonoBehaviour
     internal void DoSitDown(bool b_isRightSide, Sofa _s_newSofa)
     {
         s_currentSofa = _s_newSofa;
-
+        photonView.RPC("RemoteSit", RpcTarget.Others, _s_newSofa.GetChairTrasnsform().forward);
         if (b_isRightSide)
             anim.SetBool("SofaRight", true);
         else
             anim.SetBool("SofaLeft", true);
     }
+
+    [PunRPC]
+    public void RemoteSit(Vector3 forward)
+    {
+        GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(forward, Vector3.up);
+        GetComponent<Rigidbody>().isKinematic = true;
+
+    }
+
     #endregion
 
     #region Public Voids
