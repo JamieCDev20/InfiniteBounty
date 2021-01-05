@@ -27,12 +27,15 @@ public class Sofa : MonoBehaviour, IInteractible
             pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
             pm.transform.position = t_sitPosition.position;
             pm.transform.forward = t_sitPosition.forward;
-            go_audioSourceObject.SetActive(true);
+
+            if (go_audioSourceObject)
+                go_audioSourceObject.SetActive(true);
         }
     }
 
     internal void EndSit()
     {
-        go_audioSourceObject.SetActive(false);
+        if (go_audioSourceObject)
+            go_audioSourceObject.SetActive(false);
     }
 }
