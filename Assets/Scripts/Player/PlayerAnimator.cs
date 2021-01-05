@@ -63,6 +63,7 @@ public class PlayerAnimator : MonoBehaviour
                     s_currentSofa.EndSit();
                     s_currentSofa = null;
                     transform.parent = null;
+                    GetComponent<Collider>().enabled = true;
                 }
                 if (anim.GetBool("SofaRight"))
                 {
@@ -72,6 +73,7 @@ public class PlayerAnimator : MonoBehaviour
                     s_currentSofa.EndSit();
                     s_currentSofa = null;
                     transform.parent = null;
+                    GetComponent<Collider>().enabled = true;
                 }
             }
         }
