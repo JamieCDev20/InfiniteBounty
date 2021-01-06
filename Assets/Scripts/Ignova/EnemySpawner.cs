@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     [Header("Zone Things")]
     [SerializeField] private ZoneInfo[] ziA_enemySpawnZones = new ZoneInfo[0];
+    [SerializeField] private LayerMask lm_zoneCheckMask;
 
     private void Start()
     {
@@ -41,9 +42,10 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private void SpawnEnemyWave()
     {
+        print("Trying to spawn enemy wave");
         for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
         {
-            int _i_playerCount = Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, LayerMask.NameToLayer("Player")).Length;
+            int _i_playerCount = Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length;
             for (int x = 0; x < _i_playerCount; x++)
             {
                 print("DETECTED PLAYER IN SECTOR " + i + ". SENDING HOPDOGS.");
