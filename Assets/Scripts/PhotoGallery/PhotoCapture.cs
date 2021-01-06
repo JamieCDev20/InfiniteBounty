@@ -59,7 +59,10 @@ public class PhotoCapture : MonoBehaviour
         for (int i = 0; i < stampColor.Length; i++)
         {
             // Alpha blend here
-            //float topAlpha = 
+            float topAlpha = stampColor[i].a;
+            float destAlpha = 1f - topAlpha;
+            float alpha = topAlpha + destAlpha + botColor[botColor.Length / 2 - i].a;
+
         }
         return tex_combine;
     }
