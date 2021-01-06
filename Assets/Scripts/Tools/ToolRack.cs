@@ -67,7 +67,7 @@ public class ToolRack : Shop
 
             parent.ToolID = tb.ToolID;
             parent.RackID = toolRackID;
-            Debug.Log(string.Format("Tool Rack: {0} | Parent: {1}", toolRackID, parent.RackID));
+            //Debug.Log(string.Format("Tool Rack: {0} | Parent: {1}", toolRackID, parent.RackID));
             parent.gameObject.SetActive(false);
             if (isWeapon)
             {
