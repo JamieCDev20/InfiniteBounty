@@ -67,46 +67,30 @@ public class PhotoCapture : MonoBehaviour
         Texture2D tex_combine = new Texture2D(_tex_bottom.width, _tex_bottom.height);
         Color[] botColor = _tex_bottom.GetPixels();
         Debug.Log(string.Format("Screenshot: {0}px x {1}px.", tex_combine.width, tex_combine.height));
-        int botPoint = (_tex_bottom.width / 2) + (_tex_bottom.height / 4);
-        int topPoint = ib_photoStamp.width / 2;
         Texture2D tempTex = Instantiate(ib_photoStamp);
         TextureScale.Bilinear(tempTex, 128, 64);
+
+        int mWidth = tex_combine.width;
+        int mHeight = tex_combine.height;
 
         Color[] stampColor = tempTex.GetPixels();
         for(int i = 0; i < tempTex.width; i++)
         {
             for(int j = 0; j < tempTex.height; j++)
             {
-                Color topCol = stampColor[i+j];
-                Color botCol = botColor[i+j];
+                Color topCol = stampColor[i*j];
+                Color botCol = botColor[(mWidth + mHeight) - ((_tex_bottom.width - i) + (_tex_bottom.height - j))];
 
-                float topAlpha = topCol.a*0.15f;
+                float topAlpha = topCol.a;
                 float destAlpha = 1f - topAlpha;
                 float alpha = topAlpha + destAlpha * botCol.a;
 
                 Color result = (topCol * topAlpha + botCol * botCol.a * destAlpha) / alpha;
-                botColor[(i+j)] = result;
+                Debug.Log((mWidth + mHeight) - ((_tex_bottom.width - i) + (_tex_bottom.height - j)));
+                botColor[(mWidth + mHeight) - ((_tex_bottom.width - i) + (_tex_bottom.height - j))] = result;
             }
         }
 
-        /*for (int i = 0; i < stampColor.Length; i++)
-        {
-            int texInd = 0;
-            // Alpha blend here
-            if (i <= stampColor.Length / 2)
-                texInd = botPoint - (topPoint + i);
-            else
-                texInd = botPoint + (topPoint - i);
-            Color topCol = stampColor[i];
-            Color botCol = botColor[i];
-
-            float topAlpha = topCol.a;
-            float destAlpha = 1f - topAlpha;
-            float alpha = topAlpha + destAlpha * botCol.a;
-
-            Color result = (topCol * topAlpha + botCol * botCol.a * destAlpha) / alpha;
-            botColor[i] = result;
-        }*/
         tex_combine.SetPixels(botColor);
         tex_combine.Apply();
         return tex_combine;
