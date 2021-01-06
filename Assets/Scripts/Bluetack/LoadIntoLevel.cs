@@ -29,10 +29,10 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         if (other.CompareTag("Player"))
         {
             i_playersCount += 1;
-            if(!loadOnButtonPress)
+            if (!loadOnButtonPress)
                 CheckPlayers();
         }
-            //ReturnToShip();
+        //ReturnToShip();
     }
 
     private void OnTriggerExit(Collider other)
@@ -50,6 +50,8 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     private void LoadLevel(string levelname)
     {
         i_playersCount = 0;
+        if (levelname.Contains("Lobby"))
+            ReturnToShip();
         NetworkManager.x.LoadLevel(levelname);
     }
 
@@ -63,7 +65,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         }
         if (cCount >= PhotonNetwork.CurrentRoom.PlayerCount)
             LoadLevel(levelToLoad);
-            
+
     }
 
     #endregion

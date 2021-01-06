@@ -43,7 +43,7 @@ public class NugManager : SubjectBase, ObserverBase
         i_playerID = GetComponent<PlayerInputManager>().GetID();
 
         photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
-        //SendNugs();
+        SendNugs();
     }
 
     [PunRPC]
@@ -96,7 +96,8 @@ public class NugManager : SubjectBase, ObserverBase
     public void SendNugs()
     {
         // Send Total nugs and nugs collected
-
+        UniversalNugManager.x.RecieveNugs(i_playerID, D_nugTypeIntCount.Values, i_inLevelNugs);
+        Debug.LogError("SENDING NUGS");
         // Send nugs
         ReceiveNugs(i_inLevelNugs);
 
@@ -105,9 +106,10 @@ public class NugManager : SubjectBase, ObserverBase
     [PunRPC]
     public void SetRemoteNugs(int nugs)
     {
-        i_inLevelNugs += nugs;
-        CollectNugs(0);
-        SetPrefs();
+        //i_inLevelNugs += nugs;
+        //CollectNugs(0);
+        //SetPrefs();
+        SendNugs();
     }
 
     [PunRPC]

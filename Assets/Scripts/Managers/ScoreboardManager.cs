@@ -8,7 +8,18 @@ public class ScoreboardManager : MonoBehaviour
 
     [SerializeField] private ScoreObjects[] so_playerScoreObjects;
 
-
+    public void SetValues(int[][] values, int nugCount)
+    {
+        for (int i = 0; i < values.Length; i++)
+        {
+            so_playerScoreObjects[i].boomText.text = values[i][0].ToString();
+            //so_playerScoreObjects[i].tastyText.text = values[i, 1].ToString();
+            so_playerScoreObjects[i].thunderText.text = values[i][2].ToString();
+            so_playerScoreObjects[i].magmaText.text = values[i][3].ToString();
+            so_playerScoreObjects[i].hydroText.text = values[i][4].ToString();
+            so_playerScoreObjects[i].gooText.text = values[i][5].ToString();
+        }
+    }
 
 }
 

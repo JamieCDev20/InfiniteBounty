@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -12,6 +13,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private int[][] playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0, 0 } };
     private int i_localID = -1;
+    private int localNugCount;
 
     private void Start()
     {
@@ -20,9 +22,10 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
         else
             x = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoad;
     }
 
-    public void RecieveNugs(int id, Dictionary<NugType, int>.ValueCollection counts)
+    public void RecieveNugs(int id, Dictionary<NugType, int>.ValueCollection counts, int nugCount)
     {
         if (i_localID < 0)
         {
@@ -59,4 +62,15 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
         }
 
     }
+
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name.Contains("Lobby"))
+        {
+            ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
+            sMan.SetValues(playerNugCounts, localNugCount);
+
+        }
+    }
+
 }
