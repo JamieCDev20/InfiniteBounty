@@ -113,6 +113,8 @@ public class PlayerInputManager : MonoBehaviour
 
         ph_health = GetComponent<PlayerHealth>();
 
+        pc_capture = GetComponent<PhotoCapture>();
+
         ph_health.SetAnimator(animator);
 
         toolHandler.SetPlayerHealth(ph_health);
