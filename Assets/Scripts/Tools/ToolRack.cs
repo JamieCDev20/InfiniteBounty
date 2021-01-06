@@ -59,7 +59,7 @@ public class ToolRack : Shop
                 moneyText.gameObject.transform.parent = tb.transform;
                 moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x, tb.transform.position.y + 0.5f, tb.transform.position.z);
                 moneyText.text = tb.Cost.ToString();
-                Debug.Log(moneyText.transform.parent.name);
+                //Debug.Log(moneyText.transform.parent.name);
             }
 
             tb.RackID = toolRackID;

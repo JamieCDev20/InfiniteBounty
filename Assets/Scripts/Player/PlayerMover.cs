@@ -13,8 +13,10 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private bool b_networked = false;
 
     [Header("Motion Variables")]
-    [SerializeField] private float f_moveSpeed = 10; // How fast the player moves
-    [SerializeField] private float f_sprintMult = 2; // The multiplier applied to the base speed whilst sprinting;
+    [SerializeField] private float f_shipMoveSpeed = 10; // How fast the player moves on the ship
+    [SerializeField] private float f_planetMoveSpeed = 20; // How fast the player moves on the planet
+    [SerializeField] private float f_shipSprintMult = 2; // The multiplier applied to the base speed whilst sprinting on the ship;
+    [SerializeField] private float f_planetSprintMult = 3; // The multiplier applied to the base speed whilst sprinting on the planet;
     [SerializeField] private float f_downMult = 0.3f; // The multiplier applied to the base speed whilst down;
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
     [SerializeField] private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
@@ -35,6 +37,8 @@ public class PlayerMover : MonoBehaviour
     private bool b_down;
     private bool b_applyGravity;
     internal bool b_jumpPress;
+    private float f_currentMoveSpeed;
+    private float f_currentMultiplier;
     private bool b_jumpHold;
     private bool b_jumpUp;
     private bool b_sprintPress;
@@ -95,7 +99,7 @@ public class PlayerMover : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         v_startPos = transform.position;
-
+        SetMoveSpeeds(true);
         view = GetComponent<PhotonView>();
 
     }
@@ -112,7 +116,7 @@ public class PlayerMover : MonoBehaviour
         Vector3 dir = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up), v_groundNormal);
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
-            rb.AddForce(dir.normalized * f_moveSpeed * Time.deltaTime * (b_down? f_downMult :( b_sprintHold ? f_sprintMult : 1)), ForceMode.Impulse);
+            rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down? f_downMult :( b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.3f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
     }
@@ -217,6 +221,20 @@ public class PlayerMover : MonoBehaviour
     public void SetDown(bool _b_val)
     {
         b_down = _b_val;
+    }
+
+    public void SetMoveSpeeds(bool onShip)
+    {
+        if (onShip)
+        {
+            f_currentMoveSpeed = f_shipMoveSpeed;
+            f_currentMultiplier = f_shipSprintMult;
+        }
+        else
+        {
+            f_currentMoveSpeed = f_planetMoveSpeed;
+            f_currentMultiplier = f_planetSprintMult;
+        }
     }
 
     #endregion

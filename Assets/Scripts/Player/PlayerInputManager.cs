@@ -261,7 +261,7 @@ public class PlayerInputManager : MonoBehaviour
         b_canPickUpNugs = val;
     }
 
-    public void ChangedScene()
+    public void ChangedScene(bool onShip)
     {
         animator.PlayerRevived();
         ResetCamFollow();
@@ -269,6 +269,7 @@ public class PlayerInputManager : MonoBehaviour
         view.RPC("SetMaxHealth", RpcTarget.All);
         view.RPC("RemoteRevive", RpcTarget.All);
         b_inCannon = false;
+        mover.SetMoveSpeeds(onShip);
     }
 
     #endregion

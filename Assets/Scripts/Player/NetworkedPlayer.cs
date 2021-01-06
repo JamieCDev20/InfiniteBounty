@@ -52,9 +52,10 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //playerIM.gameObject.SetActive(true);
         x.view.RPC("Respawn", RpcTarget.All);
 
-        x.playerIM.ChangedScene();
+        x.playerIM.ChangedScene(scene.name.Contains("Lobby"));
         FindObjectOfType<CameraController>().SetFollow(x.t_thisPlayer);
         t_thisPlayer.SendMessage("FullRespawn");
+
         NetworkManager.x.SetCanLoad(true);
     }
 
