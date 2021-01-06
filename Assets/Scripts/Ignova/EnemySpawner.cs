@@ -37,8 +37,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             SpawnEnemyWave();
 
 
-        if (!PhotonNetwork.IsMasterClient)
-            Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
+        Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
 
@@ -61,12 +60,13 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             _fL.Add(_f_max * 2);
         }
 
-        for (int i = 0; i < _fL.Count; i++)
-        {
-            float rando = Random.Range(0, _f_max);
-            if (rando >= _fL[i] && rando < _fL[i + 1])
-                SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], tA_spawnPoints[Random.Range(0, tA_spawnPoints.Length)].position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
-        }
+        for (int x = 0; x < Random.Range(v_enemiesPerWave.x, v_enemiesPerWave.y); x++)
+            for (int i = 0; i < _fL.Count; i++)
+            {
+                float rando = Random.Range(0, _f_max);
+                if (rando >= _fL[i] && rando < _fL[i + 1])
+                    SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], tA_spawnPoints[Random.Range(0, tA_spawnPoints.Length)].position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
+            }
 
         Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
