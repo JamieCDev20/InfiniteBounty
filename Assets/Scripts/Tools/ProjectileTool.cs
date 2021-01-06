@@ -30,7 +30,7 @@ public class ProjectileTool : WeaponTool
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
             PlayParticles(true);
-            cc_cam.Recoil(f_recoil);
+            cc_cam?.Recoil(f_recoil);
             PlayAudio(ac_activationSound);
         }
     }
