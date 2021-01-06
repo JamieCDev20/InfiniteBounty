@@ -5106,6 +5106,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5665405912644170931}
+  - component: {fileID: 3808196956226405949}
+  - component: {fileID: 6591933635237699285}
   m_Layer: 0
   m_Name: PerformanceReviewScreen
   m_TagString: Untagged
@@ -5130,6 +5132,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3808196956226405949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665405912644170928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c982f0095c86f574cab8b574147bd942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_radius: 3
+  go_screenObject: {fileID: 5665405912925813552}
+--- !u!135 &6591933635237699285
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665405912644170928}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5665405912842630487
 GameObject:
   m_ObjectHideFlags: 0
@@ -5223,7 +5252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5665405912925813548
 RectTransform:
   m_ObjectHideFlags: 0
