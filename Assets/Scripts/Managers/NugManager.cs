@@ -31,6 +31,9 @@ public class NugManager : SubjectBase, ObserverBase
                 ngo.AddObserver(this);
             }
         }
+
+        ReceiveNugs(1000);
+        Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
     }
 
 

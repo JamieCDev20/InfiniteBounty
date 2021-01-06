@@ -16,6 +16,7 @@ public class ProjectileTool : WeaponTool
     {
         b_active = val;
         cc_cam = transform.root.GetComponent<PlayerInputManager>().GetCamera();
+        c_playerCollider = transform.root.GetComponent<Collider>();
     }
 
     public override void Use(Vector3 _v_forwards)
@@ -29,7 +30,7 @@ public class ProjectileTool : WeaponTool
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
             PlayParticles(true);
-            //cc_cam.Recoil(f_recoil);
+            cc_cam.Recoil(f_recoil);
             PlayAudio(ac_activationSound);
         }
     }
