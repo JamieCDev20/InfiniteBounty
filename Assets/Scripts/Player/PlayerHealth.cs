@@ -64,7 +64,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         if (!view.IsMine || isDead)
             return;
-        print(damage + " DMG taken");
+        //print(damage + " DMG taken");
 
         if (acA_hurtClips.Length > 0)
             AudioSource.PlayClipAtPoint(acA_hurtClips[acA_hurtClips.Length], transform.position);
@@ -92,6 +92,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public void Respawn()
     {
         SetMaxHealth();
+        isDead = false;
+        b_downed = false;
         ToggleAlive(true);
 
     }

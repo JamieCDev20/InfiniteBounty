@@ -51,7 +51,6 @@ public class Jetpack : MobilityTool
                 rb.velocity = Vector3.Lerp(rb.velocity, v_targetV, .5f);
                 PlayParticles(true);
                 f_timeHeld += t;
-                Debug.Log(v_targetV.y);
 
                 f_currentFuel -= t;
                 UpdateFuelMeter();

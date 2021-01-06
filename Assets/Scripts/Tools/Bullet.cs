@@ -12,7 +12,6 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private float f_lifeTime;
     [SerializeField] private GameObject go_hitEffect;
     [SerializeField] private LayerMask lm_placementLayer;
-    [SerializeField] private Rigidbody rb;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
     [SerializeField] private Collider c_myCollider;
@@ -25,6 +24,7 @@ public class Bullet : MonoBehaviour, IPoolable
     private bool b_explosive;
     private bool b_gooey;
     private bool b_soaked;
+    private Rigidbody rb;
 
     protected bool b_inPool;
     protected int i_poolIndex;
@@ -34,6 +34,7 @@ public class Bullet : MonoBehaviour, IPoolable
         c_myCollider.isTrigger = true;
         i_damage = _i_damage;
         i_lodeDamage = _i_lodeDamage;
+        rb = GetComponent<Rigidbody>();
         transform.localScale = Vector3.one;
         transform.rotation = Quaternion.identity;
         StartCoroutine(DeathTimer(f_lifeTime));
@@ -108,7 +109,8 @@ public class Bullet : MonoBehaviour, IPoolable
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
         if (tr_bulletTrail != null)
             tr_bulletTrail.Clear();
-        rb.velocity = Vector3.zero;
+        if (rb != null)
+            rb.velocity = Vector3.zero;
     }
 
 
