@@ -81,7 +81,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             {
                 float rando = Random.Range(0, _f_max);
                 if (rando >= _fL[i] && rando < _fL[i + 1])
-                    SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
+                    SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
             }
     }
 
