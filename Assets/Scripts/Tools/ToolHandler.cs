@@ -281,6 +281,12 @@ public class ToolHandler : SubjectBase
         if (A_tools[(int)_ts_] != null)
         {
             A_tools[(int)_ts_].gameObject.SetActive(true);
+            try
+            {
+                A_tools[(int)_ts_].GetComponent<Collider>().enabled = false;
+            }
+            catch (System.NullReferenceException e) { }
+
             if (!A_tools[(int)_ts_].Purchased)
             {
                 L_ownedTools.Add(A_tools[(int)_ts_]);
