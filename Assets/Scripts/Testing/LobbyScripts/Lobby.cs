@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
+using System;
 
 public class Lobby : MonoBehaviourPunCallbacks
 {
@@ -17,6 +18,9 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private Button HostButton;
 
     private List<Listing> goL_listings = new List<Listing>();
+    private List<RoomInfo> riL_currentRooms = new List<RoomInfo>();
+    [Space, SerializeField] private int f_lobbyButtonHeight;
+    [SerializeField] private int f_topmostLobbyPositionY;
 
     private void Start()
     {
@@ -29,6 +33,14 @@ public class Lobby : MonoBehaviourPunCallbacks
             if_gameTitleInput.text = PlayerPrefs.GetString("roomName");
         if_gameTitleInput.characterLimit = 16;
         if_playerName.characterLimit = 16;
+
+        for (int i = 0; i < 20; i++)
+        {
+            GameObject _go = Instantiate(go_roomListing, t_roomListParent);
+            _go.SetActive(false);
+            goL_listings.Add(_go.GetComponent<Listing>());
+        }
+
     }
 
     public void OnRoomNameChange()
@@ -50,7 +62,7 @@ public class Lobby : MonoBehaviourPunCallbacks
         //PhotonNetwork.JoinLobby();
     }
 
-    public override void OnJoinedLobby() 
+    public override void OnJoinedLobby()
     {
         Debug.Log("joined lobby");
     }
@@ -78,7 +90,7 @@ public class Lobby : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(if_gameTitleInput.text, new RoomOptions { MaxPlayers = 4 }, TypedLobby.Default);
         t_camera.gameObject.SetActive(false);
     }
-    
+
     public void OnClickQuit()
     {
 
@@ -89,12 +101,56 @@ public class Lobby : MonoBehaviourPunCallbacks
 #endif
     }
 
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-        Debug.Log("room list update : " + roomList.Count);
-        UpdateRoomList(roomList);
 
+        //PhotonNetwork.JoinLobby(TypedLobby.Default);
+
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            if (riL_currentRooms.Contains(roomList[i]))
+            {
+                riL_currentRooms.Remove(roomList[i]);
+                if (riL_currentRooms[i].PlayerCount < riL_currentRooms[i].MaxPlayers)
+                    riL_currentRooms.Add(roomList[i]);
+            }
+            else
+                riL_currentRooms.Add(roomList[i]);
+        }
+        UpdateRoomListDisplay();
+    }
+
+    private void UpdateRoomListDisplay()
+    {
+        for (int i = 0; i < 20; i++)
+            goL_listings[i].gameObject.SetActive(false);
+
+        for (int i = 0; i < riL_currentRooms.Count; i++)
+        {
+            goL_listings[i].gameObject.SetActive(true);
+            goL_listings[i].SetInfo(riL_currentRooms[i]);
+        }
+    }
+
+
+
+
+    /*
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        base.OnRoomListUpdate(roomList);
+
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            if (riL_currentRooms.Contains(roomList[i]))
+                riL_currentRooms.Remove(roomList[i]);
+            else
+                riL_currentRooms.Add(roomList[i]);
+        }
+
+        UpdateRoomList(riL_currentRooms);
     }
 
     private void UpdateRoomList(List<RoomInfo> roomList)
@@ -143,6 +199,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 
         RemoveAllNullFromList(goL_listings);
     }
+    */
 
     private void RemoveAllNullFromList(List<Listing> list)
     {
