@@ -27,6 +27,8 @@ public class Lobby : MonoBehaviourPunCallbacks
             if_playerName.text = PlayerPrefs.GetString("playerName");
         if (PlayerPrefs.HasKey("roomName"))
             if_gameTitleInput.text = PlayerPrefs.GetString("roomName");
+        if_gameTitleInput.characterLimit = 16;
+        if_playerName.characterLimit = 16;
     }
 
     public void OnRoomNameChange()
