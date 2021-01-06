@@ -32,8 +32,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < i_enemiesAtStart * 0.5f; i++)
         {
-            SpawnEnemiesInZone(0);
-            SpawnEnemiesInZone(1);
+            SpawnEnemiesInZone(0, 1);
+            SpawnEnemiesInZone(1, 1);
         }
 
         Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
@@ -58,6 +58,9 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private void SpawnEnemiesInZone(int _i_zoneIndex)
     {
+        if (i_numberOfEnemies > i_maxNumberOfEnemies)
+            return;
+
         float _f_max = 0;
         List<float> _fL = new List<float>();
 
@@ -65,17 +68,44 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             _f_max += fA_enemyPerWaveWeighting[i];
 
 
-        if (i_numberOfEnemies < i_maxNumberOfEnemies)
+        for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
         {
-            for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
-            {
-                _fL.Add(_f_max);
-                _f_max += fA_enemyPerWaveWeighting[i];
-            }
-            _fL.Add(_f_max * 2);
+            _fL.Add(_f_max);
+            _f_max += fA_enemyPerWaveWeighting[i];
         }
+        _fL.Add(_f_max * 2);
+
 
         for (int x = 0; x < Random.Range(v_enemiesPerWave.x, v_enemiesPerWave.y); x++)
+            for (int i = 0; i < _fL.Count; i++)
+            {
+                float rando = Random.Range(0, _f_max);
+                if (rando >= _fL[i] && rando < _fL[i + 1])
+                    SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-3 + (Random.value * 6), 0, -3 + (Random.value * 6)));
+            }
+    }
+
+    private void SpawnEnemiesInZone(int _i_zoneIndex, int _i_amountOfEnemiesToSpawn)
+    {
+        if (i_numberOfEnemies > i_maxNumberOfEnemies)
+            return;
+
+        float _f_max = 0;
+        List<float> _fL = new List<float>();
+
+        for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
+            _f_max += fA_enemyPerWaveWeighting[i];
+
+
+        for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
+        {
+            _fL.Add(_f_max);
+            _f_max += fA_enemyPerWaveWeighting[i];
+        }
+        _fL.Add(_f_max * 2);
+
+
+        for (int x = 0; x < _i_amountOfEnemiesToSpawn; x++)
             for (int i = 0; i < _fL.Count; i++)
             {
                 float rando = Random.Range(0, _f_max);
