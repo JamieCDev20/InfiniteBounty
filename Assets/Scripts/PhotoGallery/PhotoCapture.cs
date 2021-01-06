@@ -18,9 +18,9 @@ public class PhotoCapture : MonoBehaviour
         cam = c_cam;
     }
 
-    public void RecieveInputs(float _f_button)
+    public void RecieveInputs(bool _b_button)
     {
-        if (_f_button > 0)
+        if (_b_button)
             TakePhoto();
     }
 
@@ -55,11 +55,11 @@ public class PhotoCapture : MonoBehaviour
     {
         Texture2D tex_combine = new Texture2D(_tex_bottom.width, _tex_bottom.height);
         Color[] botColor = _tex_bottom.GetPixels();
-        Color[] stampColor = ib_photoStamp.
-        for (int i = 0; i < ib_photoStamp.Length; i++)
+        Color[] stampColor = ib_photoStamp.GetPixels();
+        for (int i = 0; i < stampColor.Length; i++)
         {
             // Alpha blend here
-
+            //float topAlpha = 
         }
         return tex_combine;
     }
