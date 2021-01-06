@@ -6,10 +6,22 @@ using System.IO;
 public class PhotoCapture : MonoBehaviour
 {
     private Camera cam;
+    [SerializeField] private Texture2D ib_photoStamp;
 
     public void Start()
     {
-        cam = Camera.main;
+        RecieveCamera(Camera.main);
+    }
+
+    public void RecieveCamera(Camera c_cam)
+    {
+        cam = c_cam;
+    }
+
+    public void RecieveInputs(float _f_button)
+    {
+        if (_f_button > 0)
+            TakePhoto();
     }
 
     private void TakePhoto()
@@ -37,5 +49,18 @@ public class PhotoCapture : MonoBehaviour
         if (!Directory.Exists(Application.dataPath + "/ScreenShots"))
             Directory.CreateDirectory(Application.dataPath + "/ScreenShots");
         return Application.dataPath + "/ScreenShots";
+    }
+
+    private Texture2D AlphaBlend(Texture2D _tex_bottom)
+    {
+        Texture2D tex_combine = new Texture2D(_tex_bottom.width, _tex_bottom.height);
+        Color[] botColor = _tex_bottom.GetPixels();
+        Color[] stampColor = ib_photoStamp.
+        for (int i = 0; i < ib_photoStamp.Length; i++)
+        {
+            // Alpha blend here
+
+        }
+        return tex_combine;
     }
 }
