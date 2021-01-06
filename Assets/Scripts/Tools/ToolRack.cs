@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ToolRack : Shop
 {
@@ -9,6 +10,8 @@ public class ToolRack : Shop
     [SerializeField] private List<EmptyToolSlot> L_weaponToolPos;
     [SerializeField] private List<EmptyToolSlot> L_mobToolPos;
     [SerializeField] private Material m_silhouette;
+    [SerializeField] private Material m_purchased;
+    [SerializeField] private TMP_Text txt_exampleText;
     [SerializeField] private float f_maxShake;
     [SerializeField] private float f_minShake;
     [SerializeField] private float f_shakeTime;
@@ -47,9 +50,17 @@ public class ToolRack : Shop
             tb.transform.position = parent.transform.position;
 
             // Unpurchased weapons set their material to a silhouette
+            ApplyMaterials(tb);
             if (!tb.Purchased)
-                foreach(MeshRenderer mr in tb.GetComponentsInChildren<MeshRenderer>())
-                    mr.sharedMaterial = m_silhouette;
+            {
+                TMP_Text moneyText = Instantiate<TMP_Text>(txt_exampleText);
+                //moneyText.gameObject.AddComponent<Billboard>();
+                moneyText.gameObject.SetActive(true);
+                moneyText.gameObject.transform.parent = tb.transform;
+                moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x, tb.transform.position.y + 0.5f, tb.transform.position.z);
+                moneyText.text = tb.Cost.ToString();
+                Debug.Log(moneyText.transform.parent.name);
+            }
 
             tb.RackID = toolRackID;
             tb.gameObject.SetActive(true);
@@ -102,9 +113,15 @@ public class ToolRack : Shop
     public void ReturnToRack(int _i_ID, bool _b_rackType)
     {
         if (_b_rackType)
+        {
             tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+            ApplyMaterials(tl_weaponTools.GetToolAt(_i_ID));
+        }
         else
+        {
             tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+            ApplyMaterials(tl_mobTools.GetToolAt(_i_ID));
+        }
 
     }
 
@@ -141,6 +158,16 @@ public class ToolRack : Shop
             b_currentlyShaking = true;
             StartCoroutine(ShakeTool(toolRef, toolOrigin.position));
         }
+    }
+
+    private void ApplyMaterials(ToolBase _tb_toolToMat)
+    {
+        if (!_tb_toolToMat.Purchased)
+            foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
+                mr.sharedMaterial = m_silhouette;
+        else
+            foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
+                mr.sharedMaterial = m_purchased;
     }
 
     private IEnumerator ShakeTool(ToolBase _tb_toolToShake, Vector3 _v_origin)
