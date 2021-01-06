@@ -24,6 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private string s_rightToolUse = "RightTool";
     [SerializeField] private string s_interactButton = "Use";
     [SerializeField] private string s_pauseButton = "Pause";
+    [SerializeField] private string s_captureButton = "ScreenShot";
     [SerializeField] private TextMeshPro nameText;
     [Space]
     [SerializeField] private bool offline = false;
@@ -41,6 +42,7 @@ public class PlayerInputManager : MonoBehaviour
     private bool b_sprintPress;
     private bool b_sprintHold;
     private bool b_sprintRelease;
+    private bool b_capturePress;
 
     private bool b_canPickUpNugs;
     private bool b_pausePressed;
@@ -58,6 +60,7 @@ public class PlayerInputManager : MonoBehaviour
     private PhotonView view;
     private NugManager nugMan;
     private PlayerHealth ph_health;
+    private PhotoCapture pc_capture;
     private Rigidbody rb;
     internal bool b_shouldPassInputs = true;
 
@@ -142,6 +145,8 @@ public class PlayerInputManager : MonoBehaviour
         toolBools.b_RToolHold = Input.GetButton(s_rightToolUse);
         toolBools.b_RToolUp = Input.GetButtonUp(s_rightToolUse);
 
+        b_capturePress = Input.GetButtonDown(s_captureButton);
+
         b_pausePressed = Input.GetButtonDown(s_pauseButton);
 
         if (Input.GetButtonDown(s_interactButton))
@@ -159,6 +164,8 @@ public class PlayerInputManager : MonoBehaviour
         camControl.SetLookInput(v2_lookVector);
 
         toolHandler.RecieveInputs(toolBools);
+
+        pc_capture.RecieveInputs(b_capturePress);
 
     }
 
