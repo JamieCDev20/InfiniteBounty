@@ -37,8 +37,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-            TakeDamage(10000);
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    TakeDamage(10000);
         if(b_downed)
         {
             f_downHealth -= Time.deltaTime;
