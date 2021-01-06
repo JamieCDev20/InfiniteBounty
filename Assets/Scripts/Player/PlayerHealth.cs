@@ -50,6 +50,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (b_canRegen)
         {
             f_currentHealth = Mathf.Clamp(f_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
+            hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
         }
         else
         {
