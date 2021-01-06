@@ -20,6 +20,7 @@ public class ToolHandler : SubjectBase
     [SerializeField] private ToolBase[] A_tools = new ToolBase[3];
     [SerializeField] private ToolLoader[] A_toolLoaders;
     [SerializeField] private LayerMask lm_shoppingMask;
+    [SerializeField] private LayerMask lm_shootingMask;
 
     #endregion
 
@@ -346,9 +347,8 @@ public class ToolHandler : SubjectBase
                 if (!A_tools[(int)ts].ReleaseActivated)
                 {
                     RaycastHit hit;
-                    LayerMask mask = ~LayerMask.NameToLayer("Player");
                     Vector3 dir = t_camTransform.forward;
-                    if (Physics.Raycast(t_camTransform.position, t_camTransform.forward, out hit, 10000, mask))
+                    if (Physics.Raycast(t_camTransform.position, t_camTransform.forward, out hit, 10000, lm_shootingMask, QueryTriggerInteraction.Ignore))
                     {
                         dir = hit.point - A_toolTransforms[(int)ts].position;
                     }
