@@ -32,6 +32,7 @@ public class WeaponTool : ToolBase
     // Detonation is if it explodes immediately, on impact or on a timer
     #region Protected
     [SerializeField] protected bool b_rackUpgrade;
+    [SerializeField] protected Collider c_playerCollider;
     #endregion
 
 

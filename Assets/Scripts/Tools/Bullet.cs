@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour, IPoolable
     protected bool b_inPool;
     protected int i_poolIndex;
 
-    public void Setup(int _i_damage, int _i_lodeDamage)
+    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol)
     {
         c_myCollider.isTrigger = true;
         i_damage = _i_damage;
@@ -38,11 +38,19 @@ public class Bullet : MonoBehaviour, IPoolable
         transform.localScale = Vector3.one;
         transform.rotation = Quaternion.identity;
         StartCoroutine(DeathTimer(f_lifeTime));
+        //Invoke("BecomeCollidable", Time.deltaTime);
+        BecomeCollidable(_c_playerCol);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void BecomeCollidable(Collider playerCollider)
     {
-        IHitable temp = other.gameObject.GetComponent<IHitable>();
+        Physics.IgnoreCollision(c_myCollider, playerCollider, true);
+        c_myCollider.isTrigger = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        IHitable temp = collision.gameObject.GetComponent<IHitable>();
         switch (temp)
         {
             case NGoapAgent nga:
@@ -61,17 +69,14 @@ public class Bullet : MonoBehaviour, IPoolable
         go_hitEffect.SetActive(false);
         go_hitEffect.transform.parent = transform;
         go_hitEffect.transform.localPosition = Vector3.zero;
-        go_hitEffect.transform.forward = transform.position - other.transform.position;
+        go_hitEffect.transform.forward = collision.contacts[0].normal;
         go_hitEffect.transform.parent = null;
         go_hitEffect.SetActive(true);
 
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
 
-        transform.LookAt(other.transform);
-
         Die();
-
     }
 
     public void MoveBullet(Vector3 _v_dir, float _f_force)
