@@ -32,8 +32,8 @@ public class NugManager : SubjectBase, ObserverBase
             }
         }
 
-        ReceiveNugs(1000);
-        Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
+        //ReceiveNugs(1000);
+        //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
     }
 
 
