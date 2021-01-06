@@ -64,7 +64,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         if (!mover.HasPath())
             mover.Retarget(target, true);
         anim.SetBool("Running", rb.velocity.magnitude >= 0.1f);
-        if(rb.velocity.magnitude > 0.1f)
+        if(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up).magnitude > 0.1f)
             transform.rotation = Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up);
         go_aggroParticles.SetActive(target != null);
         mover.Move();

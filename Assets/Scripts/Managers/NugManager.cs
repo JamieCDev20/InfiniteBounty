@@ -15,6 +15,7 @@ public class NugManager : SubjectBase, ObserverBase
     private int i_playerID;
     private Text t_nugText;
     private HUDController hud;
+    private Dictionary<NugType, int> D_nugTypeIntCount = new Dictionary<NugType, int> { { NugType.boom, 0 }, { NugType.goo, 0 }, { NugType.hydro, 0 }, { NugType.magma, 0 }, { NugType.tasty, 0 }, { NugType.thunder, 0 } };
     public int Nugs { get { return i_totalNugs; } }
 
     // Start is called before the first frame update
@@ -58,7 +59,10 @@ public class NugManager : SubjectBase, ObserverBase
         {
             case CurrencyEvent ce:
                 if (ce.AddOrSubtract)
+                {
                     CollectNugs(ce.AmountToChange);
+                    D_nugTypeIntCount[ce.Nug.nt_type] += 1;
+                }
                 else
                     CollectNugs(-ce.AmountToChange);
                 break;

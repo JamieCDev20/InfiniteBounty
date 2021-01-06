@@ -216,6 +216,9 @@ public class PlayerInputManager : MonoBehaviour
         animator.SetCam(camControl.transform.GetChild(0));
         nugMan.SetNugTextRef(camControl.GetNugCountText());
         ph_health.Cam = camControl;
+
+        //pc_capture.RecieveCameraController(camControl);
+
     }
 
     public void ResetCamFollow()

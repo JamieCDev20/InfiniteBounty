@@ -32,7 +32,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable
             if (!other.GetComponent<PlayerInputManager>().CanPickUpNugs())
                 return;
 
-            CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true);
+            CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true, nug);
 
             myLode.NugCollected(i_lodeID);
             Notify(ce);

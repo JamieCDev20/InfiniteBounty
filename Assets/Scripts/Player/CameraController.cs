@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float f_leftWardOffset;
     [SerializeField] private Vector3 v_firingBothOffset;
     [SerializeField] private float f_cameraLerpFiring;
+    [SerializeField] private GameObject go_logo;
 
     #endregion
 
@@ -118,6 +119,12 @@ public class CameraController : MonoBehaviour
         pim_inputs = _pim_newPIM;
 
     }
+
+    public void ToggleLogo(bool on)
+    {
+        go_logo?.SetActive(on);
+    }
+    
 
     #endregion
 
