@@ -79,8 +79,12 @@ public class NugManager : SubjectBase, ObserverBase
         i_inLevelNugs += _i_value;
         t_nugText.text = i_totalNugs.ToString();
 
-        for (int i = 0; i < _i_value; i++)
-            hud.GainNug();
+        if (_i_value > 0)
+            for (int i = 0; i < _i_value; i++)
+                hud.GainNug();
+        else
+            for (int i = 0; i < -(_i_value * 0.1f); i++)
+                hud.LoseMoney();
     }
     public void SendNugs()
     {

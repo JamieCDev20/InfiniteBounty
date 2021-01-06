@@ -17,8 +17,10 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Gradient g_healthBarGradient;
 
     [Header("Nug Counter")]
-    [SerializeField] private GameObject go_particle;
-    private List<GameObject> goL_parts = new List<GameObject>();
+    [SerializeField] private GameObject go_moneyUpParticle;
+    private List<GameObject> goL_moneyUpParts = new List<GameObject>();
+    [SerializeField] private GameObject go_moneyDownParticle;
+    private List<GameObject> goL_moneyDownParts = new List<GameObject>();
 
     private void Start()
     {
@@ -26,7 +28,10 @@ public class HUDController : MonoBehaviour
         //SetLeftHeatGuage(1, 1);
         //SetRightHeatGuage(1, 1);
         for (int i = 0; i < 100; i++)
-            goL_parts.Add(Instantiate(go_particle, go_particle.transform.parent));
+        {
+            goL_moneyDownParts.Add(Instantiate(go_moneyDownParticle, go_moneyDownParticle.transform.parent));
+            goL_moneyUpParts.Add(Instantiate(go_moneyUpParticle, go_moneyUpParticle.transform.parent));
+        }
     }
 
     public void SetHealthBarValue(float _i_currentHealth, int _i_maxHealth)
@@ -51,15 +56,30 @@ public class HUDController : MonoBehaviour
 
     public void GainNug()
     {
-        GameObject _go = goL_parts[0];
-        goL_parts.RemoveAt(0);
+        GameObject _go = goL_moneyUpParts[0];
+        goL_moneyUpParts.RemoveAt(0);
         _go.SetActive(true);
+        StartCoroutine(ReturnNugSignToPool(_go));
     }
     private IEnumerator ReturnNugSignToPool(GameObject _go)
     {
         yield return new WaitForSeconds(1);
         _go.SetActive(false);
-        goL_parts.Add(_go);
+        goL_moneyUpParts.Add(_go);
     }
 
+
+    public void LoseMoney()
+    {
+        GameObject _go = goL_moneyDownParts[0];
+        goL_moneyDownParts.RemoveAt(0);
+        _go.SetActive(true);
+        StartCoroutine(ReturnMoneyDownSignToPool(_go));
+    }
+    private IEnumerator ReturnMoneyDownSignToPool(GameObject _go)
+    {
+        yield return new WaitForSeconds(1);
+        _go.SetActive(false);
+        goL_moneyDownParts.Add(_go);
+    }
 }
