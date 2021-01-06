@@ -393,6 +393,7 @@ MonoBehaviour:
   s_rightToolUse: RightTool
   s_interactButton: Use
   s_pauseButton: Pause
+  s_captureButton: ScreenShot
   nameText: {fileID: 1502289513438947728}
   offline: 0
 --- !u!114 &1834883202107126509
@@ -426,8 +427,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   b_networked: 1
-  f_shipMoveSpeed: 50
-  f_planetMoveSpeed: 100
+  f_shipMoveSpeed: 35
+  f_planetMoveSpeed: 70
   f_shipSprintMult: 2
   f_planetSprintMult: 2
   f_downMult: 0.9
@@ -591,6 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e738760d5d02a047ac02d0acaa5eebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ib_photoStamp: {fileID: 0}
 --- !u!1 &5768610029833893305
 GameObject:
   m_ObjectHideFlags: 0
