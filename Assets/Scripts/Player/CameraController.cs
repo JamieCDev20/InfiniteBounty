@@ -81,12 +81,13 @@ public class CameraController : MonoBehaviour
     internal void Recoil(float _f_recoilSeverity)
     {
         transform.Rotate(-_f_recoilSeverity, UnityEngine.Random.Range(-_f_recoilSeverity * 0.7f, _f_recoilSeverity * 0.7f), 0);
-        Invoke("BackToNoRoll", 0.1f);
+        StartCoroutine(BackToNormal(_f_recoilSeverity));
     }
 
-    private void BackToNoRoll()
+    private IEnumerator BackToNormal(float _f_recoilSeverity)
     {
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+        yield return new WaitForSeconds(0.3f);
+        transform.Rotate(_f_recoilSeverity, 0, 0);
     }
 
     public void SetLookInput(Vector2 _v2_newLookInput)
