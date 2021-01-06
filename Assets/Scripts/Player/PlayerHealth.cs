@@ -39,10 +39,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         //if (Input.GetKeyDown(KeyCode.P))
         //    TakeDamage(10000);
-        if(b_downed)
+        if (b_downed)
         {
             f_downHealth -= Time.deltaTime;
-            if(f_downHealth <= 0)
+            if (f_downHealth <= 0)
             {
                 ClientFullDie();
             }
@@ -122,6 +122,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [PunRPC]
     public void RemoteDie()
     {
+        transform.parent = null;
         isDead = true;
         b_downed = true;
         b_canBeRevived = true;
@@ -192,6 +193,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         ToggleAlive(false);
         b_downed = false;
+        transform.parent = null;
     }
 
     public IEnumerator DeathDelay()
