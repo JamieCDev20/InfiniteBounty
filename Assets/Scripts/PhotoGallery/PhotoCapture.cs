@@ -33,8 +33,6 @@ public class PhotoCapture : MonoBehaviour
 
     private void TakePhoto()
     {
-        string dir = GetDirectory();
-        Debug.Log(dir);
         RenderTexture rTex = new RenderTexture(cam.pixelWidth, cam.pixelHeight, (int)cam.depth);
         cam.targetTexture = rTex;
         cam.Render();
@@ -45,14 +43,10 @@ public class PhotoCapture : MonoBehaviour
         screenshot.Apply();
         cam.targetTexture = null;
         RenderTexture.active = null;
-        int fileCount = 0;
-        screenshot = AlphaBlend(screenshot);
 
-        FileInfo[] filesInDir = new DirectoryInfo(dir).GetFiles();
-        foreach (FileInfo fi in filesInDir)
-            if(fi.Name.Substring(fi.Name.Length - 4) != "meta")
-                fileCount++;
-        File.WriteAllBytes(dir + "/ScreenShot" + fileCount + ".png", screenshot.EncodeToPNG());
+        // screenshot = AlphaBlend(screenshot);
+        SavePicture(screenshot);
+
     }
 
     private string GetDirectory()
@@ -66,33 +60,47 @@ public class PhotoCapture : MonoBehaviour
     {
         Texture2D tex_combine = new Texture2D(_tex_bottom.width, _tex_bottom.height);
         Color[] botColor = _tex_bottom.GetPixels();
-        Debug.Log(string.Format("Screenshot: {0}px x {1}px.", tex_combine.width, tex_combine.height));
+        Debug.Log(string.Format("Screenshot: {0}px x {1}px. btm: {2} | Watermark: {3}px x {4}px, btm: {5}",
+            tex_combine.width, tex_combine.height, tex_combine.width * tex_combine.height,
+            128, 64, 128 * 64));
         Texture2D tempTex = Instantiate(ib_photoStamp);
         TextureScale.Bilinear(tempTex, 128, 64);
-
+        SavePicture(tempTex);
         int mWidth = tex_combine.width;
         int mHeight = tex_combine.height;
 
         Color[] stampColor = tempTex.GetPixels();
-        for(int i = 0; i < tempTex.width; i++)
+        for(int i = 0; i < tempTex.height; i++)
         {
-            for(int j = 0; j < tempTex.height; j++)
+            for (int j = 0; j < tempTex.width; j++)
             {
-                Color topCol = stampColor[i*j];
-                Color botCol = botColor[(mWidth + mHeight) - ((_tex_bottom.width - i) + (_tex_bottom.height - j))];
+                int currentPos = ((mWidth * mHeight) - (tempTex.width + j * tempTex.height + i));
+                Color topCol = stampColor[i+j];
+                Color botCol = botColor[currentPos];
 
                 float topAlpha = topCol.a;
                 float destAlpha = 1f - topAlpha;
                 float alpha = topAlpha + destAlpha * botCol.a;
 
                 Color result = (topCol * topAlpha + botCol * botCol.a * destAlpha) / alpha;
-                Debug.Log((mWidth + mHeight) - ((_tex_bottom.width - i) + (_tex_bottom.height - j)));
-                botColor[(mWidth + mHeight) - ((_tex_bottom.width - i) + (_tex_bottom.height - j))] = result;
+                Debug.Log(currentPos);
+                botColor[currentPos] = result;
             }
         }
 
         tex_combine.SetPixels(botColor);
         tex_combine.Apply();
         return tex_combine;
+    }
+
+    private void SavePicture(Texture2D pic)
+    {
+        string dir = GetDirectory();
+        FileInfo[] filesInDir = new DirectoryInfo(dir).GetFiles();
+        int fileCount = 0;
+        foreach (FileInfo fi in filesInDir)
+            if (fi.Name.Substring(fi.Name.Length - 4) != "meta")
+                fileCount++;
+        File.WriteAllBytes(dir + "/ScreenShot" + fileCount + ".png", pic.EncodeToPNG());
     }
 }
