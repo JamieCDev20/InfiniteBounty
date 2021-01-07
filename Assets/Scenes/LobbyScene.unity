@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33350492, g: 0.4994853, b: 0.8330084, a: 1}
+  m_IndirectSpecularColor: {r: 0.33333853, g: 0.49926066, b: 0.8330084, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1965,6 +1965,8 @@ MonoBehaviour:
   t_roomListParent: {fileID: 1494335186}
   t_camera: {fileID: 948482415}
   HostButton: {fileID: 82122421}
+  f_lobbyButtonHeight: 0
+  f_topmostLobbyPositionY: 0
 --- !u!1 &184511194
 GameObject:
   m_ObjectHideFlags: 0
@@ -30078,7 +30080,7 @@ PrefabInstance:
     - target: {fileID: 8062822100435471660, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
         type: 3}
       propertyPath: goA_toSpawnOnStart.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8062822100435471660, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
         type: 3}
@@ -30097,6 +30099,12 @@ PrefabInstance:
       propertyPath: goA_toSpawnOnStart.Array.data[2]
       value: 
       objectReference: {fileID: 2171003126382093, guid: 95d3e2855e21578448243dab1d3b9966,
+        type: 3}
+    - target: {fileID: 8062822100435471660, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
+        type: 3}
+      propertyPath: goA_toSpawnOnStart.Array.data[3]
+      value: 
+      objectReference: {fileID: 2089187301667936939, guid: afed184b22cb79f49b5c64c225bc5bd4,
         type: 3}
     - target: {fileID: 8062822100435471661, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
         type: 3}
