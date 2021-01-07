@@ -82,7 +82,7 @@ public class Bullet : MonoBehaviour, IPoolable
     public void MoveBullet(Vector3 _v_dir, float _f_force)
     {
         transform.rotation = Quaternion.LookRotation(_v_dir, Vector3.up);
-        rb.AddForce(transform.forward * _f_force, ForceMode.Impulse);
+        rb.AddForce(transform.forward * _f_force, ForceMode.VelocityChange);
 
         if (tr_bulletTrail)
         {
