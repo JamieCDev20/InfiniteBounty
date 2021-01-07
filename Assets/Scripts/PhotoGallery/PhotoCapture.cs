@@ -8,6 +8,7 @@ public class PhotoCapture : MonoBehaviour
     private Camera cam;
     private CameraController c_controller;
     [SerializeField] private Texture2D ib_photoStamp;
+    [SerializeField, Range(0.0f, 1.0f)] private float f_alpha;
 
     public void Start()
     {
@@ -44,7 +45,7 @@ public class PhotoCapture : MonoBehaviour
         cam.targetTexture = null;
         RenderTexture.active = null;
 
-        // screenshot = AlphaBlend(screenshot);
+        screenshot = AlphaBlend(screenshot);
         SavePicture(screenshot);
 
     }
@@ -65,26 +66,25 @@ public class PhotoCapture : MonoBehaviour
             128, 64, 128 * 64));
         Texture2D tempTex = Instantiate(ib_photoStamp);
         TextureScale.Bilinear(tempTex, 128, 64);
-        SavePicture(tempTex);
         int mWidth = tex_combine.width;
         int mHeight = tex_combine.height;
 
         Color[] stampColor = tempTex.GetPixels();
-        for(int i = 0; i < tempTex.height; i++)
+        for(int i = tempTex.height - 1; i > -1; i--)
         {
-            for (int j = 0; j < tempTex.width; j++)
+            for (int j = tempTex.width - 1; j > -1; j--)
             {
-                int currentPos = ((mWidth * mHeight) - (tempTex.width + j * tempTex.height + i));
-                Color topCol = stampColor[i+j];
-                Color botCol = botColor[currentPos];
+                int stampPos = ((tempTex.width * i) + j);
+                int imgPos = mWidth + ((mWidth * i) + j) - 1;
+                Color topCol = stampColor[stampPos];
+                Color botCol = botColor[imgPos];
 
-                float topAlpha = topCol.a;
+                float topAlpha = topCol.a * f_alpha;
                 float destAlpha = 1f - topAlpha;
                 float alpha = topAlpha + destAlpha * botCol.a;
 
                 Color result = (topCol * topAlpha + botCol * botCol.a * destAlpha) / alpha;
-                Debug.Log(currentPos);
-                botColor[currentPos] = result;
+                botColor[imgPos] = result;
             }
         }
 
