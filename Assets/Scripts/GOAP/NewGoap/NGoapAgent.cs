@@ -28,6 +28,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     [SerializeField] private GameObject go_aggroParticles;
     [SerializeField] private GameObject go_deathParticles;
     [SerializeField] private GameObject go_exploParticles;
+    [SerializeField]private ParticleSystem p_hitParticles;
 
     #endregion
 
@@ -128,6 +129,9 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     public void TakeDamage(int damage)
     {
         i_currentHealth -= damage;
+
+        p_hitParticles.Play();
+
         if (i_currentHealth <= 0)
         {
             Die();
