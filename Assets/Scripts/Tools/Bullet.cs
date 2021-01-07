@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
@@ -66,17 +67,27 @@ public class Bullet : MonoBehaviour, IPoolable
                 break;
         }
 
-        go_hitEffect.SetActive(false);
-        go_hitEffect.transform.parent = transform;
-        go_hitEffect.transform.localPosition = Vector3.zero;
-        go_hitEffect.transform.forward = collision.contacts[0].normal;
-        go_hitEffect.transform.parent = null;
-        go_hitEffect.SetActive(true);
+        GameObject _go_effect = PoolManager.x.SpawnObject(go_hitEffect);
+
+        StartCoroutine(ReturnToPool(_go_effect));
+
+        _go_effect.SetActive(false);
+        _go_effect.transform.parent = transform;
+        _go_effect.transform.localPosition = Vector3.zero;
+        _go_effect.transform.forward = collision.contacts[0].normal;
+        _go_effect.transform.parent = null;
+        _go_effect.SetActive(true);
 
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
 
         Die();
+    }
+
+    private IEnumerator ReturnToPool(GameObject _go_effect)
+    {
+        yield return new WaitForSeconds(2);
+        PoolManager.x.ReturnObjectToPool(_go_effect);
     }
 
     public void MoveBullet(Vector3 _v_dir, float _f_force)
