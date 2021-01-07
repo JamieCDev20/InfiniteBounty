@@ -9,6 +9,11 @@ public class NugPickupEffects : MonoBehaviour, IPoolable
     [SerializeField] private bool b_isNetworkedObject = false;
     [SerializeField] private string s_resourcePath;
 
+    private void Start()
+    {
+        Invoke("Die", 2);
+    }
+
     public void Die()
     {
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
@@ -28,5 +33,7 @@ public class NugPickupEffects : MonoBehaviour, IPoolable
     {
         return s_resourcePath;
     }
+
+    
 
 }
