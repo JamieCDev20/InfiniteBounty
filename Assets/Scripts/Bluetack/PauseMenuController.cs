@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] private Canvas c_pauseCanvas;
     [SerializeField] private Canvas c_optionsMenu;
     private bool b_isPaused;
+    private PlayerInputManager pim;
 
     private void Start()
     {
@@ -20,13 +22,13 @@ public class PauseMenuController : MonoBehaviour
 
     private void Update()
     {
-        //if (PlayerInputManager.x.GetIsPaused())
-        //{
-        //    if (!b_isPaused)
-        //        Pause();
-        //    else
-        //        Resume();
-        //}
+        if (pim.GetIsPaused())
+        {
+            if (!b_isPaused)
+                Pause();
+            else
+                Resume();
+        }
     }
 
     public void Resume()
@@ -36,6 +38,7 @@ public class PauseMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        Time.timeScale = 1;
         Debug.LogError("Should've resumed, but I don't know how");
     }
 
@@ -46,6 +49,7 @@ public class PauseMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        Time.timeScale = Mathf.Epsilon;
         Debug.LogError("Should've paused, but I don't know how");
     }
 
@@ -73,6 +77,12 @@ public class PauseMenuController : MonoBehaviour
     public void DoOptionThings()
     {
         print("OPTIONED");
+    }
+
+    internal void SetPIM(PlayerInputManager _newPIM)
+    {
+        print(_newPIM.name + " is the new PIM");
+        pim = _newPIM;
     }
 
     #endregion
