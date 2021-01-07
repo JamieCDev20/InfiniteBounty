@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             Destroy(gameObject);
-        else x = this;
+        else x = this; 
 
         for (int i = 0; i < i_enemiesAtStart * 0.5f; i++)
         {
@@ -49,28 +49,24 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private void SpawnEnemyWave()
     {
+        //Checks to see if there are players in any zones
         for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
-        {
-            int _i_playerCount = Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length;
-
-            if (_i_playerCount > 0)
-                StartCoroutine(SpawnEnemiesInZone(i));
-        }
+            if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
+                StartCoroutine(SpawnEnemyWave(i));
 
         Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
-    private IEnumerator SpawnEnemiesInZone(int _i_zoneIndex)
+    private IEnumerator SpawnEnemyWave(int _i_zoneIndex)
     {
         if (i_numberOfEnemies < i_maxNumberOfEnemies)
         {
-
+            //Creating a working list of weightings for the enemy types.
             float _f_max = 0;
             List<float> _fL = new List<float>();
 
             for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
                 _f_max += fA_enemyPerWaveWeighting[i];
-
 
             for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
             {
@@ -79,19 +75,21 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             }
             _fL.Add(_f_max * 2);
 
+            //Actually Spawning Enemies
             for (int y = 0; y < i_hordesPerWave; y++)
             {
-                yield return new WaitForSeconds(f_timeBetweenHordes);
+                //Determining how many enemies will spawn in a horde
                 for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y); x++)
                 {
+                    //Which enemy type to spawn
                     float rando = Random.Range(0, _f_max);
 
-                    for (int i = 0; i < _fL.Count; i++)
-                    {
-                        if (rando >= _fL[i] && rando < _fL[i + 1])
+                    for (int i = 0; i < _fL.Count; i++)                    
+                        if (rando >= _fL[i] && rando < _fL[i + 1]) //Is this the right enemy type.
                             SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
-                    }
+                    
                 }
+                yield return new WaitForSeconds(f_timeBetweenHordes);
             }
         }
     }
