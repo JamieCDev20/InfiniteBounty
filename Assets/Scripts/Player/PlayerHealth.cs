@@ -146,6 +146,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public void RemoteRevive()
     {
         isDead = false;
+        b_downed = false;
         b_canBeRevived = false;
         pa_anim?.PlayerRevived();
         go_reviveObject.SetActive(false);
