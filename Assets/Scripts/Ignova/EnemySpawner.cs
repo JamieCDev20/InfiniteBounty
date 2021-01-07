@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             Destroy(gameObject);
-        else x = this;
+        else x = this; 
 
         for (int i = 0; i < i_enemiesAtStart * 0.5f; i++)
         {
