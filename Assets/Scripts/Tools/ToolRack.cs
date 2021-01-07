@@ -12,6 +12,7 @@ public class ToolRack : Shop
     [SerializeField] private Material m_silhouette;
     [SerializeField] private Material m_purchased;
     [SerializeField] private TMP_Text txt_exampleText;
+    [SerializeField] private Vector3 t_textOffset;
     [SerializeField] private float f_maxShake;
     [SerializeField] private float f_minShake;
     [SerializeField] private float f_shakeTime;
@@ -57,7 +58,7 @@ public class ToolRack : Shop
                 //moneyText.gameObject.AddComponent<Billboard>();
                 moneyText.gameObject.SetActive(true);
                 moneyText.gameObject.transform.parent = tb.transform;
-                moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x, tb.transform.position.y + 0.5f, tb.transform.position.z);
+                moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x + t_textOffset.x, tb.transform.position.y + t_textOffset.y, tb.transform.position.z + t_textOffset.z);
                 moneyText.text = tb.Cost.ToString();
                 //Debug.Log(moneyText.transform.parent.name);
             }
@@ -163,11 +164,17 @@ public class ToolRack : Shop
     private void ApplyMaterials(ToolBase _tb_toolToMat)
     {
         if (!_tb_toolToMat.Purchased)
+        {
             foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
-                mr.sharedMaterial = m_silhouette;
+                if(!mr.gameObject.GetComponent<TMP_Text>())
+                    mr.sharedMaterial = m_silhouette;
+        }
         else
+        {
             foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
-                mr.sharedMaterial = m_purchased;
+                if(!mr.gameObject.GetComponent<TMP_Text>())
+                    mr.sharedMaterial = m_purchased;
+        }
     }
 
     private IEnumerator ShakeTool(ToolBase _tb_toolToShake, Vector3 _v_origin)
