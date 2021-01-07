@@ -49,11 +49,13 @@ MonoBehaviour:
   - {fileID: 3893965790758993077, guid: 7d85fb0ebab24e048a53b76216748d82, type: 3}
   fA_enemyPerWaveWeighting:
   - 1
-  i_enemiesAtStart: 20
-  v_secondsBetweenWave: {x: 10, y: 20}
-  v_enemiesPerWave: {x: 15, y: 20}
-  b_spawnWaveAtStart: 1
+  f_timeBetweenHordes: 5
+  i_hordesPerWave: 5
   i_maxNumberOfEnemies: 75
+  v_secondsBetweenWave: {x: 60, y: 80}
+  v_enemiesPerHorde: {x: 5, y: 10}
+  b_spawnWaveAtStart: 1
+  i_enemiesAtStart: 20
   ziA_enemySpawnZones:
   - t_zone: {fileID: 0}
     f_zoneRadius: 80

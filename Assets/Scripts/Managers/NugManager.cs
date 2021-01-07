@@ -33,8 +33,10 @@ public class NugManager : SubjectBase, ObserverBase
             }
         }
 
-        //ReceiveNugs(1000);
-        //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
+#if UNITY_EDITOR
+        CollectNugs(1000);
+        Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
+#endif
     }
 
 

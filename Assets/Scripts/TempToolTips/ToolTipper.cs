@@ -32,6 +32,11 @@ public class ToolTipper : MonoBehaviour
                 i_buttonPrompt.sprite = _tt_.buttonSprite;
                 i_buttonPrompt.color = Color.white;
             }
+            else
+            {
+                ta_canvasText.text = "";
+                i_buttonPrompt.color = Color.clear;
+            }
         }
         else
         {
