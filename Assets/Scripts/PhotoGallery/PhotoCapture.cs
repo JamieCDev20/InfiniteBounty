@@ -5,10 +5,11 @@ using System.IO;
 
 public class PhotoCapture : MonoBehaviour
 {
-    private Camera cam;
+    [SerializeField] private Camera cam;
     private CameraController c_controller;
     [SerializeField] private Texture2D ib_photoStamp;
     [SerializeField, Range(0.0f, 1.0f)] private float f_alpha;
+    [SerializeField, Range(0.0f, 1.0f)] private float f_sizeOnScreen;
 
     public void Start()
     {
@@ -61,11 +62,23 @@ public class PhotoCapture : MonoBehaviour
     {
         Texture2D tex_combine = new Texture2D(_tex_bottom.width, _tex_bottom.height);
         Color[] botColor = _tex_bottom.GetPixels();
-        Debug.Log(string.Format("Screenshot: {0}px x {1}px. btm: {2} | Watermark: {3}px x {4}px, btm: {5}",
-            tex_combine.width, tex_combine.height, tex_combine.width * tex_combine.height,
-            128, 64, 128 * 64));
         Texture2D tempTex = Instantiate(ib_photoStamp);
-        TextureScale.Bilinear(tempTex, 128, 64);
+
+        // The resize zone
+        #region Commented Out Code that I might still use
+
+        float ratio = tempTex.height / _tex_bottom.height;
+        int nW = (int)(ratio * (_tex_bottom.width * f_sizeOnScreen));
+        int nH = (int)(ratio * (_tex_bottom.height * f_sizeOnScreen));
+        int newX = (int)((nW * ratio));
+        int newY = (int)((nH * ratio));
+
+        #endregion
+        Debug.Log(string.Format("new X: {0} | new Y: {1}", nW, nH));
+        TextureScale.Bilinear(tempTex, newX, newY);
+        Debug.Log(string.Format("Screenshot: {0}px x {1}px. btm: {2} | Watermark: {3}px x {4}px, btm: {5}",
+        tex_combine.width, tex_combine.height, tex_combine.width * tex_combine.height,
+        tempTex.width, tempTex.height, tempTex.width * tempTex.height));
         int mWidth = tex_combine.width;
         int mHeight = tex_combine.height;
 
