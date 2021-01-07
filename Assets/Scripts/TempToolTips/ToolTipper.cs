@@ -7,14 +7,16 @@ public class ToolTipper : MonoBehaviour
 {
     [SerializeField] Transform t_cam;
     [SerializeField] Text ta_canvasText;
-    [SerializeField] Image i_buttonPrompt;
+    [SerializeField] GameObject[] goA_buttonPrompts = new GameObject[0];
     private RaycastHit hit;
     private PlayerInputManager pim;
 
     private void Start()
     {
         pim = GetComponent<CameraController>().pim_inputs;
-        i_buttonPrompt.color = Color.clear;
+
+        for (int i = 0; i < goA_buttonPrompts.Length; i++)
+            goA_buttonPrompts[i].SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,19 +31,20 @@ public class ToolTipper : MonoBehaviour
                     return;
 
                 ta_canvasText.text = _tt_.Tip;
-                i_buttonPrompt.sprite = _tt_.buttonSprite;
-                i_buttonPrompt.color = Color.white;
+                goA_buttonPrompts[_tt_.i_buttonSpriteIndex].SetActive(true);                
             }
             else
             {
                 ta_canvasText.text = "";
-                i_buttonPrompt.color = Color.clear;
+                for (int i = 0; i < goA_buttonPrompts.Length; i++)
+                    goA_buttonPrompts[i].SetActive(false);
             }
         }
         else
         {
             ta_canvasText.text = "";
-            i_buttonPrompt.color = Color.clear;
+            for (int i = 0; i < goA_buttonPrompts.Length; i++)
+                goA_buttonPrompts[i].SetActive(false);
         }
     }
 }
