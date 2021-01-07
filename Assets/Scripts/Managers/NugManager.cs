@@ -102,6 +102,7 @@ public class NugManager : SubjectBase, ObserverBase
         Debug.LogError("SENDING NUGS");
         // Send nugs
         ReceiveNugs(i_inLevelNugs);
+        D_nugTypeIntCount = new Dictionary<NugType, int> { { NugType.boom, 0 }, { NugType.goo, 0 }, { NugType.hydro, 0 }, { NugType.magma, 0 }, { NugType.tasty, 0 }, { NugType.thunder, 0 } };
 
     }
 
