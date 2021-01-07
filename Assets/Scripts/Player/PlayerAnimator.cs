@@ -51,32 +51,33 @@ public class PlayerAnimator : MonoBehaviourPun
         CheckJumpAnims();
         SetShootingBools();
 
-        if (Input.anyKeyDown)
-        {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright"))
+        if (s_currentSofa != null)
+            if (Input.anyKeyDown)
             {
-                if (anim.GetBool("SofaLeft"))
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright"))
                 {
-                    anim.SetBool("SofaLeft", false);
-                    rb.isKinematic = false;
-                    pm_mover.enabled = true;
-                    s_currentSofa.EndSit();
-                    s_currentSofa = null;
-                    transform.parent = null;
-                    GetComponent<Collider>().enabled = true;
-                }
-                if (anim.GetBool("SofaRight"))
-                {
-                    anim.SetBool("SofaRight", false);
-                    rb.isKinematic = false;
-                    pm_mover.enabled = true;
-                    s_currentSofa.EndSit();
-                    s_currentSofa = null;
-                    transform.parent = null;
-                    GetComponent<Collider>().enabled = true;
+                    if (anim.GetBool("SofaLeft"))
+                    {
+                        anim.SetBool("SofaLeft", false);
+                        rb.isKinematic = false;
+                        pm_mover.enabled = true;
+                        s_currentSofa.EndSit();
+                        s_currentSofa = null;
+                        transform.parent = null;
+                        GetComponent<Collider>().enabled = true;
+                    }
+                    if (anim.GetBool("SofaRight"))
+                    {
+                        anim.SetBool("SofaRight", false);
+                        rb.isKinematic = false;
+                        pm_mover.enabled = true;
+                        s_currentSofa.EndSit();
+                        s_currentSofa = null;
+                        transform.parent = null;
+                        GetComponent<Collider>().enabled = true;
+                    }
                 }
             }
-        }
     }
 
     private void LateUpdate()
