@@ -35,9 +35,10 @@ public class PauseMenuController : MonoBehaviour
     {
         c_pauseCanvas.enabled = false;
         c_playCanvas.enabled = true;
+        /*
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        */
         Time.timeScale = 1;
         Debug.LogError("Should've resumed, but I don't know how");
     }
@@ -46,9 +47,10 @@ public class PauseMenuController : MonoBehaviour
     {
         c_playCanvas.enabled = false;
         c_pauseCanvas.enabled = true;
+        /*
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
+        */
         //Time.timeScale = Mathf.Epsilon;
         Debug.LogError("Should've paused, but I don't know how");
     }
