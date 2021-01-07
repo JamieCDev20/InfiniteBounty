@@ -49,7 +49,7 @@ public class PauseMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        Time.timeScale = Mathf.Epsilon;
+        //Time.timeScale = Mathf.Epsilon;
         Debug.LogError("Should've paused, but I don't know how");
     }
 
