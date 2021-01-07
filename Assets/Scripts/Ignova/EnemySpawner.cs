@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             Destroy(gameObject);
-        else x = this; 
+        else x = this;
 
         for (int i = 0; i < i_enemiesAtStart * 0.5f; i++)
         {
@@ -53,8 +53,6 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
             if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
                 StartCoroutine(SpawnEnemyWave(i));
-
-        Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
     private IEnumerator SpawnEnemyWave(int _i_zoneIndex)
@@ -84,14 +82,16 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                     //Which enemy type to spawn
                     float rando = Random.Range(0, _f_max);
 
-                    for (int i = 0; i < _fL.Count; i++)                    
+                    for (int i = 0; i < _fL.Count; i++)
                         if (rando >= _fL[i] && rando < _fL[i + 1]) //Is this the right enemy type.
                             SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
-                    
+
                 }
                 yield return new WaitForSeconds(f_timeBetweenHordes);
             }
         }
+
+        Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
     private void SpawnEnemiesInZone(int _i_zoneIndex, int _i_amountOfEnemiesToSpawn)
