@@ -43,22 +43,30 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             SpawnEnemiesInZone(1, 1);
         }
 
-        Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
+        Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
 
-    private void SpawnEnemyWave()
+    private void CheckZonesForPlayers()
     {
+        int _i_numberOfZonesActivated = 0;
         //Checks to see if there are players in any zones
         for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
             if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
+            {
+                _i_numberOfZonesActivated++;
                 StartCoroutine(SpawnEnemyWave(i));
+            }
+
+        if (_i_numberOfZonesActivated == 0)
+            Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
     private IEnumerator SpawnEnemyWave(int _i_zoneIndex)
     {
         if (i_numberOfEnemies < i_maxNumberOfEnemies)
         {
+            print("SPAWNING ENEMY WAVE");
             //Creating a working list of weightings for the enemy types.
             float _f_max = 0;
             List<float> _fL = new List<float>();
@@ -79,6 +87,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                 //Determining how many enemies will spawn in a horde
                 for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y); x++)
                 {
+                    print("SPAWNING ENEMY HORDE");
+
                     //Which enemy type to spawn
                     float rando = Random.Range(0, _f_max);
 
@@ -91,7 +101,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             }
         }
 
-        Invoke("SpawnEnemyWave", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
+        Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
     private void SpawnEnemiesInZone(int _i_zoneIndex, int _i_amountOfEnemiesToSpawn)
