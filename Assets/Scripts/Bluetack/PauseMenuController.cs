@@ -50,8 +50,7 @@ public class PauseMenuController : MonoBehaviour
         pim.b_shouldPassInputs = true;
         cc_cam.enabled = true;
         pim.GetComponent<PlayerAnimator>().SetShootability(true);
-        rb_playerPhysics.isKinematic = false;
-        Debug.LogError("Should've resumed, but I don't know how");
+        rb_playerPhysics.isKinematic = false;        
     }
 
     public void Pause()
@@ -65,7 +64,6 @@ public class PauseMenuController : MonoBehaviour
         cc_cam.enabled = false;
         pim.GetComponent<PlayerAnimator>().SetShootability(false);
         rb_playerPhysics.isKinematic = true;
-        Debug.LogError("Should've paused, but I don't know how");
     }
 
     public void Quit()

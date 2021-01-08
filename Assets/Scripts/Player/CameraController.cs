@@ -109,6 +109,12 @@ public class CameraController : MonoBehaviour
         SetOffset(_v_newOffset);
     }
 
+    public void SetFollow(Transform _t_newFollow, bool _b_isSpectating)
+    {
+        t_follow = _t_newFollow;
+        t_follow.GetComponentInChildren<Billboard>()?.gameObject.SetActive(false);
+
+    }
     public void SetOffset(Vector3 _v_newOffset)
     {
         v_offset = _v_newOffset;
