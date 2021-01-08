@@ -106,7 +106,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         }
     }
 
-    public void StopAudio()
+    public virtual void StopAudio()
     {
         if (b_oneTimeAudio) return;
         AudioSource ass = GetComponent<AudioSource>();

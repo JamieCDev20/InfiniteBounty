@@ -87,8 +87,8 @@ public class Jetpack : MobilityTool
         {
             b_isBeingUsed = false;
             f_timeHeld = 0;
-            if (as_source.clip == ac_activationSound)
-                as_source.Stop();
+            //if (as_source.clip == ac_activationSound)
+            //   as_source.Stop();
         }
         else
         {
@@ -113,8 +113,8 @@ public class Jetpack : MobilityTool
         go_fuelPool.GetComponent<Renderer>().material = m_steamingMat;
 
         as_source.Stop();
-        as_source.clip = ac_steamingSound;
-        as_source.Play();
+        //as_source.clip = ac_steamingSound;
+        as_source.PlayOneShot(ac_steamingSound);
     }
 
     private void EndSteaming()
@@ -125,5 +125,7 @@ public class Jetpack : MobilityTool
 
         as_source.clip = ac_activationSound;
     }
+
+    public override void StopAudio() { }
 
 }
