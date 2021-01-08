@@ -74,11 +74,12 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void Interacted()
     {
-        CheckPlayers();
     }
 
     public void Interacted(Transform interactor)
     {
+        if (interactor.GetComponent<PlayerInputManager>().GetID() == 0)
+            CheckPlayers();
     }
 
     public void ReturnToShip()
