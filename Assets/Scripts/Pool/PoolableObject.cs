@@ -7,12 +7,21 @@ public class PoolableObject : MonoBehaviour, IPoolable
 
     [SerializeField] private string s_resourcePath;
     [SerializeField] private bool b_isNetworkedObject;
+    [Tooltip("0 for infinite")]
+    [SerializeField] private float f_lifetime;
 
     public void Die()
     {
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
+    private void Start()
+    {
+        if(f_lifetime > 0)
+        {
+            Invoke("Die", f_lifetime);
+        }
+    }
 
     public GameObject GetGameObject()
     {
