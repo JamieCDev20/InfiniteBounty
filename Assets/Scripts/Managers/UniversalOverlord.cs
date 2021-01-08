@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class UniversalOverlord : MonoBehaviourPunCallbacks
 {
@@ -53,6 +54,14 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             }
         }
 
+    }
+
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (!scene.name.Contains("Lobby"))
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+        else
+            PhotonNetwork.CurrentRoom.IsOpen = true;
     }
 
     #endregion
