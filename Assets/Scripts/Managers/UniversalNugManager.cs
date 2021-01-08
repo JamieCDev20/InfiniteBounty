@@ -15,6 +15,8 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     private int[] iA_totalNugCounts;
     private int i_localID = -1;
     private int localNugCount;
+    private int[] totalValueCount = new int[4];
+    private string[] sA_names;
 
     private void Start()
     {
@@ -28,13 +30,17 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         PhotonNetwork.RegisterPhotonView(photonView);
     }
 
-    public void RecieveNugs(int id, Nug nugCollected)
+    public void RecieveNugs(int id, Nug nugCollected, string _name)
     {
         if (i_localID < 0)
+        {
             i_localID = id;
-        int i = 0;
+            sA_names[id] = _name;
+        }
+
         i2A_playerNugCounts[i_localID][(int)nugCollected.nt_type] += 1;
         localNugCount += nugCollected.i_worth;
+        
         RefreshTotalNugCount();
         photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID);
     }
@@ -50,7 +56,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
             }
         }
 
-        iA_totalNugCounts[i_localID] = localNugCount;
+        totalValueCount[i_localID] = localNugCount;
     }
 
     [PunRPC]
@@ -62,12 +68,23 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         HUDController.x.SetNugValues(iA_totalNugCounts);
     }
 
+    private void ResetValues()
+    {
+        localNugCount = 0;
+        i2A_playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 } };
+        RefreshTotalNugCount();
+        HUDController.x.SetNugValues(iA_totalNugCounts);
+    }
+
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         if (scene.name.Contains("Lobby"))
         {
+
             ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
-            sMan.SetValues(i2A_playerNugCounts, localNugCount);
+            sMan.SetValues(i2A_playerNugCounts, totalValueCount, sA_names);
+
+            ResetValues();
 
         }
     }

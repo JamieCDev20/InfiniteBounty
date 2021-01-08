@@ -57,11 +57,11 @@ public class HUDController : MonoBehaviour
 
     public void SetNugValues(int[] _iA_nugCounts)
     {
-        texts.boomText.text = _iA_nugCounts[0].ToString();
-        texts.tastyText.text = _iA_nugCounts[1].ToString();
-        texts.thunderText.text = _iA_nugCounts[2].ToString();
-        texts.magmaText.text = _iA_nugCounts[3].ToString();
-        texts.hydroText.text = _iA_nugCounts[4].ToString();
-        texts.gooText.text = _iA_nugCounts[5].ToString();
+        texts.gooText.text = _iA_nugCounts[0].ToString();
+        texts.hydroText.text = _iA_nugCounts[1].ToString();
+        texts.tastyText.text = _iA_nugCounts[2].ToString();
+        texts.thunderText.text = _iA_nugCounts[3].ToString();
+        texts.boomText.text = _iA_nugCounts[4].ToString();
+        texts.magmaText.text = _iA_nugCounts[5].ToString();
     }
 }
