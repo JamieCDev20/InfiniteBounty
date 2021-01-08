@@ -50,6 +50,7 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody rb;
     private Transform t_camTransform;
     private PhotonView view;
+    internal bool b_isSitting;
 
     #endregion
 

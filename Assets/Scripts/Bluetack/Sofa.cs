@@ -11,6 +11,7 @@ public class Sofa : MonoBehaviour, IInteractible
     [SerializeField] private GameObject go_audioSourceObject;
     private bool b_isBeingUsed;
     private Transform sitter = null;
+    private object pm;
 
     public void Interacted()
     {
@@ -31,6 +32,8 @@ public class Sofa : MonoBehaviour, IInteractible
         if (!b_isBeingUsed)
         {
             PlayerMover pm = interactor.GetComponent<PlayerMover>();
+            if (pm.b_isSitting)
+                return;
 
             if (pm.transform.parent == null && pm.transform != transform.root)
             {
@@ -38,6 +41,7 @@ public class Sofa : MonoBehaviour, IInteractible
                 pm.enabled = false;
                 pm.GetComponent<Rigidbody>().isKinematic = true;
                 pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
+                pm.b_isSitting = true;
 
                 pm.transform.position = t_sitPosition.position;
                 pm.transform.forward = t_sitPosition.forward;
@@ -75,6 +79,7 @@ public class Sofa : MonoBehaviour, IInteractible
         if (go_audioSourceObject)
             go_audioSourceObject.SetActive(false);
         b_isBeingUsed = false;
+        sitter.GetComponent<PlayerMover>().b_isSitting = false;
         sitter = null;
     }
 }
