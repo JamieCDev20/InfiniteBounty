@@ -8,11 +8,14 @@ public class ScoreboardManager : MonoBehaviour
 {
 
     [SerializeField] private ScoreObjects[] so_playerScoreObjects;
+    [SerializeField] private Text t_totalEarned;
 
     public void SetValues(int[][] values, int[] nugCount, string[] _names)
     {
+        int totalEarned = 0;
         for (int i = 0; i < values.Length; i++)
         {
+            totalEarned +=[nugCount];
             so_playerScoreObjects[i].nameText.text = _names[i];
             so_playerScoreObjects[i].gooText.text = values[i][0].ToString();
             so_playerScoreObjects[i].hydroText.text = values[i][1].ToString();
@@ -22,6 +25,8 @@ public class ScoreboardManager : MonoBehaviour
             so_playerScoreObjects[i].magmaText.text = values[i][5].ToString();
             so_playerScoreObjects[i].bucksText.text = nugCount[i].ToString();
         }
+        t_totalEarned.text = totalEarned.ToString();
+        
     }
 
 }
