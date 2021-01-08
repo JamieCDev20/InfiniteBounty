@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerInputManager : MonoBehaviour
+public class PlayerInputManager : MonoBehaviourPunCallbacks
 {
 
     //Variables
@@ -244,6 +244,7 @@ public class PlayerInputManager : MonoBehaviour
         playerID = id;
 
         ph_health.SetID(id);
+        nugMan.SetID(id);
 
         if (id == 0)
             playerNickname = nickName + " (Host)";
@@ -283,6 +284,17 @@ public class PlayerInputManager : MonoBehaviour
         view.RPC("RemoteRevive", RpcTarget.All);
         b_inCannon = false;
         mover.SetMoveSpeeds(onShip);
+    }
+
+    public void LocalGetOnChair()
+    {
+        photonView.RPC("SetPosition", RpcTarget.Others, transform.position);
+    }
+
+    [PunRPC]
+    public void SetPosition(Vector3 _pos)
+    {
+        transform.position = _pos;
     }
 
     #endregion

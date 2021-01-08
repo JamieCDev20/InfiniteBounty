@@ -11,7 +11,8 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public static UniversalNugManager x;
 
-    private int[][] playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0, 0 } };
+    private int[][] i2A_playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0} };
+    private int[] iA_totalNugCounts;
     private int i_localID = -1;
     private int localNugCount;
 
@@ -34,17 +35,30 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
         int i = 0;
         foreach (int c in counts)
         {
-            playerNugCounts[id][i] = c;
+            i2A_playerNugCounts[id][i] = c;
             i++;
         }
+        RefreshTotalNugCount();
     }
 
     public void SetLocal(int id)
     {
         i_localID = id;
-        for (int i = 0; i < playerNugCounts.Length; i++)
+        for (int i = 0; i < i2A_playerNugCounts.Length; i++)
         {
-            playerNugCounts[i][6] = id;
+            i2A_playerNugCounts[i][6] = id;
+        }
+    }
+
+    private void RefreshTotalNugCount()
+    {
+        iA_totalNugCounts = new int[6];
+        for (int i = 0; i < i2A_playerNugCounts.Length; i++)
+        {
+            for (int j = 0; j < i2A_playerNugCounts[i].Length; j++)
+            {
+                iA_totalNugCounts[j] += i2A_playerNugCounts[i][j];
+            }
         }
     }
 
@@ -53,12 +67,14 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
 
         if (stream.IsWriting)
         {
-            stream.SendNext(playerNugCounts[i_localID]);
+            stream.SendNext(i2A_playerNugCounts[i_localID]);
+            stream.SendNext(iA_totalNugCounts);
         }
         else
         {
             int[] t = (int[])stream.ReceiveNext();
-            playerNugCounts[t[6]] = t;
+            i2A_playerNugCounts[t[6]] = t;
+            iA_totalNugCounts = (int[])stream.ReceiveNext();
         }
 
     }
@@ -68,7 +84,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
         if (scene.name.Contains("Lobby"))
         {
             ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
-            sMan.SetValues(playerNugCounts, localNugCount);
+            sMan.SetValues(i2A_playerNugCounts, localNugCount);
 
         }
         foreach(NugManager nMan in FindObjectsOfType<NugManager>())
