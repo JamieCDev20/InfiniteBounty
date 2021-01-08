@@ -32,6 +32,7 @@ public class Sofa : MonoBehaviour, IInteractible
         if (!b_isBeingUsed)
         {
             PlayerMover pm = interactor.GetComponent<PlayerMover>();
+            interactor.GetComponent<PlayerInputManager>().LocalGetOnChair();
             if (pm.b_isSitting)
                 return;
 
