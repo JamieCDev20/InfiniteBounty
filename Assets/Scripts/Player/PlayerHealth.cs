@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private int i_maxHealth = 10;
     [SerializeField] private float f_healthPerSecond = 0.5f;
     [SerializeField] private float f_downTime = 20;
+    private float f_maxDownTime;
     [SerializeField] private float f_afterHitRegenTime = 5;
     [SerializeField] private GameObject go_reviveObject;
     [SerializeField] private AudioClip[] acA_hurtClips;
@@ -27,6 +28,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private PhotonView view;
     internal HUDController hudControl;
     private PlayerAnimator pa_anim;
+    [Space, SerializeField] private RectTransform rt_downedTimer;
 
     private void Start()
     {
@@ -44,6 +46,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (b_downed)
         {
             f_downHealth -= Time.deltaTime;
+            rt_downedTimer.localScale = new Vector3((float)(f_downHealth / f_maxDownTime), 1, 1);
             if (f_downHealth <= 0)
             {
                 ClientFullDie();
@@ -88,6 +91,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         f_currentHealth = i_maxHealth;
         f_downHealth = f_downTime;
+        f_maxDownTime = f_downTime;
         hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
     }
 

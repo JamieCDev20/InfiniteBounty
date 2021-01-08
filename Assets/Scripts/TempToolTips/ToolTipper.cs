@@ -31,7 +31,7 @@ public class ToolTipper : MonoBehaviour
                     return;
 
                 ta_canvasText.text = _tt_.Tip;
-                goA_buttonPrompts[_tt_.i_buttonSpriteIndex].SetActive(true);                
+                goA_buttonPrompts[_tt_.i_buttonSpriteIndex].SetActive(true);
             }
             else
             {
