@@ -8,7 +8,6 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     [SerializeField] private PlayerInputManager pim_pim;
     private PhotonView view;
 
-
     [Header("Head Things")]
     [SerializeField] private GameObject[] goA_heads = new GameObject[0];
     private int i_currentHead;
