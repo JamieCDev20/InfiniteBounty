@@ -35,6 +35,7 @@ public class NugManager : SubjectBase, ObserverBase
 
 #if UNITY_EDITOR
         i_totalNugs = 1000;
+        CollectNugs(1);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
     }
