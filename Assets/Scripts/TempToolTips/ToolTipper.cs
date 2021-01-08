@@ -10,6 +10,8 @@ public class ToolTipper : MonoBehaviour
     [SerializeField] GameObject[] goA_buttonPrompts = new GameObject[0];
     private RaycastHit hit;
     private PlayerInputManager pim;
+    [SerializeField] private LayerMask lm_mask;
+
 
     private void Start()
     {
@@ -22,9 +24,10 @@ public class ToolTipper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10, ~LayerMask.NameToLayer("Player"), QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10, lm_mask, QueryTriggerInteraction.Ignore))
         {
             ToolTip _tt_ = hit.transform.GetComponent<ToolTip>();
+
             if (_tt_)
             {
                 if ((_tt_.b_hostOnly && pim.GetID() > 0))
