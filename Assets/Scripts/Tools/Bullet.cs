@@ -69,8 +69,6 @@ public class Bullet : MonoBehaviour, IPoolable
 
         GameObject _go_effect = PoolManager.x.SpawnObject(go_hitEffect);
 
-        StartCoroutine(ReturnToPool(_go_effect));
-
         _go_effect.SetActive(false);
         _go_effect.transform.parent = transform;
         _go_effect.transform.localPosition = Vector3.zero;

@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
+public class UniversalNugManager : MonoBehaviourPunCallbacks
 {
 
     public static UniversalNugManager x;
@@ -35,6 +35,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
             i++;
         }
         RefreshTotalNugCount();
+        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts, iA_totalNugCounts);
     }
 
     private void RefreshTotalNugCount()
@@ -49,23 +50,11 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    [PunRPC]
+    private void UpdateCount(int[][] _playerTotals, int[] _totals)
     {
-        Debug.Log("UNM Serialize view");
-        if (stream.IsWriting)
-        {
-            stream.SendNext(i2A_playerNugCounts[i_localID]);
-            stream.SendNext(iA_totalNugCounts);
-            Debug.Log("UNM SENT");
-        }
-        else
-        {
-            int[] t = (int[])stream.ReceiveNext();
-            i2A_playerNugCounts[t[6]] = t;
-            iA_totalNugCounts = (int[])stream.ReceiveNext();
-            Debug.Log("UNM RECIEVE");
-        }
-
+        i2A_playerNugCounts = _playerTotals;
+        iA_totalNugCounts = _totals;
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
