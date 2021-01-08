@@ -33,7 +33,7 @@ public class NugManager : SubjectBase, ObserverBase
         }
 
 #if UNITY_EDITOR
-        CollectNugs(000, false);
+        CollectNugs(5000, false);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
     }
@@ -66,7 +66,7 @@ public class NugManager : SubjectBase, ObserverBase
                 if (ce.AddOrSubtract)
                 {
                     CollectNugs(ce.AmountToChange, true);
-                    UniversalNugManager.x.RecieveNugs(i_playerID, ce.Nug);
+                    UniversalNugManager.x.RecieveNugs(i_playerID, ce.Nug, PhotonNetwork.NickName);
                 }
                 else
                     CollectNugs(-ce.AmountToChange, true);
