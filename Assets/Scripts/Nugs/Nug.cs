@@ -4,12 +4,12 @@ using UnityEngine;
 
 public enum NugType
 {
-    magma,
-    boom,
-    thunder,
-    tasty,
+    goo,
     hydro,
-    goo
+    tasty,
+    thunder,
+    boom,
+    magma
 }
 
 [CreateAssetMenu(fileName = "Nug", menuName = "ScriptableObjects/Nug") ]
