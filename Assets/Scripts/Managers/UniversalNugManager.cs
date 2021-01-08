@@ -30,6 +30,8 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     public void RecieveNugs(int id, int[] counts, int nugCount)
     {
+        if (i_localID < 0)
+            i_localID = id;
         int i = 0;
         foreach (int c in counts)
         {
@@ -37,7 +39,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
             i++;
         }
         RefreshTotalNugCount();
-        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts, iA_totalNugCounts);
+        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], i_localID);
     }
 
     private void RefreshTotalNugCount()
@@ -53,10 +55,10 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void UpdateCount(int[][] _playerTotals, int[] _totals)
+    private void UpdateCount(int[] _playerTotals, int _id)
     {
-        i2A_playerNugCounts = _playerTotals;
-        iA_totalNugCounts = _totals;
+        i2A_playerNugCounts[_id] = _playerTotals;
+        RefreshTotalNugCount();
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
