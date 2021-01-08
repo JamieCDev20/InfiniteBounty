@@ -55,7 +55,6 @@ public class PhotoCapture : MonoBehaviour
     {
         if (!Directory.Exists(Application.persistentDataPath + "/ScreenShots"))
             Directory.CreateDirectory(Application.persistentDataPath + "/ScreenShots");
-        Debug.Log(Application.persistentDataPath + "/ScreenShots");
         return Application.persistentDataPath + "/ScreenShots";
     }
 
@@ -66,10 +65,7 @@ public class PhotoCapture : MonoBehaviour
         Texture2D tempTex = Instantiate(ib_photoStamp);
 
         // The resize zone
-        Debug.LogError(string.Format("ScreenWidth: {0} | ScreenHeight: {1}, FullStampWidth: {2} | FullStampHeight: {3}",
-            _tex_bottom.width, _tex_bottom.height, tempTex.width, tempTex.height));
         float ratio = tempTex.width / _tex_bottom.width;
-        Debug.LogError(ratio.ToString());
         int nW = (int)(ratio * (_tex_bottom.width * f_sizeOnScreen));
         int nH = (int)(ratio * (_tex_bottom.height * f_sizeOnScreen));
         int newX = (int)((nW * ratio));
@@ -77,7 +73,6 @@ public class PhotoCapture : MonoBehaviour
         TextureScale.Bilinear(tempTex, newX, newY);
         int mWidth = tex_combine.width;
         int mHeight = tex_combine.height;
-        Debug.LogError(string.Format("StampWidth: {0} | StampHeight: {1}", mWidth, mHeight));
 
         Color[] stampColor = tempTex.GetPixels();
         for(int i = tempTex.height - 1; i > -1; i--)
