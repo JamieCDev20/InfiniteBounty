@@ -93,10 +93,10 @@ public class NugManager : SubjectBase, ObserverBase
         
         if (_i_value > 0)
             for (int i = 0; i < _i_value; i++)
-                hud.GainNug();
+                hud?.GainNug();
         else
             for (int i = 0; i < -(_i_value * 0.1f); i++)
-                hud.LoseMoney();
+                hud?.LoseMoney();
                 
     }
     public void SendNugs()
