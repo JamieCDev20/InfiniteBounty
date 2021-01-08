@@ -165,7 +165,6 @@ public class ToolRack : Shop
 
     private void ApplyMaterials(ToolBase _tb_toolToMat)
     {
-        return;
         if (!_tb_toolToMat.Purchased)
         {
             foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
