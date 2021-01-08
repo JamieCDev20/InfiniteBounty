@@ -66,7 +66,7 @@ public class NugManager : SubjectBase, ObserverBase
                 if (ce.AddOrSubtract)
                 {
                     CollectNugs(ce.AmountToChange, true);
-                    UniversalNugManager.x.RecieveNugs(i_playerID, ce.Nug, PhotonNetwork.NickName);
+                    UniversalNugManager.x.RecieveNugs(i_playerID, ce.Nug);
                 }
                 else
                     CollectNugs(-ce.AmountToChange, true);

@@ -61,7 +61,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void UpdateCount(int[] _playerTotal, int nugCount, int _id, string _name)
     {
-        sA_names[id] = _name;
+        sA_names[_id] = _name;
 
         i2A_playerNugCounts[_id] = _playerTotal;
         iA_totalNugCounts[_id] = nugCount;
