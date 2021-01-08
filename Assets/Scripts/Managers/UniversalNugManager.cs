@@ -26,7 +26,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
-    public void RecieveNugs(int id, Dictionary<NugType, int>.ValueCollection counts, int nugCount)
+    public void RecieveNugs(int id, int[] counts, int nugCount)
     {
         int i = 0;
         foreach (int c in counts)

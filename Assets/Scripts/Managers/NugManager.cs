@@ -14,7 +14,7 @@ public class NugManager : SubjectBase, ObserverBase
     private int i_inLevelNugs = 0;
     private int i_playerID;
     private HUDController hud;
-    private Dictionary<NugType, int> D_nugTypeIntCount = new Dictionary<NugType, int> { { NugType.goo, 0 }, { NugType.hydro, 0 }, { NugType.tasty, 0 }, { NugType.thunder, 0 }, { NugType.boom, 0 }, { NugType.magma, 0 } };
+    private int[] iA_nugCount = new int[6];
     public int Nugs { get { return i_totalNugs; } }
 
     // Start is called before the first frame update
@@ -66,8 +66,8 @@ public class NugManager : SubjectBase, ObserverBase
                 if (ce.AddOrSubtract)
                 {
                     CollectNugs(ce.AmountToChange, true);
-                    D_nugTypeIntCount[ce.Nug.nt_type] += 1;
-                    UniversalNugManager.x.RecieveNugs(i_playerID, D_nugTypeIntCount.Values, 1);
+                    iA_nugCount[(int)ce.Nug.nt_type] += 1;
+                    UniversalNugManager.x.RecieveNugs(i_playerID, iA_nugCount, 1);
                 }
                 else
                     CollectNugs(-ce.AmountToChange, true);
