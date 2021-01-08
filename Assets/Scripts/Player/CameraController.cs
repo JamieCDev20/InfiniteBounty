@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     //Variables
     #region Serialised
 
-    [SerializeField] private float f_cameraSensitivity = 180;
+    [SerializeField] internal float f_cameraSensitivity = 180;
     [SerializeField] private bool networkedCamera = false;
     [SerializeField] private Text nugCountText;
     [SerializeField] private Vector3 v_offset = Vector3.up * 3;

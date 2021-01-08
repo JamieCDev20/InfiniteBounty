@@ -15,13 +15,19 @@ public class PauseMenuController : MonoBehaviour
     private CameraController cc_cam;
     private Rigidbody rb_playerPhysics;
 
+    [Header("Option References")]
+    [SerializeField] private Slider s_sensitivitySlider;
+
     private void Start()
     {
         c_optionsMenu.enabled = false;
         c_pauseCanvas.enabled = false;
         c_playCanvas.enabled = true;
         cc_cam = GetComponentInParent<CameraController>();
+        SetSensitivty();
     }
+
+    #region Nick Stuff
 
     private void Update()
     {
@@ -67,7 +73,6 @@ public class PauseMenuController : MonoBehaviour
         Debug.LogError("It should've quit, I don't know how");
     }
 
-    #region Option Menu things
 
     public void Options()
     {
@@ -95,5 +100,16 @@ public class PauseMenuController : MonoBehaviour
     }
 
     #endregion
+
+    #region Options
+
+    public void SetSensitivty()
+    {
+        cc_cam.f_cameraSensitivity = s_sensitivitySlider.value;
+    }
+
+
+    #endregion
+
 
 }
