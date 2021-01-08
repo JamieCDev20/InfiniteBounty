@@ -24,6 +24,8 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
             x = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoad;
+        photonView.ViewID = 99999;
+        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     public void RecieveNugs(int id, int[] counts, int nugCount)
