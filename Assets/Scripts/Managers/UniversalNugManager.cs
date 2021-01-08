@@ -28,10 +28,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void RecieveNugs(int id, Dictionary<NugType, int>.ValueCollection counts, int nugCount)
     {
-        if (i_localID < 0)
-        {
-            SetLocal(id);
-        }
         int i = 0;
         foreach (int c in counts)
         {
@@ -39,15 +35,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
             i++;
         }
         RefreshTotalNugCount();
-    }
-
-    public void SetLocal(int id)
-    {
-        i_localID = id;
-        for (int i = 0; i < i2A_playerNugCounts.Length; i++)
-        {
-            i2A_playerNugCounts[i][6] = id;
-        }
     }
 
     private void RefreshTotalNugCount()
