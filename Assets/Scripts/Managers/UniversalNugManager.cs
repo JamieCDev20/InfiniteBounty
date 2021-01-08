@@ -36,7 +36,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         i2A_playerNugCounts[i_localID][(int)nugCollected.nt_type] += 1;
         localNugCount += nugCollected.i_worth;
         RefreshTotalNugCount();
-        photonView.RPC("UpdateCount", RpcTarget.Others, i2A_playerNugCounts[i_localID], localNugCount, i_localID);
+        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID);
     }
 
     private void RefreshTotalNugCount()
