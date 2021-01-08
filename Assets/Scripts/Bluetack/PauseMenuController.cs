@@ -12,17 +12,19 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] private Canvas c_optionsMenu;
     private bool b_isPaused;
     private PlayerInputManager pim;
+    private CameraController cc_cam;
+    private Rigidbody rb_playerPhysics;
 
     private void Start()
     {
         c_optionsMenu.enabled = false;
         c_pauseCanvas.enabled = false;
         c_playCanvas.enabled = true;
+        cc_cam = GetComponentInParent<CameraController>();
     }
 
     private void Update()
     {
-        /*
         if (pim.GetIsPaused())
         {
             if (!b_isPaused)
@@ -30,28 +32,33 @@ public class PauseMenuController : MonoBehaviour
             else
                 Resume();
         }
-        */
     }
 
     public void Resume()
     {
         c_pauseCanvas.enabled = false;
-        c_playCanvas.enabled = true;        
+        c_playCanvas.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
-        Time.timeScale = 1;
+
+        pim.b_shouldPassInputs = true;
+        cc_cam.enabled = true;
+        pim.GetComponent<PlayerAnimator>().SetShootability(true);
+        rb_playerPhysics.isKinematic = false;
         Debug.LogError("Should've resumed, but I don't know how");
     }
 
     public void Pause()
     {
-        c_playCanvas.enabled = false;
         c_pauseCanvas.enabled = true;
+        c_playCanvas.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        
-        //Time.timeScale = Mathf.Epsilon;
+
+        pim.b_shouldPassInputs = false;
+        cc_cam.enabled = false;
+        pim.GetComponent<PlayerAnimator>().SetShootability(false);
+        rb_playerPhysics.isKinematic = true;
         Debug.LogError("Should've paused, but I don't know how");
     }
 
@@ -83,8 +90,8 @@ public class PauseMenuController : MonoBehaviour
 
     internal void SetPIM(PlayerInputManager _newPIM)
     {
-        print(_newPIM.name + " is the new PIM");
         pim = _newPIM;
+        rb_playerPhysics = pim.GetComponent<Rigidbody>();
     }
 
     #endregion
