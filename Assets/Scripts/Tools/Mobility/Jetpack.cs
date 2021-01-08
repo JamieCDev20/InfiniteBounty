@@ -27,6 +27,7 @@ public class Jetpack : MobilityTool
 
     private Vector3 v_targetV;
     private float t;
+    private AudioSource as_steamSource;
 
     private void Start()
     {
@@ -35,6 +36,7 @@ public class Jetpack : MobilityTool
         as_source = GetComponent<AudioSource>();
         as_source.clip = ac_activationSound;
         EndSteaming();
+        as_steamSource = gameObject.AddComponent<AudioSource>();
     }
 
     public override void Use(Vector3 _v)
@@ -87,8 +89,8 @@ public class Jetpack : MobilityTool
         {
             b_isBeingUsed = false;
             f_timeHeld = 0;
-            //if (as_source.clip == ac_activationSound)
-            //   as_source.Stop();
+            if (as_source.clip == ac_activationSound)
+                as_source.Stop();
         }
         else
         {
@@ -114,7 +116,7 @@ public class Jetpack : MobilityTool
 
         as_source.Stop();
         //as_source.clip = ac_steamingSound;
-        as_source.PlayOneShot(ac_steamingSound);
+        as_steamSource.PlayOneShot(ac_steamingSound);
     }
 
     private void EndSteaming()
