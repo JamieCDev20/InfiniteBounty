@@ -49,13 +49,15 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         iA_totalNugCounts = new int[6];
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
+            int curTotal = 0;
             for (int j = 0; j < i2A_playerNugCounts[i].Length; j++)
             {
+                curTotal += i2A_playerNugCounts[i][j];
                 iA_totalNugCounts[j] += i2A_playerNugCounts[i][j];
             }
+            totalValueCount[i_localID] = curTotal;
         }
 
-        totalValueCount[i_localID] = localNugCount;
     }
 
     [PunRPC]
