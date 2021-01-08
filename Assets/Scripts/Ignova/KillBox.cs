@@ -11,6 +11,7 @@ public class KillBox : MonoBehaviour
     private List<IHitable> hL_thingsWithinCloud = new List<IHitable>();
     private float f_time;
     [SerializeField] private float f_timeBetweenDamages;
+    [SerializeField] private bool b_dealDamageOnEntry;
 
     private void Update()
     {
@@ -31,6 +32,9 @@ public class KillBox : MonoBehaviour
 
         if (_h != null)
             hL_thingsWithinCloud.Add(_h);
+
+        if (b_dealDamageOnEntry)
+            _h.TakeDamage(i_damageToDeal);
     }
 
     private void OnTriggerExit(Collider other)

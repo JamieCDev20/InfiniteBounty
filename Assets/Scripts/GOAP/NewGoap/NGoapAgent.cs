@@ -20,26 +20,26 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     [Space]
     [Header("Combat")]
     [SerializeField] private AITargetting targetting;
-    [SerializeField] private int i_damage = 5;
-    [SerializeField] private float f_attackRange = 3;
-    [SerializeField] private float f_lungeForce = 10;
+    [SerializeField] internal int i_damage = 5;
+    [SerializeField] internal float f_attackRange = 3;
+    [SerializeField] internal float f_lungeForce = 10;
 
     [Header("Particles")]
     [SerializeField] private GameObject go_aggroParticles;
     [SerializeField] private GameObject go_deathParticles;
     [SerializeField] private GameObject go_exploParticles;
-    [SerializeField]private ParticleSystem p_hitParticles;
+    [SerializeField] private ParticleSystem p_hitParticles;
 
     #endregion
 
     #region Private
 
-    private int i_currentHealth;
-    private bool b_canAttack = true;
-    private Animator anim;
-    private AIGroundMover mover;
-    private Rigidbody rb;
-    private Transform target;
+    internal int i_currentHealth;
+    internal bool b_canAttack = true;
+    internal Animator anim;
+    internal AIGroundMover mover;
+    internal Rigidbody rb;
+    internal Transform target;
 
     #endregion
 
@@ -60,12 +60,12 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (!mover.HasPath())
             mover.Retarget(target, true);
         anim.SetBool("Running", rb.velocity.magnitude >= 0.1f);
-        if(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up).magnitude > 0.1f)
+        if (Vector3.Scale(rb.velocity, Vector3.one - Vector3.up).magnitude > 0.1f)
             transform.rotation = Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up);
         go_aggroParticles.SetActive(target != null);
         mover.Move();
@@ -83,9 +83,9 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     #region Private Voids
 
-    private void Init()
+    protected virtual void Init()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         i_currentHealth = i_maxHealth;
         targetting.SetTransform(transform);
@@ -103,7 +103,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         }
     }
 
-    private void Attack()
+    protected virtual void Attack()
     {
         mover.SetCanMove(false);
         anim.SetBool("Jump", true);
@@ -130,7 +130,8 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
     {
         i_currentHealth -= damage;
 
-        p_hitParticles.Play();
+        if (p_hitParticles)
+            p_hitParticles?.Play();
 
         if (i_currentHealth <= 0)
         {
@@ -159,7 +160,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         if (target == null)
             return false;
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, target.position - transform.position, out hit))
+        if (Physics.Raycast(transform.position, target.position - transform.position, out hit))
         {
             return hit.collider.transform == target;
         }
@@ -195,8 +196,11 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     public void Die()
     {
-        go_deathParticles.SetActive(true);
-        go_deathParticles.transform.parent = null;
+        if (go_deathParticles)
+        {
+            go_deathParticles.SetActive(true);
+            go_deathParticles.transform.parent = null;
+        }
 
         gameObject.SetActive(false);
         PoolManager.x.ReturnObjectToPool(gameObject);
