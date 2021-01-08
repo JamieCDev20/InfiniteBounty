@@ -21,6 +21,7 @@ public class HUDController : MonoBehaviour
     private List<GameObject> goL_moneyUpParts = new List<GameObject>();
     [SerializeField] private GameObject go_moneyDownParticle;
     private List<GameObject> goL_moneyDownParts = new List<GameObject>();
+    [SerializeField] private Text t_nugCountText;
 
     private void Start()
     {
@@ -67,7 +68,6 @@ public class HUDController : MonoBehaviour
         _go.SetActive(false);
         goL_moneyUpParts.Add(_go);
     }
-
 
     public void LoseMoney()
     {

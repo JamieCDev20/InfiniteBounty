@@ -13,7 +13,6 @@ public class NugManager : SubjectBase, ObserverBase
     /// </summary>
     private int i_inLevelNugs = 0;
     private int i_playerID;
-    private Text t_nugText;
     private HUDController hud;
     private Dictionary<NugType, int> D_nugTypeIntCount = new Dictionary<NugType, int> { { NugType.goo, 0 }, { NugType.hydro, 0 }, { NugType.tasty, 0 }, { NugType.thunder, 0 }, { NugType.boom, 0 }, { NugType.magma, 0 } };
     public int Nugs { get { return i_totalNugs; } }
@@ -34,8 +33,7 @@ public class NugManager : SubjectBase, ObserverBase
         }
 
 #if UNITY_EDITOR
-        i_totalNugs = 1000;
-        CollectNugs(1);
+        CollectNugs(1000, false);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
     }
@@ -67,12 +65,12 @@ public class NugManager : SubjectBase, ObserverBase
             case CurrencyEvent ce:
                 if (ce.AddOrSubtract)
                 {
-                    CollectNugs(ce.AmountToChange);
+                    CollectNugs(ce.AmountToChange, true);
                     D_nugTypeIntCount[ce.Nug.nt_type] += 1;
                     UniversalNugManager.x.RecieveNugs(i_playerID, D_nugTypeIntCount.Values, 1);
                 }
                 else
-                    CollectNugs(-ce.AmountToChange);
+                    CollectNugs(-ce.AmountToChange, true);
                 break;
             case PoolLoadEvent ple:
                 foreach (NugGO np in FindObjectsOfType<NugGO>())
@@ -88,9 +86,13 @@ public class NugManager : SubjectBase, ObserverBase
 
     }
 
-    public void CollectNugs(int _i_value)
+    public void CollectNugs(int _i_value, bool inLevel)
     {
-        i_inLevelNugs += _i_value;
+        if (inLevel)
+            i_inLevelNugs += _i_value;
+        else
+            i_totalNugs += _i_value;
+
 
         if (_i_value > 0)
         {
@@ -101,7 +103,6 @@ public class NugManager : SubjectBase, ObserverBase
         else
             for (int i = 0; i < -(_i_value * 0.1f); i++)
                 hud?.LoseMoney();
-
     }
 
 
@@ -138,11 +139,6 @@ public class NugManager : SubjectBase, ObserverBase
     public void ReceiveNugs(int _i_value)
     {
         i_totalNugs += _i_value;
-    }
-
-    public void SetNugTextRef(Text _txt_)
-    {
-        t_nugText = _txt_;
     }
 
 }

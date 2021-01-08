@@ -214,7 +214,6 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         mover.SetCameraTranfsorm(camControl.transform.GetChild(0));
         toolHandler.RecieveCameraTransform(camControl.transform.GetChild(0));
         animator.SetCam(camControl.transform.GetChild(0));
-        nugMan.SetNugTextRef(camControl.GetNugCountText());
         ph_health.Cam = camControl;
 
         //pc_capture.RecieveCameraController(camControl);

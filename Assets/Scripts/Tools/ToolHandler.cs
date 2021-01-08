@@ -102,13 +102,13 @@ public class ToolHandler : SubjectBase
                         {
                             case WeaponTool wt:
                                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
-                                GetComponent<NugManager>().CollectNugs(-tb.Cost);
+                                GetComponent<NugManager>().CollectNugs(-tb.Cost, false);
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
                                 return true;
                             case MobilityTool mt:
                                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
-                                GetComponent<NugManager>().CollectNugs(-mt.Cost);
+                                GetComponent<NugManager>().CollectNugs(-mt.Cost, false);
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
                                 return true;
