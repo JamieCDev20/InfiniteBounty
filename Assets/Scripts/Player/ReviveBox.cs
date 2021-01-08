@@ -19,8 +19,11 @@ public class ReviveBox : MonoBehaviour, IInteractible
 
     public void Interacted(Transform interactor)
     {
-        interactor.GetComponent<PhotonView>().RPC("DoRevive", RpcTarget.All);
-        ph_health.photonView.RPC("GetRevived", RpcTarget.All);
+        if (interactor != transform.root)
+        {
+            interactor.GetComponent<PhotonView>().RPC("DoRevive", RpcTarget.All);
+            ph_health.photonView.RPC("GetRevived", RpcTarget.All);
+        }
     }
 
 }
