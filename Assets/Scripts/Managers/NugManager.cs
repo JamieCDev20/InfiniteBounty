@@ -90,7 +90,7 @@ public class NugManager : SubjectBase, ObserverBase
     public void CollectNugs(int _i_value)
     {
         i_inLevelNugs += _i_value;
-
+        i_totalNugs += _i_value;
 
         if (_i_value > 0)
         {
