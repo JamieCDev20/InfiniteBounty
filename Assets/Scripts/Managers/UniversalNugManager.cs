@@ -30,12 +30,11 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         PhotonNetwork.RegisterPhotonView(photonView);
     }
 
-    public void RecieveNugs(int id, Nug nugCollected, string _name)
+    public void RecieveNugs(int id, Nug nugCollected)
     {
         if (i_localID < 0)
         {
             i_localID = id;
-            sA_names[id] = _name;
         }
 
         i2A_playerNugCounts[i_localID][(int)nugCollected.nt_type] += 1;
@@ -60,8 +59,10 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void UpdateCount(int[] _playerTotal, int nugCount, int _id)
+    private void UpdateCount(int[] _playerTotal, int nugCount, int _id, string _name)
     {
+        sA_names[id] = _name;
+
         i2A_playerNugCounts[_id] = _playerTotal;
         iA_totalNugCounts[_id] = nugCount;
         RefreshTotalNugCount();
