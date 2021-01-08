@@ -142,6 +142,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (pim.GetID() == NetworkedPlayer.x.PlayerID)
             go_reviveSymbol.SetActive(false);
 
+        GetComponent<Collider>().enabled = false;
         StartCoroutine(DeathDelay());
     }
 
@@ -160,6 +161,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [PunRPC]
     public void RemoteRevive()
     {
+        GetComponent<Collider>().enabled = true;
         isDead = false;
         b_downed = false;
         b_canBeRevived = false;
