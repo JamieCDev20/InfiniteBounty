@@ -56,6 +56,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             stream.SendNext(i2A_playerNugCounts[i_localID]);
             stream.SendNext(iA_totalNugCounts);
+            Debug.Log("UNM SENT");
         }
         else
         {
