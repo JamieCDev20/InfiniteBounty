@@ -81,24 +81,30 @@ public class NugManager : SubjectBase, ObserverBase
                 break;
         }
     }
+
     public void Init()
     {
 
     }
+
     public void CollectNugs(int _i_value)
     {
         i_inLevelNugs += _i_value;
 
 
-        
         if (_i_value > 0)
-            for (int i = 0; i < _i_value; i++)
-                hud?.GainNug();
+        {
+            if (_i_value < 100)
+                for (int i = 0; i < _i_value; i++)
+                    hud?.GainNug();
+        }
         else
             for (int i = 0; i < -(_i_value * 0.1f); i++)
                 hud?.LoseMoney();
-                
+
     }
+
+
     public void SendNugs()
     {
         // Send Total nugs and nugs collected
