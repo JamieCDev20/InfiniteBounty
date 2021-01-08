@@ -53,9 +53,10 @@ public class PhotoCapture : MonoBehaviour
 
     private string GetDirectory()
     {
-        if (!Directory.Exists(Application.dataPath + "/ScreenShots"))
-            Directory.CreateDirectory(Application.dataPath + "/ScreenShots");
-        return Application.dataPath + "/ScreenShots";
+        if (!Directory.Exists(Application.persistentDataPath + "/ScreenShots"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/ScreenShots");
+        Debug.Log(Application.persistentDataPath + "/ScreenShots");
+        return Application.persistentDataPath + "/ScreenShots";
     }
 
     private Texture2D AlphaBlend(Texture2D _tex_bottom)
@@ -65,22 +66,18 @@ public class PhotoCapture : MonoBehaviour
         Texture2D tempTex = Instantiate(ib_photoStamp);
 
         // The resize zone
-        #region Commented Out Code that I might still use
-
-        float ratio = tempTex.height / _tex_bottom.height;
+        Debug.LogError(string.Format("ScreenWidth: {0} | ScreenHeight: {1}, FullStampWidth: {2} | FullStampHeight: {3}",
+            _tex_bottom.width, _tex_bottom.height, tempTex.width, tempTex.height));
+        float ratio = tempTex.width / _tex_bottom.width;
+        Debug.LogError(ratio.ToString());
         int nW = (int)(ratio * (_tex_bottom.width * f_sizeOnScreen));
         int nH = (int)(ratio * (_tex_bottom.height * f_sizeOnScreen));
         int newX = (int)((nW * ratio));
         int newY = (int)((nH * ratio));
-
-        #endregion
-        Debug.Log(string.Format("new X: {0} | new Y: {1}", nW, nH));
         TextureScale.Bilinear(tempTex, newX, newY);
-        Debug.Log(string.Format("Screenshot: {0}px x {1}px. btm: {2} | Watermark: {3}px x {4}px, btm: {5}",
-        tex_combine.width, tex_combine.height, tex_combine.width * tex_combine.height,
-        tempTex.width, tempTex.height, tempTex.width * tempTex.height));
         int mWidth = tex_combine.width;
         int mHeight = tex_combine.height;
+        Debug.LogError(string.Format("StampWidth: {0} | StampHeight: {1}", mWidth, mHeight));
 
         Color[] stampColor = tempTex.GetPixels();
         for(int i = tempTex.height - 1; i > -1; i--)
