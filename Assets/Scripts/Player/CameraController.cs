@@ -113,8 +113,14 @@ public class CameraController : MonoBehaviour
     {
         t_follow = _t_newFollow;
         t_follow.GetComponentInChildren<Billboard>()?.gameObject.SetActive(false);
-
+        GetComponentInChildren<PauseMenuController>().SetSpectating();
     }
+
+    internal void StopSpectating()
+    {
+        GetComponentInChildren<PauseMenuController>().StopSpectating();
+    }
+
     public void SetOffset(Vector3 _v_newOffset)
     {
         v_offset = _v_newOffset;
@@ -130,7 +136,7 @@ public class CameraController : MonoBehaviour
     {
         go_logo?.SetActive(on);
     }
-    
+
 
     #endregion
 

@@ -98,6 +98,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         f_downHealth = f_downTime;
         f_maxDownTime = f_downTime;
         hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        cc_cam.StopSpectating();
     }
 
     [PunRPC]
@@ -201,7 +202,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         {
             if (!ph.isDead)
             {
-                cc_cam.SetFollow(ph.transform);
+                cc_cam.SetFollow(ph.transform, true);
             }
         }
     }
