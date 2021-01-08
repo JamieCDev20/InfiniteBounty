@@ -10,10 +10,12 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] private Canvas c_playCanvas;
     [SerializeField] private Canvas c_pauseCanvas;
     [SerializeField] private Canvas c_optionsMenu;
+    [SerializeField] private Canvas c_spectatingCanvas;
     private bool b_isPaused;
     private PlayerInputManager pim;
     private CameraController cc_cam;
     private Rigidbody rb_playerPhysics;
+    private bool b_isSpectating;
 
     [Header("Option References")]
     [SerializeField] private Slider s_sensitivitySlider;
@@ -42,8 +44,12 @@ public class PauseMenuController : MonoBehaviour
 
     public void Resume()
     {
+        if (b_isSpectating)
+            c_spectatingCanvas.enabled = true;
+        else
+            c_playCanvas.enabled = true;
+
         c_pauseCanvas.enabled = false;
-        c_playCanvas.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -51,13 +57,16 @@ public class PauseMenuController : MonoBehaviour
         cc_cam.enabled = true;
         pim.GetComponent<PlayerAnimator>().SetShootability(true);
         rb_playerPhysics.isKinematic = false;
-        Debug.LogError("Should've resumed, but I don't know how");
     }
 
     public void Pause()
     {
+        if (b_isSpectating)
+            c_spectatingCanvas.enabled = false;
+        else
+            c_playCanvas.enabled = false;
+
         c_pauseCanvas.enabled = true;
-        c_playCanvas.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -65,12 +74,15 @@ public class PauseMenuController : MonoBehaviour
         cc_cam.enabled = false;
         pim.GetComponent<PlayerAnimator>().SetShootability(false);
         rb_playerPhysics.isKinematic = true;
-        Debug.LogError("Should've paused, but I don't know how");
     }
 
     public void Quit()
     {
-        Debug.LogError("It should've quit, I don't know how");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
     }
 
 
@@ -99,6 +111,20 @@ public class PauseMenuController : MonoBehaviour
         rb_playerPhysics = pim.GetComponent<Rigidbody>();
     }
 
+    internal void SetSpectating()
+    {
+        b_isSpectating = true;
+        c_playCanvas.enabled = false;
+        c_spectatingCanvas.enabled = true;
+    }
+
+    internal void StopSpectating()
+    {
+        b_isSpectating = false;
+        c_playCanvas.enabled = true;
+        c_spectatingCanvas.enabled = false;
+    }
+
     #endregion
 
     #region Options
@@ -107,6 +133,7 @@ public class PauseMenuController : MonoBehaviour
     {
         cc_cam.f_cameraSensitivity = s_sensitivitySlider.value;
     }
+
 
 
     #endregion
