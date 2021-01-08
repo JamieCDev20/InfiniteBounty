@@ -74,10 +74,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
             sMan.SetValues(i2A_playerNugCounts, localNugCount);
 
         }
-        foreach(NugManager nMan in FindObjectsOfType<NugManager>())
-        {
-            nMan.ResetNugCount();
-        }
     }
 
 }

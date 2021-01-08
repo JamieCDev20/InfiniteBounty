@@ -109,16 +109,11 @@ public class NugManager : SubjectBase, ObserverBase
     public void SendNugs()
     {
         // Send Total nugs and nugs collected
-        UniversalNugManager.x.RecieveNugs(i_playerID, D_nugTypeIntCount.Values, i_inLevelNugs);
+        UniversalNugManager.x.RecieveNugs(i_playerID, iA_nugCount, i_inLevelNugs);
         Debug.LogError("SENDING NUGS");
         // Send nugs
         ReceiveNugs(i_inLevelNugs);
 
-    }
-
-    public void ResetNugCount()
-    {
-        D_nugTypeIntCount = new Dictionary<NugType, int> { { NugType.boom, 0 }, { NugType.goo, 0 }, { NugType.hydro, 0 }, { NugType.magma, 0 }, { NugType.tasty, 0 }, { NugType.thunder, 0 } };
     }
 
     [PunRPC]
