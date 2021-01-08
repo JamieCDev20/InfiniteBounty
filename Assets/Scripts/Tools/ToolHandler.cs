@@ -95,7 +95,7 @@ public class ToolHandler : SubjectBase
                                 return true;
                         }
                     }
-                    if(GetComponent<NugManager>().Nugs >= tb.Cost)
+                    if (GetComponent<NugManager>().Nugs >= tb.Cost)
                     {
 
                         switch (tb)
@@ -283,7 +283,8 @@ public class ToolHandler : SubjectBase
             A_tools[(int)_ts_].gameObject.SetActive(true);
             try
             {
-                A_tools[(int)_ts_].GetComponent<Collider>().enabled = false;
+                if (_ts_ != ToolSlot.moblility)
+                    A_tools[(int)_ts_].GetComponent<Collider>().enabled = false;
             }
             catch (System.NullReferenceException e) { }
 
