@@ -140,7 +140,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_canBeRevived = true;
         go_reviveObject.SetActive(true);
 
-        if (pim.GetID() == NetworkedPlayer.x.PlayerID)
+        if (pim?.GetID() == NetworkedPlayer.x?.PlayerID)
             go_reviveSymbol.SetActive(false);
 
         GetComponent<Collider>().enabled = false;

@@ -12,11 +12,11 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     public static UniversalNugManager x;
 
     private int[][] i2A_playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0} };
-    private int[] iA_totalNugCounts;
+    private int[] iA_totalNugCounts = new int[6];
     private int i_localID = -1;
     private int localNugCount;
     private int[] totalValueCount = new int[4];
-    private string[] sA_names;
+    private string[] sA_names = new string[4];
 
     private void Start()
     {
