@@ -80,6 +80,8 @@ public class ToolRack : Shop
                     dupe.transform.position = _t_toolTransform[i * 2 + 1].transform.position;
                     toolRackID++;
                     dupe.RackID = toolRackID;
+                    dupe.Purchased = true;
+                    ApplyMaterials(dupe);
                     dupe.gameObject.SetActive(true);
                     L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
                     L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;

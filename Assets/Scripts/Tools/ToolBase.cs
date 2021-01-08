@@ -36,7 +36,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     #endregion
 
     #region get/set
-    public bool Purchased { get { return b_purchased; } }
+    public bool Purchased { get { return b_purchased; } set { b_purchased = value; } }
     public bool ReleaseActivated { get { return b_releaseActivated; } }
     public int ToolID { get { return i_toolId; } set { i_toolId = value; } }
     public int RackID { get { return i_rackId; } set { i_rackId = value; } }
