@@ -12,7 +12,6 @@ public class PoolableObject : MonoBehaviour, IPoolable
 
     public void Die()
     {
-        Debug.Log("DYING");
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
