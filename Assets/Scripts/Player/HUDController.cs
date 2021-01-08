@@ -24,8 +24,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private GameObject go_moneyDownParticle;
     private List<GameObject> goL_moneyDownParts = new List<GameObject>();
     [SerializeField] private Text t_nugCountText;*/
-    [SerializeField] private Text[] tA_nugTexts = new Text[0];
-
+    [SerializeField] private ScoreObjects texts;
     private void Start()
     {
         x = this;
@@ -58,9 +57,11 @@ public class HUDController : MonoBehaviour
 
     public void SetNugValues(int[] _iA_nugCounts)
     {
-        for (int i = 0; i < 6; i++)
-        {
-            tA_nugTexts[i].text = _iA_nugCounts[i] + "";
-        }
+        texts.boomText.text = _iA_nugCounts[0].ToString();
+        texts.tastyText.text = _iA_nugCounts[1].ToString();
+        texts.thunderText.text = _iA_nugCounts[2].ToString();
+        texts.magmaText.text = _iA_nugCounts[3].ToString();
+        texts.hydroText.text = _iA_nugCounts[4].ToString();
+        texts.gooText.text = _iA_nugCounts[5].ToString();
     }
 }
