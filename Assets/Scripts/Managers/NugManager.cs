@@ -33,7 +33,7 @@ public class NugManager : SubjectBase, ObserverBase
         }
 
 #if UNITY_EDITOR
-        CollectNugs(1000, false);
+        CollectNugs(5000, false);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
     }
@@ -66,8 +66,7 @@ public class NugManager : SubjectBase, ObserverBase
                 if (ce.AddOrSubtract)
                 {
                     CollectNugs(ce.AmountToChange, true);
-                    iA_nugCount[(int)ce.Nug.nt_type] += 1;
-                    UniversalNugManager.x.RecieveNugs(i_playerID, iA_nugCount, 1);
+                    UniversalNugManager.x.RecieveNugs(i_playerID, ce.Nug);
                 }
                 else
                     CollectNugs(-ce.AmountToChange, true);
@@ -93,24 +92,12 @@ public class NugManager : SubjectBase, ObserverBase
         else
             i_totalNugs += _i_value;
 
-
-        if (_i_value > 0)
-        {
-            if (_i_value < 100)
-                for (int i = 0; i < _i_value; i++)
-                    hud?.GainNug();
-        }
-        else
-            for (int i = 0; i < -(_i_value * 0.1f); i++)
-                hud?.LoseMoney();
     }
 
 
     public void SendNugs()
     {
         // Send Total nugs and nugs collected
-        UniversalNugManager.x.RecieveNugs(i_playerID, iA_nugCount, i_inLevelNugs);
-        Debug.LogError("SENDING NUGS");
         // Send nugs
         ReceiveNugs(i_inLevelNugs);
 

@@ -28,37 +28,38 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         PhotonNetwork.RegisterPhotonView(photonView);
     }
 
-    public void RecieveNugs(int id, int[] counts, int nugCount)
+    public void RecieveNugs(int id, Nug nugCollected)
     {
         if (i_localID < 0)
             i_localID = id;
         int i = 0;
-        foreach (int c in counts)
-        {
-            i2A_playerNugCounts[id][i] = c;
-            i++;
-        }
+        i2A_playerNugCounts[i_localID][(int)nugCollected.nt_type] += 1;
+        localNugCount += nugCollected.i_worth;
         RefreshTotalNugCount();
-        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], i_localID);
+        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID);
     }
 
     private void RefreshTotalNugCount()
     {
         iA_totalNugCounts = new int[6];
-        for (int i = 0; i < i2A_playerNugCounts.Length; i++)
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             for (int j = 0; j < i2A_playerNugCounts[i].Length; j++)
             {
                 iA_totalNugCounts[j] += i2A_playerNugCounts[i][j];
             }
         }
+
+        iA_totalNugCounts[i_localID] = localNugCount;
     }
 
     [PunRPC]
-    private void UpdateCount(int[] _playerTotals, int _id)
+    private void UpdateCount(int[] _playerTotal, int nugCount, int _id)
     {
-        i2A_playerNugCounts[_id] = _playerTotals;
+        i2A_playerNugCounts[_id] = _playerTotal;
+        iA_totalNugCounts[_id] = nugCount;
         RefreshTotalNugCount();
+        HUDController.x.SetNugValues(iA_totalNugCounts);
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)

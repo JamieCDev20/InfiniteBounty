@@ -113,7 +113,7 @@ public class Lobby : MonoBehaviourPunCallbacks
             if (riL_currentRooms.Contains(roomList[i]))
             {
                 riL_currentRooms.Remove(roomList[i]);
-                if (riL_currentRooms[i].PlayerCount < riL_currentRooms[i].MaxPlayers)
+                if (riL_currentRooms[i].PlayerCount < riL_currentRooms[i].MaxPlayers && riL_currentRooms[i].PlayerCount > 0)
                     riL_currentRooms.Add(roomList[i]);
             }
             else

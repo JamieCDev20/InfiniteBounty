@@ -131,7 +131,8 @@ public class PauseMenuController : MonoBehaviour
 
     public void SetSensitivty()
     {
-        cc_cam.f_cameraSensitivity = s_sensitivitySlider.value;
+        if (cc_cam != null)
+            cc_cam.f_cameraSensitivity = s_sensitivitySlider.value;
     }
 
 
