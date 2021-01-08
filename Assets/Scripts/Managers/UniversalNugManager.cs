@@ -51,7 +51,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
+        Debug.Log("UNM Serialize view");
         if (stream.IsWriting)
         {
             stream.SendNext(i2A_playerNugCounts[i_localID]);
@@ -63,6 +63,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks, IPunObservable
             int[] t = (int[])stream.ReceiveNext();
             i2A_playerNugCounts[t[6]] = t;
             iA_totalNugCounts = (int[])stream.ReceiveNext();
+            Debug.Log("UNM RECIEVE");
         }
 
     }
