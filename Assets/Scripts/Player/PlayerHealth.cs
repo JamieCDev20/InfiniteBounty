@@ -29,11 +29,14 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     internal HUDController hudControl;
     private PlayerAnimator pa_anim;
     [Space, SerializeField] private RectTransform rt_downedTimer;
+    private PlayerInputManager pim;
+    [SerializeField] private GameObject go_reviveSymbol;
 
     private void Start()
     {
         view = GetComponent<PhotonView>();
         SetMaxHealth();
+        pim = GetComponent<PlayerInputManager>();
     }
 
 
@@ -54,8 +57,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         }
         if (b_canRegen)
         {
-            f_currentHealth = Mathf.Clamp(f_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
-            hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+            if (!b_downed)
+            {
+                f_currentHealth = Mathf.Clamp(f_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
+                hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+            }
         }
         else
         {
@@ -63,7 +69,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             if (f_currentCount <= 0)
                 b_canRegen = true;
         }
-
     }
 
     public void TakeDamage(int damage)
@@ -133,6 +138,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_downed = true;
         b_canBeRevived = true;
         go_reviveObject.SetActive(true);
+
+        if (pim.GetID() == NetworkedPlayer.x.PlayerID)
+            go_reviveSymbol.SetActive(false);
+
         StartCoroutine(DeathDelay());
     }
 
