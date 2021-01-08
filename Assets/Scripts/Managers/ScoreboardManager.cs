@@ -15,7 +15,7 @@ public class ScoreboardManager : MonoBehaviour
         int totalEarned = 0;
         for (int i = 0; i < values.Length; i++)
         {
-            totalEarned +=[nugCount];
+            totalEarned += nugCount[i];
             so_playerScoreObjects[i].nameText.text = _names[i];
             so_playerScoreObjects[i].gooText.text = values[i][0].ToString();
             so_playerScoreObjects[i].hydroText.text = values[i][1].ToString();
@@ -26,7 +26,7 @@ public class ScoreboardManager : MonoBehaviour
             so_playerScoreObjects[i].bucksText.text = nugCount[i].ToString();
         }
         t_totalEarned.text = totalEarned.ToString();
-        
+
     }
 
 }
