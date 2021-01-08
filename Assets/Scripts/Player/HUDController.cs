@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
+    public static HUDController x;
+
     [Header("Heat Guages")]
     [SerializeField] private RectTransform rt_healthBar;
     [SerializeField] private Image i_healthBar;
@@ -26,6 +28,7 @@ public class HUDController : MonoBehaviour
 
     private void Start()
     {
+        x = this;
         SetHealthBarValue(1, 1);
         //SetLeftHeatGuage(1, 1);
         //SetRightHeatGuage(1, 1);
