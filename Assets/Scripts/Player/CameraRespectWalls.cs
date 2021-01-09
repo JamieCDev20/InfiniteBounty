@@ -8,7 +8,7 @@ public class CameraRespectWalls : MonoBehaviour
     //Variables
     #region Serialised
 
-
+    [SerializeField] private LayerMask lm_playerMask;
 
     #endregion
 
@@ -16,7 +16,6 @@ public class CameraRespectWalls : MonoBehaviour
 
     private float f_targetDistance;
     private Vector3 v_targetPos;
-    private LayerMask lm_playerMask;
     private Transform t_root;
 
     #endregion
@@ -26,9 +25,6 @@ public class CameraRespectWalls : MonoBehaviour
 
     private void Start()
     {
-        lm_playerMask =~ LayerMask.GetMask("Player");
-        lm_playerMask += ~LayerMask.GetMask("Enemy");
-        lm_playerMask += LayerMask.GetMask("Default");
         v_targetPos = transform.localPosition;
         t_root = transform.root;
         f_targetDistance = v_targetPos.magnitude;
