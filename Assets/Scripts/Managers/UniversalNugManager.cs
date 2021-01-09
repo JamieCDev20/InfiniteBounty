@@ -84,17 +84,13 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         HUDController.x.SetNugValues(iA_totalNugCounts);
     }
 
-    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    public void DoScoring()
     {
-        if (scene.name.Contains("Lobby"))
-        {
-            RefreshTotalNugCount();
-            ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
-            sMan.SetValues(i2A_playerNugCounts, sA_names);
+        RefreshTotalNugCount();
+        ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
+        sMan.SetValues(i2A_playerNugCounts, sA_names);
 
-            ResetValues();
-
-        }
+        ResetValues();
     }
 
 }
