@@ -14,9 +14,9 @@ public class ScoreboardManager : MonoBehaviour
     public void SetValues(int[][] values, int[] nugCount, string[] _names)
     {
         int totalEarned = 0;
+        int playerTotal;
         for (int i = 0; i < values.Length; i++)
         {
-            totalEarned += nugCount[i];
             so_playerScoreObjects[i].nameText.text = _names[i];
             so_playerScoreObjects[i].gooText.text = values[i][0].ToString();
             so_playerScoreObjects[i].hydroText.text = values[i][1].ToString();
@@ -24,7 +24,9 @@ public class ScoreboardManager : MonoBehaviour
             so_playerScoreObjects[i].thunderText.text = values[i][3].ToString();
             so_playerScoreObjects[i].boomText.text = values[i][4].ToString();
             so_playerScoreObjects[i].magmaText.text = values[i][5].ToString();
-            so_playerScoreObjects[i].bucksText.text = CalculateValues(values[i]).ToString();
+            playerTotal = CalculateValues(values[i]);
+            so_playerScoreObjects[i].bucksText.text = playerTotal.ToString();
+            totalEarned += playerTotal;
         }
         t_totalEarned.text = totalEarned.ToString();
 
