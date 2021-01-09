@@ -72,7 +72,11 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         anim.SetBool("Running", rb.velocity.magnitude >= 0.1f);
         if (Vector3.Scale(rb.velocity, Vector3.one - Vector3.up).magnitude > 0.1f)
             transform.rotation = Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up);
-        photonView.RPC("SetParticles", RpcTarget.All, target != null);
+        if(!go_aggroParticles.activeSelf && target != null)
+            photonView.RPC("SetParticles", RpcTarget.All, true);
+        else if(go_aggroParticles.activeSelf && target == null)
+            photonView.RPC("SetParticles", RpcTarget.All, false);
+            
         mover.Move();
     }
 
