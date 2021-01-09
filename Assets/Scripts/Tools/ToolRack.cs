@@ -154,7 +154,6 @@ public class ToolRack : Shop
     public void UnableToBuy(int _i_rackID, bool _b_rackType)
     {
         ToolBase toolRef = _b_rackType ? tl_weaponTools.GetToolAt(_i_rackID) : tl_mobTools.GetToolAt(_i_rackID);
-        toolRef = tl_weaponTools.GetToolAt(_i_rackID);
         Transform toolOrigin = toolRef.transform;
         if (!b_currentlyShaking)
         {
