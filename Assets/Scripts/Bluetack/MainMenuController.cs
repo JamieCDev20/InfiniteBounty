@@ -12,7 +12,7 @@ public class MainMenuController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject menuCam;
 
-    private void Start()
+    private void Awake()
     {
         b_onlineButton.interactable = false;
         if (PhotonNetwork.IsConnected)
