@@ -25,6 +25,7 @@ public class TagManager : MonoBehaviour
     private void Awake()
     {
         x = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
