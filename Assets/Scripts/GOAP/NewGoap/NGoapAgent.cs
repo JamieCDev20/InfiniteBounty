@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
+public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
 {
 
     //Variables
@@ -36,6 +36,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     internal int i_currentHealth;
     internal bool b_canAttack = true;
+    private bool b_isHost = true;
     internal Animator anim;
     internal AIGroundMover mover;
     internal Rigidbody rb;
@@ -53,6 +54,8 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     private void Update()
     {
+        if (!b_isHost)
+            return;
         if (!CanSeeTarget())
             target = targetting.GetTarget();
         if (b_canAttack && target != null && (target.position - transform.position).magnitude < f_attackRange)
@@ -62,6 +65,8 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     protected virtual void FixedUpdate()
     {
+        if (!b_isHost)
+            return;
         if (!mover.HasPath())
             mover.Retarget(target, true);
         anim.SetBool("Running", rb.velocity.magnitude >= 0.1f);
@@ -73,6 +78,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     private void OnCollisionEnter(Collision collision)
     {
+
         if (b_canAttack)
             return;
         if (rb.velocity.sqrMagnitude > 15)
@@ -85,6 +91,8 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     protected virtual void Init()
     {
+        b_isHost = PhotonNetwork.IsMasterClient;
+
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         i_currentHealth = i_maxHealth;
@@ -128,6 +136,10 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     public void TakeDamage(int damage)
     {
+        if(!b_isHost)
+        {
+            photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage);
+        }
         i_currentHealth -= damage;
 
         if (p_hitParticles)
@@ -135,8 +147,17 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
         if (i_currentHealth <= 0)
         {
-            Die();
+            photonView.RPC("Die", RpcTarget.AllViaServer);
         }
+    }
+
+    [PunRPC]
+    public void RemoteTakeDamage(int damage)
+    {
+        if (!b_isHost)
+            return;
+        TakeDamage(damage);
+
     }
 
     public void Explode()
@@ -148,7 +169,7 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
         }
         go_exploParticles?.SetActive(true);
         go_exploParticles.transform.parent = null;
-        Die();
+        photonView.RPC("Die", RpcTarget.AllViaServer);
     }
 
     #endregion
@@ -184,16 +205,12 @@ public class NGoapAgent : MonoBehaviour, IHitable, IPunObservable, IPoolable
 
     #region Public Returns
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-    }
-
     public GameObject GetGameObject()
     {
         return gameObject;
     }
 
+    [PunRPC]
     public void Die()
     {
         if (go_deathParticles)
