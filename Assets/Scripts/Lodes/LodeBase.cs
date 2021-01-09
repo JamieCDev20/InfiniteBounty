@@ -20,6 +20,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     private bool burst = true;
     private PhotonView view;
     private NugGO[] nuggets;
+    [SerializeField] private ParticleSystem p_chunkEffect;
 
     protected override void Start()
     {
@@ -119,6 +120,8 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     private void NuggetBurst(params float[] v)
     {
         //Nick and byron did this
+
+        p_chunkEffect.Play();
 
         GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
         nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
