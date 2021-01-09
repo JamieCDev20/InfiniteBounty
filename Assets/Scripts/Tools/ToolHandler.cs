@@ -19,6 +19,8 @@ public class ToolHandler : SubjectBase
     [SerializeField] private Transform[] A_toolTransforms;
     [SerializeField] private ToolBase[] A_tools = new ToolBase[3];
     [SerializeField] private ToolLoader[] A_toolLoaders;
+    [SerializeField] private AudioClip[] acA_ToolSwapEffects;
+    [SerializeField] private Vector2 v2_toolSwapPitchRange;
     [SerializeField] private LayerMask lm_shoppingMask;
     [SerializeField] private LayerMask lm_shootingMask;
 
@@ -194,8 +196,14 @@ public class ToolHandler : SubjectBase
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)
     {
         SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
+        PlaySwapNoise();
         view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
 
+    }
+
+    private void PlaySwapNoise()
+    {
+        AudioSource.PlayClipAtPoint(acA_ToolSwapEffects[Random.Range(0, acA_ToolSwapEffects.Length)], transform.position);
     }
 
     [PunRPC]
