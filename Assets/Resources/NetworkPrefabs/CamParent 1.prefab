@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1023,7 +1023,7 @@ RectTransform:
   - {fileID: 216889270920845164}
   - {fileID: 4217111933169697315}
   m_Father: {fileID: 1389389271049876155}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1790,7 +1790,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '*Tailored content courtesy of NothingIsSacred Ltd.'
+  m_Text: '*tailored content courtesy of NothingIsSacred Ltd.'
 --- !u!1 &2455907963472053948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1870,6 +1870,92 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 0
+--- !u!1 &2822106187985128050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8536552839799366088}
+  - component: {fileID: 3521520893626511979}
+  - component: {fileID: 318397700255712737}
+  m_Layer: 0
+  m_Name: ContractBody (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8536552839799366088
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822106187985128050}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4490897293282540686}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 9.9, y: -35}
+  m_SizeDelta: {x: 490, y: 250}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3521520893626511979
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822106187985128050}
+  m_CullTransparentMesh: 0
+--- !u!114 &318397700255712737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822106187985128050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f92c5d799e74da8478d99d8fe4ab8f66, type: 3}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 6
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: '- Immediate disintegration/disemployment
+
+    - Use of Infinite Bounty''s
+    DMSN-HPR technology to employ your next of self.
+
+    - Cost of paperwork and
+    use of Infinite Bounty''s DMSN-HPR will be deducted from you/your team''s payment
+    for the mission on which the incident occured.'
 --- !u!1 &3102048421360009538
 GameObject:
   m_ObjectHideFlags: 0
@@ -2093,7 +2179,7 @@ RectTransform:
   - {fileID: 1352807131941636360}
   - {fileID: 5624703956860378874}
   m_Father: {fileID: 1389389271049876155}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8126,6 +8212,7 @@ RectTransform:
   m_Children:
   - {fileID: 3449902370997763492}
   - {fileID: 5576011152931948958}
+  - {fileID: 8536552839799366088}
   m_Father: {fileID: 2445109205771428537}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8259,7 +8346,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1389389271049876155}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8288,7 +8375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -8778,18 +8865,18 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "By opening this menu you have agreed to the following terms:\n\nAny form
-    of death, dismemberment or debilitation which causes you to be unable to perform
-    the simple tasks asked of you will result in:\n\t- Immediate disintegration/disemployment\n\t-
-    Use of Infinite Bounty's DMSN-HPR technology to employ your\n\t  next of self.\n\t-
-    Cost of paperwork and use of Infinite Bounty's DMSN-HPR will\n\t  be deducted
-    from you/your team's payment for the mission\n\t  on which the incident occured."
+  m_Text: 'By opening this menu you have agreed to the following terms:
+
+
+    Any
+    form of death, dismemberment or debilitation which causes you to be unable to
+    perform the simple tasks asked of you will result in:'
 --- !u!1 &5791687128939348899
 GameObject:
   m_ObjectHideFlags: 0
@@ -9196,8 +9283,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '*Farmite Corp does not claim responsibility for long-term developmental
-    defects as a result of Farmite.'
+  m_Text: '*Farmite Corp relinquishes responsibility for long-term developmental
+    defects as a result of exposure to Farmite.'
 --- !u!1 &6038144467176992171
 GameObject:
   m_ObjectHideFlags: 0
@@ -9642,10 +9729,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8940822994700118933}
   - {fileID: 6165774485853985869}
   - {fileID: 5513926486092723583}
   - {fileID: 3268089739884646582}
-  - {fileID: 8940822994700118933}
   m_Father: {fileID: 35636494887286609}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9675,7 +9762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5411765, g: 0.5019608, b: 0.9450981, a: 0.4745098}
+  m_Color: {r: 0.3795875, g: 0.32484868, b: 0.9433962, a: 0.85882354}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9756,7 +9843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5411765, g: 0.5019608, b: 0.9450981, a: 0.4745098}
+  m_Color: {r: 0.3795875, g: 0.32484868, b: 0.9433962, a: 0.85882354}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -16465,7 +16552,7 @@ RectTransform:
   m_Children:
   - {fileID: 5862921940282444877}
   m_Father: {fileID: 1389389271049876155}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
