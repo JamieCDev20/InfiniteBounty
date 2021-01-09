@@ -203,7 +203,8 @@ public class ToolHandler : SubjectBase
 
     private void PlaySwapNoise()
     {
-        AudioSource.PlayClipAtPoint(acA_ToolSwapEffects[Random.Range(0, acA_ToolSwapEffects.Length)], transform.position);
+        if (acA_ToolSwapEffects.Length > 0)
+            AudioSource.PlayClipAtPoint(acA_ToolSwapEffects[Random.Range(0, acA_ToolSwapEffects.Length)], transform.position);
     }
 
     [PunRPC]
