@@ -36,6 +36,7 @@ public class NugManager : SubjectBase, ObserverBase
         CollectNugs(5000, false);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
+        SceneManager.sceneLoaded += OnSceneLoad;
     }
 
     public void SetID(int _id)
@@ -66,7 +67,7 @@ public class NugManager : SubjectBase, ObserverBase
                 if (ce.AddOrSubtract)
                 {
                     CollectNugs(ce.AmountToChange, true);
-                    UniversalNugManager.x.RecieveNugs(i_playerID, ce.Nug);
+                    UniversalNugManager.x.RecieveNugs(ce.Nug);
                 }
                 else
                     CollectNugs(-ce.AmountToChange, true);
@@ -121,6 +122,12 @@ public class NugManager : SubjectBase, ObserverBase
     public void ReceiveNugs(int _i_value)
     {
         i_totalNugs += _i_value;
+    }
+
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (!scene.name.Contains("Lobby"))
+            UniversalNugManager.x.Handshake(i_playerID);
     }
 
 }
