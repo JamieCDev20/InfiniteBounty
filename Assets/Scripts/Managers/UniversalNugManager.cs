@@ -95,10 +95,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
             ResetValues();
 
         }
-        else
-        {
-
-        }
     }
 
 }
