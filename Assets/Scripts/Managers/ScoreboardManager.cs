@@ -11,7 +11,7 @@ public class ScoreboardManager : MonoBehaviour
     [SerializeField] private Text t_totalEarned;
     private int[] nugValues = new int[6] { 1, 1, 1, 2, 2, 3 };
 
-    public void SetValues(int[][] values, int[] nugCount, string[] _names)
+    public void SetValues(int[][] values, string[] _names)
     {
         int totalEarned = 0;
         int playerTotal;

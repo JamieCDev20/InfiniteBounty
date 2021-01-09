@@ -65,7 +65,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     private IEnumerator SpawnEnemyWave(int _i_zoneIndex)
     {
         {
-            print("SPAWNING ENEMY WAVE");
+            //print("SPAWNING ENEMY WAVE");
             //Creating a working list of weightings for the enemy types.
             float _f_max = 0;
             List<float> _fL = new List<float>();
@@ -89,7 +89,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                     //Only spawn enemies up to the current limit
                     if (i_numberOfEnemies < i_maxNumberOfEnemies)
                     {
-                        print("SPAWNING ENEMY HORDE");
+                        //print("SPAWNING ENEMY HORDE");
 
                         //Which enemy type to spawn
                         float rando = Random.Range(0, _f_max);
@@ -97,7 +97,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                         for (int i = 0; i < _fL.Count; i++)
                             if (rando >= _fL[i] && rando < _fL[i + 1]) //Is this the right enemy type.{
                             {
-                                print("Spawning enemies");
+                                //print("Spawning enemies");
                                 SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
                             }
                     }

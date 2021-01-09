@@ -15,7 +15,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     private int[] iA_totalNugCounts = new int[6];
     private int i_localID = -1;
     private int localNugCount;
-    private int[] totalValueCount = new int[4];
     private string[] sA_names = new string[4];
 
     private void Start()
@@ -55,7 +54,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
                 curTotal += i2A_playerNugCounts[i][j];
                 iA_totalNugCounts[j] += i2A_playerNugCounts[i][j];
             }
-            totalValueCount[i_localID] = curTotal;
         }
 
     }
@@ -66,7 +64,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         sA_names[_id] = _name;
 
         i2A_playerNugCounts[_id] = _playerTotal;
-        totalValueCount[_id] = nugCount;
         RefreshTotalNugCount();
         HUDController.x.SetNugValues(iA_totalNugCounts);
     }
@@ -85,7 +82,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         {
             RefreshTotalNugCount();
             ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
-            sMan.SetValues(i2A_playerNugCounts, totalValueCount, sA_names);
+            sMan.SetValues(i2A_playerNugCounts, sA_names);
 
             ResetValues();
 
