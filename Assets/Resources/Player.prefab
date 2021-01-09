@@ -5192,8 +5192,8 @@ GameObject:
   - component: {fileID: 5097147677987189592}
   - component: {fileID: 1834883202107126509}
   - component: {fileID: 5097147677987189594}
-  - component: {fileID: 5097147677987189593}
   - component: {fileID: 5097147677987189598}
+  - component: {fileID: 5097147677987189593}
   - component: {fileID: 4710986726784191867}
   - component: {fileID: 3574640354655469097}
   - component: {fileID: 5097147677987189597}
@@ -5333,6 +5333,21 @@ MonoBehaviour:
   f_plummetPoint: 20
   f_plummetMultiplier: 4.13
   v_dragVector: {x: 0.1, y: 0, z: 0.1}
+--- !u!114 &5097147677987189598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097147677987189575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999c9bf6c43b51848afa82dc34ccde17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armR: {fileID: 4038241088917655543}
+  armL: {fileID: 4628760963184228513}
+  doDemoIK: 0
 --- !u!114 &5097147677987189593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5365,21 +5380,6 @@ MonoBehaviour:
   lm_shootingMask:
     serializedVersion: 2
     m_Bits: 31543
---- !u!114 &5097147677987189598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5097147677987189575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 999c9bf6c43b51848afa82dc34ccde17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  armR: {fileID: 4038241088917655543}
-  armL: {fileID: 4628760963184228513}
-  doDemoIK: 0
 --- !u!114 &4710986726784191867
 MonoBehaviour:
   m_ObjectHideFlags: 0

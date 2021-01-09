@@ -42,10 +42,9 @@ public class AITargetting
         RaycastHit hit;
         Vector3 origin, target;
         int i = 0;
-        foreach (GameObject g in TagManager.x.GetTagSet("Player"))
+        //foreach (GameObject g in TagManager.x.GetTagSet("Player"))
+        foreach (PlayerInputManager g in GameObject.FindObjectsOfType<PlayerInputManager>())
         {
-            i++;
-            Debug.Log(i);
             origin = transform.position + Vector3.up * 0.5f;
             target = g.transform.position + Vector3.up * 0.5f;
             Physics.Raycast(origin, target - origin, out hit, f_spottingDistance, LayerMask.GetMask("Player"));

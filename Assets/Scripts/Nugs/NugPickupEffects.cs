@@ -9,7 +9,7 @@ public class NugPickupEffects : MonoBehaviour, IPoolable
     [SerializeField] private bool b_isNetworkedObject = false;
     [SerializeField] private string s_resourcePath;
 
-    private void Start()
+    private void OnEnable()
     {
         Invoke("Die", 2);
     }
