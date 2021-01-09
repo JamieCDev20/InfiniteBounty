@@ -15,7 +15,7 @@ public class MainMenuController : MonoBehaviourPunCallbacks
     private void Start()
     {
         b_onlineButton.interactable = false;
-        if (PhotonNetwork.IsConnectedAndReady)
+        if (PhotonNetwork.IsConnected)
         {
             mainMenu.SetActive(false);
             menuCam.SetActive(false);
