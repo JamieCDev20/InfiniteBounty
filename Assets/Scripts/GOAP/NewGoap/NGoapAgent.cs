@@ -72,11 +72,11 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         anim.SetBool("Running", rb.velocity.magnitude >= 0.1f);
         if (Vector3.Scale(rb.velocity, Vector3.one - Vector3.up).magnitude > 0.1f)
             transform.rotation = Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up);
-        if(!go_aggroParticles.activeSelf && target != null)
+        if (!go_aggroParticles.activeSelf && target != null)
             photonView.RPC("SetParticles", RpcTarget.All, true);
-        else if(go_aggroParticles.activeSelf && target == null)
+        else if (go_aggroParticles.activeSelf && target == null)
             photonView.RPC("SetParticles", RpcTarget.All, false);
-            
+
         mover.Move();
     }
 
@@ -86,7 +86,8 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         if (b_canAttack)
             return;
         if (rb.velocity.sqrMagnitude > 15)
-            Explode();
+            photonView.RPC("Explode", RpcTarget.All);
+        //Explode();
     }
 
     #endregion
@@ -146,7 +147,7 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
 
     public void TakeDamage(int damage)
     {
-        if(!b_isHost)
+        if (!b_isHost)
         {
             photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage);
         }
@@ -170,6 +171,7 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
 
     }
 
+    [PunRPC]
     public void Explode()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, 1);
@@ -177,8 +179,10 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         {
             c.GetComponent<IHitable>()?.TakeDamage(i_damage);
         }
-        photonView.RPC("SplosionFX", RpcTarget.All);
-        photonView.RPC("Die", RpcTarget.AllViaServer);
+        //photonView.RPC("SplosionFX", RpcTarget.All);
+        //photonView.RPC("Die", RpcTarget.AllViaServer);
+        Die();
+        SplosionFX();
     }
 
     [PunRPC]
