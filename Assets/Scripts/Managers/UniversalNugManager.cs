@@ -66,7 +66,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         sA_names[_id] = _name;
 
         i2A_playerNugCounts[_id] = _playerTotal;
-        iA_totalNugCounts[_id] = nugCount;
+        totalValueCount[_id] = nugCount;
         RefreshTotalNugCount();
         HUDController.x.SetNugValues(iA_totalNugCounts);
     }
@@ -83,7 +83,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     {
         if (scene.name.Contains("Lobby"))
         {
-
+            RefreshTotalNugCount();
             ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
             sMan.SetValues(i2A_playerNugCounts, totalValueCount, sA_names);
 
