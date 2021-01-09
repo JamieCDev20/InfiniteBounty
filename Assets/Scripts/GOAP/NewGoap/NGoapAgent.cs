@@ -173,9 +173,16 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         {
             c.GetComponent<IHitable>()?.TakeDamage(i_damage);
         }
+        photonView.RPC("SplosionFX", RpcTarget.All);
+        photonView.RPC("Die", RpcTarget.AllViaServer);
+    }
+
+    [PunRPC]
+    public void SplosionFX()
+    {
         go_exploParticles?.SetActive(true);
         go_exploParticles.transform.parent = null;
-        photonView.RPC("Die", RpcTarget.AllViaServer);
+
     }
 
     #endregion
