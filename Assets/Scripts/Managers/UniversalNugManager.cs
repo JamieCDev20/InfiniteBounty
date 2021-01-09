@@ -29,7 +29,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += OnSceneLoad;
         photonView.ViewID = 99999;
         PhotonNetwork.RegisterPhotonView(photonView);
     }
