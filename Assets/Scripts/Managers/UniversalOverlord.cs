@@ -88,6 +88,8 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     {
         base.OnMasterClientSwitched(newMasterClient);
         PhotonNetwork.Disconnect();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     #endregion
