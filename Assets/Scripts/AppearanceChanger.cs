@@ -25,8 +25,11 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         i_currentBody = Random.Range(0, goA_bodies.Length);
         i_currentHead = Random.Range(0, goA_heads.Length);
-        NextHead();
-        NextBody();
+        //NextHead();
+        //NextBody();
+        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        view.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
+
     }
 
     #region Head things
