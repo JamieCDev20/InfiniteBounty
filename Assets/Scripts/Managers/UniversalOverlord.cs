@@ -12,7 +12,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     #region Serialised
 
     //The managers that will be spawned on start
-    [SerializeField] private GameObject[] goA_toSpawnOnStart; 
+    [SerializeField] private GameObject[] goA_toSpawnOnStart;
 
     #endregion
 
@@ -72,6 +72,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     {
         //initialise the pools in pool manager when you join a room
         PoolManager.x.InitialisePools();
+        UniversalNugManager.x.DoScoring();
 
     }
 

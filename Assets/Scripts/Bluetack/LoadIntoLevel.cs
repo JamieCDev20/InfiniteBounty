@@ -87,6 +87,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
         foreach (NugManager n in FindObjectsOfType<NugManager>())
         {
+            UniversalNugManager.x.FinishedLevel();
             n.EndedLevel();
         }
 

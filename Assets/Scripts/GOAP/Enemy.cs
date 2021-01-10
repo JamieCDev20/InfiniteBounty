@@ -39,6 +39,11 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
 
     }
 
+    public bool IsDead()
+    {
+        return i_currentHealth > 0;
+    }
+
     /*
     private void BeamBackToShip()
     {

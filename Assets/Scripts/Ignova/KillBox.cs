@@ -48,7 +48,15 @@ public class KillBox : MonoBehaviour
     private void DealDamage()
     {
         for (int i = 0; i < hL_thingsWithinCloud.Count; i++)
+        {
+            if (hL_thingsWithinCloud[i].IsDead())
+            {
+                hL_thingsWithinCloud.RemoveAt(i);
+                i -= 1;
+                continue;
+            }
             hL_thingsWithinCloud[i].TakeDamage(i_damageToDeal);
+        }
         f_time = 0;
     }
 }

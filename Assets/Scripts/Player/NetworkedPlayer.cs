@@ -15,6 +15,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private PlayerInfo playerInfo;
     private Transform t_thisPlayer;
     private PlayerInputManager playerIM;
+    private NugManager nMan;
     private ToolHandler handler;
     private PhotonView view;
     private GameObject playerCamera;
@@ -92,6 +93,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         GameObject cam = Instantiate(playerInfo.go_camPrefab);
         playerIM.SetCamera(cam.GetComponent<CameraController>());
         playerCamera = cam.transform.GetChild(0).gameObject;
+        nMan = t_thisPlayer.GetComponent<NugManager>();
+        
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -107,6 +110,11 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
+    public void CollectEndLevelNugs(int value)
+    {
+        nMan?.CollectNugs(value, false);
+    }
+
     public void SetCameraActive(bool val)
     {
         x.playerCamera?.SetActive(val);
@@ -116,4 +124,10 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         //throw new System.NotImplementedException();
     }
+
+    public NugManager GetLocalNugManager()
+    {
+        return nMan;
+    }
+
 }

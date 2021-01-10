@@ -11,11 +11,14 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     public static UniversalNugManager x;
 
-    private int[][] i2A_playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0}, new int[] { 0, 0, 0, 0, 0, 0} };
+    private int[][] i2A_playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 } };
     private int[] iA_totalNugCounts = new int[6];
     private int i_localID = -1;
     private int localNugCount;
     private string[] sA_names = new string[4];
+    private bool b_levelFinished;
+    private int[] nugValues = new int[6] { 1, 1, 1, 2, 2, 3 };
+
 
     private void Awake()
     {
@@ -23,7 +26,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         else
             x = this;
-        
+
     }
 
     private void Start()
@@ -38,7 +41,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
         i2A_playerNugCounts[i_localID][(int)nugCollected.nt_type] += 1;
         localNugCount += nugCollected.i_worth;
-        
+
         RefreshTotalNugCount();
         photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID, PhotonNetwork.NickName);
     }
@@ -75,21 +78,47 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         HUDController.x.SetNugValues(iA_totalNugCounts);
     }
 
+    public void FinishedLevel()
+    {
+        photonView.RPC("RemoteFinished", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteFinished()
+    {
+        b_levelFinished = true;
+    }
+
     private void ResetValues()
     {
         localNugCount = 0;
         i2A_playerNugCounts = new int[][] { new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0, 0 } };
         RefreshTotalNugCount();
-        HUDController.x.SetNugValues(iA_totalNugCounts);
+        b_levelFinished = false;
+        HUDController.x?.SetNugValues(iA_totalNugCounts);
     }
 
     public void DoScoring()
     {
+        if (!b_levelFinished)
+            ResetValues();
         RefreshTotalNugCount();
         ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
         sMan.SetValues(i2A_playerNugCounts, sA_names);
-
+        NetworkedPlayer.x.CollectEndLevelNugs(CalculateValues(i2A_playerNugCounts[i_localID]));
+        HUDController.x?.SetBBTotal();
         ResetValues();
+
+    }
+
+    public int CalculateValues(int[] _Vals)
+    {
+        int total = 0;
+        for (int i = 0; i < _Vals.Length; i++)
+        {
+            total += (_Vals[i] * nugValues[i]);
+        }
+        return total;
     }
 
 }

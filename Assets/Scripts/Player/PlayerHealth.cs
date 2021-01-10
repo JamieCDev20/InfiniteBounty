@@ -222,4 +222,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     }
 
+    public bool IsDead()
+    {
+        return b_downed || isDead;
+    }
+
 }

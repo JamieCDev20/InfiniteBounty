@@ -33,7 +33,7 @@ public class NugManager : SubjectBase, ObserverBase
         }
 
 #if UNITY_EDITOR
-       // CollectNugs(5000, false);
+        CollectNugs(5000, false);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -91,7 +91,10 @@ public class NugManager : SubjectBase, ObserverBase
         if (inLevel)
             i_inLevelNugs += _i_value;
         else
+        {
             i_totalNugs += _i_value;
+            HUDController.x?.SetBBTotal();
+        }
 
     }
 

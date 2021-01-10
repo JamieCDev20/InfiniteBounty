@@ -9,11 +9,11 @@ public class ScoreboardManager : MonoBehaviour
 
     [SerializeField] private ScoreObjects[] so_playerScoreObjects;
     [SerializeField] private Text t_totalEarned;
-    private int[] nugValues = new int[6] { 1, 1, 1, 2, 2, 3 };
 
     public void Start()
     {
-        UniversalNugManager.x?.DoScoring();
+        if (PhotonNetwork.InRoom)
+            UniversalNugManager.x?.DoScoring();
     }
 
     public void SetValues(int[][] values, string[] _names)
@@ -29,7 +29,7 @@ public class ScoreboardManager : MonoBehaviour
             so_playerScoreObjects[i].thunderText.text = values[i][3].ToString();
             so_playerScoreObjects[i].boomText.text = values[i][4].ToString();
             so_playerScoreObjects[i].magmaText.text = values[i][5].ToString();
-            playerTotal = CalculateValues(values[i]);
+            playerTotal = UniversalNugManager.x.CalculateValues(values[i]);
             so_playerScoreObjects[i].bucksText.text = playerTotal.ToString();
             totalEarned += playerTotal;
         }
@@ -37,15 +37,7 @@ public class ScoreboardManager : MonoBehaviour
 
     }
 
-    private int CalculateValues(int[] _Vals)
-    {
-        int total = 0;
-        for (int i = 0; i < _Vals.Length; i++)
-        {
-            total += (_Vals[i] * nugValues[i]);
-        }
-        return total;
-    }
+    
 
 }
 

@@ -29,6 +29,7 @@ public class HUDController : MonoBehaviour
     {
         x = this;
         SetHealthBarValue(1, 1);
+        SetBBTotal();
         //SetLeftHeatGuage(1, 1);
         //SetRightHeatGuage(1, 1);
 
@@ -64,4 +65,10 @@ public class HUDController : MonoBehaviour
         texts.boomText.text = _iA_nugCounts[4].ToString();
         texts.magmaText.text = _iA_nugCounts[5].ToString();
     }
+
+    public void SetBBTotal()
+    {
+        texts.bucksText.text = NetworkedPlayer.x.GetLocalNugManager().Nugs.ToString();
+    }
+
 }

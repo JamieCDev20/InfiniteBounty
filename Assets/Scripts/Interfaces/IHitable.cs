@@ -7,4 +7,6 @@ public interface IHitable
 
     void TakeDamage(int damage);
 
+    bool IsDead();
+
 }

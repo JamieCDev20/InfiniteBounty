@@ -138,7 +138,7 @@ public class ToolRack : Shop
                 if (ts.RackID == _i_ID && ts.ToolID == tb.ToolID)
                 {
                     ts.gameObject.SetActive(true);
-                    Debug.Log(string.Format("ID: {0} | Object: {1}", _i_ID, ts.gameObject.name));
+                    //Debug.Log(string.Format("ID: {0} | Object: {1}", _i_ID, ts.gameObject.name));
                 }
             return tb.RackID;
         }
