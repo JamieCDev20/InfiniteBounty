@@ -103,7 +103,7 @@ public class NugManager : SubjectBase, ObserverBase
     {
         // Send Total nugs and nugs collected
         // Send nugs
-        ReceiveNugs(i_inLevelNugs);
+        //ReceiveNugs(i_inLevelNugs);
 
     }
 

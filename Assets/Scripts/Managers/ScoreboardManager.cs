@@ -34,7 +34,7 @@ public class ScoreboardManager : MonoBehaviour
             totalEarned += playerTotal;
         }
         t_totalEarned.text = totalEarned.ToString();
-
+        NetworkedPlayer.x.CollectEndLevelNugs(totalEarned);
     }
 
     
