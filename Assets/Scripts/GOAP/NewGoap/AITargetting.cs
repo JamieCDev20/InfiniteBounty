@@ -10,6 +10,7 @@ public class AITargetting
     #region Serialised
 
     [SerializeField] private float f_spottingDistance = 25;
+    [SerializeField] private LayerMask spottingMask;
 
     #endregion
 
@@ -45,13 +46,13 @@ public class AITargetting
         List<Transform> targets = new List<Transform>();
         foreach (PlayerInputManager p in GameObject.FindObjectsOfType<PlayerInputManager>())
         {
-            origin = p.transform.position + Vector3.up * 0.5f;
-            target = p.transform.position + Vector3.up * 0.5f;
-            Physics.Raycast(origin, target - origin, out hit, f_spottingDistance, LayerMask.GetMask("Player"));
+            origin = p.transform.position;
+            target = p.transform.position;
+            Physics.Raycast(origin, target - origin, out hit, f_spottingDistance, spottingMask);
             if (hit.collider != null)
                 targets.Add(p.transform);
         }
-
+        Debug.Log(targets.Count);
         if (targets.Count > 0)
             return targets[Random.Range(0, targets.Count)];
 
