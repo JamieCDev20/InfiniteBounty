@@ -65,6 +65,10 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
                 iA_totalNugCounts[j] += i2A_playerNugCounts[i][j];
             }
         }
+        if (i_localID >= 0)
+            localNugCount = CalculateValues(i2A_playerNugCounts[i_localID]);
+        else
+            localNugCount = 0;
 
     }
 
@@ -105,7 +109,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         RefreshTotalNugCount();
         ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
         sMan.SetValues(i2A_playerNugCounts, sA_names);
-        NetworkedPlayer.x.CollectEndLevelNugs(CalculateValues(i2A_playerNugCounts[i_localID]));
+        NetworkedPlayer.x?.CollectEndLevelNugs(localNugCount);
         HUDController.x?.SetBBTotal();
         ResetValues();
 
