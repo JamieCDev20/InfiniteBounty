@@ -53,7 +53,6 @@ public class AITargetting
             if (hit.collider != null)
                 targets.Add(p.transform);
         }
-        Debug.Log(targets.Count);
         if (targets.Count > 0)
             return targets[Random.Range(0, targets.Count)];
 

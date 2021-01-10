@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
@@ -10,6 +11,7 @@ public class HUDController : MonoBehaviour
     [Header("Heat Guages")]
     [SerializeField] private RectTransform rt_healthBar;
     [SerializeField] private Image i_healthBar;
+    [SerializeField] private GameObject go_healthbarParent;
     //[SerializeField] private RectTransform rt_rightHeatGuage;
 
     [Header("Health Stats")]
@@ -24,12 +26,16 @@ public class HUDController : MonoBehaviour
     [SerializeField] private GameObject go_moneyDownParticle;
     private List<GameObject> goL_moneyDownParts = new List<GameObject>();
     [SerializeField] private Text t_nugCountText;*/
+    [SerializeField] private GameObject go_nugHudParent;
+    [SerializeField] private GameObject go_bbObject;
     [SerializeField] private ScoreObjects texts;
+
     private void Start()
     {
         x = this;
         SetHealthBarValue(1, 1);
         SetBBTotal();
+        SceneManager.sceneLoaded += SceneLoad;
         //SetLeftHeatGuage(1, 1);
         //SetRightHeatGuage(1, 1);
 
@@ -69,6 +75,19 @@ public class HUDController : MonoBehaviour
     public void SetBBTotal()
     {
         texts.bucksText.text = NetworkedPlayer.x.GetLocalNugManager().Nugs.ToString();
+    }
+
+    public void SceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        HudInLevel(!scene.name.Contains("Lobby"));
+    }
+
+    private void HudInLevel(bool inLevel)
+    {
+        go_healthbarParent.gameObject.SetActive(inLevel);
+        go_nugHudParent.SetActive(inLevel);
+        go_bbObject.SetActive(!inLevel);
+        
     }
 
 }
