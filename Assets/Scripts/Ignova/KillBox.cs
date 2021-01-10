@@ -35,6 +35,8 @@ public class KillBox : MonoBehaviour
 
         if (b_dealDamageOnEntry)
             _h.TakeDamage(i_damageToDeal);
+
+        other.GetComponent<ExplodeWhenExpsoedToFire>()?.Explode();
     }
 
     private void OnTriggerExit(Collider other)

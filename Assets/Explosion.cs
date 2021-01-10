@@ -29,6 +29,10 @@ public class Explosion : MonoBehaviour
                     _cA[i].GetComponent<Rigidbody>().AddExplosionForce(f_knockBack, transform.position, f_radius, -1);
                 }
             }
+            else
+            {
+                _cA[i].GetComponent<ExplodeWhenExpsoedToFire>()?.Explode();
+            }
         }
     }
 }
