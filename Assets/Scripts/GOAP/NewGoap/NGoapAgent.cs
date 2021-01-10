@@ -257,7 +257,7 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
 
     public bool IsDead()
     {
-        return i_currentHealth > 0;
+        return true;
     }
 
     #endregion

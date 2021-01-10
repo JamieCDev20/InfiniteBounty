@@ -46,8 +46,9 @@ public class AITargetting
         List<Transform> targets = new List<Transform>();
         foreach (PlayerInputManager p in GameObject.FindObjectsOfType<PlayerInputManager>())
         {
-            origin = p.transform.position;
+            origin = transform.position;
             target = p.transform.position;
+            Debug.DrawRay(origin, target - origin * 2, Color.red);
             Physics.Raycast(origin, target - origin, out hit, f_spottingDistance, spottingMask);
             if (hit.collider != null)
                 targets.Add(p.transform);
