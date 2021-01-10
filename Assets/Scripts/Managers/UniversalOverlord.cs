@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public class UniversalOverlord : MonoBehaviourPunCallbacks
 {
@@ -74,6 +75,13 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         PoolManager.x.InitialisePools();
         UniversalNugManager.x.DoScoring();
 
+    }
+
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        SceneManager.LoadScene(0);
     }
 
     #endregion

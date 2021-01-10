@@ -322,7 +322,9 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
     public bool GetIsPaused()
     {
-        return b_pausePressed;
+        if (b_shouldPassInputs)
+            return b_pausePressed;
+        else return false;
     }
 
     public CameraController GetCamera()

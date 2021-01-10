@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenuController : MonoBehaviour
@@ -78,12 +80,9 @@ public class PauseMenuController : MonoBehaviour
 
     public void Quit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-         Application.Quit();
-#endif
+        PhotonNetwork.Disconnect();
     }
+
 
 
     public void Options()
