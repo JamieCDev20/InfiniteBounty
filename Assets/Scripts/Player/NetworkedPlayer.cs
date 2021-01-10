@@ -67,6 +67,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //Make it fast
         //Make it nice
 
+        GameObject.FindObjectOfType<MainMenuController>().DisableCamera();
+
         //set player ID
         playerInfo.playerID = PhotonNetwork.CurrentRoom.PlayerCount - 1;
 

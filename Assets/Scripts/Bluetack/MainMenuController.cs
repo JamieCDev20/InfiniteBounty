@@ -37,6 +37,12 @@ public class MainMenuController : MonoBehaviourPunCallbacks
         EnableButtons();
     }
 
+    public void DisableCamera()
+    {
+        mainMenu.SetActive(false);
+        menuCam.SetActive(false);
+    }
+
     internal void EnableButtons()
     {
         b_onlineButton.interactable = true;
