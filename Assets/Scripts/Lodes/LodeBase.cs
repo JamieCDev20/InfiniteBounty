@@ -57,7 +57,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     public void SetHealth(int health)
     {
         //it's a psuedo set health func so that thresholds are still respected
-        Debug.Log("SettingHealth");
+        //Debug.Log("SettingHealth");
         TakeTrueDamage(i_currentHealth - health);
         CheckHealth();
 
