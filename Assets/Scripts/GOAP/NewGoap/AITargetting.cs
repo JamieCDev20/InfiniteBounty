@@ -43,6 +43,7 @@ public class AITargetting
         Vector3 origin, target;
         //foreach (GameObject g in TagManager.x.GetTagSet("Player"))
         PlayerInputManager[] players = GameObject.FindObjectsOfType<PlayerInputManager>();
+        List<Transform> targets = new List<Transform>();
         int p = 0;
         for (int i = 0; i < (players.Length * 2); i++)
         {
@@ -51,8 +52,11 @@ public class AITargetting
             target = players[p].transform.position + Vector3.up * 0.5f;
             Physics.Raycast(origin, target - origin, out hit, f_spottingDistance, LayerMask.GetMask("Player"));
             if (hit.collider != null)
-                return players[p].transform;
+                targets.Add(players[p].transform);
         }
+
+        if (targets.Count > 0)
+            return targets[Random.Range(0, targets.Count)];
 
         return null;
     }
