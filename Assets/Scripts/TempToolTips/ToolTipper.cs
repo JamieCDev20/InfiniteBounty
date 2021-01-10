@@ -11,12 +11,11 @@ public class ToolTipper : MonoBehaviour
     private RaycastHit hit;
     private PlayerInputManager pim;
     [SerializeField] private LayerMask lm_mask;
-    private ToolTip tt_toIgnore;
+
 
     private void Start()
     {
         pim = GetComponent<CameraController>().pim_inputs;
-        tt_toIgnore = pim.GetComponentInChildren<ToolTip>();
 
         for (int i = 0; i < goA_buttonPrompts.Length; i++)
             goA_buttonPrompts[i].SetActive(false);
@@ -31,7 +30,9 @@ public class ToolTipper : MonoBehaviour
 
             if (_tt_)
             {
-                if ((_tt_.b_hostOnly && pim.GetID() > 0) || _tt_.transform == tt_toIgnore.transform)
+                if (_tt_.b_hostOnly && pim.GetID() > 0)
+                    return;
+                if (_tt_.transform.root == pim.transform) //Ignores self
                     return;
 
                 ta_canvasText.text = _tt_.Tip;
