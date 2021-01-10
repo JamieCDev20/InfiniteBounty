@@ -108,7 +108,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
             ResetValues();
         RefreshTotalNugCount();
         ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
-        sMan.SetValues(i2A_playerNugCounts, sA_names);
+        sMan?.SetValues(i2A_playerNugCounts, sA_names);
         NetworkedPlayer.x?.CollectEndLevelNugs(localNugCount);
         HUDController.x?.SetBBTotal();
         ResetValues();

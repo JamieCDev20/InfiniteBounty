@@ -47,7 +47,7 @@ public class PoolManager : MonoBehaviour
     {
         // Each pool is initialised during loading
         foreach (Pool p in pools.Values)
-            p.InitializePool();
+            p?.InitializePool();
     }
 
     /// <summary>
