@@ -11,11 +11,12 @@ public class ToolTipper : MonoBehaviour
     private RaycastHit hit;
     private PlayerInputManager pim;
     [SerializeField] private LayerMask lm_mask;
-
+    private ToolTip tt_toIgnore;
 
     private void Start()
     {
         pim = GetComponent<CameraController>().pim_inputs;
+        tt_toIgnore = pim.GetComponentInChildren<ToolTip>();
 
         for (int i = 0; i < goA_buttonPrompts.Length; i++)
             goA_buttonPrompts[i].SetActive(false);
@@ -27,14 +28,15 @@ public class ToolTipper : MonoBehaviour
         if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10, lm_mask, QueryTriggerInteraction.Ignore))
         {
             ToolTip _tt_ = hit.transform.GetComponentInChildren<ToolTip>();
-            //print("Hitting " + hit.transform.name);
+
             if (_tt_)
             {
-                if (_tt_.b_hostOnly && pim.GetID() > 0)
+                if ((_tt_.b_hostOnly && pim.GetID() > 0) || _tt_.transform == tt_toIgnore.transform)
                     return;
 
                 ta_canvasText.text = _tt_.Tip;
                 goA_buttonPrompts[_tt_.i_buttonSpriteIndex].SetActive(true);
+
             }
             else
             {
