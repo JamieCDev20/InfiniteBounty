@@ -15,7 +15,10 @@ public class NugSucker : ConeTool
         PlayParticles(true);
         foreach (GameObject hit in GetAllObjectsInCone(t_conePoint.forward))
         {
-            hit.GetComponent<ISuckable>()?.GetRigidbody().AddForce((t_conePoint.position - hit.transform.position).normalized * f_suckForce, ForceMode.Impulse);
+            ISuckable suck = hit.GetComponent<ISuckable>();
+            if(suck != null)
+                suck.GetRigidbody().velocity = (t_conePoint.position - hit.transform.position).normalized * f_suckForce;
+            //(hit.GetComponent<ISuckable>()?.GetRigidbody()).velocity = (t_conePoint.position - hit.transform.position).normalized * f_suckForce;//.AddForce((t_conePoint.position - hit.transform.position).normalized * f_suckForce, ForceMode.VelocityChange);
         }
     }
 }

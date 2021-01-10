@@ -39,6 +39,12 @@ public class NugGO : SubjectBase, IPoolable, ISuckable
         }
     }
 
+    public void OnEnable()
+    {
+        Invoke("Die", 60);
+        
+    }
+
     private void TimeOut()
     {
         Die();

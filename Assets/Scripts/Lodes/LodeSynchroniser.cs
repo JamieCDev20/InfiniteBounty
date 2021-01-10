@@ -24,7 +24,7 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks
     //Methods
     #region Unity Standards
 
-    private void Start()
+    private void Awake()
     {
         x = this;
     }

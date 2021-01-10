@@ -78,6 +78,18 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.End))
+            try
+            {
+                transform.position = GameObject.Find("Secret1").transform.position;
+            }
+            catch
+            {
+                transform.position = Vector3.zero;
+            }
+#endif
+
         if (!view.IsMine && b_networked)
             return;
         GetInputs();
