@@ -88,14 +88,14 @@ public class PauseMenuController : MonoBehaviour
 
     public void Options()
     {
-        Debug.LogError("It should've optioned, maybe it did, I dunno;");
+        //Debug.LogError("It should've optioned, maybe it did, I dunno;");
         c_pauseCanvas.enabled = false;
         c_optionsMenu.enabled = true;
     }
 
     public void ReturnFromOptions()
     {
-        Debug.LogError("Are we back on the main pause-menu? Aight, sick.");
+        //Debug.LogError("Are we back on the main pause-menu? Aight, sick.");
         c_pauseCanvas.enabled = true;
         c_optionsMenu.enabled = false;
     }
