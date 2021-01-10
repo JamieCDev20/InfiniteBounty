@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class PlayRandomClip : MonoBehaviour
         as_source = GetComponent<AudioSource>();
         acL_clipsUInplayed.AddRange(acA_clipsToPlayRandomly);
 
-        if (ac_clipToPlayAtStart)
+        if (ac_clipToPlayAtStart && !PhotonNetwork.IsConnected)
             as_source.PlayOneShot(ac_clipToPlayAtStart);
 
         f_timeToWaitTo = Random.Range(v_gapBetweenClips.x, v_gapBetweenClips.y);
