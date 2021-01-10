@@ -27,7 +27,7 @@ public class ToolTipper : MonoBehaviour
         if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10, lm_mask, QueryTriggerInteraction.Ignore))
         {
             ToolTip _tt_ = hit.transform.GetComponentInChildren<ToolTip>();
-            print("Hitting " + hit.transform.name);
+            //print("Hitting " + hit.transform.name);
             if (_tt_)
             {
                 if (_tt_.b_hostOnly && pim.GetID() > 0)

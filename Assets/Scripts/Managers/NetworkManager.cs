@@ -119,6 +119,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         b_canLoad = _val;
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+
+    }
+
     #endregion
 
     #region Private Returns

@@ -77,12 +77,17 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     }
 
-
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         SceneManager.LoadScene(0);
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        base.OnMasterClientSwitched(newMasterClient);
+        PhotonNetwork.Disconnect();
     }
 
     #endregion
