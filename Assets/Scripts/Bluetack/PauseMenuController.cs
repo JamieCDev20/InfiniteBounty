@@ -35,6 +35,15 @@ public class PauseMenuController : MonoBehaviour
 
     private void Update()
     {
+        if (b_isPaused)
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Debug.Log("press");
+                Resume();
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                return;
+            }
         if (pim.GetIsPaused())
         {
             if (!b_isPaused)
@@ -46,23 +55,25 @@ public class PauseMenuController : MonoBehaviour
 
     public void Resume()
     {
+        b_isPaused = false;
         if (b_isSpectating)
             c_spectatingCanvas.enabled = true;
         else
             c_playCanvas.enabled = true;
 
         c_pauseCanvas.enabled = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
         pim.b_shouldPassInputs = true;
         cc_cam.enabled = true;
         pim.GetComponent<PlayerAnimator>().SetShootability(true);
         rb_playerPhysics.isKinematic = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void Pause()
     {
+        b_isPaused = true;
         if (b_isSpectating)
             c_spectatingCanvas.enabled = false;
         else
