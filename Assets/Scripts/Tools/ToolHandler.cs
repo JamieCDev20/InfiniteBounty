@@ -366,7 +366,8 @@ public class ToolHandler : SubjectBase
                     Vector3 dir = t_camTransform.forward;
                     if (Physics.Raycast(t_camTransform.position, t_camTransform.forward, out hit, 10000, lm_shootingMask, QueryTriggerInteraction.Ignore))
                     {
-                        dir = hit.point - A_toolTransforms[(int)ts].position;
+                        if (hit.distance > 7)
+                            dir = hit.point - A_toolTransforms[(int)ts].position;
                     }
                     view.RPC("UseTool", RpcTarget.Others, ts, dir);
                     A_tools[(int)ts].Use(dir);

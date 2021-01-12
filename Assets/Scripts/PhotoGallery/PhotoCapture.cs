@@ -8,8 +8,8 @@ public class PhotoCapture : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private Texture2D ib_photoStamp;
-    [SerializeField, Range(0.0f, 1.0f)] private float f_alpha;
-    [SerializeField, Range(0.0f, 1.0f)] private float f_sizeOnScreen;
+    [SerializeField, Range(0.01f, 1.0f)] private float f_alpha;
+    [SerializeField, Range(0.01f, 1.0f)] private float f_sizeOnScreen;
     private CameraController c_controller;
     private bool photoDone = true;
 
