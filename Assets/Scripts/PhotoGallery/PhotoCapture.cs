@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using System.IO;
 
 public class PhotoCapture : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    private CameraController c_controller;
     [SerializeField] private Texture2D ib_photoStamp;
     [SerializeField, Range(0.0f, 1.0f)] private float f_alpha;
     [SerializeField, Range(0.0f, 1.0f)] private float f_sizeOnScreen;
+    private CameraController c_controller;
+    private bool photoDone = true;
 
     public void Start()
     {
@@ -33,22 +35,30 @@ public class PhotoCapture : MonoBehaviour
             TakePhoto();
     }
 
-    private void TakePhoto()
+    private async void TakePhoto()
     {
+        if (!photoDone)
+            return;
+        photoDone = false;
         RenderTexture rTex = new RenderTexture(cam.pixelWidth, cam.pixelHeight, (int)cam.depth);
         cam.targetTexture = rTex;
         cam.Render();
         RenderTexture.active = rTex;
         Texture2D screenshot = new Texture2D(rTex.width, rTex.height, TextureFormat.ARGB32, false);
-
         screenshot.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
         screenshot.Apply();
         cam.targetTexture = null;
         RenderTexture.active = null;
-
-        screenshot = AlphaBlend(screenshot);
-        SavePicture(screenshot);
-
+        // Add camera flash here?
+        AlphaBlend(screenshot);
+        bool asynbool = false;
+        while (!asynbool)
+        {
+            await Task.Yield();
+            asynbool = true;
+        }
+        photoDone = true;
+        Debug.Log("BONG!");
     }
 
     private string GetDirectory()
@@ -58,7 +68,7 @@ public class PhotoCapture : MonoBehaviour
         return Application.persistentDataPath + "/ScreenShots";
     }
 
-    private Texture2D AlphaBlend(Texture2D _tex_bottom)
+    private void AlphaBlend(Texture2D _tex_bottom)
     {
         Texture2D tex_combine = new Texture2D(_tex_bottom.width, _tex_bottom.height);
         Color[] botColor = _tex_bottom.GetPixels();
@@ -95,7 +105,7 @@ public class PhotoCapture : MonoBehaviour
 
         tex_combine.SetPixels(botColor);
         tex_combine.Apply();
-        return tex_combine;
+        SavePicture(tex_combine);
     }
 
     private void SavePicture(Texture2D pic)
