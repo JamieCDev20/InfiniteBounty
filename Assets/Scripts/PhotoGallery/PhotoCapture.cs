@@ -74,12 +74,11 @@ public class PhotoCapture : MonoBehaviour
         Texture2D tempTex = Instantiate(ib_photoStamp);
 
         // The resize zone
-        float ratio = tempTex.width / _tex_bottom.width;
+        float ratio = tempTex.width / (float)_tex_bottom.width;
         int nW = (int)(ratio * (_tex_bottom.width * f_sizeOnScreen));
         int nH = (int)(ratio * (_tex_bottom.height * f_sizeOnScreen));
         int newX = (int)((nW * ratio));
         int newY = (int)((nH * ratio));
-        Debug.Log(string.Format("x: {0} | y: {1}", newX, newY));
         TextureScale.Bilinear(tempTex, newX, newY);
         int mWidth = tex_combine.width;
         int mHeight = tex_combine.height;
