@@ -58,7 +58,6 @@ public class PhotoCapture : MonoBehaviour
             asynbool = true;
         }
         photoDone = true;
-        Debug.Log("BONG!");
     }
 
     private string GetDirectory()
@@ -80,6 +79,7 @@ public class PhotoCapture : MonoBehaviour
         int nH = (int)(ratio * (_tex_bottom.height * f_sizeOnScreen));
         int newX = (int)((nW * ratio));
         int newY = (int)((nH * ratio));
+        Debug.Log(string.Format("x: {0} | y: {1}", newX, newY));
         TextureScale.Bilinear(tempTex, newX, newY);
         int mWidth = tex_combine.width;
         int mHeight = tex_combine.height;
