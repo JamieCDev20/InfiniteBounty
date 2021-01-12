@@ -1,0 +1,34 @@
+Agent AI need 4 things:
+	A sensor or input system
+	A working memory
+	A reasoning/analysis core
+	An action/output system
+
+Sensing the world:
+	What is sensed depends on the game
+	Sensing is usually the slowest part of the game
+	Pathfinding is expensive!
+
+	For InBo:
+	I dont think we will need to do much in the way of sensing.
+		
+		Can we attack?
+		Can we see a player?
+		What's my health?
+		
+		For grouund enemies:
+			Melee:
+				No extra vars?
+			Ranged:
+				Are we within range?
+		Flying Enemies:
+			Melee:
+				Probably wont exist
+			Ranged: 
+				See above
+
+Ai Technologies:
+	
+	FSM:
+		A set of states that represent the scenarios or configurations that AI can be immersed in
+		A set of transitions that are conditions that connect two states in a directed way

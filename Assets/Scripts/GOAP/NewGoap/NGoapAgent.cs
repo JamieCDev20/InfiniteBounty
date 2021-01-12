@@ -190,7 +190,18 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
     {
         go_exploParticles?.SetActive(true);
         go_exploParticles.transform.parent = null;
+        Invoke("SetExploPartsInactive", 2);
 
+    }
+
+    public void SetExploPartsInactive()
+    {
+        go_exploParticles?.SetActive(false);
+    }
+
+    public void SetDeathPartsInactive()
+    {
+        go_deathParticles?.SetActive(false);
     }
 
     #endregion
@@ -241,6 +252,7 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         }
 
         gameObject.SetActive(false);
+        Invoke("SetDeathPartsInactive", 2);
         PoolManager.x.ReturnObjectToPool(gameObject);
         EnemySpawner.x?.EnemyDied();
     }

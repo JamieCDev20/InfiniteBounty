@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour
     private Transform t_follow;
     internal PlayerInputManager pim_inputs;
     private float f_firingTime;
+    private float f_yLook;
 
     #endregion
 
@@ -70,9 +71,12 @@ public class CameraController : MonoBehaviour
 
     private void Look()
     {
-        transform.Rotate(transform.right.normalized * v2_lookInputs.y * f_cameraSensitivity * Time.deltaTime, Space.World);
+        f_yLook = Mathf.Clamp(f_yLook + v2_lookInputs.y * f_cameraSensitivity * Time.deltaTime, -80, 40);
         transform.Rotate(transform.up.normalized * v2_lookInputs.x * f_cameraSensitivity * Time.deltaTime, Space.World);
+        transform.eulerAngles = new Vector3(f_yLook, transform.eulerAngles.y, 0);
+
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, Vector3.one - Vector3.forward);
+
     }
 
     #endregion
