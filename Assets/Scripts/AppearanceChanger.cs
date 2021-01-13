@@ -16,8 +16,13 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject[] goA_bodies = new GameObject[0];
     private int i_currentBody;
 
+    [Header("Arm Things")]
+    [SerializeField] private GameObjectList[] goA_arms = new GameObjectList[0];
+    private int i_currentArm;
 
-
+    [Header("Feet Things")]
+    [SerializeField] private GameObject[] goA_feet = new GameObject[0];
+    private int i_currentFeet;
 
     private void Start()
     {
@@ -25,8 +30,12 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         i_currentBody = Random.Range(0, goA_bodies.Length);
         i_currentHead = Random.Range(0, goA_heads.Length);
+        i_currentArm = Random.Range(0, goA_arms.Length);
+        i_currentFeet = Random.Range(0, goA_feet.Length);
         NextHead();
         NextBody();
+        NextArms();
+        NextFeet();
     }
 
     #region Head things
@@ -104,4 +113,90 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region Arm things
+
+    public void NextArms()
+    {
+        goA_arms[i_currentArm].goL_theList[0].SetActive(false);
+        goA_arms[i_currentArm].goL_theList[1].SetActive(false);
+
+        i_currentArm++;
+        if (i_currentArm == goA_arms.Length)
+            i_currentArm = 0;
+        
+        goA_arms[i_currentArm].goL_theList[0].SetActive(true);
+        goA_arms[i_currentArm].goL_theList[1].SetActive(true);
+
+        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentArm);
+    }
+    public void LastArm()
+    {
+        goA_arms[i_currentArm].goL_theList[0].SetActive(false);
+        goA_arms[i_currentArm].goL_theList[1].SetActive(false);
+
+        i_currentArm--;
+        if (i_currentArm < 0)
+            i_currentArm = goA_arms.Length - 1;
+
+        goA_arms[i_currentArm].goL_theList[0].SetActive(true);
+        goA_arms[i_currentArm].goL_theList[1].SetActive(true);
+
+        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentArm);
+    }
+
+    [PunRPC]
+    public void UpdateArmsInOthers(int _i_armIndex)
+    {        
+        goA_arms[i_currentArm].goL_theList[0].SetActive(false);
+        goA_arms[i_currentArm].goL_theList[1].SetActive(false);
+        i_currentArm = _i_armIndex;
+        goA_arms[i_currentArm].goL_theList[0].SetActive(true);
+        goA_arms[i_currentArm].goL_theList[1].SetActive(true);
+    }
+
+    #endregion
+
+    #region Feet things
+
+    public void NextFeet()
+    {
+        goA_feet[i_currentFeet].SetActive(false);
+
+        i_currentFeet++;
+        if (i_currentFeet == goA_feet.Length)
+            i_currentFeet = 0;
+
+        goA_feet[i_currentFeet].SetActive(true);
+
+        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentFeet);
+    }
+    public void LastFeet()
+    {
+        goA_feet[i_currentFeet].SetActive(false);
+
+        i_currentFeet--;
+        if (i_currentFeet < 0)
+            i_currentFeet = goA_feet.Length - 1;
+
+        goA_feet[i_currentFeet].SetActive(true);
+
+        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentFeet);
+    }
+
+    [PunRPC]
+    public void UpdateFeetInOthers(int _i_feetIndex)
+    {
+        goA_feet[i_currentFeet].SetActive(false);
+        i_currentFeet = _i_feetIndex;
+        goA_feet[i_currentFeet].SetActive(true);
+    }
+
+    #endregion
+
+}
+
+[System.Serializable]
+public struct GameObjectList
+{
+    public List<GameObject> goL_theList;
 }
