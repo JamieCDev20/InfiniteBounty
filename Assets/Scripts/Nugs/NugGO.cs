@@ -52,6 +52,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable
 
     public void Die()
     {
+        CancelInvoke();
         GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles, transform.position, Quaternion.identity);
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);

@@ -9,6 +9,8 @@ using Photon.Realtime;
 public class UniversalOverlord : MonoBehaviourPunCallbacks
 {
 
+    public static UniversalOverlord x;
+
     //Variables
     #region Serialised
 
@@ -19,6 +21,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     #region Private
 
+    private bool canLoadScene = true;
 
     #endregion
 
@@ -27,6 +30,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        x = this;
         Init();
     }
 
@@ -39,6 +43,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     /// </summary>
     private void Init()
     {
+        canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
         //GM persist through scenes
         DontDestroyOnLoad(gameObject);
@@ -69,6 +74,11 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     #region Public Voids
 
+    public void CantLoadScene()
+    {
+        canLoadScene = false;
+    }
+
     public override void OnJoinedRoom()
     {
         //initialise the pools in pool manager when you join a room
@@ -80,8 +90,11 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.LoadScene(0);
+        if (canLoadScene)
+        {
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            SceneManager.LoadScene(0);
+        }
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
