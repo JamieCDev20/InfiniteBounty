@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Augment
 {
+    [SerializeField] string s_name;
+    public string Name { get { return s_name; } }
     #region Audio
     
     [SerializeField] AudioClip ac_useSound;
@@ -69,12 +71,31 @@ public class Augment
         f_lodeDamage = _f_lode;
     }
 
+    public void InitInfo(AugmentProperties _ap_data)
+    {
+        s_name = _ap_data.s_name;
+        f_weight = _ap_data.f_weight;
+        f_speed = _ap_data.f_speed;
+        f_heatsink = _ap_data.f_heatsink;
+        f_knockback = _ap_data.f_knockback;
+        f_energyGauge = _ap_data.f_energyGauge;
+        f_damage = _ap_data.f_damage;
+        f_lodeDamage = _ap_data.f_lodeDamage;
+    }
     public void InitPhysical(float _f_width, float _f_lifetime, Color[] _a_keys, GameObject _go_projectile)
     {
         f_trWidth = _f_width;
         f_trLifetime = _f_lifetime;
         A_trKeys = _a_keys;
         go_weaponProjectile = _go_projectile;
+    }
+    public void InitPhysical(AugmentPhysicals _phys_aug)
+    {
+        f_trWidth = _phys_aug.f_trWidth;
+        f_trLifetime = _phys_aug.f_trLifetime;
+        if(_phys_aug.A_trKeys != null)
+            A_trKeys = _phys_aug.A_trKeys.ToArray();
+        go_weaponProjectile = _phys_aug.go_projectile;
     }
 
     public void InitExplosion(float _f_knockback, float _f_detTime, GameObject _go_explosion, GameObject _go_explarticles)
@@ -83,5 +104,13 @@ public class Augment
         f_detonationTime = _f_detTime;
         go_explosion = _go_explosion;
         go_explarticles = _go_explarticles;
+    }
+
+    public void InitExplosion(AugmentExplosion _ae_boom)
+    {
+        f_explockBack = _ae_boom.f_explockBack;
+        f_detonationTime = _ae_boom.f_detonationTime;
+        go_explosion = _ae_boom.go_explosion;
+        go_explarticles = _ae_boom.go_explarticles;
     }
 }

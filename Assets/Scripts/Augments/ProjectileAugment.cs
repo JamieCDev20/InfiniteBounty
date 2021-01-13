@@ -17,4 +17,12 @@ public class ProjectileAugment : Augment
         pm_physMat = _pm_mat;
         v_bulletScale = _v_scale;
     }
+    public void InitProjectile(AugmentProjectile _nyooom)
+    {
+        i_shotsPerRound = _nyooom.i_shotsPerRound;
+        f_gravity = _nyooom.f_gravity;
+        pm_physMat = _nyooom.pm_phys;
+        v_bulletScale = _nyooom.v_bulletScale;
+        
+    }
 }

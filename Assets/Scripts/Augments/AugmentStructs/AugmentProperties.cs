@@ -4,6 +4,7 @@ using UnityEngine;
 
 public struct AugmentProperties
 {
+    public string s_name;
     public float f_weight;
     public float f_recoil;
     public float f_speed;

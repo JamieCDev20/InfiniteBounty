@@ -8,28 +8,42 @@ public class AugmentCreator
 {
     
     private const string rs = "/Resources/";
-    public void CreateAugment(string[] _s_parsedData)
+    public static void CreateAugment(string _s_parsedData)
     {
         // The path to grab assets
         string path = Application.dataPath;
 
         // Create the augment to read in whatever augment data
-        Augment aug = new Augment();
-        switch (_s_parsedData[1])
+        Augment aug = null;
+        try
         {
-            case "Projectile Augment":
-                aug = CreateProjectile(_s_parsedData[6]);
+            ProjectileAugment pa = JsonUtility.FromJson<ProjectileAugment>(_s_parsedData);
+            aug = pa;
+        }
+        catch (System.InvalidCastException e) { }
+        try
+        {
+            ConeAugment ca = JsonUtility.FromJson<ConeAugment>(_s_parsedData);
+            aug = ca;
+        }
+        catch (System.InvalidCastException e) { }
+        if (aug == null)
+            aug = JsonUtility.FromJson<Augment>(_s_parsedData);
+        // Create the prefab
+        GameObject newPrefab = new GameObject();
+        AugmentGo newAugmentGo = newPrefab.AddComponent<AugmentGo>();
+        switch (aug)
+        {
+            case ProjectileAugment pa:
+                newAugmentGo.Aug = pa;
                 break;
-            case "Cone Augment":
-                aug = CreateCone(_s_parsedData[7]);
+            case ConeAugment ca:
+                newAugmentGo.Aug = ca;
                 break;
         }
-        // Add the standard audment data on top
-        CreateStandardAugments(aug, _s_parsedData);
-        // Create the prefab
-        GameObject newPrefab = CreateGameObject(_s_parsedData[0], _s_parsedData[8]);
-        newPrefab.AddComponent<AugmentGo>().Aug = aug;
-        PrefabUtility.SaveAsPrefabAssetAndConnect(newPrefab, path + rs + "/Augments/" + _s_parsedData[0] + ".prefab", InteractionMode.UserAction);
+        if (newAugmentGo.Aug == null)
+            newAugmentGo.Aug = aug;
+        PrefabUtility.SaveAsPrefabAssetAndConnect(newPrefab, path + rs + "/Augments/" + newAugmentGo.Aug.Name + ".prefab", InteractionMode.UserAction);
         // Remove the gameobject from the scene
         Object.DestroyImmediate(newPrefab);
     }
@@ -46,40 +60,6 @@ public class AugmentCreator
         mesh.sharedMesh = Resources.Load<Mesh>(_s_meshProperties.Split(':', '}')[3].Replace(rs, "").Replace(".fbx", ""));
         return newAugment;
         
-    }
-
-    private void CreateStandardAugments(Augment _aug, string[] _s_augmentData)
-    {
-
-        // Crunchy crunchy audio. Need to lay some ground rules here.
-        AudioClip use = Resources.Load<AudioClip>(_s_augmentData[2].Split(':', '}')[1].Replace(rs, "").Replace(".wav", ""));
-        AudioClip travel = Resources.Load<AudioClip>(_s_augmentData[2].Split(':', '}')[3].Replace(rs, "").Replace(".wav", ""));
-        AudioClip hit = Resources.Load<AudioClip>(_s_augmentData[2].Split(':', '}')[5].Replace(rs, "").Replace(".wav", ""));
-        
-        _aug.InitAudio(use, travel, hit);
-
-        // Info stuff
-        float weight = float.Parse(_s_augmentData[3].Split(':', ',')[1]);
-        float recoil = float.Parse(_s_augmentData[3].Split(':', ',')[3]);
-        float speed = float.Parse(_s_augmentData[3].Split(':', ',')[5]);
-        float heatsink = float.Parse(_s_augmentData[3].Split(':', ',')[7]);
-        float knockback = float.Parse(_s_augmentData[3].Split(':', ',')[9]);
-        float energy = float.Parse(_s_augmentData[3].Split(':', ',')[11]);
-        float dmg = float.Parse(_s_augmentData[3].Split(':', ',')[13]);
-        float lode = float.Parse(_s_augmentData[3].Split(':', ',')[15].Replace("}}", ""));
-
-        _aug.InitInfo(weight, recoil, speed, heatsink, knockback, energy, dmg, lode);
-
-        // Physical Data
-        float width = float.Parse(_s_augmentData[4].Split(':', ',')[1]);
-        float lifeTime = float.Parse(_s_augmentData[4].Split(':', ',')[3]);
-        // For now the array and Game Object are Null... I need a better way to extract them
-        _aug.InitPhysical(width, lifeTime, null, null);
-
-        float explockback = float.Parse(_s_augmentData[5].Split(':', ',')[1]);
-        float detonationTime = float.Parse(_s_augmentData[5].Split(':', ',')[3].Split('}')[0]);
-        // Same with explosion. Extract the game object file names
-        _aug.InitExplosion(explockback, lifeTime, null, null);
     }
 
     

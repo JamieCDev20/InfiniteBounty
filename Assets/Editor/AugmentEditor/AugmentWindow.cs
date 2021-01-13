@@ -13,7 +13,6 @@ public class AugmentWindow : EditorWindow
     private string[] i_dropdownOptions = { "Standard Augment", "Projectile Augment", "Cone Augment"};
     private int i_dropDownIndex = 0;
     bool b_displayBaseAugments = true;
-    AugmentCreator ac_creator = new AugmentCreator();
     Vector2 scrollPos;
     #endregion
 
@@ -137,75 +136,39 @@ public class AugmentWindow : EditorWindow
                         return;
                     }
                 // Making the save data a tiny bit more readable
-                augmentData += s_augName + "=";
+                ap_toolProperties.s_name = s_augName;
             }
             else { Debug.LogError("Augment Needs a name"); tr.Close(); return; }
 
-            #region Save Data
+            Augment outputAug = new Augment();
             // Save variables time!
-            augmentData += "{\"ClassType\":" + i_dropdownOptions[i_dropDownIndex] + "}~";
-            augmentData += "AudioData={";
-            if (ac_useSound)
-                augmentData += "{\"AudioFile\":" + rs + "Audio/" + ac_useSound.name + ".wav" + "}";
-            else
-                augmentData += "{\"AudioFile\":null}";
-            if (ac_travelSound)
-                augmentData += "{\"AudioFile\":" + rs + "Audio/" + ac_travelSound.name + ".wav" + "}";
-            else
-                augmentData += "{\"AudioFile\":null}";
-            if (ac_hitSound)
-                augmentData += "{\"AudioFile\":" + rs + "Audio/" + ac_hitSound.name + ".wav" + "}";
-            else
-                augmentData += "{\"AudioFile\":null}";
-            augmentData += "}~";
-            augmentData += "InfoProperties={";
-            augmentData += EditorJsonUtility.ToJson(ap_toolProperties);
-            augmentData += "}~";
-            augmentData += "PhysicalProperties={";
-            augmentData += EditorJsonUtility.ToJson(phys_toolPhys);
-            if (go_weaponProjectile)
-                augmentData += EditorJsonUtility.ToJson(go_weaponProjectile);
-            else
-                augmentData += "{\"GameObject\":null}";
-            augmentData += "}~";
-            augmentData += "ExplosionProperties={";
-            augmentData += EditorJsonUtility.ToJson(ae_splosion);
-            if (go_explosion)
-                augmentData += EditorJsonUtility.ToJson(go_explosion);
-            else
-                augmentData += "{\"GameObject\":null}";
-            if (go_explarticles)
-                augmentData += EditorJsonUtility.ToJson(go_explarticles);
-            else
-                augmentData += "{\"GameObject\":null}";
-            augmentData += "}~";
-            augmentData += "ProjectileProperties={";
-            augmentData += EditorJsonUtility.ToJson(apro);
-            if (pm_mat)
-                augmentData += "{\"PhysicsMaterial\":" + rs + "PhysicsMaterials/" + pm_mat.name + ".physicMaterial" + "}";
-            else
-                augmentData += "{\"PhysicsMaterial:null}";
-            augmentData += "}~";
-            augmentData += "ConeProperties={";
-            augmentData += EditorJsonUtility.ToJson(acone);
-            augmentData += "}~";
-            augmentData += "MeshProperties={";
-            if (mat_material)
-                augmentData += "{\"Material\":" + rs + "Augments/Materials/" + mat_material.name + ".mat" + "}";
-            else
-                augmentData += "{\"Material\":null}";
-            if (m_mesh)
-                augmentData += "{\"Mesh\":" + rs + "Augments/Meshs/" + m_mesh.name + ".fbx" + "}";
-            else
-                augmentData += "{\"Mesh\":null}";
-            augmentData += "}~";
-            augmentData += "\n";
-            #endregion
-
-            File.AppendAllText(path + "AugmentData.json", augmentData);
-            // Pass to a "Prefab Creator"
-            string[] parsedData = AugmentParser.ParseAugmentData(augmentData);
-            ac_creator.CreateAugment(parsedData);
+            switch (i_dropdownOptions[i_dropDownIndex])
+            {
+                case "Standard Augment":
+                    InitStandardAugment(outputAug);
+                    break;
+                case "Projectile Augment":
+                    ProjectileAugment pOutput = new ProjectileAugment();
+                    InitStandardAugment(pOutput);
+                    try
+                    {
+                        pOutput.InitProjectile(apro);
+                        outputAug = pOutput;
+                    }catch(InvalidCastException e) { }
+                    break;
+                case "Cone Augment":
+                    ConeAugment cOutput = new ConeAugment();
+                    InitStandardAugment(cOutput);
+                    try
+                    {
+                        cOutput.InitCone(acone);
+                        outputAug = cOutput;
+                    }catch (InvalidCastException e) { }
+                    break;
+            }
+            augmentData = EditorJsonUtility.ToJson(outputAug);
+            File.AppendAllText(path + "AugmentData.json", augmentData + "\n");
+            AugmentCreator.CreateAugment(augmentData);
         }
     }
 
@@ -214,8 +177,11 @@ public class AugmentWindow : EditorWindow
         // Grab the first parameter of each new line and compare its name
         string[] newLine = sr.Split('\n');
         for (int i = 0; i < newLine.Length; i++)
-            if (newLine[i].Split('=')[0] == _s_name)
-                return true;
+        {
+            if(newLine[i] != "")
+                if (JsonUtility.FromJson<Augment>(newLine[i]).Name == _s_name)
+                    return true;
+        }
         return false;
     }
 
@@ -320,4 +286,27 @@ public class AugmentWindow : EditorWindow
         acone.f_radius = EditorGUILayout.FloatField(acone.f_radius);
     }
 
+    private void InitStandardAugment(Augment outputAug)
+    {
+        try
+        {
+            outputAug.InitAudio(ac_useSound, ac_travelSound, ac_hitSound);
+        }
+        catch (InvalidCastException e) { }
+        try
+        {
+            outputAug.InitInfo(ap_toolProperties);
+        }
+        catch (InvalidCastException e) { }
+        try
+        {
+            outputAug.InitPhysical(phys_toolPhys);
+        }
+        catch (InvalidCastException e) { }
+        try
+        {
+            outputAug.InitExplosion(ae_splosion);
+        }
+        catch (InvalidCastException e) { }
+    }
 }
