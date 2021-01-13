@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private float f_afterHitRegenTime = 5;
     [SerializeField] private GameObject go_reviveObject;
     [SerializeField] private AudioClip[] acA_hurtClips;
+    [SerializeField] private bool Damageable = true;
     private CameraController cc_cam;
     public CameraController Cam { set { cc_cam = value; } }
 
@@ -73,6 +74,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void TakeDamage(int damage)
     {
+#if UNITY_EDITOR
+        if (!Damageable)
+            return;
+#endif
         if (!view.IsMine || isDead)
             return;
         //print(damage + " DMG taken");

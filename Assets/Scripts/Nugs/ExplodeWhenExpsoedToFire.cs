@@ -8,7 +8,6 @@ public class ExplodeWhenExpsoedToFire : MonoBehaviour
 
     internal void Explode()
     {
-        print("I'm explsoing");
         PoolManager.x.SpawnObject(go_explosion, transform.position, Quaternion.identity);
         GetComponent<NugGO>().Die();
     }

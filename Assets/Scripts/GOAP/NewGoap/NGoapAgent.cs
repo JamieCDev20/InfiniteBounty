@@ -30,6 +30,8 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
     [SerializeField] private GameObject go_exploParticles;
     [SerializeField] private ParticleSystem p_hitParticles;
 
+    [SerializeField] private bool playParticles;
+
     #endregion
 
     #region Private
@@ -132,7 +134,8 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
     [PunRPC]
     public void SetParticles(bool val)
     {
-        go_aggroParticles.SetActive(val);
+        if (playParticles)
+            go_aggroParticles.SetActive(val);
     }
 
     public void SetTarget(Transform target)
@@ -153,7 +156,7 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         }
         i_currentHealth -= damage;
 
-        if (p_hitParticles)
+        if (p_hitParticles && playParticles)
             p_hitParticles?.Play();
 
         if (i_currentHealth <= 0)
@@ -188,9 +191,13 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
     [PunRPC]
     public void SplosionFX()
     {
-        go_exploParticles?.SetActive(true);
-        go_exploParticles.transform.parent = null;
-        Invoke("SetExploPartsInactive", 2);
+        if (playParticles)
+        {
+            go_exploParticles?.SetActive(true);
+            go_exploParticles.transform.parent = null;
+            Invoke("SetExploPartsInactive", 2);
+
+        }
 
     }
 
@@ -201,7 +208,8 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
 
     public void SetDeathPartsInactive()
     {
-        go_deathParticles?.SetActive(false);
+        if (playParticles)
+            go_deathParticles?.SetActive(false);
     }
 
     #endregion
@@ -247,8 +255,12 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
     {
         if (go_deathParticles)
         {
-            go_deathParticles.SetActive(true);
-            go_deathParticles.transform.parent = null;
+            if (playParticles)
+            {
+                go_deathParticles.SetActive(true);
+                go_deathParticles.transform.parent = null;
+
+            }
         }
 
         gameObject.SetActive(false);
