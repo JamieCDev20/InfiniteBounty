@@ -60,6 +60,9 @@ public class KillBox : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.isTrigger)
+            return;
+
         IHitable _h = collision.collider.GetComponent<IHitable>();
         _h?.TakeDamage(i_damageToDeal, false);
         as_source.PlayOneShot(ac_burnEffect);
