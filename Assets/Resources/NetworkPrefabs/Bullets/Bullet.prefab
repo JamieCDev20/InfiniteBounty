@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 3355626298987255008}
   - component: {fileID: 15834745700504613}
   m_Layer: 11
-  m_Name: Trail
+  m_Name: BulletTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,13 +473,14 @@ MonoBehaviour:
   f_lifeTime: 7
   go_hitEffect: {fileID: 1446105863206547350, guid: 68e540017e4f3db40b5772c89de6b701,
     type: 3}
+  go_spawnItem: {fileID: 0}
   lm_placementLayer:
     serializedVersion: 2
     m_Bits: 6144
   b_isNetworkedObject: 0
   s_resourcePath: NetworkPrefabs\Bullets\
   c_myCollider: {fileID: 4762224859139194053}
-  tr_bulletTrail: {fileID: 15834745700504613}
+  tr_bulletTrail: {fileID: 0}
   go_flameTrails: {fileID: 4959757957196078087}
   go_electricTrails: {fileID: 9174736352834884035}
 --- !u!135 &4762224859139194053
