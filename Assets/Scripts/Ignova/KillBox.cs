@@ -61,7 +61,7 @@ public class KillBox : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         IHitable _h = collision.collider.GetComponent<IHitable>();
-        _h.TakeDamage(i_damageToDeal, true);
+        _h?.TakeDamage(i_damageToDeal, false);
         as_source.PlayOneShot(ac_burnEffect);
         if (b_shouldCauseBurningBum && collision.transform.tag == "Player")
             collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection);

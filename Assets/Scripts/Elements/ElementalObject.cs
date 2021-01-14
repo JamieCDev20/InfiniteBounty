@@ -6,28 +6,30 @@ using UnityEngine.Events;
 public class ElementalObject : MonoBehaviour, IElementable
 {
 
-    [SerializeField] private List<Element> eA_activeElements = new List<Element>();
-    [SerializeField] private GameObject go_lrObject;
+    [SerializeField] private List<Element> eA_activeElements = new List<Element>(); //The elements on this object
+    [SerializeField] private GameObject go_lrObject; //the line renderer for shocking
 
     //Goo  Hydro   Tasty Thunder Boom    Fire    Lava
-    private bool[] bA_statuses = new bool[7] { false, false, false, false, false, false, false };
+    private bool[] bA_statuses = new bool[7] { false, false, false, false, false, false, false }; //status effects on the object
 
-    private delegate void ElementInteraction();
-    private delegate void ElementActivation();
+    private delegate void ElementInteraction(); //Delegates for Elemental Interactions
+    private delegate void ElementActivation(); //Delegates for Elemental Activations
 
-    private ElementActivation activated;
+    private ElementActivation activated; // The delegate called when the object get's activated
 
-    private ElementInteraction[,] interactions;
-    private ElementActivation[] activations;
+    private ElementInteraction[,] interactions; //The big ass 2D array of interactions
+    private ElementActivation[] activations; //The array of activation functions
 
-    private bool b_doThunder = true;
-    private LineRenderer lrend;
-    private PoolableObject pO;
-    private bool b_activatedThisFrame = false;
-    private bool flag;
+    private bool b_doThunder = true; // bool to stop thunder infinitely repeating
+    private LineRenderer lrend; 
+    private PoolableObject pO; //To store the line renderer object
+    private bool b_activatedThisFrame = false; //only activate once per frame <<Not sure if i actually need this anymore.. but better safe than sorry
+    private bool flag; // ^^
+    private ElementManager em;
 
     private void Start()
     {
+        em = ElementManager.x;
         pO = GetComponent<PoolableObject>();
         interactions = new ElementInteraction[,] {
             //Goo               Hydro               Tasty               Thunder             Boom                Fire                Lava
@@ -50,9 +52,10 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         flag = false;
         b_activatedThisFrame = false;
+        //more only once per frame stuff
     }
 
-    private void InitialiseActivations()
+    private void InitialiseActivations() //add the intial activation stuff we should have
     {
         activated += ActivatedThisFrame;
         for (int i = 0; i < eA_activeElements.Count; i++)
@@ -63,7 +66,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void ActivatedThisFrame()
     {
-        Debug.Log($"{b_activatedThisFrame} & {flag}");
+        //once per frame stufffff
         if (!b_activatedThisFrame && flag)
             b_activatedThisFrame = true;
         else
@@ -73,6 +76,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void RecieveElements(List<Element> _recieved)
     {
+        //get affected by elements and carry out interactions
         int size = eA_activeElements.Count;
         for (int i = 0; i < _recieved.Count; i++)
         {
@@ -84,6 +88,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     }
     public void RecieveElements(Element _recieved)
     {
+        //get affected by elements and carry out interactions
         int size = eA_activeElements.Count;
         for (int i = 0; i < size; i++)
         {
@@ -184,7 +189,6 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void HydroThunder()
     {
-
         AddRemoveElement(Element.thunder, true);
     }
 
@@ -262,10 +266,10 @@ public class ElementalObject : MonoBehaviour, IElementable
             return;
         }
 
-        SetStatusEffect(Element.thunder, true, 2); //No tag backs
+        SetStatusEffect(Element.thunder, true, em.noShockBackDuration); //No tag backs
 
         //Waddid i hit
-        Collider[] hits = Physics.OverlapSphere(transform.position, 10);
+        Collider[] hits = Physics.OverlapSphere(transform.position, em.shockRange);
         Vector3[] verts = new Vector3[hits.Length];
         IElementable ie;
         int count = 0;
@@ -276,17 +280,15 @@ public class ElementalObject : MonoBehaviour, IElementable
             ie = hits[i].GetComponent<IElementable>();
             if (ie != null)
             {
-                ie?.RecieveElements(Element.thunder);
-                hits[i].GetComponent<IHitable>()?.TakeDamage(5, true, 0.3f);
-                if (hits[i].transform.position == Vector3.zero)
-                    Debug.Log(hits[i].gameObject.name, hits[i].gameObject);
-                count += 1;
-                verts[i] = hits[i].transform.position;
+                ie?.RecieveElements(Element.thunder); //tell the target we're shocking it
+                hits[i].GetComponent<IHitable>()?.TakeDamage(em.shockDamage, true, em.shockDelay); //if it can be damaged then dewit
+                count += 1; //<<to limit the number of objects we can shock
+                verts[i] = hits[i].transform.position; //remember the position for line renderer stuff
             }
-            if (count >= 3)
+            if (count >= em.maximumShockTargets) //Stop if we're at max
                 break;
         }
-        SetLineRendererPos(verts);
+        SetLineRendererPos(verts); //Show the shock lines
     }
 
     private void BoomActivate()
