@@ -21,7 +21,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private ElementActivation[] activations; //The array of activation functions
 
     private bool b_doThunder = true; // bool to stop thunder infinitely repeating
-    private LineRenderer lrend; 
+    private LineRenderer lrend;
     private PoolableObject pO; //To store the line renderer object
     private bool b_activatedThisFrame = false; //only activate once per frame <<Not sure if i actually need this anymore.. but better safe than sorry
     private bool flag; // ^^
@@ -102,7 +102,11 @@ public class ElementalObject : MonoBehaviour, IElementable
     }
     public void SetStatusEffect(Element _status, bool _val, float _time)
     {
+        if (!gameObject)
+            return;
         bA_statuses[(int)_status] = _val;
+        if (!gameObject || !gameObject.activeSelf)
+            return;
         StartCoroutine(TimedSetStatus(_status, !_val, _time));
     }
     private IEnumerator TimedSetStatus(Element _status, bool _val, float _time)
@@ -153,8 +157,8 @@ public class ElementalObject : MonoBehaviour, IElementable
             lrend.SetPosition(p + 1, transform.position);
             p += 2;
         }
-
-        StartCoroutine(ResetLineRenderer(lrend, 0.3f));
+        if (!gameObject)
+            StartCoroutine(ResetLineRenderer(lrend, 0.3f));
 
     }
 
