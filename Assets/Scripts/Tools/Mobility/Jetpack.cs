@@ -28,6 +28,7 @@ public class Jetpack : MobilityTool
     private Vector3 v_targetV;
     private float t;
     private AudioSource as_steamSource;
+    private PlayerMover pm_mover;
 
     private void Start()
     {
@@ -37,6 +38,9 @@ public class Jetpack : MobilityTool
         as_source.clip = ac_activationSound;
         EndSteaming();
         as_steamSource = gameObject.AddComponent<AudioSource>();
+
+        pm_mover = transform.root.GetComponent<PlayerMover>();
+
     }
 
     public override void Use(Vector3 _v)
@@ -72,8 +76,11 @@ public class Jetpack : MobilityTool
         {
             if (f_currentFuel < f_maxFuel)
             {
-                f_currentFuel += Time.deltaTime * f_rechargeRate;
-                UpdateFuelMeter();
+                if (pm_mover.b_grounded)
+                {
+                    f_currentFuel += Time.deltaTime * f_rechargeRate;
+                    UpdateFuelMeter();
+                }
             }
             else
             {
@@ -110,6 +117,7 @@ public class Jetpack : MobilityTool
 
     private void BecomeSteaming()
     {
+        f_currentFuel += 0.1f;
         b_isSteaming = true;
         ps_steamEffect.Play();
         go_fuelPool.GetComponent<Renderer>().material = m_steamingMat;
