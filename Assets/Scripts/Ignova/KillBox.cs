@@ -13,6 +13,17 @@ public class KillBox : MonoBehaviour
     [SerializeField] private float f_timeBetweenDamages;
     [SerializeField] private bool b_dealDamageOnEntry;
 
+    [Header("Bouncing")]
+    [SerializeField] private Vector3 v_bounceDirection;
+    [SerializeField] private bool b_shouldCauseBurningBum;
+    private AudioSource as_source;
+    [SerializeField] private AudioClip ac_burnEffect;
+
+    private void Start()
+    {
+        as_source = gameObject.AddComponent<AudioSource>();
+    }
+
     private void Update()
     {
         if (b_shouldSinBackToStart)
@@ -45,6 +56,15 @@ public class KillBox : MonoBehaviour
 
         if (hL_thingsWithinCloud.Contains(_h))
             hL_thingsWithinCloud.Remove(_h);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        IHitable _h = collision.collider.GetComponent<IHitable>();
+        _h.TakeDamage(i_damageToDeal, true);
+        as_source.PlayOneShot(ac_burnEffect);
+        if (b_shouldCauseBurningBum && collision.transform.tag == "Player")
+            collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection);
     }
 
     private void DealDamage()

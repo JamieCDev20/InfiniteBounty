@@ -32,6 +32,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [Space, SerializeField] private RectTransform rt_downedTimer;
     private PlayerInputManager pim;
     [SerializeField] private GameObject go_reviveSymbol;
+    [SerializeField] private ParticleSystem ps_burningBumParticles;
 
     private void Start()
     {
@@ -240,6 +241,17 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public bool IsDead()
     {
         return b_downed || isDead;
+    }
+
+    public void StartBurningBum(Vector3 _v_bounceDirection)
+    {
+        GetComponent<Rigidbody>().AddForce(_v_bounceDirection);
+        ps_burningBumParticles.Play();
+        Invoke("StopParticles", 1);
+    }
+    private void StopParticles()
+    {
+        ps_burningBumParticles.Stop();
     }
 
 }
