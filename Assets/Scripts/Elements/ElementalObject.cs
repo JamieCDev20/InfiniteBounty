@@ -22,10 +22,11 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private bool b_doThunder = true;
     private LineRenderer lrend;
+    private PoolableObject pO;
 
     private void Start()
     {
-        lrend = GetComponentInChildren<LineRenderer>();
+        pO = GetComponent<PoolableObject>();
         interactions = new ElementInteraction[,] {
             //Goo               Hydro               Tasty               Thunder             Boom                Fire                Lava
             {NullInteraction,   GooHydro,           NullInteraction,    GooThunder,         NullInteraction,    GooFire,            NullInteraction},   //Goo
@@ -100,7 +101,8 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void SetLineRendererPos(Vector3[] positions)
     {
-        go_lrObject.transform.parent = null;
+        GameObject LR = PoolManager.x.SpawnObject(go_lrObject, transform.position);
+        lrend = LR.GetComponent<LineRenderer>();
         if (!lrend)
             return;
         lrend.positionCount = (positions.Length * 2) + 1;
@@ -112,12 +114,16 @@ public class ElementalObject : MonoBehaviour, IElementable
             lrend.SetPosition(p + 1, transform.position);
             p += 2;
         }
+
+        StartCoroutine(ResetLineRenderer(lrend, 0.3f));
+
     }
 
-    private void ResetLineRenderer()
+    IEnumerator ResetLineRenderer(LineRenderer lr, float _delay)
     {
-        go_lrObject.transform.parent = transform;
-        SetLineRendererPos(new Vector3[0]);
+        yield return new WaitForSeconds(_delay);
+        lr.SetPositions(new Vector3[0]);
+        
     }
 
     #region ElementInteractions
@@ -224,13 +230,15 @@ public class ElementalObject : MonoBehaviour, IElementable
             ie?.RecieveElements(eA_activeElements);
             hits[i].GetComponent<IHitable>()?.TakeDamage(5, true, 0.3f);
             if (ie!= null)
+            {
                 count += 1;
-            verts[i] = hits[i].transform.position;
+                verts[i] = hits[i].transform.position;
+            }
             if (count >= 3)
                 break;
         }
         SetLineRendererPos(verts);
-        Invoke("ResetLineRenderer", 0.2f);
+        //Invoke("ResetLineRenderer", 0.2f);
     }
 
     private void BoomActivate()
