@@ -47,11 +47,6 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         
     }
 
-    private void TimeOut()
-    {
-        Die();
-    }
-
     public void Die()
     {
         CancelInvoke();

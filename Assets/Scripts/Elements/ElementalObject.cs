@@ -9,8 +9,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     [SerializeField] private List<Element> eA_activeElements = new List<Element>();
     [SerializeField] private GameObject go_lrObject;
 
-                                              //Goo     Hydro   Tasty   Thunder Boom    Fire    Lava
-    private bool[] bA_statuses = new bool[7] { false,   false,  false,  false,  false,  false,  false };
+    //Goo     Hydro   Tasty   Thunder Boom    Fire    Lava
+    private bool[] bA_statuses = new bool[7] { false, false, false, false, false, false, false };
 
     private delegate void ElementInteraction();
     private delegate void ElementActivation();
@@ -38,7 +38,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             {NullInteraction,   HydroLava,          NullInteraction,    NullInteraction,    BoomLava,           NullInteraction,    NullInteraction}    //Lava
         };
 
-        activations = new ElementActivation[7] { GooActivate, HydroActivate, TastyActivate, ThunderActivate, BoomActivate, FireActivate, LavaActivate};
+        activations = new ElementActivation[7] { GooActivate, HydroActivate, TastyActivate, ThunderActivate, BoomActivate, FireActivate, LavaActivate };
 
         InitialiseActivations();
 
@@ -123,7 +123,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         yield return new WaitForSeconds(_delay);
         lr.SetPositions(new Vector3[0]);
-        
+
     }
 
     #region ElementInteractions
@@ -150,7 +150,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void HydroThunder()
     {
-
+        ThunderActivate();
     }
 
     private void HydroFire()
@@ -227,18 +227,19 @@ public class ElementalObject : MonoBehaviour, IElementable
         for (int i = 0; i < hits.Length; i++)
         {
             ie = hits[i].GetComponent<IElementable>();
-            ie?.RecieveElements(eA_activeElements);
-            hits[i].GetComponent<IHitable>()?.TakeDamage(5, true, 0.3f);
-            if (ie!= null)
+            if (ie != null)
             {
+                hits[i].GetComponent<IHitable>()?.TakeDamage(5, true, 0.3f);
+                if(hits[i].transform.position == Vector3.zero)
+                    Debug.Log(hits[i].gameObject.name, hits[i].gameObject);
                 count += 1;
                 verts[i] = hits[i].transform.position;
+                ie?.RecieveElements(eA_activeElements);
             }
             if (count >= 3)
                 break;
         }
         SetLineRendererPos(verts);
-        //Invoke("ResetLineRenderer", 0.2f);
     }
 
     private void BoomActivate()
