@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NugGO : SubjectBase, IPoolable, ISuckable
+public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 {
     #region Serialized Variables
     [SerializeField] public Nug nug;
-    [SerializeField] private float f_nugTimeout;
     [SerializeField] private GameObject go_pickupParticles;
     [SerializeField] private AudioClip ac_pickupSound;
     [SerializeField] private bool b_isNetworkedObject = true;
@@ -19,11 +18,14 @@ public class NugGO : SubjectBase, IPoolable, ISuckable
     private bool b_inPool;
     private LodeBase myLode;
     private Rigidbody rb;
+    private ElementalObject eO_elem;
     #endregion
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        eO_elem = GetComponent<ElementalObject>();
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -85,5 +87,28 @@ public class NugGO : SubjectBase, IPoolable, ISuckable
     public Rigidbody GetRigidbody()
     {
         return rb;
+    }
+
+    public void TakeDamage(int damage, bool activatesThunder)
+    {
+        if (eO_elem)
+            eO_elem.ActivateElement(activatesThunder);
+        Die();
+    }
+
+    public bool IsDead()
+    {
+        return false;
+    }
+
+    public void TakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        StartCoroutine(DelayedTakeDamage(damage, activatesThunder, _delay));
+    }
+
+    IEnumerator DelayedTakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        TakeDamage(damage, activatesThunder);
     }
 }

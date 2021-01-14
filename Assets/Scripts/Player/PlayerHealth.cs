@@ -45,7 +45,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Delete))
-            TakeDamage(10000);
+            TakeDamage(10000, false);
 #endif
         if (b_downed)
         {
@@ -72,7 +72,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool activatesThunder)
     {
 #if UNITY_EDITOR
         if (!Damageable)
@@ -94,6 +94,16 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
 
+    }
+    public void TakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        StartCoroutine(DelayedTakeDamage(damage, activatesThunder, _delay));
+    }
+
+    IEnumerator DelayedTakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        TakeDamage(damage, activatesThunder);
     }
 
     [PunRPC]

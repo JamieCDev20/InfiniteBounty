@@ -34,7 +34,7 @@ public class KillBox : MonoBehaviour
             hL_thingsWithinCloud.Add(_h);
 
         if (b_dealDamageOnEntry)
-            _h.TakeDamage(i_damageToDeal);
+            _h.TakeDamage(i_damageToDeal, false);
 
         other.GetComponent<ExplodeWhenExpsoedToFire>()?.Explode();
     }
@@ -57,7 +57,7 @@ public class KillBox : MonoBehaviour
                 i -= 1;
                 continue;
             }
-            hL_thingsWithinCloud[i].TakeDamage(i_damageToDeal);
+            hL_thingsWithinCloud[i].TakeDamage(i_damageToDeal, false);
         }
         f_time = 0;
     }

@@ -12,7 +12,7 @@ public class Sandwich : MonoBehaviour, IPoolable
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<IHitable>().TakeDamage(-i_healthGain);
+            other.GetComponent<IHitable>().TakeDamage(-i_healthGain, false);
 
             go_pickedUpEffect.transform.parent = null;
             go_pickedUpEffect.transform.position = transform.position;

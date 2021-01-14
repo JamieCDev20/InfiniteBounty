@@ -29,7 +29,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         view = GetComponent<PhotonView>();
     }
 
-    public override void TakeDamage(int _i_damage)
+    public override void TakeDamage(int _i_damage, bool activatesThunder)
     {
         //only take damage if you are the master client
         if (!PhotonNetwork.IsMasterClient)

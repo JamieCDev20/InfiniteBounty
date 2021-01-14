@@ -21,11 +21,11 @@ public class Explosion : MonoBehaviour
             {
                 if (_i is LodeBase)
                 {
-                    _i.TakeDamage(i_lodeDamage);
+                    _i.TakeDamage(i_lodeDamage, true);
                 }
                 else
                 {
-                    _i.TakeDamage(i_damage);
+                    _i.TakeDamage(i_damage, true);
                     _cA[i].GetComponent<Rigidbody>().AddExplosionForce(f_knockBack, transform.position, f_radius, -1);
                 }
             }

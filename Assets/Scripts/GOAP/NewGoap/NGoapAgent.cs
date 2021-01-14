@@ -148,11 +148,11 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         mover.Retarget(target, true);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool activatesThunder)
     {
         if (!b_isHost)
         {
-            photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage);
+            photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage, activatesThunder);
         }
         i_currentHealth -= damage;
 
@@ -164,13 +164,23 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
             photonView.RPC("Die", RpcTarget.AllViaServer);
         }
     }
+    public void TakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        StartCoroutine(DelayedTakeDamage(damage, activatesThunder, _delay));
+    }
+
+    IEnumerator DelayedTakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        TakeDamage(damage, activatesThunder);
+    }
 
     [PunRPC]
-    public void RemoteTakeDamage(int damage)
+    public void RemoteTakeDamage(int damage, bool activatesThunder)
     {
         if (!b_isHost)
             return;
-        TakeDamage(damage);
+        TakeDamage(damage, activatesThunder);
 
     }
 
@@ -180,7 +190,7 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         Collider[] hits = Physics.OverlapSphere(transform.position, 1);
         foreach (Collider c in hits)
         {
-            c.GetComponent<IHitable>()?.TakeDamage(i_damage);
+            c.GetComponent<IHitable>()?.TakeDamage(i_damage, true);
         }
         //photonView.RPC("SplosionFX", RpcTarget.All);
         //photonView.RPC("Die", RpcTarget.AllViaServer);

@@ -58,15 +58,21 @@ public class Bullet : MonoBehaviour, IPoolable
         switch (temp)
         {
             case NGoapAgent nga:
-                nga.TakeDamage(i_damage);
+                nga.TakeDamage(i_damage, true);
                 break;
             case LodeBase lb:
-                lb.TakeDamage(i_lodeDamage);
+                lb.TakeDamage(i_lodeDamage, false);
                 break;
             case Enemy e:
-                e.TakeDamage(i_damage);
+                e.TakeDamage(i_damage, false);
+                break;
+            case null:
+                break;
+            case NugGO n:
+                n.TakeDamage(i_damage, true);
                 break;
             default:
+                temp.TakeDamage(i_damage, true);
                 break;
         }
 

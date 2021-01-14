@@ -5,8 +5,10 @@ using UnityEngine;
 public interface IHitable
 {
 
-    void TakeDamage(int damage);
+    void TakeDamage(int damage, bool activatesThunder);
 
     bool IsDead();
+
+    void TakeDamage(int damage, bool activatesThunder, float delay);
 
 }

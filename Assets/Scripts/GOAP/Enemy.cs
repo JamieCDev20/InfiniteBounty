@@ -21,10 +21,20 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
         b_isHunting = true;
     }
 
-    public virtual void TakeDamage(int _i_damage)
+    public virtual void TakeDamage(int _i_damage, bool activatesThunder)
     {
         i_currentHealth -= _i_damage;
         if (i_currentHealth <= 0) Death();
+    }
+    public void TakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        StartCoroutine(DelayedTakeDamage(damage, activatesThunder, _delay));
+    }
+
+    IEnumerator DelayedTakeDamage(int damage, bool activatesThunder, float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        TakeDamage(damage, activatesThunder);
     }
 
     internal virtual void Death()
