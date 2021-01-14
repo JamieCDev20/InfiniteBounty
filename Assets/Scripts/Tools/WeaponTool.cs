@@ -60,4 +60,8 @@ public class WeaponTool : ToolBase
         a_playerAnims.SetBool(s_meleeAnim, _b_);
     }
 
+    public void GetStatChanges()
+    {
+
+    }
 }

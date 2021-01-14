@@ -23,8 +23,8 @@ public class Augment
     [SerializeField] float f_heatsink;
     [SerializeField] float f_knockback;
     [SerializeField] float f_energyGauge;
-    [SerializeField] float f_damage;
-    [SerializeField] float f_lodeDamage;
+    [SerializeField] int i_damage;
+    [SerializeField] int i_lodeDamage;
 
     #endregion
 
@@ -39,8 +39,10 @@ public class Augment
 
     #region EXPLOSION
 
+    [SerializeField] int i_explosionDamage;
     [SerializeField] float f_explockBack;
     [SerializeField] float f_detonationTime;
+    [SerializeField] Vector3 v_exploSize;
     [SerializeField] GameObject go_explosion;
     [SerializeField] GameObject go_explarticles;
 
@@ -59,7 +61,7 @@ public class Augment
         ac_hitSound = _ac_hit;
     }
 
-    public void InitInfo(float _f_weight, float _f_recoil, float _f_speed, float _f_heatsink, float _f_knockback, float _f_energy, float _f_damage, float _f_lode)
+    public void InitInfo(float _f_weight, float _f_recoil, float _f_speed, float _f_heatsink, float _f_knockback, float _f_energy, int _i_damage, int _i_lode)
     {
         f_weight = _f_weight;
         f_recoil = _f_recoil;
@@ -67,8 +69,8 @@ public class Augment
         f_heatsink = _f_heatsink;
         f_knockback = _f_knockback;
         f_energyGauge = _f_energy;
-        f_damage = _f_damage;
-        f_lodeDamage = _f_lode;
+        i_damage = _i_damage;
+        i_lodeDamage = _i_lode;
     }
 
     public void InitInfo(AugmentProperties _ap_data)
@@ -79,8 +81,8 @@ public class Augment
         f_heatsink = _ap_data.f_heatsink;
         f_knockback = _ap_data.f_knockback;
         f_energyGauge = _ap_data.f_energyGauge;
-        f_damage = _ap_data.f_damage;
-        f_lodeDamage = _ap_data.f_lodeDamage;
+        i_damage = _ap_data.i_damage;
+        i_lodeDamage = _ap_data.i_lodeDamage;
     }
     public void InitPhysical(float _f_width, float _f_lifetime, Color[] _a_keys, GameObject _go_projectile)
     {
@@ -112,5 +114,9 @@ public class Augment
         f_detonationTime = _ae_boom.f_detonationTime;
         go_explosion = _ae_boom.go_explosion;
         go_explarticles = _ae_boom.go_explarticles;
+    }
+    public virtual void ApplyAugment(WeaponTool _t_toolRef)
+    {
+        _t_toolRef.GetStatChanges();
     }
 }

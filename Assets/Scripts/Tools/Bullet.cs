@@ -11,7 +11,10 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private int i_damage;
     [SerializeField] private int i_lodeDamage;
     [SerializeField] private float f_lifeTime;
+    // Hit effect is the particle that plays when you hit an object
     [SerializeField] private GameObject go_hitEffect;
+    // Spawn Item is the item that gets spawned, like a daisy or shoe
+    [SerializeField] private GameObject go_spawnItem;
     [SerializeField] private LayerMask lm_placementLayer;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
@@ -67,19 +70,27 @@ public class Bullet : MonoBehaviour, IPoolable
                 break;
         }
 
-        GameObject _go_effect = PoolManager.x.SpawnObject(go_hitEffect);
-
-        _go_effect.SetActive(false);
-        _go_effect.transform.parent = transform;
-        _go_effect.transform.localPosition = Vector3.zero;
-        _go_effect.transform.forward = collision.contacts[0].normal;
-        _go_effect.transform.parent = null;
-        _go_effect.SetActive(true);
+        if(go_hitEffect != null)
+            SpawnOnHit(go_hitEffect, collision.contacts[0].normal);
+        if (go_spawnItem != null)
+            SpawnOnHit(go_spawnItem, collision.contacts[0].normal);
 
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
 
         Die();
+    }
+
+    private void SpawnOnHit(GameObject _go_objToSpawn, Vector3 _v_direction)
+    {
+        GameObject spawned = PoolManager.x.SpawnObject(_go_objToSpawn);
+
+        spawned.SetActive(false);
+        spawned.transform.parent = transform;
+        spawned.transform.localPosition = Vector3.zero;
+        spawned.transform.forward = _v_direction;
+        spawned.transform.parent = null;
+        spawned.SetActive(true);
     }
 
     private IEnumerator ReturnToPool(GameObject _go_effect)

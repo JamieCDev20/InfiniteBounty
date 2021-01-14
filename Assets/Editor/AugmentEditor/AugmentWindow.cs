@@ -226,9 +226,9 @@ public class AugmentWindow : EditorWindow
         GUILayout.Label("Recoil", EditorStyles.label);
         ap_toolProperties.f_recoil = EditorGUILayout.FloatField(ap_toolProperties.f_recoil);
         GUILayout.Label("Enemy Damage", EditorStyles.label);
-        ap_toolProperties.f_damage = EditorGUILayout.FloatField(ap_toolProperties.f_damage);
+        ap_toolProperties.i_damage = EditorGUILayout.IntField(ap_toolProperties.i_damage);
         GUILayout.Label("Lode Damage", EditorStyles.label);
-        ap_toolProperties.f_lodeDamage = EditorGUILayout.FloatField(ap_toolProperties.f_lodeDamage);
+        ap_toolProperties.i_lodeDamage = EditorGUILayout.IntField(ap_toolProperties.i_lodeDamage);
         GUILayout.Label("Knockback", EditorStyles.label);
         ap_toolProperties.f_knockback = EditorGUILayout.FloatField(ap_toolProperties.f_knockback);
         GUILayout.Label("Weight", EditorStyles.label);

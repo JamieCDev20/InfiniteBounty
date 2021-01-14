@@ -11,6 +11,6 @@ public struct AugmentProperties
     public float f_heatsink;
     public float f_knockback;
     public float f_energyGauge;
-    public float f_damage;
-    public float f_lodeDamage;
+    public int i_damage;
+    public int i_lodeDamage;
 }
