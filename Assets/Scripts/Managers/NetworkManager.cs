@@ -39,8 +39,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void Start()
     {
 
-        Debug.Log("Recreated");
-
         //singleton and persist
         DontDestroyOnLoad(gameObject);
 
@@ -52,6 +50,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //connect to the network and store reference to the players networked
         Connect();
         netPlayer = FindObjectOfType<NetworkedPlayer>();
+    }
+
+    public void Reset()
+    {
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveLobby();
     }
 
     #endregion

@@ -43,7 +43,11 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
-
+    public void Reset()
+    {
+        Destroy(t_thisPlayer.gameObject);
+        Destroy(playerCamera.transform.parent.gameObject);
+    }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {

@@ -22,7 +22,7 @@ public class MainMenuController : MonoBehaviourPunCallbacks
         }
         else
         {
-            PhotonNetwork.ConnectUsingSettings();
+            //PhotonNetwork.ConnectUsingSettings();
             mainMenu.SetActive(true);
             menuCam.SetActive(true);
         }

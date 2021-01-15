@@ -19,23 +19,29 @@ public class PoolManager : MonoBehaviour
     private void Init()
     {
         // SINGLETOOOOOON
-        x = this;
+        if (x != null)
+            Destroy(gameObject);
+        else
+            x = this;
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += SceneChange;
 
     }
 
+    public void Reset()
+    {
+    }
+
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
-        if (this == null)
-            return;
-        ResetPools();
+
         
     }
 
     private void ResetPools()
     {
+        if(pools.Values != null)
         foreach (Pool p in pools.Values)
         {
             p.ResetPool();

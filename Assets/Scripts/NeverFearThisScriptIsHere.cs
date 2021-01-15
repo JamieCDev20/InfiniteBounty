@@ -10,7 +10,7 @@ public class NeverFearThisScriptIsHere : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.LeaveRoom();
+        //PhotonNetwork.LeaveRoom();
     }
 
     public void DestroyAllDontDestroyOnLoadObjects()
@@ -29,10 +29,10 @@ public class NeverFearThisScriptIsHere : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        base.OnLeftRoom();
-        Debug.Log("LEFT THE ROOM");
-        DestroyAllDontDestroyOnLoadObjects();
-        SceneManager.UnloadSceneAsync(0);
+        //base.OnLeftRoom();
+        //Debug.Log("LEFT THE ROOM");
+        //DestroyAllDontDestroyOnLoadObjects();
+        //SceneManager.UnloadSceneAsync(0);
         SceneManager.LoadScene(0);
     }
 

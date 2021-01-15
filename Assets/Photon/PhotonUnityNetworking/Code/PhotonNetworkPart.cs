@@ -271,7 +271,7 @@ namespace Photon.Pun
         /// <summary>
         /// Cleans up anything that was instantiated in-game (not loaded with the scene). Resets views that are not destroyed.
         /// </summary>
-        // TODO: This method name no longer matches is function. It also resets scene object's views.
+        // TODO: This method name no longer matches is function. It also resets room object's views.
         internal static void LocalCleanupAnythingInstantiated(bool destroyInstantiatedGameObjects)
         {
             //if (tempInstantiationData.Count > 0)
@@ -415,7 +415,7 @@ namespace Photon.Pun
 
             if (PhotonNetwork.LogLevel >= PunLogLevel.Full)
             {
-                //Debug.Log("Received RPC: " + inMethodName);
+                Debug.Log("Received RPC: " + inMethodName);
             }
 
 
@@ -555,7 +555,7 @@ namespace Photon.Pun
                         // Check for PhotonNetworkMessage being the last
                         if (parameters[parameters.Length - 1].ParameterType == typeof(PhotonMessageInfo) && CheckTypeMatch(parameters, argumentsTypes))
                         {
-                            int sendTime = (int)rpcData[(byte)2];
+                            int sendTime = (int)rpcData[keyByteTwo];
                             object[] argumentsWithInfo = new object[arguments.Length + 1];
                             arguments.CopyTo(argumentsWithInfo, 0);
                             argumentsWithInfo[argumentsWithInfo.Length - 1] = new PhotonMessageInfo(sender, sendTime, photonNetview);
@@ -624,18 +624,21 @@ namespace Photon.Pun
                     if (foundMethods == 0)
                     {
                         // found no method that matches
-                        Debug.LogErrorFormat(context, "RPC method '{0}({2})' not found on object with PhotonView {1}. Implement as non-static. Apply [PunRPC]. Components on children are not found.", inMethodName, netViewID, argsString);
+                        Debug.LogErrorFormat(context, "RPC method '{0}({2})' not found on object with PhotonView {1}. Implement as non-static. Apply [PunRPC]. Components on children are not found. " +
+                            "Return type must be void or IEnumerator (if you enable RunRpcCoroutines). RPCs are a one-way message.", inMethodName, netViewID, argsString);
                     }
                     else
                     {
                         // found a method but not the right arguments
-                        Debug.LogErrorFormat(context, "RPC method '{0}' found on object with PhotonView {1} but has wrong parameters. Implement as '{0}({2})'. PhotonMessageInfo is optional as final parameter.", inMethodName, netViewID, argsString);
+                        Debug.LogErrorFormat(context, "RPC method '{0}' found on object with PhotonView {1} but has wrong parameters. Implement as '{0}({2})'. PhotonMessageInfo is optional as final parameter." +
+                            "Return type must be void or IEnumerator (if you enable RunRpcCoroutines).", inMethodName, netViewID, argsString);
                     }
                 }
                 else
                 {
                     // multiple components have the same method
-                    Debug.LogErrorFormat(context, "RPC method '{0}({2})' found {3}x on object with PhotonView {1}. Only one component should implement it.", inMethodName, netViewID, argsString, foundMethods);
+                    Debug.LogErrorFormat(context, "RPC method '{0}({2})' found {3}x on object with PhotonView {1}. Only one component should implement it." +
+                            "Return type must be void or IEnumerator (if you enable RunRpcCoroutines).", inMethodName, netViewID, argsString, foundMethods);
                 }
             }
         }
@@ -884,7 +887,7 @@ namespace Photon.Pun
         private static void SendDestroyOfPlayer(int actorNr)
         {
             ExitGames.Client.Photon.Hashtable evData = new ExitGames.Client.Photon.Hashtable();
-            evData[(byte)0] = actorNr;
+            evData[keyByteZero] = actorNr;
 
             PhotonNetwork.RaiseEventInternal(PunEvent.DestroyPlayer, evData, null, SendOptions.SendReliable);
             //NetworkingClient.OpRaiseEvent(PunEvent.DestroyPlayer, evData, null, SendOptions.SendReliable);
@@ -894,7 +897,7 @@ namespace Photon.Pun
         private static void SendDestroyOfAll()
         {
             ExitGames.Client.Photon.Hashtable evData = new ExitGames.Client.Photon.Hashtable();
-            evData[(byte)0] = -1;
+            evData[keyByteZero] = -1;
 
             PhotonNetwork.RaiseEventInternal(PunEvent.DestroyPlayer, evData, null, SendOptions.SendReliable);
             //NetworkingClient.OpRaiseEvent(PunEvent.DestroyPlayer, evData, null , SendOptions.SendReliable);
@@ -1014,7 +1017,7 @@ namespace Photon.Pun
 
             if (PhotonNetwork.LogLevel >= PunLogLevel.Full)
             {
-                //Debug.Log("Registered PhotonView: " + netView.ViewID);
+                Debug.Log("Registered PhotonView: " + netView.ViewID);
             }
         }
 
@@ -1066,7 +1069,7 @@ namespace Photon.Pun
         {
             if (view.OwnerActorNr != NetworkingClient.LocalPlayer.ActorNumber && !NetworkingClient.LocalPlayer.IsMasterClient)
             {
-                Debug.LogError("Cannot remove cached RPCs on a PhotonView thats not ours! " + view.Owner + " scene: " + view.IsSceneView);
+                Debug.LogError("Cannot remove cached RPCs on a PhotonView thats not ours! " + view.Owner + " scene: " + view.IsRoomView);
                 return;
             }
 
@@ -1080,7 +1083,7 @@ namespace Photon.Pun
         /// <summary>Cleans server RPCs for PhotonView (without any further checks).</summary>
         public static void OpCleanRpcBuffer(PhotonView view)
         {
-            rpcFilterByViewId[(byte)0] = view.ViewID;
+            rpcFilterByViewId[keyByteZero] = view.ViewID;
             PhotonNetwork.RaiseEventInternal(PunEvent.RPC, rpcFilterByViewId, OpCleanRpcBufferOptions, SendOptions.SendReliable);
         }
 
@@ -1104,6 +1107,45 @@ namespace Photon.Pun
             }
         }
 
+        /// <summary>
+        /// Clear buffered RPCs based on filter parameters.
+        /// </summary>
+        /// <param name="viewId">The viewID of the PhotonView where the RPC has been called on. We actually need its ViewID. If 0 (default) is provided, all PhotonViews/ViewIDs are considered.</param>
+        /// <param name="methodName">The RPC method name, if possible we will use its hash shortcut for efficiency. If none (null or empty string) is provided all RPC method names are considered.</param>
+        /// <param name="callersActorNumbers">The actor numbers of the players who called/buffered the RPC. For example if two players buffered the same RPC you can clear the buffered RPC of one and keep the other. If none (null or empty array) is provided all senders are considered.</param>
+        /// <returns>If the operation could be sent to the server.</returns>
+        public static bool RemoveBufferedRPCs(int viewId = 0, string methodName = null, int[] callersActorNumbers = null/*, params object[] parameters*/)
+        {
+            Hashtable filter = new Hashtable(2);
+            if (viewId != 0)
+            {
+                filter[keyByteZero] = viewId;
+            }
+            if (!string.IsNullOrEmpty(methodName))
+            {
+                // send name or shortcut (if available)
+                int shortcut;
+                if (rpcShortcuts.TryGetValue(methodName, out shortcut))
+                {
+                    filter[keyByteFive] = (byte)shortcut; // LIMITS RPC COUNT
+                }
+                else
+                {
+                    filter[keyByteThree] = methodName;
+                }
+            }
+            //if (parameters != null && parameters.Length > 0)
+            //{
+            //    filter[keyByteFour] = parameters;
+            //}
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions();
+            raiseEventOptions.CachingOption = EventCaching.RemoveFromRoomCache;
+            if (callersActorNumbers != null)
+            {
+                raiseEventOptions.TargetActors = callersActorNumbers;
+            }
+            return RaiseEventInternal(PunEvent.RPC, filter, raiseEventOptions, SendOptions.SendReliable);
+        }
 
         /// <summary>
         /// Sets level prefix for PhotonViews instantiated later on. Don't set it if you need only one!
@@ -1161,7 +1203,7 @@ namespace Photon.Pun
 
             if (PhotonNetwork.LogLevel >= PunLogLevel.Full)
             {
-                //Debug.Log("Sending RPC \"" + methodName + "\" to target: " + target + " or player:" + player + ".");
+                Debug.Log("Sending RPC \"" + methodName + "\" to target: " + target + " or player:" + player + ".");
             }
 
 
@@ -1449,7 +1491,6 @@ namespace Photon.Pun
             {
 
                 int key = removeKeys[index];
-                //Debug.LogError("NewScene Clean " + key);
                 photonViewList.Remove(key);
             }
 
@@ -1911,7 +1952,7 @@ namespace Photon.Pun
             }
 
 
-            int[] indexesThatAreChangedToNull = incomingData[(byte)2] as int[];
+            int[] indexesThatAreChangedToNull = incomingData[2] as int[];
             for (int index = SyncFirstValue; index < incomingData.Length; index++)
             {
                 if (indexesThatAreChangedToNull != null && indexesThatAreChangedToNull.Contains(index))
@@ -2211,7 +2252,7 @@ namespace Photon.Pun
 
                 case PunEvent.DestroyPlayer:
                     Hashtable evData = (Hashtable)photonEvent.CustomData;
-                    int targetPlayerId = (int)evData[(byte)0];
+                    int targetPlayerId = (int)evData[keyByteZero];
                     if (targetPlayerId >= 0)
                     {
                         DestroyPlayerObjects(targetPlayerId, true);
@@ -2233,7 +2274,7 @@ namespace Photon.Pun
 
                 case PunEvent.Destroy:
                     evData = (Hashtable)photonEvent.CustomData;
-                    int instantiationId = (int)evData[(byte)0];
+                    int instantiationId = (int)evData[keyByteZero];
                     // Debug.Log("Ev Destroy for viewId: " + instantiationId + " sent by owner: " + (instantiationId / PhotonNetwork.MAX_VIEW_IDS == actorNr) + " this client is owner: " + (instantiationId / PhotonNetwork.MAX_VIEW_IDS == this.LocalPlayer.ID));
 
 
@@ -2409,13 +2450,21 @@ namespace Photon.Pun
             switch (opResponse.OperationCode)
             {
                 case OperationCode.GetRegions:
+                    if (opResponse.ReturnCode != 0)
+                    {
+                        if (PhotonNetwork.LogLevel >= PunLogLevel.Full)
+                        {
+                            Debug.Log("OpGetRegions failed. Will not ping any. ReturnCode: " + opResponse.ReturnCode);
+                        }
+                        return;
+                    }
                     if (ConnectMethod == ConnectMethod.ConnectToBest)
                     {
                         string previousBestRegionSummary = PhotonNetwork.BestRegionSummaryInPreferences;
 
                         if (PhotonNetwork.LogLevel >= PunLogLevel.Informational)
                         {
-                            //Debug.Log("PUN got region list. Going to ping minimum regions, based on this previous result summary: " + previousBestRegionSummary);
+                            Debug.Log("PUN got region list. Going to ping minimum regions, based on this previous result summary: " + previousBestRegionSummary);
                         }
                         NetworkingClient.RegionHandler.PingMinimumOfRegions(OnRegionsPinged, previousBestRegionSummary);
                     }
@@ -2453,7 +2502,7 @@ namespace Photon.Pun
         {
             if (PhotonNetwork.LogLevel >= PunLogLevel.Informational)
             {
-                //Debug.Log(regionHandler.GetResults());
+                Debug.Log(regionHandler.GetResults());
             }
 
             _cachedRegionHandler = regionHandler;

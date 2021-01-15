@@ -138,6 +138,8 @@ public class Pool
 
     public void ResetPool()
     {
+        if (p_objects == null)
+            return;
         foreach (IPoolable ip in p_objects)
         {
             ip.Die();

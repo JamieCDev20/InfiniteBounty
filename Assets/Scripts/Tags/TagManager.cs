@@ -24,13 +24,21 @@ public class TagManager : MonoBehaviour
 
     private void Awake()
     {
-        x = this;
+        if (x != null)
+            Destroy(gameObject);
+        else
+            x = this;
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         //GetAllTaggedObjects();
+    }
+
+    public void Reset()
+    {
+
     }
 
     #endregion

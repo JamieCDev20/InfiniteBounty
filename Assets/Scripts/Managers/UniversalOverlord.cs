@@ -31,7 +31,6 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        
         if (x != null)
             Destroy(gameObject);
         else
@@ -48,8 +47,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     /// </summary>
     private void Init()
     {
-        if (FindObjectOfType<PoolManager>())
-            return;
+
         canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
         //GM persist through scenes
@@ -67,6 +65,28 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             }
         }
 
+    }
+    public void Reset()
+    {
+        NetworkedPlayer.x.Reset();
+        PoolManager.x.Reset();
+        UniversalNugManager.x.Reset();
+        TagManager.x.Reset();
+        NetworkManager.x.Reset();
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public override void OnLeftLobby()
+    {
+        base.OnLeftLobby();
+        Debug.Log("Left Lobby");
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        Debug.Log("Left Room");
+        SceneManager.LoadScene(0);
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -94,17 +114,6 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     }
 
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        base.OnDisconnected(cause);
-        if (canLoadScene)
-        {
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-            SceneManager.LoadScene(0);
-        }
-        Destroy(gameObject);
-    }
-
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         base.OnMasterClientSwitched(newMasterClient);
@@ -113,10 +122,9 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         Cursor.visible = true;
     }
 
-    public void SpawnTheSaviour()
+    public void ReturnToMainMenu()
     {
-        x = null;
-        Instantiate(theSaviour);
+        Reset();
     }
 
     #endregion

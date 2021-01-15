@@ -91,7 +91,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void Quit()
     {
-        UniversalOverlord.x.SpawnTheSaviour();
+        UniversalOverlord.x.ReturnToMainMenu();
     }
 
 
