@@ -128,6 +128,17 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         StartCoroutine(AddRemoveAtEOF(_elem, add));
     }
+    public void AddRemoveElement(Element _elem, bool add, float _duration)
+    {
+        StartCoroutine(AddRemoveAtEOF(_elem, add));
+        StartCoroutine(DelayAddRemoveElement(_elem, !add, _duration));
+    }
+
+    IEnumerator DelayAddRemoveElement(Element _elem, bool add, float _duration)
+    {
+        yield return new WaitForSeconds(_duration);
+        AddRemoveAtEOF(_elem, add);
+    }
 
     IEnumerator AddRemoveAtEOF(Element _elem, bool add)
     {
@@ -264,13 +275,16 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
+        SetStatusEffect(Element.goo, true, em.gooDuration);
+        AddRemoveElement(Element.goo, true);
     }
 
     private void HydroActivate()
     {
         if (b_activatedThisFrame)
             return;
-
+        AddRemoveElement(Element.hydro, true);
+        SetStatusEffect(Element.hydro, true);
     }
 
     private void TastyActivate()
@@ -326,6 +340,11 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
+
+        SetStatusEffect(Element.fire, true);
+        AddRemoveElement(Element.fire, true);
+        StopCoroutine("FireDamage");
+        StartCoroutine(FireDamage(em.fireDuration * (bA_statuses[(int)Element.goo] ? em.gooDurationMultiplier : 1), em.fireDamage * (bA_statuses[(int)Element.goo] ? em.gooDamageMultiplier : 1)));
 
     }
 

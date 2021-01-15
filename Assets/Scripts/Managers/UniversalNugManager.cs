@@ -31,6 +31,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        Debug.Log("Recreated");
         DontDestroyOnLoad(gameObject);
         photonView.ViewID = 99999;
         PhotonNetwork.RegisterPhotonView(photonView);

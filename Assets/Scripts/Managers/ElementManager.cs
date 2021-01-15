@@ -8,9 +8,11 @@ public class ElementManager : MonoBehaviour
     public static ElementManager x;
 
     [Header("Goo")]
+    public float gooDuration;
     public float gooDurationMultiplier;
     public int gooDamageMultiplier;
     [Header("Hydro")]
+    public float hydroDuration;
     [Header("Tasty")]
     public int growMultiplier;
     [Header("Thunder")]

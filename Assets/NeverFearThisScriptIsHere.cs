@@ -10,10 +10,7 @@ public class NeverFearThisScriptIsHere : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        DestroyAllDontDestroyOnLoadObjects();
         PhotonNetwork.LeaveRoom();
-        SceneManager.UnloadSceneAsync(0);
-        SceneManager.LoadScene(0);
     }
 
     public void DestroyAllDontDestroyOnLoadObjects()
@@ -23,8 +20,20 @@ public class NeverFearThisScriptIsHere : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(go);
 
         foreach (var root in go.scene.GetRootGameObjects())
-            Destroy(root);
+        {
+            if (root.GetComponent<PhotonHandler>() != null)
+                Destroy(root);
+        }
 
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        Debug.Log("LEFT THE ROOM");
+        DestroyAllDontDestroyOnLoadObjects();
+        SceneManager.UnloadSceneAsync(0);
+        SceneManager.LoadScene(0);
     }
 
 }

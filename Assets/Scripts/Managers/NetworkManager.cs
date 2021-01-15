@@ -38,9 +38,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+
+        Debug.Log("Recreated");
+
         //singleton and persist
         DontDestroyOnLoad(gameObject);
-        x = this;
+
+        if (x != null)
+            Destroy(gameObject);
+        else
+            x = this;
+
         //connect to the network and store reference to the players networked
         Connect();
         netPlayer = FindObjectOfType<NetworkedPlayer>();
