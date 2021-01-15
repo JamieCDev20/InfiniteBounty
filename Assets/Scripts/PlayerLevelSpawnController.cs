@@ -25,6 +25,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
         pim = _go_playerToSetup.GetComponent<PlayerInputManager>();
         pim.b_shouldPassInputs = false;
         pim.GetCamera().enabled = false;
+        pim.GetCamera().transform.localEulerAngles = new Vector3(5, 0, 0);
 
         _go_playerToSetup.transform.position = transform.position;
 
