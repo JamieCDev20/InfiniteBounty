@@ -1310,6 +1310,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2773092627871378422}
   - component: {fileID: 131995102587668447}
+  - component: {fileID: 1316248930957975711}
+  - component: {fileID: 3158819964265015421}
   m_Layer: 0
   m_Name: VendingMachine
   m_TagString: Untagged
@@ -1356,6 +1358,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.2, y: 2.9, z: 2.3}
   m_Center: {x: 0.076, y: 0, z: 0}
+--- !u!114 &1316248930957975711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5827097242644530622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263a3aff2f352b94fbef5510e2c0f669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  t_camParent: {fileID: 1821750499}
+  i_timesToLerpCam: 100
+  f_cameraMovementT: 0.3
+  c_vendingCanvas: {fileID: 613316198}
+  vmd_vendingMachineDisplay:
+    t_levelNumber: {fileID: 443802791496035313}
+    t_augmentName: {fileID: 1252844582325748744}
+    t_augmentType: {fileID: 8632383409305074519}
+    t_augmentFits: {fileID: 442322342617779518}
+    t_augmentEffects: {fileID: 1884753760}
+    t_augmentCost: {fileID: 7725516167455695555}
+--- !u!114 &3158819964265015421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5827097242644530622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Buy Augments
+  i_buttonSpriteIndex: 0
+  b_hostOnly: 0
 --- !u!1 &6753712753909002055
 GameObject:
   m_ObjectHideFlags: 0
