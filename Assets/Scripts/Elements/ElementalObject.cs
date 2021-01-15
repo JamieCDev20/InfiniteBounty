@@ -26,11 +26,14 @@ public class ElementalObject : MonoBehaviour, IElementable
     private bool b_activatedThisFrame = false; //only activate once per frame <<Not sure if i actually need this anymore.. but better safe than sorry
     private bool flag; // ^^
     private ElementManager em;
+    private IHitable ourHitable;
 
     private void Start()
     {
         em = ElementManager.x;
         pO = GetComponent<PoolableObject>();
+        ourHitable = GetComponent<IHitable>();
+
         interactions = new ElementInteraction[,] {
             //Goo               Hydro               Tasty               Thunder             Boom                Fire                Lava
             {NullInteraction,   GooHydro,           NullInteraction,    GooThunder,         NullInteraction,    GooFire,            NullInteraction},   //Goo
@@ -167,6 +170,23 @@ public class ElementalObject : MonoBehaviour, IElementable
         yield return new WaitForSeconds(_delay);
         lr.SetPositions(new Vector3[0]);
 
+    }
+
+    IEnumerator FireDamage(float _duration, int _damage)
+    {
+        ourHitable.TakeDamage(_damage, true);
+        float t = 0;
+        while (t < _duration)
+        {
+            t += em.fireInterval;
+            yield return new WaitForSeconds(em.fireInterval);
+            ourHitable.TakeDamage(_damage, true);
+            
+        }
+        SetStatusEffect(Element.fire, false);
+        AddRemoveElement(Element.fire, false);
+        SetStatusEffect(Element.goo, false);
+        AddRemoveElement(Element.goo, false);
     }
 
     #region ElementInteractions

@@ -25,6 +25,7 @@ public class ElementManager : MonoBehaviour
     [Header("Fire")]
     public float fireDuration;
     public int fireDamage;
+    public float fireInterval;
     [Header("Lava")]
     public int lavaDamage;
 
