@@ -7,6 +7,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     #region Serialized Variables
     [SerializeField] public Nug nug;
     [SerializeField] private GameObject go_pickupParticles;
+    [SerializeField] private GameObject go_destroyParticles;
     [SerializeField] private AudioClip ac_pickupSound;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
@@ -19,6 +20,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     private LodeBase myLode;
     private Rigidbody rb;
     private ElementalObject eO_elem;
+    private bool b_collected;
     #endregion
 
     private void Start()
@@ -36,6 +38,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true, nug);
 
+            b_collected = true;
             myLode.NugCollected(i_lodeID);
             Notify(ce);
         }
@@ -51,7 +54,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         CancelInvoke();
         StopAllCoroutines();
-        GameObject particlesToPlay = PoolManager.x.SpawnObject(go_pickupParticles, transform.position, Quaternion.identity);
+        GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
         if(rb != null)

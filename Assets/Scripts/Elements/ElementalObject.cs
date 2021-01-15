@@ -39,10 +39,10 @@ public class ElementalObject : MonoBehaviour, IElementable
             {NullInteraction,   GooHydro,           NullInteraction,    GooThunder,         NullInteraction,    GooFire,            NullInteraction},   //Goo
             {GooHydro,          NullInteraction,    HydroTasty,         HydroThunder,       NullInteraction,    HydroFire,          HydroLava},         //Hydro
             {NullInteraction,   HydroTasty,         NullInteraction,    NullInteraction,    NullInteraction,    TastyFire,          NullInteraction},   //Tasty
-            {GooThunder,        HydroThunder,       NullInteraction,    NullInteraction,    ThunderBoom,        NullInteraction,    NullInteraction},   //Thunder
-            {NullInteraction,   NullInteraction,    NullInteraction,    ThunderBoom,        BoomBoom,           BoomFire,           BoomLava },         //Boom
-            {GooFire,           HydroFire,          TastyFire,          NullInteraction,    BoomFire,           NullInteraction,    NullInteraction },  //Fire
-            {NullInteraction,   HydroLava,          NullInteraction,    NullInteraction,    BoomLava,           NullInteraction,    NullInteraction}    //Lava
+            {GooThunder,        HydroThunder,       NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction},   //Thunder
+            {NullInteraction,   NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction},   //Boom
+            {GooFire,           HydroFire,          TastyFire,          NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction},   //Fire
+            {NullInteraction,   HydroLava,          NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction}    //Lava
         };
 
         activations = new ElementActivation[7] { GooActivate, HydroActivate, TastyActivate, ThunderActivate, BoomActivate, FireActivate, LavaActivate };
@@ -172,7 +172,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             p += 2;
         }
         if (!gameObject)
-            StartCoroutine(ResetLineRenderer(lrend, 0.3f));
+            StartCoroutine(ResetLineRenderer(lrend, em.shockDelay * 0.5f));
 
     }
 
@@ -192,7 +192,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             t += em.fireInterval;
             yield return new WaitForSeconds(em.fireInterval);
             ourHitable.TakeDamage(_damage, true);
-            
+
         }
         SetStatusEffect(Element.fire, false);
         AddRemoveElement(Element.fire, false);
@@ -204,22 +204,26 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void GooHydro()
     {
-
+        AddRemoveElement(Element.goo, false);
+        AddRemoveElement(Element.hydro, false);
     }
 
     private void GooThunder()
     {
-
+        b_doThunder = false;
+        SetStatusEffect(Element.thunder, false);
     }
 
     private void GooFire()
     {
-
+        SetStatusEffect(Element.goo, true, em.gooDuration);
+        SetStatusEffect(Element.fire, true, em.fireDuration);
+        FireActivate();
     }
 
     private void HydroTasty()
     {
-
+        //do a growing thing
     }
 
     private void HydroThunder()
@@ -229,37 +233,17 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void HydroFire()
     {
-
+        SetStatusEffect(Element.fire, false);
     }
 
     private void HydroLava()
     {
-
+        //do platform things
     }
 
     private void TastyFire()
     {
-
-    }
-
-    private void ThunderBoom()
-    {
-
-    }
-
-    private void BoomBoom()
-    {
-
-    }
-
-    private void BoomFire()
-    {
-
-    }
-
-    private void BoomLava()
-    {
-
+        //do eating things
     }
 
     private void NullInteraction()
@@ -310,16 +294,18 @@ public class ElementalObject : MonoBehaviour, IElementable
         Collider[] hits = Physics.OverlapSphere(transform.position, em.shockRange);
         Vector3[] verts = new Vector3[hits.Length];
         IElementable ie;
+        IHitable ih;
         int count = 0;
 
         //shock it
         for (int i = 0; i < hits.Length; i++)
         {
             ie = hits[i].GetComponent<IElementable>();
-            if (ie != null)
+            ih = hits[i].GetComponent<IHitable>();
+            if (ih != null)
             {
                 ie?.RecieveElements(Element.thunder); //tell the target we're shocking it
-                hits[i].GetComponent<IHitable>()?.TakeDamage(em.shockDamage, true, em.shockDelay); //if it can be damaged then dewit
+                ih.TakeDamage(em.shockDamage, true, em.shockDelay); //if it can be damaged then dewit
                 count += 1; //<<to limit the number of objects we can shock
                 verts[i] = hits[i].transform.position; //remember the position for line renderer stuff
             }
@@ -333,6 +319,19 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
+        Collider[] hits = Physics.OverlapSphere(transform.position, em.boomRadius);
+        IHitable iH;
+        IElementable iE;
+        for (int i = 0; i < hits.Length; i++)
+        {
+            iH = hits[i].GetComponent<IHitable>();
+            iE = hits[i].GetComponent<IElementable>();
+            if (iH != null)
+            {
+                iH.TakeDamage(em.boomDamage, true);
+                iE?.RecieveElements(Element.boom);
+            }
+        }
 
     }
 
@@ -352,7 +351,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
-
+        FireActivate();
     }
 
     #endregion
