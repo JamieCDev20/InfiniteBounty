@@ -76,15 +76,11 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public override void OnLeftLobby()
-    {
-        base.OnLeftLobby();
-        Debug.Log("Left Lobby");
-    }
-
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        if (!canLoadScene)
+            return;
         Debug.Log("Left Room");
         SceneManager.LoadScene(0);
     }
