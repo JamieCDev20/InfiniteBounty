@@ -12,6 +12,8 @@ public class ProjectileTool : WeaponTool
     private Ray r_flightPath;
     private CameraController cc_cam;
 
+    AugmentProjectile ap_projAugment;
+
     public override void SetActive(bool val)
     {
         b_active = val;
@@ -43,7 +45,7 @@ public class ProjectileTool : WeaponTool
     public void SpawnBullet(Vector3 _v_direction)
     {
         Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox, t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
-        newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider);
+        newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider, ap_projAugment, ae_explode);
         newBullet.MoveBullet(_v_direction, f_shotSpeed);
     }
 
@@ -55,5 +57,6 @@ public class ProjectileTool : WeaponTool
             go_particles.SetActive(true);
         }
     }
+
 
 }

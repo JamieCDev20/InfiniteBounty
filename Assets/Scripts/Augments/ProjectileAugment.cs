@@ -8,21 +8,26 @@ public class ProjectileAugment : Augment
     [SerializeField] int i_shotsPerRound;
     [SerializeField] float f_gravity;
     [SerializeField] PhysicMaterial pm_physMat;
-    [SerializeField] Vector3 v_bulletScale;
+    [SerializeField] float f_bulletScale;
 
-    public void InitProjectile(int _i_shots, float _f_grav, PhysicMaterial _pm_mat, Vector3 _v_scale)
+    public void InitProjectile(int _i_shots, float _f_grav, PhysicMaterial _pm_mat, float _f_scale)
     {
         i_shotsPerRound = _i_shots;
         f_gravity = _f_grav;
         pm_physMat = _pm_mat;
-        v_bulletScale = _v_scale;
+        f_bulletScale = _f_scale;
     }
     public void InitProjectile(AugmentProjectile _nyooom)
     {
         i_shotsPerRound = _nyooom.i_shotsPerRound;
         f_gravity = _nyooom.f_gravity;
         pm_physMat = _nyooom.pm_phys;
-        v_bulletScale = _nyooom.v_bulletScale;
+        f_bulletScale = _nyooom.f_bulletScale;
         
+    }
+
+    public AugmentProjectile GetProjectileData()
+    {
+        return new AugmentProjectile(i_shotsPerRound, f_gravity, pm_physMat, f_bulletScale);
     }
 }

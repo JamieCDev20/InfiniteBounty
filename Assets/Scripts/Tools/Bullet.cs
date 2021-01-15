@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private int i_damage;
     [SerializeField] private int i_lodeDamage;
     [SerializeField] private float f_lifeTime;
-    // Hit effect is the particle that plays when you hit an object
+    // Hit effect is the explosion, or particle that plays when hitting an enemy
     [SerializeField] private GameObject go_hitEffect;
     // Spawn Item is the item that gets spawned, like a daisy or shoe
     [SerializeField] private GameObject go_spawnItem;
@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private GameObject go_flameTrails;
     [SerializeField] private GameObject go_electricTrails;
 
+    [SerializeField] private PhysicMaterial pm_mat;
     private bool b_explosive;
     private bool b_gooey;
     private bool b_soaked;
@@ -32,14 +33,24 @@ public class Bullet : MonoBehaviour, IPoolable
 
     protected bool b_inPool;
     protected int i_poolIndex;
+    protected AugmentExplosion ae_explosion;
 
-    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol)
+    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae)
     {
         c_myCollider.isTrigger = true;
         i_damage = _i_damage;
         i_lodeDamage = _i_lodeDamage;
         rb = GetComponent<Rigidbody>();
-        transform.localScale = Vector3.one;
+        // Apply bullet augments here
+        rb.mass = _ap.f_gravity;
+        if(_ap.f_gravity > 0)
+            transform.localScale = Vector3.one * _ap.f_bulletScale;
+        else
+            transform.localScale = Vector3.one;
+        if(_ap.pm_phys != null)
+            pm_mat = _ap.pm_phys;
+        // If there's an explosion to be had, create a hiteffect here
+        ae_explosion = _ae;
         transform.rotation = Quaternion.identity;
         StartCoroutine(DeathTimer(f_lifeTime));
         //Invoke("BecomeCollidable", Time.deltaTime);
@@ -77,7 +88,10 @@ public class Bullet : MonoBehaviour, IPoolable
         }
 
         if(go_hitEffect != null)
+        {
+            // Apply explosion augments
             SpawnOnHit(go_hitEffect, collision.contacts[0].normal);
+        }
         if (go_spawnItem != null)
             SpawnOnHit(go_spawnItem, collision.contacts[0].normal);
 
@@ -136,6 +150,7 @@ public class Bullet : MonoBehaviour, IPoolable
     public void Die()
     {
         StopAllCoroutines();
+        SpawnOnHit(go_hitEffect, transform.forward);
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
         if (tr_bulletTrail != null)
             tr_bulletTrail.Clear();

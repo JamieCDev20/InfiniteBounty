@@ -12,8 +12,9 @@ public class AugmentWindow : EditorWindow
     #region GUI Variables
     private string[] i_dropdownOptions = { "Standard Augment", "Projectile Augment", "Cone Augment"};
     private int i_dropDownIndex = 0;
-    bool b_displayBaseAugments = true;
-    Vector2 scrollPos;
+    private bool b_displayBaseAugments = true;
+    private Vector2 scrollPos;
+    private List<Color> tex_color;
     #endregion
 
     Augment a_melee;
@@ -46,8 +47,7 @@ public class AugmentWindow : EditorWindow
 
     #region EXPLOSION
     AugmentExplosion ae_splosion;
-    GameObject go_explosion;
-    GameObject go_explarticles;
+    GameObject[] go_explarticles;
     #endregion
 
     #endregion
@@ -249,6 +249,7 @@ public class AugmentWindow : EditorWindow
         phys_toolPhys.f_trWidth = EditorGUILayout.FloatField(phys_toolPhys.f_trWidth);
         GUILayout.Label("Trail Lifetime", EditorStyles.label);
         phys_toolPhys.f_trLifetime = EditorGUILayout.FloatField(phys_toolPhys.f_trLifetime);
+
         GUILayout.Label("Projectile", EditorStyles.label);
         go_weaponProjectile = (GameObject)EditorGUILayout.ObjectField(go_weaponProjectile, typeof(GameObject), true);
         GUILayout.Label("EXPLOSION", EditorStyles.boldLabel);
@@ -256,10 +257,13 @@ public class AugmentWindow : EditorWindow
         ae_splosion.f_explockBack = EditorGUILayout.FloatField(ae_splosion.f_explockBack);
         GUILayout.Label("Detonation Time", EditorStyles.label);
         ae_splosion.f_detonationTime = EditorGUILayout.FloatField(ae_splosion.f_detonationTime);
-        GUILayout.Label("Explosion Object", EditorStyles.label);
-        go_explosion = (GameObject)EditorGUILayout.ObjectField(go_explosion, typeof(GameObject), true);
+        /*
         GUILayout.Label("Explosion Particles", EditorStyles.label);
-        go_explarticles = (GameObject)EditorGUILayout.ObjectField(go_explarticles, typeof(GameObject), true);
+        ScriptableObject so = this;
+        SerializedObject serObj = new SerializedObject(so);
+        SerializedProperty serializedProperty = serObj.FindProperty("go_explarticles");
+        EditorGUILayout.PropertyField(serializedProperty, true);
+        serObj.ApplyModifiedProperties();*/
 
     }
     private void DisplayProjectileAugments()
@@ -269,7 +273,7 @@ public class AugmentWindow : EditorWindow
         apro.i_shotsPerRound = EditorGUILayout.IntField(apro.i_shotsPerRound);
         GUILayout.Label("Gravity", EditorStyles.label);
         apro.f_gravity = EditorGUILayout.FloatField(apro.f_gravity);
-        apro.v_bulletScale = EditorGUILayout.Vector3Field("Bullet Scale", apro.v_bulletScale);
+        apro.f_bulletScale = EditorGUILayout.FloatField("Bullet Scale", apro.f_bulletScale);
         GUILayout.Label("Physics Material", EditorStyles.label);
         pm_mat = (PhysicMaterial)EditorGUILayout.ObjectField(pm_mat, typeof(PhysicMaterial), true);
 

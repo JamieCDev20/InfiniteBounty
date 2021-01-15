@@ -18,4 +18,9 @@ public class ConeAugment : Augment
         f_angle = _aCone.f_angle;
         f_radius = _aCone.f_radius;
     }
+
+    public AugmentCone GetConeData()
+    {
+        return new AugmentCone(f_angle, f_radius);
+    }
 }

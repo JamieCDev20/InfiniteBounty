@@ -7,5 +7,13 @@ public struct AugmentProjectile
     public int i_shotsPerRound;
     public float f_gravity;
     public PhysicMaterial pm_phys;
-    public Vector3 v_bulletScale;
+    public float f_bulletScale;
+
+    public AugmentProjectile(int _i_shots, float _f_grav, PhysicMaterial _pm, float _f_scale)
+    {
+        i_shotsPerRound = _i_shots;
+        f_gravity = _f_grav;
+        pm_phys = _pm;
+        f_bulletScale = _f_scale;
+    }
 }

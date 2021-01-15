@@ -72,7 +72,7 @@ public class AugmentCreator
         int shots = int.Parse(_s_projectileData.Split(':', ',')[1]);
         float grav = float.Parse(_s_projectileData.Split(':', ',')[3]);
         PhysicMaterial pm = (PhysicMaterial)Resources.Load(_s_projectileData.Split(':', ',')[5]);
-        Vector3 scale = new Vector3(float.Parse(_s_projectileData.Split(':', ',')[6]), float.Parse(_s_projectileData.Split(':', ',')[8]), float.Parse(_s_projectileData.Split(':', '}')[6]));
+        float scale = float.Parse(_s_projectileData.Split(':', ',')[7]);
         // Set the parameters
         projAug.InitProjectile(shots, grav, pm, scale);
         return projAug;
