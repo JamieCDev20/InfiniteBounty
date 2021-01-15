@@ -18,10 +18,15 @@ public class KillBox : MonoBehaviour
     [SerializeField] private bool b_shouldCauseBurningBum;
     private AudioSource as_source;
     [SerializeField] private AudioClip ac_burnEffect;
+    [SerializeField] private GameObject go_flamePrefab;
+    private List<GameObject> goL_flames = new List<GameObject>();
 
     private void Start()
     {
         as_source = gameObject.AddComponent<AudioSource>();
+        if (go_flamePrefab)
+            for (int i = 0; i < 20; i++)
+                goL_flames.Add(Instantiate(go_flamePrefab));
     }
 
     private void Update()
@@ -68,6 +73,8 @@ public class KillBox : MonoBehaviour
         as_source.PlayOneShot(ac_burnEffect);
         if (b_shouldCauseBurningBum && collision.transform.tag == "Player")
             collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection);
+        if (goL_flames.Count > 0)
+            PlaceFlameBurst(collision.GetContact(0).point);
     }
 
     private void DealDamage()
@@ -84,4 +91,20 @@ public class KillBox : MonoBehaviour
         }
         f_time = 0;
     }
+
+    private void PlaceFlameBurst(Vector3 _v_posToPlace)
+    {
+        GameObject _go = goL_flames[0];
+        goL_flames.RemoveAt(0);
+        _go.SetActive(true);
+        _go.transform.position = _v_posToPlace;
+        StartCoroutine(ReturnToPool(_go));
+    }
+    private IEnumerator ReturnToPool(GameObject _go_toReturn)
+    {
+        yield return new WaitForSeconds(3);
+        goL_flames.Add(_go_toReturn);
+        _go_toReturn.SetActive(false);
+    }
+
 }
