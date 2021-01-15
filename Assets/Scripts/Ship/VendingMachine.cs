@@ -28,9 +28,13 @@ public class VendingMachine : MonoBehaviour, IInteractible
         pm.enabled = false;
         t_camPositionToReturnTo = pim.GetCamera().transform;
         pim.GetCamera().enabled = false;
+        Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
 
         StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
         c_vendingCanvas.enabled = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Interacted() { }
@@ -43,8 +47,13 @@ public class VendingMachine : MonoBehaviour, IInteractible
         pm.enabled = true;
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
+
         c_vendingCanvas.enabled = false;
         pim.GetCamera().enabled = true;
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+
     }
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
@@ -59,15 +68,14 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
         for (int i = 0; i < i_timesToLerpCam; i++)
         {
-            _t.localPosition = Vector3.Lerp(_t_cameraToMove.position, Vector3.zero, f_cameraMovementT);
-            _t.localEulerAngles = Vector3.Lerp(_t_cameraToMove.localEulerAngles, Vector3.zero, f_cameraMovementT);
+            _t.localPosition = Vector3.Lerp(_t.localPosition, Vector3.zero, f_cameraMovementT);
+            _t.localEulerAngles = Vector3.Lerp(_t.localEulerAngles, Vector3.zero, f_cameraMovementT);
             yield return new WaitForEndOfFrame();
         }
 
 
         if (_b_comingIntoMachine)
         {
-            Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
             _t.localPosition = Vector3.zero;
             _t.localEulerAngles = Vector3.zero;
         }
