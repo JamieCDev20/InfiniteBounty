@@ -245,7 +245,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void StartBurningBum(Vector3 _v_bounceDirection)
     {
-        GetComponent<Rigidbody>().AddForce(_v_bounceDirection);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.AddForce(_v_bounceDirection);
         ps_burningBumParticles.Play();
         Invoke("StopParticles", 1);
     }

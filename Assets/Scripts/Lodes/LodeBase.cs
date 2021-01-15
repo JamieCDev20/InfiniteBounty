@@ -129,7 +129,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         nugCount += 1;
         _go_nugget.SetActive(true);
         _go_nugget.transform.parent = null;
-        _go_nugget.transform.position = transform.position + transform.localScale * (-1 + v[0] * 2);
+        _go_nugget.transform.position = transform.position + transform.localScale * (-1 + v[0] * 2) + Vector3.up;
         //_go_nugget.transform.localScale = Vector3.one;
         Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
         _rb.AddForce(new Vector3(-1 + v[1] * 2, v[2] * 2, -1 + v[3] * 2) * f_nuggetForce, ForceMode.Impulse);

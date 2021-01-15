@@ -73,7 +73,16 @@ public class KillBox : MonoBehaviour
         as_source.PlayOneShot(ac_burnEffect);
         if (b_shouldCauseBurningBum && collision.transform.tag == "Player")
             collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection);
-        if (goL_flames.Count > 0)
+
+
+
+
+
+
+
+
+
+        if (goL_flames.Count > 0 && _h != null)
             PlaceFlameBurst(collision.GetContact(0).point);
     }
 
@@ -102,7 +111,7 @@ public class KillBox : MonoBehaviour
     }
     private IEnumerator ReturnToPool(GameObject _go_toReturn)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.3f);
         goL_flames.Add(_go_toReturn);
         _go_toReturn.SetActive(false);
     }
