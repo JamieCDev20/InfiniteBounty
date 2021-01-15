@@ -79,6 +79,8 @@ public class HUDController : MonoBehaviour
 
     public void SceneLoad(Scene scene, LoadSceneMode mode)
     {
+        if (this == null)
+            return;
         HudInLevel(!scene.name.Contains("Lobby"));
     }
 

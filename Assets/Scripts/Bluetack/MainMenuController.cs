@@ -14,14 +14,15 @@ public class MainMenuController : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        b_onlineButton.interactable = false;
-        if (PhotonNetwork.IsConnected)
+        b_onlineButton.interactable = PhotonNetwork.IsConnected;
+        if (PhotonNetwork.InRoom)
         {
             mainMenu.SetActive(false);
             menuCam.SetActive(false);
         }
         else
         {
+            PhotonNetwork.ConnectUsingSettings();
             mainMenu.SetActive(true);
             menuCam.SetActive(true);
         }

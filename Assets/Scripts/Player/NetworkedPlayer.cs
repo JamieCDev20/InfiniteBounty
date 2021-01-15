@@ -47,6 +47,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
+        if (playerIM == null)
+            return;
         //players go to spawn on scene load
         //playerIM = view.GetComponent<PlayerInputManager>();
         x.playerIM.GoToSpawnPoint();

@@ -28,6 +28,8 @@ public class PoolManager : MonoBehaviour
 
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
+        if (this == null)
+            return;
         ResetPools();
         
     }

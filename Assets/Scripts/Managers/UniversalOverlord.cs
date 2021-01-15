@@ -16,6 +16,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     //The managers that will be spawned on start
     [SerializeField] private GameObject[] goA_toSpawnOnStart;
+    [SerializeField] private GameObject theSaviour;
 
     #endregion
 
@@ -30,7 +31,11 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        x = this;
+        
+        if (x != null)
+            Destroy(gameObject);
+        else
+            x = this;
         Init();
     }
 
@@ -43,6 +48,8 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     /// </summary>
     private void Init()
     {
+        if (FindObjectOfType<PoolManager>())
+            return;
         canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
         //GM persist through scenes
@@ -95,6 +102,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
             SceneManager.LoadScene(0);
         }
+        Destroy(gameObject);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -103,6 +111,12 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void SpawnTheSaviour()
+    {
+        x = null;
+        Instantiate(theSaviour);
     }
 
     #endregion

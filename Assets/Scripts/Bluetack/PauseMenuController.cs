@@ -91,7 +91,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void Quit()
     {
-        PhotonNetwork.Disconnect();
+        UniversalOverlord.x.SpawnTheSaviour();
     }
 
 
