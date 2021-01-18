@@ -102,9 +102,12 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void SetStatusEffect(Element _status, bool _val)
     {
+        if (em == null)
+            em = ElementManager.x;
         bA_statuses[(int)_status] = _val;
         if (_val)
         {
+            Debug.Log($"{goA_effects[(int)_status]}");
             goA_effects[(int)_status] = PoolManager.x.SpawnObject(em.effects[(int)_status], transform);
             goA_effects[(int)_status].transform.localPosition = Vector3.zero;
             ParticleSystem ps = goA_effects[(int)_status].GetComponent<ParticleSystem>();
@@ -307,7 +310,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
         //Waddid i hit
         Collider[] hits = Physics.OverlapSphere(transform.position, em.shockRange);
-        Vector3[] verts = new Vector3[hits.Length];
+        List<Vector3> verts = new List<Vector3>();
         IElementable ie;
         IHitable ih;
         int count = 0;
@@ -319,7 +322,8 @@ public class ElementalObject : MonoBehaviour, IElementable
             ih = hits[i].GetComponent<IHitable>();
             if (ih != null)
             {
-                verts[i] = hits[i].transform.position; //remember the position for line renderer stuff
+                ie?.SetStatusEffect(Element.thunder, true, em.noShockBackDuration);
+                verts.Add(hits[i].transform.position); //remember the position for line renderer stuff
                 ie?.RecieveElements(Element.thunder); //tell the target we're shocking it
                 ih.TakeDamage(em.shockDamage, true, em.shockDelay); //if it can be damaged then dewit
                 count += 1; //<<to limit the number of objects we can shock
@@ -327,7 +331,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             if (count >= em.maximumShockTargets) //Stop if we're at max
                 break;
         }
-        SetLineRendererPos(verts); //Show the shock lines
+        SetLineRendererPos(verts.ToArray()); //Show the shock lines
     }
 
     private void BoomActivate()
@@ -343,11 +347,10 @@ public class ElementalObject : MonoBehaviour, IElementable
             iE = hits[i].GetComponent<IElementable>();
             if (iH != null)
             {
-                iH.TakeDamage(em.boomDamage, true);
+                iH.TakeDamage(em.boomDamage, true, 0.15f);
                 iE?.RecieveElements(Element.boom);
             }
         }
-
     }
 
     private void FireActivate()
@@ -389,6 +392,7 @@ public interface IElementable
     void RecieveElements(List<Element> _recieved);
     void RecieveElements(Element _recieved);
     void SetStatusEffect(Element _status, bool _val);
+    void SetStatusEffect(Element _status, bool _val, float _time);
     void ActivateElement(bool activaesThunder);
     void AddRemoveElement(Element _elem, bool add);
 }
