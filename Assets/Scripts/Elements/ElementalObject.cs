@@ -87,10 +87,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         int size = eA_activeElements.Count;
         for (int i = 0; i < _recieved.Count; i++)
         {
-            for (int j = 0; j < size; j++)
-            {
-                interactions[(int)_recieved[i], (int)eA_activeElements[j]]();
-            }
+            RecieveElements(_recieved[0]);
         }
     }
     public void RecieveElements(Element _recieved)
@@ -322,10 +319,10 @@ public class ElementalObject : MonoBehaviour, IElementable
             ih = hits[i].GetComponent<IHitable>();
             if (ih != null)
             {
+                verts[i] = hits[i].transform.position; //remember the position for line renderer stuff
                 ie?.RecieveElements(Element.thunder); //tell the target we're shocking it
                 ih.TakeDamage(em.shockDamage, true, em.shockDelay); //if it can be damaged then dewit
                 count += 1; //<<to limit the number of objects we can shock
-                verts[i] = hits[i].transform.position; //remember the position for line renderer stuff
             }
             if (count >= em.maximumShockTargets) //Stop if we're at max
                 break;
