@@ -106,7 +106,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
         t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
         UpdateAugmentDisplay();
 
-        as_source.pitch = UnityEngine.Random.Range(0.95f, 1.05f);        
+        as_source.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
         as_source.PlayOneShot(acA_beeps[UnityEngine.Random.Range(0, acA_beeps.Length)]);
     }
 
