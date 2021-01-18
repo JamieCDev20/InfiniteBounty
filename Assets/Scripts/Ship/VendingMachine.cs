@@ -18,10 +18,16 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [SerializeField] private VendingMachineDisplay vmd_vendingMachineDisplay;
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
     [SerializeField] private Transform t_augmentHighlight;
+    [SerializeField] private Rigidbody[] rbA_augmentRigidbodies = new Rigidbody[0];
 
+    [Header("Audio Thangs")]    
+    [SerializeField] private AudioClip ac_whirringClip;
+    private AudioSource as_source;
+    [SerializeField] private AudioClip[] acA_beeps = new AudioClip[0];
 
     private void Start()
     {
+        as_source = GetComponent<AudioSource>();
         ClickedAugment(UnityEngine.Random.Range(0, 9));
         UpdateAugmentDisplay();
     }
@@ -99,6 +105,8 @@ public class VendingMachine : MonoBehaviour, IInteractible
         i_currentAugmentIndex = _i_augmentIndex;
         t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
         UpdateAugmentDisplay();
+
+        as_source.PlayOneShot(acA_beeps[UnityEngine.Random.Range(0, acA_beeps.Length)]);
     }
 
     private void UpdateAugmentDisplay()
@@ -117,8 +125,40 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     public void BuyAugment()
     {
-        print("Should've bought an augment, but I don't know how");
+        if (rbA_augmentRigidbodies[i_currentAugmentIndex])
+        {
+            as_source.PlayOneShot(ac_whirringClip);
+            StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
+            StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex]));
+            aA_avaliableAugments[i_currentAugmentIndex] = null;
+            rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
+        }
     }
+    private IEnumerator MoveAugmentForward(Rigidbody _rb)
+    {
+        for (int i = 0; i < 87; i++)
+        {
+            yield return new WaitForEndOfFrame();
+            _rb.transform.position -= transform.right * 0.003f;
+        }
+        yield return new WaitForSeconds(0.4f);
+        _rb.isKinematic = false;
+        _rb.AddForce((-transform.right * 5) + transform.up, ForceMode.Impulse);
+        _rb.AddTorque(new Vector3(UnityEngine.Random.Range(-360, 360), UnityEngine.Random.Range(-360, 360), UnityEngine.Random.Range(-360, 360)), ForceMode.Impulse);
+    }
+
+    public void GetAugments(Augment[] _aA_augments, ProjectileAugment[] _paA_projs, ConeAugment[] _caA_cones)
+    {
+        Debug.LogError("AUGMENTS OBTAINED. PROCEEDING WIHT RETIAL.");
+        aA_avaliableAugments = _aA_augments;
+    }
+
+    private IEnumerator SpitOutAugment(Augment _aA_augmentToVomUp)
+    {
+        yield return new WaitForSeconds(3);
+        Debug.LogError("should be spitting an augment, but I don't know how to 3d-ify them");
+    }
+
 
     [System.Serializable]
     private struct VendingMachineDisplay
