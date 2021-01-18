@@ -22,6 +22,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     private void Start()
     {
+        ClickedAugment(UnityEngine.Random.Range(0, 9));
         UpdateAugmentDisplay();
     }
 
@@ -72,7 +73,6 @@ public class VendingMachine : MonoBehaviour, IInteractible
             _t.parent = t_camParent;
         else
             Camera.main.transform.parent = _t_cameraToMove;
-
 
         for (int i = 0; i < i_timesToLerpCam; i++)
         {

@@ -153,11 +153,12 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
     }
-    
+
     public void SetArmActive(int _i_armIndex, bool _b_active)
     {
-        for (int i = 0; i < golA_arms.Length; i++)
-            golA_arms[i].goL_theList[_i_armIndex].SetActive(_b_active);
+        if (_i_armIndex < 2)
+            for (int i = 0; i < golA_arms.Length; i++)
+                golA_arms[i].goL_theList[_i_armIndex].SetActive(_b_active);
     }
 
     #endregion
