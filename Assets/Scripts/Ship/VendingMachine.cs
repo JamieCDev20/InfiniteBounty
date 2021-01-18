@@ -19,6 +19,12 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
     [SerializeField] private Transform t_augmentHighlight;
 
+
+    private void Start()
+    {
+        UpdateAugmentDisplay();
+    }
+
     public void Interacted(Transform interactor)
     {
         print("I've been interacted with");
@@ -74,7 +80,6 @@ public class VendingMachine : MonoBehaviour, IInteractible
             _t.localEulerAngles = Vector3.Lerp(_t.localEulerAngles, Vector3.zero, f_cameraMovementT);
             yield return new WaitForEndOfFrame();
         }
-
 
         if (_b_comingIntoMachine)
         {
