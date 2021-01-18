@@ -56,10 +56,25 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     }
 
+    public void Init(Element[] _startingElements)
+    {
+        for (int i = 0; i < _startingElements.Length; i++)
+        {
+            Init(_startingElements[i]);
+        }
+        activated = null;
+        InitialiseActivations();
+    }
+    private void Init(Element _startingElement)
+    {
+        eA_activeElements.Add(_startingElement);
+    }
+
     private void OnDisable()
     {
         flag = false;
         b_activatedThisFrame = false;
+        StopAllCoroutines();
         //more only once per frame stuff
     }
 
@@ -102,12 +117,13 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void SetStatusEffect(Element _status, bool _val)
     {
+        if (bA_statuses[(int)_status] == _val)
+            return;
         if (em == null)
             em = ElementManager.x;
         bA_statuses[(int)_status] = _val;
         if (_val)
         {
-            Debug.Log($"{goA_effects[(int)_status]}");
             goA_effects[(int)_status] = PoolManager.x.SpawnObject(em.effects[(int)_status], transform);
             goA_effects[(int)_status].transform.localPosition = Vector3.zero;
             ParticleSystem ps = goA_effects[(int)_status].GetComponent<ParticleSystem>();

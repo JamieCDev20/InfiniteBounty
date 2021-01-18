@@ -11,6 +11,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     [SerializeField] private AudioClip ac_pickupSound;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
+    [SerializeField] private float f_spawnImmunityDuration = 0.5f;
     #endregion
 
     #region Private Variables
@@ -21,6 +22,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     private Rigidbody rb;
     private ElementalObject eO_elem;
     private bool b_collected;
+    private bool b_canBeHit = false;
     #endregion
 
     private void Start()
@@ -46,12 +48,24 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void OnEnable()
     {
+        Invoke("RemoveSpawnImmunity", f_spawnImmunityDuration);
         Invoke("Die", 60);
-        
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke("Die");
+    }
+
+    private void RemoveSpawnImmunity()
+    {
+        b_canBeHit = true;
     }
 
     public void Die()
     {
+        if (!b_canBeHit)
+            return;
         CancelInvoke();
         StopAllCoroutines();
         GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
@@ -90,6 +104,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
+        if (!b_canBeHit)
+            return;
         if (eO_elem)
             eO_elem.ActivateElement(activatesThunder);
         Die();
