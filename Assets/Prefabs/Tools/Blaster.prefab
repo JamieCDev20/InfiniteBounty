@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2615119019875266316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.037, y: 0.058, z: 0.135}
+  m_LocalPosition: {x: -0.037, y: 0.058, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 5962168969864289709}
@@ -4966,23 +4966,24 @@ MonoBehaviour:
   b_releaseActivated: 0
   go_particles: {fileID: 7482291071960192522}
   i_damage: 3
-  i_weight: 3
   i_lodeDamage: 12
+  f_weight: 0
   f_recoil: 0.4
   f_speed: 25
+  f_heatsink: 0
   f_knockback: 1
+  f_energyGauge: 0
   go_hitBox: {fileID: 6714505186059660760, guid: 28584f6847a727945aeef6508171489a,
     type: 3}
   i_elementDamage: 0
   f_elementDuration: 0
   f_elementFrequency: 0
-  go_explosion: {fileID: 0}
-  f_explosionRadius: 0
-  f_explosionKnockback: 0
-  s_meleeAnim: 
-  a_playerAnims: {fileID: 0}
   b_rackUpgrade: 1
   c_playerCollider: {fileID: 0}
+  A_augmentSlots: []
+  tr_trail: {fileID: 0}
+  s_meleeAnim: 
+  a_playerAnims: {fileID: 0}
   f_shotSpeed: 450
   i_shotsPerRound: 1
   pm_physicsMat: {fileID: 0}
@@ -5161,7 +5162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8220174204682026623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.008, z: 0.728}
+  m_LocalPosition: {x: -0.01, y: 0.008, z: 0.568}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8222778673555611143}
