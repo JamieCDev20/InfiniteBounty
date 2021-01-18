@@ -16,6 +16,8 @@ public class VendingMachine : MonoBehaviour, IInteractible
     private Augment[] aA_avaliableAugments = new Augment[9];
     [SerializeField] private Canvas c_vendingCanvas;
     [SerializeField] private VendingMachineDisplay vmd_vendingMachineDisplay;
+    [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
+    [SerializeField] private Transform t_augmentHighlight;
 
     public void Interacted(Transform interactor)
     {
@@ -90,6 +92,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
     public void ClickedAugment(int _i_augmentIndex)
     {
         i_currentAugmentIndex = _i_augmentIndex;
+        t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
         UpdateAugmentDisplay();
     }
 

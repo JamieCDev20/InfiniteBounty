@@ -27,6 +27,7 @@ public class PauseMenuController : MonoBehaviour
         c_optionsMenu.enabled = false;
         c_pauseCanvas.enabled = false;
         c_playCanvas.enabled = true;
+
         cc_cam = GetComponentInParent<CameraController>();
         SetSensitivty();
     }
@@ -57,9 +58,13 @@ public class PauseMenuController : MonoBehaviour
     {
         b_isPaused = false;
         if (b_isSpectating)
+        {
             c_spectatingCanvas.enabled = true;
+        }
         else
+        {
             c_playCanvas.enabled = true;
+        }
 
         c_pauseCanvas.enabled = false;
 
@@ -91,6 +96,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void Quit()
     {
+        print("Quitting by pasue menu");
         UniversalOverlord.x.ReturnToMainMenu();
     }
 

@@ -16,6 +16,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private Transform t_roomListParent;
     [SerializeField] private Transform t_camera;
     [SerializeField] private Button HostButton;
+    [SerializeField] private GraphicRaycaster gr_menuRaycaster;
 
     private List<Listing> goL_listings = new List<Listing>();
     private List<RoomInfo> riL_currentRooms = new List<RoomInfo>();
@@ -63,7 +64,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinedLobby()
-    {
+    {        
         Debug.Log("joined lobby");
     }
 
@@ -78,6 +79,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
         t_camera.gameObject.SetActive(false);
+        gr_menuRaycaster.enabled = false;
     }
 
     public void OnClickLeave()
@@ -89,6 +91,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CreateRoom(if_gameTitleInput.text, new RoomOptions { MaxPlayers = 4 }, TypedLobby.Default);
         t_camera.gameObject.SetActive(false);
+        gr_menuRaycaster.enabled = false;
     }
 
     public void OnClickQuit()
