@@ -17,7 +17,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     private int i_currentBody;
 
     [Header("Arm Things")]
-    [SerializeField] private GameObjectList[] goA_arms = new GameObjectList[0];
+    [SerializeField] private GameObjectList[] golA_arms = new GameObjectList[0];
     private int i_currentArm;
 
     [Header("Feet Things")]
@@ -30,7 +30,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         i_currentBody = Random.Range(0, goA_bodies.Length);
         i_currentHead = Random.Range(0, goA_heads.Length);
-        i_currentArm = Random.Range(0, goA_arms.Length);
+        i_currentArm = Random.Range(0, golA_arms.Length);
         i_currentFeet = Random.Range(0, goA_feet.Length);
         NextHead();
         NextBody();
@@ -117,41 +117,47 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
     public void NextArms()
     {
-        goA_arms[i_currentArm].goL_theList[0].SetActive(false);
-        goA_arms[i_currentArm].goL_theList[1].SetActive(false);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(false);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(false);
 
         i_currentArm++;
-        if (i_currentArm == goA_arms.Length)
+        if (i_currentArm == golA_arms.Length)
             i_currentArm = 0;
-        
-        goA_arms[i_currentArm].goL_theList[0].SetActive(true);
-        goA_arms[i_currentArm].goL_theList[1].SetActive(true);
+
+        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
         view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentArm);
     }
     public void LastArm()
     {
-        goA_arms[i_currentArm].goL_theList[0].SetActive(false);
-        goA_arms[i_currentArm].goL_theList[1].SetActive(false);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(false);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(false);
 
         i_currentArm--;
         if (i_currentArm < 0)
-            i_currentArm = goA_arms.Length - 1;
+            i_currentArm = golA_arms.Length - 1;
 
-        goA_arms[i_currentArm].goL_theList[0].SetActive(true);
-        goA_arms[i_currentArm].goL_theList[1].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
         view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentArm);
     }
 
     [PunRPC]
     public void UpdateArmsInOthers(int _i_armIndex)
-    {        
-        goA_arms[i_currentArm].goL_theList[0].SetActive(false);
-        goA_arms[i_currentArm].goL_theList[1].SetActive(false);
+    {
+        golA_arms[i_currentArm].goL_theList[0].SetActive(false);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(false);
         i_currentArm = _i_armIndex;
-        goA_arms[i_currentArm].goL_theList[0].SetActive(true);
-        goA_arms[i_currentArm].goL_theList[1].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
+    }
+    
+    public void SetArmActive(int _i_armIndex, bool _b_active)
+    {
+        for (int i = 0; i < golA_arms.Length; i++)
+            golA_arms[i].goL_theList[_i_armIndex].SetActive(_b_active);
     }
 
     #endregion

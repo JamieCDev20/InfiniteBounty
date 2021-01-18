@@ -28,6 +28,7 @@ public class ToolHandler : SubjectBase
 
     #region Private
     private List<ToolBase> L_ownedTools = new List<ToolBase>();
+    private AppearanceChanger ac_changer;
     private NetworkedPlayer np_network;
     private Transform t_camTransform;
     private PlayerHealth ph_health;
@@ -38,6 +39,7 @@ public class ToolHandler : SubjectBase
 
     private void Start()
     {
+        ac_changer = GetComponent<AppearanceChanger>();
         np_network = GetComponent<NetworkedPlayer>();
         view = GetComponent<PhotonView>();
         InitialiseTools();
@@ -76,6 +78,7 @@ public class ToolHandler : SubjectBase
                     CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                     ToolRack tr = (ToolRack)sr;
                     tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                    ac_changer.SetArmActive((int)ts, true);
                     return true;
                 }
                 return false;
@@ -290,6 +293,7 @@ public class ToolHandler : SubjectBase
         if (A_tools[(int)_ts_] != null)
         {
             A_tools[(int)_ts_].gameObject.SetActive(true);
+            ac_changer.SetArmActive((int)_ts_, false);
             try
             {
                 if (_ts_ != ToolSlot.moblility)
