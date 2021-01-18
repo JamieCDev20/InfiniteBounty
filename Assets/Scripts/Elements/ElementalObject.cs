@@ -8,9 +8,12 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     [SerializeField] private List<Element> eA_activeElements = new List<Element>(); //The elements on this object
     [SerializeField] private GameObject go_lrObject; //the line renderer for shocking
+    [SerializeField] private Mesh mesh;
 
     //Goo  Hydro   Tasty Thunder Boom    Fire    Lava
     private bool[] bA_statuses = new bool[7] { false, false, false, false, false, false, false }; //status effects on the object
+
+    private GameObject[] goA_effects = new GameObject[7];
 
     private delegate void ElementInteraction(); //Delegates for Elemental Interactions
     private delegate void ElementActivation(); //Delegates for Elemental Activations
@@ -33,6 +36,8 @@ public class ElementalObject : MonoBehaviour, IElementable
         em = ElementManager.x;
         pO = GetComponent<PoolableObject>();
         ourHitable = GetComponent<IHitable>();
+        if(mesh == null)
+            mesh = GetComponentInChildren<MeshFilter>().mesh;
 
         interactions = new ElementInteraction[,] {
             //Goo               Hydro               Tasty               Thunder             Boom                Fire                Lava
@@ -74,7 +79,6 @@ public class ElementalObject : MonoBehaviour, IElementable
             b_activatedThisFrame = true;
         else
             flag = true;
-
     }
 
     public void RecieveElements(List<Element> _recieved)
@@ -102,12 +106,26 @@ public class ElementalObject : MonoBehaviour, IElementable
     public void SetStatusEffect(Element _status, bool _val)
     {
         bA_statuses[(int)_status] = _val;
+        if (_val)
+        {
+            goA_effects[(int)_status] = PoolManager.x.SpawnObject(em.effects[(int)_status], transform);
+            goA_effects[(int)_status].transform.localPosition = Vector3.zero;
+            ParticleSystem ps = goA_effects[(int)_status].GetComponent<ParticleSystem>();
+            ParticleSystem.ShapeModule sh = ps.shape;
+            sh.shapeType = ParticleSystemShapeType.Mesh;
+            sh.mesh = mesh;
+        }
+        else
+        {
+            goA_effects[(int)_status].GetComponent<IPoolable>().Die();
+            goA_effects[(int)_status] = null;
+        }
     }
     public void SetStatusEffect(Element _status, bool _val, float _time)
     {
         if (!gameObject)
             return;
-        bA_statuses[(int)_status] = _val;
+        SetStatusEffect(_status, _val);
         if (!gameObject || !gameObject.activeSelf)
             return;
         StartCoroutine(TimedSetStatus(_status, !_val, _time));

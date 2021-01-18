@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7842632038622063305}
-  - component: {fileID: 2658606711362494324}
-  - component: {fileID: 2277124940354022631}
+  - component: {fileID: 4576248192122664683}
+  - component: {fileID: 532099313727167042}
+  - component: {fileID: -8990176090927324107}
   m_Layer: 0
-  m_Name: HydroElement
+  m_Name: GooElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!199 &2658606711362494324
+--- !u!199 &4576248192122664683
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -98,7 +99,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!198 &2277124940354022631
+--- !u!198 &532099313727167042
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +108,7 @@ ParticleSystem:
   m_GameObject: {fileID: 5455787005946691885}
   serializedVersion: 6
   lengthInSec: 5
-  simulationSpeed: 1
+  simulationSpeed: 0.6
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -287,8 +288,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.41037738, g: 0.75721425, b: 1, a: 0.65882355}
-      maxColor: {r: 0.6745283, g: 0.9539514, b: 1, a: 1}
+      minColor: {r: 0.7248426, g: 0.1745283, b: 1, a: 0.65882355}
+      maxColor: {r: 0.93682086, g: 0.4764151, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -672,7 +673,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4812,3 +4813,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &-8990176090927324107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455787005946691885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfbe075ad4ac4b47a467229193717da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_resourcePath: \ParticleEffects\Elements\
+  b_isNetworkedObject: 0
+  f_lifetime: 5

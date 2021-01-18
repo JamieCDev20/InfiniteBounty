@@ -7,6 +7,7 @@ public class ElementManager : MonoBehaviour
 
     public static ElementManager x;
 
+    public GameObject[] effects;
     [Header("Goo")]
     public float gooDuration;
     public float gooDurationMultiplier;
