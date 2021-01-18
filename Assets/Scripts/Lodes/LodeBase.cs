@@ -15,6 +15,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     [Space, SerializeField] private bool b_isNetworkedObject;
     [SerializeField] private string s_path;
     [SerializeField] private MeshRenderer mr_mainRenderer;
+    [SerializeField] private float f_baseEmission = 7.5f;
 
     private int index;
     private int nugCount;
@@ -28,6 +29,11 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
+
+
+        //if (mr_mainRenderer)
+         //   mr_mainRenderer.material.SetFloat("_emissionMult", f_baseEmission);
+
     }
 
     public override void TakeDamage(int _i_damage, bool activatesThunder)
@@ -71,6 +77,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
 
     private void CheckHealth()
     {
+
         for (int i = 0; i < iA_healthIntervals.Length; i++)
         {
             if (i_currentHealth <= iA_healthIntervals[i])
@@ -92,7 +99,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         if (i_currentHealth <= 0) Death();
 
         if (mr_mainRenderer)
-            mr_mainRenderer.material.SetFloat("_emissionMult", ((float)(i_currentHealth / i_maxHealth)) * 7.5f);
+            mr_mainRenderer.material.SetFloat("_emissionMult", (((float)i_currentHealth / i_maxHealth)) * 7.5f);
 
     }
 
