@@ -14,6 +14,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     [SerializeField] private GameObject[] goA_damageMeshes = new GameObject[3];
     [Space, SerializeField] private bool b_isNetworkedObject;
     [SerializeField] private string s_path;
+    [SerializeField] private MeshRenderer mr_mainRenderer;
 
     private int index;
     private int nugCount;
@@ -89,6 +90,9 @@ public class LodeBase : Enemy, IPunObservable, IHitable
             }
         }
         if (i_currentHealth <= 0) Death();
+
+        if (mr_mainRenderer)
+            mr_mainRenderer.material.SetFloat("_emissionMult", ((float)(i_currentHealth / i_maxHealth)) * 7.5f);
 
     }
 
