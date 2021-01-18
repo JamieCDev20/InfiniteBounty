@@ -20,7 +20,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [SerializeField] private Transform t_augmentHighlight;
     [SerializeField] private Rigidbody[] rbA_augmentRigidbodies = new Rigidbody[0];
 
-    [Header("Audio Thangs")]    
+    [Header("Audio Thangs")]
     [SerializeField] private AudioClip ac_whirringClip;
     private AudioSource as_source;
     [SerializeField] private AudioClip[] acA_beeps = new AudioClip[0];
@@ -106,6 +106,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
         t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
         UpdateAugmentDisplay();
 
+        as_source.pitch = UnityEngine.Random.Range(0.95f, 1.05f);        
         as_source.PlayOneShot(acA_beeps[UnityEngine.Random.Range(0, acA_beeps.Length)]);
     }
 
@@ -127,6 +128,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
     {
         if (rbA_augmentRigidbodies[i_currentAugmentIndex])
         {
+            as_source.pitch = 1;
             as_source.PlayOneShot(ac_whirringClip);
             StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
             StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex]));
