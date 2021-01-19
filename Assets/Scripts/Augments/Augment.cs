@@ -8,10 +8,10 @@ public class Augment
     [SerializeField] string s_name;
     public string Name { get { return s_name; } }
     #region Audio
-    
-    [SerializeField] protected AudioClip ac_useSound;
-    [SerializeField] protected AudioClip ac_travelSound;
-    [SerializeField] protected AudioClip ac_hitSound;
+
+    [SerializeField] protected AudioClip[] ac_useSound;
+    [SerializeField] protected AudioClip[] ac_travelSound;
+    [SerializeField] protected AudioClip[] ac_hitSound;
 
     #endregion
 
@@ -45,19 +45,20 @@ public class Augment
     [SerializeField] protected float f_explockBack;
     [SerializeField] protected float f_detonationTime;
     [SerializeField] protected float f_expRad;
-    [SerializeField] protected Vector3 v_exploSize;
-    [SerializeField] protected GameObject go_explosion;
     [SerializeField] protected GameObject[] go_explarticles;
 
     #endregion
 
     #region Elemental 
 
-    // Coming soon to a tool near you!
+    [SerializeField] protected Element[] eo_element;
+    public Element[] AugElement { get { return eo_element; } set { eo_element = value; } }
 
     #endregion
 
-    public void InitAudio(AudioClip _ac_use, AudioClip _ac_travel, AudioClip _ac_hit)
+    public AugmentType at_type;
+
+    public void InitAudio(AudioClip[] _ac_use, AudioClip[] _ac_travel, AudioClip[] _ac_hit)
     {
         ac_useSound = _ac_use;
         ac_travelSound = _ac_travel;
@@ -99,7 +100,7 @@ public class Augment
         f_trWidth = _phys_aug.f_trWidth;
         f_trLifetime = _phys_aug.f_trLifetime;
         if(_phys_aug.A_trKeys != null)
-            A_trKeys = _phys_aug.A_trKeys.ToArray();
+            A_trKeys = _phys_aug.A_trKeys;
         go_weaponProjectile = _phys_aug.go_projectile;
     }
 
@@ -136,11 +137,99 @@ public class Augment
 
     public AugmentPhysicals GetPhysicalProperties()
     {
-        return new AugmentPhysicals(f_trWidth, f_trLifetime, new List<Color>(A_trKeys), go_weaponProjectile);
+        return new AugmentPhysicals(f_trWidth, f_trLifetime, A_trKeys, go_weaponProjectile);
     }
 
     public AugmentExplosion GetExplosionProperties()
     {
         return new AugmentExplosion(i_explosionDamage, i_expLodeDamage, f_explockBack, f_detonationTime, f_expRad, b_impact, go_explarticles);
+    }
+
+    public static Augment operator +(Augment a, Augment b)
+    {
+        // Name stuffs
+        string newNamea = a.s_name.Split(' ')[0];
+        string newNameb = b.s_name.Split(' ')[0];
+        string newName = "";
+        if (newNamea == newNameb)
+            newName += "Super ";
+        else
+            newName += newNamea + " " + newNameb + " ";
+        newName += a.s_name.Split(' ')[1];
+        a.s_name += newName;
+        // Audio data
+        a.ac_useSound = Utils.CombineArrays(a.ac_useSound, b.ac_useSound);
+        a.ac_travelSound = Utils.CombineArrays(a.ac_travelSound, b.ac_travelSound);
+        a.ac_hitSound = Utils.CombineArrays(a.ac_hitSound, b.ac_hitSound);
+        // Info data
+        a.i_damage += b.i_damage;
+        a.i_lodeDamage += b.i_lodeDamage;
+        a.f_weight += b.f_weight;
+        a.f_recoil += b.f_recoil;
+        a.f_energyGauge += b.f_energyGauge;
+        a.f_knockback += b.f_knockback;
+        a.f_heatsink += b.f_heatsink;
+        // Physical data
+        a.f_trWidth += b.f_trWidth;
+        a.f_trLifetime += b.f_trLifetime;
+        a.A_trKeys = Utils.CombineArrays(a.A_trKeys, b.A_trKeys);
+        a.go_weaponProjectile = b.go_weaponProjectile;
+        // Explosion data
+        a.i_explosionDamage += b.i_explosionDamage;
+        a.i_expLodeDamage += b.i_expLodeDamage;
+        a.f_explockBack += b.f_explockBack;
+        a.f_detonationTime += b.f_detonationTime;
+        a.f_expRad += b.f_expRad;
+        a.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
+        // If any of them are set to impact, set to be impact
+        if (a.b_impact || b.b_impact)
+            a.b_impact = true;
+        else
+            a.b_impact = false;
+        return a;
+    }
+
+    public static Augment operator -(Augment a, Augment b)
+    {
+        // Name stuffs
+        string newNamea = a.s_name.Split(' ')[0];
+        string newNameb = b.s_name.Split(' ')[0];
+        string newName = "";
+        if (newNamea == newNameb)
+            newName += "Super ";
+        else
+            newName += newNamea + " " + newNameb + " ";
+        newName += a.s_name.Split(' ')[1];
+        a.s_name += newName;
+        // Audio data
+        a.ac_useSound = Utils.CombineArrays(a.ac_useSound, b.ac_useSound);
+        a.ac_travelSound = Utils.CombineArrays(a.ac_travelSound, b.ac_travelSound);
+        a.ac_hitSound = Utils.CombineArrays(a.ac_hitSound, b.ac_hitSound);
+        // Info data
+        a.i_damage += b.i_damage;
+        a.i_lodeDamage += b.i_lodeDamage;
+        a.f_weight += b.f_weight;
+        a.f_recoil += b.f_recoil;
+        a.f_energyGauge += b.f_energyGauge;
+        a.f_knockback += b.f_knockback;
+        a.f_heatsink += b.f_heatsink;
+        // Physical data
+        a.f_trWidth += b.f_trWidth;
+        a.f_trLifetime += b.f_trLifetime;
+        a.A_trKeys = Utils.CombineArrays(a.A_trKeys, b.A_trKeys);
+        a.go_weaponProjectile = b.go_weaponProjectile;
+        // Explosion data
+        a.i_explosionDamage += b.i_explosionDamage;
+        a.i_expLodeDamage += b.i_expLodeDamage;
+        a.f_explockBack += b.f_explockBack;
+        a.f_detonationTime += b.f_detonationTime;
+        a.f_expRad += b.f_expRad;
+        a.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
+        // If any of them are set to impact, set to be impact
+        if (a.b_impact || b.b_impact)
+            a.b_impact = true;
+        else
+            a.b_impact = false;
+        return a;
     }
 }

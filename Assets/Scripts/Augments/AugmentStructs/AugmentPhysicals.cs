@@ -6,10 +6,10 @@ public struct AugmentPhysicals
 {
     public float f_trWidth;
     public float f_trLifetime;
-    public List<Color> A_trKeys;
+    public Color[] A_trKeys;
     public GameObject go_projectile;
 
-    public AugmentPhysicals(float _f_trWidth, float _f_trLifetime, List<Color> _A_keys, GameObject _go_proj)
+    public AugmentPhysicals(float _f_trWidth, float _f_trLifetime, Color[] _A_keys, GameObject _go_proj)
     {
         f_trWidth = _f_trWidth;
         f_trLifetime = _f_trLifetime;

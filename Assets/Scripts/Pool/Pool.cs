@@ -146,4 +146,9 @@ public class Pool
         }
     }
 
+    public HashSet<IPoolable> GetPooledObjects()
+    {
+        return p_objects;
+    }
+
 }

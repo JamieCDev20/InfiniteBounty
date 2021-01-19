@@ -135,12 +135,20 @@ public class PoolManager : MonoBehaviour
     /// <summary>
     /// Set a new pool using the class name
     /// </summary>
-    /// <param name="type"></param>
-    private void CreateNewPool(GameObject type)
+    /// <param name="type">Class name</param>
+    public void CreateNewPool(GameObject type)
     {
         pools.Add(type.name, new Pool(5, type));
     }
-
+    /// <summary>
+    /// Set a new pool to the stated size using the class name
+    /// </summary>
+    /// <param name="type">Class name</param>
+    /// <param name="size">Size of pool</param>
+    public void CreateNewPool(GameObject type, int size)
+    {
+        pools.Add(type.name, new Pool(size, type));
+    }
     /// <summary>
     /// Set the object back to the pool
     /// </summary>
@@ -150,5 +158,14 @@ public class PoolManager : MonoBehaviour
         if (pools.ContainsKey(type.name))
             pools[type.name].ReturnToPool(type);
     }
-
+    public HashSet<IPoolable> GetPooledObject(GameObject type)
+    {
+        if (pools.Contains(type.name))
+            return pools[type.name].GetPooledObjects();
+        else
+        {
+            CreateNewPool(type);
+            return pools[type.name].GetPooledObjects();
+        }
+    }
 }

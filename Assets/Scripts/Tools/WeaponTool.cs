@@ -74,6 +74,7 @@ public class WeaponTool : ToolBase
         AugmentPhysicals aPhys = aug.GetPhysicalProperties();
         AddToPhysicalProperties(aPhys);
 
+
     }
 
     public virtual void RemoveStatChanges(Augment aug)
@@ -111,6 +112,6 @@ public class WeaponTool : ToolBase
         tr_trail.startWidth = ap.f_trWidth;
         tr_trail.endWidth = ap.f_trWidth;
         // Add the keys here
-        //tr_trail.
+        // ap.A_trKeys;
     }
 }

@@ -7,10 +7,13 @@ using System;
 
 public class AugmentWindow : EditorWindow
 {
+    int i_arrSize;
+    int i_prevSize;
     private const float f_windWidth = 800;
     private const float f_windHeight = 600;
     #region GUI Variables
     private string[] i_dropdownOptions = { "Standard Augment", "Projectile Augment", "Cone Augment"};
+    private AugmentType at_type;
     private int i_dropDownIndex = 0;
     private bool b_displayBaseAugments = true;
     private Vector2 scrollPos;
@@ -26,9 +29,9 @@ public class AugmentWindow : EditorWindow
 
     #region Audio
 
-    AudioClip ac_useSound;
-    AudioClip ac_travelSound;
-    AudioClip ac_hitSound;
+    public AudioClip[] ac_useSound;
+    public AudioClip[] ac_travelSound;
+    public AudioClip[] ac_hitSound;
 
     #endregion
 
@@ -40,14 +43,16 @@ public class AugmentWindow : EditorWindow
 
     #region Physical Tool
 
-    AugmentPhysicals phys_toolPhys;
+    public AugmentPhysicals phys_toolPhys;
     GameObject go_weaponProjectile;
 
     #endregion
 
     #region EXPLOSION
     AugmentExplosion ae_splosion;
-    GameObject[] go_explarticles;
+    public GameObject[] go_explarticles = { };
+    public Color[] c_trailRenderer = { };
+    GameObject target;
     #endregion
 
     #endregion
@@ -72,6 +77,8 @@ public class AugmentWindow : EditorWindow
 
     #endregion
 
+    public Element[] elements;
+
     [MenuItem("Window/Augment Editor")]
     static void Init()
     {
@@ -81,11 +88,14 @@ public class AugmentWindow : EditorWindow
 
     private void OnGUI()
     {
+
+        GUI.contentColor = Color.white;
+        GUI.color = Color.white;
+        GUI.backgroundColor = Color.grey;
+        
         // Main GUI loop where things need to update
         GUILayout.Label("Augment Type", EditorStyles.boldLabel);
-        i_dropDownIndex = EditorGUI.Popup(new Rect(20, 20, position.width / 2, 20), "Augment Type", i_dropDownIndex, i_dropdownOptions);
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
+        at_type = (AugmentType)EditorGUILayout.EnumPopup("", at_type);
         EditorGUILayout.Space();
         GUILayout.Label("Augment Name", EditorStyles.label);
         s_augName = EditorGUILayout.TextArea(s_augName);
@@ -97,7 +107,7 @@ public class AugmentWindow : EditorWindow
             b_displayBaseAugments = EditorGUILayout.Toggle("Show Base Augments", b_displayBaseAugments);
         }
 
-        ShowAugmentToCreate(i_dropDownIndex);
+        ShowAugmentToCreate();
         EditorGUILayout.Space();
         EditorGUILayout.EndScrollView();
         SaveAugment();
@@ -138,16 +148,21 @@ public class AugmentWindow : EditorWindow
                 // Making the save data a tiny bit more readable
                 ap_toolProperties.s_name = s_augName;
             }
-            else { Debug.LogError("Augment Needs a name"); tr.Close(); return; }
+            else
+            {
+                Debug.LogError("Augment Needs a name");
+                tr.Close();
+                return;
+            }
 
             Augment outputAug = new Augment();
             // Save variables time!
-            switch (i_dropdownOptions[i_dropDownIndex])
+            switch (at_type)
             {
-                case "Standard Augment":
+                case AugmentType.standard:
                     InitStandardAugment(outputAug);
                     break;
-                case "Projectile Augment":
+                case AugmentType.projectile:
                     ProjectileAugment pOutput = new ProjectileAugment();
                     InitStandardAugment(pOutput);
                     try
@@ -156,7 +171,7 @@ public class AugmentWindow : EditorWindow
                         outputAug = pOutput;
                     }catch(InvalidCastException e) { }
                     break;
-                case "Cone Augment":
+                case AugmentType.cone:
                     ConeAugment cOutput = new ConeAugment();
                     InitStandardAugment(cOutput);
                     try
@@ -166,39 +181,46 @@ public class AugmentWindow : EditorWindow
                     }catch (InvalidCastException e) { }
                     break;
             }
+            outputAug.at_type = at_type;
             augmentData = EditorJsonUtility.ToJson(outputAug);
             File.AppendAllText(path + "AugmentData.json", augmentData + "\n");
-            AugmentCreator.CreateAugment(augmentData);
+            tr.Close();
+            Debug.Log(String.Format("{0} Created!", s_augName));
+            //AugmentCreator.CreateAugment(augmentData);
         }
     }
 
     private bool CheckIfNameUsed(string sr, string _s_name)
     {
-        // Grab the first parameter of each new line and compare its name
         string[] newLine = sr.Split('\n');
         for (int i = 0; i < newLine.Length; i++)
         {
-            if(newLine[i] != "")
-                if (JsonUtility.FromJson<Augment>(newLine[i]).Name == _s_name)
+            if (newLine[i] != "")
+            {
+                // Grab the first parameter of each new line and compare its name
+                if(newLine[i].Split(':', ',')[1].Replace("\"", String.Empty) == _s_name)
+                {
                     return true;
+                }
+            }
         }
         return false;
     }
 
-    private void ShowAugmentToCreate(int _i_augmentType)
+    private void ShowAugmentToCreate()
     {
         // Display the augment data relevent to the augment type
-        switch (_i_augmentType)
+        switch (at_type)
         {
-            case 0:
+            case AugmentType.standard:
                 DisplayBaseAugments();
                 break;
-            case 1:
+            case AugmentType.projectile:
                 DisplayProjectileAugments();
                 if (b_displayBaseAugments)
                     DisplayBaseAugments();
                 break;
-            case 2:
+            case AugmentType.cone:
                 DisplayConeAugments();
                 if (b_displayBaseAugments)
                     DisplayBaseAugments();
@@ -238,18 +260,19 @@ public class AugmentWindow : EditorWindow
         GUILayout.Label("Energy Gauge", EditorStyles.label);
         ap_toolProperties.f_energyGauge = EditorGUILayout.FloatField(ap_toolProperties.f_energyGauge);
         GUILayout.Label("Audio Attributes", EditorStyles.boldLabel);
-        GUILayout.Label("Usage Sound", EditorStyles.label);
-        ac_useSound = (AudioClip)EditorGUILayout.ObjectField(ac_useSound, typeof(AudioClip), true);
-        GUILayout.Label("Travel Sound", EditorStyles.label);
-        ac_travelSound = (AudioClip)EditorGUILayout.ObjectField(ac_travelSound, typeof(AudioClip), true);
-        GUILayout.Label("Hit Sound", EditorStyles.label);
-        ac_hitSound = (AudioClip)EditorGUILayout.ObjectField(ac_hitSound, typeof(AudioClip), true);
+        GUILayout.Label("Usage Sounds", EditorStyles.label);
+        DisplayArray("ac_useSound");
+        GUILayout.Label("Travel Sounds", EditorStyles.label);
+        DisplayArray("ac_travelSound");
+        GUILayout.Label("Hit Sounds", EditorStyles.label);
+        DisplayArray("ac_hitSound");
         GUILayout.Label("Trail and Particles", EditorStyles.boldLabel);
         GUILayout.Label("Trail Width", EditorStyles.label);
         phys_toolPhys.f_trWidth = EditorGUILayout.FloatField(phys_toolPhys.f_trWidth);
         GUILayout.Label("Trail Lifetime", EditorStyles.label);
         phys_toolPhys.f_trLifetime = EditorGUILayout.FloatField(phys_toolPhys.f_trLifetime);
-
+        GUILayout.Label("Trail Colors", EditorStyles.label);
+        DisplayArray("c_trailRenderer");
         GUILayout.Label("Projectile", EditorStyles.label);
         go_weaponProjectile = (GameObject)EditorGUILayout.ObjectField(go_weaponProjectile, typeof(GameObject), true);
         GUILayout.Label("EXPLOSION", EditorStyles.boldLabel);
@@ -257,15 +280,21 @@ public class AugmentWindow : EditorWindow
         ae_splosion.f_explockBack = EditorGUILayout.FloatField(ae_splosion.f_explockBack);
         GUILayout.Label("Detonation Time", EditorStyles.label);
         ae_splosion.f_detonationTime = EditorGUILayout.FloatField(ae_splosion.f_detonationTime);
-        /*
         GUILayout.Label("Explosion Particles", EditorStyles.label);
-        ScriptableObject so = this;
-        SerializedObject serObj = new SerializedObject(so);
-        SerializedProperty serializedProperty = serObj.FindProperty("go_explarticles");
-        EditorGUILayout.PropertyField(serializedProperty, true);
-        serObj.ApplyModifiedProperties();*/
-
+        DisplayArray("go_explarticles");
+        GUILayout.Label("Elements", EditorStyles.label);
+        DisplayArray("elements");
     }
+
+    public void DisplayArray(string _variableName)
+    {
+        ScriptableObject target = this;
+        SerializedObject so = new SerializedObject(target);
+        SerializedProperty goProperty = so.FindProperty(_variableName);
+        EditorGUILayout.PropertyField(goProperty, true);
+        so.ApplyModifiedProperties();
+    }
+
     private void DisplayProjectileAugments()
     {
         GUILayout.Label("Projectile Augments", EditorStyles.boldLabel);
@@ -276,8 +305,6 @@ public class AugmentWindow : EditorWindow
         apro.f_bulletScale = EditorGUILayout.FloatField("Bullet Scale", apro.f_bulletScale);
         GUILayout.Label("Physics Material", EditorStyles.label);
         pm_mat = (PhysicMaterial)EditorGUILayout.ObjectField(pm_mat, typeof(PhysicMaterial), true);
-
-
     }
 
     private void DisplayConeAugments()
@@ -304,12 +331,19 @@ public class AugmentWindow : EditorWindow
         catch (InvalidCastException e) { }
         try
         {
+            phys_toolPhys.A_trKeys = c_trailRenderer;
             outputAug.InitPhysical(phys_toolPhys);
         }
         catch (InvalidCastException e) { }
         try
         {
+            ae_splosion.go_explarticles = go_explarticles;
             outputAug.InitExplosion(ae_splosion);
+        }
+        catch (InvalidCastException e) { }
+        try
+        {
+            outputAug.AugElement = elements;
         }
         catch (InvalidCastException e) { }
     }
