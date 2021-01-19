@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 549316924589027928}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0001352951, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4308096341704676512}
   m_RootOrder: 1
@@ -167,6 +167,7 @@ MonoBehaviour:
   ac_pickupSound: {fileID: 8300000, guid: 4f2d23f88f07db443b4cc4598193a55e, type: 3}
   b_isNetworkedObject: 0
   s_resourcePath: NetworkPrefabs\Nuggets\
+  f_spawnImmunityDuration: 1
 --- !u!114 &-2242082669688494291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +196,7 @@ MonoBehaviour:
   eA_activeElements: 05000000
   go_lrObject: {fileID: 5860972205640831532, guid: 59547ea43e8d76f4988c38b81ea0d7f0,
     type: 3}
+  mesh: {fileID: 0}
 --- !u!1 &7458468679660463975
 GameObject:
   m_ObjectHideFlags: 0

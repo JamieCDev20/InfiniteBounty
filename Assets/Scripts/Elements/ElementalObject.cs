@@ -36,7 +36,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         em = ElementManager.x;
         pO = GetComponent<PoolableObject>();
         ourHitable = GetComponent<IHitable>();
-        if(mesh == null)
+        if (mesh == null)
             mesh = GetComponentInChildren<MeshFilter>().mesh;
 
         interactions = new ElementInteraction[,] {
@@ -128,8 +128,11 @@ public class ElementalObject : MonoBehaviour, IElementable
             goA_effects[(int)_status].transform.localPosition = Vector3.zero;
             ParticleSystem ps = goA_effects[(int)_status].GetComponent<ParticleSystem>();
             ParticleSystem.ShapeModule sh = ps.shape;
-            sh.shapeType = ParticleSystemShapeType.Mesh;
+            //ParticleSystem.MainModule mm = ps.main;
+            //mm.scalingMode = ParticleSystemScalingMode.Shape;
+            //sh.shapeType = ParticleSystemShapeType.Mesh;
             sh.mesh = mesh;
+            //sh.scale = Vector3.one;
         }
         else
         {
@@ -357,13 +360,13 @@ public class ElementalObject : MonoBehaviour, IElementable
         Collider[] hits = Physics.OverlapSphere(transform.position, em.boomRadius);
         IHitable iH;
         IElementable iE;
+        SetStatusEffect(Element.boom, true, em.boomFuse);
         for (int i = 0; i < hits.Length; i++)
         {
             iH = hits[i].GetComponent<IHitable>();
             iE = hits[i].GetComponent<IElementable>();
             if (iH != null)
             {
-                iE?.SetStatusEffect(Element.boom, true, em.boomFuse);
                 iE?.RecieveElements(Element.boom);
                 iH.TakeDamage(em.boomDamage, true, em.boomFuse);
             }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3657380861907892567}
   - component: {fileID: 2178577864221831924}
   - component: {fileID: 6854813325705059827}
+  - component: {fileID: -6966527540002075661}
   m_Layer: 0
   m_Name: BoomFuseEffect
   m_TagString: Untagged
@@ -659,7 +660,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 6
     angle: 50
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -727,7 +728,8 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    m_Mesh: {fileID: 0}
+    m_Mesh: {fileID: -6642232518959099049, guid: a3dafadb19e06ca43bbece653a8257a8,
+      type: 3}
     m_MeshRenderer: {fileID: 0}
     m_SkinnedMeshRenderer: {fileID: 0}
     m_Sprite: {fileID: 0}
@@ -4871,3 +4873,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &-6966527540002075661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921916589703706177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfbe075ad4ac4b47a467229193717da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_resourcePath: \ParticleEffects\Elements\
+  b_isNetworkedObject: 0
+  f_lifetime: 3
