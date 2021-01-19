@@ -363,8 +363,9 @@ public class ElementalObject : MonoBehaviour, IElementable
             iE = hits[i].GetComponent<IElementable>();
             if (iH != null)
             {
-                iH.TakeDamage(em.boomDamage, true, 0.15f);
+                iE?.SetStatusEffect(Element.boom, true, em.boomFuse);
                 iE?.RecieveElements(Element.boom);
+                iH.TakeDamage(em.boomDamage, true, em.boomFuse);
             }
         }
     }

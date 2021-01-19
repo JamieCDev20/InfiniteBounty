@@ -24,6 +24,7 @@ public class ElementManager : MonoBehaviour
     public int maximumShockTargets;
     [Header("Boom")]
     public float boomRadius;
+    public float boomFuse;
     public int boomDamage;
     [Header("Fire")]
     public float fireDuration;
