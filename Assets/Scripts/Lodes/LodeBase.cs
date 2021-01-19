@@ -87,8 +87,10 @@ public class LodeBase : Enemy, IPunObservable, IHitable
                     for (int j = 0; j < i_nuggetsPerBurst; j++)
                     {
                         float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-                        NuggetBurst(v);
-                        view.RPC("NuggetBurst", RpcTarget.Others, v);
+                        int newSeed = Mathf.RoundToInt(Random.value * 10000);
+
+                        NuggetBurst(newSeed, v);
+                        view.RPC("NuggetBurst", RpcTarget.Others, newSeed, v);
 
                     }
                 }
@@ -113,8 +115,9 @@ public class LodeBase : Enemy, IPunObservable, IHitable
                 for (int i = 0; i < i_nuggetsPerBurst; i++)
                 {
                     float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-                    NuggetBurst(v);
-                    view.RPC("NuggetBurst", RpcTarget.Others, v);
+                    int newSeed = Mathf.RoundToInt(Random.value * 10000);
+                    NuggetBurst(newSeed, v);
+                    view.RPC("NuggetBurst", RpcTarget.Others, newSeed, v);
 
                 }
 
@@ -128,10 +131,10 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     }
 
     [PunRPC]
-    private void NuggetBurst(params float[] v)
+    private void NuggetBurst(int _seed, params float[] v)
     {
         //Nick and byron did this
-
+        Random.InitState(_seed);
         p_chunkEffect.Play();
 
         GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
