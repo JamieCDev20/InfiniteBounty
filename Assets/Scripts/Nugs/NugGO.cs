@@ -108,6 +108,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             return;
         if (eO_elem)
             eO_elem.ActivateElement(activatesThunder);
+        myLode.NugGotHit(i_lodeID, damage, activatesThunder);
     }
 
     public bool IsDead()
@@ -125,4 +126,11 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         yield return new WaitForSeconds(_delay);
         TakeDamage(damage, activatesThunder);
     }
+
+    public void TakeDamageFromRemote(int _i_damage, bool activatesThunder)
+    {
+        if (eO_elem)
+            eO_elem.ActivateElement(activatesThunder);
+    }
+
 }

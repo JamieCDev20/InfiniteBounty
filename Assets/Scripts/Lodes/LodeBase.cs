@@ -199,4 +199,15 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         nuggets[id] = null;
     }
 
+    public void NugGotHit(int _index, int _dmg, bool _thunderActivate)
+    {
+        photonView.RPC("RemoteNugHit", RpcTarget.Others, _index, _dmg, _thunderActivate);
+    }
+
+    [PunRPC]
+    public void RemoteNugHit(int _index, int _dmg, bool _thunderActivate)
+    {
+        nuggets[_index].TakeDamageFromRemote(_dmg, _thunderActivate);
+    }
+
 }
