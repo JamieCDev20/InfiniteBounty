@@ -133,10 +133,9 @@ public class Workbench : MonoBehaviour, IInteractible
             goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
-
         }
 
-        rt_augmentButtonParent.rect.Set(rt_augmentButtonParent.rect.x, rt_augmentButtonParent.rect.y, rt_augmentButtonParent.rect.width, f_augmentButtonHeight * 30);
+        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * ((30) + 1));
         s_slider.value = 1;
     }
 
