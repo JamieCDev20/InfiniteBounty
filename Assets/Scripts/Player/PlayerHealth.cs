@@ -90,7 +90,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             return;
         //print(damage + " DMG taken");
 
-        if (acA_hurtClips.Length > 0)
+        if (acA_hurtClips.Length > 0 && damage > 0)
             AudioSource.PlayClipAtPoint(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)], transform.position);
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
         hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
@@ -271,13 +271,17 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         return b_downed || isDead;
     }
 
-    public void StartBurningBum(Vector3 _v_bounceDirection)
+    public void StartBurningBum(Vector3 _v_bounceDirection, bool _b_shouldCatchFire)
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.velocity = Vector3.zero;//new Vector3(rb.velocity.x, 0, rb.velocity.z);
         rb.AddForce(_v_bounceDirection);
-        ps_burningBumParticles.Play();
-        Invoke("StopParticles", 1);
+
+        if (_b_shouldCatchFire)
+        {
+            ps_burningBumParticles.Play();
+            Invoke("StopParticles", 1);
+        }
     }
     private void StopParticles()
     {
