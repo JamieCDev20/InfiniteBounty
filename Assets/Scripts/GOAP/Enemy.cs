@@ -42,6 +42,11 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
         gameObject.SetActive(false);
     }
 
+    public void Die()
+    {
+
+    }
+
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 

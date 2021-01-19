@@ -107,6 +107,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         TakeDamage(damage, activatesThunder);
     }
 
+    public void Die()
+    {
+
+    }
+
     [PunRPC]
     public void SetMaxHealth()
     {

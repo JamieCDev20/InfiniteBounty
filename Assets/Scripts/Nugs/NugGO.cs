@@ -108,7 +108,6 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             return;
         if (eO_elem)
             eO_elem.ActivateElement(activatesThunder);
-        Die();
     }
 
     public bool IsDead()

@@ -9,6 +9,8 @@ public interface IHitable
 
     bool IsDead();
 
+    void Die();
+
     void TakeDamage(int damage, bool activatesThunder, float delay);
 
 }

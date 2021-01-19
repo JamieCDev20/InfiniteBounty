@@ -30,6 +30,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private bool flag; // ^^
     private ElementManager em;
     private IHitable ourHitable;
+    private bool b_shouldDie = true;
 
     private void Start()
     {
@@ -76,6 +77,12 @@ public class ElementalObject : MonoBehaviour, IElementable
         b_activatedThisFrame = false;
         StopAllCoroutines();
         //more only once per frame stuff
+    }
+
+    private IEnumerator EOFCheckDie()
+    {
+        if (b_shouldDie)
+            ourHitable.TakeDamage();
     }
 
     private void InitialiseActivations() //add the intial activation stuff we should have
