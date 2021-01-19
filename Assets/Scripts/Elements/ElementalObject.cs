@@ -81,8 +81,9 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private IEnumerator EOFCheckDie()
     {
+        yield return new WaitForEndOfFrame();
         if (b_shouldDie)
-            ourHitable.TakeDamage();
+            ourHitable.TakeDamage(0, true);
     }
 
     private void InitialiseActivations() //add the intial activation stuff we should have
