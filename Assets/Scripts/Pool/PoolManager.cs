@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -167,5 +168,10 @@ public class PoolManager : MonoBehaviour
             CreateNewPool(type);
             return pools[type.name].GetPooledObjects();
         }
+    }
+
+    internal void SpawnObject(object go_augmentPrefab, object position, Quaternion quaternion)
+    {
+        throw new NotImplementedException();
     }
 }

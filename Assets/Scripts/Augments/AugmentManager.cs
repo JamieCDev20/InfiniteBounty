@@ -23,20 +23,23 @@ public class AugmentManager : MonoBehaviour
     /// </summary>
     private void SpawnPhysicalAugments()
     {
-        PoolManager.x.CreateNewPool(augRef, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
-        int iter = 0;
-        foreach(IPoolable pool_aug in PoolManager.x.GetPooledObject(augRef))
+        if(A_augs != null && A_projAugs != null && A_coneAugs != null)
         {
-            GameObject go_aug = pool_aug.GetGameObject();
-            AugmentGo ago = go_aug.GetComponent<AugmentGo>();
-            //
-            if (iter < A_augs.Length)
-                ago.Aug = A_augs[iter];
-            else if (iter < A_augs.Length + A_projAugs.Length)
-                ago.Aug = A_projAugs[iter - A_projAugs.Length];
-            else if (iter < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
-                ago.Aug = A_coneAugs[iter - (A_augs.Length + A_projAugs.Length)];
-            iter++;
+            PoolManager.x.CreateNewPool(augRef, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
+            int iter = 0;
+            foreach(IPoolable pool_aug in PoolManager.x.GetPooledObject(augRef))
+            {
+                GameObject go_aug = pool_aug.GetGameObject();
+                AugmentGo ago = go_aug.GetComponent<AugmentGo>();
+                //
+                if (iter < A_augs.Length)
+                    ago.Aug = A_augs[iter];
+                else if (iter < A_augs.Length + A_projAugs.Length)
+                    ago.Aug = A_projAugs[iter - A_projAugs.Length];
+                else if (iter < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
+                    ago.Aug = A_coneAugs[iter - (A_augs.Length + A_projAugs.Length)];
+                iter++;
+            }
         }
     }
 }

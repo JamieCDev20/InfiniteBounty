@@ -27,6 +27,10 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [SerializeField] private AudioClip[] acA_beeps = new AudioClip[0];
     private bool b_isBeingUsed;
 
+    [Header("Spittin' out Augments")]
+    [SerializeField] private GameObject go_augmentPrefab;
+    [SerializeField] private Transform t_augmentSpawnPoint;
+
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
@@ -178,8 +182,9 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     private IEnumerator SpitOutAugment(Augment _aA_augmentToVomUp)
     {
-        yield return new WaitForSeconds(3);
-        Debug.LogError("should be spitting an augment, but I don't know how to 3d-ify them");
+        yield return new WaitForSeconds(2);
+        GameObject _g = PoolManager.x.SpawnObject(go_augmentPrefab, t_augmentSpawnPoint.position, new Quaternion(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value));
+        _g.GetComponent<Rigidbody>().AddForce(t_augmentSpawnPoint.forward * 5, ForceMode.Impulse);
     }
 
 

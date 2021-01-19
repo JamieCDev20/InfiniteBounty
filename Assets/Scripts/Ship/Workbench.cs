@@ -27,7 +27,7 @@ public class Workbench : MonoBehaviour, IInteractible
 
     [Header("Augment Display")]
     [SerializeField] private AugmentDisplay ad_display;
-    private List<Augment> aL_augmentsInList = new List<Augment>();
+    private List<Augment> aL_allAugmentsOwned = new List<Augment>();
 
 
     #region Interactions
@@ -60,8 +60,6 @@ public class Workbench : MonoBehaviour, IInteractible
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-
-        InitAugmentList(new Augment[30]);
     }
 
     public void Interacted() { }
@@ -87,7 +85,6 @@ public class Workbench : MonoBehaviour, IInteractible
     }
 
     #endregion
-
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
     {
@@ -118,26 +115,52 @@ public class Workbench : MonoBehaviour, IInteractible
         }
     }
 
-    private void InitAugmentList(Augment[] _aA_augmentsInList)
+    internal void InitAugmentList(Augment[] _aA_augmentsInList, bool _b_shouldAddToExistingList)
     {
-        aL_augmentsInList.AddRange(_aA_augmentsInList);
+        if (!_b_shouldAddToExistingList)
+            aL_allAugmentsOwned.Clear();
 
-        for (int i = 0; i < 30; i++)
+        aL_allAugmentsOwned.AddRange(_aA_augmentsInList);
+
+        UpdateAugmentListDisplay(AugmentDisplayType.ShowAll);
+    }
+
+    private void UpdateAugmentListDisplay(AugmentDisplayType _adt_whichToShow)
+    {
+        List<Augment> _aL_augmentsToShow = new List<Augment>();
+
+        switch (_adt_whichToShow)
+        {
+            case AugmentDisplayType.ShowAll:
+                _aL_augmentsToShow.AddRange(aL_allAugmentsOwned);
+                break;
+
+            case AugmentDisplayType.ShowSameType:
+                for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
+                {
+                    /*
+                        if(aL_allAugmentsOwned[i].type == currentWeapon.type)
+                            _aL_augmentsToShow.Add(aL_allAugmentsOwned[i]);
+                    */
+                }
+                break;
+        }
+
+        for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
         {
             if (goL_augmentButtonPool.Count <= i)
                 goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
-
             goL_augmentButtonPool[i].SetActive(true);
-
             goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
             goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
         }
 
-        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * ((30) + 1));
+        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_allAugmentsOwned.Count + 1));
         s_slider.value = 1;
     }
+
 
     #region Button Functions
 
@@ -163,5 +186,19 @@ public class Workbench : MonoBehaviour, IInteractible
 
     #endregion
 
+    #region Swap Weapons
 
+    public void ChangeWeapon(int _i_weaponIndexChange)
+    {
+
+    }
+
+
+    #endregion
+
+}
+
+public enum AugmentDisplayType
+{
+    ShowAll, ShowEquipped, ShowSameType
 }
