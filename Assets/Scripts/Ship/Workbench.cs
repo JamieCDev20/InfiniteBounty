@@ -117,9 +117,10 @@ public class Workbench : MonoBehaviour, IInteractible
             if (goL_augmentButtonPool.Count <= i)
                 goL_augmentButtonPool.Add(Instantiate(go_augmentButton, t_augmentButtonParent));
 
-            goL_augmentButtonPool[i].transform.localPosition = new Vector3(i * f_augmentButtonWidth, 0, 0);
+            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, -i * f_augmentButtonWidth, 0);
             goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
-
+            //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
+            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
         }
     }
 
@@ -137,7 +138,7 @@ public class Workbench : MonoBehaviour, IInteractible
 
     public void MoveSlider(float value)
     {
-        t_sliderParent.localPosition = new Vector3(value * f_augmentButtonWidth * goL_augmentButtonPool.Count, 0, 0);
+        t_sliderParent.localPosition = new Vector3(0, value * f_augmentButtonWidth * goL_augmentButtonPool.Count, 0);
     }
 
 
