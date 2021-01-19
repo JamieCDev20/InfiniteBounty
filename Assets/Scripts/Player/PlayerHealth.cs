@@ -34,6 +34,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private GameObject go_reviveSymbol;
     [SerializeField] private ParticleSystem ps_burningBumParticles;
 
+    [Header("Sound FX")]
+    [SerializeField] private AudioClip ac_slowHeartBeat;
+    [SerializeField] private AudioClip ac_fastHeartBeat;
+    [SerializeField] private AudioSource as_heartBeatSource;
+
     private void Start()
     {
         view = GetComponent<PhotonView>();
@@ -46,7 +51,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Delete))
-            TakeDamage(10000, false);
+            TakeDamage(1, false);
 #endif
         if (b_downed)
         {
@@ -71,6 +76,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             if (f_currentCount <= 0)
                 b_canRegen = true;
         }
+
+        CheckSound();
     }
 
     public void TakeDamage(int damage, bool activatesThunder)
@@ -94,8 +101,24 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         }
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
-
     }
+
+    private void CheckSound()
+    {
+        if (f_currentHealth < (i_maxHealth * 0.2f))
+        {
+            as_heartBeatSource.clip = ac_fastHeartBeat;
+            as_heartBeatSource.Play();
+        }
+        else if (f_currentHealth < (i_maxHealth * 0.5f))
+        {
+            as_heartBeatSource.clip = ac_slowHeartBeat;
+            as_heartBeatSource.Play();
+        }
+        else
+            as_heartBeatSource.Stop();
+    }
+
     public void TakeDamage(int damage, bool activatesThunder, float _delay)
     {
         StartCoroutine(DelayedTakeDamage(damage, activatesThunder, _delay));

@@ -19,8 +19,8 @@ public class Workbench : MonoBehaviour, IInteractible
 
     [Header("Button Info")]
     [SerializeField] private GameObject go_augmentButton;
-    [SerializeField] private Transform t_augmentButtonParent;
-    [SerializeField] private float f_augmentButtonWidth;
+    [SerializeField] private RectTransform rt_augmentButtonParent;
+    [SerializeField] private float f_augmentButtonHeight = 85;
     private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
     private int i_currentAugmentIndex;
     [SerializeField] private Scrollbar s_slider;
@@ -123,16 +123,16 @@ public class Workbench : MonoBehaviour, IInteractible
         for (int i = 0; i < _aA_augmentsInList.Length; i++)
         {
             if (goL_augmentButtonPool.Count <= i)
-                goL_augmentButtonPool.Add(Instantiate(go_augmentButton, t_augmentButtonParent));
+                goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
 
-            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, -i * f_augmentButtonWidth, 0);
+            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, -i * f_augmentButtonHeight, 0);
             goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
             goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
 
         }
 
-        s_slider.size = 1 / _aA_augmentsInList.Length;
+        rt_augmentButtonParent.rect.Set(rt_augmentButtonParent.rect.x, rt_augmentButtonParent.rect.y, rt_augmentButtonParent.rect.width, f_augmentButtonHeight * aL_augmentsInList.Count);
     }
 
     #region Button Functions
@@ -157,10 +157,10 @@ public class Workbench : MonoBehaviour, IInteractible
         */
     }
 
-    public void MoveSlider()
+   /* public void MoveSlider()
     {
-        t_augmentButtonParent.localPosition = new Vector3(0, s_slider.value * f_augmentButtonWidth * goL_augmentButtonPool.Count, 0);
-    }
+        rt_augmentButtonParent.localPosition = new Vector3(0, s_slider.value * f_augmentButtonHeight * goL_augmentButtonPool.Count, 0);
+    }*/
 
 
     #endregion
