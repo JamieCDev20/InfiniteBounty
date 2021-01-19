@@ -15,11 +15,12 @@ public class KillBox : MonoBehaviour
 
     [Header("Bouncing")]
     [SerializeField] private Vector3 v_bounceDirection;
-    [SerializeField] private bool b_shouldCauseBurningBum;
+    [SerializeField] private bool b_shouldCauseKnockback;
     private AudioSource as_source;
     [SerializeField] private AudioClip ac_burnEffect;
     [SerializeField] private GameObject go_flamePrefab;
     private List<GameObject> goL_flames = new List<GameObject>();
+    [SerializeField] private bool b_dealsFire = true;
 
     private void Start()
     {
@@ -71,8 +72,8 @@ public class KillBox : MonoBehaviour
         IHitable _h = collision.collider.GetComponent<IHitable>();
         _h?.TakeDamage(i_damageToDeal, false);
         as_source.PlayOneShot(ac_burnEffect);
-        if (b_shouldCauseBurningBum && collision.transform.tag == "Player")
-            collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection);
+        if (b_shouldCauseKnockback && collision.transform.tag == "Player")
+            collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
 
 
 
