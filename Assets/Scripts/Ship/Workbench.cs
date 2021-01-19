@@ -60,6 +60,8 @@ public class Workbench : MonoBehaviour, IInteractible
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        InitAugmentList(new Augment[30]);
     }
 
     public void Interacted() { }
@@ -120,7 +122,7 @@ public class Workbench : MonoBehaviour, IInteractible
     {
         aL_augmentsInList.AddRange(_aA_augmentsInList);
 
-        for (int i = 0; i < _aA_augmentsInList.Length; i++)
+        for (int i = 0; i < 30; i++)
         {
             if (goL_augmentButtonPool.Count <= i)
                 goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
@@ -128,11 +130,12 @@ public class Workbench : MonoBehaviour, IInteractible
             goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, -i * f_augmentButtonHeight, 0);
             goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
+            //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
 
         }
 
         rt_augmentButtonParent.rect.Set(rt_augmentButtonParent.rect.x, rt_augmentButtonParent.rect.y, rt_augmentButtonParent.rect.width, f_augmentButtonHeight * aL_augmentsInList.Count);
+        s_slider.value = 1;
     }
 
     #region Button Functions
@@ -156,12 +159,6 @@ public class Workbench : MonoBehaviour, IInteractible
         aL_augmentsInPool[i_currentAugment].t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;        
         */
     }
-
-   /* public void MoveSlider()
-    {
-        rt_augmentButtonParent.localPosition = new Vector3(0, s_slider.value * f_augmentButtonHeight * goL_augmentButtonPool.Count, 0);
-    }*/
-
 
     #endregion
 
