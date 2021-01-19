@@ -22,7 +22,13 @@ public class Workbench : MonoBehaviour, IInteractible
     [SerializeField] private Transform t_augmentButtonParent;
     [SerializeField] private float f_augmentButtonWidth;
     private List<GameObject> goL_augmentButtonPool;
-    [SerializeField] private Transform t_sliderParent;
+    private int i_currentAugmentIndex;
+    [SerializeField] private Slider s_slider;
+
+    [Header("Augment Display")]
+    [SerializeField] private AugmentDisplay ad_display;
+    private List<Augment> aL_augmentsInList = new List<Augment>();
+
 
     #region Interactions
 
@@ -112,6 +118,8 @@ public class Workbench : MonoBehaviour, IInteractible
 
     private void InitAugmentList(Augment[] _aA_augmentsInList)
     {
+        aL_augmentsInList.AddRange(_aA_augmentsInList);
+
         for (int i = 0; i < _aA_augmentsInList.Length; i++)
         {
             if (goL_augmentButtonPool.Count <= i)
@@ -121,7 +129,10 @@ public class Workbench : MonoBehaviour, IInteractible
             goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
             goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
+
         }
+
+        s_slider.maxValue = _aA_augmentsInList.Length;
     }
 
     #region Button Functions
@@ -133,12 +144,22 @@ public class Workbench : MonoBehaviour, IInteractible
 
     public void ClickAugment(int _i_augmentIndexClicked)
     {
+        goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
+        i_currentAugmentIndex = _i_augmentIndexClicked;
+        goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
+        /*
+        aL_augmentsInPool[i_currentAugment].t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
+        aL_augmentsInPool[i_currentAugment].t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Name;
+        aL_augmentsInPool[i_currentAugment].t_augmentType.text = aA_avaliableAugments[i_currentAugmentIndex].type;
+        aL_augmentsInPool[i_currentAugment].t_augmentFits.text = aA_avaliableAugments[i_currentAugmentIndex].fits;
+        aL_augmentsInPool[i_currentAugment].t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;        
+        */
     }
 
-    public void MoveSlider(float value)
+    public void MoveSlider()
     {
-        t_sliderParent.localPosition = new Vector3(0, value * f_augmentButtonWidth * goL_augmentButtonPool.Count, 0);
+        t_augmentButtonParent.localPosition = new Vector3(0, s_slider.value * f_augmentButtonWidth, 0);
     }
 
 

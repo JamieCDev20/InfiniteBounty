@@ -15,7 +15,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
     private int i_currentAugmentIndex;
     private Augment[] aA_avaliableAugments = new Augment[9];
     [SerializeField] private Canvas c_vendingCanvas;
-    [SerializeField] private VendingMachineDisplay vmd_vendingMachineDisplay;
+    [SerializeField] private AugmentDisplay vmd_vendingMachineDisplay;
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
     [SerializeField] private Transform t_augmentHighlight;
     [SerializeField] private Rigidbody[] rbA_augmentRigidbodies = new Rigidbody[0];
@@ -183,14 +183,15 @@ public class VendingMachine : MonoBehaviour, IInteractible
     }
 
 
-    [System.Serializable]
-    private struct VendingMachineDisplay
-    {
-        public Text t_levelNumber;
-        public Text t_augmentName;
-        public Text t_augmentType;
-        public Text t_augmentFits;
-        public Text t_augmentEffects;
-        public Text t_augmentCost;
-    }
+}
+
+[System.Serializable]
+public struct AugmentDisplay
+{
+    public Text t_levelNumber;
+    public Text t_augmentName;
+    public Text t_augmentType;
+    public Text t_augmentFits;
+    public Text t_augmentEffects;
+    public Text t_augmentCost;
 }
