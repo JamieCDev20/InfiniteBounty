@@ -129,7 +129,7 @@ public class Workbench : MonoBehaviour, IInteractible
 
             goL_augmentButtonPool[i].SetActive(true);
 
-            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) + 70, 0);
+            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
             goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = _aA_augmentsInList[i].Name;
