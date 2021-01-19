@@ -8,21 +8,33 @@ public class AugmentLoader : MonoBehaviour
     private const string rs = "/Resources/";
     public static Augment[] LoadInitialAugments()
     {
-        string augmentString = File.ReadAllText(Application.dataPath + rs + "AugmentData.json");
-        Augment[] newAugs = ReadAugmentData(augmentString);
-        return newAugs;
+        if(File.Exists(Application.dataPath + rs + "AugmentData.json"))
+        {
+            string augmentString = File.ReadAllText(Application.dataPath + rs + "AugmentData.json");
+            Augment[] newAugs = ReadAugmentData(augmentString);
+            return newAugs;
+        }
+        return null;
     }
     public static ProjectileAugment[] LoadProjectileAugments()
     {
-        string augmentString = File.ReadAllText(Application.dataPath + rs + "AugmentData.json");
-        ProjectileAugment[] newAugs = ReadProjectileAugment(augmentString);
-        return newAugs;
+        if (File.Exists(Application.dataPath + rs + "AugmentData.json"))
+        {
+            string augmentString = File.ReadAllText(Application.dataPath + rs + "AugmentData.json");
+            ProjectileAugment[] newAugs = ReadProjectileAugment(augmentString);
+            return newAugs;
+        }
+        return null;
     }
     public static ConeAugment[] LoadConeAugments()
     {
-        string augmentString = File.ReadAllText(Application.dataPath + rs + "AugmentData.json");
-        ConeAugment[] newAugs = ReadConeAugment(augmentString);
-        return newAugs;
+        if (File.Exists(Application.dataPath + rs + "AugmentData.json"))
+        {
+            string augmentString = File.ReadAllText(Application.dataPath + rs + "AugmentData.json");
+            ConeAugment[] newAugs = ReadConeAugment(augmentString);
+            return newAugs;
+        }
+        return null;
     }
     private static Augment[] ReadAugmentData(string augData)
     {
