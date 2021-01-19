@@ -21,7 +21,7 @@ public class Workbench : MonoBehaviour, IInteractible
     [SerializeField] private GameObject go_augmentButton;
     [SerializeField] private Transform t_augmentButtonParent;
     [SerializeField] private float f_augmentButtonWidth;
-    private List<GameObject> goL_augmentButtonPool;
+    private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
     private int i_currentAugmentIndex;
     [SerializeField] private Scrollbar s_slider;
 
@@ -132,7 +132,7 @@ public class Workbench : MonoBehaviour, IInteractible
 
         }
 
-        //s_slider.maxValue = _aA_augmentsInList.Length;
+        s_slider.size = 1 / _aA_augmentsInList.Length;
     }
 
     #region Button Functions
