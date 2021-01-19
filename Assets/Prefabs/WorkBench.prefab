@@ -101,19 +101,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30761651}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1901028010}
   m_Father: {fileID: 2125265361}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 8.75, y: 0}
-  m_SizeDelta: {x: 350, y: 35}
-  m_Pivot: {x: 0.5, y: 0}
+  m_SizeDelta: {x: 35, y: 350}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &30761655
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -193,13 +193,25 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 11157418}
   m_HandleRect: {fileID: 11157417}
-  m_Direction: 0
+  m_Direction: 3
   m_Value: 0
-  m_Size: 0.2
+  m_Size: 0.059
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4868943948158857479}
+        m_TargetAssemblyTypeName: Workbench, Assembly-CSharp
+        m_MethodName: MoveSlider
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &31078631
 GameObject:
   m_ObjectHideFlags: 0
@@ -5911,7 +5923,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7211629807821442926}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -6070,7 +6082,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7211629808007410748
 Transform:
   m_ObjectHideFlags: 0
