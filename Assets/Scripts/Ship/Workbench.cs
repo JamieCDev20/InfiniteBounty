@@ -78,6 +78,7 @@ public class Workbench : MonoBehaviour, IInteractible
         pm.GetComponent<PlayerAnimator>().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);
+        _pa.StartWalking();
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
