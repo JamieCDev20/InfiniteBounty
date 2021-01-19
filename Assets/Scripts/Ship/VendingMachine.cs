@@ -81,6 +81,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);
+        _pa.StartWalking();
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
