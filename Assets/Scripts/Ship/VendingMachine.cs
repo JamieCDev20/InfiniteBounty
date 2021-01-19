@@ -19,6 +19,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
     [SerializeField] private Transform t_augmentHighlight;
     [SerializeField] private Rigidbody[] rbA_augmentRigidbodies = new Rigidbody[0];
+    [SerializeField] private Transform t_playerPos;
 
     [Header("Audio Thangs")]
     [SerializeField] private AudioClip ac_whirringClip;
@@ -29,14 +30,21 @@ public class VendingMachine : MonoBehaviour, IInteractible
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
-        ClickedAugment(UnityEngine.Random.Range(0, 9));
+
+        int _i = UnityEngine.Random.Range(0, 9);
+        i_currentAugmentIndex = _i;
+        t_augmentHighlight.position = tA_augmentPositions[_i].position;
         UpdateAugmentDisplay();
+
     }
 
     public void Interacted(Transform interactor)
     {
         if (!b_isBeingUsed)
         {
+            interactor.position = t_playerPos.position;
+            interactor.transform.forward = t_playerPos.forward;
+
             b_isBeingUsed = true;
             pim = interactor.GetComponent<PlayerInputManager>();
             PlayerMover pm = pim.GetComponent<PlayerMover>();
@@ -46,6 +54,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
             t_camPositionToReturnTo = pim.GetCamera().transform;
             pim.GetCamera().enabled = false;
             Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
+            pm.GetComponent<PlayerAnimator>().enabled = false;
 
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_vendingCanvas.enabled = true;
@@ -68,6 +77,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
         c_vendingCanvas.enabled = false;
         pim.GetCamera().enabled = true;
+        pm.GetComponent<PlayerAnimator>().enabled = true;
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
