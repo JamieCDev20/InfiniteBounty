@@ -203,7 +203,7 @@ MonoBehaviour:
       - m_Target: {fileID: 4868943948158857479}
         m_TargetAssemblyTypeName: Workbench, Assembly-CSharp
         m_MethodName: MoveSlider
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2402,6 +2402,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &864791618291231689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2937623504335608891}
+  m_Layer: 0
+  m_Name: PlayerPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2937623504335608891
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864791618291231689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.518, y: 0, z: -1.074}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7211629806612318131}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &873236563714100699
 GameObject:
   m_ObjectHideFlags: 0
@@ -3535,6 +3565,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7211629806612318131}
   - component: {fileID: 4868943948158857479}
+  - component: {fileID: 3859615887861356107}
+  - component: {fileID: 7211629807479709916}
   m_Layer: 0
   m_Name: WorkBench
   m_TagString: Untagged
@@ -3560,6 +3592,7 @@ Transform:
   - {fileID: 7211629807821442927}
   - {fileID: 7211629806110765320}
   - {fileID: 6385535358844961378}
+  - {fileID: 2937623504335608891}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3576,14 +3609,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   c_workbenchCanvas: {fileID: 7211629807821442914}
-  t_playerPos: {fileID: 0}
+  t_playerPos: {fileID: 2937623504335608891}
   t_camParent: {fileID: 7211629806340180035}
   i_timesToLerpCam: 50
   f_cameraMovementT: 0.4
   go_augmentButton: {fileID: 1412358631}
   t_augmentButtonParent: {fileID: 3565259527052178646}
   f_augmentButtonWidth: 85
-  t_sliderParent: {fileID: 0}
+  s_slider: {fileID: 30761653}
+  ad_display:
+    t_levelNumber: {fileID: 1096037574}
+    t_augmentName: {fileID: 140176217}
+    t_augmentType: {fileID: 733058846}
+    t_augmentFits: {fileID: 636297864}
+    t_augmentEffects: {fileID: 776373194}
+    t_augmentCost: {fileID: 0}
+--- !u!65 &3859615887861356107
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211629806612318130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.25, y: 2, z: 6}
+  m_Center: {x: -0.125, y: 0.5, z: 0}
+--- !u!114 &7211629807479709916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211629806612318130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Attach Augments to Tools
+  i_buttonSpriteIndex: 0
+  b_hostOnly: 0
 --- !u!1 &7211629806660613632
 GameObject:
   m_ObjectHideFlags: 0
@@ -4165,7 +4233,6 @@ GameObject:
   - component: {fileID: 7211629806849745911}
   - component: {fileID: 7211629806849745898}
   - component: {fileID: 7211629806849745909}
-  - component: {fileID: 7211629806849745908}
   m_Layer: 0
   m_Name: Table
   m_TagString: Untagged
@@ -4236,19 +4303,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7211629806849745908
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7211629806849745910}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7211629806974250764
 GameObject:
   m_ObjectHideFlags: 0
@@ -6373,8 +6427,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VendingMachine, Assembly-CSharp
+      - m_Target: {fileID: 4868943948158857479}
+        m_TargetAssemblyTypeName: Workbench, Assembly-CSharp
         m_MethodName: EndInteract
         m_Mode: 1
         m_Arguments:
