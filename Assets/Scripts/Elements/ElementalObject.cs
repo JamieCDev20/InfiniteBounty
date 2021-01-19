@@ -24,6 +24,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private ElementActivation[] activations; //The array of activation functions
 
     private bool b_doThunder = true; // bool to stop thunder infinitely repeating
+    private bool b_doBoom = true; // bool to stop boom
     private LineRenderer lrend;
     private PoolableObject pO; //To store the line renderer object
     private bool b_activatedThisFrame = false; //only activate once per frame <<Not sure if i actually need this anymore.. but better safe than sorry
@@ -43,10 +44,10 @@ public class ElementalObject : MonoBehaviour, IElementable
         interactions = new ElementInteraction[,] {
             //Goo               Hydro               Tasty               Thunder             Boom                Fire                Lava
             {NullInteraction,   GooHydro,           NullInteraction,    GooThunder,         NullInteraction,    GooFire,            NullInteraction},   //Goo
-            {GooHydro,          NullInteraction,    HydroTasty,         HydroThunder,       NullInteraction,    HydroFire,          HydroLava},         //Hydro
+            {GooHydro,          NullInteraction,    HydroTasty,         HydroThunder,       HydroBoom,          HydroFire,          HydroLava},         //Hydro
             {NullInteraction,   HydroTasty,         NullInteraction,    NullInteraction,    NullInteraction,    TastyFire,          NullInteraction},   //Tasty
             {GooThunder,        HydroThunder,       NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction},   //Thunder
-            {NullInteraction,   NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction},   //Boom
+            {NullInteraction,   HydroBoom,          NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction},   //Boom
             {GooFire,           HydroFire,          TastyFire,          NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction},   //Fire
             {NullInteraction,   HydroLava,          NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction,    NullInteraction}    //Lava
         };
@@ -75,6 +76,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         flag = false;
         b_activatedThisFrame = false;
+        b_doThunder = true;
+        b_doBoom = true;
         StopAllCoroutines();
         //more only once per frame stuff
     }
@@ -83,7 +86,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         yield return new WaitForEndOfFrame();
         if (b_shouldDie)
-            ourHitable.TakeDamage(0, true);
+            ourHitable.Die();
+        b_shouldDie = true;
     }
 
     private void InitialiseActivations() //add the intial activation stuff we should have
@@ -102,6 +106,9 @@ public class ElementalObject : MonoBehaviour, IElementable
             b_activatedThisFrame = true;
         else
             flag = true;
+        b_shouldDie = true;
+        if(gameObject.activeSelf)
+            StartCoroutine(EOFCheckDie());
     }
 
     public void RecieveElements(List<Element> _recieved)
@@ -168,7 +175,6 @@ public class ElementalObject : MonoBehaviour, IElementable
         b_doThunder = activatesThunder;
         activated?.Invoke();
     }
-
     public void AddRemoveElement(Element _elem, bool add)
     {
         StartCoroutine(AddRemoveAtEOF(_elem, add));
@@ -245,6 +251,27 @@ public class ElementalObject : MonoBehaviour, IElementable
         AddRemoveElement(Element.goo, false);
     }
 
+    IEnumerator Explode(float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+
+        IHitable iH;
+        IElementable iE;
+        Collider[] hits = Physics.OverlapSphere(transform.position, em.boomRadius);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            iH = hits[i].GetComponent<IHitable>();
+            iE = hits[i].GetComponent<IElementable>();
+            if (iH != null)
+            {
+                iE?.RecieveElements(Element.boom);
+                iE?.AddRemoveElement(Element.boom, true);
+                iH.TakeDamage(em.boomDamage, true);
+            }
+        }
+        ourHitable.Die();
+    }
+
     #region ElementInteractions
 
     private void GooHydro()
@@ -265,6 +292,12 @@ public class ElementalObject : MonoBehaviour, IElementable
         SetStatusEffect(Element.fire, true, em.fireDuration);
         FireActivate();
     }
+
+    private void HydroBoom()
+    {
+        SetStatusEffect(Element.boom, false);
+        SetStatusEffect(Element.hydro, true, em.hydroDuration);
+            }
 
     private void HydroTasty()
     {
@@ -363,22 +396,12 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void BoomActivate()
     {
-        if (b_activatedThisFrame)
+        b_shouldDie = false;
+        if (b_activatedThisFrame || !b_doBoom)
             return;
-        Collider[] hits = Physics.OverlapSphere(transform.position, em.boomRadius);
-        IHitable iH;
-        IElementable iE;
+        b_doBoom = false;
         SetStatusEffect(Element.boom, true, em.boomFuse);
-        for (int i = 0; i < hits.Length; i++)
-        {
-            iH = hits[i].GetComponent<IHitable>();
-            iE = hits[i].GetComponent<IElementable>();
-            if (iH != null)
-            {
-                iE?.RecieveElements(Element.boom);
-                iH.TakeDamage(em.boomDamage, true, em.boomFuse);
-            }
-        }
+        StartCoroutine(Explode(em.boomFuse));
     }
 
     private void FireActivate()

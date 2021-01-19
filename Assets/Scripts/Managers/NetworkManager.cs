@@ -100,7 +100,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LoadLevel(string levelName)
     {
-        Debug.Log("Loading level");
+        //Debug.Log("Loading level");
         PhotonNetwork.LoadLevel(levelName);
     }
 
@@ -116,7 +116,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (!b_canLoad)
             return;
-        Debug.Log("Checking all dead");
+        //Debug.Log("Checking all dead");
         foreach (PlayerHealth h in FindObjectsOfType<PlayerHealth>())
         {
             if (!h.GetIsDead())
