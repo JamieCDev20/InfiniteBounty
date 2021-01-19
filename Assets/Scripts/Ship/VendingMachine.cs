@@ -24,6 +24,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [SerializeField] private AudioClip ac_whirringClip;
     private AudioSource as_source;
     [SerializeField] private AudioClip[] acA_beeps = new AudioClip[0];
+    private bool b_isBeingUsed;
 
     private void Start()
     {
@@ -34,22 +35,24 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     public void Interacted(Transform interactor)
     {
-        print("I've been interacted with");
+        if (!b_isBeingUsed)
+        {
+            b_isBeingUsed = true;
+            pim = interactor.GetComponent<PlayerInputManager>();
+            PlayerMover pm = pim.GetComponent<PlayerMover>();
+            pm.GetComponent<Rigidbody>().isKinematic = true;
+            pim.b_shouldPassInputs = false;
+            pm.enabled = false;
+            t_camPositionToReturnTo = pim.GetCamera().transform;
+            pim.GetCamera().enabled = false;
+            Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
 
-        pim = interactor.GetComponent<PlayerInputManager>();
-        PlayerMover pm = pim.GetComponent<PlayerMover>();
-        pm.GetComponent<Rigidbody>().isKinematic = true;
-        pim.b_shouldPassInputs = false;
-        pm.enabled = false;
-        t_camPositionToReturnTo = pim.GetCamera().transform;
-        pim.GetCamera().enabled = false;
-        Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
+            StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
+            c_vendingCanvas.enabled = true;
 
-        StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
-        c_vendingCanvas.enabled = true;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public void Interacted() { }
@@ -68,7 +71,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-
+        b_isBeingUsed = false;
     }
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
@@ -102,12 +105,15 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     public void ClickedAugment(int _i_augmentIndex)
     {
-        i_currentAugmentIndex = _i_augmentIndex;
-        t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
-        UpdateAugmentDisplay();
+        if (b_isBeingUsed)
+        {
+            i_currentAugmentIndex = _i_augmentIndex;
+            t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
+            UpdateAugmentDisplay();
 
-        as_source.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
-        as_source.PlayOneShot(acA_beeps[UnityEngine.Random.Range(0, acA_beeps.Length)]);
+            as_source.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            as_source.PlayOneShot(acA_beeps[UnityEngine.Random.Range(0, acA_beeps.Length)]);
+        }
     }
 
     private void UpdateAugmentDisplay()
@@ -126,15 +132,16 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     public void BuyAugment()
     {
-        if (rbA_augmentRigidbodies[i_currentAugmentIndex])
-        {
-            as_source.pitch = 1;
-            as_source.PlayOneShot(ac_whirringClip);
-            StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
-            StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex]));
-            aA_avaliableAugments[i_currentAugmentIndex] = null;
-            rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
-        }
+        if (b_isBeingUsed)
+            if (rbA_augmentRigidbodies[i_currentAugmentIndex])
+            {
+                as_source.pitch = 1;
+                as_source.PlayOneShot(ac_whirringClip);
+                StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
+                StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex]));
+                aA_avaliableAugments[i_currentAugmentIndex] = null;
+                rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
+            }
     }
     private IEnumerator MoveAugmentForward(Rigidbody _rb)
     {
