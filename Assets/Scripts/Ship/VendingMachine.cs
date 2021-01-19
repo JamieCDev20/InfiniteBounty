@@ -54,7 +54,9 @@ public class VendingMachine : MonoBehaviour, IInteractible
             t_camPositionToReturnTo = pim.GetCamera().transform;
             pim.GetCamera().enabled = false;
             Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
-            pm.GetComponent<PlayerAnimator>().enabled = false;
+            PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
+            _pa.SetShootability(false);
+            _pa.StopWalking();
 
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_vendingCanvas.enabled = true;
@@ -77,7 +79,8 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
         c_vendingCanvas.enabled = false;
         pim.GetCamera().enabled = true;
-        pm.GetComponent<PlayerAnimator>().enabled = true;
+        PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
+        _pa.SetShootability(true);
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
@@ -168,7 +171,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     public void GetAugments(Augment[] _aA_augments, ProjectileAugment[] _paA_projs, ConeAugment[] _caA_cones)
     {
-        Debug.LogError("AUGMENTS OBTAINED. PROCEEDING WIHT RETIAL.");
+        Debug.LogError("AUGMENTS OBTAINED. PROCEEDING WITH RETAIL.");
         aA_avaliableAugments = _aA_augments;
     }
 
