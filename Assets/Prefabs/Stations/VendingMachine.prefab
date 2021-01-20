@@ -1255,8 +1255,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.09364138, y: 0.866511, z: 0.86407495}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.02, y: 0.866511, z: 0.86407495}
+  m_Center: {x: 0.05, y: 0, z: 0}
 --- !u!1 &2966582277584459981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1327,7 @@ GameObject:
   - component: {fileID: 8045832212343735884}
   - component: {fileID: 396070197714784809}
   - component: {fileID: 3794605044581755776}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VendingMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1660,7 +1660,7 @@ GameObject:
   - component: {fileID: 826539890987520226}
   - component: {fileID: 6935386436449369318}
   - component: {fileID: 3764432669348930228}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BlackBottomCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1886,7 +1886,7 @@ GameObject:
   - component: {fileID: 3186941860597282753}
   - component: {fileID: 8847141754032965814}
   - component: {fileID: 4836814143632925741}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VendingMachineFlap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2165,7 +2165,8 @@ GameObject:
   - component: {fileID: 3024736890712004716}
   - component: {fileID: 8625260074506759402}
   - component: {fileID: 5231131143950841661}
-  m_Layer: 0
+  - component: {fileID: 7549838384715679184}
+  m_Layer: 2
   m_Name: Vending_Machine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2329,6 +2330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   t_camParent: {fileID: 1821750499}
   i_timesToLerpCam: 100
+  f_lerpTime: 0.5
   f_cameraMovementT: 0.3
   c_vendingCanvas: {fileID: 613316198}
   vmd_vendingMachineDisplay:
@@ -2388,6 +2390,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &7549838384715679184
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7326499903969962979}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 1.3, z: 1}
+  m_Center: {x: -0.67, y: 0.13, z: 0.11}
 --- !u!1 &7353827904736705844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2476,7 +2491,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2303740368980194901}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FlapPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3776,15 +3791,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80a4c8c072d1aba498045c60fd249226, type: 3}
---- !u!1 &8701992169639094358 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 80a4c8c072d1aba498045c60fd249226,
-    type: 3}
-  m_PrefabInstance: {fileID: 8359461647715964167}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8325044002141369068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80a4c8c072d1aba498045c60fd249226,
+    type: 3}
+  m_PrefabInstance: {fileID: 8359461647715964167}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8701992169639094358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 80a4c8c072d1aba498045c60fd249226,
     type: 3}
   m_PrefabInstance: {fileID: 8359461647715964167}
   m_PrefabAsset: {fileID: 0}
@@ -3988,15 +4003,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80a4c8c072d1aba498045c60fd249226, type: 3}
---- !u!4 &8325044001496490234 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80a4c8c072d1aba498045c60fd249226,
-    type: 3}
-  m_PrefabInstance: {fileID: 8359461648327280401}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8701992169042459200 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 80a4c8c072d1aba498045c60fd249226,
+    type: 3}
+  m_PrefabInstance: {fileID: 8359461648327280401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8325044001496490234 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80a4c8c072d1aba498045c60fd249226,
     type: 3}
   m_PrefabInstance: {fileID: 8359461648327280401}
   m_PrefabAsset: {fileID: 0}
@@ -4200,15 +4215,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80a4c8c072d1aba498045c60fd249226, type: 3}
---- !u!1 &8701992168680660462 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 80a4c8c072d1aba498045c60fd249226,
-    type: 3}
-  m_PrefabInstance: {fileID: 8359461648905019583}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8325044000927074132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80a4c8c072d1aba498045c60fd249226,
+    type: 3}
+  m_PrefabInstance: {fileID: 8359461648905019583}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8701992168680660462 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 80a4c8c072d1aba498045c60fd249226,
     type: 3}
   m_PrefabInstance: {fileID: 8359461648905019583}
   m_PrefabAsset: {fileID: 0}
