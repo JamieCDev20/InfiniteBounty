@@ -24,7 +24,7 @@ public class KillBox : MonoBehaviour
 
     private void Start()
     {
-        as_source = gameObject.AddComponent<AudioSource>();
+        as_source = gameObject.GetComponent<AudioSource>();
         if (go_flamePrefab)
             for (int i = 0; i < 20; i++)
                 goL_flames.Add(Instantiate(go_flamePrefab));
@@ -71,9 +71,10 @@ public class KillBox : MonoBehaviour
 
         IHitable _h = collision.collider.GetComponent<IHitable>();
         _h?.TakeDamage(i_damageToDeal, false);
-        as_source.PlayOneShot(ac_burnEffect);
         if (b_shouldCauseKnockback && collision.transform.tag == "Player")
             collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
+        if (as_source)
+            as_source.PlayOneShot(ac_burnEffect);
 
 
 
