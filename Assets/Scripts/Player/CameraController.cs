@@ -66,7 +66,8 @@ public class CameraController : MonoBehaviour
 
     private void Follow()
     {
-        transform.position = t_follow.position + v_offset;
+        if(t_follow != null)
+            transform.position = t_follow.position + v_offset;
     }
 
     private void Look()

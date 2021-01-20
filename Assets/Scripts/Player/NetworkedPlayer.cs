@@ -19,6 +19,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private ToolHandler handler;
     private PhotonView view;
     private GameObject playerCamera;
+    private PlayerHealth ph_health;
 
     public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
@@ -98,6 +99,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerIM.SetCanPickUpNugs(true);
         playerIM.SetPlayerNumber(playerInfo.playerID);
         playerIM.GoToSpawnPoint();
+        ph_health = playerIM.GetComponent<PlayerHealth>();
         GameObject cam = Instantiate(playerInfo.go_camPrefab);
         playerIM.SetCamera(cam.GetComponent<CameraController>());
         playerCamera = cam.transform.GetChild(0).gameObject;
@@ -117,7 +119,12 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerIM.SyncNameOverNetwork();
         playerIM.b_shouldPassInputs = true;
         playerIM.enabled = true;
+        
+    }
 
+    public void Suicide()
+    {
+        ph_health.TakeDamage(1000000, false);
     }
 
     public void CollectEndLevelNugs(int value)

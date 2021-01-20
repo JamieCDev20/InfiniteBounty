@@ -73,6 +73,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
         if(rb != null)
             rb.velocity = Vector3.zero;
+        eO_elem.ResetElements();
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
 

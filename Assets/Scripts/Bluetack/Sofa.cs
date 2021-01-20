@@ -86,10 +86,4 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
         sitter = null;
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
-        EndSit();
-    }
-
 }

@@ -110,7 +110,10 @@ public class PauseMenuController : MonoBehaviour
         UniversalOverlord.x.ReturnToMainMenu();
     }
 
-
+    public void Suicude()
+    {
+        NetworkedPlayer.x.Suicide();
+    }
 
     public void Options()
     {

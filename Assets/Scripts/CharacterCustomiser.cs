@@ -42,6 +42,8 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 
     public void EndInteract()
     {
+        if (!b_isBeingUsed)
+            return;
         pim.b_shouldPassInputs = true;
         ac_user.GetComponent<Rigidbody>().isKinematic = false;
         pim.GetComponent<PlayerAnimator>().SetShootability(true);
