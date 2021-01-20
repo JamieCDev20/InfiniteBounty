@@ -107,7 +107,10 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         if (!b_canBeHit)
             return;
         if (eO_elem)
+        {
+
             eO_elem.ActivateElement(activatesThunder);
+        }
         myLode.NugGotHit(i_lodeID, damage, activatesThunder);
     }
 
