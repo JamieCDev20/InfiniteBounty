@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_impactEffects: {fileID: 2658854103036150497}
   f_fireForce: 1500
-  f_timeToWaitBeforeActivating: 3
+  f_timeToWaitBeforeActivating: 5
   f_timeToPlayParticle: 0.4
   go_cameraParent: {fileID: 3386068056101632335}
 --- !u!1 &879872403286612584
@@ -85,7 +85,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 703}
+  m_AnchoredPosition: {x: 0, y: 680.22}
   m_SizeDelta: {x: -400, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6363766596324157304
@@ -131,7 +131,13 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Collect as many Nuggets as you can
 
-    and make it back to the ship alive'
+    and make it back to the ship alive
+
+
+    [WARNING]
+
+    Giant
+    volcanic ash cloud impending'
 --- !u!114 &2925047137136387730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5155,7 +5161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 390}
+  m_AnchoredPosition: {x: 0, y: 467.87}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1692660708765496033
@@ -5240,13 +5246,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4522288804892743308}
-  m_LocalRotation: {x: 0, y: 0.9659259, z: 0.258819, w: 0}
-  m_LocalPosition: {x: 0, y: 0.2, z: 2.75}
+  m_LocalRotation: {x: -0.025213072, y: 0.018467415, z: 0.00046584784, w: 0.9995114}
+  m_LocalPosition: {x: -5.37, y: -7.3, z: 15.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4255018072119792974}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -30, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.89, y: 2.117, z: 0}
 --- !u!20 &8306053050964705324
 Camera:
   m_ObjectHideFlags: 0
@@ -10316,7 +10322,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
