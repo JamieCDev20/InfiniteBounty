@@ -329,6 +329,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void HydroThunder()
     {
+        b_doThunder = false;
         AddRemoveElement(Element.thunder, true);
     }
 
@@ -385,7 +386,6 @@ public class ElementalObject : MonoBehaviour, IElementable
             return;
         if (!b_doThunder)
         {
-            b_doThunder = true;
             return;
         }
 
