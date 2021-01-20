@@ -99,6 +99,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerIM.SetCanPickUpNugs(true);
         playerIM.SetPlayerNumber(playerInfo.playerID);
         playerIM.GoToSpawnPoint();
+        ph_health = playerIM.GetComponent<PlayerHealth>();
         GameObject cam = Instantiate(playerInfo.go_camPrefab);
         playerIM.SetCamera(cam.GetComponent<CameraController>());
         playerCamera = cam.transform.GetChild(0).gameObject;
