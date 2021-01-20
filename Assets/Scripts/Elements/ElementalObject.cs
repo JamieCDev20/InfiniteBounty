@@ -298,7 +298,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void HydroBoom()
     {
         SetStatusEffect(Element.boom, false);
-        SetStatusEffect(Element.hydro, true, em.hydroDuration);
+        if (em != null)
+            SetStatusEffect(Element.hydro, true, em.hydroDuration);
     }
 
     private void HydroTasty()
@@ -416,8 +417,12 @@ public class ElementalObject : MonoBehaviour, IElementable
 
         SetStatusEffect(Element.fire, true);
         AddRemoveElement(Element.fire, true);
-        StopCoroutine("FireDamage");
-        StartCoroutine(FireDamage(em.fireDuration * (bA_statuses[(int)Element.goo] ? em.gooDurationMultiplier : 1), em.fireDamage * (bA_statuses[(int)Element.goo] ? em.gooDamageMultiplier : 1)));
+        if (gameObject.activeSelf)
+        {
+            StopCoroutine("FireDamage");
+            StartCoroutine(FireDamage(em.fireDuration * (bA_statuses[(int)Element.goo] ? em.gooDurationMultiplier : 1), em.fireDamage * (bA_statuses[(int)Element.goo] ? em.gooDamageMultiplier : 1)));
+
+        }
 
     }
 
