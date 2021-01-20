@@ -15,6 +15,7 @@ public class Workbench : MonoBehaviour, IInteractible
     [Header("Camera & Movement")]
     [SerializeField] private Transform t_camParent;
     [SerializeField] private int i_timesToLerpCam = 50;
+    [SerializeField] private float f_lerpTime = 0.5f;
     [SerializeField] private float f_cameraMovementT = 0.4f;
 
     [Header("Button Info")]
@@ -90,16 +91,27 @@ public class Workbench : MonoBehaviour, IInteractible
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
     {
         Transform _t = Camera.main.transform;
-
+        float t = 0;
         if (_b_comingIntoMachine)
             _t.parent = t_camParent;
         else
             Camera.main.transform.parent = _t_cameraToMove;
 
-        for (int i = 0; i < i_timesToLerpCam; i++)
+        Vector3 start = _t.localPosition;
+        Quaternion iRot = _t.rotation;
+
+        //for (int i = 0; i < i_timesToLerpCam; i++)
+        //{
+        //    _t.localPosition = Vector3.Lerp(_t.localPosition, Vector3.zero, f_cameraMovementT);
+        //    _t.localEulerAngles = Vector3.Lerp(_t.localEulerAngles, Vector3.zero, f_cameraMovementT);
+        //    yield return new WaitForEndOfFrame();
+        //}
+
+        while (t < 1)
         {
-            _t.localPosition = Vector3.Lerp(_t.localPosition, Vector3.zero, f_cameraMovementT);
-            _t.localEulerAngles = Vector3.Lerp(_t.localEulerAngles, Vector3.zero, f_cameraMovementT);
+            _t.localPosition = Vector3.Lerp(start, Vector3.zero, t);
+            _t.rotation = Quaternion.Lerp(iRot, _t_transformToMoveTo.rotation, t);
+            t += (Time.deltaTime * (1 / f_lerpTime));
             yield return new WaitForEndOfFrame();
         }
 
