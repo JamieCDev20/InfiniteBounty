@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,6 +22,12 @@ public class PauseMenuController : MonoBehaviour
 
     [Header("Option References")]
     [SerializeField] private Slider s_sensitivitySlider;
+    [SerializeField] private VolumeSliders vs_volSliders;
+
+    [Header("Mixers")]
+    [SerializeField] private AudioMixer am_ambienceMixer;
+    [SerializeField] private AudioMixer am_musicMixer;
+    [SerializeField] private AudioMixer am_sfxMixer;
 
     private void Start()
     {
@@ -151,9 +158,30 @@ public class PauseMenuController : MonoBehaviour
             cc_cam.f_cameraSensitivity = s_sensitivitySlider.value;
     }
 
+    public void SetAmbienceVolume()
+    {
+        am_ambienceMixer.SetFloat("Volume", vs_volSliders.s_ambienceVolumeSlider.value);
+    }
+
+    public void SetMusicVolume()
+    {
+        am_musicMixer.SetFloat("Volume", vs_volSliders.s_musicVolumeSilder.value);
+    }
+
+    public void SetSFXVolume()
+    {
+        am_sfxMixer.SetFloat("Volume", vs_volSliders.s_sfxVolumeSilder.value);
+    }
 
 
     #endregion
 
+    [System.Serializable]
+    private struct VolumeSliders
+    {
+        public Slider s_ambienceVolumeSlider;
+        public Slider s_musicVolumeSilder;
+        public Slider s_sfxVolumeSilder;
+    }
 
 }

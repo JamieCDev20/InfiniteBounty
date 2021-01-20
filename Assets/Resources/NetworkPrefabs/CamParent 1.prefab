@@ -729,7 +729,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9032185520143853257}
         m_TargetAssemblyTypeName: PauseMenuController, Assembly-CSharp
-        m_MethodName: SetSensitivty
+        m_MethodName: SetMusicVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10497,7 +10497,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9032185520143853257}
         m_TargetAssemblyTypeName: PauseMenuController, Assembly-CSharp
-        m_MethodName: SetSensitivty
+        m_MethodName: SetAmbienceVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12327,6 +12327,13 @@ MonoBehaviour:
   c_optionsMenu: {fileID: 8824769907728310491}
   c_spectatingCanvas: {fileID: 2518555380220408743}
   s_sensitivitySlider: {fileID: 4127286767849125091}
+  vs_volSliders:
+    s_ambienceVolumeSlider: {fileID: 2816502451854783328}
+    s_musicVolumeSilder: {fileID: 9050891502806287622}
+    s_sfxVolumeSilder: {fileID: 6887909695786492227}
+  am_ambienceMixer: {fileID: 24100000, guid: c3d69dad9c003054cac4792334b08f06, type: 2}
+  am_musicMixer: {fileID: 24100000, guid: 152d7ddb756c12845abcb3052f02db79, type: 2}
+  am_sfxMixer: {fileID: 24100000, guid: a8176709bbf996c48a0235a5e2f0fd06, type: 2}
 --- !u!1 &6090158020547270353
 GameObject:
   m_ObjectHideFlags: 0
@@ -19778,7 +19785,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9032185520143853257}
         m_TargetAssemblyTypeName: PauseMenuController, Assembly-CSharp
-        m_MethodName: SetSensitivty
+        m_MethodName: SetSFXVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20040,7 +20047,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8857801955161920234}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
