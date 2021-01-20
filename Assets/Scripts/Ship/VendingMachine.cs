@@ -30,9 +30,11 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [Header("Spittin' out Augments")]
     [SerializeField] private GameObject go_augmentPrefab;
     [SerializeField] private Transform t_augmentSpawnPoint;
+    private Animator anim;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
 
         int _i = UnityEngine.Random.Range(0, 9);
@@ -41,6 +43,8 @@ public class VendingMachine : MonoBehaviour, IInteractible
         UpdateAugmentDisplay();
 
     }
+
+    #region Interactions
 
     public void Interacted(Transform interactor)
     {
@@ -91,6 +95,8 @@ public class VendingMachine : MonoBehaviour, IInteractible
         Cursor.visible = false;
         b_isBeingUsed = false;
     }
+
+    #endregion
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
     {
@@ -182,7 +188,9 @@ public class VendingMachine : MonoBehaviour, IInteractible
 
     private IEnumerator SpitOutAugment(Augment _aA_augmentToVomUp)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.8f);
+        anim.SetTrigger("MoveFlap");
+        yield return new WaitForSeconds(0.2f);
         GameObject _g = PoolManager.x.SpawnObject(go_augmentPrefab, t_augmentSpawnPoint.position, new Quaternion(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value));
         _g.GetComponent<Rigidbody>().AddForce(t_augmentSpawnPoint.forward * 5, ForceMode.Impulse);
     }
