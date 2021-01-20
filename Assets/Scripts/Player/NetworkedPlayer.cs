@@ -115,6 +115,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //sync weapons for when new player joins
         handler.SyncToolOverNetwork();
         playerIM.SyncNameOverNetwork();
+        playerIM.b_shouldPassInputs = true;
+        playerIM.enabled = true;
 
     }
 

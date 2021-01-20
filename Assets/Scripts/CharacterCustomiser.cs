@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterCustomiser : MonoBehaviour, IInteractible
+public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 {
 
     private AppearanceChanger ac_user;
@@ -70,6 +72,12 @@ public class CharacterCustomiser : MonoBehaviour, IInteractible
     public void LastBody()
     {
         ac_user.LastBody();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+            EndInteract();
     }
 
 }

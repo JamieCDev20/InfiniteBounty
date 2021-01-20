@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sofa : MonoBehaviour, IInteractible
+public class Sofa : MonoBehaviourPunCallbacks, IInteractible
 {
 
     [SerializeField] private bool b_isRightSide;
@@ -83,4 +85,11 @@ public class Sofa : MonoBehaviour, IInteractible
         sitter.GetComponent<PlayerMover>().b_isSitting = false;
         sitter = null;
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        EndSit();
+    }
+
 }

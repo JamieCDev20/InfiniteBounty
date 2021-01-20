@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Workbench : MonoBehaviour, IInteractible
+public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 {
 
     private PlayerInputManager pim;
@@ -220,6 +222,12 @@ public class Workbench : MonoBehaviour, IInteractible
 
 
     #endregion
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        EndInteract();
+    }
 
 }
 

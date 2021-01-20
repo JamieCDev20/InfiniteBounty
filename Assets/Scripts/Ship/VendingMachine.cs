@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -207,6 +208,11 @@ public class VendingMachine : SubjectBase, IInteractible
         _g.GetComponent<Rigidbody>().AddForce(t_augmentSpawnPoint.forward * 5, ForceMode.Impulse);
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        EndInteract();
+    }
 
 }
 

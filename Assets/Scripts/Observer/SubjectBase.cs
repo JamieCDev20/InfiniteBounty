@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubjectBase : MonoBehaviourPun
+public class SubjectBase : MonoBehaviourPunCallbacks
 {
     private List<ObserverBase> L_observers = new List<ObserverBase>();
     
