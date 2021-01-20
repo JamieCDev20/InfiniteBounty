@@ -6,7 +6,8 @@ using UnityEngine.Events;
 public class ElementalObject : MonoBehaviour, IElementable
 {
 
-    [SerializeField] private List<Element> eA_activeElements = new List<Element>(); //The elements on this object
+    [SerializeField] private List<Element> eL_activeElements = new List<Element>(); //The elements on this object
+    [SerializeField] private List<Element> eL_elementImmunities = new List<Element>(); //The elemental immunities of this object
     [SerializeField] private GameObject go_lrObject; //the line renderer for shocking
     [SerializeField] private Mesh mesh;
 
@@ -69,7 +70,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     }
     private void Init(Element _startingElement)
     {
-        eA_activeElements.Add(_startingElement);
+        eL_activeElements.Add(_startingElement);
     }
 
     private void OnDisable()
@@ -93,9 +94,9 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void InitialiseActivations() //add the intial activation stuff we should have
     {
         activated += ActivatedThisFrame;
-        for (int i = 0; i < eA_activeElements.Count; i++)
+        for (int i = 0; i < eL_activeElements.Count; i++)
         {
-            activated += activations[(int)eA_activeElements[i]];
+            activated += activations[(int)eL_activeElements[i]];
         }
     }
 
@@ -114,7 +115,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     public void RecieveElements(List<Element> _recieved)
     {
         //get affected by elements and carry out interactions
-        int size = eA_activeElements.Count;
+        int size = eL_activeElements.Count;
         for (int i = 0; i < _recieved.Count; i++)
         {
             RecieveElements(_recieved[0]);
@@ -123,10 +124,10 @@ public class ElementalObject : MonoBehaviour, IElementable
     public void RecieveElements(Element _recieved)
     {
         //get affected by elements and carry out interactions
-        int size = eA_activeElements.Count;
+        int size = eL_activeElements.Count;
         for (int i = 0; i < size; i++)
         {
-            interactions[(int)_recieved, (int)eA_activeElements[i]]();
+            interactions[(int)_recieved, (int)eL_activeElements[i]]();
         }
     }
 
@@ -196,12 +197,12 @@ public class ElementalObject : MonoBehaviour, IElementable
         yield return new WaitForEndOfFrame();
         if (add)
         {
-            eA_activeElements.Add(_elem);
+            eL_activeElements.Add(_elem);
             activated += activations[(int)_elem];
         }
         else
         {
-            eA_activeElements.Remove(_elem);
+            eL_activeElements.Remove(_elem);
             activated -= activations[(int)_elem];
         }
 
