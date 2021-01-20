@@ -59,7 +59,7 @@ public class ToolRack : Shop
                 moneyText.gameObject.SetActive(true);
                 moneyText.gameObject.transform.parent = tb.transform;
                 moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x + t_textOffset.x, tb.transform.position.y + t_textOffset.y, tb.transform.position.z + t_textOffset.z);
-                moneyText.text = tb.Cost.ToString();
+                moneyText.text = "£" + tb.Cost.ToString();
                 //Debug.Log(moneyText.transform.parent.name);
             }
 
@@ -167,13 +167,13 @@ public class ToolRack : Shop
         if (!_tb_toolToMat.Purchased)
         {
             foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
-                if(!mr.gameObject.GetComponent<TMP_Text>())
+                if (!mr.gameObject.GetComponent<TMP_Text>())
                     mr.sharedMaterial = m_silhouette;
         }
         else
         {
             foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
-                if(!mr.gameObject.GetComponent<TMP_Text>())
+                if (!mr.gameObject.GetComponent<TMP_Text>())
                     mr.sharedMaterial = m_purchased;
         }
     }
@@ -186,7 +186,7 @@ public class ToolRack : Shop
         {
             _tb_toolToShake.transform.position = new Vector3(_v_origin.x + Mathf.Sin(str * Time.deltaTime),
                 _v_origin.y, _v_origin.z);
-                timr += Time.deltaTime;
+            timr += Time.deltaTime;
         }
         yield return new WaitForEndOfFrame();
         _tb_toolToShake.transform.position = _v_origin;
