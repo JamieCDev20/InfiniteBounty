@@ -16,6 +16,8 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private GameObject[] goA_effects = new GameObject[7];
 
+    private List<Element> InitElements = new List<Element>();
+
     private delegate void ElementInteraction(); //Delegates for Elemental Interactions
     private delegate void ElementActivation(); //Delegates for Elemental Activations
 
@@ -38,6 +40,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         em = ElementManager.x;
         pO = GetComponent<PoolableObject>();
+        InitElements = eL_activeElements;
         ourHitable = GetComponent<IHitable>();
         if (mesh == null)
             mesh = GetComponentInChildren<MeshFilter>().mesh;
@@ -282,6 +285,15 @@ public class ElementalObject : MonoBehaviour, IElementable
         ourHitable.Die();
     }
 
+    public void ResetElements()
+    {
+        eL_activeElements = InitElements;
+        b_doThunder = true;
+        b_doBoom = true;
+        b_activatedThisFrame = false;
+
+    }
+
     #region ElementInteractions
 
     private void GooHydro()
@@ -470,4 +482,5 @@ public interface IElementable
     void ActivateElement(bool activaesThunder);
     void AddRemoveElement(Element _elem, bool add);
     List<Element> GetActiveElements();
+    void ResetElements();
 }
