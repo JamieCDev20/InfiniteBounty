@@ -16,7 +16,6 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     //The managers that will be spawned on start
     [SerializeField] private GameObject[] goA_toSpawnOnStart;
-    [SerializeField] private GameObject theSaviour;
 
     #endregion
 

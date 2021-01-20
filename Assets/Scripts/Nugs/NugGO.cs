@@ -108,8 +108,12 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             return;
         if (eO_elem)
         {
-
-            eO_elem.ActivateElement(activatesThunder);
+            eO_elem.ActivateElement(activatesThunder); 
+            Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
+            for (int i = 0; i < cols.Length; i++)
+            {
+                cols[i].GetComponent<IElementable>()?.RecieveElements(eO_elem.GetActiveElements());
+            }
         }
         myLode.NugGotHit(i_lodeID, damage, activatesThunder);
     }

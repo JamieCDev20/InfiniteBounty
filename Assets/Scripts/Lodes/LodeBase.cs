@@ -32,7 +32,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
 
 
         //if (mr_mainRenderer)
-         //   mr_mainRenderer.material.SetFloat("_emissionMult", f_baseEmission);
+        //   mr_mainRenderer.material.SetFloat("_emissionMult", f_baseEmission);
 
     }
 
@@ -207,7 +207,8 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     [PunRPC]
     public void RemoteNugHit(int _index, int _dmg, bool _thunderActivate)
     {
-        nuggets[_index].TakeDamageFromRemote(_dmg, _thunderActivate);
+        if (nuggets[_index] != null)
+            nuggets[_index].TakeDamageFromRemote(_dmg, _thunderActivate);
     }
 
 }
