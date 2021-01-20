@@ -77,23 +77,24 @@ MonoBehaviour:
   b_releaseActivated: 0
   go_particles: {fileID: 6559715803998442033}
   i_damage: 20
-  i_weight: 2
   i_lodeDamage: 40
+  f_weight: 0
   f_recoil: 1.5
   f_speed: 45
+  f_heatsink: 0
   f_knockback: 1
+  f_energyGauge: 0
   go_hitBox: {fileID: 6714505186059660760, guid: 170710955e5c7cc4eaa4cff43e3d9ac7,
     type: 3}
   i_elementDamage: 0
   f_elementDuration: 0
   f_elementFrequency: 0
-  go_explosion: {fileID: 0}
-  f_explosionRadius: 0
-  f_explosionKnockback: 0
-  s_meleeAnim: 
-  a_playerAnims: {fileID: 0}
   b_rackUpgrade: 1
   c_playerCollider: {fileID: 0}
+  A_augmentSlots: []
+  tr_trail: {fileID: 0}
+  s_meleeAnim: 
+  a_playerAnims: {fileID: 0}
   f_shotSpeed: 1000
   i_shotsPerRound: 1
   pm_physicsMat: {fileID: 0}
@@ -150,7 +151,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.902
   m_Pitch: 1
   Loop: 0

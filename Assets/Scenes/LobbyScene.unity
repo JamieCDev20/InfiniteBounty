@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.33350492, g: 0.4994853, b: 0.8330084, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -966,7 +966,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0d9a1eec609406b40af979695be2b4bd, type: 3}
   - {fileID: 8300000, guid: e7eb755bbeda5554c883d2278de75ca1, type: 3}
   b_shouldOnlyPlayClipsOnce: 1
-  v_gapBetweenClips: {x: 30, y: 40}
+  v_gapBetweenClips: {x: 180, y: 240}
 --- !u!1 &119486969 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 119486969, guid: 8d05161c35f163d48a5d1c4f32295305,
@@ -6365,7 +6365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &955400591
 Transform:
   m_ObjectHideFlags: 0
@@ -6389,10 +6389,11 @@ AudioSource:
   m_GameObject: {fileID: 955400590}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a8176709bbf996c48a0235a5e2f0fd06,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6496,7 +6497,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0d9a1eec609406b40af979695be2b4bd, type: 3}
   - {fileID: 8300000, guid: e7eb755bbeda5554c883d2278de75ca1, type: 3}
   b_shouldOnlyPlayClipsOnce: 1
-  v_gapBetweenClips: {x: 30, y: 40}
+  v_gapBetweenClips: {x: 180, y: 240}
 --- !u!1 &955681477
 GameObject:
   m_ObjectHideFlags: 0
@@ -26469,7 +26470,7 @@ PrefabInstance:
     - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 207.6174
+      value: 24274.5
       objectReference: {fileID: 0}
     - target: {fileID: 7211629806612318130, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
