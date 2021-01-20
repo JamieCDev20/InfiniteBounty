@@ -108,7 +108,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         else
             flag = true;
         b_shouldDie = true;
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
             StartCoroutine(EOFCheckDie());
     }
 
@@ -178,7 +178,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     }
     public void AddRemoveElement(Element _elem, bool add)
     {
-        StartCoroutine(AddRemoveAtEOF(_elem, add));
+        if (gameObject.activeSelf)
+            StartCoroutine(AddRemoveAtEOF(_elem, add));
     }
     public void AddRemoveElement(Element _elem, bool add, float _duration)
     {
@@ -298,7 +299,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         SetStatusEffect(Element.boom, false);
         SetStatusEffect(Element.hydro, true, em.hydroDuration);
-            }
+    }
 
     private void HydroTasty()
     {
@@ -401,8 +402,11 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (b_activatedThisFrame || !b_doBoom)
             return;
         b_doBoom = false;
-        SetStatusEffect(Element.boom, true, em.boomFuse);
-        StartCoroutine(Explode(em.boomFuse));
+        if (gameObject.activeSelf)
+        {
+            SetStatusEffect(Element.boom, true, em.boomFuse);
+            StartCoroutine(Explode(em.boomFuse));
+        }
     }
 
     private void FireActivate()
@@ -426,6 +430,11 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     #endregion
 
+    public List<Element> GetActiveElements()
+    {
+        return eL_activeElements;
+    }
+
 }
 
 public enum Element
@@ -447,4 +456,5 @@ public interface IElementable
     void SetStatusEffect(Element _status, bool _val, float _time);
     void ActivateElement(bool activaesThunder);
     void AddRemoveElement(Element _elem, bool add);
+    List<Element> GetActiveElements();
 }
