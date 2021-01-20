@@ -127,7 +127,15 @@ public class ElementalObject : MonoBehaviour, IElementable
         int size = eL_activeElements.Count;
         for (int i = 0; i < size; i++)
         {
-            interactions[(int)_recieved, (int)eL_activeElements[i]]();
+            try
+            {
+                interactions[(int)_recieved, (int)eL_activeElements[i]]();
+
+            }
+            catch
+            {
+
+            }
         }
     }
 
