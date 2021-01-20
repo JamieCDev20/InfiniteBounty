@@ -37,6 +37,9 @@ public class PauseMenuController : MonoBehaviour
 
         cc_cam = GetComponentInParent<CameraController>();
         SetSensitivty();
+        SetAmbienceVolume();
+        SetMusicVolume();
+        SetSFXVolume();
     }
 
     #region Nick Stuff
