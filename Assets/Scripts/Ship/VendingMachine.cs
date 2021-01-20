@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VendingMachine : MonoBehaviour, IInteractible
+public class VendingMachine : SubjectBase, IInteractible
 {
 
     [SerializeField] private Transform t_camParent;
     private Transform t_camPositionToReturnTo;
     private PlayerInputManager pim;
+    private AugmentManager augMan;
     [SerializeField] private int i_timesToLerpCam = 15;
     [SerializeField] private float f_lerpTime = 0.5f;
     [SerializeField] private float f_cameraMovementT = 0.3f;
     private int i_currentAugmentIndex;
-    private Augment[] aA_avaliableAugments = new Augment[9];
+    private AugmentGo[] aA_avaliableAugments = new AugmentGo[9];
     [SerializeField] private Canvas c_vendingCanvas;
     [SerializeField] private AugmentDisplay vmd_vendingMachineDisplay;
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
@@ -33,7 +34,7 @@ public class VendingMachine : MonoBehaviour, IInteractible
     [SerializeField] private Transform t_augmentSpawnPoint;
     private Animator anim;
 
-    private void Start()
+    public void Init(AugmentManager _am)
     {
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
@@ -42,7 +43,9 @@ public class VendingMachine : MonoBehaviour, IInteractible
         i_currentAugmentIndex = _i;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
         UpdateAugmentDisplay();
-
+        AddObserver(FindObjectOfType<SaveManager>());
+        augMan = _am;
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length));
     }
 
     #region Interactions
@@ -111,13 +114,6 @@ public class VendingMachine : MonoBehaviour, IInteractible
         Vector3 start = _t.localPosition;
         Quaternion iRot = _t.rotation;
 
-        //for (int i = 0; i < i_timesToLerpCam; i++)
-        //{
-        //    _t.localPosition = Vector3.Lerp(_t.localPosition, Vector3.zero, f_cameraMovementT);
-        //    _t.localEulerAngles = Vector3.Lerp(_t.localEulerAngles, Vector3.zero, f_cameraMovementT);
-        //    yield return new WaitForEndOfFrame();
-        //}
-
         while (t < 1)
         {
             _t.localPosition = Vector3.Lerp(start, Vector3.zero, t);
@@ -174,8 +170,13 @@ public class VendingMachine : MonoBehaviour, IInteractible
                 as_source.pitch = 1;
                 as_source.PlayOneShot(ac_whirringClip);
                 StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
-                StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex]));
-                aA_avaliableAugments[i_currentAugmentIndex] = null;
+                StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
+                Augment[] grabbedAugment = new Augment[1];
+                grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
+                // Player Save data needs: 0, Cost of Augment, Augment Reference
+                SaveEvent se = new SaveEvent(new PlayerSaveData(0, 0, grabbedAugment));
+                Notify(se);
+                aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
                 rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
             }
     }
@@ -192,9 +193,8 @@ public class VendingMachine : MonoBehaviour, IInteractible
         _rb.AddTorque(new Vector3(UnityEngine.Random.Range(-360, 360), UnityEngine.Random.Range(-360, 360), UnityEngine.Random.Range(-360, 360)), ForceMode.Impulse);
     }
 
-    public void GetAugments(Augment[] _aA_augments, ProjectileAugment[] _paA_projs, ConeAugment[] _caA_cones)
+    public void GetAugments(AugmentGo[] _aA_augments)
     {
-        Debug.LogError("AUGMENTS OBTAINED. PROCEEDING WITH RETAIL.");
         aA_avaliableAugments = _aA_augments;
     }
 

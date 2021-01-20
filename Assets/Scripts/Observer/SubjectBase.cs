@@ -10,7 +10,8 @@ public class SubjectBase : MonoBehaviourPun
     protected void Notify(ObserverEvent oe_event)
     {
         foreach (ObserverBase obs in L_observers)
-            obs.OnNotify(oe_event);
+            if(obs != null)
+                obs.OnNotify(oe_event);
     }
     public void AddObserver(ObserverBase _ob_obs)
     {

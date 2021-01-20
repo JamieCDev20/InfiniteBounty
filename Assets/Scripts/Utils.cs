@@ -50,9 +50,13 @@ public class Utils
     {
         T[] output = new T[a.Length + b.Length];
         for (int i = 0; i < a.Length; i++)
+        {
             output[i] = a[i];
+        }
         for (int j = 0; j < b.Length; j++)
-            output[a.Length + 1 + j] = b[j];
+        {
+            output[a.Length + j] = b[j];
+        }
         return output;
     }
 }

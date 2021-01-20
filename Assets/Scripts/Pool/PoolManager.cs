@@ -159,7 +159,12 @@ public class PoolManager : MonoBehaviour
         if (pools.ContainsKey(type.name))
             pools[type.name].ReturnToPool(type);
     }
-    public HashSet<IPoolable> GetPooledObject(GameObject type)
+    /// <summary>
+    /// Get the hashset of objects
+    /// </summary>
+    /// <param name="type">Type of pool</param>
+    /// <returns></returns>
+    public HashSet<IPoolable> GetPooledObjects(GameObject type)
     {
         if (pools.Contains(type.name))
             return pools[type.name].GetPooledObjects();

@@ -9,6 +9,7 @@ public class Workbench : MonoBehaviour, IInteractible
     private PlayerInputManager pim;
     private bool b_isBeingUsed;
     private Transform t_camPositionToReturnTo;
+    private SaveManager saveMan;
     [SerializeField] private Canvas c_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
 
@@ -32,6 +33,11 @@ public class Workbench : MonoBehaviour, IInteractible
 
 
     #region Interactions
+
+    public void Init(SaveManager _sm)
+    {
+        saveMan = _sm;
+    }
 
     public void Interacted(Transform interactor)
     {
@@ -57,6 +63,12 @@ public class Workbench : MonoBehaviour, IInteractible
 
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
+
+            if(saveMan.SaveData.purchasedAugments != null)
+            {
+                Augment[] augs = saveMan.SaveData.purchasedAugments;
+                InitAugmentList(augs, false);
+            }
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
