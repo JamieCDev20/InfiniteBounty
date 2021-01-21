@@ -12,6 +12,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     private bool b_isBeingUsed;
     private Transform t_camPositionToReturnTo;
     private SaveManager saveMan;
+    [SerializeField] private ToolLoader tl;
     [SerializeField] private Canvas c_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
 
@@ -26,6 +27,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private RectTransform rt_augmentButtonParent;
     [SerializeField] private float f_augmentButtonHeight = 85;
     private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
+    [SerializeField] private List<WeaponTool> wt_toolsInHand = new List<WeaponTool>();
     private int i_currentAugmentIndex;
     [SerializeField] private Scrollbar s_slider;
 
@@ -39,6 +41,10 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     public void Init(SaveManager _sm)
     {
         saveMan = _sm;
+        foreach (ToolLoader too in FindObjectsOfType<ToolLoader>())
+            if (too.name.Contains("Weapon"))
+                tl = too;
+        tl.LoadTools(transform);
     }
 
     public void Interacted(Transform interactor)
@@ -50,6 +56,11 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
             b_isBeingUsed = true;
             pim = interactor.GetComponent<PlayerInputManager>();
+            ToolHandler th = interactor.GetComponent<ToolHandler>();
+            if (th.GetTool(0) != -1)
+                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th.GetTool(0)));
+            if (th.GetTool(1) != -1)
+                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th.GetTool(1)));
             PlayerMover pm = pim.GetComponent<PlayerMover>();
             pm.GetComponent<Rigidbody>().isKinematic = true;
             pim.b_shouldPassInputs = false;
@@ -66,7 +77,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
 
-            if(saveMan.SaveData.purchasedAugments != null)
+            if (saveMan.SaveData.purchasedAugments != null)
             {
                 Augment[] augs = saveMan.SaveData.purchasedAugments;
                 InitAugmentList(augs, false);
@@ -81,10 +92,12 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void EndInteract()
     {
-        PlayerMover pm = pim.GetComponent<PlayerMover>();
+        PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
         pm.enabled = true;
+
+        wt_toolsInHand.Clear();
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
 
@@ -194,15 +207,16 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     public void ApplyAugment()
     {
         print("APPLY AUGMENT");
+        //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
 
     public void ClickAugment(int _i_augmentIndexClicked)
     {
+        /*
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
-        /*
         aL_augmentsInPool[i_currentAugment].t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
         aL_augmentsInPool[i_currentAugment].t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Name;
         aL_augmentsInPool[i_currentAugment].t_augmentType.text = aA_avaliableAugments[i_currentAugmentIndex].type;

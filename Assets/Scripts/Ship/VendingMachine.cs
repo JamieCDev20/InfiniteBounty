@@ -83,7 +83,7 @@ public class VendingMachine : SubjectBase, IInteractible
 
     public void EndInteract()
     {
-        PlayerMover pm = pim.GetComponent<PlayerMover>();
+        PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
         pm.enabled = true;

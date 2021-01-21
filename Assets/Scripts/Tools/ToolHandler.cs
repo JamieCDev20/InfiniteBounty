@@ -263,7 +263,9 @@ public class ToolHandler : SubjectBase
 
     public int GetTool(int index)
     {
-        return A_tools[index].ToolID;
+        if(A_tools[index] != null)
+            return A_tools[index].ToolID;
+        return -1;
     }
 
     private void RemoveTool(ToolSlot _ts_slot)
