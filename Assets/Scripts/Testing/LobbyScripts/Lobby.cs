@@ -32,7 +32,6 @@ public class Lobby : MonoBehaviourPunCallbacks
         //PhotonNetwork.ConnectUsingSettings();
         if (HostButton != null)
             HostButton.interactable = false;
-        Debug.Log(if_playerName, gameObject);
         if (PlayerPrefs.HasKey("playerName"))
             if_playerName.text = PlayerPrefs.GetString("playerName");
         if (PlayerPrefs.HasKey("roomName"))
