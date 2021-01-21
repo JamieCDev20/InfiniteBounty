@@ -23,6 +23,8 @@ public class Lobby : MonoBehaviourPunCallbacks
     [Space, SerializeField] private int f_lobbyButtonHeight;
     [SerializeField] private int f_topmostLobbyPositionY;
 
+    [Space, SerializeField] private Button[] bA_buttonsToSetToNonInteractableWhenHostIsClicked = new Button[0];
+
     private void Start()
     {
         sb_bar.value = 1;
@@ -64,7 +66,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinedLobby()
-    {        
+    {
         Debug.Log("joined lobby");
     }
 
@@ -80,11 +82,17 @@ public class Lobby : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
         t_camera.gameObject.SetActive(false);
         gr_menuRaycaster.enabled = false;
+
+        for (int i = 0; i < bA_buttonsToSetToNonInteractableWhenHostIsClicked.Length; i++)
+            bA_buttonsToSetToNonInteractableWhenHostIsClicked[i].enabled = false;
+
     }
 
     public void OnClickLeave()
     {
         PhotonNetwork.LeaveRoom();
+        for (int i = 0; i < bA_buttonsToSetToNonInteractableWhenHostIsClicked.Length; i++)
+            bA_buttonsToSetToNonInteractableWhenHostIsClicked[i].enabled = true;
     }
 
     public void OnClickCreate()
@@ -92,6 +100,9 @@ public class Lobby : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(if_gameTitleInput.text, new RoomOptions { MaxPlayers = 4 }, TypedLobby.Default);
         t_camera.gameObject.SetActive(false);
         gr_menuRaycaster.enabled = false;
+
+        for (int i = 0; i < bA_buttonsToSetToNonInteractableWhenHostIsClicked.Length; i++)
+            bA_buttonsToSetToNonInteractableWhenHostIsClicked[i].enabled = false;
     }
 
     public void OnClickQuit()

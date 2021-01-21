@@ -49,7 +49,6 @@ public class PauseMenuController : MonoBehaviour
         if (b_isPaused)
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Debug.Log("press");
                 Resume();
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -77,6 +76,7 @@ public class PauseMenuController : MonoBehaviour
         }
 
         c_pauseCanvas.enabled = false;
+        c_optionsMenu.enabled = false;
 
         pim.b_shouldPassInputs = true;
         cc_cam.enabled = true;
@@ -95,13 +95,13 @@ public class PauseMenuController : MonoBehaviour
             c_playCanvas.enabled = false;
 
         c_pauseCanvas.enabled = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
         pim.b_shouldPassInputs = false;
         cc_cam.enabled = false;
         pim.GetComponent<PlayerAnimator>().SetShootability(false);
         rb_playerPhysics.isKinematic = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Quit()
