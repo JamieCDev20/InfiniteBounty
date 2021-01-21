@@ -28,7 +28,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshPro nameText;
     [Space]
     [SerializeField] private bool offline = false;
-
+    
     #endregion
 
     #region Private
@@ -198,6 +198,13 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Public Voids
+
+    public void SetMoving(bool _val)
+    {
+        rb.velocity = _val? rb.velocity : Vector3.zero;
+        mover.enabled = _val;
+        rb.isKinematic = !_val;
+    }
 
     public void GoToSpawnPoint()
     {
