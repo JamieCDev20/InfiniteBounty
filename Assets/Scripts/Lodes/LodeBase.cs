@@ -201,7 +201,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
 
     public void NugGotHit(int _index, int _dmg, bool _thunderActivate)
     {
-        //photonView.RPC("RemoteNugHit", RpcTarget.Others, _index, _dmg, _thunderActivate);
+        photonView.RPC("RemoteNugHit", RpcTarget.Others, _index, _dmg, _thunderActivate);
     }
 
     [PunRPC]

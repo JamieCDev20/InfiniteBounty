@@ -287,10 +287,13 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void ResetElements()
     {
-        eL_activeElements = InitElements;
+        eL_activeElements = new List<Element>();
+
         b_doThunder = true;
         b_doBoom = true;
         b_activatedThisFrame = false;
+
+        Init(InitElements.ToArray());
 
     }
 
@@ -329,6 +332,8 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void HydroThunder()
     {
+        if (!b_doThunder)
+            return;
         b_doThunder = false;
         AddRemoveElement(Element.thunder, true);
     }
@@ -369,8 +374,10 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
+
         AddRemoveElement(Element.hydro, true);
         SetStatusEffect(Element.hydro, true);
+
     }
 
     private void TastyActivate()
@@ -415,6 +422,7 @@ public class ElementalObject : MonoBehaviour, IElementable
                 break;
         }
         SetLineRendererPos(verts.ToArray()); //Show the shock lines
+        AddRemoveElement(Element.thunder, false);
     }
 
     private void BoomActivate()
@@ -460,6 +468,11 @@ public class ElementalObject : MonoBehaviour, IElementable
         return eL_activeElements;
     }
 
+    public bool[] GetStatuses()
+    {
+        return bA_statuses;
+    }
+
 }
 
 public enum Element
@@ -482,5 +495,6 @@ public interface IElementable
     void ActivateElement(bool activaesThunder);
     void AddRemoveElement(Element _elem, bool add);
     List<Element> GetActiveElements();
+    bool[] GetStatuses();
     void ResetElements();
 }
