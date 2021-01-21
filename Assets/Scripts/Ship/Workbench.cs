@@ -15,7 +15,6 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private ToolLoader tl;
     [SerializeField] private Canvas c_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
-
     [Header("Camera & Movement")]
     [SerializeField] private Transform t_camParent;
     [SerializeField] private int i_timesToLerpCam = 50;
@@ -26,9 +25,10 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private GameObject go_augmentButton;
     [SerializeField] private RectTransform rt_augmentButtonParent;
     [SerializeField] private float f_augmentButtonHeight = 85;
-    private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
+    [SerializeField] private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
     [SerializeField] private List<WeaponTool> wt_toolsInHand = new List<WeaponTool>();
     private int i_currentAugmentIndex;
+    private int i_currentWeaponIndex = 0;
     [SerializeField] private Scrollbar s_slider;
 
     [Header("Augment Display")]
@@ -51,17 +51,22 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     {
         if (!b_isBeingUsed)
         {
+            // Move player to cinimatic point
             interactor.position = t_playerPos.position;
             interactor.transform.forward = t_playerPos.forward;
-
+            // Don't let the menu be used twice
             b_isBeingUsed = true;
             pim = interactor.GetComponent<PlayerInputManager>();
             ToolHandler th = interactor.GetComponent<ToolHandler>();
+            PlayerMover pm = pim.GetComponent<PlayerMover>();
+
+            // Check if there's tools in the players hands
             if (th.GetTool(0) != -1)
                 wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th.GetTool(0)));
             if (th.GetTool(1) != -1)
                 wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th.GetTool(1)));
-            PlayerMover pm = pim.GetComponent<PlayerMover>();
+
+            // Stop the player and camera from moving 
             pm.GetComponent<Rigidbody>().isKinematic = true;
             pim.b_shouldPassInputs = false;
             pm.enabled = false;
@@ -69,20 +74,20 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             pim.GetCamera().enabled = false;
             Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
             pm.GetComponent<PlayerAnimator>().enabled = false;
-
+            // Stop player from shooting
             PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
             _pa.SetShootability(false);
             _pa.StopWalking();
 
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
-
+            // Find any saved augments and load them
             if (saveMan.SaveData.purchasedAugments != null)
             {
                 Augment[] augs = saveMan.SaveData.purchasedAugments;
                 InitAugmentList(augs, false);
             }
-
+            // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
@@ -92,22 +97,24 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void EndInteract()
     {
+        // Make the player able to move
         PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
         pm.enabled = true;
-
+        // Remove weapon refs
         wt_toolsInHand.Clear();
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
-
+        // Player is able to move camera
         c_workbenchCanvas.enabled = false;
         pim.GetCamera().enabled = true;
+        // Player is able to animate again!
         pm.GetComponent<PlayerAnimator>().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);
         _pa.StartWalking();
-
+        // Remove the cursor and allow the bench to be used again
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         b_isBeingUsed = false;
@@ -126,13 +133,6 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
         Vector3 start = _t.localPosition;
         Quaternion iRot = _t.rotation;
-
-        //for (int i = 0; i < i_timesToLerpCam; i++)
-        //{
-        //    _t.localPosition = Vector3.Lerp(_t.localPosition, Vector3.zero, f_cameraMovementT);
-        //    _t.localEulerAngles = Vector3.Lerp(_t.localEulerAngles, Vector3.zero, f_cameraMovementT);
-        //    yield return new WaitForEndOfFrame();
-        //}
 
         while (t < 1)
         {
@@ -157,18 +157,18 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     internal void InitAugmentList(Augment[] _aA_augmentsInList, bool _b_shouldAddToExistingList)
     {
+        // Clear the display
         if (!_b_shouldAddToExistingList)
             aL_allAugmentsOwned.Clear();
-
+        // Update display from save file
         aL_allAugmentsOwned.AddRange(_aA_augmentsInList);
-
         UpdateAugmentListDisplay(AugmentDisplayType.ShowAll);
     }
 
     private void UpdateAugmentListDisplay(AugmentDisplayType _adt_whichToShow)
     {
         List<Augment> _aL_augmentsToShow = new List<Augment>();
-
+        // Currently only show all augments
         switch (_adt_whichToShow)
         {
             case AugmentDisplayType.ShowAll:
@@ -192,9 +192,9 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
             goL_augmentButtonPool[i].SetActive(true);
             goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
-            goL_augmentButtonPool[i].GetComponent<Button>().onClick.AddListener(delegate { ClickAugment(i); });
             //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
             goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[i].Name;
+            goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
         }
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_allAugmentsOwned.Count + 1));
@@ -207,22 +207,46 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     public void ApplyAugment()
     {
         print("APPLY AUGMENT");
+        switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
+        {
+            case AugmentType.standard:
+                ToolBase tb = wt_toolsInHand[i_currentWeaponIndex].GetComponent<ToolBase>();
+                break;
+            case AugmentType.projectile:
+                break;
+            case AugmentType.cone:
+                break;
+
+        }
         //aL_allAugmentsOwned[i_currentAugmentIndex];
+    }
+
+    private bool CheckCompatability(AugmentType _at, ToolBase _tb)
+    {
+        switch (_at)
+        {
+            case AugmentType.standard:
+                break;
+            case AugmentType.projectile:
+                break;
+            case AugmentType.cone:
+                break;
+        }
+        return false;
     }
 
     public void ClickAugment(int _i_augmentIndexClicked)
     {
-        /*
+        Debug.Log(_i_augmentIndexClicked);
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
-
+        /*
         aL_augmentsInPool[i_currentAugment].t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
         aL_augmentsInPool[i_currentAugment].t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Name;
         aL_augmentsInPool[i_currentAugment].t_augmentType.text = aA_avaliableAugments[i_currentAugmentIndex].type;
         aL_augmentsInPool[i_currentAugment].t_augmentFits.text = aA_avaliableAugments[i_currentAugmentIndex].fits;
-        aL_augmentsInPool[i_currentAugment].t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;        
-        */
+        aL_augmentsInPool[i_currentAugment].t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;*/
     }
 
     #endregion
@@ -231,7 +255,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void ChangeWeapon(int _i_weaponIndexChange)
     {
-
+        i_currentWeaponIndex = _i_weaponIndexChange;
     }
 
 

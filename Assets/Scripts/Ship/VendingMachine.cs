@@ -152,15 +152,24 @@ public class VendingMachine : SubjectBase, IInteractible
     private void UpdateAugmentDisplay()
     {
         print("Is trying to update the Augment display to match Augment " + i_currentAugmentIndex);
-
         /*
-        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
-        vmd_vendingMachineDisplay.t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Name;
-        vmd_vendingMachineDisplay.t_augmentType.text = aA_avaliableAugments[i_currentAugmentIndex].type;
+        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level;
+        vmd_vendingMachineDisplay.t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Name;
+        switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
+        {
+            case AugmentType.standard:
+                vmd_vendingMachineDisplay.t_augmentType.text = "Standard";
+                break;
+            case AugmentType.projectile:
+                vmd_vendingMachineDisplay.t_augmentType.text = "Projectile";
+                break;
+            case AugmentType.cone:
+                vmd_vendingMachineDisplay.t_augmentType.text = "Cone";
+                break;
+        }
         vmd_vendingMachineDisplay.t_augmentFits.text = aA_avaliableAugments[i_currentAugmentIndex].fits;
         vmd_vendingMachineDisplay.t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;
-        vmd_vendingMachineDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].cost;
-        */
+        vmd_vendingMachineDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].cost;*/
     }
 
     public void BuyAugment()
