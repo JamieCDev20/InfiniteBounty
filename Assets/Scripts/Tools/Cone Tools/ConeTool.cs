@@ -7,6 +7,7 @@ public class ConeTool : WeaponTool
     [SerializeField] protected float f_angle;
     [SerializeField] protected float f_radius;
     [SerializeField] protected Transform t_conePoint;
+    private const AugmentType augType = AugmentType.cone;
 
     private bool CheckInCone(Transform _t_objectToCheck, Vector3 _t_camPos)
     {

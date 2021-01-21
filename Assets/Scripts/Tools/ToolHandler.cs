@@ -268,6 +268,13 @@ public class ToolHandler : SubjectBase
         return -1;
     }
 
+    public ToolBase GetToolBase(int index)
+    {
+        if (A_tools[index] != null)
+            return A_tools[index];
+        return null;
+    }
+
     private void RemoveTool(ToolSlot _ts_slot)
     {
         if (A_tools[(int)_ts_slot] != null)

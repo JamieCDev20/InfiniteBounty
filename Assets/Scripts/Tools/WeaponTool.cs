@@ -32,11 +32,13 @@ public class WeaponTool : ToolBase
     #region Serialized Privates
     [SerializeField] private string s_meleeAnim;
     [SerializeField] private Animator a_playerAnims;
+    private const AugmentType augType = AugmentType.standard;
+    public AugmentType AugType { get { return augType; } }
     #endregion
 
     // Detonation is if it explodes immediately, on impact or on a timer
     #region Protected
-    protected Augment[] A_augs;
+    [SerializeField] protected Augment[] A_augs;
     #endregion
 
 
@@ -46,7 +48,7 @@ public class WeaponTool : ToolBase
 
     protected void OnEnable()
     {
-
+        A_augs = new Augment[A_augmentSlots.Length];
     }
     public override void Use()
     {
@@ -64,16 +66,23 @@ public class WeaponTool : ToolBase
         a_playerAnims.SetBool(s_meleeAnim, _b_);
     }
 
-    public virtual void AddStatChanges(Augment aug)
+    public virtual bool AddStatChanges(Augment aug)
     {
-        A_augs[GetInactiveAugmentIndex()] = aug;
-        // Set the properties
-        AugmentProperties ap = aug.GetAugmentProperties();
-        AddToAugmentProperties(ap);
-        // Set the physical
-        AugmentPhysicals aPhys = aug.GetPhysicalProperties();
-        AddToPhysicalProperties(aPhys);
-
+        if (A_augs != null && A_augs.Length >= 0)
+        {
+            int i = GetInactiveAugmentIndex();
+            if (i == -1)
+                return false;
+            A_augs[i] = aug;
+            // Set the properties
+            AugmentProperties ap = aug.GetAugmentProperties();
+            AddToAugmentProperties(ap);
+            // Set the physical
+            AugmentPhysicals aPhys = aug.GetPhysicalProperties();
+            AddToPhysicalProperties(aPhys);
+            return true;
+        }
+        return false;
 
     }
 
@@ -90,8 +99,12 @@ public class WeaponTool : ToolBase
     public int GetInactiveAugmentIndex()
     {
         for (int i = 0; i < A_augs.Length; i++)
+        {
             if (A_augs[i] == null)
+            {
                 return i;
+            }
+        }
         return -1;
     }
 
@@ -109,8 +122,11 @@ public class WeaponTool : ToolBase
 
     private void AddToPhysicalProperties(AugmentPhysicals ap)
     {
-        tr_trail.startWidth = ap.f_trWidth;
-        tr_trail.endWidth = ap.f_trWidth;
+        if(tr_trail != null)
+        {
+            tr_trail.startWidth = ap.f_trWidth;
+            tr_trail.endWidth = ap.f_trWidth;
+        }
         // Add the keys here
         // ap.A_trKeys;
     }
