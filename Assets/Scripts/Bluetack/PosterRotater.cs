@@ -15,6 +15,7 @@ public class PosterRotater : MonoBehaviour
 
     private void MoveAd()
     {
+        float t = Time.realtimeSinceStartup;
         RectTransform _rt = rtL_adParents[0];
         rtL_adParents.RemoveAt(0);
         rtL_adParents.Add(_rt);

@@ -18,7 +18,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private Button HostButton;
     [SerializeField] private GraphicRaycaster gr_menuRaycaster;
 
-    private List<Listing> goL_listings = new List<Listing>();
+    private List<Listing> goL_listings = new List<Listing>(20);
     private List<RoomInfo> riL_currentRooms = new List<RoomInfo>();
     [Space, SerializeField] private int f_lobbyButtonHeight;
     [SerializeField] private int f_topmostLobbyPositionY;
@@ -27,9 +27,12 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        sb_bar.value = 1;
+        if (sb_bar != null)
+            sb_bar.value = 1;
         //PhotonNetwork.ConnectUsingSettings();
-        HostButton.interactable = false;
+        if (HostButton != null)
+            HostButton.interactable = false;
+        Debug.Log(if_playerName, gameObject);
         if (PlayerPrefs.HasKey("playerName"))
             if_playerName.text = PlayerPrefs.GetString("playerName");
         if (PlayerPrefs.HasKey("roomName"))
@@ -61,7 +64,8 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected");
-        HostButton.interactable = true;
+        if (HostButton != null)
+            HostButton.interactable = true;
         //PhotonNetwork.JoinLobby();
     }
 
@@ -138,7 +142,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     private void UpdateRoomListDisplay()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < goL_listings.Count; i++)
             goL_listings[i].gameObject.SetActive(false);
 
         for (int i = 0; i < riL_currentRooms.Count; i++)

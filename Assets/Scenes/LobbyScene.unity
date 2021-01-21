@@ -20790,10 +20790,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 11157417, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11157417, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
@@ -20801,23 +20797,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 776373193, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 105
+    - target: {fileID: 11157417, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 776373193, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -220
-      objectReference: {fileID: 0}
-    - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 207.31464
+    - target: {fileID: 30761653, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 10
+      propertyPath: m_AnchoredPosition.y
+      value: 207.49994
       objectReference: {fileID: 0}
     - target: {fileID: 7211629806612318130, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
@@ -20879,37 +20870,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 717992742364705145, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
---- !u!1 &7211629807479709915 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7211629806612318130, guid: 717dab0a65a3a0540b9b2485d386840c,
-    type: 3}
-  m_PrefabInstance: {fileID: 7211629807479709914}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7211629807479709916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7211629807479709915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5d4ff62909109e448099bc52ee5b9be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  if_gameTitleInput: {fileID: 0}
-  if_playerName: {fileID: 0}
-  sb_bar: {fileID: 0}
-  go_roomListing: {fileID: 0}
-  t_roomListParent: {fileID: 0}
-  t_camera: {fileID: 0}
-  HostButton: {fileID: 0}
-  gr_menuRaycaster: {fileID: 0}
-  f_lobbyButtonHeight: 0
-  f_topmostLobbyPositionY: 0
-  bA_buttonsToSetToNonInteractableWhenHostIsClicked: []
 --- !u!1001 &8062822099413367491
 PrefabInstance:
   m_ObjectHideFlags: 0
