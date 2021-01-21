@@ -207,21 +207,36 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     public void ApplyAugment()
     {
         print("APPLY AUGMENT");
-        switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
-        {
-            case AugmentType.standard:
-                ToolBase tb = wt_toolsInHand[i_currentWeaponIndex].GetComponent<ToolBase>();
-                break;
-            case AugmentType.projectile:
-                break;
-            case AugmentType.cone:
-                break;
+        if(wt_toolsInHand != null)
+            switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
+            {
+                case AugmentType.standard:
+                    WeaponTool wt = wt_toolsInHand[i_currentWeaponIndex].GetComponent<WeaponTool>();
+                    if (CheckCompatability(AugmentType.standard, wt))
+                        wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]);
+                    else
+                        Debug.LogError("Incompatable Augment Type");
+                    break;
+                case AugmentType.projectile:
+                    ProjectileTool pt = wt_toolsInHand[i_currentWeaponIndex].GetComponent<ProjectileTool>();
+                    if (CheckCompatability(AugmentType.standard, (WeaponTool)pt))
+                        pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]);
+                    else
+                        Debug.LogError("Incompatable Augment Type");
+                    break;
+                case AugmentType.cone:
+                    ConeTool ct = wt_toolsInHand[i_currentWeaponIndex].GetComponent<ConeTool>();
+                    if (CheckCompatability(AugmentType.standard, (WeaponTool)ct))
+                        ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]);
+                    else
+                        Debug.LogError("Incompatable Augment Type");
+                    break;
 
-        }
+            }
         //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
 
-    private bool CheckCompatability(AugmentType _at, ToolBase _tb)
+    private bool CheckCompatability(AugmentType _at, WeaponTool _wb)
     {
         switch (_at)
         {
@@ -237,7 +252,6 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void ClickAugment(int _i_augmentIndexClicked)
     {
-        Debug.Log(_i_augmentIndexClicked);
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
