@@ -30,9 +30,17 @@ public class HUDController : MonoBehaviour
     [SerializeField] private GameObject go_bbObject;
     [SerializeField] private ScoreObjects texts;
 
-    private void Start()
+    [Header("Other UI")]
+    [SerializeField] private Transform hudCanvas;
+
+    private void Awake()
     {
         x = this;
+        
+    }
+
+    private void Start()
+    {
         SetHealthBarValue(1, 1);
         SetBBTotal();
         SceneManager.sceneLoaded += SceneLoad;
@@ -90,6 +98,11 @@ public class HUDController : MonoBehaviour
         go_nugHudParent.SetActive(inLevel);
         go_bbObject.SetActive(!inLevel);
         
+    }
+
+    public Transform GetHudCanvasTransform()
+    {
+        return hudCanvas;
     }
 
 }
