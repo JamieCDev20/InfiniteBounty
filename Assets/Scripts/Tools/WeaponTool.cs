@@ -101,9 +101,9 @@ public class WeaponTool : ToolBase
         for (int i = 0; i < A_augs.Length; i++)
         {
             if (A_augs[i] == null)
-            {
                 return i;
-            }
+            else if (A_augs[i].Name == null)
+                return i;
         }
         return -1;
     }
