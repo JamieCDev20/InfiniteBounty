@@ -175,6 +175,16 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    public bool CheckIfPoolExists(GameObject type)
+    {
+        foreach(string pool in pools.Keys)
+        {
+            if (pool == type.name)
+                return true;
+        }
+        return false;
+    }
+
     internal void SpawnObject(object go_augmentPrefab, object position, Quaternion quaternion)
     {
         throw new NotImplementedException();
