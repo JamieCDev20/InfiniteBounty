@@ -204,7 +204,9 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     private void DisplayWeapon()
     {
-        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex].ToolID).SetActive(true);
+        ToolBase tb = tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]);
+        tb.SetActive(true);
+        Debug.Log(tb.name);
     }
 
     private void UndisplayWeapon()
@@ -287,10 +289,14 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         if(wt_toolsInHand != null)
         {
             UndisplayWeapon();
-            if (i_currentWeaponIndex == wt_toolsInHand.Count-1)
+            if (i_currentWeaponIndex == wt_toolsInHand.Count - 1)
+            {
                 i_currentWeaponIndex = 0;
+            }
             else
+            {
                 i_currentWeaponIndex++;
+            }
             DisplayWeapon();
         }
     }
@@ -312,7 +318,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        EndInteract();
+        if(b_isBeingUsed)
+            EndInteract();
     }
 
 }

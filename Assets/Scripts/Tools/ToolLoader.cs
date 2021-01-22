@@ -42,4 +42,12 @@ public class ToolLoader : MonoBehaviour
         return tb_tools[_i_index];
     }
 
+    public ToolBase GetPrefabTool(ToolBase _go_toolRef)
+    {
+        foreach (ToolBase go_tool in tb_tools)
+            if (_go_toolRef == go_tool)
+                return go_tool;
+        return null;
+    }
+
 }
