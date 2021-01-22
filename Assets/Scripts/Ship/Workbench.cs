@@ -207,42 +207,51 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void ApplyAugment()
     {
-        if(wt_toolsInHand.Count != 0)
+        if (wt_toolsInHand.Count != 0)
         {
-            switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
+            if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ProjectileTool)
             {
-                case AugmentType.standard:
-                    WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
-                    if (CheckCompatability(AugmentType.standard, wt))
-                    {
-                        if (!wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
-                            Debug.LogError("Augments Full");
-                    }
-                    else
-                        Debug.LogError("Incompatable Augment Type");
-                    break;
-                case AugmentType.projectile:
-                    ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
-                    if (CheckCompatability(AugmentType.standard, pt))
-                    {
-                        if (!pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
-                            Debug.LogError("Augments Full");
-                    }
-                    else
-                        Debug.LogError("Incompatable Augment Type");
-                    break;
-                case AugmentType.cone:
-                    ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
-                    if (CheckCompatability(AugmentType.standard, ct))
-                    {
-                        if(!ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
-                            Debug.LogError("Augments Full");
-                    }
-                    else
-                        Debug.LogError("Incompatable Augment Type");
-                    break;
 
+                if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.projectile)
+                {
+                    ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
+                    if (!pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                        Debug.LogError("Augments Full");
+                }
+                else
+                {
+                    Debug.LogError("Incompatable Augment Type");
+                }
             }
+            else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ConeTool)
+            {
+                if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.cone)
+                {
+                    ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
+                    if (!ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                        Debug.LogError("Augments Full");
+                }
+                else
+                {
+                    Debug.LogError("Incompatable Augment Type");
+                }
+            }
+            else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is WeaponTool)
+            {
+
+                if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.standard)
+                {
+                    WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
+                    if (!wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                        Debug.LogError("Augments Full");
+                }
+                else
+                {
+                    Debug.LogError("Incompatable Augment Type");
+                }
+            }
+
+
         }
         //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
