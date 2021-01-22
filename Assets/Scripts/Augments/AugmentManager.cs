@@ -27,7 +27,8 @@ public class AugmentManager : MonoBehaviour
     {
         if(A_augs != null && A_projAugs != null && A_coneAugs != null)
         {
-            PoolManager.x.CreateNewPool(augRef, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
+            if(!PoolManager.x.CheckIfPoolExists(augRef))
+                PoolManager.x.CreateNewPool(augRef, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
             int iter = 0;
             foreach(IPoolable pool_aug in PoolManager.x.GetPooledObjects(augRef))
             {
