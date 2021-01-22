@@ -147,4 +147,14 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         return nMan;
     }
 
+    public Transform GetPlayer()
+    {
+        return t_thisPlayer;
+    }
+
+    public Camera GetCamera()
+    {
+        return playerCamera.GetComponent<Camera>();
+    }
+
 }
