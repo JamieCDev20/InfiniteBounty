@@ -220,7 +220,8 @@ public class VendingMachine : SubjectBase, IInteractible
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        EndInteract();
+        if(b_isBeingUsed)
+            EndInteract();
     }
 
 }

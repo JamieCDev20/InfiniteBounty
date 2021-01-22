@@ -202,6 +202,15 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         s_slider.value = 1;
     }
 
+    private void DisplayWeapon()
+    {
+        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex].ToolID).SetActive(true);
+    }
+
+    private void UndisplayWeapon()
+    {
+        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex].ToolID).SetActive(false);
+    }
 
     #region Button Functions
 
@@ -256,25 +265,6 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
 
-    private bool CheckCompatability(AugmentType _at, WeaponTool _wb)
-    {
-        if (_at == _wb.AugType)
-            return true;
-        return false;
-    }
-    private bool CheckCompatability(AugmentType _at, ProjectileTool _wb)
-    {
-        if (_at == _wb.AugType)
-            return true;
-        return false;
-    }
-    private bool CheckCompatability(AugmentType _at, ConeTool _wb)
-    {
-        if (_at == _wb.AugType)
-            return true;
-        return false;
-    }
-
     public void ClickAugment(int _i_augmentIndexClicked)
     {
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
@@ -292,11 +282,30 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     #region Swap Weapons
 
-    public void ChangeWeapon(int _i_weaponIndexChange)
+    public void ChangeWeaponPos()
     {
-        i_currentWeaponIndex = _i_weaponIndexChange;
+        if(wt_toolsInHand != null)
+        {
+            UndisplayWeapon();
+            if (i_currentWeaponIndex == wt_toolsInHand.Count-1)
+                i_currentWeaponIndex = 0;
+            else
+                i_currentWeaponIndex++;
+            DisplayWeapon();
+        }
     }
-
+    public void ChangeWeaponNeg()
+    {
+        if(wt_toolsInHand != null)
+        {
+            UndisplayWeapon();
+            if (i_currentWeaponIndex == 0)
+                i_currentWeaponIndex = wt_toolsInHand.Count-1;
+            else
+                i_currentWeaponIndex--;
+            DisplayWeapon();
+        }
+    }
 
     #endregion
 

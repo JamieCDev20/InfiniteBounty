@@ -17,7 +17,8 @@ public class ProjectileTool : WeaponTool
     public override void SetActive(bool val)
     {
         b_active = val;
-        cc_cam = transform.root.GetComponent<PlayerInputManager>().GetCamera();
+        if(transform.root.GetComponent<PlayerInputManager>() != null)
+            cc_cam = transform.root.GetComponent<PlayerInputManager>().GetCamera();
         c_playerCollider = transform.root.GetComponent<Collider>();
     }
 
