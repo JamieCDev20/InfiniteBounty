@@ -2059,15 +2059,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2932690616932088812}
   - component: {fileID: 6660927331059419237}
-  - component: {fileID: 1951890747936300716}
   - component: {fileID: 1311320014751064816}
   m_Layer: 0
   m_Name: OutlineCamera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2932690616932088812
 Transform:
   m_ObjectHideFlags: 0
@@ -2125,21 +2124,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &1951890747936300716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943196920587044729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6337758a221fee64fb5778c20dcea41a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lm_playerMask:
-    serializedVersion: 2
-    m_Bits: 28983
 --- !u!114 &1311320014751064816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2223,7 +2207,7 @@ MonoBehaviour:
   xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
-  customRenderingSettings: 0
+  customRenderingSettings: 1
   invertFaceCulling: 0
   probeLayerMask:
     serializedVersion: 2
@@ -2242,7 +2226,7 @@ MonoBehaviour:
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
-      data1: 5764616319127188236
+      data1: 5764615771519906572
       data2: 428933127
   defaultFrameSettings: 0
 --- !u!1 &1951933806033325336
