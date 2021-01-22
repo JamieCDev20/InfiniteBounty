@@ -204,14 +204,12 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     private void DisplayWeapon()
     {
-        ToolBase tb = tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]);
-        tb.SetActive(true);
-        Debug.Log(tb.name);
+        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(true);
     }
 
     private void UndisplayWeapon()
     {
-        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex].ToolID).SetActive(false);
+        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(false);
     }
 
     #region Button Functions
