@@ -45,7 +45,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         foreach (ToolLoader too in FindObjectsOfType<ToolLoader>())
             if (too.name.Contains("Weapon"))
                 tl = too;
-        tl.LoadTools(transform);
+        tl.LoadTools(transform);        
     }
 
     public void Interacted(Transform interactor)
@@ -92,6 +92,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        ClickAugment(0);
     }
 
     public void Interacted() { }
@@ -270,12 +272,32 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
+
+        ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
+        switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
+        {
+            case AugmentType.standard:
+                ad_display.t_augmentType.text = "Standard";
+                ad_display.t_augmentFits.text = "Hammer - Blaster - Shredder - Cannon";
+                break;
+            case AugmentType.projectile:
+                ad_display.t_augmentType.text = "Projectile";
+                ad_display.t_augmentFits.text = "Blaster - Shredder - Cannon";
+                break;
+            case AugmentType.cone:
+                ad_display.t_augmentType.text = "Cone";
+                ad_display.t_augmentFits.text = "Nuggsucker";
+                break;
+        }
+
+
+
         /*
         aL_augmentsInPool[i_currentAugment].t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
-        aL_augmentsInPool[i_currentAugment].t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Name;
         aL_augmentsInPool[i_currentAugment].t_augmentType.text = aA_avaliableAugments[i_currentAugmentIndex].type;
         aL_augmentsInPool[i_currentAugment].t_augmentFits.text = aA_avaliableAugments[i_currentAugmentIndex].fits;
-        aL_augmentsInPool[i_currentAugment].t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;*/
+        aL_augmentsInPool[i_currentAugment].t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;
+        */
     }
 
     #endregion
@@ -284,7 +306,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void ChangeWeaponPos()
     {
-        if(wt_toolsInHand != null)
+        if (wt_toolsInHand != null)
         {
             UndisplayWeapon();
             if (i_currentWeaponIndex == wt_toolsInHand.Count - 1)
@@ -300,11 +322,11 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     }
     public void ChangeWeaponNeg()
     {
-        if(wt_toolsInHand != null)
+        if (wt_toolsInHand != null)
         {
             UndisplayWeapon();
             if (i_currentWeaponIndex == 0)
-                i_currentWeaponIndex = wt_toolsInHand.Count-1;
+                i_currentWeaponIndex = wt_toolsInHand.Count - 1;
             else
                 i_currentWeaponIndex--;
             DisplayWeapon();
@@ -316,7 +338,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        if(b_isBeingUsed)
+        if (b_isBeingUsed)
             EndInteract();
     }
 

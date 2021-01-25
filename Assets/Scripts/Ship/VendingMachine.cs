@@ -39,14 +39,14 @@ public class VendingMachine : SubjectBase, IInteractible
     {
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
+        augMan = _am;
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length));
 
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = _i;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
         UpdateAugmentDisplay();
         AddObserver(FindObjectOfType<SaveManager>());
-        augMan = _am;
-        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length));
     }
 
     #region Interactions
@@ -119,7 +119,7 @@ public class VendingMachine : SubjectBase, IInteractible
         {
             _t.localPosition = Vector3.Lerp(start, Vector3.zero, t);
             _t.rotation = Quaternion.Lerp(iRot, _t_transformToMoveTo.rotation, t);
-            t += (Time.deltaTime * (1/f_lerpTime));
+            t += (Time.deltaTime * (1 / f_lerpTime));
             yield return new WaitForEndOfFrame();
         }
 
@@ -150,26 +150,29 @@ public class VendingMachine : SubjectBase, IInteractible
     }
 
     private void UpdateAugmentDisplay()
-    {
-        print("Is trying to update the Augment display to match Augment " + i_currentAugmentIndex);
-        /*
-        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level;
+    {        
         vmd_vendingMachineDisplay.t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Name;
         switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
         {
             case AugmentType.standard:
                 vmd_vendingMachineDisplay.t_augmentType.text = "Standard";
+                vmd_vendingMachineDisplay.t_augmentFits.text = "Hammer - Blaster - Shredder - Cannon";
                 break;
             case AugmentType.projectile:
                 vmd_vendingMachineDisplay.t_augmentType.text = "Projectile";
+                vmd_vendingMachineDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
                 break;
             case AugmentType.cone:
                 vmd_vendingMachineDisplay.t_augmentType.text = "Cone";
+                vmd_vendingMachineDisplay.t_augmentFits.text = "Nuggsucker";
                 break;
         }
-        vmd_vendingMachineDisplay.t_augmentFits.text = aA_avaliableAugments[i_currentAugmentIndex].fits;
+
+        /*
+        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level;        
         vmd_vendingMachineDisplay.t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;
-        vmd_vendingMachineDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].cost;*/
+        vmd_vendingMachineDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].cost;
+        */
     }
 
     public void BuyAugment()
@@ -205,6 +208,7 @@ public class VendingMachine : SubjectBase, IInteractible
 
     public void GetAugments(AugmentGo[] _aA_augments)
     {
+        print(_aA_augments.Length);
         aA_avaliableAugments = _aA_augments;
     }
 
@@ -220,7 +224,7 @@ public class VendingMachine : SubjectBase, IInteractible
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        if(b_isBeingUsed)
+        if (b_isBeingUsed)
             EndInteract();
     }
 
