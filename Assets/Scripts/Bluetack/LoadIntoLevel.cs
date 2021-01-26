@@ -10,7 +10,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     //Variables
     #region Serialised
 
-    [SerializeField] private string levelToLoad = "LobbyScene";
+    [SerializeField] internal string levelToLoad = "LobbyScene";
     [SerializeField] private bool loadOnButtonPress = true;
 
     #endregion
