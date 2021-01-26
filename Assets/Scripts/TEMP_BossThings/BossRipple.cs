@@ -10,11 +10,12 @@ public class BossRipple : BossProjectile
 
     private void Start()
     {
-        transform.position -= Vector3.up * 7;
+        if (f_growthRate > 0)
+            transform.position -= Vector3.up * 5;
     }
 
     void Update()
     {
-        transform.localScale += f_growthRate * Time.deltaTime * (Vector3.one);
+        transform.localScale += f_growthRate * Time.deltaTime * (Vector3.one - (Vector3.up * 0.6f));
     }
 }
