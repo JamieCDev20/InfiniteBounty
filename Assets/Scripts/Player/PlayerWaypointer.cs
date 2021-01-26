@@ -17,6 +17,7 @@ public class PlayerWaypointer : MonoBehaviour
     private int i_scrHeight;
 
     private Camera cam;
+    private RectTransform canRect;
 
     private Transform t_targetPlayer;
     private Transform t_hudCanvas;
@@ -42,6 +43,8 @@ public class PlayerWaypointer : MonoBehaviour
 
         cam = NetworkedPlayer.x.GetCamera();
 
+        canRect = t_hudCanvas.GetComponent<RectTransform>();
+
     }
 
     void Update()
@@ -51,7 +54,7 @@ public class PlayerWaypointer : MonoBehaviour
 
     private void PositionWaypoint()
     {
-        Vector2 screenPos = cam.WorldToScreenPoint(transform.position);
+        Vector2 screenPos = cam.WorldToScreenPoint(transform.position + (f_yOnScreenOffset * Vector3.up));
         float w = Screen.width;
         float h = Screen.height;
         //screenPos.x /= t_hudCanvas.GetComponent<RectTransform>().rect.width;
@@ -59,15 +62,15 @@ public class PlayerWaypointer : MonoBehaviour
         screenPos.x /= w;
         screenPos.y /= h;
 
-        rt_on.anchoredPosition = new Vector2(w * screenPos.x, h * screenPos.y);
-        rt_off.anchoredPosition = new Vector2((screenPos.x > 0.5 ? w - f_xRadius : f_xRadius), h * screenPos.y);
+        rt_on.anchoredPosition = new Vector2(canRect.rect.width * screenPos.x, canRect.rect.height * screenPos.y);
+        rt_off.anchoredPosition = new Vector2((screenPos.x > 0.5 ? canRect.rect.width - f_xRadius : f_xRadius), canRect.rect.height * screenPos.y);
 
         if(Vector3.Dot(cam.transform.forward, transform.position - cam.transform.position) < 0)
         {
             if(screenPos.x < 0.5f)
-                rt_off.anchoredPosition = new Vector2(w - f_xRadius, h * screenPos.y);
+                rt_off.anchoredPosition = new Vector2(canRect.rect.width - f_xRadius, canRect.rect.height * screenPos.y);
             else
-                rt_off.anchoredPosition = new Vector2(f_xRadius, h * screenPos.y);
+                rt_off.anchoredPosition = new Vector2(f_xRadius, canRect.rect.height * screenPos.y);
             screenPos.x = -1;
         }
         if(screenPos.x < 0.01f || screenPos.x > 0.99f)

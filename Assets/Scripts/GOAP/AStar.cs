@@ -6,9 +6,9 @@ public class AStar
 {
 
     private int maxChainLength = 5;
-    private Node[] nodes;
-    private List<Node> open = new List<Node>();
-    private List<Node> tempOpen = new List<Node>();
+    private ANode[] nodes;
+    private List<ANode> open = new List<ANode>();
+    private List<ANode> tempOpen = new List<ANode>();
 
     public void Init(Action[] actions)
     {
@@ -28,7 +28,7 @@ public class AStar
         maxChainLength = _maxChainLength;
         List<Action> path = new List<Action>();
 
-        List<Node> closed = new List<Node>();
+        List<ANode> closed = new List<ANode>();
 
         SetClosedList(out closed, ref valid);
         if (closed.Count < 1)
@@ -63,7 +63,7 @@ public class AStar
 
     }
 
-    private bool CheckSuccessors(Node parent, Condition[] goal, int chainLength)
+    private bool CheckSuccessors(ANode parent, Condition[] goal, int chainLength)
     {
         if (chainLength >= maxChainLength)
             return false;
@@ -106,9 +106,9 @@ public class AStar
         return false;
     }
 
-    private void SetClosedList(out List<Node> _closedList, ref Validator valid)
+    private void SetClosedList(out List<ANode> _closedList, ref Validator valid)
     {
-        _closedList = new List<Node>();
+        _closedList = new List<ANode>();
 
         for (int i = 0; i < nodes.Length; i++)
         {
@@ -117,9 +117,9 @@ public class AStar
         }
     }
 
-    private List<Node> ConvertToNode(Action[] _points)
+    private List<ANode> ConvertToNode(Action[] _points)
     {
-        List<Node> nodes = new List<Node>();
+        List<ANode> nodes = new List<ANode>();
         for (int i = 0; i < _points.Length; i++)
         {
             nodes.Add(ConvertToNode(_points[i]));
@@ -127,14 +127,14 @@ public class AStar
         return nodes;
     }
 
-    private Node ConvertToNode(Action point)
+    private ANode ConvertToNode(Action point)
     {
-        return new Node(0, 0, point);
+        return new ANode(0, 0, point);
     }
 
 }
 
-public struct Node
+public struct ANode
 {
     public float goal;
     public float heuristic;
@@ -144,7 +144,7 @@ public struct Node
     public int myID;
     public int[] successors;
 
-    public Node(float _goal, float _heuristic, Action _reference)
+    public ANode(float _goal, float _heuristic, Action _reference)
     {
         goal = _goal;
         heuristic = _heuristic;
@@ -165,7 +165,7 @@ public struct Node
 
     }
 
-    public Node GenerateSuccessors(Node[] nodes, int myId)
+    public ANode GenerateSuccessors(ANode[] nodes, int myId)
     {
         myID = myId;
         List<int> t = new List<int>();
