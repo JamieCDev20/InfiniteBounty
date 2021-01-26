@@ -2,16 +2,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+public enum Diversifier
+{
+    None, JackedRabbits
+
+}
+
 
 public class SlotMachine : MonoBehaviour, IInteractible
 {
-    private PlayerInputManager pim;
-    private bool b_isBeingUsed;
+    private Animator anim;
+
+
+    [Header("Interactable Things That Moves the Camera")]
     [SerializeField] private Transform t_playerPos;
-    [SerializeField] private Canvas c_infoCanvas;
+    private bool b_isBeingUsed;
+    private PlayerInputManager pim;
     private Transform t_camPositionToReturnTo;
     [SerializeField] private Transform t_camParent;
     [SerializeField] private float f_lerpTime = 0.5f;
+
+    [Header("Wheels")]
+    [SerializeField] private WheelData[] wdA_wheels = new WheelData[3];
+
+    private Diversifier[] dA_activeDiversifiers = new Diversifier[3];
+
+    [Header("Diversifier Sprites")]
+    [SerializeField] private DiversifierInfo[] diA_diversifiers = new DiversifierInfo[0];
+
+    [Header("UI References")]
+    [SerializeField] private Text t_nameText;
+    [SerializeField] private Text t_descriptionText;
+    [SerializeField] private Canvas c_infoCanvas;
+
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+    }
 
 
     #region Interactions
@@ -103,8 +132,89 @@ public class SlotMachine : MonoBehaviour, IInteractible
     }
 
 
+    private void GenerateDiversifiers()
+    {
+
+    }
+
+    private IEnumerator RollWheel(WheelData _wd_wheel, float _f_startDelay)
+    {
+        yield return new WaitForSeconds(_f_startDelay);
+
+        int _i_diversifierToRoll = UnityEngine.Random.Range(0, _wd_wheel.dL_wheelDiversifiers.Count);
+        int _i_currentIndex = 0;
+
+        print(_i_diversifierToRoll);
+        for (int i = 0; i < 80 - _i_diversifierToRoll; i++)
+        {
+            yield return new WaitForSeconds(0.009f);
+            _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 22.5f, Space.Self);
+            yield return new WaitForSeconds(0.009f);
+            _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 22.5f, Space.Self);
+
+            SpriteRenderer _sr = _wd_wheel.srL_wheelSprites[0];
+            _wd_wheel.srL_wheelSprites.RemoveAt(0);
+            _wd_wheel.srL_wheelSprites.Add(_sr);
+            _sr.sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_currentIndex]].s_image;
+            _i_currentIndex++;
+            if (_i_currentIndex >= _wd_wheel.dL_wheelDiversifiers.Count)
+                _i_currentIndex = 0;
+        }
+
+        for (int i = 0; i < 8; i++)
+        {
+            yield return new WaitForSeconds(0.009f);
+            _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 11.25f, Space.Self);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            yield return new WaitForSeconds(0.02f);
+            _wd_wheel.go_wheelSpinner.transform.Rotate(-Vector3.right * 22.5f, Space.Self);
+        }
+
+        dA_activeDiversifiers[_wd_wheel.i_wheelIndex] = _wd_wheel.dL_wheelDiversifiers[_i_diversifierToRoll];
+        anim.SetBool("PullLever", false);
+    }
+
+
+    internal void PullLever()
+    {
+        anim.SetBool("PullLever", true);
+        StartCoroutine(RollWheel(wdA_wheels[0], 0.19f));
+        StartCoroutine(RollWheel(wdA_wheels[1], 0.28f));
+        StartCoroutine(RollWheel(wdA_wheels[2], 0.37f));
+    }
+
+    internal void DisplayDiversifierInfo(int _i_index)
+    {
+        if (diA_diversifiers.Length > _i_index)
+        {
+            t_descriptionText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
+            t_nameText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
+        }
+    }
 
 
 
+
+
+
+    [System.Serializable]
+    private struct WheelData
+    {
+        public GameObject go_wheelSpinner;
+        public List<SpriteRenderer> srL_wheelSprites;
+        public int i_wheelIndex;
+        public List<Diversifier> dL_wheelDiversifiers;
+
+    }
+    [System.Serializable]
+    private struct DiversifierInfo
+    {
+        public string s_name;
+        [TextArea] public string s_desc;
+        public Sprite s_image;
+    }
 
 }
