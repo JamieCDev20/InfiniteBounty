@@ -82,7 +82,7 @@ public class HUDController : MonoBehaviour
 
     public void SetBBTotal()
     {
-        texts.bucksText.text = NetworkedPlayer.x.GetLocalNugManager().Nugs.ToString();
+        texts.bucksText.text = NetworkedPlayer.x?.GetLocalNugManager().Nugs.ToString();
     }
 
     public void SceneLoad(Scene scene, LoadSceneMode mode)

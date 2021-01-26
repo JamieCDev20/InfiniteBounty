@@ -37,41 +37,51 @@ public class PlayerWaypointer : MonoBehaviour
         go_offMarker = Instantiate(go_offScreenMarker, t_hudCanvas);
         rt_off = go_offMarker.GetComponent<RectTransform>();
 
-        cam = NetworkedPlayer.x.GetCamera();
+        rt_on.anchorMin = Vector2.zero;
+        rt_off.anchorMin = Vector2.zero;
 
-        i_scrWidth = Screen.width;
-        i_scrHeight = Screen.height;
+        cam = NetworkedPlayer.x.GetCamera();
 
     }
 
     void Update()
     {
-        if ((transform.position - t_targetPlayer.position).sqrMagnitude > (f_maxDistance * f_maxDistance))
+        PositionWaypoint();
+    }
+
+    private void PositionWaypoint()
+    {
+        Vector2 screenPos = cam.WorldToScreenPoint(transform.position);
+        float w = Screen.width;
+        float h = Screen.height;
+        //screenPos.x /= t_hudCanvas.GetComponent<RectTransform>().rect.width;
+        //screenPos.y /= t_hudCanvas.GetComponent<RectTransform>().rect.height;
+        screenPos.x /= w;
+        screenPos.y /= h;
+
+        rt_on.anchoredPosition = new Vector2(w * screenPos.x, h * screenPos.y);
+        rt_off.anchoredPosition = new Vector2((screenPos.x > 0.5 ? w - f_xRadius : f_xRadius), h * screenPos.y);
+
+        if(Vector3.Dot(cam.transform.forward, transform.position - cam.transform.position) < 0)
         {
-            Vector2 targetPos = cam.WorldToScreenPoint(transform.position);
-
-            if(targetPos.x > i_scrWidth || targetPos.x < 0)
-            {
-                go_onMarker.SetActive(false);
-                go_offMarker.SetActive(true);
-            }
+            if(screenPos.x < 0.5f)
+                rt_off.anchoredPosition = new Vector2(w - f_xRadius, h * screenPos.y);
             else
-            {
-                go_onMarker.SetActive(true);
-                go_offMarker.SetActive(false);
-            }
-
-            targetPos.x = Mathf.Clamp(targetPos.x, f_xRadius, i_scrWidth - f_xRadius);
-            targetPos.y = Mathf.Clamp(targetPos.y, f_yRadius, i_scrHeight - f_yRadius);
-
-            rt_on.position = targetPos;
-            rt_off.position = targetPos;
-
+                rt_off.anchoredPosition = new Vector2(f_xRadius, h * screenPos.y);
+            screenPos.x = -1;
+        }
+        if(screenPos.x < 0.01f || screenPos.x > 0.99f)
+        {
+            rt_on.gameObject.SetActive(false);
+            rt_off.gameObject.SetActive(true);
         }
         else
         {
-            go_onMarker.SetActive(false);
-            go_offMarker.SetActive(false);
+            rt_on.gameObject.SetActive(true);
+            rt_off.gameObject.SetActive(false);
+
         }
+
     }
+
 }
