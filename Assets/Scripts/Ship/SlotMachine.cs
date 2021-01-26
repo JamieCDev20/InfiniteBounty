@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum Diversifier
 {
-    None, JackedRabbits
+    None, JackedRabbits, GigaGeysers, SolarStorm, 
 
 }
 
@@ -188,7 +188,7 @@ public class SlotMachine : MonoBehaviour, IInteractible
 
     internal void DisplayDiversifierInfo(int _i_index)
     {
-        if (diA_diversifiers.Length > _i_index)
+        //if (diA_diversifiers.Length > _i_index)
         {
             t_descriptionText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
             t_nameText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
