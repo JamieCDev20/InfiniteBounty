@@ -669,6 +669,7 @@ GameObject:
   - component: {fileID: 8426025395206013304}
   - component: {fileID: 8426025395206013305}
   - component: {fileID: 8426025395206013306}
+  - component: {fileID: 1820537428}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -752,6 +753,27 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1820537428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426025395206013308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3860a3105c2424498530d2b13bf3967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lil_teleportButton: {fileID: 0}
+  goA_highlightPositions:
+  - {fileID: 8426025395698433578}
+  - {fileID: 8426025395451644234}
+  - {fileID: 8426025396292800345}
+  sA_sceneNames:
+  - 
+  - 
+  - 
 --- !u!1 &8426025395451644234
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +787,7 @@ GameObject:
   - component: {fileID: 8426025395451644231}
   - component: {fileID: 8426025395451644232}
   m_Layer: 0
-  m_Name: HighlightCube
+  m_Name: MotherLodeHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -865,12 +887,12 @@ GameObject:
   - component: {fileID: 8426025395698433575}
   - component: {fileID: 8426025395698433576}
   m_Layer: 0
-  m_Name: HighlightCube
+  m_Name: NugRunHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8426025395698433577
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1340,7 +1362,7 @@ GameObject:
   - component: {fileID: 8426025396292800342}
   - component: {fileID: 8426025396292800343}
   m_Layer: 0
-  m_Name: HighlightCube
+  m_Name: PvPHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

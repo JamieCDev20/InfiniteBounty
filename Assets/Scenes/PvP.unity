@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33350492, g: 0.4994853, b: 0.8330084, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2495,7 +2495,7 @@ MonoBehaviour:
   i_damageToDeal: 4
   f_timeBetweenDamages: 0.2
   b_dealDamageOnEntry: 0
-  v_bounceDirection: {x: 0, y: 1000, z: 0}
+  v_bounceDirection: {x: 0, y: 2000, z: 0}
   b_shouldCauseKnockback: 1
   ac_burnEffect: {fileID: 8300000, guid: 4f2d23f88f07db443b4cc4598193a55e, type: 3}
   go_flamePrefab: {fileID: 5987874258221079754, guid: de9ccfd0bfab00e4db5eeb5d998c533b,
@@ -2607,7 +2607,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -11364,7 +11364,7 @@ PrefabInstance:
     - target: {fileID: 5097147677987189573, guid: 5c93b44f46045c44181fbac4e7e25120,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.7
+      value: 6.586
       objectReference: {fileID: 0}
     - target: {fileID: 5097147677987189573, guid: 5c93b44f46045c44181fbac4e7e25120,
         type: 3}
