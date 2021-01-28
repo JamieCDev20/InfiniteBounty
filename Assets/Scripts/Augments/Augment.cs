@@ -151,9 +151,9 @@ public class Augment
         return new AugmentExplosion(i_explosionDamage, i_expLodeDamage, f_explockBack, f_detonationTime, f_expRad, b_impact, go_explarticles);
     }
 
-    public static Augment operator +(Augment a, Augment b)
+    public static Augment Combine(Augment a, Augment b)
     {
-        Debug.Log("Am Adding");
+        Augment c = new Augment();
         // Name stuffs
         string newName = "";
         if (a.Name.Contains(" "))
@@ -165,42 +165,48 @@ public class Augment
             else
                 newName += newNamea + " " + newNameb + " ";
             newName += a.s_name.Split(' ')[1];
-            a.s_name += newName;
+            c.s_name += newName;
         }
         else
         {
             newName = a.Name + " " + b.Name;
-            a.s_name = newName;
+            c.s_name = newName;
         }
         // Audio data
-        a.ac_useSound = Utils.CombineArrays(a.ac_useSound, b.ac_useSound);
-        a.ac_travelSound = Utils.CombineArrays(a.ac_travelSound, b.ac_travelSound);
-        a.ac_hitSound = Utils.CombineArrays(a.ac_hitSound, b.ac_hitSound);
+        c.ac_useSound = Utils.CombineArrays(a.ac_useSound, b.ac_useSound);
+        c.ac_travelSound = Utils.CombineArrays(a.ac_travelSound, b.ac_travelSound);
+        c.ac_hitSound = Utils.CombineArrays(a.ac_hitSound, b.ac_hitSound);
         // Info data
-        a.i_damage += b.i_damage;
-        a.i_lodeDamage += b.i_lodeDamage;
-        a.f_weight += b.f_weight;
-        a.f_recoil += b.f_recoil;
-        a.f_energyGauge += b.f_energyGauge;
-        a.f_knockback += b.f_knockback;
-        a.f_heatsink += b.f_heatsink;
+        c.i_damage += b.i_damage;
+        c.i_lodeDamage += b.i_lodeDamage;
+        c.f_weight += b.f_weight;
+        c.f_recoil += b.f_recoil;
+        c.f_energyGauge += b.f_energyGauge;
+        c.f_knockback += b.f_knockback;
+        c.f_heatsink += b.f_heatsink;
         // Physical data
-        a.f_trWidth += b.f_trWidth;
-        a.f_trLifetime += b.f_trLifetime;
-        a.A_trKeys = Utils.CombineArrays(a.A_trKeys, b.A_trKeys);
-        a.go_weaponProjectile = b.go_weaponProjectile;
+        c.f_trWidth += b.f_trWidth;
+        c.f_trLifetime += b.f_trLifetime;
+        c.A_trKeys = Utils.CombineArrays(a.A_trKeys, b.A_trKeys);
+        c.go_weaponProjectile = b.go_weaponProjectile;
         // Explosion data
-        a.i_explosionDamage += b.i_explosionDamage;
-        a.i_expLodeDamage += b.i_expLodeDamage;
-        a.f_explockBack += b.f_explockBack;
-        a.f_detonationTime += b.f_detonationTime;
-        a.f_expRad += b.f_expRad;
-        a.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
+        c.i_explosionDamage += b.i_explosionDamage;
+        c.i_expLodeDamage += b.i_expLodeDamage;
+        c.f_explockBack += b.f_explockBack;
+        c.f_detonationTime += b.f_detonationTime;
+        c.f_expRad += b.f_expRad;
+        c.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
         // If any of them are set to impact, set to be impact
         if (a.b_impact || b.b_impact)
-            a.b_impact = true;
+            c.b_impact = true;
         else
-            a.b_impact = false;
+            c.b_impact = false;
+        return c;
+    }
+
+    public static Augment operator +(Augment a, Augment b)
+    {
+        a = Combine(a, b);
         return a;
     }
 

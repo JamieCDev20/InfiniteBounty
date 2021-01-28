@@ -61,7 +61,7 @@ public class AugmentLoader : MonoBehaviour
             {
                 if(j > i)
                 {
-                    fusedAugs.Add(augs[i] + augs[j]);
+                    fusedAugs.Add(AugmentFuser.VerbCombine(augs[i], augs[j]));
                 }
             }
         }

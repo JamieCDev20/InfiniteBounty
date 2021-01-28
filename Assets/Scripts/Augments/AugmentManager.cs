@@ -8,7 +8,7 @@ public class AugmentManager : MonoBehaviour
     [SerializeField] Augment[] A_augs;
     [SerializeField] ProjectileAugment[] A_projAugs;
     [SerializeField] ConeAugment[] A_coneAugs;
-    private List<GameObject> go_augments = new List<GameObject>();
+    [SerializeField] private List<GameObject> go_augments = new List<GameObject>();
 
     public void Start()
     {
@@ -63,6 +63,6 @@ public class AugmentManager : MonoBehaviour
 
     public AugmentGo GetRandomAugment(int _i_maxSize)
     {
-        return go_augments[Random.Range(0, _i_maxSize < go_augments.Count ? _i_maxSize : go_augments.Count)].GetComponent<AugmentGo>();
+        return go_augments[Random.Range(0, _i_maxSize <= go_augments.Count ? _i_maxSize+1 : go_augments.Count+1)].GetComponent<AugmentGo>();
     }
 }

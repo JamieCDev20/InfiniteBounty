@@ -26,6 +26,6 @@ public class AugmentFuser : MonoBehaviour
 
     public static Augment VerbCombine(Augment a, Augment b)
     {
-        return a + b;
+        return Augment.Combine(a, b);
     }
 }
