@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +18,12 @@ public class BubbleShield : MobilityTool
     [SerializeField] private Material m_onCooldownMaterial;
     [SerializeField] private Material m_offCooldownMaterial;
 
+    private Rigidbody rb_currentOrb;
+
     private void Awake()
     {
         f_useTimer = f_timeBetweenUsage;
+        go_growth.GetComponent<MeshRenderer>().material = m_offCooldownMaterial;
         for (int i = 0; i < 2; i++)
         {
             GameObject _go = Instantiate(go_shieldPrefab, transform);
@@ -43,11 +47,21 @@ public class BubbleShield : MobilityTool
 
     public override void Use(Vector3 _v_forwards)
     {
-        ShootOrb(_v_forwards);
+        if (rb_currentOrb)
+        {
+            if (f_useTimer > 0.3f)
+                StopOrb();
+        }
+        else
+            ShootOrb(_v_forwards);
     }
-
     public override void Use() { }
     public override void NetUse(Vector3 _v_forwards) { }
+    private void StopOrb()
+    {
+        rb_currentOrb.isKinematic = !rb_currentOrb.isKinematic;
+    }
+
 
     private void ShootOrb(Vector3 _v_forwards)
     {
@@ -58,7 +72,10 @@ public class BubbleShield : MobilityTool
             _go.transform.parent = null;
             _go.transform.position = t_firePoint.position;
             _go.SetActive(true);
-            _go.GetComponent<Rigidbody>().AddForce(_v_forwards * f_shootForce);
+            rb_currentOrb = _go.GetComponent<Rigidbody>();
+            rb_currentOrb.isKinematic = false;
+            rb_currentOrb.velocity = Vector3.zero;
+            rb_currentOrb.AddForce(_v_forwards.normalized * f_shootForce, ForceMode.VelocityChange);
 
             StartCoroutine(ReturnOrbToPool(_go));
             f_useTimer = 0;
@@ -72,6 +89,7 @@ public class BubbleShield : MobilityTool
         yield return new WaitForSeconds(f_orbLifeTime);
         _go_orb.SetActive(false);
         goL_shieldPool.Add(_go_orb);
+        rb_currentOrb = null;
     }
 
 

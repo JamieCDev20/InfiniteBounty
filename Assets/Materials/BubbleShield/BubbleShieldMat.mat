@@ -20,14 +20,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_ShieldShader
+  m_Name: BubbleShieldMat
   m_Shader: {fileID: -6465566751694194690, guid: b5258e3a4ff9b0d4a8e41564f9dc6c66,
     type: 3}
-  m_ShaderKeywords: _BLENDMODE_ALPHA _ENABLE_FOG_ON_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
+  m_ShaderKeywords: _ALPHATEST_ON _BLENDMODE_ADD _DOUBLESIDED_ON _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_DoubleSidedGI: 1
+  m_CustomRenderQueue: 3000
   stringTagMap:
     MotionVector: User
     RenderType: Transparent
@@ -40,17 +40,23 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - Vector1_D91E7463: 0.5
-    - _AlphaCutoffEnable: 0
-    - _AlphaDstBlend: 10
+    - Vector1_2741BAFD: 0.1
+    - Vector1_572D17C6: 0.5
+    - Vector1_7F09D676: 50
+    - Vector1_B5C7CC47: 0.49
+    - Vector1_D91E7463: 0.4
+    - Vector1_E7E4CA2C: 90
+    - _AlphaCutoffEnable: 1
+    - _AlphaDstBlend: 1
     - _AlphaSrcBlend: 1
-    - _BlendMode: 0
-    - _CullMode: 2
-    - _CullModeForward: 2
-    - _DoubleSidedEnable: 0
+    - _BlendMode: 1
+    - _CellDensity: 60
+    - _CullMode: 0
+    - _CullModeForward: 0
+    - _DoubleSidedEnable: 1
     - _DoubleSidedNormalMode: 2
-    - _DstBlend: 10
-    - _EnableFogOnTransparent: 1
+    - _DstBlend: 1
+    - _EnableFogOnTransparent: 0
     - _ReceivesSSR: 0
     - _RenderQueueType: 5
     - _RequireSplitLighting: 0
@@ -71,14 +77,17 @@ Material:
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 0
     - _TransparentSortPriority: 0
-    - _TransparentZWrite: 1
+    - _TransparentZWrite: 0
     - _UseShadowThreshold: 0
+    - _Wiggle: 10
     - _ZTestDepthEqualForOpaque: 4
-    - _ZTestGBuffer: 4
+    - _ZTestGBuffer: 3
     - _ZTestTransparent: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
-    - Color_59D13CBF: {r: 0.43264386, g: 0, b: 1, a: 0}
+    - Color_59D13CBF: {r: 0.14782198, g: 0.11098258, b: 0.8113208, a: 1}
+    - Color_C39C27DB: {r: 0.26783636, g: 0.07609471, b: 0.3584906, a: 0}
+    - Vector2_391D173A: {r: 0.1, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
