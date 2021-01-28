@@ -84,13 +84,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   m_AdvancedMode: 0
-  indirectSpecularIntensity:
-    m_OverrideState: 1
-    m_Value: 1
-    min: 0
   indirectDiffuseIntensity:
     m_OverrideState: 1
     m_Value: 3
+    min: 0
+  indirectDiffuseLightingLayers:
+    m_OverrideState: 0
+    m_Value: 255
+  reflectionLightingMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  reflectionLightingLayers:
+    m_OverrideState: 0
+    m_Value: 255
+  indirectSpecularIntensity:
+    m_OverrideState: 1
+    m_Value: 1
     min: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -217,8 +227,8 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 3
   skyAmbientMode:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   fogType:
     m_OverrideState: 1
     m_Value: 0
