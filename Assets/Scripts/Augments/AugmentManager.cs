@@ -34,13 +34,13 @@ public class AugmentManager : MonoBehaviour
             {
                 GameObject go_aug = pool_aug.GetGameObject();
                 AugmentGo ago = go_aug.GetComponent<AugmentGo>();
-                //
                 if (iter < A_augs.Length)
                     ago.Aug = A_augs[iter];
                 else if (iter < A_augs.Length + A_projAugs.Length)
                     ago.Aug = A_projAugs[iter - A_augs.Length];
                 else if (iter < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
                     ago.Aug = A_coneAugs[iter - (A_augs.Length + A_projAugs.Length)];
+                ago.Mat = ago.Aug.AugmentMaterial;
                 iter++;
             }
         }
@@ -63,6 +63,6 @@ public class AugmentManager : MonoBehaviour
 
     public AugmentGo GetRandomAugment(int _i_maxSize)
     {
-        return go_augments[Random.Range(0, _i_maxSize)].GetComponent<AugmentGo>();
+        return go_augments[Random.Range(0, _i_maxSize < go_augments.Count ? _i_maxSize : go_augments.Count)].GetComponent<AugmentGo>();
     }
 }

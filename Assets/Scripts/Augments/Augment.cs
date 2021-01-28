@@ -5,8 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class Augment
 {
-    [SerializeField] string s_name;
+    [SerializeField] protected string s_name;
+    [SerializeField] protected int i_level;
+    [SerializeField] protected bool b_fused;
+    [SerializeField] protected Material mat_augColor;
     public string Name { get { return s_name; } }
+    public int Level { get { return i_level; } set { i_level = value; } }
+    public bool Fused { get { return b_fused; } set{ b_fused = value; } }
+    public Material AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
 
     [SerializeField] protected AudioClip[] ac_useSound;
@@ -60,9 +66,9 @@ public class Augment
 
     public void InitAudio(AudioClip[] _ac_use, AudioClip[] _ac_travel, AudioClip[] _ac_hit)
     {
-        ac_useSound = _ac_use;
-        ac_travelSound = _ac_travel;
-        ac_hitSound = _ac_hit;
+        ac_useSound =       _ac_use;
+        ac_travelSound =    _ac_travel;
+        ac_hitSound =       _ac_hit;
     }
 
     public void InitInfo(float _f_weight, float _f_recoil, float _f_speed, float _f_heatsink, float _f_knockback, float _f_energy, int _i_damage, int _i_lode)
@@ -147,16 +153,25 @@ public class Augment
 
     public static Augment operator +(Augment a, Augment b)
     {
+        Debug.Log("Am Adding");
         // Name stuffs
-        string newNamea = a.s_name.Split(' ')[0];
-        string newNameb = b.s_name.Split(' ')[0];
         string newName = "";
-        if (newNamea == newNameb)
-            newName += "Super ";
+        if (a.Name.Contains(" "))
+        {
+            string newNamea = a.s_name.Split(' ')[0];
+            string newNameb = b.s_name.Split(' ')[0];
+            if (newNamea == newNameb)
+                newName += "Super ";
+            else
+                newName += newNamea + " " + newNameb + " ";
+            newName += a.s_name.Split(' ')[1];
+            a.s_name += newName;
+        }
         else
-            newName += newNamea + " " + newNameb + " ";
-        newName += a.s_name.Split(' ')[1];
-        a.s_name += newName;
+        {
+            newName = a.Name + " " + b.Name;
+            a.s_name = newName;
+        }
         // Audio data
         a.ac_useSound = Utils.CombineArrays(a.ac_useSound, b.ac_useSound);
         a.ac_travelSound = Utils.CombineArrays(a.ac_travelSound, b.ac_travelSound);

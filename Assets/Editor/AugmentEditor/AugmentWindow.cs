@@ -60,7 +60,6 @@ public class AugmentWindow : EditorWindow
     #region AugmentGO physicals
 
     Material mat_material;
-    Mesh m_mesh;
 
     #endregion
 
@@ -186,7 +185,6 @@ public class AugmentWindow : EditorWindow
             File.AppendAllText(path + "AugmentData.json", augmentData + "\n");
             tr.Close();
             Debug.Log(String.Format("{0} Created!", s_augName));
-            //AugmentCreator.CreateAugment(augmentData);
         }
     }
 
@@ -232,7 +230,6 @@ public class AugmentWindow : EditorWindow
     {
         // Display a mesh and material field
         GUILayout.Label("Augment mesh", EditorStyles.boldLabel);
-        m_mesh = (Mesh)EditorGUILayout.ObjectField(m_mesh, typeof(Mesh), true);
         mat_material = (Material)EditorGUILayout.ObjectField(mat_material, typeof(Material), true);
     }
 
@@ -319,6 +316,7 @@ public class AugmentWindow : EditorWindow
 
     private void InitStandardAugment(Augment outputAug)
     {
+        outputAug.AugmentMaterial = mat_material;
         try
         {
             outputAug.InitAudio(ac_useSound, ac_travelSound, ac_hitSound);

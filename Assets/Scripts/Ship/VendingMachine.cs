@@ -155,8 +155,8 @@ public class VendingMachine : SubjectBase, IInteractible
         switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
         {
             case AugmentType.standard:
-                vmd_vendingMachineDisplay.t_augmentType.text = "Standard";
-                vmd_vendingMachineDisplay.t_augmentFits.text = "Hammer - Blaster - Shredder - Cannon";
+                vmd_vendingMachineDisplay.t_augmentType.text = "Melee";
+                vmd_vendingMachineDisplay.t_augmentFits.text = "Hammer";
                 break;
             case AugmentType.projectile:
                 vmd_vendingMachineDisplay.t_augmentType.text = "Projectile";

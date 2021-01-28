@@ -13,7 +13,7 @@ public class AugmentCreator
     public static void CreateAugment(string _s_parsedData)
     {
         // The path to grab assets
-        string path = Application.dataPath;
+        string path = Application.persistentDataPath;
 
         // Create the augment to read in Augment Data from JSON
         Augment aug = null;
