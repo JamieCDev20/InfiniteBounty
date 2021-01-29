@@ -49,7 +49,7 @@ public class BubbleShield : MobilityTool
     {
         if (rb_currentOrb)
         {
-            if (f_useTimer > 0.3f)
+            if (f_useTimer > 0.01f)
                 StopOrb();
         }
         else

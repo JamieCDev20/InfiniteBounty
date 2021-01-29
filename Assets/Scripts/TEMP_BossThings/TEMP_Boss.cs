@@ -16,6 +16,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     private int i_currentTarget;
     [SerializeField] private int i_currentHealth;
     private bool b_isHost;
+    [SerializeField] private LayerMask lm_playerLayer;
 
     private void Start()
     {
@@ -30,17 +31,22 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             for (int i = 0; i < _goA.Length; i++)
                 tL_potentialTargets.Add(_goA[i].transform);
 
-            view.RPC("GetTargets", RpcTarget.Others, tL_potentialTargets.ToArray());
+            Invoke("GetTargets", 1);
 
             Invoke("BeginAttacks", 7);
             b_isHost = true;
         }
     }
 
-    [PunRPC]
-    public void GetTargets(Transform[] _tA_targets)
+    public void GetTargets()
     {
-        tL_potentialTargets.AddRange(_tA_targets);
+        Collider[] _cA = Physics.OverlapSphere(transform.position, 30, lm_playerLayer);
+
+        for (int i = 0; i < _cA.Length; i++)
+            if (_cA[i].CompareTag("Player"))
+                tL_potentialTargets.Add(_cA[i].transform);
+
+        i_currentHealth *= tL_potentialTargets.Count;
     }
 
     private void Update()
