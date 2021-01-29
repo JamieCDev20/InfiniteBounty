@@ -2,10 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class BehaviourTree
 {
-    
 
+    private Node n_startNode;
+
+    public BehaviourTree(Node _StartingNode)
+    {
+        n_startNode = _StartingNode;
+    }
+
+    public void DoTreeIteration()
+    {
+        n_startNode.Activate();
+    }
 
 }
