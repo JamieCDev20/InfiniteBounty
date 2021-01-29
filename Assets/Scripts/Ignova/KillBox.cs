@@ -69,10 +69,9 @@ public class KillBox : MonoBehaviour
         if (collision.collider.isTrigger)
             return;
 
-        print(collision.collider.name);
-
         IHitable _h = collision.collider.GetComponent<IHitable>();
-        _h?.TakeDamage(i_damageToDeal, false);
+        if (!collision.transform.CompareTag("Lilypad"))
+            _h?.TakeDamage(i_damageToDeal, false);
         if (b_shouldCauseKnockback && collision.transform.tag == "Player")
             collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
         if (as_source)

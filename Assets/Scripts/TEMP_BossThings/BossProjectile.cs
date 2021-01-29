@@ -6,7 +6,8 @@ using UnityEngine;
 public abstract class BossProjectile : MonoBehaviourPunCallbacks
 {
     protected Transform t_target;
-    [SerializeField] protected int i_damageOnImpact;
+    [SerializeField] protected int i_playerDamage;
+    [SerializeField] protected int i_padDamage;
     [SerializeField] private bool b_isDestroyedOnImpact;
 
     public virtual void Setup(Transform _t_newTarget)
@@ -16,10 +17,17 @@ public abstract class BossProjectile : MonoBehaviourPunCallbacks
 
     public virtual void OnCollisionEnter(Collision collision)
     {
-        collision.collider.GetComponent<IHitable>()?.TakeDamage(i_damageOnImpact, true);
-        if (b_isDestroyedOnImpact)
-            gameObject.SetActive(false);
+        if (collision.transform.CompareTag("Player"))
+            collision.collider.GetComponent<IHitable>()?.TakeDamage(i_playerDamage, true);
+        else if (collision.transform.CompareTag("Lilypad"))
+            collision.collider.GetComponent<IHitable>()?.TakeDamage(i_padDamage, true);
+
+        if (b_isDestroyedOnImpact)        
+            Die();        
     }
 
-
+    protected virtual void Die()
+    {
+        gameObject.SetActive(false);
+    }
 }

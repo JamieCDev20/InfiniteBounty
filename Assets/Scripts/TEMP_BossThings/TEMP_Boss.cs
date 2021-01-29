@@ -76,9 +76,22 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     }
     private IEnumerator TimedMove(Vector3 _v_newPos)
     {
-        transform.position = Vector3.down * 100;
+        for (int i = 0; i < 60; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            transform.position += Vector3.down * 0.5f;
+        }
+
         yield return new WaitForSeconds(1);
-        transform.position = _v_newPos + Vector3.up * 10;
+
+        transform.position = _v_newPos + Vector3.down * 20;
+
+        for (int i = 0; i < 60; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            transform.position += Vector3.up * 0.5f;
+        }
+
         b_isAttacking = true;
         f_currentMoveTimer = 0;
     }
