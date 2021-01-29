@@ -29,7 +29,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
         if (PhotonNetwork.IsMasterClient)
         {
-            BeginAttacks();
+            Invoke("BeginAttacks", 5);
             b_isHost = true;
         }
 
@@ -104,14 +104,14 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
         switch (_i_moveIndex)
         {
+            default:
+                view.RPC("RangedAttack", RpcTarget.All, _i_moveIndex);
+                break;
             case 3:
                 view.RPC("MortarAttack", RpcTarget.All);
                 break;
             case 4:
                 view.RPC("MeleeAttack", RpcTarget.All);
-                break;
-            default:
-                view.RPC("RangedAttack", RpcTarget.All, _i_moveIndex);
                 break;
         }
         f_currentTimer = 0;
@@ -128,10 +128,23 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     [PunRPC]
     private void RangedAttack(int _i_whichProjectile)
     {
-        GameObject _go = Instantiate(goA_projectiles[_i_whichProjectile]);
-        _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
-        _go.transform.position = transform.position + transform.forward * 3;
-        _go.transform.forward = transform.forward;
+        if (_i_whichProjectile == 0) //Homing Attack
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject _go = Instantiate(goA_projectiles[_i_whichProjectile]);
+                _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
+                _go.transform.position = transform.position + (transform.forward * i);
+                _go.transform.forward = transform.forward;
+            }
+        }
+        else
+        {
+            GameObject _go = Instantiate(goA_projectiles[_i_whichProjectile]);
+            _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
+            _go.transform.position = transform.position + transform.forward * 3;
+            _go.transform.forward = transform.forward;
+        }
     }
 
     [PunRPC]
