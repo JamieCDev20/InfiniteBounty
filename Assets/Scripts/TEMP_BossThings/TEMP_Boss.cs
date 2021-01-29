@@ -22,16 +22,25 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
         view = GetComponent<PhotonView>();
         PhotonNetwork.RegisterPhotonView(view);
 
-        //Get the players as targets
-        GameObject[] _goA = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < _goA.Length; i++)
-            tL_potentialTargets.Add(_goA[i].transform);
 
         if (PhotonNetwork.IsMasterClient)
         {
+            //Get the players as targets
+            GameObject[] _goA = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < _goA.Length; i++)
+                tL_potentialTargets.Add(_goA[i].transform);
+
+            view.RPC("GetTargets", RpcTarget.Others, tL_potentialTargets.ToArray());
+
             Invoke("BeginAttacks", 7);
             b_isHost = true;
         }
+    }
+
+    [PunRPC]
+    public void GetTargets(Transform[] _tA_targets)
+    {
+        tL_potentialTargets.AddRange(_tA_targets);
     }
 
     private void Update()
