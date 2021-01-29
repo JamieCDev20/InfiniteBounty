@@ -29,10 +29,9 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
         if (PhotonNetwork.IsMasterClient)
         {
-            Invoke("BeginAttacks", 5);
+            Invoke("BeginAttacks", 7);
             b_isHost = true;
         }
-
     }
 
     private void Update()
@@ -92,8 +91,9 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             transform.position += Vector3.up * 0.5f;
         }
 
-        b_isAttacking = true;
         f_currentMoveTimer = 0;
+        if (b_isHost)
+            b_isAttacking = true;
     }
 
 
