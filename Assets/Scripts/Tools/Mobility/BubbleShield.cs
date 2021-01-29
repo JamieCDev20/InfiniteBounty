@@ -81,6 +81,7 @@ public class BubbleShield : MobilityTool
         _go_orb.SetActive(false);
         goL_shieldPool.Add(_go_orb);
         rb_currentOrb = null;
+        _go_orb.transform.parent = transform;
     }
 
 
