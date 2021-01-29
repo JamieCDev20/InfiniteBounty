@@ -19,7 +19,6 @@ public class PlaymodeStateFix
         switch (obj)
         {
             case PlayModeStateChange.EnteredEditMode:
-                EditorSceneManager.OpenScene(EditorSceneManager.GetSceneByBuildIndex(0).path);
                 break;
             case PlayModeStateChange.ExitingEditMode:
                 EditorSceneManager.SaveOpenScenes();

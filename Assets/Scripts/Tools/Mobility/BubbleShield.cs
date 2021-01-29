@@ -47,20 +47,11 @@ public class BubbleShield : MobilityTool
 
     public override void Use(Vector3 _v_forwards)
     {
-        if (rb_currentOrb)
-        {
-            if (f_useTimer > 0.3f)
-                StopOrb();
-        }
-        else
-            ShootOrb(_v_forwards);
+        ShootOrb(_v_forwards);
     }
     public override void Use() { }
     public override void NetUse(Vector3 _v_forwards) { }
-    private void StopOrb()
-    {
-        rb_currentOrb.isKinematic = !rb_currentOrb.isKinematic;
-    }
+
 
 
     private void ShootOrb(Vector3 _v_forwards)
@@ -90,6 +81,7 @@ public class BubbleShield : MobilityTool
         _go_orb.SetActive(false);
         goL_shieldPool.Add(_go_orb);
         rb_currentOrb = null;
+        _go_orb.transform.parent = transform;
     }
 
 

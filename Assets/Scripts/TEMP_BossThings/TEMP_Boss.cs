@@ -12,27 +12,44 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     private float f_currentTimer;
     [SerializeField] private float f_timeBetweenMoves = 15;
     private float f_currentMoveTimer;
-    [SerializeField] private GameObject[] goA_projectiles = new GameObject[3];
     private int i_currentTarget;
     [SerializeField] private int i_currentHealth;
     private bool b_isHost;
+    [SerializeField] private LayerMask lm_playerLayer;
+
+    [Header("Homing Attack")]
+    [SerializeField] private GameObject go_homingPrefab;
+    [SerializeField] private Vector2 v_shotsPerHomingRound;
 
     private void Start()
     {
         view = GetComponent<PhotonView>();
         PhotonNetwork.RegisterPhotonView(view);
 
-        //Get the players as targets
-        GameObject[] _goA = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < _goA.Length; i++)
-            tL_potentialTargets.Add(_goA[i].transform);
 
         if (PhotonNetwork.IsMasterClient)
         {
-            BeginAttacks();
+            //Get the players as targets
+            GameObject[] _goA = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < _goA.Length; i++)
+                tL_potentialTargets.Add(_goA[i].transform);
+
+            Invoke("GetTargets", 1);
+
+            Invoke("BeginAttacks", 7);
             b_isHost = true;
         }
+    }
 
+    public void GetTargets()
+    {
+        Collider[] _cA = Physics.OverlapSphere(transform.position, 30, lm_playerLayer);
+
+        for (int i = 0; i < _cA.Length; i++)
+            if (_cA[i].CompareTag("Player"))
+                tL_potentialTargets.Add(_cA[i].transform);
+
+        i_currentHealth *= tL_potentialTargets.Count;
     }
 
     private void Update()
@@ -42,17 +59,17 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             f_currentTimer += Time.deltaTime;
             f_currentMoveTimer += Time.deltaTime;
 
-            if (f_currentMoveTimer > f_timeBetweenMoves) view.RPC("MoveAttack", RpcTarget.All, GenerateRandomArenaPos());
+            if (f_currentMoveTimer > f_timeBetweenMoves) view.RPC("MoveAttack", RpcTarget.All, PickTargetPosition());
             if (f_currentTimer > f_timeBetweenAttacks) PickAttack();
         }
         transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].position.x, transform.position.y, tL_potentialTargets[i_currentTarget].position.z));
     }
 
-    private Vector3 GenerateRandomArenaPos()
+    private Vector3 PickTargetPosition()
     {
-        Vector3 _v_direction = new Vector3(Random.value, 0, Random.value).normalized;
-        _v_direction *= Random.Range(0, 75);
-        return _v_direction;
+        Vector3 _v = tL_potentialTargets[Random.Range(0, tL_potentialTargets.Count)].position;
+        _v = Vector3.Scale(_v, Vector3.one - Vector3.up);
+        return _v;
     }
 
     private void BeginAttacks()
@@ -76,11 +93,30 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     }
     private IEnumerator TimedMove(Vector3 _v_newPos)
     {
-        transform.position = Vector3.down * 100;
+        for (int i = 0; i < 60; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            transform.position += Vector3.down * 0.5f;
+        }
+
         yield return new WaitForSeconds(1);
-        transform.position = _v_newPos + Vector3.up * 10;
-        b_isAttacking = true;
+
+        transform.position = _v_newPos + Vector3.down * 20;
+
+        Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 50, 15);
+        for (int i = 0; i < _cA.Length; i++)
+            _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
+
+
+        for (int i = 0; i < 60; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            transform.position += Vector3.up * 0.5f;
+        }
+
         f_currentMoveTimer = 0;
+        if (b_isHost)
+            b_isAttacking = true;
     }
 
 
@@ -91,14 +127,14 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
         switch (_i_moveIndex)
         {
+            case 0:
+                view.RPC("HomingAttackRPC", RpcTarget.All, Mathf.RoundToInt(Random.Range(v_shotsPerHomingRound.x, v_shotsPerHomingRound.y)));
+                break;
             case 3:
                 view.RPC("MortarAttack", RpcTarget.All);
                 break;
             case 4:
                 view.RPC("MeleeAttack", RpcTarget.All);
-                break;
-            default:
-                view.RPC("RangedAttack", RpcTarget.All, _i_moveIndex);
                 break;
         }
         f_currentTimer = 0;
@@ -113,13 +149,22 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     }
 
     [PunRPC]
-    private void RangedAttack(int _i_whichProjectile)
+    private void HomingAttackRPC(int _i_amount)
     {
-        GameObject _go = Instantiate(goA_projectiles[_i_whichProjectile]);
-        _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
-        _go.transform.position = transform.position + transform.forward * 3;
-        _go.transform.forward = transform.forward;
+        StartCoroutine(HomingAttack(_i_amount));
     }
+    private IEnumerator HomingAttack(int _i_amount)
+    {
+        for (int i = 0; i < _i_amount; i++)
+        {
+            yield return new WaitForSeconds(0.5f);
+            GameObject _go = Instantiate(go_homingPrefab);
+            _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
+            _go.transform.position = transform.position + transform.forward;
+            _go.transform.forward = transform.forward;
+        }
+    }
+
 
     [PunRPC]
     private void MeleeAttack()

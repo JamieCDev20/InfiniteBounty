@@ -8,6 +8,12 @@ public class BubbleShieldController : MonoBehaviour
     [SerializeField] private MeshRenderer m_shieldRenderer;
     private float f_currentTime;
     [SerializeField] private Collider c_colliderToDisable;
+    private Rigidbody rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void OnEnable()
     {
@@ -22,7 +28,7 @@ public class BubbleShieldController : MonoBehaviour
     private IEnumerator TurnColliderOn()
     {
         c_colliderToDisable.enabled = false;
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.1f);
         c_colliderToDisable.enabled = true;
     }
 
@@ -45,6 +51,15 @@ public class BubbleShieldController : MonoBehaviour
             f_currentTime -= 1;
             m_shieldRenderer.material.SetFloat("_CellDensity", Mathf.Clamp(f_currentTime, 0, 60));
             m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.2f;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (transform.parent == null)
+        {
+            transform.SetParent(collision.transform, true);
+            rb.isKinematic = true;
         }
     }
 }

@@ -12,6 +12,12 @@ public class PlayerAnimator : MonoBehaviourPun
 
     [SerializeField] private Transform armR;
     [SerializeField] private Transform armL;
+    [SerializeField] private Transform chest;
+    [SerializeField] private Transform spine;
+    [SerializeField] private Transform stomach;
+    [SerializeField] private Transform hips;
+    [SerializeField] private float f_spineWeight = 0.55f;
+    [SerializeField] private float f_stomachWeight = 0.2f;
     [Space]
     [Header("Tester")]
     [SerializeField] private bool doDemoIK = true;
@@ -24,7 +30,6 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private PlayerMover pm_mover;
     private PlayerInputManager pim_inputManager;
-
 
     private Transform camTransform;
     private Animator anim;
@@ -85,8 +90,12 @@ public class PlayerAnimator : MonoBehaviourPun
     {
         if (doDemoIK)
         {
-            MakeAnArmDoTheRightThing(armR, -1);
-            MakeAnArmDoTheRightThing(armL, 1);
+            //MakeAnArmDoTheRightThing(armR, -1);
+            //MakeAnArmDoTheRightThing(armL, 1);
+            if(anim.GetBool("ShootingLeft") || anim.GetBool("ShootingRight"))
+            {
+                ApplyBodyRotation();
+            }
         }
     }
 
@@ -134,6 +143,26 @@ public class PlayerAnimator : MonoBehaviourPun
             anim.SetBool("ShootingLeft", false);
             anim.SetBool("ShootingRight", false);
         }
+    }
+
+    private void ApplyBodyRotation()
+    {
+        Quaternion iHipsRot = hips.rotation;
+        Quaternion iStomachRot = stomach.rotation;
+        Quaternion iSpineRot = spine.rotation;
+        Quaternion iChestRot = chest.rotation;
+
+        Quaternion diff = camTransform.rotation * Quaternion.Inverse(hips.rotation);
+
+        Vector3 axis;
+        float angle;
+
+        diff.ToAngleAxis(out angle, out axis);
+
+        stomach.rotation = Quaternion.AngleAxis(angle * f_stomachWeight, axis) * stomach.rotation;
+        spine.rotation = Quaternion.AngleAxis(angle * (f_spineWeight - f_stomachWeight), axis) * spine.rotation;
+        chest.rotation = Quaternion.AngleAxis(angle * (1 - (f_spineWeight + f_stomachWeight)), axis) * chest.rotation;
+
     }
 
     private void MakeAnArmDoTheRightThing(Transform arm, int fix)

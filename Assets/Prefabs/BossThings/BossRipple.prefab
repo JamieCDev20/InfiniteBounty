@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 984406888578087917}
   - component: {fileID: 5160952807880771449}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: BossRipple
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8b0a2ce6a0eef4f96e4165b0d9583c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  i_damageOnImpact: 10
+  i_playerDamage: 25
+  i_padDamage: 2
   b_isDestroyedOnImpact: 0
   f_growthRate: 15
 --- !u!1 &5879480004101973574
@@ -60,7 +61,7 @@ GameObject:
   - component: {fileID: 4608100250699084107}
   - component: {fileID: 7428072255954507494}
   - component: {fileID: 7684666665191726718}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: BossRipple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8b0a2ce6a0eef4f96e4165b0d9583c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  i_damageOnImpact: 25
+  i_playerDamage: 25
+  i_padDamage: 3
   b_isDestroyedOnImpact: 0
   f_growthRate: 0

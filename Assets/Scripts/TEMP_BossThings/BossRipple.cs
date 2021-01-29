@@ -16,6 +16,6 @@ public class BossRipple : BossProjectile
 
     void Update()
     {
-        transform.localScale += f_growthRate * Time.deltaTime * (Vector3.one - (Vector3.up * 0.6f));
+        transform.localScale += f_growthRate * Time.deltaTime * (Vector3.one - (Vector3.up * 0.8f));
     }
 }
