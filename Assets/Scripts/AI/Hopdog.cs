@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Hopdog : MonoBehaviour
 {
@@ -10,13 +11,14 @@ public class Hopdog : MonoBehaviour
     [SerializeField] private float f_spottingDistance = 50;
 
     private float f_timeStarted;
+    private float f_targetFindLimiter = 0;
     private BehaviourTree tree;
     private Transform t_target;
 
     private void Awake()
     {
 
-        //tree = new BehaviourTree();
+        tree = new BehaviourTree(ParentSequencer());
 
     }
 
@@ -37,12 +39,47 @@ public class Hopdog : MonoBehaviour
 
     #region BehaviourNodeDefinitions
 
-    private SelectorNode TargetedActionSelectorDefinition()
+    private SequencerNode ParentSequencer()
+    {
+        QueryNode summoningSicknessNode = new QueryNode(IsOverSummoningSickness);
+        SelectorNode actionSelector = new SelectorNode(ActionSelectorDefinition());
+
+        SequencerNode parentNode = new SequencerNode(summoningSicknessNode, actionSelector);
+        return parentNode;
+    }
+
+    private SelectorNode ActionSelectorDefinition()
+    {
+        ActionNode idleActionNode = new ActionNode(IdleAction);
+
+        SelectorNode actionSelectNode = new SelectorNode(TargetAttackSequence(), idleActionNode);
+        return actionSelectNode;
+    }
+
+    private SequencerNode TargetAttackSequence()
+    {
+        SelectorNode hasGetTargetSelector = new SelectorNode(RetargetSelector());
+        SelectorNode targettedActionNode = new SelectorNode(TargetedActionSelectorDefinition());
+        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, targettedActionNode);
+        return targAttackSequence;
+    }
+
+    private SelectorNode RetargetSelector()
     {
 
-        QueryNode isOverSummoningSicknessNode = new QueryNode(IsOverSummoningSickness);
-        QueryNode stillHasTargetNode = new QueryNode(StillHasTarget);
-        ActionNode idleActionNode = new ActionNode(IdleAction);
+        QueryNode hasNode = new QueryNode(StillHasTarget);
+        ActionNode getNode = new ActionNode(GetTargetAction);
+
+        //this is to check if the agent has a target after getting one since actions always return true
+        //the sequence and therefore the selector will fail if no target is had or found
+        SequencerNode getTargetSequence = new SequencerNode(getNode, hasNode); 
+
+        SelectorNode retargetNode = new SelectorNode(hasNode, getTargetSequence); 
+        return retargetNode;
+    }
+
+    private SelectorNode TargetedActionSelectorDefinition()
+    {
 
         SelectorNode targetedActionSelector = new SelectorNode(AttackPlayerDefinition(), FollowPlayerDefinition());
         
@@ -66,13 +103,11 @@ public class Hopdog : MonoBehaviour
     private SequencerNode AttackPlayerDefinition()
     {
 
-        QueryNode hasTargetNode = new QueryNode(HasTarget);
-
         QueryNode withinRangeNode = new QueryNode(IsWithinAttackRange);
 
         ActionNode attackActionNode = new ActionNode(AttackAction);
 
-        SequencerNode attackSequence = new SequencerNode(hasTargetNode, withinRangeNode, attackActionNode);
+        SequencerNode attackSequence = new SequencerNode(withinRangeNode, attackActionNode);
 
         return attackSequence;
 
@@ -133,6 +168,29 @@ public class Hopdog : MonoBehaviour
     {
         Debug.Log("Idling");
         return;
+    }
+
+    public void GetTargetAction()
+    {
+        f_targetFindLimiter += Time.deltaTime;
+
+        if (f_targetFindLimiter <= 1)
+            return;
+
+        f_targetFindLimiter = 0;
+
+        List<Transform> potentials = new List<Transform>();
+        foreach (PlayerHealth ph in FindObjectsOfType<PlayerHealth>())
+        {
+            if (!ph.GetIsDead())
+                if(CanSeeTransform(ph.transform))
+                    potentials.Add(ph.transform);
+        }
+
+        potentials = potentials.OrderBy(x => (transform.position - x.position).sqrMagnitude).ToList();
+
+        if (potentials.Count > 0)
+            t_target = potentials[0];
     }
 
     #endregion
