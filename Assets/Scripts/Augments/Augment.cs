@@ -7,11 +7,13 @@ public class Augment
 {
     [SerializeField] protected string s_name;
     [SerializeField] protected int i_level;
+    [SerializeField] protected AugmentStage as_stage;
     [SerializeField] protected bool b_fused;
     [SerializeField] protected Material mat_augColor;
     public string Name { get { return s_name; } }
     public int Level { get { return i_level; } set { i_level = value; } }
     public bool Fused { get { return b_fused; } set{ b_fused = value; } }
+    public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
     public Material AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
 
@@ -136,6 +138,15 @@ public class Augment
         go_explarticles     = _ae_boom.go_explarticles;
     }
 
+    public List<AudioClip[]> GetAudioProperties()
+    {
+        List<AudioClip[]> aAudio = new List<AudioClip[]>();
+        aAudio.Add(ac_useSound);
+        aAudio.Add(ac_travelSound);
+        aAudio.Add(ac_hitSound);
+        return aAudio;
+    }
+
     public AugmentProperties GetAugmentProperties()
     {
         return new AugmentProperties(s_name, f_weight, f_recoil, f_speed, f_heatsink, f_knockback, f_energyGauge, i_damage, i_lodeDamage);
@@ -151,6 +162,12 @@ public class Augment
         return new AugmentExplosion(i_explosionDamage, i_expLodeDamage, f_explockBack, f_detonationTime, f_expRad, b_impact, go_explarticles);
     }
 
+    /// <summary>
+    /// Combine two augments, and return an entirely new augment
+    /// </summary>
+    /// <param name="a">Base augment</param>
+    /// <param name="b">Augment to be added</param>
+    /// <returns>New augment with both augment traits</returns>
     public static Augment Combine(Augment a, Augment b)
     {
         Augment c = new Augment();
@@ -190,7 +207,7 @@ public class Augment
         c.A_trKeys = Utils.CombineArrays(a.A_trKeys, b.A_trKeys);
         ///TODO:
         ///figure out how to deal with projectiles
-        c.go_weaponProjectile = b.go_weaponProjectile;
+        c.go_weaponProjectile = a.go_weaponProjectile;
         // Explosion data
         c.i_explosionDamage = a.i_explosionDamage + b.i_explosionDamage;
         c.i_expLodeDamage = a.i_expLodeDamage + b.i_expLodeDamage;
@@ -199,7 +216,7 @@ public class Augment
         c.f_expRad = a.f_expRad + b.f_expRad;
         c.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
         // If any of them are set to impact, set to be impact
-        if (a.b_impact || b.b_impact)
+        if (a.b_impact)
             c.b_impact = true;
         else
             c.b_impact = false;
@@ -267,6 +284,12 @@ public class Augment
         return c;
     }
 
+    /// <summary>
+    /// Add augment a to augment b
+    /// </summary>
+    /// <param name="a">Base augment</param>
+    /// <param name="b">Augment being added</param>
+    /// <returns>Base augment</returns>
     public static Augment operator +(Augment a, Augment b)
     {
         a = Combine(a, b);

@@ -40,10 +40,10 @@ public class VendingMachine : SubjectBase, IInteractible
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
         augMan = _am;
-        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length));
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments()));
 
         int _i = UnityEngine.Random.Range(0, 9);
-        i_currentAugmentIndex = _i;
+        i_currentAugmentIndex = 0;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
         UpdateAugmentDisplay();
         AddObserver(FindObjectOfType<SaveManager>());
@@ -168,8 +168,8 @@ public class VendingMachine : SubjectBase, IInteractible
                 break;
         }
 
+        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level.ToString();        
         /*
-        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level;        
         vmd_vendingMachineDisplay.t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;
         vmd_vendingMachineDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].cost;
         */

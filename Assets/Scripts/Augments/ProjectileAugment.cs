@@ -30,4 +30,28 @@ public class ProjectileAugment : Augment
     {
         return new AugmentProjectile(i_shotsPerRound, f_gravity, pm_physMat, f_bulletScale);
     }
+
+    public static ProjectileAugment Combine(ProjectileAugment a, ProjectileAugment b)
+    {
+        ProjectileAugment c = new ProjectileAugment();
+        Augment ac = Augment.Combine(a, b);
+        List<AudioClip[]> audioClips = ac.GetAudioProperties();
+        c.s_name = ac.Name;
+        c.at_type = AugmentType.projectile;
+        c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);
+        c.InitPhysical(ac.GetPhysicalProperties());
+        c.i_shotsPerRound = a.i_shotsPerRound + b.i_shotsPerRound;
+        c.f_gravity = a.f_gravity + b.f_gravity;
+        c.f_bulletScale = a.f_bulletScale + b.f_bulletScale;
+        // Ask John and Nick what it do
+        c.pm_physMat = a.pm_physMat;
+        return c;
+    }
+
+    public static ProjectileAugment operator +(ProjectileAugment a, ProjectileAugment b)
+    {
+        a = ProjectileAugment.Combine(a, b);
+        return a;
+    }
+
 }

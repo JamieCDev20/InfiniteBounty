@@ -7,6 +7,7 @@ using System;
 
 public class AugmentWindow : EditorWindow
 {
+    static AugmentWindow wind;
     int i_arrSize;
     int i_prevSize;
     private const float f_windWidth = 800;
@@ -26,6 +27,9 @@ public class AugmentWindow : EditorWindow
     #region Augment Vars
 
     string s_augName;
+    AugmentStage as_stage;
+
+    #endregion
 
     #region Audio
 
@@ -55,8 +59,6 @@ public class AugmentWindow : EditorWindow
     GameObject target;
     #endregion
 
-    #endregion
-
     #region AugmentGO physicals
 
     Material mat_material;
@@ -81,25 +83,29 @@ public class AugmentWindow : EditorWindow
     [MenuItem("Window/Augment Editor")]
     static void Init()
     {
-        AugmentWindow wind = GetWindow<AugmentWindow>();
+        wind = GetWindow<AugmentWindow>();
         wind.position = new Rect(0, 0, f_windWidth, f_windHeight);
     }
 
     private void OnGUI()
     {
-
+        /*
         GUI.contentColor = Color.white;
         GUI.color = Color.white;
         GUI.backgroundColor = Color.grey;
-        
+        */
+
         // Main GUI loop where things need to update
         GUILayout.Label("Augment Type", EditorStyles.boldLabel);
         at_type = (AugmentType)EditorGUILayout.EnumPopup("", at_type);
         EditorGUILayout.Space();
         GUILayout.Label("Augment Name", EditorStyles.label);
         s_augName = EditorGUILayout.TextArea(s_augName);
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+        as_stage = (AugmentStage)EditorGUILayout.EnumPopup("Augment Stage", as_stage);
         DisplayGameObjectArgs();
+
+        EditorGUILayout.BeginVertical("box");
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
         EditorGUILayout.Space();
         if (i_dropDownIndex != 0)
         {
@@ -108,6 +114,7 @@ public class AugmentWindow : EditorWindow
 
         ShowAugmentToCreate();
         EditorGUILayout.Space();
+        EditorGUILayout.EndVertical();
         EditorGUILayout.EndScrollView();
         SaveAugment();
     }
@@ -181,10 +188,15 @@ public class AugmentWindow : EditorWindow
                     break;
             }
             outputAug.at_type = at_type;
+            outputAug.Stage = as_stage;
             augmentData = EditorJsonUtility.ToJson(outputAug);
             File.AppendAllText(path + "AugmentData.json", augmentData + "\n");
             tr.Close();
             Debug.Log(String.Format("{0} Created!", s_augName));
+            wind = (AugmentWindow)EditorWindow.GetWindow(typeof(AugmentWindow), false);
+            wind.Close();
+            wind = (AugmentWindow)EditorWindow.GetWindow(typeof(AugmentWindow), false);
+            wind.Show();
         }
     }
 
@@ -240,22 +252,14 @@ public class AugmentWindow : EditorWindow
     {
         GUILayout.Label("Base Augments", EditorStyles.boldLabel);
         GUILayout.Label("Physical Properties", EditorStyles.boldLabel);
-        GUILayout.Label("Weapon Speed", EditorStyles.label);
-        ap_toolProperties.f_speed = EditorGUILayout.FloatField(ap_toolProperties.f_speed);
-        GUILayout.Label("Recoil", EditorStyles.label);
-        ap_toolProperties.f_recoil = EditorGUILayout.FloatField(ap_toolProperties.f_recoil);
-        GUILayout.Label("Enemy Damage", EditorStyles.label);
-        ap_toolProperties.i_damage = EditorGUILayout.IntField(ap_toolProperties.i_damage);
-        GUILayout.Label("Lode Damage", EditorStyles.label);
-        ap_toolProperties.i_lodeDamage = EditorGUILayout.IntField(ap_toolProperties.i_lodeDamage);
-        GUILayout.Label("Knockback", EditorStyles.label);
-        ap_toolProperties.f_knockback = EditorGUILayout.FloatField(ap_toolProperties.f_knockback);
-        GUILayout.Label("Weight", EditorStyles.label);
-        ap_toolProperties.f_weight = EditorGUILayout.FloatField(ap_toolProperties.f_weight);
-        GUILayout.Label("Heatsink", EditorStyles.label);
-        ap_toolProperties.f_heatsink = EditorGUILayout.FloatField(ap_toolProperties.f_heatsink);
-        GUILayout.Label("Energy Gauge", EditorStyles.label);
-        ap_toolProperties.f_energyGauge = EditorGUILayout.FloatField(ap_toolProperties.f_energyGauge);
+        ap_toolProperties.f_speed = EditorGUILayout.FloatField("Weapon Speed", ap_toolProperties.f_speed);
+        ap_toolProperties.f_recoil = EditorGUILayout.FloatField("Recoil", ap_toolProperties.f_recoil);
+        ap_toolProperties.i_damage = EditorGUILayout.IntField("Enemy Damage", ap_toolProperties.i_damage);
+        ap_toolProperties.i_lodeDamage = EditorGUILayout.IntField("Lode Damage", ap_toolProperties.i_lodeDamage);
+        ap_toolProperties.f_knockback = EditorGUILayout.FloatField("Knockback", ap_toolProperties.f_knockback);
+        ap_toolProperties.f_weight = EditorGUILayout.FloatField("Weight", ap_toolProperties.f_weight);
+        ap_toolProperties.f_heatsink = EditorGUILayout.FloatField("Heatsink", ap_toolProperties.f_heatsink);
+        ap_toolProperties.f_energyGauge = EditorGUILayout.FloatField("Energy Gauge", ap_toolProperties.f_energyGauge);
         GUILayout.Label("Audio Attributes", EditorStyles.boldLabel);
         GUILayout.Label("Usage Sounds", EditorStyles.label);
         DisplayArray("ac_useSound");
@@ -264,19 +268,14 @@ public class AugmentWindow : EditorWindow
         GUILayout.Label("Hit Sounds", EditorStyles.label);
         DisplayArray("ac_hitSound");
         GUILayout.Label("Trail and Particles", EditorStyles.boldLabel);
-        GUILayout.Label("Trail Width", EditorStyles.label);
-        phys_toolPhys.f_trWidth = EditorGUILayout.FloatField(phys_toolPhys.f_trWidth);
-        GUILayout.Label("Trail Lifetime", EditorStyles.label);
-        phys_toolPhys.f_trLifetime = EditorGUILayout.FloatField(phys_toolPhys.f_trLifetime);
+        phys_toolPhys.f_trWidth = EditorGUILayout.FloatField("Trail Width", phys_toolPhys.f_trWidth);
+        phys_toolPhys.f_trLifetime = EditorGUILayout.FloatField("Trail lifetime", phys_toolPhys.f_trLifetime);
         GUILayout.Label("Trail Colors", EditorStyles.label);
         DisplayArray("c_trailRenderer");
-        GUILayout.Label("Projectile", EditorStyles.label);
-        go_weaponProjectile = (GameObject)EditorGUILayout.ObjectField(go_weaponProjectile, typeof(GameObject), true);
+        go_weaponProjectile = (GameObject)EditorGUILayout.ObjectField("Projectile", go_weaponProjectile, typeof(GameObject), true);
         GUILayout.Label("EXPLOSION", EditorStyles.boldLabel);
-        GUILayout.Label("Explosion Knockback", EditorStyles.label);
-        ae_splosion.f_explockBack = EditorGUILayout.FloatField(ae_splosion.f_explockBack);
-        GUILayout.Label("Detonation Time", EditorStyles.label);
-        ae_splosion.f_detonationTime = EditorGUILayout.FloatField(ae_splosion.f_detonationTime);
+        ae_splosion.f_explockBack = EditorGUILayout.FloatField("Explosion Knockback", ae_splosion.f_explockBack);
+        ae_splosion.f_detonationTime = EditorGUILayout.FloatField("Detonation Time", ae_splosion.f_detonationTime);
         GUILayout.Label("Explosion Particles", EditorStyles.label);
         DisplayArray("go_explarticles");
         GUILayout.Label("Elements", EditorStyles.label);
@@ -295,23 +294,18 @@ public class AugmentWindow : EditorWindow
     private void DisplayProjectileAugments()
     {
         GUILayout.Label("Projectile Augments", EditorStyles.boldLabel);
-        GUILayout.Label("Shots Per Round", EditorStyles.label);
-        apro.i_shotsPerRound = EditorGUILayout.IntField(apro.i_shotsPerRound);
-        GUILayout.Label("Gravity", EditorStyles.label);
-        apro.f_gravity = EditorGUILayout.FloatField(apro.f_gravity);
+        apro.i_shotsPerRound = EditorGUILayout.IntField("Shots per Round", apro.i_shotsPerRound);
+        apro.f_gravity = EditorGUILayout.FloatField("Gravity", apro.f_gravity);
         apro.f_bulletScale = EditorGUILayout.FloatField("Bullet Scale", apro.f_bulletScale);
-        GUILayout.Label("Physics Material", EditorStyles.label);
-        pm_mat = (PhysicMaterial)EditorGUILayout.ObjectField(pm_mat, typeof(PhysicMaterial), true);
+        pm_mat = (PhysicMaterial)EditorGUILayout.ObjectField("Physics Material", pm_mat, typeof(PhysicMaterial), true);
     }
 
     private void DisplayConeAugments()
     {
         GUILayout.Label("Cone Augments", EditorStyles.boldLabel);
         // Width and length of the cone
-        GUILayout.Label("Cone", EditorStyles.label);
-        acone.f_angle = EditorGUILayout.FloatField(acone.f_angle);
-        GUILayout.Label("Length", EditorStyles.label);
-        acone.f_radius = EditorGUILayout.FloatField(acone.f_radius);
+        acone.f_angle = EditorGUILayout.FloatField("Cone Width", acone.f_angle);
+        acone.f_radius = EditorGUILayout.FloatField("Cone Length", acone.f_radius);
     }
 
     private void InitStandardAugment(Augment outputAug)

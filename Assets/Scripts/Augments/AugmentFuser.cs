@@ -28,4 +28,14 @@ public class AugmentFuser : MonoBehaviour
     {
         return Augment.Combine(a, b);
     }
+
+    public static ProjectileAugment VerbCombine(ProjectileAugment a, ProjectileAugment b)
+    {
+        return ProjectileAugment.Combine(a, b);
+    }
+
+    public static ConeAugment VerbCombine(ConeAugment a, ConeAugment b)
+    {
+        return ConeAugment.Combine(a, b);
+    }
 }

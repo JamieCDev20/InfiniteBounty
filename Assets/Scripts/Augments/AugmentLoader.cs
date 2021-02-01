@@ -2,136 +2,101 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq;
+using System;
 
 public class AugmentLoader : MonoBehaviour
 {
-    public static Augment[] LoadInitialAugments()
-    {
-        if(Resources.Load("AugmentData"))
-        {
-            string augmentString = Resources.Load("AugmentData").ToString();
-            Augment[] newAugs = ReadAugmentData(augmentString);
-            return newAugs;
-        }
-        return null;
-    }
-
-    public static ProjectileAugment[] LoadProjectileAugments()
+    public static string LoadAugmentJson()
     {
         if (Resources.Load("AugmentData"))
         {
-            string augmentString = Resources.Load("AugmentData").ToString();
-            ProjectileAugment[] newAugs = ReadProjectileAugment(augmentString);
-            return newAugs;
+            return Resources.Load("AugmentData").ToString();
         }
         return null;
     }
-
-    public static ConeAugment[] LoadConeAugments()
-    {
-        if (Resources.Load("AugmentData"))
-        {
-            string augmentString = Resources.Load("AugmentData").ToString();
-            ConeAugment[] newAugs = ReadConeAugment(augmentString);
-            return newAugs;
-        }
-        return null;
-    }
-
-    private static Augment[] ReadAugmentData(string augData)
+    
+    public static T[] ReadAugmentData<T>(string augData) where T : Augment
     {
         string[] augments = augData.Split('\n');
-        List<Augment> augs = new List<Augment>();
-        List<Augment> fusedAugs = new List<Augment>();
+        List<T> augs = new List<T>();
+        List<T> fusedAugs = new List<T>();
         // Make sure that you're only getting augments that are pure augs
         for (int i = 0; i < augments.Length; i++)
         {
             if (augments[i] != string.Empty)
             {
-                if (GetAugmentType(augments[i]) == AugmentType.standard)
-                {
-                    augs.Add(JsonUtility.FromJson<Augment>(augments[i]));
-                    Debug.Log(augs[i].Name);
-                }
+                if (GetAugmentType(augments[i]) == AugmentType.standard && typeof(T).Equals(typeof(Augment)))
+                    augs.Add(JsonUtility.FromJson<T>(augments[i]));
+                else if (GetAugmentType(augments[i]) == AugmentType.projectile && typeof(T).Equals(typeof(ProjectileAugment)))
+                    augs.Add(JsonUtility.FromJson<T>(augments[i]));
+                else if (GetAugmentType(augments[i]) == AugmentType.cone && typeof(T).Equals(typeof(ConeAugment)))
+                    augs.Add(JsonUtility.FromJson<T>(augments[i]));
             }
         }
-        for(int i = 0; i < augs.Count - 1; i++)
+        List<T> theme = new List<T>();
+        List<T> augType = new List<T>();
+        for(int i = 0; i < augs.Count; i++)
         {
-            for (int j = 0; j < augs.Count; j++)
+            switch (GetAugmentStage(JsonUtility.ToJson(augs[i])))
             {
-                if(j > i)
-                {
-                    fusedAugs.Add(AugmentFuser.VerbCombine(augs[i], augs[j]));
-                }
+                case AugmentStage.theme:
+                    theme.Add(augs[i]);
+                    break;
+                case AugmentStage.type:
+                    augType.Add(augs[i]);
+                    break;
             }
         }
-        foreach (Augment fa in fusedAugs)
-            Debug.Log(fa.Name);
+        // The last element will've always been fused with everything
+        for (int i = 0; i < theme.Count; i++)
+        {
+            for (int j = 0; j < augType.Count; j++)
+            {
+                // Fuse the types to the themes
+                if (typeof(T).Equals(typeof(ProjectileAugment)))
+                {
+                    fusedAugs.Add((T)(Augment)AugmentFuser.VerbCombine((ProjectileAugment)(Augment)theme[i], (ProjectileAugment)(Augment)augType[j]));
+                }
+                else if (typeof(T).Equals(typeof(ConeAugment)))
+                {
+                    fusedAugs.Add((T)(Augment)AugmentFuser.VerbCombine((ConeAugment)(Augment)theme[i], (ConeAugment)(Augment)augType[j]));
+                }
+                else if (typeof(T).Equals(typeof(Augment)))
+                {
+                    fusedAugs.Add((T)AugmentFuser.VerbCombine(theme[i], augType[j]));
+                }
+                fusedAugs[fusedAugs.Count-1].Level = 1;
+                fusedAugs[fusedAugs.Count - 1].Stage = AugmentStage.full;
+            }
+        }
         return fusedAugs.ToArray();
-    }
-
-    private static ProjectileAugment[] ReadProjectileAugment(string augData)
-    {
-        string[] augments = augData.Split('\n');
-        List<ProjectileAugment> augs = new List<ProjectileAugment>();
-        List<ProjectileAugment> fusedAugs = new List<ProjectileAugment>();
-        for (int i = 0; i < augments.Length; i++)
-        {
-            if(augments[i] != string.Empty)
-                if (GetAugmentType(augments[i]) == AugmentType.projectile)
-                    augs.Add(JsonUtility.FromJson<ProjectileAugment>(augments[i]));
-        }
-        for (int i = 0; i < augs.Count; i++)
-        {
-            for (int j = 0; j < augs.Count; j++)
-            {
-                if (augs[i] != augs[j])
-                {
-                    //if (!fusedAugs.Contains(AugmentFuser.VerbCombine(augs[i], augs[j]))
-                      //  fusedAugs.Add(AugmentFuser.VerbCombine(augs[i], augs[j]));
-                }
-            }
-        }
-        return augs.ToArray();
-    }
-
-    private static ConeAugment[] ReadConeAugment(string augData)
-    {
-        string[] augments = augData.Split('\n');
-        List<ConeAugment> augs = new List<ConeAugment>();
-        List<ConeAugment> fusedAugs = new List<ConeAugment>();
-        for (int i = 0; i < augments.Length; i++)
-        {
-            if(augments[i] != string.Empty)
-                if (GetAugmentType(augments[i]) == AugmentType.cone)
-                    augs.Add(JsonUtility.FromJson<ConeAugment>(augments[i]));
-        }
-        for (int i = 0; i < augs.Count; i++)
-        {
-            for (int j = 0; j < augs.Count; j++)
-            {
-                if (augs[i] != augs[j])
-                {
-                    //if (!fusedAugs.Contains(AugmentFuser.VerbCombine(augs[i], augs[j]))
-                       // fusedAugs.Add(AugmentFuser.VerbCombine(augs[i], augs[j]));
-                }
-            }
-        }
-        return augs.ToArray();
     }
 
     private static AugmentType GetAugmentType(string _atString)
     {
-        string[] atString = _atString.Split(':');
-        string enumString = string.Empty;
-        for (int j = 0; j < atString.Length; j++)
+        string enumString = GetSpecificVar(_atString, "at_type");
+        return (AugmentType)int.Parse(enumString);
+    }
+
+    private static AugmentStage GetAugmentStage(string _asString)
+    {
+        string enumString = GetSpecificVar(_asString, "as_stage");
+        return (AugmentStage)int.Parse(enumString);
+    }
+
+    private static string GetSpecificVar(string _s_toSplit, string _s_splitter)
+    {
+        string[] split = _s_toSplit.Split(':');
+        string outputValue = string.Empty;
+        for (int j = 0; j < split.Length; j++)
         {
-            if (atString[j].Contains("at_type"))
+            if (split[j].Contains(_s_splitter))
             {
-                enumString = atString[j + 1].Contains(",") ? atString[j + 1].Split(',')[0] : atString[j + 1].Split('}')[0];
+                outputValue = split[j + 1].Contains(",") ? split[j + 1].Split(',')[0] : split[j + 1].Split('}')[0];
             }
         }
-        return (AugmentType)int.Parse(enumString);
+        return outputValue;
     }
 
 }

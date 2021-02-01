@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AugmentManager : MonoBehaviour
 {
@@ -12,9 +13,10 @@ public class AugmentManager : MonoBehaviour
 
     public void Start()
     {
-        A_augs = AugmentLoader.LoadInitialAugments();
-        A_projAugs = AugmentLoader.LoadProjectileAugments();
-        A_coneAugs = AugmentLoader.LoadConeAugments();
+        string augstr = AugmentLoader.LoadAugmentJson();
+        A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
+        A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
+        A_coneAugs = AugmentLoader.ReadAugmentData<ConeAugment>(augstr);
         SpawnPhysicalAugments();
         GetAllAugmentGameObjects();
         FindObjectOfType<VendingMachine>().Init(this);
@@ -53,16 +55,21 @@ public class AugmentManager : MonoBehaviour
             go_augments.Add(pooledAug.GetGameObject());
     }
 
+    public int GetNumberOfAugments()
+    {
+        return A_augs.Length + A_projAugs.Length + A_coneAugs.Length;
+    }
+
     public AugmentGo[] GetRandomAugments(int _i_size)
     {
         AugmentGo[] augs = new AugmentGo[_i_size];
         for (int i = 0; i < _i_size; i++)
-            augs[i] = go_augments[Random.Range(0, go_augments.Count - 1)].GetComponent<AugmentGo>();
+            augs[i] = go_augments[UnityEngine.Random.Range(0, go_augments.Count - 1)].GetComponent<AugmentGo>();
         return augs;
     }
 
     public AugmentGo GetRandomAugment(int _i_maxSize)
     {
-        return go_augments[Random.Range(0, _i_maxSize <= go_augments.Count ? _i_maxSize+1 : go_augments.Count+1)].GetComponent<AugmentGo>();
+        return go_augments[UnityEngine.Random.Range(0, _i_maxSize <= go_augments.Count ? _i_maxSize+1 : go_augments.Count+1)].GetComponent<AugmentGo>();
     }
 }

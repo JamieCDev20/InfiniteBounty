@@ -128,6 +128,6 @@ public class WeaponTool : ToolBase
             tr_trail.endWidth = ap.f_trWidth;
         }
         // Add the keys here
-        // ap.A_trKeys;
+        //tr_trail.colorGradient.SetKeys(new GradientColorKey(ap.A_trKeys));
     }
 }
