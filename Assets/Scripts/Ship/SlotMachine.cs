@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum Diversifier
 {
-    None, JackedRabbits, GigaGeysers, SolarStorm, 
+    None, JackedRabbits, GigaGeysers, SolarStorm,
 
 }
 
@@ -139,6 +139,8 @@ public class SlotMachine : MonoBehaviour, IInteractible
 
     private IEnumerator RollWheel(WheelData _wd_wheel, float _f_startDelay)
     {
+        _wd_wheel.go_wheelSpinner.transform.localEulerAngles = Vector3.zero;
+
         yield return new WaitForSeconds(_f_startDelay);
 
         int _i_diversifierToRoll = UnityEngine.Random.Range(0, _wd_wheel.dL_wheelDiversifiers.Count);
@@ -152,6 +154,7 @@ public class SlotMachine : MonoBehaviour, IInteractible
             yield return new WaitForSeconds(0.009f);
             _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 22.5f, Space.Self);
 
+
             SpriteRenderer _sr = _wd_wheel.srL_wheelSprites[0];
             _wd_wheel.srL_wheelSprites.RemoveAt(0);
             _wd_wheel.srL_wheelSprites.Add(_sr);
@@ -159,6 +162,7 @@ public class SlotMachine : MonoBehaviour, IInteractible
             _i_currentIndex++;
             if (_i_currentIndex >= _wd_wheel.dL_wheelDiversifiers.Count)
                 _i_currentIndex = 0;
+
         }
 
         for (int i = 0; i < 8; i++)
