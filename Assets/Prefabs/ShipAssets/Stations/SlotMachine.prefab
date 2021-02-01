@@ -327,74 +327,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4202852832832303596}
   m_maskType: 0
---- !u!1 &1446860870652023751
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1892041845964279809}
-  - component: {fileID: 8132139999040266766}
-  - component: {fileID: 7780224442889093739}
-  m_Layer: 0
-  m_Name: DiversifierManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1892041845964279809
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446860870652023751}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7925930484445450912}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8132139999040266766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446860870652023751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1801a3e67a01ed84288eb57d66df2521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  s_geyserPath: NetworkPrefabs\Diversifiers\Geyser
-  v_numberOfGeysers: {x: 80, y: 120}
---- !u!114 &7780224442889093739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446860870652023751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1748270000648343307
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,7 +2256,6 @@ Transform:
   - {fileID: 2229005736559461270}
   - {fileID: 42613625347206168}
   - {fileID: 3721922916482394812}
-  - {fileID: 1892041845964279809}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2350,7 +2281,7 @@ MonoBehaviour:
     - {fileID: 6818957570727851945}
     - {fileID: 5423084085505219552}
     i_wheelIndex: 0
-    dL_wheelDiversifiers: 0000000001000000020000000300000000000000000000000000000000000000
+    dL_wheelDiversifiers: 0200000002000000020000000200000002000000020000000200000002000000
   - go_wheelSpinner: {fileID: 1957996910088128699}
     srL_wheelSprites:
     - {fileID: 7038145365922325747}
@@ -3710,9 +3641,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 026aab2a68cbe814990a4a7f82f8a47d, type: 3}
---- !u!4 &7565251900913165535 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 026aab2a68cbe814990a4a7f82f8a47d,
+--- !u!1 &5265862888231050553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2766212503428324877, guid: 026aab2a68cbe814990a4a7f82f8a47d,
     type: 3}
   m_PrefabInstance: {fileID: 8032053352839398196}
   m_PrefabAsset: {fileID: 0}
@@ -3722,9 +3653,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8032053352839398196}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5265862888231050553 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2766212503428324877, guid: 026aab2a68cbe814990a4a7f82f8a47d,
+--- !u!4 &7565251900913165535 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 026aab2a68cbe814990a4a7f82f8a47d,
     type: 3}
   m_PrefabInstance: {fileID: 8032053352839398196}
   m_PrefabAsset: {fileID: 0}

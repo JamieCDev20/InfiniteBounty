@@ -24,6 +24,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject[] goA_feet = new GameObject[0];
     private int i_currentFeet;
 
+
     private void Start()
     {
         view = GetComponent<PhotonView>();
@@ -127,7 +128,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
-        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentArm);
+        view.RPC("UpdateArmInOthers", RpcTarget.Others, i_currentArm);
     }
     public void LastArm()
     {
@@ -141,7 +142,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
-        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentArm);
+        view.RPC("UpdateArmInOthers", RpcTarget.Others, i_currentArm);        
     }
 
     [PunRPC]
@@ -175,7 +176,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_feet[i_currentFeet].SetActive(true);
 
-        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentFeet);
+        view.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
     }
     public void LastFeet()
     {
@@ -187,7 +188,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_feet[i_currentFeet].SetActive(true);
 
-        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentFeet);
+        view.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
     }
 
     [PunRPC]

@@ -15,12 +15,12 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        transform.parent = null;
         if (x != null) Destroy(gameObject);
         else
         {
             x = this;
             DontDestroyOnLoad(gameObject);
-            transform.parent = null;
         }
 
         view = GetComponent<PhotonView>();
@@ -57,7 +57,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
                     for (int x = 0; x < _vA_positions.Length; x++)
                     {
                         int _i_zoneIndex = Random.Range(0, _ziA_spawnableZones.Length);
-                        _vA_positions[x] = ((Vector3.one * Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius)) + _ziA_spawnableZones[_i_zoneIndex].t_zone.position) + Vector3.up * 500;
+                        _vA_positions[x] = new Vector3(Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius), 500, Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius)) + _ziA_spawnableZones[_i_zoneIndex].t_zone.position;
                     }
 
                     view.RPC(nameof(GigaGeysersRPC), RpcTarget.All, _vA_positions);
@@ -84,6 +84,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
             Physics.Raycast(_vA_pointsToPlaceGeysers[i], Vector3.down, out _hit, Mathf.Infinity);
             GameObject _go = PhotonNetwork.Instantiate(s_geyserPath, _hit.point, Quaternion.identity);
             _go.transform.up = _hit.normal;
+
         }
     }
 
