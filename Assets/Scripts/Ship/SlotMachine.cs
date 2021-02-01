@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,10 +13,10 @@ public enum Diversifier
 }
 
 
-public class SlotMachine : MonoBehaviour, IInteractible
+public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 {
     private Animator anim;
-
+    private PhotonView view;
 
     [Header("Interactable Things That Moves the Camera")]
     [SerializeField] private Transform t_playerPos;
@@ -48,9 +49,11 @@ public class SlotMachine : MonoBehaviour, IInteractible
     [SerializeField] private int i_currentCost;
     [SerializeField] private float f_costMultPerSpin;
     [SerializeField] private TextMeshPro tmp_costText;
+    private bool b_isSpinning;
 
     private void Start()
     {
+        view = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         tmp_costText.text = "";
     }
@@ -158,16 +161,11 @@ public class SlotMachine : MonoBehaviour, IInteractible
 
     }
 
-    private IEnumerator RollWheel(WheelData _wd_wheel, float _f_startDelay)
+    private IEnumerator RollWheel(WheelData _wd_wheel, float _f_startDelay, int _i_diversifierToRoll)
     {
-        _wd_wheel.go_wheelSpinner.transform.localEulerAngles = Vector3.zero;
-
         yield return new WaitForSeconds(_f_startDelay);
-
-        int _i_diversifierToRoll = UnityEngine.Random.Range(0, _wd_wheel.dL_wheelDiversifiers.Count);
         int _i_currentIndex = 0;
-
-
+        b_isSpinning = true;
         for (int i = 0; i < 100; i++)
         {
             yield return new WaitForSeconds(0.009f);
@@ -175,7 +173,7 @@ public class SlotMachine : MonoBehaviour, IInteractible
             yield return new WaitForSeconds(0.009f);
             _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * -22.5f, Space.Self);
 
-            int _i_ = _i_currentIndex;
+            int _i_;
 
             //Centre Sprite
             _wd_wheel.srL_wheelSprites[0].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_currentIndex]].s_image;
@@ -205,7 +203,6 @@ public class SlotMachine : MonoBehaviour, IInteractible
             _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 11.25f, Space.Self);
         }
 
-        DisplayDiversifierInfo(i_currentButtonHighlighted);
 
         for (int i = 0; i < 4; i++)
         {
@@ -228,22 +225,34 @@ public class SlotMachine : MonoBehaviour, IInteractible
             _i = 0;
         _wd_wheel.srL_wheelSprites[2].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i]].s_image;
 
-        anim.SetBool("PullLever", false);
+        b_isSpinning = false;
+        DisplayDiversifierInfo(i_currentButtonHighlighted);
+
+        if (view.IsMine)
+            anim.SetBool("PullLever", false);
         tmp_costText.text = "£" + i_currentCost;
     }
 
+    [PunRPC]
+    public void SyncedRollsRPC(int _i_firstRoll, int _i_secondRoll, int _i_thirdRoll)
+    {
+        StartCoroutine(RollWheel(wdA_wheels[0], 0.19f, _i_firstRoll));
+        StartCoroutine(RollWheel(wdA_wheels[1], 0.28f, _i_secondRoll));
+        StartCoroutine(RollWheel(wdA_wheels[2], 0.37f, _i_thirdRoll));
+    }
 
     internal void PullLever()
     {
         if (nm_nugMan.Nugs >= i_currentCost)
         {
             nm_nugMan.CollectNugs(-i_currentCost, false);
-            i_currentCost = Mathf.RoundToInt(i_currentCost * f_costMultPerSpin);
+            view.RPC(nameof(UpCostRPC), RpcTarget.All);
             anim.SetBool("PullLever", true);
-            //tmp_costText.text = "";
-            StartCoroutine(RollWheel(wdA_wheels[0], 0.19f));
-            StartCoroutine(RollWheel(wdA_wheels[1], 0.28f));
-            StartCoroutine(RollWheel(wdA_wheels[2], 0.37f));
+            view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+                UnityEngine.Random.Range(0, wdA_wheels[0].dL_wheelDiversifiers.Count),
+                UnityEngine.Random.Range(0, wdA_wheels[1].dL_wheelDiversifiers.Count),
+                UnityEngine.Random.Range(0, wdA_wheels[2].dL_wheelDiversifiers.Count));
+
             DisplayDiversifierInfo("SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!");
         }
         else
@@ -251,8 +260,15 @@ public class SlotMachine : MonoBehaviour, IInteractible
 
     }
 
+    [PunRPC]
+    public void UpCostRPC()
+    {
+        i_currentCost = Mathf.RoundToInt(i_currentCost * f_costMultPerSpin);
+    }
+
     internal void DisplayDiversifierInfo(int _i_index)
     {
+        if (b_isSpinning) return;
         i_currentButtonHighlighted = _i_index;
         t_descriptionText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
         t_nameText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
@@ -285,5 +301,4 @@ public class SlotMachine : MonoBehaviour, IInteractible
         [TextArea] public string s_desc;
         public Sprite s_image;
     }
-
 }
