@@ -14,10 +14,11 @@ public class Hopdog : MonoBehaviour
     private float f_targetFindLimiter = 0;
     private BehaviourTree tree;
     private Transform t_target;
+    private HopdogMover mover;
 
     private void Awake()
     {
-
+        mover = GetComponent<HopdogMover>();
         tree = new BehaviourTree(ParentSequencer());
 
     }
@@ -27,10 +28,15 @@ public class Hopdog : MonoBehaviour
         f_timeStarted = Time.realtimeSinceStartup;
     }
 
+    private void Update()
+    {
+        tree.DoTreeIteration();
+    }
+
     private bool CanSeeTransform(Transform _targ)
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, _targ.position - transform.position, out hit, f_spottingDistance))
+        if (Physics.Raycast(transform.position, _targ.position - transform.position, out hit, f_spottingDistance))
         {
             return hit.collider.transform == _targ;
         }
@@ -72,9 +78,9 @@ public class Hopdog : MonoBehaviour
 
         //this is to check if the agent has a target after getting one since actions always return true
         //the sequence and therefore the selector will fail if no target is had or found
-        SequencerNode getTargetSequence = new SequencerNode(getNode, hasNode); 
+        SequencerNode getTargetSequence = new SequencerNode(getNode, hasNode);
 
-        SelectorNode retargetNode = new SelectorNode(hasNode, getTargetSequence); 
+        SelectorNode retargetNode = new SelectorNode(hasNode, getTargetSequence);
         return retargetNode;
     }
 
@@ -82,7 +88,7 @@ public class Hopdog : MonoBehaviour
     {
 
         SelectorNode targetedActionSelector = new SelectorNode(AttackPlayerDefinition(), FollowPlayerDefinition());
-        
+
         return targetedActionSelector;
 
     }
@@ -119,7 +125,7 @@ public class Hopdog : MonoBehaviour
 
     public bool StillHasTarget()
     {
-        if(t_target != null)
+        if (t_target != null)
         {
             if (CanSeeTransform(t_target))
                 return CanSeeTransform(t_target);
@@ -146,7 +152,17 @@ public class Hopdog : MonoBehaviour
 
     public bool CanSeeAPlayer()
     {
-        Debug.LogError("Not implemented can see player check");
+        foreach (PlayerHealth ph in FindObjectsOfType<PlayerHealth>())
+        {
+            if (!ph.IsDead())
+            {
+                if (CanSeeTransform(ph.transform))
+                {
+                    t_target = ph.transform;
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -154,43 +170,43 @@ public class Hopdog : MonoBehaviour
 
     #region Actions
 
+    public void DebugTarget()
+    {
+        Debug.Log($"Target: {t_target}");
+    }
+
     public void AttackAction()
     {
-        Debug.Log("Doing attack action");
+
+        mover.Launch(t_target.position);
+
     }
 
     public void MoveTowardsTargetAction()
     {
-        Debug.Log("Moving towards target");
+        mover.Move(t_target.position - transform.position);
     }
 
     public void IdleAction()
     {
-        Debug.Log("Idling");
         return;
     }
 
     public void GetTargetAction()
     {
         f_targetFindLimiter += Time.deltaTime;
-
+        t_target = null;
         if (f_targetFindLimiter <= 1)
             return;
 
         f_targetFindLimiter = 0;
 
-        List<Transform> potentials = new List<Transform>();
-        foreach (PlayerHealth ph in FindObjectsOfType<PlayerHealth>())
-        {
-            if (!ph.GetIsDead())
-                if(CanSeeTransform(ph.transform))
-                    potentials.Add(ph.transform);
-        }
+        t_target = FindObjectOfType<PlayerInputManager>().transform;
 
-        potentials = potentials.OrderBy(x => (transform.position - x.position).sqrMagnitude).ToList();
+        //potentials = potentials.OrderBy(x => (transform.position - x.position).sqrMagnitude).ToList();
 
-        if (potentials.Count > 0)
-            t_target = potentials[0];
+        //if (potentials.Count > 0)
+        //    t_target = potentials[0];
     }
 
     #endregion

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HopdogMover : MoverBase
 {
-    
+
     /*
      *  f_moveSpeed
      *  v_drag
@@ -13,11 +13,16 @@ public class HopdogMover : MoverBase
      *  v_groundNormal
      *  rb
      */
+    [SerializeField] private float f_launchForce = 15f;
 
-    public void Launch()
+    public void Launch(Vector3 _targetPos)
     {
+        if (!b_canMove)
+            return;
+        Debug.Log("Launched");
         b_canMove = false;
         Invoke(nameof(SetCanMove), 2);
+        rb.AddForce((_targetPos - transform.position).normalized * f_launchForce, ForceMode.VelocityChange);
 
     }
 

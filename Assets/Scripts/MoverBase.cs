@@ -22,10 +22,10 @@ public class MoverBase : MonoBehaviour
     {
         v_groundNormal = Vector3.up;
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_drag);
-        if (!Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f) || !b_canMove)
+        if (!Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out hit, 0.5f) || !b_canMove)
             return;
         v_groundNormal = hit.normal;
-
+        Debug.Log(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized);
         rb.AddForce(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized * f_moveSpeed, ForceMode.Impulse);
 
     }

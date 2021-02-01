@@ -159,7 +159,7 @@ public class PlayerAnimator : MonoBehaviourPun
 
         diff.ToAngleAxis(out angle, out axis);
 
-        stomach.rotation = Quaternion.AngleAxis(angle * f_stomachWeight, axis) * stomach.rotation;
+        stomach.rotation = Quaternion.AngleAxis(angle * f_stomachWeight, axis ) * stomach.rotation;
         spine.rotation = Quaternion.AngleAxis(angle * (f_spineWeight - f_stomachWeight), axis) * spine.rotation;
         chest.rotation = Quaternion.AngleAxis(angle * (1 - (f_spineWeight + f_stomachWeight)), axis) * chest.rotation;
 
