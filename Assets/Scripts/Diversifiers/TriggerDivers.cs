@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class TriggerDivers : MonoBehaviour
 {
+    [Header("Zone Info")]
+    [SerializeField] private ZoneInfo[] ziA_diversifiableZone = new ZoneInfo[0];
+
     void Start()
     {
-        DiversifierManager.x.ApplyDiversifiers();
+        DiversifierManager.x.ApplyDiversifiers(ziA_diversifiableZone);
     }
 }
