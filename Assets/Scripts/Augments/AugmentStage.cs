@@ -6,5 +6,6 @@ public enum AugmentStage
 {
     theme,
     type,
-    full
+    full,
+    fused
 }
