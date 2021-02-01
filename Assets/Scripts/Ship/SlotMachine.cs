@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,7 @@ public class SlotMachine : MonoBehaviour, IInteractible
     [SerializeField] private WheelData[] wdA_wheels = new WheelData[3];
 
     private Diversifier[] dA_activeDiversifiers = new Diversifier[3];
+    private NugManager nm_nugMan;
 
     [Header("Diversifier Sprites")]
     [SerializeField] private DiversifierInfo[] diA_diversifiers = new DiversifierInfo[0];
@@ -37,11 +39,21 @@ public class SlotMachine : MonoBehaviour, IInteractible
     [SerializeField] private Text t_descriptionText;
     [SerializeField] private Canvas c_infoCanvas;
 
+    [Header("Info Buttons")]
+    [SerializeField] private GameObject go_infoHighlight;
+    [SerializeField] private Transform[] tA_buttonPositions = new Transform[0];
+    private int i_currentButtonHighlighted;
+
+    [Header("MONEYS")]
+    [SerializeField] private int i_currentCost;
+    [SerializeField] private float f_costMultPerSpin;
+    [SerializeField] private TextMeshPro tmp_costText;
+
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
+        tmp_costText.text = "";
     }
-
 
     #region Interactions
 
@@ -64,12 +76,13 @@ public class SlotMachine : MonoBehaviour, IInteractible
             PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
             _pa.SetShootability(false);
             _pa.StopWalking();
-
+            nm_nugMan = pim.GetComponent<NugManager>();
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_infoCanvas.enabled = true;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            tmp_costText.text = "£" + i_currentCost;
         }
     }
 
@@ -78,6 +91,8 @@ public class SlotMachine : MonoBehaviour, IInteractible
 
     public void EndInteract()
     {
+        LockInDivers();
+
         PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
@@ -94,9 +109,14 @@ public class SlotMachine : MonoBehaviour, IInteractible
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         b_isBeingUsed = false;
+        tmp_costText.text = "";
     }
 
-    #endregion
+    private void LockInDivers()
+    {
+        DiversifierManager.x.ReceiveDiversifiers(dA_activeDiversifiers);
+    }
+
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
     {
@@ -131,6 +151,7 @@ public class SlotMachine : MonoBehaviour, IInteractible
         }
     }
 
+    #endregion
 
     private void GenerateDiversifiers()
     {
@@ -146,24 +167,37 @@ public class SlotMachine : MonoBehaviour, IInteractible
         int _i_diversifierToRoll = UnityEngine.Random.Range(0, _wd_wheel.dL_wheelDiversifiers.Count);
         int _i_currentIndex = 0;
 
-        print(_i_diversifierToRoll);
-        for (int i = 0; i < 80 - _i_diversifierToRoll; i++)
+
+        for (int i = 0; i < 100; i++)
         {
             yield return new WaitForSeconds(0.009f);
             _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 22.5f, Space.Self);
             yield return new WaitForSeconds(0.009f);
-            _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 22.5f, Space.Self);
+            _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * -22.5f, Space.Self);
 
+            int _i_ = _i_currentIndex;
 
-            SpriteRenderer _sr = _wd_wheel.srL_wheelSprites[0];
-            _wd_wheel.srL_wheelSprites.RemoveAt(0);
-            _wd_wheel.srL_wheelSprites.Add(_sr);
-            _sr.sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_currentIndex]].s_image;
+            //Centre Sprite
+            _wd_wheel.srL_wheelSprites[0].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_currentIndex]].s_image;
+
+            //Sprite below
+            _i_ = _i_currentIndex - 1;
+            if (_i_ < 0)
+                _i_ = _wd_wheel.dL_wheelDiversifiers.Count - 1;
+            _wd_wheel.srL_wheelSprites[1].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_]].s_image;
+
+            //Sprite Above
+            _i_ = _i_currentIndex + 1;
+            if (_i_ >= _wd_wheel.dL_wheelDiversifiers.Count)
+                _i_ = 0;
+            _wd_wheel.srL_wheelSprites[2].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_]].s_image;
+
             _i_currentIndex++;
             if (_i_currentIndex >= _wd_wheel.dL_wheelDiversifiers.Count)
                 _i_currentIndex = 0;
 
         }
+        dA_activeDiversifiers[_wd_wheel.i_wheelIndex] = _wd_wheel.dL_wheelDiversifiers[_i_diversifierToRoll];
 
         for (int i = 0; i < 8; i++)
         {
@@ -171,34 +205,65 @@ public class SlotMachine : MonoBehaviour, IInteractible
             _wd_wheel.go_wheelSpinner.transform.Rotate(Vector3.right * 11.25f, Space.Self);
         }
 
+        DisplayDiversifierInfo(i_currentButtonHighlighted);
+
         for (int i = 0; i < 4; i++)
         {
             yield return new WaitForSeconds(0.02f);
             _wd_wheel.go_wheelSpinner.transform.Rotate(-Vector3.right * 22.5f, Space.Self);
         }
 
-        dA_activeDiversifiers[_wd_wheel.i_wheelIndex] = _wd_wheel.dL_wheelDiversifiers[_i_diversifierToRoll];
+        int _i = _i_currentIndex;
+        _wd_wheel.srL_wheelSprites[0].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_diversifierToRoll]].s_image;
+
+        //Sprite below
+        _i = _i_diversifierToRoll - 1;
+        if (_i < 0)
+            _i = _wd_wheel.dL_wheelDiversifiers.Count - 1;
+        _wd_wheel.srL_wheelSprites[1].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i]].s_image;
+
+        //Sprite Above
+        _i = _i_diversifierToRoll + 1;
+        if (_i >= _wd_wheel.dL_wheelDiversifiers.Count)
+            _i = 0;
+        _wd_wheel.srL_wheelSprites[2].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i]].s_image;
+
         anim.SetBool("PullLever", false);
+        tmp_costText.text = "£" + i_currentCost;
     }
 
 
     internal void PullLever()
     {
-        anim.SetBool("PullLever", true);
-        StartCoroutine(RollWheel(wdA_wheels[0], 0.19f));
-        StartCoroutine(RollWheel(wdA_wheels[1], 0.28f));
-        StartCoroutine(RollWheel(wdA_wheels[2], 0.37f));
+        if (nm_nugMan.Nugs >= i_currentCost)
+        {
+            nm_nugMan.CollectNugs(-i_currentCost, false);
+            i_currentCost = Mathf.RoundToInt(i_currentCost * f_costMultPerSpin);
+            anim.SetBool("PullLever", true);
+            //tmp_costText.text = "";
+            StartCoroutine(RollWheel(wdA_wheels[0], 0.19f));
+            StartCoroutine(RollWheel(wdA_wheels[1], 0.28f));
+            StartCoroutine(RollWheel(wdA_wheels[2], 0.37f));
+            DisplayDiversifierInfo("SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!");
+        }
+        else
+            anim.SetTrigger("FailedToBuy");
+
     }
 
     internal void DisplayDiversifierInfo(int _i_index)
     {
-        //if (diA_diversifiers.Length > _i_index)
-        {
-            t_descriptionText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
-            t_nameText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
-        }
+        i_currentButtonHighlighted = _i_index;
+        t_descriptionText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
+        t_nameText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
+        go_infoHighlight.transform.position = tA_buttonPositions[_i_index].position;
     }
 
+    internal void DisplayDiversifierInfo(string _s_name, string _s_desc)
+    {
+        t_nameText.text = _s_name;
+        t_descriptionText.text = _s_desc;
+    }
 
 
 
