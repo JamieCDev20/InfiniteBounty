@@ -13,11 +13,17 @@ public class PlayerAnimator : MonoBehaviourPun
     [SerializeField] private Transform armR;
     [SerializeField] private Transform armL;
     [SerializeField] private Transform chest;
+    [SerializeField] private Transform chestRef;
     [SerializeField] private Transform spine;
+    [SerializeField] private Transform spineRef;
     [SerializeField] private Transform stomach;
+    [SerializeField] private Transform stomachRef;
     [SerializeField] private Transform hips;
     [SerializeField] private float f_spineWeight = 0.55f;
     [SerializeField] private float f_stomachWeight = 0.2f;
+    [SerializeField] private float f_maxBodyAngle = 80;
+    [SerializeField] private float f_maxArmAngle = 80;
+    [SerializeField] private float f_armOffset = -20;
     [Space]
     [Header("Tester")]
     [SerializeField] private bool doDemoIK = true;
@@ -92,9 +98,11 @@ public class PlayerAnimator : MonoBehaviourPun
         {
             //MakeAnArmDoTheRightThing(armR, -1);
             //MakeAnArmDoTheRightThing(armL, 1);
-            if(anim.GetBool("ShootingLeft") || anim.GetBool("ShootingRight"))
+            if (anim.GetBool("ShootingLeft") || anim.GetBool("ShootingRight"))
             {
                 ApplyBodyRotation();
+                ArmUpDownRespect(armL, anim.GetBool("ShootingLeft"));
+                ArmUpDownRespect(armR, anim.GetBool("ShootingRight"));
             }
         }
     }
@@ -147,28 +155,29 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private void ApplyBodyRotation()
     {
-        Quaternion iHipsRot = hips.rotation;
-        Quaternion iStomachRot = stomach.rotation;
-        Quaternion iSpineRot = spine.rotation;
-        Quaternion iChestRot = chest.rotation;
 
-        Quaternion diff = camTransform.rotation * Quaternion.Inverse(hips.rotation);
+        float ang = Mathf.Clamp(Vector3.Angle(Vector3.ProjectOnPlane(camTransform.forward, hips.up), hips.forward), -f_maxBodyAngle, f_maxBodyAngle);
 
-        Vector3 axis;
-        float angle;
+        float side = Mathf.Sign(Vector3.Dot(camTransform.transform.forward, hips.right));
 
-        diff.ToAngleAxis(out angle, out axis);
-
-        stomach.rotation = Quaternion.AngleAxis(angle * f_stomachWeight, axis ) * stomach.rotation;
-        spine.rotation = Quaternion.AngleAxis(angle * (f_spineWeight - f_stomachWeight), axis) * spine.rotation;
-        chest.rotation = Quaternion.AngleAxis(angle * (1 - (f_spineWeight + f_stomachWeight)), axis) * chest.rotation;
+        stomach.rotation = Quaternion.AngleAxis(ang * f_stomachWeight * side, stomachRef.up) * stomach.rotation;
+        spine.rotation = Quaternion.AngleAxis(ang * (f_spineWeight - f_stomachWeight) * side, spineRef.up) * spine.rotation;
+        chest.rotation = Quaternion.AngleAxis(ang *  (1-(f_spineWeight + f_stomachWeight)) * side, chestRef.up) * chest.rotation;
 
     }
 
-    private void MakeAnArmDoTheRightThing(Transform arm, int fix)
+    private void ArmUpDownRespect(Transform _arm, bool _active)
     {
-        arm.transform.rotation = camTransform.rotation;
-        arm.Rotate(transform.up * fix, 90);
+        if (!_active)
+            return;
+
+        float ang = Mathf.Clamp(Vector3.Angle(Vector3.ProjectOnPlane(camTransform.forward, hips.right), hips.forward),-f_maxArmAngle, f_maxArmAngle);
+        float side = Mathf.Sign(Vector3.Dot(camTransform.transform.forward, -hips.up));
+
+        Vector3 temp = _arm.localEulerAngles;
+        temp.z += (ang * side) + f_armOffset;
+        _arm.localEulerAngles = temp;
+
     }
 
     internal void DoSitDown(bool b_isRightSide, Sofa _s_newSofa)
