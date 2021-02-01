@@ -132,10 +132,10 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             case 0:
                 StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_shotsPerHomingRound.x, v_shotsPerHomingRound.y)), tL_potentialTargets[Random.Range(0, tL_potentialTargets.Count)]));
                 break;
-            case 3:
+            case 1:
                 view.RPC("MortarAttack", RpcTarget.All);
                 break;
-            case 4:
+            case 2:
                 view.RPC("MeleeAttack", RpcTarget.All);
                 break;
         }
@@ -203,6 +203,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     public void Die()
     {
+        Debug.LogError("I'm being told to die");
         gameObject.SetActive(false);
     }
 
