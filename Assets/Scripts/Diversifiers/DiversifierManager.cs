@@ -9,7 +9,7 @@ public class DiversifierManager : MonoBehaviour
 
     private void Awake()
     {
-        if (x) Destroy(gameObject);
+        if (x != null) Destroy(gameObject);
         else
         {
             x = this;
@@ -40,10 +40,13 @@ public class DiversifierManager : MonoBehaviour
                 case Diversifier.None: break;
 
                 case Diversifier.JackedRabbits:
+                    print("THERE ARE JACKED RABBITS");
                     break;
                 case Diversifier.GigaGeysers:
+                    print("THERE ARE GIGA-GEYSERS");
                     break;
                 case Diversifier.SolarStorm:
+                    print("THE SUN IS A DEADLY LASER");
                     break;
 
                 default: break;
