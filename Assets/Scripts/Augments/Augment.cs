@@ -8,11 +8,9 @@ public class Augment
     [SerializeField] protected string s_name;
     [SerializeField] protected int i_level;
     [SerializeField] protected AugmentStage as_stage;
-    [SerializeField] protected bool b_fused;
     [SerializeField] protected Material mat_augColor;
     public string Name { get { return s_name; } }
     public int Level { get { return i_level; } set { i_level = value; } }
-    public bool Fused { get { return b_fused; } set{ b_fused = value; } }
     public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
     public Material AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
