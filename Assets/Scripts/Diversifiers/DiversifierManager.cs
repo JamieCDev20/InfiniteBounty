@@ -60,7 +60,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
                         _vA_positions[x] = ((Vector3.one * Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius)) + _ziA_spawnableZones[_i_zoneIndex].t_zone.position) + Vector3.up * 500;
                     }
 
-                    view.RPC(nameof(GigaGeysersRPC), RpcTarget.All);
+                    view.RPC(nameof(GigaGeysersRPC), RpcTarget.All, _vA_positions);
                     break;
 
                 case Diversifier.SolarStorm:
