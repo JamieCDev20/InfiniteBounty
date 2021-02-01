@@ -19,7 +19,9 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     [Header("Homing Attack")]
     [SerializeField] private GameObject go_homingPrefab;
+    [SerializeField] private float f_homingForwardMovement;
     [SerializeField] private Vector2 v_shotsPerHomingRound;
+    [SerializeField] private string s_homingMissilePath;
 
     private void Start()
     {
@@ -128,7 +130,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
         switch (_i_moveIndex)
         {
             case 0:
-                view.RPC("HomingAttackRPC", RpcTarget.All, Mathf.RoundToInt(Random.Range(v_shotsPerHomingRound.x, v_shotsPerHomingRound.y)));
+                StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_shotsPerHomingRound.x, v_shotsPerHomingRound.y)), tL_potentialTargets[Random.Range(0, tL_potentialTargets.Count)]));
                 break;
             case 3:
                 view.RPC("MortarAttack", RpcTarget.All);
@@ -148,20 +150,27 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     }
 
-    [PunRPC]
-    private void HomingAttackRPC(int _i_amount)
+    private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
-        StartCoroutine(HomingAttack(_i_amount));
-    }
-    private IEnumerator HomingAttack(int _i_amount)
-    {
+        List<GameObject> _goL_orbs = new List<GameObject>();
         for (int i = 0; i < _i_amount; i++)
         {
             yield return new WaitForSeconds(0.5f);
-            GameObject _go = Instantiate(go_homingPrefab);
+            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath + go_homingPrefab.name, transform.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
-            _go.transform.position = transform.position + transform.forward;
+            _go.transform.position = transform.position + transform.forward * i;
             _go.transform.forward = transform.forward;
+            _goL_orbs.Add(_go);
+        }
+
+        while (_goL_orbs.Count > 0)
+        {
+            yield return new WaitForEndOfFrame();
+            for (int i = 0; i < _goL_orbs.Count; i++)
+            {
+                _goL_orbs[i].transform.position += _goL_orbs[i].transform.forward * f_homingForwardMovement * Time.deltaTime;
+                _goL_orbs[i].transform.LookAt(_t_target);
+            }
         }
     }
 

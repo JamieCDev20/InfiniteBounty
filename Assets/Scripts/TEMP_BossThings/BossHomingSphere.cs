@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class BossHomingSphere : BossProjectile
 {
-    [Header("Homing Sphere")]
-    [SerializeField] private float f_forwardMovement;
+    [Header("Homing Sphere")]    
     [SerializeField] private GameObject go_explosionEffect;
 
-    private void Update()
-    {
-        transform.position += f_forwardMovement * Time.deltaTime * transform.forward;
-        transform.LookAt(t_target);
-    }
 
     protected override void Die()
     {
