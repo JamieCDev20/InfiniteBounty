@@ -21,6 +21,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
         else
             File.Create(Application.persistentDataPath + sv);
         FindObjectOfType<Workbench>().Init(this);
+        DontDestroyOnLoad(gameObject);
     }
 
     public void OnNotify(ObserverEvent oe_event)

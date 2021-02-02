@@ -83,6 +83,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
             // Find any saved augments and load them
+            saveMan = FindObjectOfType<SaveManager>();
             if (saveMan.SaveData.purchasedAugments != null)
             {
                 Augment[] augs = saveMan.SaveData.purchasedAugments;

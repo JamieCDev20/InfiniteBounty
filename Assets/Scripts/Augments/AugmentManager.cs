@@ -20,6 +20,7 @@ public class AugmentManager : MonoBehaviour
         SpawnPhysicalAugments();
         GetAllAugmentGameObjects();
         FindObjectOfType<VendingMachine>().Init(this);
+        DontDestroyOnLoad(gameObject);
     }
 
     /// <summary>
