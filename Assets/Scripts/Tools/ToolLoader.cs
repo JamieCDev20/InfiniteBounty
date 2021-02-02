@@ -23,6 +23,7 @@ public class ToolLoader : MonoBehaviour
         go_tool.transform.position = _t_parent.position;
         go_tool.transform.rotation = _t_parent.rotation;
         go_tool.transform.parent = _t_parent;
+        go_tool.transform.localScale = Vector3.one;
         go_tool.ToolID = _i_index;
         go_tool.gameObject.SetActive(false);
         tb_loadedTools.Add(go_tool);
