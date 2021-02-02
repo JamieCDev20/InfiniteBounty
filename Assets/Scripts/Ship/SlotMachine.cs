@@ -56,6 +56,30 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         view = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
         tmp_costText.text = "";
+
+        SetWheels(wdA_wheels[0], UnityEngine.Random.Range(0, wdA_wheels[0].dL_wheelDiversifiers.Count));
+        SetWheels(wdA_wheels[1], UnityEngine.Random.Range(0, wdA_wheels[1].dL_wheelDiversifiers.Count));
+        SetWheels(wdA_wheels[2], UnityEngine.Random.Range(0, wdA_wheels[2].dL_wheelDiversifiers.Count));
+    }
+
+    private void SetWheels(WheelData _wd_wheel, int _i_diversifierToRoll)
+    {
+        dA_activeDiversifiers[_wd_wheel.i_wheelIndex] = _wd_wheel.dL_wheelDiversifiers[_i_diversifierToRoll];
+
+        int _i;
+        _wd_wheel.srL_wheelSprites[0].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i_diversifierToRoll]].s_image;
+
+        //Sprite below
+        _i = _i_diversifierToRoll - 1;
+        if (_i < 0)
+            _i = _wd_wheel.dL_wheelDiversifiers.Count - 1;
+        _wd_wheel.srL_wheelSprites[1].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i]].s_image;
+
+        //Sprite Above
+        _i = _i_diversifierToRoll + 1;
+        if (_i >= _wd_wheel.dL_wheelDiversifiers.Count)
+            _i = 0;
+        _wd_wheel.srL_wheelSprites[2].sprite = diA_diversifiers[(int)_wd_wheel.dL_wheelDiversifiers[_i]].s_image;
     }
 
     #region Interactions
@@ -246,6 +270,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         if (nm_nugMan.Nugs >= i_currentCost)
         {
             nm_nugMan.CollectNugs(-i_currentCost, false);
+
             view.RPC(nameof(UpCostRPC), RpcTarget.All);
             anim.SetBool("PullLever", true);
             view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
@@ -257,8 +282,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         }
         else
             anim.SetTrigger("FailedToBuy");
-
     }
+    internal void PullLeverFree()
+    {
+        anim.SetBool("PullLever", true);
+        view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+            UnityEngine.Random.Range(0, wdA_wheels[0].dL_wheelDiversifiers.Count),
+            UnityEngine.Random.Range(0, wdA_wheels[1].dL_wheelDiversifiers.Count),
+            UnityEngine.Random.Range(0, wdA_wheels[2].dL_wheelDiversifiers.Count));
+
+        DisplayDiversifierInfo("SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!");
+    }
+
+
 
     [PunRPC]
     public void UpCostRPC()

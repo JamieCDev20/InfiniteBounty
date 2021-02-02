@@ -6,9 +6,9 @@ using UnityEngine;
 public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 {
     private PhotonView view;
-    private List<Transform> tL_potentialTargets = new List<Transform>();
+    [SerializeField] private List<Transform> tL_potentialTargets = new List<Transform>();
     private bool b_isAttacking;
-    [SerializeField] private float f_timeBetweenAttacks = 6;
+    [Space, SerializeField] private float f_timeBetweenAttacks = 6;
     private float f_currentTimer;
     [SerializeField] private float f_timeBetweenMoves = 15;
     private float f_currentMoveTimer;
@@ -23,10 +23,11 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private Vector2 v_shotsPerHomingRound;
     [SerializeField] private string s_homingMissilePath;
 
+
     private void Start()
     {
         view = GetComponent<PhotonView>();
-        PhotonNetwork.RegisterPhotonView(view);
+        //PhotonNetwork.RegisterPhotonView(view);
 
 
         if (PhotonNetwork.IsMasterClient)
@@ -38,18 +39,16 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
             Invoke("GetTargets", 1);
 
-            Invoke("BeginAttacks", 7);
+            Invoke(nameof(BeginAttacks), 7);
             b_isHost = true;
         }
     }
 
     public void GetTargets()
     {
-        Collider[] _cA = Physics.OverlapSphere(transform.position, 30, lm_playerLayer);
-
-        for (int i = 0; i < _cA.Length; i++)
-            if (_cA[i].CompareTag("Player"))
-                tL_potentialTargets.Add(_cA[i].transform);
+        for (int i = 0; i < tL_potentialTargets.Count; i++)
+            if (tL_potentialTargets[i] == null)
+                tL_potentialTargets.RemoveAt(i);
 
         i_currentHealth *= tL_potentialTargets.Count;
     }
