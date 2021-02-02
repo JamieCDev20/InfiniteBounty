@@ -89,7 +89,7 @@ public class Jetpack : MobilityTool
                 EndSteaming();
             }
         }
-        anim.SetBool("Jetpack", b_isBeingUsed);
+        anim?.SetBool("Jetpack", b_isBeingUsed);
     }
 
     public override void PlayParticles(bool val)

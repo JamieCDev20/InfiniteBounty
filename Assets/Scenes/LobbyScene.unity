@@ -3184,74 +3184,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497184087}
   m_CullTransparentMesh: 0
---- !u!1 &510474956
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 510474959}
-  - component: {fileID: 510474958}
-  - component: {fileID: 510474957}
-  m_Layer: 0
-  m_Name: DiversifierManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &510474957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510474956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 851
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &510474958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510474956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1801a3e67a01ed84288eb57d66df2521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  s_geyserPath: NetworkPrefabs\Diversifiers\Geyser
-  v_numberOfGeysers: {x: 80, y: 120}
---- !u!4 &510474959
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510474956}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.93, y: -1.0297103, z: -14.388}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 37
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &514706313
 GameObject:
   m_ObjectHideFlags: 0
@@ -21809,7 +21741,7 @@ PrefabInstance:
     - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 207.5548
+      value: 207.44273
       objectReference: {fileID: 0}
     - target: {fileID: 7211629806612318130, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
@@ -21896,7 +21828,7 @@ PrefabInstance:
     - target: {fileID: 8062822100435471660, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
         type: 3}
       propertyPath: goA_toSpawnOnStart.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8062822100435471660, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
         type: 3}
@@ -21933,6 +21865,12 @@ PrefabInstance:
       propertyPath: goA_toSpawnOnStart.Array.data[5]
       value: 
       objectReference: {fileID: 4680260357865433723, guid: 0e191e9e69a3a534e89d767ce2e5b8bc,
+        type: 3}
+    - target: {fileID: 8062822100435471660, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
+        type: 3}
+      propertyPath: goA_toSpawnOnStart.Array.data[6]
+      value: 
+      objectReference: {fileID: 5660222384504388976, guid: c4abf8ebcfb95a245b054396ef919aee,
         type: 3}
     - target: {fileID: 8062822100435471661, guid: 9f563a9cb6b4a0f4aa396833e5fecd16,
         type: 3}

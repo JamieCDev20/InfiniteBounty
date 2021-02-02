@@ -24,6 +24,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         }
 
         view = GetComponent<PhotonView>();
+        PhotonNetwork.RegisterPhotonView(view);
     }
 
     public void ReceiveDiversifiers(Diversifier[] _dA_diversGotten)
@@ -40,9 +41,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
 
     public void ApplyDiversifiers(ZoneInfo[] _ziA_spawnableZones)
-    {
-        PhotonNetwork.RegisterPhotonView(view);
-
+    {        
         if (PhotonNetwork.IsMasterClient)
             for (int i = 0; i < dA_activeDivers.Length; i++)
             {

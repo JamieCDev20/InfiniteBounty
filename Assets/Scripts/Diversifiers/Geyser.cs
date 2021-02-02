@@ -8,6 +8,8 @@ public class Geyser : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<Rigidbody>()?.AddForce(transform.up * f_firePower);
+        Rigidbody _rb = other.GetComponent<Rigidbody>();
+        if (_rb)
+            _rb.AddForce(transform.up * f_firePower);
     }
 }

@@ -56,7 +56,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             f_currentTimer += Time.deltaTime;
             f_currentMoveTimer += Time.deltaTime;
 
-            if (f_currentMoveTimer > f_timeBetweenMoves) view.RPC("MoveAttack", RpcTarget.All, PickTargetPosition());
+            if (f_currentMoveTimer > f_timeBetweenMoves) view.RPC("MoveAttack", RpcTarget.All, PickTargetPosition(), Random.Range(1f, 5f));
             if (f_currentTimer > f_timeBetweenAttacks) PickAttack();
         }
         transform.LookAt(new Vector3(tL_potentialTarget[i_currentTarget].position.x, transform.position.y, tL_potentialTarget[i_currentTarget].position.z));
@@ -81,14 +81,14 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     }
 
     [PunRPC]
-    private void MoveAttack(Vector3 _v_newPos)
+    private void MoveAttack(Vector3 _v_newPos, float _f_timeToWait)
     {
         b_isAttacking = false;
         if (b_isHost)
             view.RPC("ChangeTarget", RpcTarget.All, Random.Range(0, tL_potentialTarget.Count));
-        StartCoroutine(TimedMove(_v_newPos));
+        StartCoroutine(TimedMove(_v_newPos, _f_timeToWait));
     }
-    private IEnumerator TimedMove(Vector3 _v_newPos)
+    private IEnumerator TimedMove(Vector3 _v_newPos, float _f_timeToWait)
     {
         for (int i = 0; i < 60; i++)
         {
@@ -96,7 +96,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             transform.position += Vector3.down * 0.5f;
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(_f_timeToWait);
 
         transform.position = _v_newPos + Vector3.down * 20;
 
