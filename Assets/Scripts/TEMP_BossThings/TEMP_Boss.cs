@@ -17,7 +17,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     private bool b_isHost;
     [SerializeField] private LayerMask lm_playerLayer;
 
-    [Header("Homing Attack")]    
+    [Header("Homing Attack")]
     [SerializeField] private float f_homingForwardMovement;
     [SerializeField] private Vector2 v_shotsPerHomingRound;
     [SerializeField] private string s_homingMissilePath;
@@ -135,7 +135,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
                 StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_shotsPerHomingRound.x, v_shotsPerHomingRound.y)), tL_potentialTarget[Random.Range(0, tL_potentialTarget.Count)]));
                 break;
             case 1:
-                view.RPC("MortarAttack", RpcTarget.All, Random.Range(0, 9999999));
+                view.RPC(nameof(MortarAttackRPC), RpcTarget.All, Random.Range(0, 9999999));
                 break;
             case 2:
                 view.RPC("MeleeAttack", RpcTarget.All);
@@ -150,7 +150,12 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     #region Attack RPCs
 
     [PunRPC]
-    private IEnumerator MortarAttack(int _i_seed)
+    public void MortarAttackRPC(int _i_seed)
+    {
+        StartCoroutine(MortarAttackActual(_i_seed));
+    }
+
+    private IEnumerator MortarAttackActual(int _i_seed)
     {
         Random.InitState(_i_seed);
         p_mortarParticle.Play();
@@ -162,8 +167,8 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
             PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
         }
-
     }
+
 
     private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
