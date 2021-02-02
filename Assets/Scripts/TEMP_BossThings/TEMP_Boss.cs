@@ -183,8 +183,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
-        if (b_isHost)
-            view.RPC("ActualTakeDamage", RpcTarget.All, damage);
+        view.RPC("ActualTakeDamage", RpcTarget.All, damage);
     }
     [PunRPC]
     public void ActualTakeDamage(int damage)
