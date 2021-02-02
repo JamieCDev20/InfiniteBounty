@@ -42,14 +42,12 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             Invoke(nameof(BeginAttacks), 7);
             b_isHost = true;
         }
+        Invoke(nameof(SetHealth), 0.5f);
+
     }
 
-    public void GetTargets()
+    private void SetHealth()
     {
-        for (int i = 0; i < tL_potentialTarget.Count; i++)
-            if (tL_potentialTarget[i] == null)
-                tL_potentialTarget.RemoveAt(i);
-
         i_currentHealth *= tL_potentialTarget.Count;
     }
 
