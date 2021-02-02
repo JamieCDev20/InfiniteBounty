@@ -8,6 +8,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     public static DiversifierManager x;
     private PhotonView view;
     private Diversifier[] dA_activeDivers = new Diversifier[3];
+    private ZoneInfo[] ziA_allZones;
 
     [Header("Geyser Things")]
     [SerializeField] private string s_geyserPath;
@@ -24,6 +25,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         }
 
         view = GetComponent<PhotonView>();
+        view.ViewID = 84520;
         PhotonNetwork.RegisterPhotonView(view);
     }
 
@@ -41,7 +43,9 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
 
     public void ApplyDiversifiers(ZoneInfo[] _ziA_spawnableZones)
-    {        
+    {
+        ziA_allZones = _ziA_spawnableZones;
+
         if (PhotonNetwork.IsMasterClient)
             for (int i = 0; i < dA_activeDivers.Length; i++)
             {
@@ -54,15 +58,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
                         break;
 
                     case Diversifier.GigaGeysers:
-                        Vector3[] _vA_positions = new Vector3[Mathf.RoundToInt(Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y))];
-
-                        for (int x = 0; x < _vA_positions.Length; x++)
-                        {
-                            int _i_zoneIndex = Random.Range(0, _ziA_spawnableZones.Length);
-                            _vA_positions[x] = new Vector3(Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius), 500, Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius)) + _ziA_spawnableZones[_i_zoneIndex].t_zone.position;
-                        }
-
-                        view.RPC(nameof(GigaGeysersRPC), RpcTarget.All, _vA_positions);
+                        view.RPC(nameof(GigaGeysersRPC), RpcTarget.All, Random.Range(0, 9999999));
                         break;
 
                     case Diversifier.SolarStorm:
@@ -77,13 +73,15 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     #region Diver Functions
 
     [PunRPC]
-    public void GigaGeysersRPC(Vector3[] _vA_pointsToPlaceGeysers)
+    public void GigaGeysersRPC(int _i_seed)
     {
+        Random.InitState(_i_seed);
+
         RaycastHit _hit;
 
-        for (int i = 0; i < _vA_pointsToPlaceGeysers.Length; i++)
+        for (int i = 0; i < Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y); i++)
         {
-            Physics.Raycast(_vA_pointsToPlaceGeysers[i], Vector3.down, out _hit, Mathf.Infinity);
+            Physics.Raycast(ReturnPositionWithinZone(ziA_allZones[Random.Range(0, ziA_allZones.Length)]), Vector3.down, out _hit, Mathf.Infinity);
             GameObject _go = PhotonNetwork.Instantiate(s_geyserPath, _hit.point, Quaternion.identity);
             _go.transform.up = _hit.normal;
 
@@ -92,4 +90,13 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    private Vector3 ReturnPositionWithinZone(ZoneInfo _zi_zone)
+    {
+        return new Vector3(Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative()), 500, Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative())) + _zi_zone.t_zone.position;
+    }
+
+    private float RandomiseToNegative()
+    {
+        return Random.Range(-1f, 1f);
+    }
 }
