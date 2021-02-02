@@ -128,7 +128,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
-        view.RPC("UpdateArmInOthers", RpcTarget.Others, i_currentArm);
+        view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
     }
     public void LastArm()
     {
@@ -142,7 +142,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
-        view.RPC("UpdateArmInOthers", RpcTarget.Others, i_currentArm);        
+        view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);        
     }
 
     [PunRPC]
