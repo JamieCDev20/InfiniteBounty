@@ -17,12 +17,15 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     private bool b_isHost;
     [SerializeField] private LayerMask lm_playerLayer;
 
-    [Header("Homing Attack")]
-    [SerializeField] private GameObject go_homingPrefab;
+    [Header("Homing Attack")]    
     [SerializeField] private float f_homingForwardMovement;
     [SerializeField] private Vector2 v_shotsPerHomingRound;
     [SerializeField] private string s_homingMissilePath;
 
+    [Header("Mortar")]
+    [SerializeField] private string s_mortarShotPath;
+    [SerializeField] private Vector2 v_numberOfMortarShots;
+    [SerializeField] private ParticleSystem p_mortarParticle;
 
     private void Start()
     {
@@ -69,6 +72,12 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
         return _v;
     }
 
+    private Vector3 PickArenaPosition()
+    {
+        Vector3 _v = new Vector3(Random.Range(-75, 75), 0, Random.Range(-75, 75));
+        return _v;
+    }
+
     private void BeginAttacks()
     {
         b_isAttacking = true;
@@ -100,7 +109,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
         transform.position = _v_newPos + Vector3.down * 20;
 
-        Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 50, 15);
+        Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
 
@@ -116,8 +125,6 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             b_isAttacking = true;
     }
 
-
-
     private void PickAttack()
     {
         int _i_moveIndex = Random.Range(0, 3);
@@ -128,7 +135,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
                 StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_shotsPerHomingRound.x, v_shotsPerHomingRound.y)), tL_potentialTarget[Random.Range(0, tL_potentialTarget.Count)]));
                 break;
             case 1:
-                view.RPC("MortarAttack", RpcTarget.All);
+                view.RPC("MortarAttack", RpcTarget.All, Random.Range(0, 9999999));
                 break;
             case 2:
                 view.RPC("MeleeAttack", RpcTarget.All);
@@ -139,9 +146,22 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             view.RPC("ChangeTarget", RpcTarget.All, Random.Range(0, tL_potentialTarget.Count));
     }
 
+
+    #region Attack RPCs
+
     [PunRPC]
-    private void MortarAttack()
+    private IEnumerator MortarAttack(int _i_seed)
     {
+        Random.InitState(_i_seed);
+        p_mortarParticle.Play();
+        yield return new WaitForSeconds(2);
+
+        for (int i = 0; i < Random.Range(v_numberOfMortarShots.x, v_numberOfMortarShots.y); i++)
+        {
+            yield return new WaitForSeconds(0.2f);
+            Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
+            PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
+        }
 
     }
 
@@ -151,7 +171,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
         for (int i = 0; i < _i_amount; i++)
         {
             yield return new WaitForSeconds(0.5f);
-            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath + go_homingPrefab.name, transform.position + transform.forward, Quaternion.identity);
+            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTarget[i_currentTarget]);
             _go.transform.position = transform.position + transform.forward * i;
             _go.transform.forward = transform.forward;
@@ -169,6 +189,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
         }
     }
 
+    #endregion
 
     [PunRPC]
     private void MeleeAttack()
