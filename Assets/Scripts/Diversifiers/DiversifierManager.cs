@@ -41,35 +41,36 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     public void ApplyDiversifiers(ZoneInfo[] _ziA_spawnableZones)
     {
-        for (int i = 0; i < dA_activeDivers.Length; i++)
-        {
-            switch (dA_activeDivers[i])
+        if (PhotonNetwork.IsMasterClient)
+            for (int i = 0; i < dA_activeDivers.Length; i++)
             {
-                case Diversifier.None: break;
+                switch (dA_activeDivers[i])
+                {
+                    case Diversifier.None: break;
 
-                case Diversifier.JackedRabbits:
-                    print("THERE ARE JACKED RABBITS");
-                    break;
+                    case Diversifier.JackedRabbits:
+                        print("THERE ARE JACKED RABBITS");
+                        break;
 
-                case Diversifier.GigaGeysers:
-                    Vector3[] _vA_positions = new Vector3[Mathf.RoundToInt(Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y))];
+                    case Diversifier.GigaGeysers:
+                        Vector3[] _vA_positions = new Vector3[Mathf.RoundToInt(Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y))];
 
-                    for (int x = 0; x < _vA_positions.Length; x++)
-                    {
-                        int _i_zoneIndex = Random.Range(0, _ziA_spawnableZones.Length);
-                        _vA_positions[x] = new Vector3(Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius), 500, Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius)) + _ziA_spawnableZones[_i_zoneIndex].t_zone.position;
-                    }
+                        for (int x = 0; x < _vA_positions.Length; x++)
+                        {
+                            int _i_zoneIndex = Random.Range(0, _ziA_spawnableZones.Length);
+                            _vA_positions[x] = new Vector3(Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius), 500, Random.Range(0, _ziA_spawnableZones[_i_zoneIndex].f_zoneRadius)) + _ziA_spawnableZones[_i_zoneIndex].t_zone.position;
+                        }
 
-                    view.RPC(nameof(GigaGeysersRPC), RpcTarget.All, _vA_positions);
-                    break;
+                        view.RPC(nameof(GigaGeysersRPC), RpcTarget.All, _vA_positions);
+                        break;
 
-                case Diversifier.SolarStorm:
-                    print("THE SUN IS A DEADLY LASER");
-                    break;
+                    case Diversifier.SolarStorm:
+                        print("THE SUN IS A DEADLY LASER");
+                        break;
 
-                default: break;
+                    default: break;
+                }
             }
-        }
     }
 
     #region Diver Functions
