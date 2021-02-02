@@ -60,6 +60,8 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         SetWheels(wdA_wheels[0], UnityEngine.Random.Range(0, wdA_wheels[0].dL_wheelDiversifiers.Count));
         SetWheels(wdA_wheels[1], UnityEngine.Random.Range(0, wdA_wheels[1].dL_wheelDiversifiers.Count));
         SetWheels(wdA_wheels[2], UnityEngine.Random.Range(0, wdA_wheels[2].dL_wheelDiversifiers.Count));
+
+        DiversifierManager.x.ReceiveDiversifiers(dA_activeDiversifiers);
     }
 
     private void SetWheels(WheelData _wd_wheel, int _i_diversifierToRoll)
