@@ -10,6 +10,6 @@ public class Geyser : MonoBehaviour
     {
         Rigidbody _rb = other.GetComponent<Rigidbody>();
         if (_rb)
-            _rb.AddForce(transform.up * f_firePower);
+            _rb.velocity = transform.up * f_firePower;
     }
 }
