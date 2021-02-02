@@ -7,6 +7,7 @@ public class Jetpack : MobilityTool
 {
     [Header("Jetpack Info")]
     [SerializeField] private float f_force = 5;
+    private Animator anim;
     private Rigidbody rb;
     [SerializeField] private AnimationCurve ac_jetPackForce;
     private float f_timeHeld;
@@ -32,6 +33,7 @@ public class Jetpack : MobilityTool
 
     private void Start()
     {
+        anim = GetComponentInParent<Animator>();
         rb = transform.root.GetComponent<Rigidbody>();
         f_currentFuel = f_maxFuel;
         as_source = GetComponent<AudioSource>();
@@ -87,6 +89,7 @@ public class Jetpack : MobilityTool
                 EndSteaming();
             }
         }
+        anim.SetBool("Jetpack", b_isBeingUsed);
     }
 
     public override void PlayParticles(bool val)

@@ -37,8 +37,6 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             for (int i = 0; i < _goA.Length; i++)
                 tL_potentialTarget.Add(_goA[i].transform);
 
-            Invoke("GetTargets", 1);
-
             Invoke(nameof(BeginAttacks), 7);
             b_isHost = true;
         }
@@ -186,6 +184,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     [PunRPC]
     public void ActualTakeDamage(int damage)
     {
+        print("I HAVE TAKEN SOME DAMAGE");
         i_currentHealth -= damage;
         if (i_currentHealth < 0)
             Die();
