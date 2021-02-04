@@ -12,8 +12,15 @@ public class FootstepAudioPlayer : MonoBehaviour
     [SerializeField] private AudioClip ac_footstepShip;
     [SerializeField] private AudioClip ac_footstepPlanet;
     [SerializeField] private AudioSource as_feetAudio;
+    [SerializeField] private float f_velocityToVolumeMultiplier = 0.035f;
+
+    private Rigidbody rb_playerRB;
 
     private Surface e_surface;
+    private void Start()
+    {
+        rb_playerRB = GetComponentInParent<Rigidbody>();
+    }
 
     public void ChangeSurfaceEnum(Surface _surface)
     {
@@ -24,13 +31,11 @@ public class FootstepAudioPlayer : MonoBehaviour
     {
         switch (e_surface)
         {
-            case Surface.ship:
-                print("played ship step sound");
-                as_feetAudio.PlayOneShot(ac_footstepShip);
+            case Surface.ship:                
+                as_feetAudio.PlayOneShot(ac_footstepShip, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
-            case Surface.planet:
-                print("played planet step sound");
-                as_feetAudio.PlayOneShot(ac_footstepPlanet);
+            case Surface.planet:                
+                as_feetAudio.PlayOneShot(ac_footstepPlanet, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
             default:
                 break;
