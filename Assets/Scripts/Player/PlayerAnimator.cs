@@ -124,6 +124,10 @@ public class PlayerAnimator : MonoBehaviourPun
             Vector3 vec = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
             anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), pm_mover.v_movementVector.x * (pm_mover.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
             anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), pm_mover.v_movementVector.z * (pm_mover.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
+            if (Mathf.Abs(anim.GetFloat("Y")) < 0.05f)
+                anim.SetFloat("Y", 0);
+            if (Mathf.Abs(anim.GetFloat("X")) < 0.05f)
+                anim.SetFloat("X", 0);
             //anim.SetFloat("Y", pm_inputs.v_movementVector.z * (pm_inputs.b_sprintHold ? 2 : 1));
         }
     }
