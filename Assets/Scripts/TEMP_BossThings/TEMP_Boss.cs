@@ -14,6 +14,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     private float f_currentMoveTimer;
     private int i_currentTarget;
     [SerializeField] private int i_currentHealth;
+    private int i_maxHealth;
     private bool b_isHost;
     [SerializeField] private LayerMask lm_playerLayer;
 
@@ -26,6 +27,12 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private string s_mortarShotPath;
     [SerializeField] private Vector2 v_numberOfMortarShots;
     [SerializeField] private ParticleSystem p_mortarParticle;
+
+    [Header("Death")]
+    [SerializeField] private GameObject go_deathParticle;
+
+    [Header("UI References")]
+    [SerializeField] private RectTransform rt_healthBar;
 
     private void Start()
     {
@@ -50,6 +57,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     private void SetHealth()
     {
         i_currentHealth *= tL_potentialTarget.Count;
+        i_maxHealth = i_currentHealth;
     }
 
     private void Update()
@@ -202,20 +210,18 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     }
 
-
     public void TakeDamage(int damage, bool activatesThunder)
     {
-        view.RPC("ActualTakeDamage", RpcTarget.All, damage);
+        view.RPC("ActualTakeDamage", RpcTarget.All, i_currentHealth - damage);
     }
     [PunRPC]
-    public void ActualTakeDamage(int damage)
+    public void ActualTakeDamage(int _i_newHealthValue)
     {
-        print("I HAVE TAKEN SOME DAMAGE");
-        i_currentHealth -= damage;
-        if (i_currentHealth < 0)
+        i_currentHealth = _i_newHealthValue;
+        rt_healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
+        if (i_currentHealth <= 0)
             Die();
     }
-
 
     public bool IsDead()
     {
@@ -224,7 +230,14 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     public void Die()
     {
-        Debug.LogError("I'm being told to die");
+        go_deathParticle.SetActive(true);
+        go_deathParticle.transform.parent = null;
+        StartCoroutine(GameObjectOff(gameObject, 1));
+    }
+
+    private IEnumerator GameObjectOff(GameObject _go, float _f_delay)
+    {
+        yield return new WaitForSeconds(_f_delay);
         gameObject.SetActive(false);
     }
 
