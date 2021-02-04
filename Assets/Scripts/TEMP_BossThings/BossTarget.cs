@@ -10,22 +10,17 @@ public class BossTarget : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(AddSelfToTargets());
-    }
-
-    private IEnumerator AddSelfToTargets()
-    {
-        yield return new WaitForSeconds(f_delay);
         Collider[] _cA = Physics.OverlapSphere(transform.position, 5, lm_playerLayer);
 
         for (int i = 0; i < _cA.Length; i++)
             if (_cA[i].CompareTag("Player"))
             {
+                print("I, " + name + " have obtained a PLAYER. Gaze upon it in awe & fear.");
                 transform.parent = _cA[i].transform;
                 transform.localPosition = Vector3.up;
                 tb_boss.tL_potentialTarget.Add(transform);
-                break;
-            }        
+                return;
+            }
     }
 
 }
