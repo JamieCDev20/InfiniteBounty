@@ -31,10 +31,12 @@ public class FootstepAudioPlayer : MonoBehaviour
     {
         switch (e_surface)
         {
-            case Surface.ship:                
+            case Surface.ship:
+                as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
                 as_feetAudio.PlayOneShot(ac_footstepShip, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
             case Surface.planet:                
+                as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
                 as_feetAudio.PlayOneShot(ac_footstepPlanet, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
             default:
