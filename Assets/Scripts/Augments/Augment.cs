@@ -15,9 +15,9 @@ public class Augment
     public Material AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
 
-    [SerializeField] protected AudioClip[] ac_useSound;
-    [SerializeField] protected AudioClip[] ac_travelSound;
-    [SerializeField] protected AudioClip[] ac_hitSound;
+    [SerializeField] protected string[] ac_useSound;
+    [SerializeField] protected string[] ac_travelSound;
+    [SerializeField] protected string[] ac_hitSound;
 
     #endregion
 
@@ -66,9 +66,21 @@ public class Augment
 
     public void InitAudio(AudioClip[] _ac_use, AudioClip[] _ac_travel, AudioClip[] _ac_hit)
     {
-        ac_useSound =       _ac_use;
-        ac_travelSound =    _ac_travel;
-        ac_hitSound =       _ac_hit;
+        ac_useSound = new string[_ac_use.Length];
+        ac_travelSound = new string[_ac_travel.Length];
+        ac_hitSound = new string[_ac_hit.Length];
+        for(int i = 0; i < _ac_use.Length; i++)
+            ac_useSound[i] = _ac_use[i].name;
+        for(int i = 0; i < _ac_travel.Length; i++)
+            ac_travelSound[i] = _ac_travel[i].name;
+        for(int i = 0; i < _ac_hit.Length; i++)
+            ac_hitSound[i] = _ac_hit[i].name;
+    }
+    public void InitAudio(string[] _ac_use, string[] _ac_travel, string[] _ac_hit)
+    {
+        ac_useSound     = _ac_use;
+        ac_travelSound  = _ac_travel;
+        ac_hitSound     = _ac_hit;
     }
 
     public void InitInfo(float _f_weight, float _f_recoil, float _f_speed, float _f_heatsink, float _f_knockback, float _f_energy, int _i_damage, int _i_lode)
@@ -136,9 +148,9 @@ public class Augment
         go_explarticles     = _ae_boom.go_explarticles;
     }
 
-    public List<AudioClip[]> GetAudioProperties()
+    public List<string[]> GetAudioProperties()
     {
-        List<AudioClip[]> aAudio = new List<AudioClip[]>();
+        List<string[]> aAudio = new List<string[]>();
         aAudio.Add(ac_useSound);
         aAudio.Add(ac_travelSound);
         aAudio.Add(ac_hitSound);

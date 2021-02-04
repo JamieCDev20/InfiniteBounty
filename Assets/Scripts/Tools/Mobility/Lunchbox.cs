@@ -49,7 +49,7 @@ public class Lunchbox : MobilityTool
                 _go_sandwich.GetComponent<Rigidbody>().AddForce(tA_sandWichFirePoints[i].transform.forward * f_sandwichForce, ForceMode.Impulse);
             }
             go_lidObject.transform.localEulerAngles = v_lidOpenRotation;
-            as_source.PlayOneShot(ac_activationSound);
+            PlayAudio(ac_activationSound);
 
             f_coolDown = f_timeBetweenUsage;
             b_isOpen = true;

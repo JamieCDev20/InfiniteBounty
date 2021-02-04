@@ -80,6 +80,7 @@ public class WeaponTool : ToolBase
             // Set the physical
             AugmentPhysicals aPhys = aug.GetPhysicalProperties();
             AddToPhysicalProperties(aPhys);
+            AddToAudioProperties(aug.GetAudioProperties());
             return true;
         }
         return false;
@@ -129,5 +130,26 @@ public class WeaponTool : ToolBase
         }
         // Add the keys here
         //tr_trail.colorGradient.SetKeys(new GradientColorKey(ap.A_trKeys));
+    }
+
+    private void AddToAudioProperties(List<string[]> _sL_audio)
+    {
+        string[] use = _sL_audio[0];
+        string[] travel = _sL_audio[1];
+        string[] hit = _sL_audio[2];
+        if(use != null)
+            LoadAndAddAudio(ac_activationSound, use);
+        if (travel != null)
+            LoadAndAddAudio(ac_diegeticAudio, travel);
+        if (hit != null)
+            LoadAndAddAudio(ac_hitSound, hit);
+    }
+
+    private void LoadAndAddAudio(AudioClip[] _ac_existingClips, string[] _s_aud)
+    {
+        AudioClip[] audClips = new AudioClip[_s_aud.Length];
+        for (int i = 0; i < _s_aud.Length; i++)
+            audClips[i] = Resources.Load<AudioClip>(_s_aud[i]);
+        _ac_existingClips = Utils.CombineArrays(_ac_existingClips, audClips);
     }
 }

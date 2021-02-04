@@ -5,12 +5,16 @@ using UnityEngine;
 public class NugSucker : ConeTool
 {
     [SerializeField] private float f_suckForce;
+    [SerializeField] private ParticleSystem ps_cone;
     public override void Use(Vector3 _v_forwards)
     {
         base.Use(_v_forwards);
-
-        ParticleSystem.ShapeModule sm = go_particles.GetComponentInChildren<ParticleSystem>().shape;
-        sm.angle = f_angle * 0.5f;
+        if(ps_cone != null)
+        {
+            ParticleSystem.ShapeModule sm = ps_cone.shape;
+            sm.angle = f_angle * 0.5f;
+            ps_cone.Play();
+        }
         PlayAudio(ac_activationSound);
         PlayParticles(true);
         foreach (GameObject hit in GetAllObjectsInCone(t_conePoint.forward))

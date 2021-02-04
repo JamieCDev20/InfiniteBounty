@@ -52,10 +52,16 @@ public class ProjectileTool : WeaponTool
 
     public override void PlayParticles(bool val)
     {
-        if (go_particles)
+        if (go_particles.Length != 0)
         {
-            go_particles.SetActive(false);
-            go_particles.SetActive(true);
+            foreach(GameObject partics in go_particles)
+            {
+                if(partics != null)
+                {
+                    partics.SetActive(false);
+                    partics.SetActive(true);
+                }
+            }
         }
     }
 

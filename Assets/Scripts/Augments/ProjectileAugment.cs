@@ -35,7 +35,7 @@ public class ProjectileAugment : Augment
     {
         ProjectileAugment c = new ProjectileAugment();
         Augment ac = Augment.Combine(a, b);
-        List<AudioClip[]> audioClips = ac.GetAudioProperties();
+        List<string[]> audioClips = ac.GetAudioProperties();
         c.s_name = ac.Name;
         c.at_type = AugmentType.projectile;
         c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);

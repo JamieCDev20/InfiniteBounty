@@ -25,13 +25,13 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     [SerializeField] protected EnergyGauge eg_gauge;
     [SerializeField] protected float f_timeBetweenUsage;
     [Header("Audio")]
-    [SerializeField] protected AudioClip ac_activationSound;
-    [SerializeField] protected AudioClip ac_hitSound;
-    [SerializeField] protected AudioClip ac_diegeticAudio;
+    [SerializeField] protected AudioClip[] ac_activationSound;
+    [SerializeField] protected AudioClip[] ac_hitSound;
+    [SerializeField] protected AudioClip[] ac_diegeticAudio;
     [SerializeField] private bool b_oneTimeAudio;
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
-    [SerializeField] protected GameObject go_particles;
+    [SerializeField] protected GameObject[] go_particles;
 
     #endregion
 
@@ -106,6 +106,12 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         }
     }
 
+    public void PlayAudio(AudioClip[] _ac_auds)
+    {
+        foreach (AudioClip audiofx in _ac_auds)
+            PlayAudio(audiofx);
+    }
+
     public virtual void StopAudio()
     {
         if (b_oneTimeAudio) return;
@@ -130,6 +136,9 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public virtual void PlayParticles(bool val)
     {
-        go_particles?.SetActive(val);
+        if(go_particles.Length != 0)
+            foreach(GameObject partic in go_particles)
+                if(partic != null)
+                    partic?.SetActive(val);
     }
 }

@@ -37,7 +37,7 @@ public class Jetpack : MobilityTool
         rb = transform.root.GetComponent<Rigidbody>();
         f_currentFuel = f_maxFuel;
         as_source = GetComponent<AudioSource>();
-        as_source.clip = ac_activationSound;
+        as_source.clip = ac_activationSound[0];
         EndSteaming();
         as_steamSource = gameObject.AddComponent<AudioSource>();
 
@@ -94,19 +94,24 @@ public class Jetpack : MobilityTool
 
     public override void PlayParticles(bool val)
     {
-        go_particles.SetActive(val);
+        if(go_particles.Length != 0)
+            foreach(GameObject partics in go_particles)
+            {
+                if(partics != null)
+                    partics.SetActive(val);
+            }
         if (!val)
         {
             b_isBeingUsed = false;
             f_timeHeld = 0;
-            if (as_source.clip == ac_activationSound)
+            if (as_source.clip == ac_activationSound[0])
                 as_source.Stop();
         }
         else
         {
             if (!as_source.isPlaying)
             {
-                as_source.clip = ac_activationSound;
+                as_source.clip = ac_activationSound[0];
                 as_source.Play();
             }
         }
@@ -135,8 +140,8 @@ public class Jetpack : MobilityTool
         b_isSteaming = false;
         ps_steamEffect.Stop();
         go_fuelPool.GetComponent<Renderer>().material = m_readyMat;
-
-        as_source.clip = ac_activationSound;
+        foreach (AudioClip jetpackSound in ac_activationSound)
+            as_source.clip = jetpackSound;
     }
 
     public override void StopAudio() { }

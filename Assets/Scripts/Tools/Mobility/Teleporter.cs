@@ -43,7 +43,7 @@ public class Teleporter : MobilityTool
 
             StartCoroutine(DoTheTeleport(_v_lookDirection));
 
-            as_source.PlayOneShot(ac_activationSound);
+            PlayAudio(ac_activationSound);
         }
     }
 
@@ -77,7 +77,7 @@ public class Teleporter : MobilityTool
         lightRenderer.material = greenMat;
         b_isActive = true;
 
-        as_source.PlayOneShot(ac_hitSound);
+        PlayAudio(ac_hitSound);
     }
 
     private void BeginCooldown()

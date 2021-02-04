@@ -28,7 +28,7 @@ public class ConeAugment : Augment
     {
         ConeAugment c = new ConeAugment();
         Augment ac = Augment.Combine(a, b);
-        List<AudioClip[]> audioClips = ac.GetAudioProperties();
+        List<string[]> audioClips = ac.GetAudioProperties();
         c.s_name = ac.Name;
         c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);
         c.InitPhysical(ac.GetPhysicalProperties());
