@@ -50,14 +50,15 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
             Invoke(nameof(BeginAttacks), 7);
             b_isHost = true;
         }
-        Invoke(nameof(SetHealth), 0.5f);
-
+        Invoke(nameof(SetHealth), 1f);        
     }
 
     private void SetHealth()
     {
         i_currentHealth *= tL_potentialTarget.Count;
         i_maxHealth = i_currentHealth;
+        rt_healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
+
     }
 
     private void Update()
