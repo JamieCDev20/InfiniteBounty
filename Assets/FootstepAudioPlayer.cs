@@ -9,9 +9,10 @@ public enum Surface
 
 public class FootstepAudioPlayer : MonoBehaviour
 {
+    [SerializeField] private AudioSource as_feetAudio;
     [SerializeField] private AudioClip ac_footstepShip;
     [SerializeField] private AudioClip ac_footstepPlanet;
-    [SerializeField] private AudioSource as_feetAudio;
+    [SerializeField] private AudioClip ac_land;
     [SerializeField] private float f_velocityToVolumeMultiplier = 0.035f;
 
     private Rigidbody rb_playerRB;
@@ -27,6 +28,12 @@ public class FootstepAudioPlayer : MonoBehaviour
         e_surface = _surface;
     }
 
+    public void PlayLandingSound()
+    {
+        as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
+        as_feetAudio.PlayOneShot(ac_land);
+    }
+
     public void PlayFootstepSound()
     {
         switch (e_surface)
@@ -35,7 +42,7 @@ public class FootstepAudioPlayer : MonoBehaviour
                 as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
                 as_feetAudio.PlayOneShot(ac_footstepShip, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
-            case Surface.planet:                
+            case Surface.planet:
                 as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
                 as_feetAudio.PlayOneShot(ac_footstepPlanet, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
