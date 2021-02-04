@@ -42,19 +42,15 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
         if (PhotonNetwork.IsMasterClient)
         {
-            //Get the players as targets
-            GameObject[] _goA = GameObject.FindGameObjectsWithTag("Player");
-            for (int i = 0; i < _goA.Length; i++)
-                tL_potentialTarget.Add(_goA[i].transform);
-
             Invoke(nameof(BeginAttacks), 7);
             b_isHost = true;
         }
-        Invoke(nameof(SetHealth), 1f);        
+        Invoke(nameof(SetHealth), 1f);
     }
 
     private void SetHealth()
     {
+        print(tL_potentialTarget.Count + " is the number of things.");
         i_currentHealth *= tL_potentialTarget.Count;
         i_maxHealth = i_currentHealth;
         rt_healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
