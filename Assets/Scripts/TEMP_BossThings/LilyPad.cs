@@ -8,6 +8,7 @@ public class LilyPad : MonoBehaviour, IHitable
     private int i_currentHealth = 50;
     private PhotonView view;
     private bool b_isHost;
+    [SerializeField] private GameObject go_deathEffects;
 
     private void Start()
     {
@@ -18,6 +19,8 @@ public class LilyPad : MonoBehaviour, IHitable
     public void Die()
     {
         gameObject.SetActive(false);
+        go_deathEffects.SetActive(true);
+        go_deathEffects.transform.parent = null;
     }
 
     public bool IsDead()
@@ -34,7 +37,7 @@ public class LilyPad : MonoBehaviour, IHitable
     public void ActualTakeDamage(int damage)
     {
         i_currentHealth -= damage;
-        if (i_currentHealth < 0)
+        if (i_currentHealth <= 0)
             Die();
     }
 
