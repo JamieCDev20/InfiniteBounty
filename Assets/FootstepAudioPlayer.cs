@@ -25,9 +25,11 @@ public class FootstepAudioPlayer : MonoBehaviour
         switch (e_surface)
         {
             case Surface.ship:
+                print("played ship step sound");
                 as_feetAudio.PlayOneShot(ac_footstepShip);
                 break;
             case Surface.planet:
+                print("played planet step sound");
                 as_feetAudio.PlayOneShot(ac_footstepPlanet);
                 break;
             default:
