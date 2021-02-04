@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.67409086, g: 0.33267143, b: 0.62968767, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7514,6 +7514,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3112939477822676699, guid: 2c48dbc5306ddea4a83a86a4298c758b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112939477822676699, guid: 2c48dbc5306ddea4a83a86a4298c758b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 3527424127619293352, guid: 2c48dbc5306ddea4a83a86a4298c758b,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3527424127619293352, guid: 2c48dbc5306ddea4a83a86a4298c758b,
+        type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c48dbc5306ddea4a83a86a4298c758b, type: 3}
 --- !u!1 &1175990321 stripped
@@ -8205,6 +8225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81cc60728b97b047816b593bce9df51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  go_deathEffects: {fileID: 0}
 --- !u!1001 &1353653786
 PrefabInstance:
   m_ObjectHideFlags: 0
