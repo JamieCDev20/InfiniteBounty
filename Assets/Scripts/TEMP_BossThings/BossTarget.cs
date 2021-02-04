@@ -8,9 +8,11 @@ public class BossTarget : MonoBehaviour
     [SerializeField] private float f_delay;
     [SerializeField] private TEMP_Boss tb_boss;
 
-    void Start()
+    IEnumerator Start()
     {
-        Collider[] _cA = Physics.OverlapSphere(transform.position, 5, lm_playerLayer);
+        yield return new WaitForEndOfFrame();
+
+        Collider[] _cA = Physics.OverlapSphere(transform.position, 5);
 
         for (int i = 0; i < _cA.Length; i++)
             if (_cA[i].CompareTag("Player"))
@@ -19,8 +21,7 @@ public class BossTarget : MonoBehaviour
                 transform.parent = _cA[i].transform;
                 transform.localPosition = Vector3.up;
                 tb_boss.tL_potentialTarget.Add(transform);
-                return;
+                break;
             }
     }
-
 }
