@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIBase : MonoBehaviour
+public class AIBase : MonoBehaviourPun
 {
 
     [SerializeField] protected float f_summoningSickness = 1;
@@ -60,6 +61,8 @@ public class AIBase : MonoBehaviour
         return false;
     }
 
+    #endregion
+
     #region Actions
 
     public void DebugTarget()
@@ -79,8 +82,6 @@ public class AIBase : MonoBehaviour
         t_target = FindObjectOfType<PlayerInputManager>().transform;
 
     }
-
-    #endregion
 
     #endregion
 

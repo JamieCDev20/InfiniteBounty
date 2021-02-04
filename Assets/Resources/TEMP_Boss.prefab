@@ -58734,6 +58734,7 @@ GameObject:
   - component: {fileID: 6982169945701208662}
   - component: {fileID: 1120913190323296397}
   - component: {fileID: 7260950640791844713}
+  - component: {fileID: 995032814173551828}
   m_Layer: 0
   m_Name: TEMP_Boss
   m_TagString: Untagged
@@ -58767,7 +58768,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7036592035728656315}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf66143447f5eb444a4a359845c3738d, type: 3}
   m_Name: 
@@ -58822,6 +58823,30 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &995032814173551828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036592035728656315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bcadcad5b5a7e4582d3b5ce4f61cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_summoningSickness: 1
+  f_spottingDistance: 50
+  lm_spottingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  f_meleeRange: 10
+  s_mortarShotPath: NetworkPrefabs\BossThings\MortarProjectile
+  v_numberOfMortarShots: {x: 15, y: 30}
+  p_mortarParticle: {fileID: 6520989874241016879}
+  s_homingMissilePath: NetworkPrefabs\BossThings\BossHomingSphere
+  v_homingOrbAmount: {x: 3, y: 6}
+  f_homingForwardMovement: 15
 --- !u!1 &7915942169296733605
 GameObject:
   m_ObjectHideFlags: 0
