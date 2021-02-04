@@ -135,7 +135,7 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     private void PickAttack()
     {
-        int _i_moveIndex = Random.Range(0, 3);
+        int _i_moveIndex = Random.Range(0, 2);
 
         switch (_i_moveIndex)
         {
@@ -165,25 +165,27 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
 
     private IEnumerator MortarAttackActual(int _i_seed)
     {
-        Random.InitState(_i_seed);
-        p_mortarParticle.Play();
-        yield return new WaitForSeconds(2);
-
-        for (int i = 0; i < Random.Range(v_numberOfMortarShots.x, v_numberOfMortarShots.y); i++)
+        if (PhotonNetwork.IsMasterClient)
         {
-            yield return new WaitForSeconds(0.2f);
-            Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
-            PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
+            Random.InitState(_i_seed);
+            p_mortarParticle.Play();
+            yield return new WaitForSeconds(2);
+
+            for (int i = 0; i < Random.Range(v_numberOfMortarShots.x, v_numberOfMortarShots.y); i++)
+            {
+                yield return new WaitForSeconds(0.2f);
+                Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
+                PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
+            }
         }
     }
-
 
     private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
         List<GameObject> _goL_orbs = new List<GameObject>();
         for (int i = 0; i < _i_amount; i++)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1);
             GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTarget[i_currentTarget]);
             _go.transform.position = transform.position + transform.forward * i;
