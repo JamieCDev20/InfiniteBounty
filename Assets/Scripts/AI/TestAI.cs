@@ -22,7 +22,7 @@ public class TestAI : MonoBehaviour
 
     private void Update()
     {
-        tree.DoTreeIteration();
+        //tree.DoTreeIteration();
     }
 
     public bool testTrue()
