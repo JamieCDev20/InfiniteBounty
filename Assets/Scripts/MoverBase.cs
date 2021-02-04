@@ -5,10 +5,13 @@ using UnityEngine;
 public class MoverBase : MonoBehaviour
 {
 
-    [SerializeField] protected float f_moveSpeed = 5;
+    [SerializeField] protected float f_moveSpeed = 1.5f;
+    [SerializeField] protected float f_airControlMultiplier = 0.2f;
     [SerializeField] protected Vector3 v_drag = new Vector3(0.1f, 0, 0.1f);
+    [SerializeField] protected Transform t_groundCheckPoint;
 
     protected bool b_canMove = true;
+    protected bool b_grounded = false;
     protected RaycastHit hit;
     protected Vector3 v_groundNormal;
     protected Rigidbody rb;
@@ -21,12 +24,14 @@ public class MoverBase : MonoBehaviour
     public virtual void Move(Vector3 _dir)
     {
         v_groundNormal = Vector3.up;
+        b_grounded = false;
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_drag);
-        if (!Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out hit, 0.5f) || !b_canMove)
-            return;
-        v_groundNormal = hit.normal;
-        Debug.Log(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized);
-        rb.AddForce(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized * f_moveSpeed, ForceMode.Impulse);
+        if (Physics.Raycast(t_groundCheckPoint.position, Vector3.down, out hit, 0.25f) || !b_canMove)
+        {
+            v_groundNormal = hit.normal;
+            b_grounded = true;
+        }
+        rb.AddForce(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized * f_moveSpeed * (b_grounded ? 1 : f_airControlMultiplier), ForceMode.Impulse);
 
     }
 

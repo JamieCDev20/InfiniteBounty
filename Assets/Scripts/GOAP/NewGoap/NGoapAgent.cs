@@ -58,6 +58,11 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        //if()
+    }
+
     #endregion
 
     #region Private Voids
@@ -132,8 +137,6 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         {
             c.GetComponent<IHitable>()?.TakeDamage(i_explosionDamage, true);
         }
-        //photonView.RPC("SplosionFX", RpcTarget.All);
-        //photonView.RPC("Die", RpcTarget.AllViaServer);
         Die();
         SplosionFX();
     }

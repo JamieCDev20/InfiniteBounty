@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Hopdog : MonoBehaviour
+public class Hopdog : AIBase
 {
 
-    [SerializeField] private float f_summoningSickness = 1;
     [SerializeField] private float f_attackRange = 15;
-    [SerializeField] private float f_spottingDistance = 50;
+    [SerializeField] private float f_attackDuration = 3;
 
-    private float f_timeStarted;
-    private float f_targetFindLimiter = 0;
-    private BehaviourTree tree;
-    private Transform t_target;
+    private float f_attackStart;
     private HopdogMover mover;
 
     private void Awake()
@@ -31,16 +27,6 @@ public class Hopdog : MonoBehaviour
     private void Update()
     {
         tree.DoTreeIteration();
-    }
-
-    private bool CanSeeTransform(Transform _targ)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, _targ.position - transform.position, out hit, f_spottingDistance))
-        {
-            return hit.collider.transform == _targ;
-        }
-        return false;
     }
 
     #region BehaviourNodeDefinitions
@@ -123,63 +109,28 @@ public class Hopdog : MonoBehaviour
 
     #region Queries
 
-    public bool StillHasTarget()
-    {
-        if (t_target != null)
-        {
-            if (CanSeeTransform(t_target))
-                return CanSeeTransform(t_target);
-            else
-                t_target = null;
-        }
-        return false;
-    }
-
-    public bool IsOverSummoningSickness()
-    {
-        return (Time.realtimeSinceStartup - f_timeStarted) > f_summoningSickness;
-    }
-
-    public bool HasTarget()
-    {
-        return t_target != null;
-    }
-
     public bool IsWithinAttackRange()
     {
         return (transform.position - t_target.position).sqrMagnitude < f_attackRange * f_attackRange;
-    }
-
-    public bool CanSeeAPlayer()
-    {
-        foreach (PlayerHealth ph in FindObjectsOfType<PlayerHealth>())
-        {
-            if (!ph.IsDead())
-            {
-                if (CanSeeTransform(ph.transform))
-                {
-                    t_target = ph.transform;
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     #endregion
 
     #region Actions
 
-    public void DebugTarget()
-    {
-        Debug.Log($"Target: {t_target}");
-    }
-
     public void AttackAction()
     {
-
+        if (f_attackStart == 0)
+        {
+            if (Time.realtimeSinceStartup - f_attackStart > f_attackDuration)
+            {
+                f_attackStart = 0;
+                t_target = null;
+            }
+            return;
+        }
+        f_attackStart = Time.realtimeSinceStartup;
         mover.Launch(t_target.position);
-
     }
 
     public void MoveTowardsTargetAction()
@@ -189,24 +140,8 @@ public class Hopdog : MonoBehaviour
 
     public void IdleAction()
     {
-        return;
-    }
-
-    public void GetTargetAction()
-    {
-        f_targetFindLimiter += Time.deltaTime;
-        t_target = null;
-        if (f_targetFindLimiter <= 1)
-            return;
-
-        f_targetFindLimiter = 0;
-
-        t_target = FindObjectOfType<PlayerInputManager>().transform;
-
-        //potentials = potentials.OrderBy(x => (transform.position - x.position).sqrMagnitude).ToList();
-
-        //if (potentials.Count > 0)
-        //    t_target = potentials[0];
+        if ((Time.realtimeSinceStartup + Random.value) * 100 % 100 <= 0.5f)
+            mover.Move(Vector3.right * (Random.value * 2 - 1) + Vector3.forward * (Random.value * 2 - 1));
     }
 
     #endregion

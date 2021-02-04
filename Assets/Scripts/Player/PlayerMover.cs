@@ -20,6 +20,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_downMult = 0.3f; // The multiplier applied to the base speed whilst down;
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
     [SerializeField] private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
+    [SerializeField] private float f_coyoteTime = 0.2f;
 
     [Space]
     [Header("Physics")]
@@ -32,11 +33,11 @@ public class PlayerMover : MonoBehaviour
 
     #region Private
 
-
     internal bool b_grounded;
     private bool b_down;
     private bool b_applyGravity;
     internal bool b_jumpPress;
+    private float f_lastOnGround;
     private float f_currentMoveSpeed;
     private float f_currentMultiplier;
     private bool b_jumpHold;
@@ -44,6 +45,7 @@ public class PlayerMover : MonoBehaviour
     private bool b_sprintPress;
     internal bool b_sprintHold;
     private bool b_sprintUp;
+    private Surface s_currentSurface;
     internal Vector3 v_movementVector; // The direction the player is inputting
     private Vector3 v_startPos;
     private Vector3 v_groundNormal;
@@ -107,6 +109,7 @@ public class PlayerMover : MonoBehaviour
 
     private void HandleAllInputs()
     {
+
     }
 
     /// <summary>
@@ -117,7 +120,7 @@ public class PlayerMover : MonoBehaviour
         Vector3 dir = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up), v_groundNormal);
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
-            rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down? f_downMult :( b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
+            rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
     }
@@ -129,8 +132,13 @@ public class PlayerMover : MonoBehaviour
     {
         if (!b_jumpPress || b_down)
             return;
-        if (b_grounded)
-            StartCoroutine(DelayedJump());
+        if ((Time.realtimeSinceStartup - f_lastOnGround) < f_coyoteTime)
+        {
+            f_lastOnGround -= 10;
+            Vector3 t = rb.velocity;
+            t.y = f_jumpForce;
+            rb.velocity = t;
+        }
     }
 
     private IEnumerator DelayedJump()
@@ -250,6 +258,11 @@ public class PlayerMover : MonoBehaviour
         {
             b_applyGravity = hit.distance > 0.15f;
             v_groundNormal = hit.normal;
+            f_lastOnGround = Time.realtimeSinceStartup;
+
+            ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
+            if (iS != null)
+                s_currentSurface = iS.GetSurface();
             return true;
 
         }
