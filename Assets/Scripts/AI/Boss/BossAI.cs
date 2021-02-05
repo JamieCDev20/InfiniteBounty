@@ -194,7 +194,8 @@ public class BossAI : AIBase
     {
         b_canAttack = false;
         if (PhotonNetwork.IsMasterClient)
-            photonView.RPC("ChangeTarget", RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
+            photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
+
         StartCoroutine(TimedMove(_v_newPos, _f_timeToWait));
     }
     private IEnumerator TimedMove(Vector3 _v_newPos, float _f_timeToWait)
@@ -236,6 +237,13 @@ public class BossAI : AIBase
     public void ChangeTarget(int _i_newTargetIndex)
     {
         i_currentTarget = _i_newTargetIndex;
+
+        if (PhotonNetwork.IsMasterClient)
+            if (tL_potentialTargets[i_currentTarget].GetComponent<PlayerHealth>().IsDead())
+            {
+                tL_potentialTargets.RemoveAt(i_currentTarget);
+                photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
+            }
     }
 
 }
