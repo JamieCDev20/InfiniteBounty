@@ -249,6 +249,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
                 cc_cam.SetFollow(ph.transform, true);
             }
         }
+
+        PvPManager.x?.PlayerDied();
     }
 
     [PunRPC]
