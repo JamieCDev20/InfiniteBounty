@@ -7,7 +7,6 @@ public class NugSucker : ConeTool
     [SerializeField] private float f_suckForce;
     [SerializeField] private GameObject go_cone;
     private ParticleSystem ps_cone;
-    private bool b_beingUsed;
 
     public void Start()
     {
