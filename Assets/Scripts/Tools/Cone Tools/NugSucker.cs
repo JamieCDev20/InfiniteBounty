@@ -7,6 +7,7 @@ public class NugSucker : ConeTool
     [SerializeField] private float f_suckForce;
     [SerializeField] private GameObject go_cone;
     private ParticleSystem ps_cone;
+    private bool b_beingUsed;
 
     public void Start()
     {
@@ -17,13 +18,11 @@ public class NugSucker : ConeTool
         base.Use(_v_forwards);
         if (go_cone != null)
         {
-            go_cone.SetActive(true);
             ParticleSystem.ShapeModule sm = ps_cone.shape;
             sm.angle = f_angle * 0.5f;
-            ps_cone.Play();
+            PlayParticles(true);
         }
         PlayAudio(ac_activationSound);
-        PlayParticles(true);
         foreach (GameObject hit in GetAllObjectsInCone(t_conePoint.forward))
         {
             ISuckable suck = hit.GetComponent<ISuckable>();
@@ -32,17 +31,4 @@ public class NugSucker : ConeTool
             //(hit.GetComponent<ISuckable>()?.GetRigidbody()).velocity = (t_conePoint.position - hit.transform.position).normalized * f_suckForce;//.AddForce((t_conePoint.position - hit.transform.position).normalized * f_suckForce, ForceMode.VelocityChange);
         }
     }
-
-    public override void PlayParticles(bool val)
-    {
-        if (val)
-        {
-            ps_cone.Play();
-        }
-        else
-        {
-            ps_cone.gameObject.SetActive(false);
-        }
-    }
-
 }
