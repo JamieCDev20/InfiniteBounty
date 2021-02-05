@@ -26,6 +26,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
     public void Die()
     {
         go_deathParticles.SetActive(true);
+        go_deathParticles.transform.parent = null;
         Invoke(nameof(ActualDie), 1);
     }
     private void ActualDie()
