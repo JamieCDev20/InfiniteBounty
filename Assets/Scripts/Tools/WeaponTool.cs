@@ -15,13 +15,14 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_heatsink;
     [SerializeField] protected float f_knockback;
     [SerializeField] protected float f_energyGauge;
-    [SerializeField] protected GameObject go_hitBox;
+    [SerializeField] protected GameObject[] go_hitBox;
     [Header("Elemental Stats")]
     [SerializeField] protected int i_elementDamage;
     [SerializeField] protected float f_elementDuration;
     [SerializeField] protected float f_elementFrequency;
     [Header("Explosion Stats")]
     [SerializeField] protected AugmentExplosion ae_explode;
+    [SerializeField] protected GameObject[] go_explarticles;
     #endregion
     [SerializeField] protected bool b_rackUpgrade;
     [SerializeField] protected Collider c_playerCollider;
@@ -74,13 +75,10 @@ public class WeaponTool : ToolBase
             if (i == -1)
                 return false;
             A_augs[i] = aug;
-            // Set the properties
-            AugmentProperties ap = aug.GetAugmentProperties();
-            AddToAugmentProperties(ap);
-            // Set the physical
-            AugmentPhysicals aPhys = aug.GetPhysicalProperties();
-            AddToPhysicalProperties(aPhys);
+            AddToAugmentProperties(aug.GetAugmentProperties());
+            AddToPhysicalProperties(aug.GetPhysicalProperties());
             AddToAudioProperties(aug.GetAudioProperties());
+            AddToExplosionProperties(aug.GetExplosionProperties());
             return true;
         }
         return false;
@@ -130,26 +128,41 @@ public class WeaponTool : ToolBase
         }
         // Add the keys here
         //tr_trail.colorGradient.SetKeys(new GradientColorKey(ap.A_trKeys));
+        if(this is ProjectileTool)
+            Utils.AddToArray<GameObject>(go_hitBox, Resources.Load<GameObject>(ap.go_projectile));
+
     }
 
-    private void AddToAudioProperties(List<string[]> _sL_audio)
+    protected void AddToAudioProperties(List<string[]> _sL_audio)
     {
         string[] use = _sL_audio[0];
         string[] travel = _sL_audio[1];
         string[] hit = _sL_audio[2];
         if(use != null)
-            LoadAndAddAudio(ac_activationSound, use);
+            LoadAndAddObjectArray(ac_activationSound, use);
         if (travel != null)
-            LoadAndAddAudio(ac_diegeticAudio, travel);
+            LoadAndAddObjectArray(ac_diegeticAudio, travel);
         if (hit != null)
-            LoadAndAddAudio(ac_hitSound, hit);
+            LoadAndAddObjectArray<AudioClip>(ac_hitSound, hit);
     }
 
-    private void LoadAndAddAudio(AudioClip[] _ac_existingClips, string[] _s_aud)
+    protected void AddToExplosionProperties(AugmentExplosion ae)
     {
-        AudioClip[] audClips = new AudioClip[_s_aud.Length];
-        for (int i = 0; i < _s_aud.Length; i++)
-            audClips[i] = Resources.Load<AudioClip>(_s_aud[i]);
-        _ac_existingClips = Utils.CombineArrays(_ac_existingClips, audClips);
+        ae_explode.b_impact = ae_explode.b_impact == true || ae.b_impact == true ? true : false;
+        ae_explode.f_detonationTime += ae.f_detonationTime;
+        ae_explode.f_explockBack += ae.f_explockBack;
+        ae_explode.f_radius += ae.f_radius;
+        ae_explode.i_damage += ae.i_damage;
+        ae_explode.i_lodeDamage += ae.i_lodeDamage;
+
+        LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
+    }
+
+    protected void LoadAndAddObjectArray<T>(T[] _tA_existingObjects, string[] _s_newObjectPaths) where T : Object
+    {
+        T[] tempObjects = new T[_s_newObjectPaths.Length];
+        for (int i = 0; i < _s_newObjectPaths.Length; i++)
+            tempObjects[i] = Resources.Load<T>(_s_newObjectPaths[i]);
+        _tA_existingObjects = Utils.CombineArrays(_tA_existingObjects, tempObjects);
     }
 }

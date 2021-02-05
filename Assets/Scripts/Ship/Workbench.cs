@@ -88,13 +88,12 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             {
                 Augment[] augs = saveMan.SaveData.purchasedAugments;
                 InitAugmentList(augs, false);
+                ClickAugment(0);
             }
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-
-        ClickAugment(0);
     }
 
     public void Interacted() { }

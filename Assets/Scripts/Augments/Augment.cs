@@ -8,11 +8,11 @@ public class Augment
     [SerializeField] protected string s_name;
     [SerializeField] protected int i_level;
     [SerializeField] protected AugmentStage as_stage;
-    [SerializeField] protected Material mat_augColor;
+    [SerializeField] protected string mat_augColor;
     public string Name { get { return s_name; } }
     public int Level { get { return i_level; } set { i_level = value; } }
     public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
-    public Material AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
+    public string AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
 
     [SerializeField] protected string[] ac_useSound;
@@ -39,7 +39,7 @@ public class Augment
     [SerializeField] protected float f_trWidth;
     [SerializeField] protected float f_trLifetime;
     [SerializeField] protected Color[] A_trKeys;
-    [SerializeField] protected GameObject go_weaponProjectile;
+    [SerializeField] protected string go_weaponProjectile;
 
     #endregion
 
@@ -51,7 +51,7 @@ public class Augment
     [SerializeField] protected float f_explockBack;
     [SerializeField] protected float f_detonationTime;
     [SerializeField] protected float f_expRad;
-    [SerializeField] protected GameObject[] go_explarticles;
+    [SerializeField] protected string[] go_explarticles;
 
     #endregion
 
@@ -106,7 +106,7 @@ public class Augment
         i_damage    = _ap_data.i_damage;
         i_lodeDamage = _ap_data.i_lodeDamage;
     }
-    public void InitPhysical(float _f_width, float _f_lifetime, Color[] _a_keys, GameObject _go_projectile)
+    public void InitPhysical(float _f_width, float _f_lifetime, Color[] _a_keys, string _go_projectile)
     {
         f_trWidth   = _f_width;
         f_trLifetime = _f_lifetime;
@@ -122,7 +122,7 @@ public class Augment
         go_weaponProjectile = _phys_aug.go_projectile;
     }
 
-    public void InitExplosion(int _i_dmg, int _i_lodedmg, float _f_knockback, float _f_detTime, float _f_rad, bool _b_imp, GameObject[] _go_explarticles)
+    public void InitExplosion(int _i_dmg, int _i_lodedmg, float _f_knockback, float _f_detTime, float _f_rad, bool _b_imp, string[] _go_explarticles)
     {
         i_explosionDamage   = _i_dmg;
         i_expLodeDamage     = _i_lodedmg;

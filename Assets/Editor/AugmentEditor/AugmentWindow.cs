@@ -310,7 +310,7 @@ public class AugmentWindow : EditorWindow
 
     private void InitStandardAugment(Augment outputAug)
     {
-        outputAug.AugmentMaterial = mat_material;
+        outputAug.AugmentMaterial = mat_material.name;
         try
         {
             outputAug.InitAudio(ac_useSound, ac_travelSound, ac_hitSound);
@@ -329,7 +329,12 @@ public class AugmentWindow : EditorWindow
         catch (InvalidCastException e) { }
         try
         {
-            ae_splosion.go_explarticles = go_explarticles;
+            if(go_explarticles.Length > 0)
+            {
+                ae_splosion.go_explarticles = new string[go_explarticles.Length];
+                for(int i = 0; i < go_explarticles.Length; i++)
+                    ae_splosion.go_explarticles[i] = go_explarticles[i].name;
+            }
             outputAug.InitExplosion(ae_splosion);
         }
         catch (InvalidCastException e) { }

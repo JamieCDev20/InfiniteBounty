@@ -10,9 +10,9 @@ public struct AugmentExplosion
     public float f_detonationTime;
     public float f_radius;
     public bool b_impact;
-    public GameObject[] go_explarticles;
+    public string[] go_explarticles;
 
-    public AugmentExplosion(int _dmg, int _lode, float _f_kb, float _f_dt, float _rad, bool _b_imp, GameObject[] _particles)
+    public AugmentExplosion(int _dmg, int _lode, float _f_kb, float _f_dt, float _rad, bool _b_imp, string[] _particles)
     {
         i_damage = _dmg;
         i_lodeDamage = _lode;

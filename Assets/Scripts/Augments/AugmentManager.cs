@@ -43,7 +43,7 @@ public class AugmentManager : MonoBehaviour
                     ago.Aug = A_projAugs[iter - A_augs.Length];
                 else if (iter < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
                     ago.Aug = A_coneAugs[iter - (A_augs.Length + A_projAugs.Length)];
-                ago.Mat = ago.Aug.AugmentMaterial;
+                ago.Mat = Resources.Load<Material>(ago.Aug.AugmentMaterial);
                 iter++;
             }
         }

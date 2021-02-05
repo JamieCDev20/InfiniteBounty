@@ -59,4 +59,28 @@ public class Utils
         }
         return output;
     }
+
+    public static T[] Swap<T>(T[] _arrayToSwap, int _firstObj, int _secondObj)
+    {
+        T temp = _arrayToSwap[_secondObj];
+        _arrayToSwap[_secondObj] = _arrayToSwap[_firstObj];
+        _arrayToSwap[_firstObj] = temp;
+        return _arrayToSwap;
+    }
+
+    public static T[] Swap<T>(T[] _arrayToSwap, T _firstObj, T _secondObj)
+    {
+        int _first = -1;
+        int _second = -1;
+        for(int i = 0; i < _arrayToSwap.Length; i++)
+        {
+            if (_arrayToSwap[i].Equals(_firstObj))
+                _first = i;
+            if (_arrayToSwap[i].Equals(_secondObj))
+                _second = i;
+        }
+        if (_first == -1 || _second == -1)
+            return _arrayToSwap;
+        return Swap(_arrayToSwap, _first, _second);
+    }
 }
