@@ -26,7 +26,7 @@ public abstract class BossProjectile : MonoBehaviourPunCallbacks
             Die();        
     }
 
-    protected virtual void Die()
+    internal virtual void Die()
     {
         gameObject.SetActive(false);
     }

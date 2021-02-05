@@ -8,7 +8,7 @@ public class BossHomingSphere : BossProjectile
     [SerializeField] private GameObject go_explosionEffect;
 
 
-    protected override void Die()
+    internal override void Die()
     {
         go_explosionEffect.SetActive(false);
         go_explosionEffect.transform.parent = null;

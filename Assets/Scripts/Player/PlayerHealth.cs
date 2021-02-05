@@ -252,7 +252,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             }
         }
 
-        //PvPManager.x?.PlayerDied();
+        PvPManager.x?.PlayerDied();
     }
 
     [PunRPC]
