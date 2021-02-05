@@ -76,6 +76,24 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
         ac_user.LastBody();
     }
 
+    public void NextArms()
+    {
+        ac_user.NextArms();
+    }
+    public void LastArms()
+    {
+        ac_user.LastArms();
+    }
+
+    public void NextLegs()
+    {
+        ac_user.NextFeet();
+    }
+    public void LastLegs()
+    {
+        ac_user.LastFeet();
+    }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);

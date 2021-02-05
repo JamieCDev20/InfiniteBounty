@@ -130,7 +130,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
     }
-    public void LastArm()
+    public void LastArms()
     {
         golA_arms[i_currentArm].goL_theList[0].SetActive(false);
         golA_arms[i_currentArm].goL_theList[1].SetActive(false);
