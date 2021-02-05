@@ -37,7 +37,8 @@ public class BossAI : AIBase
     }
     private void StopAttackingForPeriod()
     {
-        b_canAttack = false;
+        if (PhotonNetwork.IsMasterClient)
+            b_canAttack = false;
         Invoke(nameof(StartAttacking), f_timeBetweenAttacks);
     }
 
@@ -196,7 +197,7 @@ public class BossAI : AIBase
     }
     private IEnumerator TimedMove(Vector3 _v_newPos, float _f_timeToWait)
     {
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < 80; i++)
         {
             yield return new WaitForSeconds(0.01f);
             transform.position += Vector3.down * 0.5f;
@@ -204,14 +205,14 @@ public class BossAI : AIBase
 
         yield return new WaitForSeconds(_f_timeToWait);
 
-        transform.position = _v_newPos + Vector3.down * 20;
+        transform.position = _v_newPos + Vector3.down * 30;
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
 
 
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < 80; i++)
         {
             yield return new WaitForSeconds(0.01f);
             transform.position += Vector3.up * 0.5f;
@@ -223,5 +224,10 @@ public class BossAI : AIBase
 
     #endregion
 
+    [PunRPC]
+    public void ChangeTarget(int _i_newTargetIndex)
+    {
+        i_currentTarget = _i_newTargetIndex;
+    }
 
 }

@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class BossHealth : MonoBehaviourPun, IHitable
 {
+    private BossAI boss;
     [SerializeField] private int i_maxHealth;
     private int i_currentHealth;
     [SerializeField] private GameObject go_deathParticles;
     [SerializeField] private RectTransform rt_healthBar;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        for (int i = 0; i < 5; i++)
+            yield return new WaitForEndOfFrame();
+
+        boss = GetComponent<BossAI>();
+        i_maxHealth *= boss.tL_potentialTargets.Count;
+
         i_currentHealth = i_maxHealth;
         rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
     }
