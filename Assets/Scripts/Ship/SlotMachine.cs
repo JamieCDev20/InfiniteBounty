@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -319,9 +320,12 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         t_descriptionText.text = _s_desc;
     }
 
-
-
-
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        if (b_isBeingUsed)
+            EndInteract();
+    }
 
     [System.Serializable]
     private struct WheelData
