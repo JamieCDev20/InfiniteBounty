@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.67409086, g: 0.33267143, b: 0.62968767, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4495,10 +4495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77437f7e3dbd251479f69b58df38778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lm_playerLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  f_delay: 0.15
   tb_boss: {fileID: 1040575873}
 --- !u!1001 &726816809
 PrefabInstance:
@@ -6455,6 +6451,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 854295852546178409, guid: 40d5e142e5f02374b9676bfae9500f10,
+        type: 3}
+      propertyPath: rt_healthBar
+      value: 
+      objectReference: {fileID: 1175990323}
     - target: {fileID: 6982169945701208662, guid: 40d5e142e5f02374b9676bfae9500f10,
         type: 3}
       propertyPath: tL_potentialTargets.Array.size
@@ -6554,14 +6555,14 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 40d5e142e5f02374b9676bfae9500f10, type: 3}
 --- !u!114 &1040575873 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6982169945701208662, guid: 40d5e142e5f02374b9676bfae9500f10,
+  m_CorrespondingSourceObject: {fileID: 995032814173551828, guid: 40d5e142e5f02374b9676bfae9500f10,
     type: 3}
   m_PrefabInstance: {fileID: 1040575872}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf66143447f5eb444a4a359845c3738d, type: 3}
+  m_Script: {fileID: 11500000, guid: 09bcadcad5b5a7e4582d3b5ce4f61cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1051282825
@@ -7653,10 +7654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77437f7e3dbd251479f69b58df38778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lm_playerLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  f_delay: 0.1
   tb_boss: {fileID: 1040575873}
 --- !u!1 &1212239145
 GameObject:
@@ -11631,10 +11628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77437f7e3dbd251479f69b58df38778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lm_playerLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  f_delay: 0.05
   tb_boss: {fileID: 1040575873}
 --- !u!1001 &1733793776
 PrefabInstance:
@@ -12156,10 +12149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77437f7e3dbd251479f69b58df38778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lm_playerLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  f_delay: 0
   tb_boss: {fileID: 1040575873}
 --- !u!1001 &1801519378
 PrefabInstance:

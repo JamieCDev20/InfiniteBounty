@@ -58731,10 +58731,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7036592035728656314}
-  - component: {fileID: 6982169945701208662}
   - component: {fileID: 1120913190323296397}
   - component: {fileID: 7260950640791844713}
   - component: {fileID: 995032814173551828}
+  - component: {fileID: 854295852546178409}
   m_Layer: 0
   m_Name: TEMP_Boss
   m_TagString: Untagged
@@ -58761,32 +58761,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6982169945701208662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7036592035728656315}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf66143447f5eb444a4a359845c3738d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  f_timeBetweenAttacks: 3
-  f_timeBetweenMoves: 10
-  i_currentHealth: 650
-  lm_playerLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  f_homingForwardMovement: 15
-  v_shotsPerHomingRound: {x: 3, y: 5}
-  s_homingMissilePath: NetworkPrefabs\BossThings\BossHomingSphere
-  s_mortarShotPath: NetworkPrefabs\BossThings\MortarProjectile
-  v_numberOfMortarShots: {x: 15, y: 10}
-  p_mortarParticle: {fileID: 6520989874241016879}
-  go_deathParticle: {fileID: 8478087241247605652}
-  rt_healthBar: {fileID: 0}
 --- !u!136 &1120913190323296397
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -58840,13 +58814,29 @@ MonoBehaviour:
   lm_spottingMask:
     serializedVersion: 2
     m_Bits: 0
-  f_meleeRange: 10
+  f_timeBetweenAttacks: 3
+  f_meleeRange: 5
   s_mortarShotPath: NetworkPrefabs\BossThings\MortarProjectile
   v_numberOfMortarShots: {x: 15, y: 30}
   p_mortarParticle: {fileID: 6520989874241016879}
   s_homingMissilePath: NetworkPrefabs\BossThings\BossHomingSphere
   v_homingOrbAmount: {x: 3, y: 6}
   f_homingForwardMovement: 15
+--- !u!114 &854295852546178409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036592035728656315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6bb5bc4c2492949a061bfd6e91ddf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  i_maxHealth: 1200
+  go_deathParticles: {fileID: 8478087241247605652}
+  rt_healthBar: {fileID: 0}
 --- !u!1 &7915942169296733605
 GameObject:
   m_ObjectHideFlags: 0
