@@ -51,7 +51,8 @@ public class BossAI : AIBase
         if (PhotonNetwork.IsMasterClient)
             tree.DoTreeIteration();
 
-        transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+        if (tL_potentialTargets.Count > 0)
+            transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
     }
 
     #region Defines
@@ -111,7 +112,7 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.5f;
+        return Random.value < 0.7f;
     }
 
     private void DoHomingAttack()
@@ -138,7 +139,7 @@ public class BossAI : AIBase
             for (int i = 0; i < _goL_orbs.Count; i++)
             {
                 _goL_orbs[i].transform.position += _goL_orbs[i].transform.forward * f_homingForwardMovement * Time.deltaTime;
-                _goL_orbs[i].transform.LookAt(_t_target);
+                _goL_orbs[i].transform.LookAt(tL_potentialTargets[i_currentTarget]);
             }
         }
     }
