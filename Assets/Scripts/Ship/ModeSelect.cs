@@ -11,6 +11,11 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
     [Space, SerializeField] private GameObject[] goA_highlightPositions = new GameObject[3];
     [Space, SerializeField] private string[] sA_sceneNames = new string[3];
 
+    private void Start()
+    {
+        PhotonNetwork.RegisterPhotonView(photonView);
+    }
+
     public void Interacted()
     {
         goA_highlightPositions[i_currentIndex].SetActive(false);
