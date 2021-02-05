@@ -239,7 +239,7 @@ public class BossAI : AIBase
         i_currentTarget = _i_newTargetIndex;
 
         if (PhotonNetwork.IsMasterClient)
-            if (tL_potentialTargets[i_currentTarget].GetComponent<PlayerHealth>().IsDead())
+            if (tL_potentialTargets[i_currentTarget].GetComponentInParent<PlayerHealth>().IsDead())
             {
                 tL_potentialTargets.RemoveAt(i_currentTarget);
                 photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
