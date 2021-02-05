@@ -55,6 +55,7 @@ public class PlayerAnimator : MonoBehaviourPun
         anim = GetComponentInChildren<Animator>();
         pm_mover = GetComponent<PlayerMover>();
         pim_inputManager = GetComponent<PlayerInputManager>();
+        doDemoIK = NetworkedPlayer.x.GetPlayer() == transform;
     }
 
     private void Update()
@@ -94,8 +95,6 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private void LateUpdate()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
         if (doDemoIK)
         {
             //MakeAnArmDoTheRightThing(armR, -1);
