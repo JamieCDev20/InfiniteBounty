@@ -31,6 +31,9 @@ public class BossHealth : MonoBehaviourPun, IHitable
     }
     private void ActualDie()
     {
+        foreach (BossProjectile bp in FindObjectsOfType<BossProjectile>())
+            bp.Die();
+
         gameObject.SetActive(false);
     }
 

@@ -36,6 +36,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private ToolHandler th_currentTh;
     [SerializeField] private GameObject go_propertyButton;
+    private Pool btnPool;
     [SerializeField] private GameObject go_propertyParent;
 
     #region Interactions
@@ -46,7 +47,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         foreach (ToolLoader too in FindObjectsOfType<ToolLoader>())
             if (too.name.Contains("Weapon"))
                 tl = too;
-        tl.LoadTools(transform);        
+        tl.LoadTools(transform);
+        btnPool = new Pool(20, go_propertyButton);
     }
 
     public void Interacted(Transform interactor)
@@ -278,15 +280,12 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
         {
             case AugmentType.standard:
-                ad_display.t_augmentType.text = "Melee";
                 ad_display.t_augmentFits.text = "Hammer";
                 break;
             case AugmentType.projectile:
-                ad_display.t_augmentType.text = "Projectile";
                 ad_display.t_augmentFits.text = "Blaster - Shredder - Cannon";
                 break;
             case AugmentType.cone:
-                ad_display.t_augmentType.text = "Cone";
                 ad_display.t_augmentFits.text = "Nuggsucker";
                 break;
         }
@@ -294,7 +293,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Name;
         ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Level.ToString();
 
-        //UpdatePropertyText(_i_augmentIndexClicked);
+        UpdatePropertyText(_i_augmentIndexClicked);
 
         /*
         aL_augmentsInPool[i_currentAugment].t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
@@ -414,7 +413,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     }
     public Text PlaceAugmentProperties(GameObject _go_template)
     {
-        GameObject btn = PoolManager.x.SpawnObject(_go_template);
+        GameObject btn = btnPool.SpawnObject();
         btn.transform.position = go_propertyParent.transform.position;
         return btn?.GetComponent<Text>();
     }

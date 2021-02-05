@@ -155,15 +155,12 @@ public class VendingMachine : SubjectBase, IInteractible
         switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
         {
             case AugmentType.standard:
-                vmd_vendingMachineDisplay.t_augmentType.text = "Melee";
                 vmd_vendingMachineDisplay.t_augmentFits.text = "Hammer";
                 break;
             case AugmentType.projectile:
-                vmd_vendingMachineDisplay.t_augmentType.text = "Projectile";
                 vmd_vendingMachineDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
                 break;
             case AugmentType.cone:
-                vmd_vendingMachineDisplay.t_augmentType.text = "Cone";
                 vmd_vendingMachineDisplay.t_augmentFits.text = "Nuggsucker";
                 break;
         }
@@ -235,7 +232,6 @@ public struct AugmentDisplay
 {
     public Text t_levelNumber;
     public Text t_augmentName;
-    public Text t_augmentType;
     public Text t_augmentFits;
     public Text t_augmentEffects;
     public Text t_augmentCost;
