@@ -361,9 +361,7 @@ MonoBehaviour:
     can_Gauge: {fileID: 0}
   f_timeBetweenUsage: 0
   ac_activationSound:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: a8998368df0882744afec40649813993, type: 3}
   ac_hitSound:
   - {fileID: 0}
   ac_diegeticAudio:
@@ -404,7 +402,7 @@ MonoBehaviour:
   f_radius: 15
   t_conePoint: {fileID: 8694590336160786432}
   f_suckForce: 49
-  go_cone: {fileID: 933231019288107469, guid: dfcb6404840421344af81a4cf6121ffd, type: 3}
+  go_cone: {fileID: 469750441831786275}
 --- !u!82 &1589866486357523588
 AudioSource:
   m_ObjectHideFlags: 0
@@ -663,13 +661,19 @@ PrefabInstance:
     - target: {fileID: 933231019288107469, guid: dfcb6404840421344af81a4cf6121ffd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfcb6404840421344af81a4cf6121ffd, type: 3}
 --- !u!4 &469750441831786274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 933231019288107468, guid: dfcb6404840421344af81a4cf6121ffd,
+    type: 3}
+  m_PrefabInstance: {fileID: 754180466134515438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &469750441831786275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 933231019288107469, guid: dfcb6404840421344af81a4cf6121ffd,
     type: 3}
   m_PrefabInstance: {fileID: 754180466134515438}
   m_PrefabAsset: {fileID: 0}
