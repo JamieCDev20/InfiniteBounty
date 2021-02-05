@@ -14,16 +14,28 @@ public class HopdogMover : MoverBase
      *  rb
      */
     [SerializeField] private float f_launchForce = 15f;
+    private HopdogAnimator anim;
+
+    private void Start()
+    {
+        anim = GetComponent<HopdogAnimator>();
+    }
 
     public void Launch(Vector3 _targetPos)
     {
         if (!b_canMove)
             return;
-        Debug.Log("Launched");
+        anim.SetLaunchAnims(true);
         b_canMove = false;
-        Invoke(nameof(SetCanMove), 2);
+        Invoke(nameof(UnLaunch), 2);
         rb.AddForce((_targetPos - transform.position).normalized * f_launchForce, ForceMode.VelocityChange);
 
+    }
+
+    private void UnLaunch()
+    {
+        SetCanMove(true);
+        anim.SetLaunchAnims(false);
     }
 
 }

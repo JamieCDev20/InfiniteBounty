@@ -33,8 +33,9 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (rb.velocity.sqrMagnitude > f_impactExplosionVelocty * f_impactExplosionVelocty)
-            photonView.RPC("Explode", RpcTarget.AllViaServer);
+        if (Vector3.Dot((collision.contacts[0].point - transform.position).normalized, rb.velocity.normalized) < 0.3f)
+            if (rb.velocity.sqrMagnitude > f_impactExplosionVelocty * f_impactExplosionVelocty)
+                photonView.RPC("Explode", RpcTarget.AllViaServer);
     }
 
     [PunRPC]

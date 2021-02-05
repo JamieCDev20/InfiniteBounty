@@ -52,6 +52,7 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody rb;
     private Transform t_camTransform;
     private PhotonView view;
+    private FootstepAudioPlayer fap_audio;
     internal bool b_isSitting;
 
     #endregion
@@ -104,6 +105,7 @@ public class PlayerMover : MonoBehaviour
         v_startPos = transform.position;
         SetMoveSpeeds(true);
         view = GetComponent<PhotonView>();
+        fap_audio = GetComponentInChildren<FootstepAudioPlayer>();
 
     }
 
@@ -182,6 +184,11 @@ public class PlayerMover : MonoBehaviour
     private void Quit()
     {
         Application.Quit();
+    }
+
+    private void Landed()
+    {
+        fap_audio.PlayLandingSound();
     }
 
     #endregion
@@ -263,6 +270,10 @@ public class PlayerMover : MonoBehaviour
             ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
             if (iS != null)
                 s_currentSurface = iS.GetSurface();
+
+            if (!b_grounded)
+                Landed();
+
             return true;
 
         }
