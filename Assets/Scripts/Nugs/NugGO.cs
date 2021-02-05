@@ -48,7 +48,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void OnEnable()
     {
-        //b_canBeHit = false;
+        b_canBeHit = false;
         Invoke("RemoveSpawnImmunity", f_spawnImmunityDuration);
         Invoke("Die", 60);
     }
@@ -77,6 +77,11 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             rb.velocity = Vector3.zero;
         eO_elem.ResetElements();
         PoolManager.x.ReturnObjectToPool(gameObject);
+    }
+
+    public void SetCanDie()
+    {
+        b_canBeHit = true;
     }
 
     public GameObject GetGameObject()
