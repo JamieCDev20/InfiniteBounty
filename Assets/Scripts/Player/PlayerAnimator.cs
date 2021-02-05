@@ -94,6 +94,8 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private void LateUpdate()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (doDemoIK)
         {
             //MakeAnArmDoTheRightThing(armR, -1);

@@ -29,6 +29,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
         i_currentHealth = i_maxHealth;
         b_isHost = PhotonNetwork.IsMasterClient;
         rb = GetComponent<Rigidbody>();
+        Invoke(nameof(TimedDeath), 30);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,6 +47,11 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
             return;
         TakeDamage(damage, activatesThunder);
 
+    }
+
+    private void TimedDeath()
+    {
+        TakeDamage(10000, true);
     }
 
     [PunRPC]
