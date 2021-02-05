@@ -23,6 +23,10 @@ public class BossAI : AIBase
     [SerializeField] private Vector2 v_homingOrbAmount;
     [SerializeField] private float f_homingForwardMovement;
 
+    [Header("Movement Stats")]
+    [SerializeField] private GameObject go_movementTelegraph;
+
+
     private void Start()
     {
         QueryNode _q_canAttack = new QueryNode(CheckCanAttack);
@@ -33,22 +37,19 @@ public class BossAI : AIBase
     }
     private void StartAttacking()
     {
-        b_canAttack = true;
+        if (PhotonNetwork.IsMasterClient)
+            b_canAttack = true;
     }
     private void StopAttackingForPeriod()
     {
-        if (PhotonNetwork.IsMasterClient)
-            b_canAttack = false;
+        b_canAttack = false;
         Invoke(nameof(StartAttacking), f_timeBetweenAttacks);
     }
 
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
-        {
             tree.DoTreeIteration();
-            print("Doing trees");
-        }
 
         transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
     }
@@ -203,9 +204,14 @@ public class BossAI : AIBase
             transform.position += Vector3.down * 0.5f;
         }
 
-        yield return new WaitForSeconds(_f_timeToWait);
+        yield return new WaitForSeconds(_f_timeToWait - 1);
 
-        transform.position = _v_newPos + Vector3.down * 30;
+        go_movementTelegraph.transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
+
+        yield return new WaitForSeconds(2);
+
+
+        transform.position = Vector3.Scale(_v_newPos, Vector3.one - Vector3.up) + Vector3.down * 30;
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
@@ -217,6 +223,7 @@ public class BossAI : AIBase
             yield return new WaitForSeconds(0.01f);
             transform.position += Vector3.up * 0.5f;
         }
+        go_movementTelegraph.transform.position = Vector3.down * 100;
 
         if (PhotonNetwork.IsMasterClient)
             b_canAttack = true;
