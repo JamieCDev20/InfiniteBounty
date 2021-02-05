@@ -242,6 +242,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     {
         view.RPC("RemoteFullDie", RpcTarget.All);
         b_downed = false;
+
+
         foreach (PlayerHealth ph in FindObjectsOfType<PlayerHealth>())
         {
             if (!ph.isDead)
@@ -257,6 +259,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         ToggleAlive(false);
         b_downed = false;
         transform.parent = null;
+        if (SceneManager.GetActiveScene().name.Contains("Lobby"))
+        {
+            FullRespawn();
+            return;
+        }
     }
 
     public IEnumerator DeathDelay()

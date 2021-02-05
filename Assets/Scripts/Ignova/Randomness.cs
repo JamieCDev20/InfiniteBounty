@@ -85,7 +85,7 @@ public class Randomness : MonoBehaviourPunCallbacks
             GameObject ob = Instantiate(lodes[Mathf.RoundToInt(rand)], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
             ob.transform.parent = parent.transform;
             PhotonView view = ob.GetComponent<PhotonView>();
-            view.ViewID = 6000 + i;
+            view.ViewID = 600000 + i;
             PhotonNetwork.RegisterPhotonView(view);
             LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
             ob.name += Lt_lodeSpawns[num].position;
