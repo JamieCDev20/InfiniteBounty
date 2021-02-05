@@ -110,7 +110,7 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.4f;
+        return Random.value < 0.5f;
     }
 
     private void DoHomingAttack()
