@@ -13,8 +13,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
 
     private IEnumerator Start()
     {
-        for (int i = 0; i < 5; i++)
-            yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1);
 
         boss = GetComponent<BossAI>();
         i_maxHealth *= boss.tL_potentialTargets.Count;
