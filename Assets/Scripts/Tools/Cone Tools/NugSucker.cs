@@ -15,7 +15,7 @@ public class NugSucker : ConeTool
     public override void Use(Vector3 _v_forwards)
     {
         base.Use(_v_forwards);
-        if(go_cone != null)
+        if (go_cone != null)
         {
             go_cone.SetActive(true);
             ParticleSystem.ShapeModule sm = ps_cone.shape;
@@ -27,9 +27,21 @@ public class NugSucker : ConeTool
         foreach (GameObject hit in GetAllObjectsInCone(t_conePoint.forward))
         {
             ISuckable suck = hit.GetComponent<ISuckable>();
-            if(suck != null)
+            if (suck != null)
                 suck.GetRigidbody().velocity = (t_conePoint.position - hit.transform.position).normalized * f_suckForce;
             //(hit.GetComponent<ISuckable>()?.GetRigidbody()).velocity = (t_conePoint.position - hit.transform.position).normalized * f_suckForce;//.AddForce((t_conePoint.position - hit.transform.position).normalized * f_suckForce, ForceMode.VelocityChange);
+        }
+    }
+
+    public override void PlayParticles(bool val)
+    {
+        if (val)
+        {
+            ps_cone.Play();
+        }
+        else
+        {
+            ps_cone.gameObject.SetActive(false);
         }
     }
 
