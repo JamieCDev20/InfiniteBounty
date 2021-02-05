@@ -10271,10 +10271,10 @@ GameObject:
   - component: {fileID: 4620532391834650684}
   - component: {fileID: 7440646406162228465}
   - component: {fileID: 7878509176926914343}
-  - component: {fileID: 7952678402499064544}
   - component: {fileID: 3630817206034288483}
   - component: {fileID: -4327951449901491873}
   - component: {fileID: 2967995065755406698}
+  - component: {fileID: 4245083565588312581}
   m_Layer: 19
   m_Name: HopllessDog
   m_TagString: Untagged
@@ -10388,7 +10388,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 7440646406162228465}
   - {fileID: 7878509176926914343}
-  - {fileID: 7952678402499064544}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -10406,7 +10405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
+  m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &7878509176926914343
 MonoBehaviour:
@@ -10424,39 +10423,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
---- !u!114 &7952678402499064544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893965790758993077}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 2
-    Name: Running
-  - Type: 1
-    SynchronizeType: 2
-    Name: Idle
-  - Type: 4
-    SynchronizeType: 2
-    Name: Jump
-  - Type: 4
-    SynchronizeType: 2
-    Name: Spin
-  - Type: 4
-    SynchronizeType: 2
-    Name: Landing
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
 --- !u!114 &3630817206034288483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10513,6 +10479,18 @@ MonoBehaviour:
   go_deathParticles: {fileID: 3243582878672997449}
   go_exploParticles: {fileID: 6468110660106507912}
   p_hitParticles: {fileID: 5062773670210629232}
+--- !u!114 &4245083565588312581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893965790758993077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63e6d558df36d71438b980edc630ff93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4096928804534109007
 GameObject:
   m_ObjectHideFlags: 0

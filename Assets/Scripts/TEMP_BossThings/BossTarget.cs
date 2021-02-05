@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossTarget : MonoBehaviour
 {
-    [SerializeField] private TEMP_Boss tb_boss;
+    [SerializeField] private BossAI tb_boss;
 
 
     private IEnumerator Start()
@@ -20,7 +20,7 @@ public class BossTarget : MonoBehaviour
                 print("I, " + name + " have obtained a PLAYER. Gaze upon it in awe & fear.");
                 transform.parent = _cA[i].transform;
                 transform.localPosition = Vector3.up;
-                tb_boss.tL_potentialTarget.Add(transform);
+                tb_boss.tL_potentialTargets.Add(transform);
                 break;
             }
     }

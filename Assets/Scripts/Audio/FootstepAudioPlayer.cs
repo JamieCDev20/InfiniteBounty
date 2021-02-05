@@ -31,7 +31,7 @@ public class FootstepAudioPlayer : MonoBehaviour
     public void PlayLandingSound()
     {
         as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
-        as_feetAudio.PlayOneShot(ac_land, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
+        as_feetAudio.PlayOneShot(ac_land);
     }
 
     public void PlayFootstepSound()

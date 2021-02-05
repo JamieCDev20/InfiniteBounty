@@ -82,9 +82,10 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y); i++)
         {
             Physics.Raycast(ReturnPositionWithinZone(ziA_allZones[Random.Range(0, ziA_allZones.Length)]), Vector3.down, out _hit, Mathf.Infinity);
+            if (_hit.transform.name.Contains("Mushroom")) return;
+
             GameObject _go = PhotonNetwork.Instantiate(s_geyserPath, _hit.point, Quaternion.identity);
             _go.transform.up = _hit.normal;
-
         }
     }
 

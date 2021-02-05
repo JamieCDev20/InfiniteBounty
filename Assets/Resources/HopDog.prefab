@@ -19943,10 +19943,10 @@ GameObject:
   - component: {fileID: 4620532391834650684}
   - component: {fileID: 7440646406162228465}
   - component: {fileID: 7878509176926914343}
-  - component: {fileID: 6768045768300076672}
   - component: {fileID: 4571950225747552104}
   - component: {fileID: -9169695868248746339}
   - component: {fileID: 8737862836785388371}
+  - component: {fileID: 6920061157318021248}
   m_Layer: 19
   m_Name: HopDog
   m_TagString: Untagged
@@ -20060,7 +20060,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 7440646406162228465}
   - {fileID: 7878509176926914343}
-  - {fileID: 6768045768300076672}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -20096,39 +20095,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
---- !u!114 &6768045768300076672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893965790758993077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 2
-    Name: Running
-  - Type: 1
-    SynchronizeType: 2
-    Name: Idle
-  - Type: 4
-    SynchronizeType: 2
-    Name: Jump
-  - Type: 4
-    SynchronizeType: 2
-    Name: Spin
-  - Type: 4
-    SynchronizeType: 2
-    Name: Landing
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
 --- !u!114 &4571950225747552104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20185,6 +20151,18 @@ MonoBehaviour:
   go_deathParticles: {fileID: 8974009248041971325}
   go_exploParticles: {fileID: 1385815640902541363}
   p_hitParticles: {fileID: 4835961536809494986}
+--- !u!114 &6920061157318021248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893965790758993077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63e6d558df36d71438b980edc630ff93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4096928804534109007
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,9 @@ using UnityEngine;
 public class BossAI : AIBase
 {
     private bool b_canAttack;
-    private List<Transform> tL_potentialTargets = new List<Transform>();
+    internal List<Transform> tL_potentialTargets = new List<Transform>();
     private int i_currentTarget;
+    [SerializeField] private float f_timeBetweenAttacks;
 
     [Header("Melee Thangs")]
     [SerializeField] private float f_meleeRange;
@@ -22,21 +23,34 @@ public class BossAI : AIBase
     [SerializeField] private Vector2 v_homingOrbAmount;
     [SerializeField] private float f_homingForwardMovement;
 
-
     private void Start()
     {
         QueryNode _q_canAttack = new QueryNode(CheckCanAttack);
         SequencerNode _s = new SequencerNode(_q_canAttack, AttackDefine());
 
         tree = new BehaviourTree(_s);
+        Invoke(nameof(StartAttacking), 6);
+    }
+    private void StartAttacking()
+    {
+        b_canAttack = true;
+    }
+    private void StopAttackingForPeriod()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            b_canAttack = false;
+        Invoke(nameof(StartAttacking), f_timeBetweenAttacks);
     }
 
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
+        {
             tree.DoTreeIteration();
+            print("Doing trees");
+        }
 
-        transform.LookAt(Vector3.Scale(tL_potentialTargets[i_currentTarget].transform.position, Vector3.one - Vector3.up));
+        transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
     }
 
     #region Defines
@@ -86,7 +100,9 @@ public class BossAI : AIBase
     private void DoTheMelee()
     {
         print("AHHH! I'M DOING A MELEE");
+        StopAttackingForPeriod();
     }
+
 
     #endregion
 
@@ -100,6 +116,7 @@ public class BossAI : AIBase
     private void DoHomingAttack()
     {
         StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_homingOrbAmount.x, v_homingOrbAmount.y)), t_target));
+        StopAttackingForPeriod();
     }
     private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
@@ -133,6 +150,7 @@ public class BossAI : AIBase
     public void MortarAttackRPC(int _i_seed)
     {
         StartCoroutine(MortarAttackActual(_i_seed));
+        StopAttackingForPeriod();
     }
     private IEnumerator MortarAttackActual(int _i_seed)
     {
@@ -179,7 +197,7 @@ public class BossAI : AIBase
     }
     private IEnumerator TimedMove(Vector3 _v_newPos, float _f_timeToWait)
     {
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < 80; i++)
         {
             yield return new WaitForSeconds(0.01f);
             transform.position += Vector3.down * 0.5f;
@@ -187,14 +205,14 @@ public class BossAI : AIBase
 
         yield return new WaitForSeconds(_f_timeToWait);
 
-        transform.position = _v_newPos + Vector3.down * 20;
+        transform.position = _v_newPos + Vector3.down * 30;
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
 
 
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < 80; i++)
         {
             yield return new WaitForSeconds(0.01f);
             transform.position += Vector3.up * 0.5f;
@@ -206,5 +224,10 @@ public class BossAI : AIBase
 
     #endregion
 
+    [PunRPC]
+    public void ChangeTarget(int _i_newTargetIndex)
+    {
+        i_currentTarget = _i_newTargetIndex;
+    }
 
 }
