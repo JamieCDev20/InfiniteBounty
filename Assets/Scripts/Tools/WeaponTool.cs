@@ -67,6 +67,15 @@ public class WeaponTool : ToolBase
         a_playerAnims.SetBool(s_meleeAnim, _b_);
     }
 
+    protected bool CheckAnimPlaying(string _s_animName)
+    {
+        if (a_playerAnims.GetCurrentAnimatorStateInfo(0).IsName(_s_animName))
+        {
+            return true;
+        }
+        else return false;
+    }
+
     public virtual bool AddStatChanges(Augment aug)
     {
         if (A_augs != null && A_augs.Length >= 0)

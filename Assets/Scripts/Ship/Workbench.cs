@@ -35,7 +35,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private AugmentDisplay ad_display;
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private ToolHandler th_currentTh;
-
+    [SerializeField] private GameObject go_propertyButton;
+    [SerializeField] private GameObject go_propertyParent;
 
     #region Interactions
 
@@ -195,7 +196,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
             goL_augmentButtonPool[i].SetActive(true);
             goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
-            //goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aA_augmentsInList[i].level;
+            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_allAugmentsOwned[i].Level.ToString();
             goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[i].Name;
             goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
         }
@@ -277,8 +278,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
         {
             case AugmentType.standard:
-                ad_display.t_augmentType.text = "Standard";
-                ad_display.t_augmentFits.text = "Hammer - Blaster - Shredder - Cannon";
+                ad_display.t_augmentType.text = "Melee";
+                ad_display.t_augmentFits.text = "Hammer";
                 break;
             case AugmentType.projectile:
                 ad_display.t_augmentType.text = "Projectile";
@@ -290,7 +291,10 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 break;
         }
 
+        ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Name;
+        ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Level.ToString();
 
+        //UpdatePropertyText(_i_augmentIndexClicked);
 
         /*
         aL_augmentsInPool[i_currentAugment].t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
@@ -342,7 +346,81 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             EndInteract();
     }
 
+    private void UpdatePropertyText(int _i_index)
+    {
+        AugmentProperties ap = aL_allAugmentsOwned[_i_index].GetAugmentProperties();
+        AugmentExplosion ae = aL_allAugmentsOwned[_i_index].GetExplosionProperties();
+        if(ap.f_weight != 0)
+        {
+            PlaceAugmentProperties(go_propertyButton).text = ap.f_weight.ToString();
+
+        }
+        if(ap.i_damage != 0)
+        {
+
+        }
+        if(ap.i_lodeDamage != 0)
+        {
+
+        }
+        if(ap.f_speed != 0)
+        {
+
+        }
+        if(ap.f_knockback != 0)
+        {
+
+        }
+        if(ap.f_energyGauge != 0)
+        {
+
+        }
+        if(ap.f_heatsink != 0)
+        {
+
+        }
+        if(ap.f_recoil != 0)
+        {
+
+        }
+        if(ae.i_damage != 0)
+        {
+
+        }
+        if(ae.i_lodeDamage != 0)
+        {
+
+        }
+        if(ae.f_explockBack != 0)
+        {
+
+        }
+        if(ae.f_radius != 0)
+        {
+
+        }
+        if (ae.b_impact)
+        {
+
+        }
+        else
+        {
+            if(ae.f_detonationTime != 0)
+            {
+
+            }
+        }
+
+    }
+    public Text PlaceAugmentProperties(GameObject _go_template)
+    {
+        GameObject btn = PoolManager.x.SpawnObject(_go_template);
+        btn.transform.position = go_propertyParent.transform.position;
+        return btn?.GetComponent<Text>();
+    }
+
 }
+
 
 public enum AugmentDisplayType
 {
