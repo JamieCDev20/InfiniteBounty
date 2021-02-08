@@ -159,6 +159,11 @@ public class PoolManager : MonoBehaviour
         if (pools.ContainsKey(type.name))
             pools[type.name].ReturnToPool(type);
     }
+    public void KillAllObjects(GameObject type)
+    {
+        if (pools.ContainsKey(type.name))
+            pools[type.name].ResetPool();
+    }
     /// <summary>
     /// Get the hashset of objects
     /// </summary>

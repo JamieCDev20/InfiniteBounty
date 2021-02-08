@@ -36,10 +36,9 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private ToolHandler th_currentTh;
     [SerializeField] private GameObject go_propertyButton;
-    private Pool btnPool;
     [SerializeField] private GameObject go_propertyParent;
     [SerializeField] private RectTransform rt_bounds;
-
+    private int displayIter = 0;
     #region Interactions
 
     public void Init(SaveManager _sm)
@@ -49,7 +48,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             if (too.name.Contains("Weapon"))
                 tl = too;
         tl.LoadTools(transform);
-        btnPool = new Pool(20, go_propertyButton);
+        PoolManager.x.CreateNewPool(go_propertyButton, 20);
     }
 
     public void Interacted(Transform interactor)
@@ -295,7 +294,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
         ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Name;
         ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Level.ToString();
-
+        RemoveAugmentProperties();
         UpdatePropertyText(_i_augmentIndexClicked);
 
         /*
@@ -354,71 +353,110 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         AugmentExplosion ae = aL_allAugmentsOwned[_i_index].GetExplosionProperties();
         if(ap.f_weight != 0)
         {
-            PlaceAugmentProperties(go_propertyButton).text = ap.f_weight.ToString();
+            PlaceAugmentProperties(go_propertyButton).text = "Weight" + ap.f_weight.ToString();
 
         }
         if(ap.i_damage != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Enemy Damage " + ap.i_damage.ToString();
 
         }
         if(ap.i_lodeDamage != 0)
         {
-
+            PlaceAugmentProperties(go_propertyButton).text = "Lode Damage " + ap.i_lodeDamage.ToString();
         }
         if(ap.f_speed != 0)
         {
+            switch (aL_allAugmentsOwned[_i_index].at_type)
+            {
+                case AugmentType.standard:
+                    PlaceAugmentProperties(go_propertyButton).text = "Attack Speed " + ap.f_speed.ToString();
+                    break;
+                case AugmentType.projectile:
+                    PlaceAugmentProperties(go_propertyButton).text = "Fire Rate " + ap.f_speed.ToString();
+                    break;
+                case AugmentType.cone:
+                    PlaceAugmentProperties(go_propertyButton).text = "Suck Speed " + ap.f_speed.ToString();
+                    break;
+
+            }
 
         }
         if(ap.f_knockback != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Knockback " + ap.f_knockback.ToString();
 
         }
         if(ap.f_energyGauge != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Energy Capacity " + ap.f_energyGauge.ToString();
 
         }
         if(ap.f_heatsink != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Heatsink " + ap.f_heatsink.ToString();
 
         }
         if(ap.f_recoil != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Recoil " + ap.f_recoil.ToString();
 
         }
         if(ae.i_damage != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Explosion Enemy Damage " + ae.i_damage.ToString();
 
         }
         if(ae.i_lodeDamage != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Explosion Lode Damage " + ae.i_lodeDamage.ToString();
 
         }
         if(ae.f_explockBack != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Explosion Knockback " + ae.f_explockBack.ToString();
 
         }
         if(ae.f_radius != 0)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Explosion Radius " + ae.f_radius.ToString();
 
         }
         if (ae.b_impact)
         {
+            PlaceAugmentProperties(go_propertyButton).text = "Impact Explosion";
 
         }
         else
         {
             if(ae.f_detonationTime != 0)
             {
-
+                PlaceAugmentProperties(go_propertyButton).text = "Explosion Detonation Time " + ae.f_detonationTime.ToString();
             }
         }
 
     }
     public Text PlaceAugmentProperties(GameObject _go_template)
     {
-        GameObject btn = btnPool.SpawnObject();
-        btn.transform.position = go_propertyParent.transform.position;
+        GameObject btn = PoolManager.x.SpawnObject(go_propertyButton);
+        btn.transform.parent = go_propertyParent.transform;
+        btn.transform.localScale = Vector3.one;
+        if(displayIter <= 14)
+        {
+            
+            btn.transform.position = new Vector3(rt_augmentButtonParent.rect.xMin, rt_augmentButtonParent.rect.yMin - (34 * displayIter), rt_augmentButtonParent.transform.position.z);
+        }
+        else
+        {
+            btn.transform.position = new Vector3(rt_augmentButtonParent.rect.xMin + 280, rt_augmentButtonParent.rect.yMin - (34 * displayIter - 14), rt_augmentButtonParent.transform.position.z);
+        }
+        displayIter++;
         return btn?.GetComponent<Text>();
+    }
+
+    public void RemoveAugmentProperties()
+    {
+        PoolManager.x.KillAllObjects(go_propertyButton);
     }
 
 }
