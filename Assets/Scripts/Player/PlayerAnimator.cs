@@ -134,8 +134,8 @@ public class PlayerAnimator : MonoBehaviourPun
         {
             Vector3 vec = transform.position - v_posLastFrame;
 
-            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(vec).x * (b_isSprinting ? 2 : 1), Time.deltaTime * 4));
-            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(vec).z * (b_isSprinting ? 2 : 1), Time.deltaTime * 4));
+            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(vec).x * (b_isSprinting ? 2 : 1) * 8, Time.deltaTime * 4));
+            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(vec).z * (b_isSprinting ? 2 : 1) * 8, Time.deltaTime * 4));
 
             if (rb.velocity.sqrMagnitude > 0.1f)
                 return;
