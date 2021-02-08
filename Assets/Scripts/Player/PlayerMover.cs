@@ -67,9 +67,10 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
+        b_grounded = CheckGrounded();
+
         if (!view.IsMine && b_networked)
             return;
-        b_grounded = CheckGrounded();
         Jump();
         ResetIfOffMap();
         //Debug.Log($"players Velocity is: {rb.velocity.magnitude}");
