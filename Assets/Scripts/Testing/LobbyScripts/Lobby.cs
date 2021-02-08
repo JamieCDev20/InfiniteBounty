@@ -78,7 +78,6 @@ public class Lobby : MonoBehaviourPunCallbacks
         Debug.Log("Joined a room!!");
         if_gameTitleInput.interactable = false;
         if_playerName.interactable = false;
-        PhotonNetwork.LoadLevel(1);
     }
 
     public void OnClickJoin()
