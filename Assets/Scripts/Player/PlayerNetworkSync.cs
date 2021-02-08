@@ -36,6 +36,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     private void Update()
     {
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rotVector, 0.3f);
+        transform.position = Vector3.Lerp(transform.position, v_posVector, 0.3f);
     }
 
 }
