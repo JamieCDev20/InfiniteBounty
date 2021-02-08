@@ -10,6 +10,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_rotVector;
 
     private bool b_isSprinting;
+    private bool b_isGrounded;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -51,6 +52,21 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     public bool GetIsSprinting()
     {
         return b_isSprinting;
+    }
+
+    public void SetIsSprinting(bool _b_val)
+    {
+        b_isSprinting = _b_val;
+    }
+
+    public bool GetIsGrounded()
+    {
+        return b_isGrounded;
+    }
+
+    public void SetIsGrounded(bool _b_val)
+    {
+        b_isGrounded = _b_val;
     }
 
 }
