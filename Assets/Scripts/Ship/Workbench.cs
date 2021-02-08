@@ -353,7 +353,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         AugmentExplosion ae = aL_allAugmentsOwned[_i_index].GetExplosionProperties();
         if(ap.f_weight != 0)
         {
-            PlaceAugmentProperties(go_propertyButton).text = "Weight" + ap.f_weight.ToString();
+            PlaceAugmentProperties(go_propertyButton).text = "Weight " + ap.f_weight.ToString();
 
         }
         if(ap.i_damage != 0)
@@ -434,21 +434,43 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 PlaceAugmentProperties(go_propertyButton).text = "Explosion Detonation Time " + ae.f_detonationTime.ToString();
             }
         }
+        if(aL_allAugmentsOwned[_i_index] is ProjectileAugment)
+        {
+            ProjectileAugment projectileCast = (ProjectileAugment)aL_allAugmentsOwned[_i_index];
+            AugmentProjectile augmentProperties = projectileCast.GetProjectileData();
+            if (augmentProperties.i_shotsPerRound != 0)
+                PlaceAugmentProperties(go_propertyButton).text = "Shots per round " + augmentProperties.i_shotsPerRound;
+            if (augmentProperties.f_bulletScale != 0)
+                PlaceAugmentProperties(go_propertyButton).text = "Bullet Size " + augmentProperties.f_bulletScale;
+            if (augmentProperties.f_gravity != 0)
+                PlaceAugmentProperties(go_propertyButton).text = "Bullet Weight " + augmentProperties.f_gravity;
+        }
+        if(aL_allAugmentsOwned[_i_index] is ConeAugment)
+        {
+            ConeAugment coneCast = (ConeAugment)aL_allAugmentsOwned[_i_index];
+            AugmentCone coneProperties = coneCast.GetConeData();
+            if (coneProperties.f_angle != 0)
+                PlaceAugmentProperties(go_propertyButton).text = "Cone Width " + coneProperties.f_angle;
+            if (coneProperties.f_radius != 0)
+                PlaceAugmentProperties(go_propertyButton).text = "Cone Length " + coneProperties.f_radius;
+        }
 
     }
     public Text PlaceAugmentProperties(GameObject _go_template)
     {
+        const int scailar = 7;
         GameObject btn = PoolManager.x.SpawnObject(go_propertyButton);
+        RectTransform rt_button = btn.GetComponent<RectTransform>();
         btn.transform.parent = go_propertyParent.transform;
         btn.transform.localScale = Vector3.one;
-        if(displayIter <= 14)
+        if(displayIter <= scailar)
         {
-            
-            btn.transform.position = new Vector3(rt_augmentButtonParent.rect.xMin, rt_augmentButtonParent.rect.yMin - (34 * displayIter), rt_augmentButtonParent.transform.position.z);
+
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width/2), rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * displayIter));
         }
         else
         {
-            btn.transform.position = new Vector3(rt_augmentButtonParent.rect.xMin + 280, rt_augmentButtonParent.rect.yMin - (34 * displayIter - 14), rt_augmentButtonParent.transform.position.z);
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + 280, rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * (displayIter - scailar)));
         }
         displayIter++;
         return btn?.GetComponent<Text>();
@@ -456,6 +478,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void RemoveAugmentProperties()
     {
+        displayIter = 0;
         PoolManager.x.KillAllObjects(go_propertyButton);
     }
 
