@@ -38,6 +38,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private GameObject go_propertyButton;
     private Pool btnPool;
     [SerializeField] private GameObject go_propertyParent;
+    [SerializeField] private RectTransform rt_bounds;
 
     #region Interactions
 
@@ -209,12 +210,14 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     private void DisplayWeapon()
     {
-        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(true);
+        if(tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
+            tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(true);
     }
 
     private void UndisplayWeapon()
     {
-        tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(false);
+        if(tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
+            tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(false);
     }
 
     #region Button Functions
@@ -309,7 +312,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void ChangeWeaponPos()
     {
-        if (wt_toolsInHand != null)
+        if (wt_toolsInHand[0] != null && wt_toolsInHand[1] != null)
         {
             UndisplayWeapon();
             if (i_currentWeaponIndex == wt_toolsInHand.Count - 1)
