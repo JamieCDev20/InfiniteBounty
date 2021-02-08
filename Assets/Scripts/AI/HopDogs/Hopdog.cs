@@ -15,6 +15,7 @@ public class Hopdog : AIBase
 
     private void Awake()
     {
+        anima = GetComponent<HopdogAnimator>();
         mover = GetComponent<HopdogMover>();
         tree = new BehaviourTree(ParentSequencer());
 
