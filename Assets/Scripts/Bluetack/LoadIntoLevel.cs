@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +44,12 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         }
     }
 
+    internal void SetLevelToLoad(string _s_levelName)
+    {
+        levelToLoad = _s_levelName;
+        LoadingScreenManager.x.SetSceneToLoad(levelToLoad);
+    }
+
     #endregion
 
     #region Private Voids
@@ -52,7 +59,8 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         i_playersCount = 0;
         if (levelname.Contains("Lobby"))
             ReturnToShip();
-        NetworkManager.x.LoadLevel(levelname);
+        LoadingScreenManager.x.SetSceneToLoad(levelname);
+        LoadingScreenManager.x.CallLoadLevel();
     }
 
     private void CheckPlayers()
