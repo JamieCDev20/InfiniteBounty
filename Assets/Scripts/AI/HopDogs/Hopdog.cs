@@ -29,7 +29,7 @@ public class Hopdog : AIBase
     private void Update()
     {
         tree.DoTreeIteration();
-        anima.SetGrounded(Physics.Raycast(transform.position + (Vector3.up * 0.01f), Vector3.down, 0.1f));
+        //anima.SetGrounded(Physics.Raycast(transform.position + (Vector3.up * 0.01f), Vector3.down, 0.1f));
     }
 
     #region BehaviourNodeDefinitions

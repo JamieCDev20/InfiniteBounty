@@ -9,7 +9,7 @@ public class HopdogAnimator : MonoBehaviourPun
 
     private Animator anim;
     private Rigidbody rb;
-    private bool b_isGrounded;
+    private bool b_isGrounded = true;
 
     private void Start()
     {
