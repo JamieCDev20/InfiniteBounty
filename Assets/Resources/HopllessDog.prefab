@@ -10269,12 +10269,11 @@ GameObject:
   - component: {fileID: 3893965790758993073}
   - component: {fileID: 3893965790758993072}
   - component: {fileID: 4620532391834650684}
-  - component: {fileID: 7440646406162228465}
-  - component: {fileID: 7878509176926914343}
   - component: {fileID: 3630817206034288483}
   - component: {fileID: -4327951449901491873}
   - component: {fileID: 2967995065755406698}
   - component: {fileID: 4245083565588312581}
+  - component: {fileID: 6082427798787563773}
   m_Layer: 19
   m_Name: HopllessDog
   m_TagString: Untagged
@@ -10386,43 +10385,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 7440646406162228465}
-  - {fileID: 7878509176926914343}
+  - {fileID: 6082427798787563773}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7440646406162228465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893965790758993077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &7878509176926914343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893965790758993077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 0
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!114 &3630817206034288483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10489,6 +10455,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63e6d558df36d71438b980edc630ff93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6082427798787563773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893965790758993077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d767d5481f227ee41bb885723db7bb5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4096928804534109007

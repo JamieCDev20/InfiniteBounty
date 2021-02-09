@@ -11,9 +11,11 @@ public class Hopdog : AIBase
 
     private float f_attackStart;
     private HopdogMover mover;
+    private HopdogAnimator anima;
 
     private void Awake()
     {
+        anima = GetComponent<HopdogAnimator>();
         mover = GetComponent<HopdogMover>();
         tree = new BehaviourTree(ParentSequencer());
 
@@ -27,6 +29,7 @@ public class Hopdog : AIBase
     private void Update()
     {
         tree.DoTreeIteration();
+        //anima.SetGrounded(Physics.Raycast(transform.position + (Vector3.up * 0.01f), Vector3.down, 0.1f));
     }
 
     #region BehaviourNodeDefinitions

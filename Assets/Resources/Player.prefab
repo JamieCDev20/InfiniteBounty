@@ -17,95 +17,6 @@ MonoBehaviour:
   ac_footstepPlanet: {fileID: 8300000, guid: 6bb3305c429b6c74794359ad554f86ff, type: 3}
   ac_land: {fileID: 8300000, guid: d6b7e26e35dce3d44a6dfe16d78814a4, type: 3}
   f_velocityToVolumeMultiplier: 0.001
---- !u!114 &5188839372224120430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435808253775190400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 1
-    SynchronizeType: 2
-    Name: Y
-  - Type: 1
-    SynchronizeType: 2
-    Name: X
-  - Type: 4
-    SynchronizeType: 2
-    Name: ShootingRight
-  - Type: 4
-    SynchronizeType: 2
-    Name: ShootingLeft
-  - Type: 4
-    SynchronizeType: 2
-    Name: JumpUp
-  - Type: 4
-    SynchronizeType: 2
-    Name: FlyingPose
-  - Type: 4
-    SynchronizeType: 2
-    Name: TakeDamage
-  - Type: 4
-    SynchronizeType: 2
-    Name: Roll
-  - Type: 4
-    SynchronizeType: 2
-    Name: Knockdown
-  - Type: 4
-    SynchronizeType: 2
-    Name: Revive
-  - Type: 4
-    SynchronizeType: 2
-    Name: GetRevived
-  - Type: 9
-    SynchronizeType: 2
-    Name: GetKnockedDown
-  - Type: 4
-    SynchronizeType: 2
-    Name: PickupRight
-  - Type: 4
-    SynchronizeType: 2
-    Name: PickupLeft
-  - Type: 4
-    SynchronizeType: 2
-    Name: EquipLeft
-  - Type: 4
-    SynchronizeType: 2
-    Name: EquipRight
-  - Type: 4
-    SynchronizeType: 2
-    Name: ClickRight
-  - Type: 9
-    SynchronizeType: 2
-    Name: LevelStart
-  - Type: 4
-    SynchronizeType: 2
-    Name: SofaRight
-  - Type: 4
-    SynchronizeType: 2
-    Name: SofaLeft
-  - Type: 4
-    SynchronizeType: 0
-    Name: Jetpack
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
-  - SynchronizeType: 2
-    LayerIndex: 1
-  - SynchronizeType: 2
-    LayerIndex: 2
-  - SynchronizeType: 2
-    LayerIndex: 3
-  - SynchronizeType: 2
-    LayerIndex: 4
 --- !u!1 &569902664646111143
 GameObject:
   m_ObjectHideFlags: 0
@@ -10235,8 +10146,6 @@ GameObject:
   - component: {fileID: 5097147677987189594}
   - component: {fileID: 5097147677987189598}
   - component: {fileID: 5097147677987189593}
-  - component: {fileID: 4710986726784191867}
-  - component: {fileID: 3574640354655469097}
   - component: {fileID: 5097147677987189597}
   - component: {fileID: 6958340482421344952}
   - component: {fileID: -516972341943780644}
@@ -10244,6 +10153,7 @@ GameObject:
   - component: {fileID: 5258929980850452995}
   - component: {fileID: 9071923933912516108}
   - component: {fileID: 1866783683645867024}
+  - component: {fileID: 5348357265644206888}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -10444,38 +10354,6 @@ MonoBehaviour:
   lm_shootingMask:
     serializedVersion: 2
     m_Bits: 31543
---- !u!114 &4710986726784191867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5097147677987189575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 1
---- !u!114 &3574640354655469097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5097147677987189575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 0
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!114 &5097147677987189597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10495,9 +10373,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 4710986726784191867}
-  - {fileID: 3574640354655469097}
-  - {fileID: 5188839372224120430}
+  - {fileID: 5348357265644206888}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -10692,6 +10568,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5348357265644206888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097147677987189575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417a6bae8f186f9448bb4fb825806bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5768610029833893305
 GameObject:
   m_ObjectHideFlags: 0

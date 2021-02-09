@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class HopdogAnimator : MonoBehaviourPun
 
     private Animator anim;
     private Rigidbody rb;
+    private bool b_isGrounded = true;
 
     private void Start()
     {
@@ -17,8 +19,13 @@ public class HopdogAnimator : MonoBehaviourPun
 
     private void Update()
     {
-        anim.SetBool("Running", rb.velocity.sqrMagnitude > 0.05f);
+        anim.SetBool("Running", b_isGrounded ? rb.velocity.sqrMagnitude > 0.05f : false);
         anim.SetFloat("Idle", Mathf.Sin(Time.realtimeSinceStartup) + 1);
+        if (!b_isGrounded)
+        {
+            anim.SetBool("Jump", true);
+            anim.SetBool("Spin", true);
+        }
     }
 
     public void SetLaunchAnims(bool _val)
@@ -33,4 +40,8 @@ public class HopdogAnimator : MonoBehaviourPun
         anim.SetBool("Spin", _launched);
     }
 
+    internal void SetGrounded(bool _b_grounded)
+    {
+        b_isGrounded = _b_grounded;
+    }
 }

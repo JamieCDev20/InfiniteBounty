@@ -14,12 +14,17 @@ public class AIBase : MonoBehaviourPun
     protected float f_targetFindLimiter = 0;
     protected BehaviourTree tree;
     protected Transform t_target;
-
+    
     #region Queries
 
     public bool IsOverSummoningSickness()
     {
         return (Time.realtimeSinceStartup - f_timeStarted) > f_summoningSickness;
+    }
+
+    protected bool CanSeeTarget()
+    {
+        return CanSeeTransform(t_target);
     }
 
     protected bool CanSeeTransform(Transform _targ)

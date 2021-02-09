@@ -43,6 +43,9 @@ public class PlayerAnimator : MonoBehaviourPun
     private bool b_canShoot = true;
     private Sofa s_currentSofa;
     private bool b_canWalk = true;
+    private Vector3 v_posLastFrame;
+    internal bool b_isSprinting;
+    private PlayerNetworkSync pns;
 
     #endregion
 
@@ -56,10 +59,16 @@ public class PlayerAnimator : MonoBehaviourPun
         pm_mover = GetComponent<PlayerMover>();
         pim_inputManager = GetComponent<PlayerInputManager>();
         doDemoIK = NetworkedPlayer.x.GetPlayer() == transform;
+        pns = GetComponent<PlayerNetworkSync>();
     }
 
     private void Update()
     {
+        if (photonView.IsMine)
+            b_isSprinting = pm_mover.b_sprintHold;
+        else
+            b_isSprinting = pns.GetIsSprinting();
+
         GetMovementSpeed();
         CheckJumpAnims();
         SetShootingBools();
@@ -91,6 +100,7 @@ public class PlayerAnimator : MonoBehaviourPun
                     }
                 }
             }
+        v_posLastFrame = transform.position;
     }
 
     private void LateUpdate()
@@ -122,9 +132,11 @@ public class PlayerAnimator : MonoBehaviourPun
     {
         if (b_canWalk)
         {
-            Vector3 vec = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
-            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), pm_mover.v_movementVector.x * (pm_mover.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
-            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), pm_mover.v_movementVector.z * (pm_mover.b_sprintHold ? 2 : 1), Time.deltaTime * 4));
+            Vector3 vec = (transform.position - v_posLastFrame);
+
+            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(vec).x * (1 / Time.deltaTime), 0.3f));
+            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(vec).z * (1 / Time.deltaTime), 0.3f));
+
             if (rb.velocity.sqrMagnitude > 0.1f)
                 return;
             if (Mathf.Abs(anim.GetFloat("Y")) < 0.05f)
@@ -169,7 +181,7 @@ public class PlayerAnimator : MonoBehaviourPun
 
         stomach.rotation = Quaternion.AngleAxis(ang * f_stomachWeight * side, stomachRef.up) * stomach.rotation;
         spine.rotation = Quaternion.AngleAxis(ang * (f_spineWeight - f_stomachWeight) * side, spineRef.up) * spine.rotation;
-        chest.rotation = Quaternion.AngleAxis(ang *  (1-(f_spineWeight + f_stomachWeight)) * side, chestRef.up) * chest.rotation;
+        chest.rotation = Quaternion.AngleAxis(ang * (1 - (f_spineWeight + f_stomachWeight)) * side, chestRef.up) * chest.rotation;
 
     }
 
@@ -178,7 +190,7 @@ public class PlayerAnimator : MonoBehaviourPun
         if (!_active)
             return;
 
-        float ang = Mathf.Clamp(Vector3.Angle(Vector3.ProjectOnPlane(camTransform.forward, hips.right), hips.forward),-f_maxArmAngle, f_maxArmAngle);
+        float ang = Mathf.Clamp(Vector3.Angle(Vector3.ProjectOnPlane(camTransform.forward, hips.right), hips.forward), -f_maxArmAngle, f_maxArmAngle);
         float side = Mathf.Sign(Vector3.Dot(camTransform.transform.forward, -hips.up));
 
         Vector3 temp = _arm.localEulerAngles;

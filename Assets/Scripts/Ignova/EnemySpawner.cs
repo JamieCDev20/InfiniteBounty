@@ -46,7 +46,6 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
-
     private void CheckZonesForPlayers()
     {
         int _i_numberOfZonesActivated = 0;
@@ -64,48 +63,48 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private IEnumerator SpawnEnemyWave(int _i_zoneIndex)
     {
+
+        //print("SPAWNING ENEMY WAVE");
+        //Creating a working list of weightings for the enemy types.
+        float _f_max = 0;
+        List<float> _fL = new List<float>();
+
+        for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
+            _f_max += fA_enemyPerWaveWeighting[i];
+
+        for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
         {
-            //print("SPAWNING ENEMY WAVE");
-            //Creating a working list of weightings for the enemy types.
-            float _f_max = 0;
-            List<float> _fL = new List<float>();
-
-            for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
-                _f_max += fA_enemyPerWaveWeighting[i];
-
-            for (int i = 0; i < fA_enemyPerWaveWeighting.Length; i++)
-            {
-                _fL.Add(_f_max);
-                _f_max += fA_enemyPerWaveWeighting[i];
-            }
-            _fL.Add(_f_max * 2);
-
-            //Actually Spawning Enemies
-            for (int y = 0; y < i_hordesPerWave; y++)
-            {
-                //Determining how many enemies will spawn in a horde
-                for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y); x++)
-                {
-                    //Only spawn enemies up to the current limit
-                    if (i_numberOfEnemies < i_maxNumberOfEnemies)
-                    {
-                        //print("SPAWNING ENEMY HORDE");
-
-                        //Which enemy type to spawn
-                        float rando = Random.Range(0, _f_max);
-
-                        for (int i = 0; i < _fL.Count; i++)
-                            if (rando >= _fL[i] && rando < _fL[i + 1]) //Is this the right enemy type.{
-                            {
-                                //print("Spawning enemies");
-                                SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
-                            }
-                    }
-
-                }
-                yield return new WaitForSeconds(f_timeBetweenHordes);
-            }
+            _fL.Add(_f_max);
+            _f_max += fA_enemyPerWaveWeighting[i];
         }
+        _fL.Add(_f_max * 2);
+
+        //Actually Spawning Enemies
+        for (int y = 0; y < i_hordesPerWave; y++)
+        {
+            //Determining how many enemies will spawn in a horde
+            for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y); x++)
+            {
+                //Only spawn enemies up to the current limit
+                if (i_numberOfEnemies < i_maxNumberOfEnemies)
+                {
+                    //print("SPAWNING ENEMY HORDE");
+
+                    //Which enemy type to spawn
+                    float rando = Random.Range(0, _f_max);
+
+                    for (int i = 0; i < _fL.Count; i++)
+                        if (rando >= _fL[i] && rando < _fL[i + 1]) //Is this the right enemy type.{
+                        {
+                            //print("Spawning enemies");
+                            SpawnEnemy(goA_enemiesToSpawnDuringAWave[i], ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
+                        }
+                }
+
+            }
+            yield return new WaitForSeconds(f_timeBetweenHordes);
+        }
+
 
         Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
@@ -143,12 +142,14 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     {
         //GameObject ob = PoolManager.x.SpawnObject(toSpawn, spawnPos, Quaternion.identity);
         GameObject ob = PhotonNetwork.Instantiate(toSpawn.name, spawnPos, Quaternion.identity);
-        i_numberOfEnemies++;
+        ob.transform.Rotate(0, Random.Range(0, 359), 0);
+        i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
     }
 
     internal void EnemyDied()
     {
-        i_numberOfEnemies--;
+        if (PhotonNetwork.IsMasterClient)
+            i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
     }
 }
 

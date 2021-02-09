@@ -25,8 +25,8 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         if (i_currentIndex >= goA_highlightPositions.Length)
             i_currentIndex = 0;
 
-        goA_highlightPositions[i_currentIndex].SetActive(true);
-        lil_teleportButton.levelToLoad = sA_sceneNames[i_currentIndex];
+        goA_highlightPositions[i_currentIndex].SetActive(true);        
+        lil_teleportButton.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
         photonView.RPC(nameof(SetCurrentMode), RpcTarget.Others, i_currentIndex);
     }
 
@@ -38,7 +38,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         i_currentIndex = _i_newMode;
 
         goA_highlightPositions[i_currentIndex].SetActive(true);
-        lil_teleportButton.levelToLoad = sA_sceneNames[i_currentIndex];
+        lil_teleportButton.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
     }
 
 
