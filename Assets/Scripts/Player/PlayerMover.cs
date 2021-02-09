@@ -171,7 +171,7 @@ public class PlayerMover : MonoBehaviour
 
     private void ResetIfOffMap()
     {
-        if (transform.position.y < -25)
+        if (transform.position.y < -25 && view.IsMine)
         {
             transform.position = v_startPos + (Vector3.up);// * 5);                      
         }

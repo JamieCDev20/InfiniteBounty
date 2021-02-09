@@ -41,15 +41,18 @@ public class LoadingScreenManager : MonoBehaviourPun
     [PunRPC]
     public void ActuallyLoadLevelRPC()
     {
-        asyncOperation.allowSceneActivation = true;        
+        asyncOperation.allowSceneActivation = true;
+        //PhotonNetwork.LoadLevel(s_sceneNameToLoad);
     }
 
     [PunRPC]
     public void CallLoadLevel(string _s_levelName)
     {
-        print("I've been told to call the funuctyion");
-        SetSceneToLoad(_s_levelName);
-        StartCoroutine(BeginLoadingSceneAsync());
+        //print("I've been told to call the funuctyion");
+        //SetSceneToLoad(_s_levelName);
+        //StartCoroutine(BeginLoadingSceneAsync());
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel(_s_levelName);
     }
 
     internal IEnumerator BeginLoadingSceneAsync()
@@ -63,7 +66,7 @@ public class LoadingScreenManager : MonoBehaviourPun
         while (!asyncOperation.isDone)
         {
             print(asyncOperation.progress * 100 + "%");
-            if (asyncOperation.isDone)
+            if (asyncOperation.progress >= 0.9f)
             {
                 photonView.RPC(nameof(LoadedSceneRPC), RpcTarget.All);
                 break;
