@@ -15,6 +15,8 @@ public class LoadingScreenManager : MonoBehaviourPun
     private void Awake()
     {
         x = this;
+        photonView.ViewID = 9898989;
+        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     internal void SetSceneToLoad(string _s_scene)
