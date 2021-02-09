@@ -196,7 +196,7 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
         gameObject.SetActive(false);
         Invoke("SetDeathPartsInactive", 2);
         PoolManager.x.ReturnObjectToPool(gameObject);
-        EnemySpawner.x?.EnemyDied();
+        //EnemySpawner.x?.EnemyDied();
     }
 
     public bool IsNetworkedObject()

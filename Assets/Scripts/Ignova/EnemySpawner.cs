@@ -46,11 +46,6 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
     }
 
-    private void Update()
-    {
-        Debug.LogError(i_numberOfEnemies + " is how many enemies there are.");
-    }
-
     private void CheckZonesForPlayers()
     {
         int _i_numberOfZonesActivated = 0;
@@ -147,12 +142,14 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     {
         //GameObject ob = PoolManager.x.SpawnObject(toSpawn, spawnPos, Quaternion.identity);
         GameObject ob = PhotonNetwork.Instantiate(toSpawn.name, spawnPos, Quaternion.identity);
-        i_numberOfEnemies++;
+        ob.transform.Rotate(0, Random.Range(0, 359), 0);
+        i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
     }
 
     internal void EnemyDied()
     {
-        i_numberOfEnemies--;
+        if (PhotonNetwork.IsMasterClient)
+            i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
     }
 }
 
