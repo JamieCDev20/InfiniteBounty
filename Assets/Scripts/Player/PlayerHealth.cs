@@ -31,6 +31,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private PlayerAnimator pa_anim;
     [Space, SerializeField] private RectTransform rt_downedTimer;
     private PlayerInputManager pim;
+    private Animator anim;
     [SerializeField] private GameObject go_reviveSymbol;
     [SerializeField] private ParticleSystem ps_burningBumParticles;
 
@@ -44,6 +45,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         view = GetComponent<PhotonView>();
         SetMaxHealth();
         pim = GetComponent<PlayerInputManager>();
+        anim = GetComponentInChildren<Animator>();
     }
 
 
@@ -283,8 +285,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public void StartBurningBum(Vector3 _v_bounceDirection, bool _b_shouldCatchFire)
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        rb.velocity = Vector3.zero;//new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.velocity = Vector3.zero;
         rb.AddForce(_v_bounceDirection);
+        anim.SetBool("LavaHit", true);
 
         if (_b_shouldCatchFire)
         {
@@ -295,6 +298,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private void StopParticles()
     {
         ps_burningBumParticles.Stop();
+        anim.SetBool("LavaHit", false);
     }
 
 }
