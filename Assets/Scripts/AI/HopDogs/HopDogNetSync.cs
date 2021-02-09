@@ -14,28 +14,28 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
         v_rot = transform.eulerAngles;
         if (stream.IsWriting)
         {
-            //stream.SendNext(v_pos.x);
-            //stream.SendNext(v_pos.y);
-            //stream.SendNext(v_pos.z);
+            stream.SendNext(transform.position.x);
+            stream.SendNext(transform.position.y);
+            stream.SendNext(transform.position.z);
 
             stream.SendNext(v_rot.y);
         }
         else
         {
-            //v_pos.x = (float)stream.ReceiveNext();
-            //v_pos.y = (float)stream.ReceiveNext();
-            //v_pos.z = (float)stream.ReceiveNext();
+            v_pos.x = (float)stream.ReceiveNext();
+            v_pos.y = (float)stream.ReceiveNext();
+            v_pos.z = (float)stream.ReceiveNext();
 
             v_rot.y = (float)stream.ReceiveNext();
         }
 
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (photonView.IsMine)
             return;
-        //transform.position = (transform.position - v_pos).sqrMagnitude > 100 ? transform.position = v_pos : Vector3.Lerp(transform.position, v_pos, 0.3f);
+        transform.position = (transform.position - v_pos).sqrMagnitude > 100 ? transform.position = v_pos : Vector3.Lerp(transform.position, v_poKUs, 0.3f);
         transform.eulerAngles = Vector3.Lerp(transform.position, v_rot, 0.3f);
     }
 
