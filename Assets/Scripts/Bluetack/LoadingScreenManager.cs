@@ -24,8 +24,6 @@ public class LoadingScreenManager : MonoBehaviourPun
         s_sceneNameToLoad = _s_scene;
     }
 
-
-
     [PunRPC]
     public void LoadedSceneRPC()
     {
@@ -43,7 +41,7 @@ public class LoadingScreenManager : MonoBehaviourPun
     [PunRPC]
     public void ActuallyLoadLevelRPC()
     {
-        asyncOperation.allowSceneActivation = true;
+        asyncOperation.allowSceneActivation = true;        
     }
 
     [PunRPC]
@@ -65,7 +63,7 @@ public class LoadingScreenManager : MonoBehaviourPun
         while (!asyncOperation.isDone)
         {
             print(asyncOperation.progress * 100 + "%");
-            if (asyncOperation.progress > 0.9f)
+            if (asyncOperation.isDone)
             {
                 photonView.RPC(nameof(LoadedSceneRPC), RpcTarget.All);
                 break;
