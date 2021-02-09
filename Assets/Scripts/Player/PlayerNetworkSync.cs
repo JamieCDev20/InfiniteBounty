@@ -15,7 +15,6 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         v_rotVector = transform.eulerAngles;
-        v_posVector = transform.position;
         if (stream.IsWriting)
         {
             stream.SendNext(transform.position.x);
@@ -46,7 +45,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine)
             return;
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rotVector, 0.3f);
-        transform.position = Vector3.Lerp(transform.position, v_posVector, 0.3f);
+        transform.position = (transform.position - v_posVector).sqrMagnitude > 9 ? transform.position = v_posVector : Vector3.Lerp(transform.position, v_posVector, 0.3f);
     }
 
     public bool GetIsSprinting()
