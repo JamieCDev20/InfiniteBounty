@@ -35,7 +35,7 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
             return;
-        transform.position = (transform.position - v_pos).sqrMagnitude > 100 ? transform.position = v_pos : Vector3.Lerp(transform.position, v_poKUs, 0.3f);
+        transform.position = (transform.position - v_pos).sqrMagnitude > 100 ? transform.position = v_pos : Vector3.Lerp(transform.position, v_pos, 0.3f);
         transform.eulerAngles = Vector3.Lerp(transform.position, v_rot, 0.3f);
     }
 
