@@ -11,12 +11,18 @@ public class LoadingScreenManager : MonoBehaviourPun
     private string s_sceneNameToLoad;
     private AsyncOperation asyncOperation;
 
+
+    private void Awake()
+    {
+        x = this;
+    }
+
     internal void SetSceneToLoad(string _s_scene)
     {
         s_sceneNameToLoad = _s_scene;
     }
-       
-       
+
+
 
     [PunRPC]
     public void LoadedSceneRPC()
