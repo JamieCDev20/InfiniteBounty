@@ -49,7 +49,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             if (too.name.Contains("Weapon"))
                 tl = too;
         tl.LoadTools(transform);
-        PoolManager.x.CreateNewPool(go_propertyButton, 20);
+        if(!PoolManager.x.CheckIfPoolExists(go_propertyButton))
+            PoolManager.x.CreateNewPool(go_propertyButton, 20);
         augMan = FindObjectOfType<AugmentManager>();
     }
 
@@ -94,10 +95,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 Augment[] augs = saveMan.SaveData.purchasedAugments;
                 Augment[] castedAugs = new Augment[augs.Length];
                 for (int i = 0; i < castedAugs.Length; i++)
-                {
                     castedAugs[i] = augMan.GetAugment(augs[i].Name).Aug;
-                    Debug.Log(castedAugs[i].Name + " " + castedAugs[i].GetType().ToString());
-                }
                 InitAugmentList(castedAugs, false);
                 ClickAugment(0);
             }
