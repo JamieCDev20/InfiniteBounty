@@ -40,6 +40,12 @@ public class NugManager : SubjectBase, ObserverBase
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Equals))
+            CollectNugs(500, false);
+    }
+
     public void SetID(int _id)
     {
         i_playerID = _id;
