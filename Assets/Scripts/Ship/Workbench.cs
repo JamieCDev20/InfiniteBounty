@@ -208,8 +208,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
             goL_augmentButtonPool[i].SetActive(true);
             goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_allAugmentsOwned[i].Level.ToString();
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[i].Name;
+            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_allAugmentsOwned[i]?.Level.ToString();
+            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[i]?.Name;
             goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
         }
 
