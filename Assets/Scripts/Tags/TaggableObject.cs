@@ -5,25 +5,20 @@ using UnityEngine;
 public class TaggableObject : MonoBehaviour
 {
 
-    [SerializeField] private string objectTag;
+    [SerializeField] private string[] objectTags;
 
     //what is your tag?
-    public string GetTag()
+    public string[] GetTags()
     {
-        return objectTag;
+        return objectTags;
     }
 
     //Add yaself to the tag manager when you are enabled/spawned/got out of pool
     private void OnEnable()
     {
-        try
+        for (int i = 0; i < objectTags.Length; i++)
         {
-            TagManager.x.AddTaggedObject(this);
 
-        }
-        catch
-        {
-            FindObjectOfType<TagManager>().AddTaggedObject(this);
         }
     }
 

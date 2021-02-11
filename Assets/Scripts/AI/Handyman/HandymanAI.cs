@@ -88,19 +88,17 @@ public class HandymanAI : AIBase
 
     public void MoveAction()
     {
-        Debug.Log("Moving");
+
     }
 
     public void PunchAction()
     {
 
-        Debug.Log("Punching");
     }
 
     public void ThrowAction()
     {
 
-        Debug.Log("Throwing");
     }
 
     #endregion
