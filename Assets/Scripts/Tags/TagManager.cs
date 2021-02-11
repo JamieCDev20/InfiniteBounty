@@ -61,21 +61,29 @@ public class TagManager : MonoBehaviour
 
     public void AddTaggedObject(TaggableObject _t)
     {
-        if (taggedObjects.ContainsKey(_t.GetTag()))
+
+        foreach (string tag in _t.GetTags())
         {
-            taggedObjects[_t.GetTag()].Add(_t.gameObject);
+            if (taggedObjects.ContainsKey(tag))
+            {
+                taggedObjects[tag].Add(_t.gameObject);
+            }
+            else
+            {
+                taggedObjects.Add(tag, new HashSet<GameObject>() { _t.gameObject });
+            }
         }
-        else
-        {
-            taggedObjects.Add(_t.GetTag(), new HashSet<GameObject>() { _t.gameObject });
-        }
+
     }
 
     public void RemoveTaggedObject(TaggableObject _t)
     {
-        if (taggedObjects.ContainsKey(_t.GetTag()))
+        foreach (string tag in _t.GetTags())
         {
-            taggedObjects[_t.GetTag()].Remove(_t.gameObject);
+            if (taggedObjects.ContainsKey(tag))
+            {
+                taggedObjects[tag].Remove(_t.gameObject);
+            }
         }
     }
 
