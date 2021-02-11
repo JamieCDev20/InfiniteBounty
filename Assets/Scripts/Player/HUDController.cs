@@ -8,6 +8,7 @@ public class HUDController : MonoBehaviour
 {
     public static HUDController x;
 
+
     [Header("Heat Guages")]
     [SerializeField] private RectTransform rt_healthBar;
     [SerializeField] private Image i_healthBar;
@@ -33,10 +34,11 @@ public class HUDController : MonoBehaviour
     [Header("Other UI")]
     [SerializeField] private Transform hudCanvas;
 
+
     private void Awake()
     {
         x = this;
-        
+
     }
 
     private void Start()
@@ -44,9 +46,6 @@ public class HUDController : MonoBehaviour
         SetHealthBarValue(1, 1);
         SetBBTotal();
         SceneManager.sceneLoaded += SceneLoad;
-        //SetLeftHeatGuage(1, 1);
-        //SetRightHeatGuage(1, 1);
-
     }
 
     public void SetHealthBarValue(float _i_currentHealth, int _i_maxHealth)
@@ -58,17 +57,6 @@ public class HUDController : MonoBehaviour
         rt_healthBar.localScale = new Vector3((float)_i_currentHealth / _i_maxHealth, 1, 1);
         i_faceImage.sprite = sA_faceSprites[Mathf.Clamp(Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count), 0, 4)];
     }
-
-    public void SetLeftHeatGuage(int _i_currentHeat, int _i_maxHeat)
-    {
-        rt_healthBar.localScale = new Vector3(1 - (_i_currentHeat / _i_maxHeat), 1, 1);
-    }
-
-    public void SetRightHeatGuage(int _i_currentHeat, int _i_maxHeat)
-    {
-        //rt_rightHeatGuage.localScale = new Vector3(1 - (_i_currentHeat / _i_maxHeat), 1, 1);
-    }
-
 
     public void SetNugValues(int[] _iA_nugCounts)
     {
@@ -97,7 +85,7 @@ public class HUDController : MonoBehaviour
         go_healthbarParent.gameObject.SetActive(inLevel);
         go_nugHudParent.SetActive(inLevel);
         go_bbObject.SetActive(!inLevel);
-        
+
     }
 
     public Transform GetHudCanvasTransform()
