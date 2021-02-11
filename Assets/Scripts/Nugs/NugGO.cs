@@ -41,7 +41,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true, nug);
 
             b_collected = true;
-            myLode.NugCollected(i_lodeID);
+            myLode?.NugCollected(i_lodeID);
             Notify(ce);
         }
     }

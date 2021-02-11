@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,11 @@ public class KillBox : MonoBehaviour
     [SerializeField] private GameObject go_flamePrefab;
     private List<GameObject> goL_flames = new List<GameObject>();
     [SerializeField] private bool b_dealsFire = true;
+
+    [Header("Getting Neutralized")]
+    [SerializeField] private Color c_neutralColour;
+    [SerializeField] private MeshRenderer mr_renderer;
+
 
     private void Start()
     {
@@ -66,30 +72,33 @@ public class KillBox : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.isTrigger)
-            return;
+        if (b_dealDamageOnEntry)
+        {
+            if (collision.collider.isTrigger)
+                return;
 
-        IHitable _h = collision.collider.GetComponent<IHitable>();
+            IHitable _h = collision.collider.GetComponent<IHitable>();
 
-        if (!collision.transform.CompareTag("Lilypad"))
-            _h?.TakeDamage(i_damageToDeal, false);
+            if (!collision.transform.CompareTag("Lilypad"))
+                _h?.TakeDamage(i_damageToDeal, false);
 
-        if (b_shouldCauseKnockback && collision.transform.tag == "Player")
-            collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
+            if (b_shouldCauseKnockback && collision.transform.tag == "Player")
+                collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
 
-        if (as_source)
-            as_source.PlayOneShot(ac_burnEffect);
-
-
-
-
+            if (as_source)
+                as_source.PlayOneShot(ac_burnEffect);
 
 
 
 
 
-        if (goL_flames.Count > 0 && _h != null)
-            PlaceFlameBurst(collision.GetContact(0).point);
+
+
+
+
+            if (goL_flames.Count > 0 && _h != null)
+                PlaceFlameBurst(collision.GetContact(0).point);
+        }
     }
 
     private void DealDamage()
@@ -122,4 +131,21 @@ public class KillBox : MonoBehaviour
         _go_toReturn.SetActive(false);
     }
 
+
+    internal void Neutralize()
+    {
+        StartCoroutine(NeutralizeCoroutine());
+    }
+
+    private IEnumerator NeutralizeCoroutine()
+    {
+        b_dealDamageOnEntry = false;
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSecondsRealtime(0.05f);
+            mr_renderer.material.SetColor("MainColour", Vector4.Lerp(mr_renderer.material.GetColor("MainColour"), c_neutralColour, 0.2f));
+            mr_renderer.material.SetFloat("Scroll", Mathf.Lerp(mr_renderer.material.GetFloat("Scroll"), 0, 0.2f));
+            mr_renderer.material.SetFloat("WaveHeight", Mathf.Lerp(mr_renderer.material.GetFloat("WaveHeight"), 0, 0.2f));
+        }
+    }
 }

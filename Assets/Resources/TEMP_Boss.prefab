@@ -24393,6 +24393,36 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &3324547041550729390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8622144472956413026}
+  m_Layer: 0
+  m_Name: HitEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8622144472956413026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3324547041550729390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7036592035728656314}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3709170897134390922
 GameObject:
   m_ObjectHideFlags: 0
@@ -58758,6 +58788,7 @@ Transform:
   - {fileID: 5855473059964279031}
   - {fileID: 2368512431899950962}
   - {fileID: 6861059174082005568}
+  - {fileID: 8622144472956413026}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -58813,7 +58844,7 @@ MonoBehaviour:
   f_spottingDistance: 50
   lm_spottingMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   f_timeBetweenAttacks: 1
   f_meleeRange: 5
   s_mortarShotPath: NetworkPrefabs\BossThings\MortarProjectile
@@ -58838,6 +58869,18 @@ MonoBehaviour:
   i_maxHealth: 1200
   go_deathParticles: {fileID: 8478087241247605652}
   rt_healthBar: {fileID: 0}
+  rt_healthBarWhite: {fileID: 0}
+  f_timeToWauitBeforeUpdatingWhite: 1.5
+  goA_nuggetPrefabs:
+  - {fileID: 2720207710688081759, guid: 134c4967d8d4c93428fbef74d9d0417f, type: 3}
+  - {fileID: 2720207710688081759, guid: e5e31d8ee6d731043b3acfbcc3989f05, type: 3}
+  - {fileID: 2720207710688081759, guid: 645891066d588dc45855f95c68dfa9ce, type: 3}
+  - {fileID: 2720207710688081759, guid: 24039ae7894c78440a81ecdcfdadf45b, type: 3}
+  - {fileID: 2720207710688081759, guid: 30118d63e9297df4e8a836c2d56b9967, type: 3}
+  - {fileID: 2720207710688081759, guid: 6e51cf1360c62b44b8ceaffb885a2a82, type: 3}
+  f_nuggetForce: 30
+  i_nuggetsOnDeath: 100
+  go_bossHitEffectPrefab: {fileID: 3324547041550729390}
 --- !u!1 &7915942169296733605
 GameObject:
   m_ObjectHideFlags: 0
