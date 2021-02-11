@@ -64,13 +64,13 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected");
         if (HostButton != null)
-            HostButton.interactable = true;
         //PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
         Debug.Log("joined lobby");
+        HostButton.interactable = true;
     }
 
     public override void OnJoinedRoom()
