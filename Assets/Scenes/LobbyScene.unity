@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.67409086, g: 0.33267143, b: 0.62968767, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -25136,7 +25136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2447925854d527a4e8129570068ad9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTag: Spawn
+  objectTags:
+  - Spawn
 --- !u!1 &1998042054
 GameObject:
   m_ObjectHideFlags: 0
@@ -26785,6 +26786,15 @@ PrefabInstance:
     - target: {fileID: 11157417, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11157417, guid: 717dab0a65a3a0540b9b2485d386840c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 207.40991
       objectReference: {fileID: 0}
     - target: {fileID: 7211629806612318130, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}

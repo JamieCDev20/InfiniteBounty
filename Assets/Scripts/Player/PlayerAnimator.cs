@@ -126,7 +126,8 @@ public class PlayerAnimator : MonoBehaviourPun
     {
         anim.SetBool("JumpUp", pm_mover.b_jumpPress);
         anim.SetBool("FlyingPose", !pm_mover.b_grounded);
-        anim.SetBool("LavaHit", !pm_mover.b_grounded);
+        if (pm_mover.b_grounded)
+            anim.SetBool("LavaHit", !pm_mover.b_grounded);
     }
 
     private void GetMovementSpeed()
