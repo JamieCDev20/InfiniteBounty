@@ -6,11 +6,13 @@ public struct PlayerSaveData
 {
     public int i_totalNugs;
     public int i_currentNugs;
+    public ToolBase[] tb_equippedTools;
     public Augment[] purchasedAugments;
-    public PlayerSaveData(int _i_total, int _i_current, Augment[] _purchased)
+    public PlayerSaveData(int _i_total, int _i_current, ToolBase[] _tb_tools, Augment[] _purchased)
     {
         i_totalNugs = _i_total;
         i_currentNugs = _i_current;
+        tb_equippedTools = _tb_tools;
         purchasedAugments = _purchased;
     }
 }

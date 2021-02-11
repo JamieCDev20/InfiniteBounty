@@ -12,6 +12,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     private bool b_isBeingUsed;
     private Transform t_camPositionToReturnTo;
     private SaveManager saveMan;
+    private AugmentManager augMan;
     [SerializeField] private ToolLoader tl;
     [SerializeField] private Canvas c_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
@@ -49,6 +50,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 tl = too;
         tl.LoadTools(transform);
         PoolManager.x.CreateNewPool(go_propertyButton, 20);
+        augMan = FindObjectOfType<AugmentManager>();
     }
 
     public void Interacted(Transform interactor)
@@ -90,7 +92,13 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             if (saveMan.SaveData.purchasedAugments != null)
             {
                 Augment[] augs = saveMan.SaveData.purchasedAugments;
-                InitAugmentList(augs, false);
+                Augment[] castedAugs = new Augment[augs.Length];
+                for (int i = 0; i < castedAugs.Length; i++)
+                {
+                    castedAugs[i] = augMan.GetAugment(augs[i].Name).Aug;
+                    Debug.Log(castedAugs[i].Name + " " + castedAugs[i].GetType().ToString());
+                }
+                InitAugmentList(castedAugs, false);
                 ClickAugment(0);
             }
             // Enable cursor
@@ -209,13 +217,13 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     private void DisplayWeapon()
     {
-        if(tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
+        if (tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
             tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(true);
     }
 
     private void UndisplayWeapon()
     {
-        if(tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
+        if (tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
             tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(false);
     }
 
@@ -351,21 +359,21 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
     {
         AugmentProperties ap = aL_allAugmentsOwned[_i_index].GetAugmentProperties();
         AugmentExplosion ae = aL_allAugmentsOwned[_i_index].GetExplosionProperties();
-        if(ap.f_weight != 0)
+        if (ap.f_weight != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Weight " + ap.f_weight.ToString();
 
         }
-        if(ap.i_damage != 0)
+        if (ap.i_damage != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Enemy Damage " + ap.i_damage.ToString();
 
         }
-        if(ap.i_lodeDamage != 0)
+        if (ap.i_lodeDamage != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Lode Damage " + ap.i_lodeDamage.ToString();
         }
-        if(ap.f_speed != 0)
+        if (ap.f_speed != 0)
         {
             switch (aL_allAugmentsOwned[_i_index].at_type)
             {
@@ -382,42 +390,42 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             }
 
         }
-        if(ap.f_knockback != 0)
+        if (ap.f_knockback != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Knockback " + ap.f_knockback.ToString();
 
         }
-        if(ap.f_energyGauge != 0)
+        if (ap.f_energyGauge != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Energy Capacity " + ap.f_energyGauge.ToString();
 
         }
-        if(ap.f_heatsink != 0)
+        if (ap.f_heatsink != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Heatsink " + ap.f_heatsink.ToString();
 
         }
-        if(ap.f_recoil != 0)
+        if (ap.f_recoil != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Recoil " + ap.f_recoil.ToString();
 
         }
-        if(ae.i_damage != 0)
+        if (ae.i_damage != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Explosion Enemy Damage " + ae.i_damage.ToString();
 
         }
-        if(ae.i_lodeDamage != 0)
+        if (ae.i_lodeDamage != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Explosion Lode Damage " + ae.i_lodeDamage.ToString();
 
         }
-        if(ae.f_explockBack != 0)
+        if (ae.f_explockBack != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Explosion Knockback " + ae.f_explockBack.ToString();
 
         }
-        if(ae.f_radius != 0)
+        if (ae.f_radius != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Explosion Radius " + ae.f_radius.ToString();
 
@@ -429,12 +437,12 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         }
         else
         {
-            if(ae.f_detonationTime != 0)
+            if (ae.f_detonationTime != 0)
             {
                 PlaceAugmentProperties(go_propertyButton).text = "Explosion Detonation Time " + ae.f_detonationTime.ToString();
             }
         }
-        if(aL_allAugmentsOwned[_i_index] is ProjectileAugment)
+        if (aL_allAugmentsOwned[_i_index] is ProjectileAugment)
         {
             ProjectileAugment projectileCast = (ProjectileAugment)aL_allAugmentsOwned[_i_index];
             AugmentProjectile augmentProperties = projectileCast.GetProjectileData();
@@ -445,7 +453,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             if (augmentProperties.f_gravity != 0)
                 PlaceAugmentProperties(go_propertyButton).text = "Bullet Weight " + augmentProperties.f_gravity;
         }
-        if(aL_allAugmentsOwned[_i_index] is ConeAugment)
+        if (aL_allAugmentsOwned[_i_index] is ConeAugment)
         {
             ConeAugment coneCast = (ConeAugment)aL_allAugmentsOwned[_i_index];
             AugmentCone coneProperties = coneCast.GetConeData();
@@ -463,10 +471,10 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         RectTransform rt_button = btn.GetComponent<RectTransform>();
         btn.transform.parent = go_propertyParent.transform;
         btn.transform.localScale = Vector3.one;
-        if(displayIter <= scailar)
+        if (displayIter <= scailar)
         {
 
-            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width/2), rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * displayIter));
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * displayIter));
         }
         else
         {

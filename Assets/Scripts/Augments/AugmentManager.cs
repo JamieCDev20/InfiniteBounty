@@ -21,6 +21,7 @@ public class AugmentManager : MonoBehaviour
         GetAllAugmentGameObjects();
         FindObjectOfType<VendingMachine>().Init(this);
         DontDestroyOnLoad(gameObject);
+
     }
 
     /// <summary>
@@ -28,12 +29,12 @@ public class AugmentManager : MonoBehaviour
     /// </summary>
     private void SpawnPhysicalAugments()
     {
-        if(A_augs != null && A_projAugs != null && A_coneAugs != null)
+        if (A_augs != null && A_projAugs != null && A_coneAugs != null)
         {
-            if(!PoolManager.x.CheckIfPoolExists(augRef))
+            if (!PoolManager.x.CheckIfPoolExists(augRef))
                 PoolManager.x.CreateNewPool(augRef, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
             int iter = 0;
-            foreach(IPoolable pool_aug in PoolManager.x.GetPooledObjects(augRef))
+            foreach (IPoolable pool_aug in PoolManager.x.GetPooledObjects(augRef))
             {
                 GameObject go_aug = pool_aug.GetGameObject();
                 AugmentGo ago = go_aug.GetComponent<AugmentGo>();
@@ -61,6 +62,17 @@ public class AugmentManager : MonoBehaviour
         return A_augs.Length + A_projAugs.Length + A_coneAugs.Length;
     }
 
+    public AugmentGo GetAugment(string _s_augName)
+    {
+        foreach (GameObject augGo in go_augments)
+        {
+            AugmentGo aug = augGo.GetComponent<AugmentGo>();
+            if (aug.Aug.Name == _s_augName)
+                return aug;
+        }
+        return null;
+    }
+
     public AugmentGo[] GetRandomAugments(int _i_size)
     {
         AugmentGo[] augs = new AugmentGo[_i_size];
@@ -71,6 +83,6 @@ public class AugmentManager : MonoBehaviour
 
     public AugmentGo GetRandomAugment(int _i_maxSize)
     {
-        return go_augments[UnityEngine.Random.Range(0, _i_maxSize <= go_augments.Count ? _i_maxSize+1 : go_augments.Count+1)].GetComponent<AugmentGo>();
+        return go_augments[UnityEngine.Random.Range(0, _i_maxSize <= go_augments.Count ? _i_maxSize + 1 : go_augments.Count + 1)].GetComponent<AugmentGo>();
     }
 }
