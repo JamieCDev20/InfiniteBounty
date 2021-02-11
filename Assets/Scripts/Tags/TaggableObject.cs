@@ -16,10 +16,7 @@ public class TaggableObject : MonoBehaviour
     //Add yaself to the tag manager when you are enabled/spawned/got out of pool
     private void OnEnable()
     {
-        for (int i = 0; i < objectTags.Length; i++)
-        {
-
-        }
+        TagManager.x.AddTaggedObject(this);
     }
 
     //Remove self from tag manager when disabled/killed/returned to pool/ all that other stuff
