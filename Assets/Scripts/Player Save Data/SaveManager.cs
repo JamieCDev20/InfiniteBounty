@@ -12,16 +12,27 @@ public class SaveManager : MonoBehaviour, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
+        CreateSaveData();
+        FindObjectOfType<Workbench>().Init(this);
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void CreateSaveData()
+    {
         if (File.Exists(Application.persistentDataPath + sv))
         {
             string saveString = File.ReadAllText(Application.persistentDataPath + sv);
-            if(saveString != string.Empty)
+            if (saveString != string.Empty)
                 saveData = JsonUtility.FromJson<PlayerSaveData>(saveString);
         }
         else
             File.Create(Application.persistentDataPath + sv);
-        FindObjectOfType<Workbench>().Init(this);
-        DontDestroyOnLoad(gameObject);
+    }
+
+    public void ClearSaveData()
+    {
+        if (File.Exists(Application.persistentDataPath + sv))
+            File.WriteAllText(Application.persistentDataPath + sv, string.Empty);
     }
 
     public void OnNotify(ObserverEvent oe_event)
