@@ -27,4 +27,16 @@ public class ConeTool : WeaponTool
                 objInCone.Add(hit.transform.gameObject);
         return objInCone.ToArray();
     }
+
+    public override bool AddStatChanges(Augment aug)
+    {
+        if (!base.AddStatChanges(aug))
+            return false;
+        ConeAugment coneAug = (ConeAugment)aug;
+        AugmentCone augData = coneAug.GetConeData();
+        Debug.Log(string.Format("Name: {0} | Angle: {1} | Radius: {2}", coneAug.Name, augData.f_angle, augData.f_radius));
+        f_angle += augData.f_angle;
+        f_radius += augData.f_radius;
+        return true;
+    }
 }

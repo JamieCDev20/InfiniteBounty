@@ -40,6 +40,7 @@ public class WeaponTool : ToolBase
     // Detonation is if it explodes immediately, on impact or on a timer
     #region Protected
     [SerializeField] protected Augment[] A_augs;
+    [SerializeField] protected GameObject augGo;
     #endregion
 
 
@@ -83,6 +84,17 @@ public class WeaponTool : ToolBase
             int i = GetInactiveAugmentIndex();
             if (i == -1)
                 return false;
+            GameObject augmentGameObject = PoolManager.x.SpawnObject(augGo);
+            augmentGameObject.transform.parent = A_augmentSlots[i].parent;
+            augmentGameObject.transform.rotation = A_augmentSlots[i].transform.rotation;
+            augmentGameObject.transform.position = A_augmentSlots[i].transform.position;
+            Debug.Log(augmentGameObject.name, augmentGameObject);
+            augmentGameObject.GetComponent<Rigidbody>().isKinematic = true;
+            augmentGameObject.GetComponent<Collider>().isTrigger = true;
+            AugmentGo actualGo = augmentGameObject.GetComponent<AugmentGo>();
+            actualGo.Aug = aug;
+            actualGo.Mat = Resources.Load<Material>(aug.AugmentMaterial);            
+
             A_augs[i] = aug;
             AddToAugmentProperties(aug.GetAugmentProperties());
             AddToPhysicalProperties(aug.GetPhysicalProperties());
@@ -163,8 +175,8 @@ public class WeaponTool : ToolBase
         ae_explode.f_radius += ae.f_radius;
         ae_explode.i_damage += ae.i_damage;
         ae_explode.i_lodeDamage += ae.i_lodeDamage;
-
-        LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
+        if(go_explarticles != null && go_explarticles.Length > 0)
+            LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
     }
 
     protected void LoadAndAddObjectArray<T>(T[] _tA_existingObjects, string[] _s_newObjectPaths) where T : Object

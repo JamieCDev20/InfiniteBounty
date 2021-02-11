@@ -65,5 +65,17 @@ public class ProjectileTool : WeaponTool
         }
     }
 
+    public override bool AddStatChanges(Augment aug)
+    {
+        if(!base.AddStatChanges(aug))
+            return false;
+        ProjectileAugment pa = (ProjectileAugment)aug;
+        AugmentProjectile augData = pa.GetProjectileData();
+        i_shotsPerRound += augData.i_shotsPerRound;
+        ap_projAugment.f_gravity += augData.f_gravity;
+        //augData.pm_phys;
+        ap_projAugment.f_bulletScale += augData.f_bulletScale;
+        return true;
+    }
 
 }

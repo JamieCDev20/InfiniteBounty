@@ -205,7 +205,6 @@ public class VendingMachine : SubjectBase, IInteractible
 
     public void GetAugments(AugmentGo[] _aA_augments)
     {
-        print(_aA_augments.Length);
         aA_avaliableAugments = _aA_augments;
     }
 
