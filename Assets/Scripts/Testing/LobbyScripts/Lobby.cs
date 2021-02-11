@@ -63,14 +63,13 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected");
+        StartCoroutine(DelayButtonActivate());
         //PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
         Debug.Log("joined lobby");
-        if (HostButton != null)
-            HostButton.interactable = true;
     }
 
     public override void OnJoinedRoom()
@@ -151,73 +150,6 @@ public class Lobby : MonoBehaviourPunCallbacks
         }
     }
 
-
-
-
-    /*
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        base.OnRoomListUpdate(roomList);
-
-        for (int i = 0; i < roomList.Count; i++)
-        {
-            if (riL_currentRooms.Contains(roomList[i]))
-                riL_currentRooms.Remove(roomList[i]);
-            else
-                riL_currentRooms.Add(roomList[i]);
-        }
-
-        UpdateRoomList(riL_currentRooms);
-    }
-
-    private void UpdateRoomList(List<RoomInfo> roomList)
-    {
-
-        if (roomList.Count > goL_listings.Count)
-        {
-            for (int i = 0; i < roomList.Count; i++)
-            {
-                if (roomList[i].IsVisible)
-                {
-                    if (i < goL_listings.Count)
-                    {
-                        goL_listings[i].SetInfo(roomList[i]);
-                    }
-                    else
-                    {
-                        GameObject l = Instantiate(go_roomListing, t_roomListParent);
-                        goL_listings.Add(l.GetComponent<Listing>());
-                        goL_listings[goL_listings.Count - 1].SetInfo(roomList[i]);
-                    }
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < goL_listings.Count; i++)
-            {
-                if (i < roomList.Count)
-                {
-                    if (roomList[i].IsVisible)
-                        goL_listings[i].SetInfo(roomList[i]);
-                    else
-                    {
-                        goL_listings[i].Destroy();
-                        goL_listings[i] = null;
-                    }
-                }
-                else
-                {
-                    goL_listings[i].Destroy();
-                    goL_listings[i] = null;
-                }
-            }
-        }
-
-        RemoveAllNullFromList(goL_listings);
-    }
-    */
-
     private void RemoveAllNullFromList(List<Listing> list)
     {
         for (int i = list.Count - 1; i > 0; i++)
@@ -225,6 +157,13 @@ public class Lobby : MonoBehaviourPunCallbacks
             if (list[i] == null)
                 list.RemoveAt(i);
         }
+    }
+
+    IEnumerator DelayButtonActivate()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (HostButton != null)
+            HostButton.interactable = true;
     }
 
 }
