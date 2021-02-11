@@ -287,6 +287,10 @@ public class PlayerMover : MonoBehaviour
 
     #region Public Returns
 
+    public bool IsGrounded()
+    {
+        return b_grounded;
+    }
 
     #endregion
 

@@ -21,6 +21,8 @@ public class Billboard : MonoBehaviour
 
     void Update()
     {
+        if (c_cam == null)
+            c_cam = Camera.main;
         transform.LookAt(c_cam?.transform);
     }
 }
