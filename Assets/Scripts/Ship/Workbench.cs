@@ -94,8 +94,11 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             {
                 Augment[] augs = saveMan.SaveData.purchasedAugments;
                 Augment[] castedAugs = new Augment[augs.Length];
-                for (int i = 0; i < castedAugs.Length; i++)
-                    castedAugs[i] = augMan.GetAugment(augs[i].Name).Aug;
+                if(augs != null && augs.Length != 0)
+                {
+                    for (int i = 0; i < castedAugs.Length; i++)
+                        castedAugs[i] = augMan.GetAugment(augs[i].Name).Aug;
+                }
                 InitAugmentList(castedAugs, false);
                 ClickAugment(0);
             }
