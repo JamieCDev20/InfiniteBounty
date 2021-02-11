@@ -33,7 +33,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11157418}
   m_HandleRect: {fileID: 11157417}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -566,7 +566,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 388690613}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4868943948158857479}
+        m_TargetAssemblyTypeName: Workbench, Assembly-CSharp
+        m_MethodName: ChangeWeaponPos
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &398832490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,13 +1115,14 @@ GameObject:
   - component: {fileID: 776373193}
   - component: {fileID: 776373195}
   - component: {fileID: 776373194}
+  - component: {fileID: 412727659}
   m_Layer: 0
   m_Name: AugmentPropertyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &776373193
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1171,6 +1184,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Fire Rate+++
+--- !u!114 &412727659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776373192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be877eff255f77144832d7eb9dad32e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &794514231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,7 +1389,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 933079965}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4868943948158857479}
+        m_TargetAssemblyTypeName: Workbench, Assembly-CSharp
+        m_MethodName: ChangeWeaponNeg
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1096037572
 GameObject:
   m_ObjectHideFlags: 0
@@ -3115,7 +3152,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 207.58635}
+  m_AnchoredPosition: {x: 15, y: 207.04883}
   m_SizeDelta: {x: -90, y: 20}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7211629807479709921
@@ -5972,7 +6009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7211629807821442927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6003,7 +6040,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7211629807821442926}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -7205,15 +7242,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 145474bc246b66a4dac6bba0674816f0, type: 3}
---- !u!224 &1927167965060014742 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6663853776258300072, guid: 145474bc246b66a4dac6bba0674816f0,
-    type: 3}
-  m_PrefabInstance: {fileID: 5099322441670285886}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2166756961505315583 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6401219565984829633, guid: 145474bc246b66a4dac6bba0674816f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5099322441670285886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1927167965060014742 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6663853776258300072, guid: 145474bc246b66a4dac6bba0674816f0,
     type: 3}
   m_PrefabInstance: {fileID: 5099322441670285886}
   m_PrefabAsset: {fileID: 0}
