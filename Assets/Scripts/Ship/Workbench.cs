@@ -302,8 +302,8 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 break;
         }
 
-        ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Name;
-        ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked].Level.ToString();
+        ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
+        ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
         RemoveAugmentProperties();
         UpdatePropertyText(_i_augmentIndexClicked);
 
@@ -321,30 +321,35 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
 
     public void ChangeWeaponPos()
     {
-        if (wt_toolsInHand[0] != null && wt_toolsInHand[1] != null)
-        {
-            UndisplayWeapon();
-            if (i_currentWeaponIndex == wt_toolsInHand.Count - 1)
+        if(wt_toolsInHand != null && wt_toolsInHand.Count -1 > 0)
+            if (wt_toolsInHand[0] != null && wt_toolsInHand[1] != null)
             {
-                i_currentWeaponIndex = 0;
+                Debug.Log("Blumnbo");
+                UndisplayWeapon();
+                if (i_currentWeaponIndex == wt_toolsInHand?.Count - 1)
+                {
+                    i_currentWeaponIndex = 0;
+                }
+                else
+                {
+                    i_currentWeaponIndex++;
+                }
+                DisplayWeapon();
             }
-            else
-            {
-                i_currentWeaponIndex++;
-            }
-            DisplayWeapon();
-        }
     }
     public void ChangeWeaponNeg()
     {
-        if (wt_toolsInHand != null)
+        if (wt_toolsInHand != null && wt_toolsInHand.Count - 1 > 0)
         {
-            UndisplayWeapon();
-            if (i_currentWeaponIndex == 0)
-                i_currentWeaponIndex = wt_toolsInHand.Count - 1;
-            else
-                i_currentWeaponIndex--;
-            DisplayWeapon();
+            if(wt_toolsInHand[0] != null && wt_toolsInHand[1] != null)
+            {
+                UndisplayWeapon();
+                if (i_currentWeaponIndex == 0)
+                    i_currentWeaponIndex = wt_toolsInHand.Count - 1;
+                else
+                    i_currentWeaponIndex--;
+                DisplayWeapon();
+            }
         }
     }
 
