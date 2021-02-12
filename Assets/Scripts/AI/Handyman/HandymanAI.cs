@@ -14,10 +14,12 @@ public class HandymanAI : AIBase
     //Transform t_target;
 
     private HandymanMover mover;
+    private HandymanAnimator anim;
 
     private void Awake()
     {
         mover = GetComponent<HandymanMover>();
+        anim = GetComponent<HandymanAnimator>();
         tree = new BehaviourTree(ParentDefine());
     }
 
@@ -34,7 +36,9 @@ public class HandymanAI : AIBase
 
         ActionNode moveAction = new ActionNode(MoveAction);
 
-        SequencerNode parent = new SequencerNode(summonSick, new SequencerNode(TargetterDefine(), ActionSelectorDefine()), moveAction);
+        SelectorNode behavSel = new SelectorNode(new SequencerNode(TargetterDefine(), ActionSelectorDefine()), moveAction);
+
+        SequencerNode parent = new SequencerNode(summonSick, behavSel);
 
         return parent;
     }
@@ -88,16 +92,24 @@ public class HandymanAI : AIBase
 
     public void MoveAction()
     {
-
+        //Debug.Log("Doing move action");
+        foreach (GameObject p in TagManager.x.GetTagSet("Player"))
+        {
+            mover.Move(p.transform.position - transform.position);
+            return;
+        }
     }
 
     public void PunchAction()
     {
+        anim.Slap();
+        f_timeStarted = Time.realtimeSinceStartup;
 
     }
 
     public void ThrowAction()
     {
+        Debug.Log("Doing Throw action");
 
     }
 
@@ -107,13 +119,14 @@ public class HandymanAI : AIBase
 
     public bool InPunchRangeOfPlayer()
     {
-        Debug.Log((transform.position - t_target.position).magnitude < 5? "in punch range" : "not in punch range");
-        return (transform.position - t_target.position).magnitude < 5;
+        if ((t_target.position - transform.position).sqrMagnitude < 200)
+            return true;
+        return false;
     }
 
     public bool InThrowRangeOfThing()
     {
-        return true;
+        return false;
     }
 
     #endregion

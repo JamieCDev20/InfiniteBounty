@@ -33,7 +33,7 @@ public class MoverBase : MonoBehaviour
         }
         rb.AddForce(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized * f_moveSpeed * (b_grounded ? 1 : f_airControlMultiplier), ForceMode.Impulse);
         if (rb.velocity.magnitude > 0.1f)
-            transform.rotation = Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up), 0.3f);
     }
 
     public void SetCanMove(bool _val)

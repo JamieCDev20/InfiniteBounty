@@ -34,6 +34,7 @@ public class PlayerMover : MonoBehaviour
     #region Private
 
     internal bool b_grounded;
+    private bool b_applyDrag = true;
     private bool b_down;
     private bool b_applyGravity;
     internal bool b_jumpPress;
@@ -155,7 +156,8 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyDrag()
     {
-        rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_dragVector);
+        if(b_applyDrag)
+            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_dragVector);
     }
 
     /// <summary>
@@ -252,6 +254,19 @@ public class PlayerMover : MonoBehaviour
             f_currentMoveSpeed = f_planetMoveSpeed;
             f_currentMultiplier = f_planetSprintMult;
         }
+    }
+
+    public void HitKnockback(Vector3 _dir, float _force)
+    {
+        rb.AddForce(_dir.normalized * _force, ForceMode.Impulse);
+        StartCoroutine(ApplyDragDelay());
+    }
+
+    IEnumerator ApplyDragDelay()
+    {
+        b_applyDrag = false;
+        yield return new WaitForSeconds(0.5f);
+        b_applyDrag = true;
     }
 
     #endregion
