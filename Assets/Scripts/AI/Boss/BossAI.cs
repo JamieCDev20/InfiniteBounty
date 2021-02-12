@@ -112,13 +112,16 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.7f;
+        return Random.value < 0.6f;
     }
 
     private void DoHomingAttack()
     {
-        StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_homingOrbAmount.x, v_homingOrbAmount.y)), t_target));
-        StopAttackingForPeriod();
+        if (b_canAttack)
+        {
+            StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_homingOrbAmount.x, v_homingOrbAmount.y)), t_target));
+            StopAttackingForPeriod();
+        }
     }
     private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
@@ -217,7 +220,8 @@ public class BossAI : AIBase
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
-            _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
+            if (_cA[i].transform.root != transform)
+                _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
 
 
         for (int i = 0; i < 80; i++)

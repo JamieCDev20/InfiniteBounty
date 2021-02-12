@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.67409086, g: 0.33267143, b: 0.62968767, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -624,6 +624,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -744,6 +749,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -1334,6 +1344,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -5625,13 +5640,15 @@ MonoBehaviour:
   b_shouldSinBackToStart: 0
   i_damageToDeal: 4
   f_timeBetweenDamages: 0.2
-  b_dealDamageOnEntry: 0
+  b_dealDamageOnEntry: 1
   v_bounceDirection: {x: 0, y: 2000, z: 0}
   b_shouldCauseKnockback: 1
   ac_burnEffect: {fileID: 8300000, guid: 4f2d23f88f07db443b4cc4598193a55e, type: 3}
   go_flamePrefab: {fileID: 5987874258221079754, guid: de9ccfd0bfab00e4db5eeb5d998c533b,
     type: 3}
   b_dealsFire: 1
+  c_neutralColour: {r: 0, g: 0, b: 0, a: 0}
+  mr_renderer: {fileID: 0}
 --- !u!23 &295301695
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5975,6 +5992,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6160,6 +6182,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -6470,6 +6497,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -7016,6 +7048,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -7270,6 +7307,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -7453,6 +7495,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8365,13 +8412,15 @@ MonoBehaviour:
   b_shouldSinBackToStart: 0
   i_damageToDeal: 4
   f_timeBetweenDamages: 0.4
-  b_dealDamageOnEntry: 0
+  b_dealDamageOnEntry: 1
   v_bounceDirection: {x: 0, y: 2000, z: 0}
   b_shouldCauseKnockback: 1
   ac_burnEffect: {fileID: 8300000, guid: 4f2d23f88f07db443b4cc4598193a55e, type: 3}
   go_flamePrefab: {fileID: 5987874258221079754, guid: de9ccfd0bfab00e4db5eeb5d998c533b,
     type: 3}
   b_dealsFire: 1
+  c_neutralColour: {r: 0, g: 0, b: 0, a: 0}
+  mr_renderer: {fileID: 0}
 --- !u!82 &635622625
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8646,6 +8695,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -8736,6 +8790,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8931,6 +8990,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10295,6 +10359,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -10385,6 +10454,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -11424,6 +11498,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11881,6 +11960,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12561,6 +12645,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16807,13 +16896,15 @@ MonoBehaviour:
   b_shouldSinBackToStart: 0
   i_damageToDeal: 4
   f_timeBetweenDamages: 0.2
-  b_dealDamageOnEntry: 0
+  b_dealDamageOnEntry: 1
   v_bounceDirection: {x: 0, y: 2000, z: 0}
   b_shouldCauseKnockback: 1
   ac_burnEffect: {fileID: 8300000, guid: 4f2d23f88f07db443b4cc4598193a55e, type: 3}
   go_flamePrefab: {fileID: 5987874258221079754, guid: de9ccfd0bfab00e4db5eeb5d998c533b,
     type: 3}
   b_dealsFire: 1
+  c_neutralColour: {r: 0, g: 0, b: 0, a: 0}
+  mr_renderer: {fileID: 0}
 --- !u!82 &1428554314
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18321,6 +18412,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -18818,6 +18914,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -18908,6 +19009,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -19015,6 +19121,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -21454,6 +21565,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -21544,6 +21660,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -22698,6 +22819,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4333439918963025102, guid: 2e723294a9a3e4244afbc8f924da5bd8,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4545528917799366917, guid: 2e723294a9a3e4244afbc8f924da5bd8,
         type: 3}
       propertyPath: m_Name
@@ -23262,6 +23388,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 559543057}
     m_Modifications:
+    - target: {fileID: 4165804068242685911, guid: 988f5d58dee32d242b9a516fd7b1d607,
+        type: 3}
+      propertyPath: b_dealDamageOnEntry
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596443696102465038, guid: 988f5d58dee32d242b9a516fd7b1d607,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -14,6 +14,12 @@ public class BossArenaManager : MonoBehaviour
     void Start()
     {
         x = this;
+        LilyPad[] _lpA = FindObjectsOfType<LilyPad>();
+
+        for (int i = 0; i < _lpA.Length; i++)
+        {
+            _lpA[i].Setup(i);
+        }
     }
 
 
