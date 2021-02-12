@@ -2,17 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandymanHealth : MonoBehaviour
+public class HandymanHealth : MonoBehaviour, IHitable
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] private int i_maxHealth = 300;
+    
+    private int i_curHealth;
+
+    private void OnEnable()
     {
-        
+        i_curHealth = i_maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Die()
     {
-        
+        Destroy(gameObject);
+
+    }
+
+    public bool IsDead()
+    {
+        return true;
+    }
+
+    public void TakeDamage(int damage, bool activatesThunder)
+    {
+        i_curHealth -= damage;
+        if (i_curHealth <= 0)
+            Die();
+    }
+
+    public void TakeDamage(int damage, bool activatesThunder, float delay)
+    {
+
     }
 }
