@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PauseMenuController : MonoBehaviour
+public class PauseMenuController : SubjectBase
 {
     [Header("Canvas References")]
     [SerializeField] private Canvas c_playCanvas;
@@ -19,6 +19,8 @@ public class PauseMenuController : MonoBehaviour
     private CameraController cc_cam;
     private Rigidbody rb_playerPhysics;
     private bool b_isSpectating;
+
+    private float[] A_options = new float[4];
 
     [Header("Option References")]
     [SerializeField] private Slider s_sensitivitySlider;
@@ -40,6 +42,10 @@ public class PauseMenuController : MonoBehaviour
         SetAmbienceVolume();
         SetMusicVolume();
         SetSFXVolume();
+        SaveManager sm = FindObjectOfType<SaveManager>();
+        if(sm.SaveData.playerOptions.Length > 0)
+            InitOptions(sm.SaveData.playerOptions);
+        AddObserver(sm);
     }
 
     #region Nick Stuff
@@ -126,6 +132,9 @@ public class PauseMenuController : MonoBehaviour
     {
         //Debug.LogError("Are we back on the main pause-menu? Aight, sick.");
         c_pauseCanvas.enabled = true;
+        PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, A_options);
+        SaveEvent se = new SaveEvent(pd);
+        Notify(se);
         c_optionsMenu.enabled = false;
     }
 
@@ -158,24 +167,54 @@ public class PauseMenuController : MonoBehaviour
 
     #region Options
 
+    public void InitOptions(float[] _options)
+    {
+        if(_options[(int)OptionNames.sensitivity] >= s_sensitivitySlider.minValue && _options[(int)OptionNames.sensitivity] <= s_sensitivitySlider.maxValue)
+        {
+            cc_cam.f_cameraSensitivity = _options[(int)OptionNames.sensitivity];
+            s_sensitivitySlider.value = _options[(int)OptionNames.sensitivity];
+        }
+        if(_options[(int)OptionNames.ambience] >= vs_volSliders.s_ambienceVolumeSlider.minValue && _options[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
+        {
+            am_ambienceMixer.SetFloat("Volume", _options[(int)OptionNames.ambience]);
+            vs_volSliders.s_ambienceVolumeSlider.value = _options[(int)OptionNames.ambience];
+        }
+        if(_options[(int)OptionNames.music] >= vs_volSliders.s_musicVolumeSilder.minValue && _options[(int)OptionNames.music] <= vs_volSliders.s_musicVolumeSilder.maxValue)
+        {
+            am_musicMixer.SetFloat("Volume", _options[(int)OptionNames.music]);
+            vs_volSliders.s_musicVolumeSilder.value = _options[(int)OptionNames.music];
+        }
+        if(_options[(int)OptionNames.sfx] >= vs_volSliders.s_sfxVolumeSilder.minValue && _options[(int)OptionNames.sfx] <= vs_volSliders.s_sfxVolumeSilder.maxValue)
+        {
+            am_sfxMixer.SetFloat("Volume", (int)OptionNames.sfx);
+            vs_volSliders.s_sfxVolumeSilder.value = _options[(int)OptionNames.sfx];
+        }
+    }
+
     public void SetSensitivty()
     {
         if (cc_cam && s_sensitivitySlider)
+        {
+            A_options[(int)OptionNames.sensitivity] = s_sensitivitySlider.value;
             cc_cam.f_cameraSensitivity = s_sensitivitySlider.value;
+        }
     }
 
     public void SetAmbienceVolume()
     {
+        A_options[(int)OptionNames.ambience] = vs_volSliders.s_ambienceVolumeSlider.value;
         am_ambienceMixer.SetFloat("Volume", vs_volSliders.s_ambienceVolumeSlider.value);
     }
 
     public void SetMusicVolume()
     {
+        A_options[(int)OptionNames.music] = vs_volSliders.s_musicVolumeSilder.value;
         am_musicMixer.SetFloat("Volume", vs_volSliders.s_musicVolumeSilder.value);
     }
 
     public void SetSFXVolume()
     {
+        A_options[(int)OptionNames.sfx] = vs_volSliders.s_sfxVolumeSilder.value;
         am_sfxMixer.SetFloat("Volume", vs_volSliders.s_sfxVolumeSilder.value);
     }
 
@@ -190,4 +229,12 @@ public class PauseMenuController : MonoBehaviour
         public Slider s_sfxVolumeSilder;
     }
 
+}
+
+public enum OptionNames
+{
+    sensitivity,
+    ambience,
+    music,
+    sfx
 }
