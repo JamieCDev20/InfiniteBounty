@@ -175,6 +175,13 @@ public class PauseMenuController : SubjectBase
 
     #endregion
 
+    #region John Stuff
+    public void SetQuality(int _i_qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(_i_qualityIndex);
+    }
+    #endregion
+
     #region Options
 
     public void InitOptions(SettingsValues _options)
