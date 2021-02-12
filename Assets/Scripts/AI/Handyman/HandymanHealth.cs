@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandymanHealth : MonoBehaviourPun, IHitable, IPunObservable
+public class HandymanHealth : MonoBehaviourPun, IHitable
 {
 
     [SerializeField] private int i_maxHealth = 300;
@@ -55,10 +55,5 @@ public class HandymanHealth : MonoBehaviourPun, IHitable, IPunObservable
     public void TakeDamage(int damage, bool activatesThunder, float delay)
     {
 
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        throw new System.NotImplementedException();
     }
 }
