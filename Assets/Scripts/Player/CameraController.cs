@@ -10,7 +10,8 @@ public class CameraController : MonoBehaviour
     //Variables
     #region Serialised
 
-    [SerializeField] internal float f_cameraSensitivity = 180;
+    [SerializeField] internal Vector2 v2_cameraSensitivity = Vector2.one * 225;
+    [SerializeField] private bool b_invertY;
     [SerializeField] private bool networkedCamera = false;
     [SerializeField] private Text nugCountText;
     [SerializeField] private Vector3 v_offset = Vector3.up * 3;
@@ -72,8 +73,8 @@ public class CameraController : MonoBehaviour
 
     private void Look()
     {
-        f_yLook = Mathf.Clamp(f_yLook + v2_lookInputs.y * f_cameraSensitivity * Time.deltaTime, -80, 40);
-        transform.Rotate(transform.up.normalized * v2_lookInputs.x * f_cameraSensitivity * Time.deltaTime, Space.World);
+        f_yLook = Mathf.Clamp(f_yLook + v2_lookInputs.y * v2_cameraSensitivity.y * Time.deltaTime, -80, 40);
+        transform.Rotate(transform.up.normalized * v2_lookInputs.x * v2_cameraSensitivity.x * Time.deltaTime, Space.World);
         transform.eulerAngles = new Vector3(f_yLook, transform.eulerAngles.y, 0);
 
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, Vector3.one - Vector3.forward);
