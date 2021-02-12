@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandymanHealth : MonoBehaviour, IHitable
+public class HandymanHealth : MonoBehaviourPun, IHitable
 {
 
     [SerializeField] private int i_maxHealth = 300;
@@ -17,7 +18,8 @@ public class HandymanHealth : MonoBehaviour, IHitable
     public void Die()
     {
         Destroy(gameObject);
-
+        if (photonView.IsMine)
+            EnemySpawner.x?.EnemyDied();
     }
 
     public bool IsDead()
