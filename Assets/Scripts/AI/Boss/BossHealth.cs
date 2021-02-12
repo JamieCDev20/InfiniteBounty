@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviourPun, IHitable
 {
@@ -10,6 +11,8 @@ public class BossHealth : MonoBehaviourPun, IHitable
     private int i_currentHealth;
     [SerializeField] private GameObject go_deathParticles;
     [SerializeField] private RectTransform rt_healthBar;
+    private Image i_healthBarImage;
+    private Color c_healthBaseColour;
     [SerializeField] private RectTransform rt_healthBarWhite;
     private float f_timeSinceDamage;
     [SerializeField] private float f_timeToWauitBeforeUpdatingWhite = 1.5f;
@@ -33,6 +36,8 @@ public class BossHealth : MonoBehaviourPun, IHitable
         i_currentHealth = i_maxHealth;
         rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
         rt_healthBarWhite.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
+        i_healthBarImage = rt_healthBar.GetComponent<Image>();
+        c_healthBaseColour = i_healthBarImage.color;
 
         for (int i = 0; i < 50; i++)
         {
@@ -80,13 +85,21 @@ public class BossHealth : MonoBehaviourPun, IHitable
         photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, i_currentHealth - damage);
     }
     [PunRPC]
-    private void TakeDamageRPC(int _i_newHealth)
+    private IEnumerator TakeDamageRPC(int _i_newHealth)
     {
         i_currentHealth = _i_newHealth;
         if (i_currentHealth <= 0)
             photonView.RPC(nameof(Die), RpcTarget.All);
         rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
         f_timeSinceDamage = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(0.02f);
+            i_healthBarImage.color = Color.white;
+            yield return new WaitForSeconds(0.02f);
+            i_healthBarImage.color = c_healthBaseColour;
+        }
     }
 
     public void TakeDamage(int damage, bool activatesThunder, float delay) { }
