@@ -1,16 +1,17 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LilyPad : MonoBehaviour, IHitable
 {
-    private int i_currentHealth = 50;
+    [SerializeField] private int i_currentHealth = 50;
     private PhotonView view;
     private bool b_isHost;
     [SerializeField] private GameObject go_deathEffects;
 
-    private void Start()
+    private void Awake()
     {
         view = GetComponent<PhotonView>();
         b_isHost = PhotonNetwork.IsMasterClient;
@@ -21,6 +22,12 @@ public class LilyPad : MonoBehaviour, IHitable
         gameObject.SetActive(false);
         go_deathEffects.SetActive(true);
         go_deathEffects.transform.parent = null;
+    }
+
+    internal void Setup(int _i_id)
+    {
+        view.ViewID = 4000 + _i_id;
+        PhotonNetwork.RegisterPhotonView(view);
     }
 
     public bool IsDead()
