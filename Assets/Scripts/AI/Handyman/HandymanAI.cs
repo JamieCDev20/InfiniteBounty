@@ -22,7 +22,7 @@ public class HandymanAI : AIBase
 
     public HurtboxDel toggleHurtboxes;
 
-    private bool b_hurtsActive = false;
+    private bool b_hurtsActive = true;
 
     private void Awake()
     {
