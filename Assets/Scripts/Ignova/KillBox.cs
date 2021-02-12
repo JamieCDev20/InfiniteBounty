@@ -74,8 +74,6 @@ public class KillBox : MonoBehaviour
     {
         if (b_dealDamageOnEntry && enabled)
         {
-            print("I've hit " + collision.transform.name);
-
             if (collision.collider.isTrigger)
                 return;
 
