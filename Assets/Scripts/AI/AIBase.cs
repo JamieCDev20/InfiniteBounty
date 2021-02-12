@@ -17,7 +17,7 @@ public class AIBase : MonoBehaviourPun
     
     #region Queries
 
-    public bool IsOverSummoningSickness()
+    public virtual bool IsOverSummoningSickness()
     {
         return (Time.realtimeSinceStartup - f_timeStarted) > f_summoningSickness;
     }
