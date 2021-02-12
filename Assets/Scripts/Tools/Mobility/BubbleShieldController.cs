@@ -55,7 +55,7 @@ public class BubbleShieldController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
+    {        
         if (transform.parent == null)
         {
             transform.SetParent(collision.transform, true);
