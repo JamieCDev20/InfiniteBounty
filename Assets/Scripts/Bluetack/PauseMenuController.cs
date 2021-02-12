@@ -46,9 +46,9 @@ public class PauseMenuController : SubjectBase
         SetMusicVolume();
         SetSFXVolume();
         SaveManager sm = FindObjectOfType<SaveManager>();
-        if(sm.SaveData.playerOptions != null)
-            if(sm.SaveData.playerOptions.A_settingFloats.Length > 0)
-                InitOptions(sm.SaveData.playerOptions);
+        if (sm.SaveData.A_playerSliderOptions != null)
+            if (sm.SaveData.A_playerSliderOptions.Length > 0)
+                InitOptions(sm.SaveData.b_inverted, sm.SaveData.A_playerSliderOptions);
         AddObserver(sm);
     }
 
@@ -184,33 +184,36 @@ public class PauseMenuController : SubjectBase
 
     #region Options
 
-    public void InitOptions(SettingsValues _options)
+    public void InitOptions(bool _b_inv, float[] _options)
     {
-        Debug.Log("Options Getting set");
-        if(_options.A_settingFloats[(int)OptionNames.sensitivityX] >= s_sensitivitySliderX.minValue && _options.A_settingFloats[(int)OptionNames.sensitivityX] <= s_sensitivitySliderX.maxValue)
+        if (s_sensitivitySliderX != null)
+            if (_options[(int)OptionNames.sensitivityX] >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityX] <= s_sensitivitySliderX.maxValue)
+            {
+                cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
+                s_sensitivitySliderX.value = _options[(int)OptionNames.sensitivityX];
+            }
+
+        if (s_sensitivitySliderY != null)
+            if (_options[(int)OptionNames.sensitivityY] >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityY] <= s_sensitivitySliderX.maxValue)
+            {
+                cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
+                s_sensitivitySliderX.value = _options[(int)OptionNames.sensitivityX];
+            }
+
+        if (_options[(int)OptionNames.ambience] >= vs_volSliders.s_ambienceVolumeSlider.minValue && _options[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
         {
-            cc_cam.v2_cameraSensitivity.x = _options.A_settingFloats[(int)OptionNames.sensitivityX];
-            s_sensitivitySliderX.value = _options.A_settingFloats[(int)OptionNames.sensitivityX];
+            am_ambienceMixer.SetFloat("Volume", _options[(int)OptionNames.ambience]);
+            vs_volSliders.s_ambienceVolumeSlider.value = _options[(int)OptionNames.ambience];
         }
-        if(_options.A_settingFloats[(int)OptionNames.sensitivityY] >= s_sensitivitySliderX.minValue && _options.A_settingFloats[(int)OptionNames.sensitivityY] <= s_sensitivitySliderX.maxValue)
+        if (_options[(int)OptionNames.music] >= vs_volSliders.s_musicVolumeSilder.minValue && _options[(int)OptionNames.music] <= vs_volSliders.s_musicVolumeSilder.maxValue)
         {
-            cc_cam.v2_cameraSensitivity.x = _options.A_settingFloats[(int)OptionNames.sensitivityX];
-            s_sensitivitySliderX.value = _options.A_settingFloats[(int)OptionNames.sensitivityX];
+            am_musicMixer.SetFloat("Volume", _options[(int)OptionNames.music]);
+            vs_volSliders.s_musicVolumeSilder.value = _options[(int)OptionNames.music];
         }
-        if(_options.A_settingFloats[(int)OptionNames.ambience] >= vs_volSliders.s_ambienceVolumeSlider.minValue && _options.A_settingFloats[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
-        {
-            am_ambienceMixer.SetFloat("Volume", _options.A_settingFloats[(int)OptionNames.ambience]);
-            vs_volSliders.s_ambienceVolumeSlider.value = _options.A_settingFloats[(int)OptionNames.ambience];
-        }
-        if(_options.A_settingFloats[(int)OptionNames.music] >= vs_volSliders.s_musicVolumeSilder.minValue && _options.A_settingFloats[(int)OptionNames.music] <= vs_volSliders.s_musicVolumeSilder.maxValue)
-        {
-            am_musicMixer.SetFloat("Volume", _options.A_settingFloats[(int)OptionNames.music]);
-            vs_volSliders.s_musicVolumeSilder.value = _options.A_settingFloats[(int)OptionNames.music];
-        }
-        if(_options.A_settingFloats[(int)OptionNames.sfx] >= vs_volSliders.s_sfxVolumeSilder.minValue && _options.A_settingFloats[(int)OptionNames.sfx] <= vs_volSliders.s_sfxVolumeSilder.maxValue)
+        if (_options[(int)OptionNames.sfx] >= vs_volSliders.s_sfxVolumeSilder.minValue && _options[(int)OptionNames.sfx] <= vs_volSliders.s_sfxVolumeSilder.maxValue)
         {
             am_sfxMixer.SetFloat("Volume", (int)OptionNames.sfx);
-            vs_volSliders.s_sfxVolumeSilder.value = _options.A_settingFloats[(int)OptionNames.sfx];
+            vs_volSliders.s_sfxVolumeSilder.value = _options[(int)OptionNames.sfx];
         }
     }
 

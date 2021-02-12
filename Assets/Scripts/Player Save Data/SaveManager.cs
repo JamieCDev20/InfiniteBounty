@@ -51,9 +51,9 @@ public class SaveManager : MonoBehaviour, ObserverBase
                     saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, psd.SaveData.purchasedAugments);
                 }
 
-                if(psd.SaveData.playerOptions != null)
+                if (psd.SaveData.A_playerSliderOptions != null)
                 {
-                    saveData.playerOptions = psd.SaveData.playerOptions; 
+                    saveData.A_playerSliderOptions = psd.SaveData.A_playerSliderOptions;
                 }
                 string jsonData = JsonUtility.ToJson(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, jsonData);
