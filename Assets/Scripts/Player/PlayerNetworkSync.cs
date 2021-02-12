@@ -9,6 +9,10 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_posVector;
     private Vector3 v_rotVector;
 
+    private Vector3 v_vel;
+
+    private Rigidbody rb;
+
     private bool b_isSprinting;
     private bool b_isGrounded;
 
@@ -25,6 +29,8 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
 
             stream.SendNext(b_isSprinting);
 
+            stream.SendNext(rb.velocity);
+
         }
         else
         {
@@ -36,8 +42,15 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
 
             b_isSprinting = (bool)stream.ReceiveNext();
 
+            v_vel = (Vector3)stream.ReceiveNext();
+
         }
 
+    }
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -46,6 +59,9 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             return;
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rotVector, 0.3f);
         transform.position = (transform.position - v_posVector).sqrMagnitude > 100 ? transform.position = v_posVector : Vector3.Lerp(transform.position, v_posVector, 0.3f);
+
+
+
     }
 
     public bool GetIsSprinting()

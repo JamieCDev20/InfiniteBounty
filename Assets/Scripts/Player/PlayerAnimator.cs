@@ -46,6 +46,7 @@ public class PlayerAnimator : MonoBehaviourPun
     private Vector3 v_posLastFrame;
     internal bool b_isSprinting;
     private PlayerNetworkSync pns;
+    private Vector3 v_vel;
 
     #endregion
 
@@ -118,6 +119,11 @@ public class PlayerAnimator : MonoBehaviourPun
         }
     }
 
+    public void SetRemoteVelocity(Vector3 _vel)
+    {
+        v_vel = _vel;
+    }
+
     #endregion
 
     #region Private Voids
@@ -132,12 +138,15 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private void GetMovementSpeed()
     {
+        Debug.Log(transform.InverseTransformDirection(rb.velocity).z);
         if (b_canWalk)
         {
             Vector3 vec = (transform.position - v_posLastFrame);
+            if (photonView.IsMine)
+                v_vel = rb.velocity;
 
-            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(vec).x * (1 / Time.deltaTime), 0.3f));
-            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(vec).z * (1 / Time.deltaTime), 0.3f));
+            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(v_vel).x / 7, 0.3f));
+            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(v_vel).z / 7, 0.3f));
 
             if (rb.velocity.sqrMagnitude > 0.1f)
                 return;
