@@ -58,7 +58,7 @@ public class KillBox : MonoBehaviour
             if (_h != null)
                 hL_thingsWithinCloud.Add(_h);
 
-            _h.TakeDamage(i_damageToDeal, false);
+            _h?.TakeDamage(i_damageToDeal, false);
         }
     }
 
