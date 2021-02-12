@@ -29,7 +29,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
         i_currentHealth = i_maxHealth;
         b_isHost = PhotonNetwork.IsMasterClient;
         rb = GetComponent<Rigidbody>();
-        //Invoke(nameof(TimedDeath), 30);
+        Invoke(nameof(TimedDeath), Random.Range(30, 50));
     }
 
     private void OnCollisionEnter(Collision collision)

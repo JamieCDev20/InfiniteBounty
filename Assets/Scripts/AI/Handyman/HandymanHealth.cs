@@ -13,6 +13,13 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
     private void OnEnable()
     {
         i_curHealth = i_maxHealth;
+        Invoke(nameof(TimedDeath), Random.Range(90, 130));
+
+    }
+
+    private void TimedDeath()
+    {
+        TakeDamage(10000, true);
     }
 
     public void Die()
