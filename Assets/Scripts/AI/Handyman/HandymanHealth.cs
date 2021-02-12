@@ -17,7 +17,7 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
 
     public void Die()
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
         if (photonView.IsMine)
             EnemySpawner.x?.EnemyDied();
     }
