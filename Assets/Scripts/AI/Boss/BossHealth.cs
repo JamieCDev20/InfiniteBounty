@@ -53,15 +53,17 @@ public class BossHealth : MonoBehaviourPun, IHitable
     {
         go_deathParticles.SetActive(true);
         go_deathParticles.transform.parent = null;
-        Invoke(nameof(ActualDie), 1);
+        StartCoroutine(ActualDie());
         rt_healthBarWhite.transform.localScale = Vector3.zero;
+        BossArenaManager.x.BossDied();
     }
-    private void ActualDie()
+    private IEnumerator ActualDie()
     {
+        yield return new WaitForSeconds(1);
+
         foreach (BossProjectile bp in FindObjectsOfType<BossProjectile>())
             bp.Die();
 
-        BossArenaManager.x.BossDied();
         if (PhotonNetwork.IsMasterClient)
             photonView.RPC(nameof(NuggetBurst), RpcTarget.All, Random.Range(0, 9999999));
 
@@ -94,19 +96,15 @@ public class BossHealth : MonoBehaviourPun, IHitable
     {
         Random.InitState(_seed);
 
-        //for (int i = 0; i < 10; i++)
+        for (int x = 0; x < i_nuggetsOnDeath; x++)
         {
-            //yield return new WaitForSeconds(0.1f);
-            for (int x = 0; x < i_nuggetsOnDeath; x++)
-            {
-                GameObject _go_nugget = PoolManager.x.SpawnObject(goA_nuggetPrefabs[Random.Range(0, goA_nuggetPrefabs.Length)], transform.position, transform.rotation);
-                _go_nugget.transform.parent = null;
-                _go_nugget.SetActive(true);
-                _go_nugget.transform.position = transform.position + transform.localScale * (RandomMinusToPositive()) + Vector3.up;
-                Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
-                _rb.AddForce(new Vector3(RandomMinusToPositive(), Mathf.Abs(RandomMinusToPositive()), RandomMinusToPositive()) * f_nuggetForce, ForceMode.Impulse);
-                _go_nugget.transform.rotation = new Quaternion(RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive());
-            }
+            GameObject _go_nugget = PoolManager.x.SpawnObject(goA_nuggetPrefabs[Random.Range(0, goA_nuggetPrefabs.Length)], transform.position, transform.rotation);
+            _go_nugget.transform.parent = null;
+            _go_nugget.SetActive(true);
+            _go_nugget.transform.position = transform.position + transform.localScale * (RandomMinusToPositive()) + Vector3.up;
+            Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
+            _rb.AddForce(new Vector3(RandomMinusToPositive(), Mathf.Abs(RandomMinusToPositive()), RandomMinusToPositive()) * f_nuggetForce, ForceMode.Impulse);
+            _go_nugget.transform.rotation = new Quaternion(RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive());
         }
     }
 

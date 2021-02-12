@@ -9,6 +9,7 @@ public class BossArenaManager : MonoBehaviour
 
     [SerializeField] private LilyPad[] lpA_lilypads = new LilyPad[0];
     [Space, SerializeField] private KillBox kb_lava;
+    [SerializeField] private GameObject go_tractorBeam;
 
     void Start()
     {
@@ -26,6 +27,11 @@ public class BossArenaManager : MonoBehaviour
         kb_lava.Neutralize();
         yield return new WaitForSeconds(1);
         for (int i = 0; i < lpA_lilypads.Length; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
             lpA_lilypads[i].TakeDamage(100, false);
+        }
+
+        go_tractorBeam.SetActive(true);
     }
 }

@@ -123,7 +123,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
                 cols[i].GetComponent<IElementable>()?.RecieveElements(eO_elem.GetActiveElements());
             }
         }
-        myLode.NugGotHit(i_lodeID, damage, activatesThunder);
+        myLode?.NugGotHit(i_lodeID, damage, activatesThunder);
     }
 
     public bool IsDead()

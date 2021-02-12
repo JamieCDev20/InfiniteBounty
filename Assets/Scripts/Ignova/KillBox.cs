@@ -51,15 +51,15 @@ public class KillBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IHitable _h = other.GetComponent<IHitable>();
+        if (enabled)
+        {
+            IHitable _h = other.GetComponent<IHitable>();
 
-        if (_h != null)
-            hL_thingsWithinCloud.Add(_h);
+            if (_h != null)
+                hL_thingsWithinCloud.Add(_h);
 
-        if (b_dealDamageOnEntry)
             _h.TakeDamage(i_damageToDeal, false);
-
-        other.GetComponent<ExplodeWhenExpsoedToFire>()?.Explode();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -72,8 +72,10 @@ public class KillBox : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (b_dealDamageOnEntry)
+        if (b_dealDamageOnEntry && enabled)
         {
+            print("I've hit " + collision.transform.name);
+
             if (collision.collider.isTrigger)
                 return;
 
@@ -103,16 +105,17 @@ public class KillBox : MonoBehaviour
 
     private void DealDamage()
     {
-        for (int i = 0; i < hL_thingsWithinCloud.Count; i++)
-        {
-            if (hL_thingsWithinCloud[i].IsDead())
+        if (enabled)
+            for (int i = 0; i < hL_thingsWithinCloud.Count; i++)
             {
-                hL_thingsWithinCloud.RemoveAt(i);
-                i -= 1;
-                continue;
+                if (hL_thingsWithinCloud[i].IsDead())
+                {
+                    hL_thingsWithinCloud.RemoveAt(i);
+                    i -= 1;
+                    continue;
+                }
+                hL_thingsWithinCloud[i].TakeDamage(i_damageToDeal, false);
             }
-            hL_thingsWithinCloud[i].TakeDamage(i_damageToDeal, false);
-        }
         f_time = 0;
     }
 
@@ -136,13 +139,12 @@ public class KillBox : MonoBehaviour
     {
         StartCoroutine(NeutralizeCoroutine());
     }
-
     private IEnumerator NeutralizeCoroutine()
     {
-        b_dealDamageOnEntry = false;
+        enabled = false;
         for (int i = 0; i < 100; i++)
         {
-            yield return new WaitForSecondsRealtime(0.05f);
+            yield return new WaitForSecondsRealtime(0.01f);
             mr_renderer.material.SetColor("MainColour", Vector4.Lerp(mr_renderer.material.GetColor("MainColour"), c_neutralColour, 0.2f));
             mr_renderer.material.SetFloat("Scroll", Mathf.Lerp(mr_renderer.material.GetFloat("Scroll"), 0, 0.2f));
             mr_renderer.material.SetFloat("WaveHeight", Mathf.Lerp(mr_renderer.material.GetFloat("WaveHeight"), 0, 0.2f));
