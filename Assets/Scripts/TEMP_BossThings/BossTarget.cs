@@ -9,8 +9,7 @@ public class BossTarget : MonoBehaviour
 
     private IEnumerator Start()
     {
-        for (int i = 0; i < 4; i++)
-            yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1);
 
         Collider[] _cA = Physics.OverlapSphere(transform.position, 5);
 
