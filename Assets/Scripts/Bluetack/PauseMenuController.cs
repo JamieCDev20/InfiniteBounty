@@ -20,10 +20,12 @@ public class PauseMenuController : SubjectBase
     private Rigidbody rb_playerPhysics;
     private bool b_isSpectating;
 
-    private float[] A_options = new float[4];
+    private float[] A_options = new float[5];
 
     [Header("Option References")]
-    [SerializeField] private Slider s_sensitivitySlider;
+    [SerializeField] private Slider s_sensitivitySliderX;
+    [SerializeField] private Slider s_sensitivitySliderY;
+    [SerializeField] private Toggle b_mouseInverted;
     [SerializeField] private VolumeSliders vs_volSliders;
 
     [Header("Mixers")]
@@ -38,13 +40,15 @@ public class PauseMenuController : SubjectBase
         c_playCanvas.enabled = true;
 
         cc_cam = GetComponentInParent<CameraController>();
-        SetSensitivty();
+        SetXSensitivty();
+        SetYSensitivity();
         SetAmbienceVolume();
         SetMusicVolume();
         SetSFXVolume();
         SaveManager sm = FindObjectOfType<SaveManager>();
-        if(sm.SaveData.playerOptions.Length > 0)
-            InitOptions(sm.SaveData.playerOptions);
+        if(sm.SaveData.playerOptions != null)
+            if(sm.SaveData.playerOptions.A_settingFloats.Length > 0)
+                InitOptions(sm.SaveData.playerOptions);
         AddObserver(sm);
     }
 
@@ -132,9 +136,15 @@ public class PauseMenuController : SubjectBase
     {
         //Debug.LogError("Are we back on the main pause-menu? Aight, sick.");
         c_pauseCanvas.enabled = true;
-        PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, A_options);
-        SaveEvent se = new SaveEvent(pd);
-        Notify(se);
+        SettingsValues sv = new SettingsValues();
+        sv.invertY = b_mouseInverted;
+        sv.A_settingFloats = A_options;
+        PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, sv);
+        if(sv != null)
+        {
+            SaveEvent se = new SaveEvent(pd);
+            Notify(se);
+        }
         c_optionsMenu.enabled = false;
     }
 
@@ -167,36 +177,51 @@ public class PauseMenuController : SubjectBase
 
     #region Options
 
-    public void InitOptions(float[] _options)
+    public void InitOptions(SettingsValues _options)
     {
-        if(_options[(int)OptionNames.sensitivityX] >= s_sensitivitySlider.minValue && _options[(int)OptionNames.sensitivityX] <= s_sensitivitySlider.maxValue)
+        Debug.Log("Options Getting set");
+        if(_options.A_settingFloats[(int)OptionNames.sensitivityX] >= s_sensitivitySliderX.minValue && _options.A_settingFloats[(int)OptionNames.sensitivityX] <= s_sensitivitySliderX.maxValue)
         {
-            cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
-            s_sensitivitySlider.value = _options[(int)OptionNames.sensitivityX];
+            cc_cam.v2_cameraSensitivity.x = _options.A_settingFloats[(int)OptionNames.sensitivityX];
+            s_sensitivitySliderX.value = _options.A_settingFloats[(int)OptionNames.sensitivityX];
         }
-        if(_options[(int)OptionNames.ambience] >= vs_volSliders.s_ambienceVolumeSlider.minValue && _options[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
+        if(_options.A_settingFloats[(int)OptionNames.sensitivityY] >= s_sensitivitySliderX.minValue && _options.A_settingFloats[(int)OptionNames.sensitivityY] <= s_sensitivitySliderX.maxValue)
         {
-            am_ambienceMixer.SetFloat("Volume", _options[(int)OptionNames.ambience]);
-            vs_volSliders.s_ambienceVolumeSlider.value = _options[(int)OptionNames.ambience];
+            cc_cam.v2_cameraSensitivity.x = _options.A_settingFloats[(int)OptionNames.sensitivityX];
+            s_sensitivitySliderX.value = _options.A_settingFloats[(int)OptionNames.sensitivityX];
         }
-        if(_options[(int)OptionNames.music] >= vs_volSliders.s_musicVolumeSilder.minValue && _options[(int)OptionNames.music] <= vs_volSliders.s_musicVolumeSilder.maxValue)
+        if(_options.A_settingFloats[(int)OptionNames.ambience] >= vs_volSliders.s_ambienceVolumeSlider.minValue && _options.A_settingFloats[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
         {
-            am_musicMixer.SetFloat("Volume", _options[(int)OptionNames.music]);
-            vs_volSliders.s_musicVolumeSilder.value = _options[(int)OptionNames.music];
+            am_ambienceMixer.SetFloat("Volume", _options.A_settingFloats[(int)OptionNames.ambience]);
+            vs_volSliders.s_ambienceVolumeSlider.value = _options.A_settingFloats[(int)OptionNames.ambience];
         }
-        if(_options[(int)OptionNames.sfx] >= vs_volSliders.s_sfxVolumeSilder.minValue && _options[(int)OptionNames.sfx] <= vs_volSliders.s_sfxVolumeSilder.maxValue)
+        if(_options.A_settingFloats[(int)OptionNames.music] >= vs_volSliders.s_musicVolumeSilder.minValue && _options.A_settingFloats[(int)OptionNames.music] <= vs_volSliders.s_musicVolumeSilder.maxValue)
+        {
+            am_musicMixer.SetFloat("Volume", _options.A_settingFloats[(int)OptionNames.music]);
+            vs_volSliders.s_musicVolumeSilder.value = _options.A_settingFloats[(int)OptionNames.music];
+        }
+        if(_options.A_settingFloats[(int)OptionNames.sfx] >= vs_volSliders.s_sfxVolumeSilder.minValue && _options.A_settingFloats[(int)OptionNames.sfx] <= vs_volSliders.s_sfxVolumeSilder.maxValue)
         {
             am_sfxMixer.SetFloat("Volume", (int)OptionNames.sfx);
-            vs_volSliders.s_sfxVolumeSilder.value = _options[(int)OptionNames.sfx];
+            vs_volSliders.s_sfxVolumeSilder.value = _options.A_settingFloats[(int)OptionNames.sfx];
         }
     }
 
-    public void SetSensitivty()
+    public void SetXSensitivty()
     {
-        if (cc_cam && s_sensitivitySlider)
+        if (cc_cam && s_sensitivitySliderX)
         {
-            A_options[(int)OptionNames.sensitivityX] = s_sensitivitySlider.value;
-            cc_cam.v2_cameraSensitivity.x = s_sensitivitySlider.value;
+            A_options[(int)OptionNames.sensitivityX] = s_sensitivitySliderX.value;
+            cc_cam.v2_cameraSensitivity.x = s_sensitivitySliderX.value;
+        }
+    }
+
+    public void SetYSensitivity()
+    {
+        if(cc_cam && s_sensitivitySliderY)
+        {
+            A_options[(int)OptionNames.sensitivityY] = s_sensitivitySliderY.value;
+            cc_cam.v2_cameraSensitivity.y = s_sensitivitySliderY.value;
         }
     }
 

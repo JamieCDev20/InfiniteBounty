@@ -51,7 +51,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
                     saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, psd.SaveData.purchasedAugments);
                 }
 
-                if(saveData.playerOptions != null && psd.SaveData.playerOptions != null)
+                if(psd.SaveData.playerOptions != null)
                 {
                     saveData.playerOptions = psd.SaveData.playerOptions; 
                 }
