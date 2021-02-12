@@ -169,10 +169,10 @@ public class PauseMenuController : SubjectBase
 
     public void InitOptions(float[] _options)
     {
-        if(_options[(int)OptionNames.sensitivity] >= s_sensitivitySlider.minValue && _options[(int)OptionNames.sensitivity] <= s_sensitivitySlider.maxValue)
+        if(_options[(int)OptionNames.sensitivityX] >= s_sensitivitySlider.minValue && _options[(int)OptionNames.sensitivityX] <= s_sensitivitySlider.maxValue)
         {
-            cc_cam.f_cameraSensitivity = _options[(int)OptionNames.sensitivity];
-            s_sensitivitySlider.value = _options[(int)OptionNames.sensitivity];
+            cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
+            s_sensitivitySlider.value = _options[(int)OptionNames.sensitivityX];
         }
         if(_options[(int)OptionNames.ambience] >= vs_volSliders.s_ambienceVolumeSlider.minValue && _options[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
         {
@@ -195,8 +195,8 @@ public class PauseMenuController : SubjectBase
     {
         if (cc_cam && s_sensitivitySlider)
         {
-            A_options[(int)OptionNames.sensitivity] = s_sensitivitySlider.value;
-            cc_cam.f_cameraSensitivity = s_sensitivitySlider.value;
+            A_options[(int)OptionNames.sensitivityX] = s_sensitivitySlider.value;
+            cc_cam.v2_cameraSensitivity.x = s_sensitivitySlider.value;
         }
     }
 
@@ -233,7 +233,8 @@ public class PauseMenuController : SubjectBase
 
 public enum OptionNames
 {
-    sensitivity,
+    sensitivityX,
+    sensitivityY,
     ambience,
     music,
     sfx
