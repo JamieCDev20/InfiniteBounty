@@ -138,7 +138,6 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private void GetMovementSpeed()
     {
-        Debug.Log(transform.InverseTransformDirection(rb.velocity).z);
         if (b_canWalk)
         {
             Vector3 vec = (transform.position - v_posLastFrame);
