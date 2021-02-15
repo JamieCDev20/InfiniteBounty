@@ -55,6 +55,7 @@ public class PlayerMover : MonoBehaviour
     private PhotonView view;
     private FootstepAudioPlayer fap_audio;
     internal bool b_isSitting;
+    private bool b_knockedback;
 
     #endregion
 
@@ -305,6 +306,11 @@ public class PlayerMover : MonoBehaviour
     public bool IsGrounded()
     {
         return b_grounded;
+    }
+
+    public bool IsKnockedBack()
+    {
+        return b_knockedback;
     }
 
     #endregion

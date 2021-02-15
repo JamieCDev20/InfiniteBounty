@@ -70,6 +70,8 @@ public class PlayerAnimator : MonoBehaviourPun
         else
             b_isSprinting = pns.GetIsSprinting();
 
+        anim.SetBool("Knockback", pm_mover.IsKnockedBack());
+
         GetMovementSpeed();
         CheckJumpAnims();
         SetShootingBools();

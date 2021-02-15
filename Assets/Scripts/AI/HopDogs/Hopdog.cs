@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Profiling;
 
 public class Hopdog : AIBase
 {
@@ -36,6 +37,7 @@ public class Hopdog : AIBase
 
     private SequencerNode ParentSequencer()
     {
+
         QueryNode summoningSicknessNode = new QueryNode(IsOverSummoningSickness);
         SelectorNode actionSelector = new SelectorNode(ActionSelectorDefinition());
 
@@ -123,6 +125,7 @@ public class Hopdog : AIBase
 
     public void AttackAction()
     {
+        Profiler.BeginSample("Attack action Sample");
         if (f_attackStart == 0)
         {
             if (Time.realtimeSinceStartup - f_attackStart > f_attackDuration)
@@ -134,17 +137,22 @@ public class Hopdog : AIBase
         }
         f_attackStart = Time.realtimeSinceStartup;
         mover.Launch(t_target.position);
+        Profiler.EndSample();
     }
 
     public void MoveTowardsTargetAction()
     {
+        Profiler.BeginSample("Move Action");
         mover.Move(t_target.position - transform.position);
+        Profiler.EndSample();
     }
 
     public void IdleAction()
     {
+        Profiler.BeginSample("Idle Action");
         if ((Time.realtimeSinceStartup + Random.value) * 100 % 100 <= 0.5f)
             mover.Move(Vector3.right * (Random.value * 2 - 1) + Vector3.forward * (Random.value * 2 - 1));
+        Profiler.EndSample();
     }
 
     #endregion
