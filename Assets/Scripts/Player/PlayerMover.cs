@@ -265,9 +265,11 @@ public class PlayerMover : MonoBehaviour
 
     IEnumerator ApplyDragDelay()
     {
+        b_knockedback = true;
         b_applyDrag = false;
         yield return new WaitForSeconds(0.5f);
         b_applyDrag = true;
+        b_knockedback = false;
     }
 
     #endregion
