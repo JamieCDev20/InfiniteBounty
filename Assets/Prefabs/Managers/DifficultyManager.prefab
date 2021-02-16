@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2092401378154112326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2092401378154112324}
+  - component: {fileID: 2092401378154112325}
+  m_Layer: 0
+  m_Name: DifficultyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2092401378154112324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092401378154112326}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2092401378154112325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092401378154112326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63baf25b67c7e64faab86a50d890693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dsL_difficulties:
+  - s_name: Chill
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Ruff & Tumble
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Rock 'ard
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000002000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Sweaty
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000002000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Super Sweaty
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000002000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Mega Sweaty
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000002000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Super Mega Sweaty
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000002000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Insane
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000002000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  - s_name: Ultra Insane
+    f_maxHealthMult: 1
+    f_damageMult: 1
+    f_scaleMult: 1
+    f_movementSpeedMult: 1
+    f_decisionSpeedMult: 1
+    f_accuracyMult: 1
+    f_spawnFrequency: 1
+    f_maxNumberOfEnemies: 1
+    f_enemyVariantChance: 1
+    f_goldEnemyChance: 1
+    i_numberOfMiniBosses: 1
+    dA_firstDiversifierSet: 0200000002000000000000000000000000000000000000000000000000000000
+    dA_secondDiversifierSet: 0200000000000000000000000000000000000000000000000000000000000000
+    dA_thirdDiversifierSet: 0000000000000000000000000000000000000000000000000000000000000000
+  i_maximumDifficulty: 3
