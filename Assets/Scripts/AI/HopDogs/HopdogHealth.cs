@@ -10,6 +10,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
     [SerializeField] private int i_explosionDamage = 5;
     [SerializeField] private float f_explosionRadius = 1.5f;
     [SerializeField] private float f_impactExplosionVelocty = 10;
+    private int i_actualDamage;
 
     [Header("Particles")]
     [SerializeField] private GameObject go_aggroParticles;
@@ -25,8 +26,12 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
 
     private void Start()
     {
+        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
+        transform.localScale = Vector3.one * _ds.f_scaleMult;
+        i_actualDamage = Mathf.RoundToInt(i_explosionDamage * _ds.f_damageMult);
+        i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
+
         eo_elemO = GetComponent<ElementalObject>();
-        i_currentHealth = i_maxHealth;
         b_isHost = PhotonNetwork.IsMasterClient;
         rb = GetComponent<Rigidbody>();
         Invoke(nameof(TimedDeath), Random.Range(30, 50));
@@ -104,7 +109,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
         Collider[] hits = Physics.OverlapSphere(transform.position, f_explosionRadius);
         foreach (Collider c in hits)
         {
-            c.GetComponent<IHitable>()?.TakeDamage(i_explosionDamage, true);
+            c.GetComponent<IHitable>()?.TakeDamage(i_actualDamage, true);
         }
         Die();
         SplosionFX();

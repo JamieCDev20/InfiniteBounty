@@ -31,9 +31,11 @@ public class BossHealth : MonoBehaviourPun, IHitable
         yield return new WaitForSeconds(1);
 
         boss = GetComponent<BossAI>();
-        i_maxHealth *= PhotonNetwork.CurrentRoom.PlayerCount;
 
-        i_currentHealth = i_maxHealth;
+        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
+        i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult) * PhotonNetwork.CurrentRoom.PlayerCount;
+
+
         rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
         rt_healthBarWhite.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
         i_healthBarImage = rt_healthBar.GetComponent<Image>();

@@ -12,6 +12,10 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
 
     private void OnEnable()
     {
+        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);        
+        transform.localScale = Vector3.one * _ds.f_scaleMult;
+
         i_curHealth = i_maxHealth;
         Invoke(nameof(TimedDeath), Random.Range(90, 130));
 
