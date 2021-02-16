@@ -35,6 +35,8 @@ public class VendingMachine : SubjectBase, IInteractible
     [SerializeField] private Transform t_augmentSpawnPoint;
     private Animator anim;
 
+    public bool IsBeingUsed { get { return b_isBeingUsed; } }
+
     public void Init(AugmentManager _am)
     {
         anim = GetComponent<Animator>();
@@ -150,7 +152,7 @@ public class VendingMachine : SubjectBase, IInteractible
     }
 
     private void UpdateAugmentDisplay()
-    {        
+    {
         vmd_vendingMachineDisplay.t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Name;
         switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
         {
@@ -165,7 +167,7 @@ public class VendingMachine : SubjectBase, IInteractible
                 break;
         }
 
-        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level.ToString();        
+        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level.ToString();
         /*
         vmd_vendingMachineDisplay.t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;
         vmd_vendingMachineDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].cost;
@@ -194,7 +196,7 @@ public class VendingMachine : SubjectBase, IInteractible
     {
         for (int i = 0; i < 87; i++)
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.016f);
             _rb.transform.position -= transform.right * 0.003f;
         }
         yield return new WaitForSeconds(0.4f);

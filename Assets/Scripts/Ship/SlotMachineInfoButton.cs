@@ -12,8 +12,16 @@ public class SlotMachineInfoButton : MonoBehaviour
         sm_machine = GetComponentInParent<SlotMachine>();
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        sm_machine.DisplayDiversifierInfo(i_myIndex);
+        if (sm_machine.IsBeingUsed)
+        {
+            RaycastHit _hit;
+            Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Input.GetMouseButtonDown(0))
+                if (Physics.Raycast(_ray, out _hit))
+                    if (_hit.transform == transform)
+                        sm_machine.DisplayDiversifierInfo(i_myIndex);
+        }
     }
 }

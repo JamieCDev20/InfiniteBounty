@@ -8,11 +8,19 @@ public class SlotMachineHandle : MonoBehaviour
 
     private void Start()
     {
-        sm_slots =  GetComponentInParent<SlotMachine>();
+        sm_slots = GetComponentInParent<SlotMachine>();
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        sm_slots.PullLever();
+        if (sm_slots.IsBeingUsed)
+        {
+            RaycastHit _hit;
+            Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Input.GetMouseButtonDown(0))
+                if (Physics.Raycast(_ray, out _hit))
+                    if (_hit.transform == transform)
+                        sm_slots.PullLever();
+        }
     }
 }

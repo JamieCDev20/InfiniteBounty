@@ -22,6 +22,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [Header("Interactable Things That Moves the Camera")]
     [SerializeField] private Transform t_playerPos;
     private bool b_isBeingUsed;
+    public bool IsBeingUsed { get { return b_isBeingUsed; } }
     private PlayerInputManager pim;
     private Transform t_camPositionToReturnTo;
     [SerializeField] private Transform t_camParent;
@@ -51,6 +52,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private float f_costMultPerSpin;
     [SerializeField] private TextMeshPro tmp_costText;
     private bool b_isSpinning;
+
 
     private void Start()
     {
@@ -282,6 +284,8 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
     internal void PullLever()
     {
+        if (b_isSpinning) return;
+
         if (nm_nugMan.Nugs >= i_currentCost)
         {
             nm_nugMan.CollectNugs(-i_currentCost, false);
