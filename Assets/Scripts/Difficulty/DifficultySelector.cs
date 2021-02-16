@@ -23,38 +23,32 @@ public class DifficultySelector : MonoBehaviour, IInteractible
     public void ChangeDifficulty(int _i_difficultyChange)
     {
         StartCoroutine(ScrollDifficulty(_i_difficultyChange));
+    }
 
-        DifficultyManager.x.ChangeCurrentDifficulty(_i_difficultyChange);
+    private IEnumerator ScrollDifficulty(int _i_change)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForEndOfFrame();
+            t_textParent.position += Vector3.down * _i_change * 0.05f;
+        }
+
+        DifficultyManager.x.ChangeCurrentDifficulty(_i_change);
 
         if (DifficultyManager.x.ReturnCurrentDifficultyInt() <= DifficultyManager.x.MaximumDifficulty)
-        {
             tmp_difficultyAbove.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() + 1).s_name;
-        }
-        else
-            tmp_difficultyAbove.text = "???";
-
+        else tmp_difficultyAbove.text = "???";
 
         tmp_difficultyCurrent.text = DifficultyManager.x.ReturnCurrentDifficulty().s_name;
 
         if (DifficultyManager.x.ReturnCurrentDifficultyInt() > 0)
             tmp_difficultyBelow.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() - 1).s_name;
-        else
-            tmp_difficultyBelow.text = "";
+        else tmp_difficultyBelow.text = "";
 
-    }
-
-    private IEnumerator ScrollDifficulty(int _i_change)
-    {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             yield return new WaitForEndOfFrame();
-            t_textParent.position += Vector3.down * _i_change * 0.01f;
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            yield return new WaitForEndOfFrame();
-            t_textParent.position += Vector3.up * _i_change * 0.01f;
+            t_textParent.position += Vector3.up * _i_change * 0.05f;
         }
     }
 
