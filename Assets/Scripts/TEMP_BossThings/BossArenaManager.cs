@@ -39,5 +39,6 @@ public class BossArenaManager : MonoBehaviour
         }
 
         go_tractorBeam.SetActive(true);
+        DifficultyManager.x.IncreaseDifficultiesUnlocked();
     }
 }

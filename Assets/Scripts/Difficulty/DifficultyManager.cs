@@ -48,6 +48,7 @@ public class DifficultyManager : MonoBehaviour
             dsL_difficulties[i_currentDifficulty].dA_thirdDiversifierSet);
     }
 
+
     internal int ReturnCurrentDifficultyInt()
     {
         return i_currentDifficulty;
@@ -61,6 +62,11 @@ public class DifficultyManager : MonoBehaviour
         return dsL_difficulties[_i_setToGet];
     }
 
+    internal void IncreaseDifficultiesUnlocked()
+    {
+        i_maximumDifficulty++;
+        print("YOU'VE UNLOCKED A NEW DIFFICULTY! IT SHOULD'VE SAVED THAT, BUT I DONT KNOW HOW");
+    }
 
     #region Impossible Ranks
 
@@ -84,13 +90,14 @@ public struct DifficultySet
     public string s_name;
 
     [Header("Enemy Stats")]
-    public float f_maxHealthMult;
-    public float f_damageMult;
-    public float f_scaleMult;
+    public float f_maxHealthMult; //A creature's current health value is set their max multiplied by this on start
+    public float f_damageMult; //A creature's damage is multiplied by this
+    public float f_scaleMult; //A creature's localScale is multiplied by this on start
     public float f_movementSpeedMult;
     public float f_decisionSpeedMult;
     public float f_accuracyMult;
-    public float f_spawnFrequency;
+    public float f_spawnFrequencyMult; //The number of seconds between waves is multiplied by this amount
+    public float f_spawnAmountMult; //The number of enemies per wave is multiplied by this amount
     public float f_maxNumberOfEnemies;
     public float f_enemyVariantChance;
     public float f_goldEnemyChance;

@@ -18,9 +18,11 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [SerializeField] private int i_maxNumberOfEnemies;
     private int i_numberOfEnemies;
     [SerializeField] private Vector2 v_secondsBetweenWave;
+    private Vector2 v_actualSecondsBetweenWave;
 
     [SerializeField, Tooltip("The number of per player to be spawned during a wave")]
     private Vector2 v_enemiesPerHorde;
+    private Vector2 v_actualEnemiesPerHorde;
 
     [Space, SerializeField] private bool b_spawnWaveAtStart;
     [SerializeField, Tooltip("The number of enemies spawned at the start of the level, split between the two first zones")]
@@ -43,7 +45,11 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             SpawnEnemiesInZone(1, 1);
         }
 
-        Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
+        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
+        v_actualEnemiesPerHorde = v_enemiesPerHorde * _ds.f_spawnAmountMult;
+        v_actualSecondsBetweenWave = v_secondsBetweenWave * _ds.f_spawnFrequencyMult;
+
+        Invoke("CheckZonesForPlayers", Random.Range(v_actualSecondsBetweenWave.x, v_actualSecondsBetweenWave.y));
     }
 
     private void CheckZonesForPlayers()
@@ -58,7 +64,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             }
 
         if (_i_numberOfZonesActivated == 0)
-            Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
+            Invoke("CheckZonesForPlayers", Random.Range(v_actualSecondsBetweenWave.x, v_actualSecondsBetweenWave.y));
     }
 
     private IEnumerator SpawnEnemyWave(int _i_zoneIndex)
@@ -67,7 +73,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         for (int y = 0; y < i_hordesPerWave; y++)
         {
             //Determining how many enemies will spawn in a horde
-            for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y); x++)
+            for (int x = 0; x < Random.Range(v_actualEnemiesPerHorde.x, v_actualEnemiesPerHorde.y); x++)
                 //Only spawn enemies up to the current limit
                 if (i_numberOfEnemies < i_maxNumberOfEnemies)
                     SpawnEnemy(goA_enemiesToSpawnDuringAWave[Random.Range(0, goA_enemiesToSpawnDuringAWave.Length)],
@@ -77,7 +83,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         }
 
 
-        Invoke("CheckZonesForPlayers", Random.Range(v_secondsBetweenWave.x, v_secondsBetweenWave.y));
+        Invoke("CheckZonesForPlayers", Random.Range(v_actualSecondsBetweenWave.x, v_actualSecondsBetweenWave.y));
     }
 
     private void SpawnEnemiesInZone(int _i_zoneIndex, int _i_amountOfEnemiesToSpawn)
