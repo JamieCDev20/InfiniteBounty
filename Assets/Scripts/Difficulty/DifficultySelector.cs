@@ -48,13 +48,13 @@ public class DifficultySelector : MonoBehaviour, IInteractible
         for (int i = 0; i < 10; i++)
         {
             yield return new WaitForEndOfFrame();
-            t_textParent.position -= Vector3.down * _i_change * 0.01f;
+            t_textParent.position += Vector3.down * _i_change * 0.01f;
         }
 
         for (int i = 0; i < 10; i++)
         {
             yield return new WaitForEndOfFrame();
-            t_textParent.position -= Vector3.up * _i_change * 0.01f;
+            t_textParent.position += Vector3.up * _i_change * 0.01f;
         }
     }
 
