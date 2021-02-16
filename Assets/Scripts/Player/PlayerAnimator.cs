@@ -59,7 +59,15 @@ public class PlayerAnimator : MonoBehaviourPun
         anim = GetComponentInChildren<Animator>();
         pm_mover = GetComponent<PlayerMover>();
         pim_inputManager = GetComponent<PlayerInputManager>();
-        doDemoIK = NetworkedPlayer.x.GetPlayer() == transform;
+        try
+        {
+            doDemoIK = NetworkedPlayer.x.GetPlayer() == transform;
+
+        }
+        catch
+        {
+            doDemoIK = false;
+        }
         pns = GetComponent<PlayerNetworkSync>();
     }
 

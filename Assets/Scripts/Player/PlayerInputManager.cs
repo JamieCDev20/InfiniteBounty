@@ -234,11 +234,23 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         camControl.SetFollow(transform);
         camControl.SetPIM(this);
 
+        if (mover == null)
+            mover = GetComponent<PlayerMover>();
         mover.SetHUDController(camControl.GetComponent<HUDController>());
 
         mover.SetCameraTranfsorm(camControl.transform.GetChild(0));
+
+        if (toolHandler == null)
+            toolHandler = GetComponent<ToolHandler>();
+
         toolHandler.RecieveCameraTransform(camControl.transform.GetChild(0));
+
+        if (animator == null)
+            animator = GetComponent<PlayerAnimator>();
         animator.SetCam(camControl.transform.GetChild(0));
+
+        if (ph_health == null)
+            ph_health = GetComponent<PlayerHealth>();
         ph_health.Cam = camControl;
 
         //pc_capture.RecieveCameraController(camControl);

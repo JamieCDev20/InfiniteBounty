@@ -16,8 +16,12 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     private bool b_isSprinting;
     private bool b_isGrounded;
 
+    [SerializeField] private bool b_networked = true;
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        if (!b_networked)
+            return;
         v_rotVector = transform.eulerAngles;
         if (stream.IsWriting)
         {
