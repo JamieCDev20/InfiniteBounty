@@ -75,7 +75,7 @@ public class PlayerMover : MonoBehaviour
             return;
         Jump();
         ResetIfOffMap();
-        //Debug.Log($"players Velocity is: {rb.velocity.magnitude}");
+        Debug.Log($"players Velocity is: {rb.velocity.magnitude}");
     }
 
     private void FixedUpdate()
