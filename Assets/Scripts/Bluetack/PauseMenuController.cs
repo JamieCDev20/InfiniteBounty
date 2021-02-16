@@ -46,9 +46,10 @@ public class PauseMenuController : SubjectBase
         SetMusicVolume();
         SetSFXVolume();
         SaveManager sm = FindObjectOfType<SaveManager>();
-        if (sm.SaveData.A_playerSliderOptions != null)
-            if (sm.SaveData.A_playerSliderOptions.Length > 0)
-                InitOptions(sm.SaveData.b_inverted, sm.SaveData.A_playerSliderOptions);
+        if (sm != null)
+            if (sm.SaveData.A_playerSliderOptions != null)
+                if (sm.SaveData.A_playerSliderOptions.Length > 0)
+                    InitOptions(sm.SaveData.b_inverted, sm.SaveData.A_playerSliderOptions);
         AddObserver(sm);
     }
 
@@ -140,7 +141,7 @@ public class PauseMenuController : SubjectBase
         sv.invertY = b_mouseInverted;
         sv.A_settingFloats = A_options;
         PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, sv);
-        if(sv != null)
+        if (sv != null)
         {
             SaveEvent se = new SaveEvent(pd);
             Notify(se);
@@ -228,7 +229,7 @@ public class PauseMenuController : SubjectBase
 
     public void SetYSensitivity()
     {
-        if(cc_cam && s_sensitivitySliderY)
+        if (cc_cam && s_sensitivitySliderY)
         {
             A_options[(int)OptionNames.sensitivityY] = s_sensitivitySliderY.value;
             cc_cam.v2_cameraSensitivity.y = s_sensitivitySliderY.value;

@@ -44,7 +44,7 @@ public class CameraController : MonoBehaviour
         if (!networkedCamera)
         {
             pim_inputs = transform.root.GetComponentInChildren<PlayerInputManager>();
-            pim_inputs.SetCamera(this);
+            pim_inputs?.SetCamera(this);
             Detach();
         }
     }

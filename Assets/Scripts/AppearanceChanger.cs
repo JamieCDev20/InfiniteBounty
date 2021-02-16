@@ -24,6 +24,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject[] goA_feet = new GameObject[0];
     private int i_currentFeet;
 
+    [SerializeField] private bool b_networked = true;
+
 
     private void Start()
     {
@@ -51,7 +53,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_heads[i_currentHead].SetActive(true);
 
-        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        if (b_networked)
+            view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
     }
     public void LastHead()
     {
@@ -63,7 +66,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_heads[i_currentHead].SetActive(true);
 
-        view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        if (b_networked)
+            view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
     }
 
     [PunRPC]
@@ -88,7 +92,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_bodies[i_currentBody].SetActive(true);
 
-        view.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
+        if (b_networked)
+            view.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
     }
     public void LastBody()
     {
@@ -100,7 +105,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_bodies[i_currentBody].SetActive(true);
 
-        view.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
+        if (b_networked)
+            view.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
     }
 
 
@@ -128,6 +134,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
+        if(b_networked)
         view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
     }
     public void LastArms()
@@ -142,7 +149,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
-        view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);        
+        if(b_networked)
+        view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
     }
 
     [PunRPC]
@@ -176,6 +184,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_feet[i_currentFeet].SetActive(true);
 
+        if(b_networked)
         view.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
     }
     public void LastFeet()
@@ -188,6 +197,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_feet[i_currentFeet].SetActive(true);
 
+        if(b_networked)
         view.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
     }
 
