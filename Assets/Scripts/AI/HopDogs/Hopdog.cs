@@ -57,7 +57,7 @@ public class Hopdog : AIBase
     {
         SelectorNode hasGetTargetSelector = new SelectorNode(RetargetSelector());
         SelectorNode targettedActionNode = new SelectorNode(TargetedActionSelectorDefinition());
-        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, targettedActionNode);
+        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, new ActionNode(DebugTarget), targettedActionNode);
         return targAttackSequence;
     }
 
@@ -87,7 +87,7 @@ public class Hopdog : AIBase
     private SequencerNode FollowPlayerDefinition()
     {
 
-        QueryNode canSeePlayerNode = new QueryNode(CanSeeAPlayer);
+        QueryNode canSeePlayerNode = new QueryNode(CanSeeTarget);
 
         ActionNode moveTowardsNode = new ActionNode(MoveTowardsTargetAction);
 
@@ -125,8 +125,7 @@ public class Hopdog : AIBase
 
     public void AttackAction()
     {
-        Profiler.BeginSample("Attack action Sample");
-        if (f_attackStart == 0)
+        if (f_attackStart != 0)
         {
             if (Time.realtimeSinceStartup - f_attackStart > f_attackDuration)
             {
@@ -137,22 +136,17 @@ public class Hopdog : AIBase
         }
         f_attackStart = Time.realtimeSinceStartup;
         mover.Launch(t_target.position);
-        Profiler.EndSample();
     }
 
     public void MoveTowardsTargetAction()
     {
-        Profiler.BeginSample("Move Action");
         mover.Move(t_target.position - transform.position);
-        Profiler.EndSample();
     }
 
     public void IdleAction()
     {
-        Profiler.BeginSample("Idle Action");
         if ((Time.realtimeSinceStartup + Random.value) * 100 % 100 <= 0.5f)
             mover.Move(Vector3.right * (Random.value * 2 - 1) + Vector3.forward * (Random.value * 2 - 1));
-        Profiler.EndSample();
     }
 
     #endregion
