@@ -6,101 +6,90 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviourPunCallbacks
 {
     public static EnemySpawner x;
-
-    [Header("Enemy Stats")]
-    [SerializeField] private GameObject[] goA_enemiesToSpawnAtStart;
-    [Space, SerializeField] private GameObject[] goA_enemiesToSpawnDuringAWave;
-    [SerializeField] private float[] fA_enemyPerWaveWeighting;
-
-    [Header("Hordes & Waves")]
-    [SerializeField] private float f_timeBetweenHordes;
-    [SerializeField] private int i_hordesPerWave;
-    [SerializeField] private int i_maxNumberOfEnemies;
     private int i_numberOfEnemies;
-    [SerializeField] private Vector2 v_secondsBetweenWave;
-    private Vector2 v_actualSecondsBetweenWave;
+    private DifficultySet ds_currentDifficulty;
 
-    [SerializeField, Tooltip("The number of per player to be spawned during a wave")]
-    private Vector2 v_enemiesPerHorde;
-    private Vector2 v_actualEnemiesPerHorde;
+    [Header("Waves")]
+    [SerializeField] private GameObject[] goA_waveEnemies = new GameObject[2];
+    [SerializeField] private int[] iA_enemyWeightings = new int[2];
+    private List<GameObject> goL_enemyWeightedList = new List<GameObject>();
+    [SerializeField] private Vector2 v_timeBetweenWaves = new Vector2(35, 45);
+    [Space]
+    [SerializeField] private int i_numberOfHordesPerWave = 7;
+    [SerializeField] private float f_timeBetweenHordes = 5;
+    [SerializeField] private Vector2 v_enemiesPerHorde = new Vector2(5, 7);
 
-    [Space, SerializeField] private bool b_spawnWaveAtStart;
-    [SerializeField, Tooltip("The number of enemies spawned at the start of the level, split between the two first zones")]
-    private int i_enemiesAtStart;
+    [Header("Miniboss")]
+    [SerializeField] private GameObject go_miniboss;
+    private List<int> iL_minibossZones = new List<int>();
 
     [Header("Zone Things")]
     [SerializeField] private ZoneInfo[] ziA_enemySpawnZones = new ZoneInfo[0];
     [SerializeField] private LayerMask lm_zoneCheckMask;
 
-
     private void Start()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            Destroy(gameObject);
-        else x = this;
-        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
+        ds_currentDifficulty = DifficultyManager.x.ReturnCurrentDifficulty();
 
-        for (int i = 0; i < i_enemiesAtStart * 0.5f * _ds.f_spawnAmountMult; i++)
-        {
-            SpawnEnemiesInZone(0, 1);
-            SpawnEnemiesInZone(1, 1);
-        }
+        for (int i = 0; i < goA_waveEnemies.Length; i++)
+            for (int x = 0; x < iA_enemyWeightings[i]; x++)
+                goL_enemyWeightedList.Add(goA_waveEnemies[i]);
 
-        v_actualEnemiesPerHorde = v_enemiesPerHorde * _ds.f_spawnAmountMult;
-        v_actualSecondsBetweenWave = v_secondsBetweenWave * _ds.f_spawnFrequencyMult;
+        iL_minibossZones = new List<int>();
+        for (int i = 0; i < ds_currentDifficulty.i_numberOfMiniBosses; i++)
+            iL_minibossZones.Add(Random.Range(0, ziA_enemySpawnZones.Length));
 
-        Invoke("CheckZonesForPlayers", Random.Range(v_actualSecondsBetweenWave.x, v_actualSecondsBetweenWave.y));
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(CheckZoneForPlayers());
+
     }
 
-    private void CheckZonesForPlayers()
+    private IEnumerator CheckZoneForPlayers()
     {
-        int _i_numberOfZonesActivated = 0;
-        //Checks to see if there are players in any zones
+        yield return new WaitForSeconds(Random.Range(v_timeBetweenWaves.x, v_timeBetweenWaves.y) * ds_currentDifficulty.f_spawnFrequencyMult);
+
         for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
+        {
             if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
             {
-                _i_numberOfZonesActivated++;
-                StartCoroutine(SpawnEnemyWave(i));
+                print("Checking the zones for players, and I found one");
+                StartCoroutine(SpawnWave(i));
+                if (iL_minibossZones.Contains(i))
+                {
+                    SpawnEnemy(go_miniboss, i);
+                    iL_minibossZones.Remove(i);
+                }
             }
+        }
 
-        if (_i_numberOfZonesActivated == 0)
-            Invoke("CheckZonesForPlayers", Random.Range(v_actualSecondsBetweenWave.x, v_actualSecondsBetweenWave.y));
+        StartCoroutine(CheckZoneForPlayers());
     }
 
-    private IEnumerator SpawnEnemyWave(int _i_zoneIndex)
+    private IEnumerator SpawnWave(int _i_zoneToSpawnEnemiesIn)
     {
-        //Actually Spawning Enemies
-        for (int y = 0; y < i_hordesPerWave; y++)
+        for (int i = 0; i < i_numberOfHordesPerWave; i++)
         {
-            //Determining how many enemies will spawn in a horde
-            for (int x = 0; x < Random.Range(v_actualEnemiesPerHorde.x, v_actualEnemiesPerHorde.y); x++)
-                //Only spawn enemies up to the current limit
-                if (i_numberOfEnemies < i_maxNumberOfEnemies)
-                    SpawnEnemy(goA_enemiesToSpawnDuringAWave[Random.Range(0, goA_enemiesToSpawnDuringAWave.Length)],
-                        ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
+            for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
+                if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)
+                    SpawnEnemy(PickRandomWaveEnemy(), _i_zoneToSpawnEnemiesIn);
 
             yield return new WaitForSeconds(f_timeBetweenHordes);
         }
-
-
-        Invoke("CheckZonesForPlayers", Random.Range(v_actualSecondsBetweenWave.x, v_actualSecondsBetweenWave.y));
     }
 
-    private void SpawnEnemiesInZone(int _i_zoneIndex, int _i_amountOfEnemiesToSpawn)
+    private void SpawnEnemy(GameObject _go_enemyToSpawn, int _i_zoneIndexToSpawnIt)
     {
-        for (int x = 0; x < _i_amountOfEnemiesToSpawn; x++)
-            //Only spawn enemies up to the current limit
-            if (i_numberOfEnemies < i_maxNumberOfEnemies)
-                SpawnEnemy(goA_enemiesToSpawnAtStart[Random.Range(0, goA_enemiesToSpawnAtStart.Length)],
-                    ziA_enemySpawnZones[_i_zoneIndex].t_zone.GetChild(Random.Range(0, ziA_enemySpawnZones[_i_zoneIndex].t_zone.childCount)).position + new Vector3(-5 + (Random.value * 10), 0, -5 + (Random.value * 10)));
-    }
-
-    private void SpawnEnemy(GameObject toSpawn, Vector3 spawnPos)
-    {
-        //GameObject ob = PoolManager.x.SpawnObject(toSpawn, spawnPos, Quaternion.identity);
-        GameObject ob = PhotonNetwork.Instantiate(toSpawn.name, spawnPos, Quaternion.identity);
-        ob.transform.Rotate(0, Random.Range(0, 359), 0);
+        PhotonNetwork.Instantiate(_go_enemyToSpawn.name, GetPositionWithinZone(_i_zoneIndexToSpawnIt), new Quaternion(0, Random.value, 0, Random.value));
         i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
+    }
+    private GameObject PickRandomWaveEnemy()
+    {
+        return goL_enemyWeightedList[Random.Range(0, goL_enemyWeightedList.Count)];
+    }
+
+    private Vector3 GetPositionWithinZone(int _i_zoneIndexToSpawnIt)
+    {
+        return ziA_enemySpawnZones[_i_zoneIndexToSpawnIt].t_zone.position + new Vector3(Random.Range(-50, 50), 0, Random.Range(-50, 50));
     }
 
     internal void EnemyDied()

@@ -122,7 +122,8 @@ public struct DifficultySet
     public float f_accuracyMult;
     public float f_spawnFrequencyMult; //The number of seconds between waves is multiplied by this amount
     public float f_spawnAmountMult; //The number of enemies per wave is multiplied by this amount
-    public float f_maxNumberOfEnemies;
+    [Tooltip("The actual cap on the number of enemies that can be alive at any given time")]
+    public float f_maxNumberOfEnemies; //Used in the if statement when check the number of living enemies
     public float f_enemyVariantChance;
     public float f_goldEnemyChance;
     public int i_numberOfMiniBosses;
