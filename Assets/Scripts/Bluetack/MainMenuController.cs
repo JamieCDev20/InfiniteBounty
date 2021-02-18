@@ -14,7 +14,6 @@ public class MainMenuController : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        b_onlineButton.interactable = true;
         if (PhotonNetwork.InRoom)
         {
             mainMenu.SetActive(false);
@@ -30,12 +29,6 @@ public class MainMenuController : MonoBehaviourPunCallbacks
         {
             pim.ResetCamFollow();
         }
-        Invoke("EnableButtons", 2);
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        EnableButtons();
     }
 
     public void DisableCamera()

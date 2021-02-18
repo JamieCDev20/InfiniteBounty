@@ -63,13 +63,13 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected");
-        StartCoroutine(DelayButtonActivate());
         //PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
         Debug.Log("joined lobby");
+        StartCoroutine(DelayButtonActivate());
     }
 
     public override void OnJoinedRoom()
