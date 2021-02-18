@@ -110,8 +110,11 @@ public class FlyingAI : AIBase
 
     public void Throw()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         Vector3 _dir = t_target.position - transform.position;
         photonView.RPC("RemoteThrow", RpcTarget.AllViaServer, _dir);
+        f_timeStarted = Time.realtimeSinceStartup;
     }
 
     [PunRPC]
@@ -119,7 +122,6 @@ public class FlyingAI : AIBase
     {
         GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
         ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward * f_throwForce, ForceMode.Impulse);
-        f_timeStarted = Time.realtimeSinceStartup;
     }
 
     #endregion
