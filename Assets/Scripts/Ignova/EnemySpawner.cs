@@ -38,14 +38,14 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             Destroy(gameObject);
         else x = this;
+        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
 
-        for (int i = 0; i < i_enemiesAtStart * 0.5f; i++)
+        for (int i = 0; i < i_enemiesAtStart * 0.5f * _ds.f_spawnAmountMult; i++)
         {
             SpawnEnemiesInZone(0, 1);
             SpawnEnemiesInZone(1, 1);
         }
 
-        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         v_actualEnemiesPerHorde = v_enemiesPerHorde * _ds.f_spawnAmountMult;
         v_actualSecondsBetweenWave = v_secondsBetweenWave * _ds.f_spawnFrequencyMult;
 
