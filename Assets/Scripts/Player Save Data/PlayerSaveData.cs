@@ -28,4 +28,10 @@ public struct PlayerSaveData
         }
 
     }
+    public bool CheckNull()
+    {
+        if (i_currentNugs == 0 && i_totalNugs == 0 && A_playerSliderOptions == null && tb_equippedTools == null && purchasedAugments == null)
+            return true;
+        return false;
+    }
 }
