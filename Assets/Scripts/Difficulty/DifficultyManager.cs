@@ -14,6 +14,9 @@ public class DifficultyManager : MonoBehaviour
     //Returns maximum difficulty as an index
     internal int MaximumDifficulty { get { return i_maximumDifficulty - 1; } }
 
+    [Header("Impossibles")]
+    [SerializeField] private DifficultySet ds_changeInStatsPerImpossible;
+
     private void Awake()
     {
         if (x) Destroy(gameObject);
@@ -65,7 +68,7 @@ public class DifficultyManager : MonoBehaviour
     internal void IncreaseDifficultiesUnlocked()
     {
         i_maximumDifficulty++;
-        print("YOU'VE UNLOCKED A NEW DIFFICULTY! IT SHOULD'VE SAVED THAT, BUT I DONT KNOW HOW");
+        print("YOU'VE UNLOCKED A NEW DIFFICULTY! IT SHOULD'VE SAVED THAT, BUT I DONT KNOW HOW!");
     }
 
     #region Impossible Ranks
@@ -73,8 +76,29 @@ public class DifficultyManager : MonoBehaviour
     private void CreateImpossibleDifficulty()
     {
         DifficultySet impossibleX = new DifficultySet();
+        int _i_currentImpossible = (i_currentDifficulty - i_amountOfAuthoredDifs + 2);
 
-        impossibleX.s_name = "Impossible " + ((i_currentDifficulty - i_amountOfAuthoredDifs + 2) > 1 ? (i_currentDifficulty - i_amountOfAuthoredDifs + 2).ToString() : "");
+        //Display Things
+        impossibleX.s_name = "Impossible " + (_i_currentImpossible > 1 ? _i_currentImpossible.ToString() : "");
+
+        //Enemy Stats
+        impossibleX.f_maxHealthMult += (ds_changeInStatsPerImpossible.f_maxHealthMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_maxHealthMult;
+        impossibleX.f_damageMult += (ds_changeInStatsPerImpossible.f_damageMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_damageMult;
+        impossibleX.f_scaleMult += (ds_changeInStatsPerImpossible.f_scaleMult * _i_currentImpossible) + +dsL_difficulties[i_amountOfAuthoredDifs - 1].f_scaleMult;
+        impossibleX.f_movementSpeedMult += (ds_changeInStatsPerImpossible.f_movementSpeedMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_movementSpeedMult;
+        impossibleX.f_decisionSpeedMult += (ds_changeInStatsPerImpossible.f_decisionSpeedMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_decisionSpeedMult;
+        impossibleX.f_accuracyMult += (ds_changeInStatsPerImpossible.f_accuracyMult * _i_currentImpossible) + +dsL_difficulties[i_amountOfAuthoredDifs - 1].f_accuracyMult;
+        impossibleX.f_spawnFrequencyMult += (ds_changeInStatsPerImpossible.f_spawnFrequencyMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_spawnFrequencyMult;
+        impossibleX.f_spawnAmountMult += (ds_changeInStatsPerImpossible.f_spawnAmountMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_spawnAmountMult;
+        impossibleX.f_maxNumberOfEnemies += (ds_changeInStatsPerImpossible.f_maxNumberOfEnemies * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_maxNumberOfEnemies;
+        impossibleX.f_enemyVariantChance += (ds_changeInStatsPerImpossible.f_enemyVariantChance * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_enemyVariantChance;
+        impossibleX.f_goldEnemyChance += (ds_changeInStatsPerImpossible.f_goldEnemyChance * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_goldEnemyChance;
+        impossibleX.i_numberOfMiniBosses += (ds_changeInStatsPerImpossible.i_numberOfMiniBosses * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].i_numberOfMiniBosses;
+
+        //Diversifiers
+        impossibleX.dA_firstDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_firstDiversifierSet;
+        impossibleX.dA_secondDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_secondDiversifierSet;
+        impossibleX.dA_thirdDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_thirdDiversifierSet;
 
         dsL_difficulties.Add(impossibleX);
     }
