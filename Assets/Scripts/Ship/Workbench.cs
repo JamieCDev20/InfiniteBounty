@@ -68,10 +68,10 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
             PlayerMover pm = pim.GetComponent<PlayerMover>();
 
             // Check if there's tools in the players hands
-            if (th_currentTh.GetTool(0) != -1)
-                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool(0)));
-            if (th_currentTh.GetTool(1) != -1)
-                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool(1)));
+            if (th_currentTh.GetTool((int)ToolSlot.leftHand) != -1)
+                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool((int)ToolSlot.leftHand)));
+            if (th_currentTh.GetTool((int)ToolSlot.rightHand) != -1)
+                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool((int)ToolSlot.rightHand)));
 
             // Stop the player and camera from moving 
             pm.GetComponent<Rigidbody>().isKinematic = true;
@@ -241,8 +241,14 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.projectile)
                 {
                     ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
-                    if (!pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    if (pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    {
+
+                    }
+                    else
+                    {
                         Debug.LogError("Augments Full");
+                    }
                 }
                 else
                 {
@@ -254,8 +260,14 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.cone)
                 {
                     ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
-                    if (!ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    if (ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    {
+
+                    }
+                    else
+                    {
                         Debug.LogError("Augments Full");
+                    }
                 }
                 else
                 {
@@ -268,8 +280,14 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                 if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.standard)
                 {
                     WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
-                    if (!wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    if (wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    {
+
+                    }
+                    else
+                    {
                         Debug.LogError("Augments Full");
+                    }
                 }
                 else
                 {

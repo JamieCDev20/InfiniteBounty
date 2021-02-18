@@ -146,6 +146,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
             case SaveEvent psd:
                 saveData.i_currentNugs += psd.SaveData.i_currentNugs;
                 saveData.i_totalNugs += psd.SaveData.i_totalNugs;
+                saveData.tb_equippedTools = psd.SaveData.tb_equippedTools;
                 if (saveData.purchasedAugments == null && psd.SaveData.purchasedAugments != null)
                 {
                     saveData.purchasedAugments = psd.SaveData.purchasedAugments;
@@ -157,10 +158,12 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 if(saveData.tb_purchasedTools == null && psd.SaveData.tb_purchasedTools != null)
                 {
                     saveData.tb_purchasedTools = psd.SaveData.tb_purchasedTools;
+                    Debug.Log("Purchased a Tool");
                 }
                 else if(saveData.tb_purchasedTools != null && psd.SaveData.tb_purchasedTools != null)
                 {
                     saveData.tb_purchasedTools = Utils.CombineArrays(saveData.tb_purchasedTools, psd.SaveData.tb_purchasedTools);
+                    Debug.Log("Purchased a Tool");
                 }
                 if (psd.SaveData.A_playerSliderOptions != null)
                 {
