@@ -88,14 +88,6 @@ public class KillBox : MonoBehaviour
             if (as_source)
                 as_source.PlayOneShot(ac_burnEffect);
 
-
-
-
-
-
-
-
-
             if (goL_flames.Count > 0 && _h != null)
                 PlaceFlameBurst(collision.GetContact(0).point);
         }
