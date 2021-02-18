@@ -26,7 +26,10 @@ public class SaveManager : MonoBehaviour, ObserverBase
             {
                 saveData = JsonUtility.FromJson<PlayerSaveData>(saveString);
                 if (saveData.CheckNull())
-                    UpdateSaveData(saveString);
+                {
+                    saveData = UpdateSaveData(saveString);
+                    File.WriteAllText(Application.persistentDataPath + sv, JsonUtility.ToJson(saveData));
+                }
             }
         }
         else
@@ -57,6 +60,10 @@ public class SaveManager : MonoBehaviour, ObserverBase
             else if (totalNugsString[i].Contains("tb_equippedTools"))
             {
                 psd.tb_equippedTools = ReadArrayFromJson<WeaponTool>(_saveData, new string[] { "tb_equippedTools\":["}, '}');
+            }
+            else if (totalNugsString[i].Contains("tb_purchasedTools"))
+            {
+                psd.tb_purchasedTools = ReadArrayFromJson<ToolBase>(_saveData, new string[] { "tb_purchasedTools" }, '}');
             }
             else if (totalNugsString[i].Contains("purchasedAugments"))
             {
@@ -147,7 +154,14 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 {
                     saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, psd.SaveData.purchasedAugments);
                 }
-
+                if(saveData.tb_purchasedTools == null && psd.SaveData.tb_purchasedTools != null)
+                {
+                    saveData.tb_purchasedTools = psd.SaveData.tb_purchasedTools;
+                }
+                else if(saveData.tb_purchasedTools != null && psd.SaveData.tb_purchasedTools != null)
+                {
+                    saveData.tb_purchasedTools = Utils.CombineArrays(saveData.tb_purchasedTools, psd.SaveData.tb_purchasedTools);
+                }
                 if (psd.SaveData.A_playerSliderOptions != null)
                 {
                     saveData.A_playerSliderOptions = psd.SaveData.A_playerSliderOptions;
