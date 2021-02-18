@@ -144,8 +144,8 @@ public class SaveManager : MonoBehaviour, ObserverBase
         switch (oe_event)
         {
             case SaveEvent psd:
-                saveData.i_currentNugs += psd.SaveData.i_currentNugs;
-                saveData.i_totalNugs += psd.SaveData.i_totalNugs;
+                saveData.i_currentNugs = psd.SaveData.i_currentNugs;
+                saveData.i_totalNugs = psd.SaveData.i_totalNugs;
                 saveData.tb_equippedTools = psd.SaveData.tb_equippedTools;
                 if (saveData.purchasedAugments == null && psd.SaveData.purchasedAugments != null)
                 {
