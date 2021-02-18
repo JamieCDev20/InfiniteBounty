@@ -42,6 +42,7 @@ public class ToolHandler : SubjectBase
         ac_changer = GetComponent<AppearanceChanger>();
         np_network = GetComponent<NetworkedPlayer>();
         view = GetComponent<PhotonView>();
+        AddObserver(FindObjectOfType<SaveManager>());
         InitialiseTools();
     }
 
@@ -58,11 +59,9 @@ public class ToolHandler : SubjectBase
         {
             ToolBase tb = null;
             AugmentGo ab = null;
-            // Are we getting a tool, an augment or something else?
+            // Did we hit a tool?
             try { tb = hit.transform.GetComponent<ToolBase>(); }
-            catch (System.InvalidCastException e) { }
-            try { ab = hit.transform.GetComponent<AugmentGo>(); }
-            catch (System.InvalidCastException e) { }
+            catch (System.InvalidCastException e) { /*if we error remove this return*/return false; }
             // Which shop is it?
             Shop sr = hit.transform.root.GetComponent<Shop>();
             // Put a tool back;
@@ -83,6 +82,7 @@ public class ToolHandler : SubjectBase
                 }
                 return false;
             }
+            // Purchase a tool
             switch (sr)
             {
                 case ToolRack tr:
@@ -102,20 +102,24 @@ public class ToolHandler : SubjectBase
                     }
                     if (GetComponent<NugManager>().Nugs >= tb.Cost)
                     {
-
+                        int currentNugs = 0;
                         switch (tb)
                         {
                             case WeaponTool wt:
                                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
                                 GetComponent<NugManager>().CollectNugs(-tb.Cost, false);
                                 CallSwapTool(ts, tb.ToolID, tr, true);
+                                currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+                                Notify(new SaveEvent(new PlayerSaveData(0, currentNugs, A_tools, new ToolBase[] { tb }, null, null)));
                                 return true;
                             case MobilityTool mt:
                                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
                                 GetComponent<NugManager>().CollectNugs(-mt.Cost, false);
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                                currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                Notify(new SaveEvent(new PlayerSaveData(0, currentNugs, A_tools, new ToolBase[] { tb }, null, null)));
                                 return true;
                         }
                     }
