@@ -14,6 +14,21 @@ public class FlyingAI : AIBase
     //BehaviourTree tree;
     //Transform t_target;
 
+    private FlyingMover mover;
+
+    private void Start()
+    {
+        mover = GetComponent<FlyingMover>();
+
+        tree = new BehaviourTree(ParentDefine());
+
+    }
+
+    private void FixedUpdate()
+    {
+        tree.DoTreeIteration();
+    }
+
     #region Defines
 
     private SequencerNode ParentDefine()
@@ -72,6 +87,17 @@ public class FlyingAI : AIBase
 
     public void Move()
     {
+        Vector3 pos = Vector3.zero;
+        int c = 0;
+
+        foreach (GameObject p in TagManager.x.GetTagSet("Player"))
+        {
+            pos += p.transform.position;
+            c++;
+        }
+        pos /= c;
+
+        mover.Move(((pos + (Vector3.up * 10)) - transform.position));
 
     }
 
