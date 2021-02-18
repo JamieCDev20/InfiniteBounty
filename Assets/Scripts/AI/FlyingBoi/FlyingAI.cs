@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ public class FlyingAI : AIBase
     //float f_targetFindLimiter = 0;
     //BehaviourTree tree;
     //Transform t_target;
+
+    [SerializeField] private GameObject go_throwProjectile;
+    [SerializeField] private float f_throwDistance = 20;
+    [SerializeField] private float f_throwForce = 20;
 
     private FlyingMover mover;
 
@@ -62,13 +67,15 @@ public class FlyingAI : AIBase
         return throwSeq;
     }
 
-    public SequencerNode HasGetHas()
+    public SelectorNode HasGetHas()
     {
 
         QueryNode has = new QueryNode(StillHasTarget);
         ActionNode get = new ActionNode(GetTargetAction);
 
-        SequencerNode hgh = new SequencerNode(has, get, has);
+        SequencerNode gh = new SequencerNode(get, has);
+
+        SelectorNode hgh = new SelectorNode(has, gh);
         return hgh;
     }
 
@@ -78,7 +85,7 @@ public class FlyingAI : AIBase
 
     public bool InRangeOfTarget()
     {
-        return false;
+        return (t_target.position - transform.position).sqrMagnitude < f_throwDistance * f_throwDistance;
     }
 
     #endregion
@@ -103,7 +110,16 @@ public class FlyingAI : AIBase
 
     public void Throw()
     {
+        Vector3 _dir = t_target.position - transform.position;
+        photonView.RPC("RemoteThrow", RpcTarget.AllViaServer, _dir);
+    }
 
+    [PunRPC]
+    public void RemoteThrow(Vector3 dir)
+    {
+        GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
+        ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward * f_throwForce, ForceMode.Impulse);
+        f_timeStarted = Time.realtimeSinceStartup;
     }
 
     #endregion

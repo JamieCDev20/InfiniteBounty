@@ -57,7 +57,7 @@ public class Hopdog : AIBase
     {
         SelectorNode hasGetTargetSelector = new SelectorNode(RetargetSelector());
         SelectorNode targettedActionNode = new SelectorNode(TargetedActionSelectorDefinition());
-        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, new ActionNode(DebugTarget), targettedActionNode);
+        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, targettedActionNode);
         return targAttackSequence;
     }
 

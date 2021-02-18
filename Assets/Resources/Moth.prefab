@@ -162,10 +162,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   f_summoningSickness: 1
-  f_spottingDistance: 50
+  f_spottingDistance: 500000
   lm_spottingMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
+  go_throwProjectile: {fileID: 1598810658110751317, guid: a3d618c97c2bb0a4fb298716d65ca0cd,
+    type: 3}
+  f_throwDistance: 40
+  f_throwForce: 25
 --- !u!114 &6455919693938283834
 MonoBehaviour:
   m_ObjectHideFlags: 0
