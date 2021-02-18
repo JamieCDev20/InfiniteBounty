@@ -50,11 +50,13 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     private IEnumerator CheckZoneForPlayers()
     {
         yield return new WaitForSeconds(Random.Range(v_timeBetweenWaves.x, v_timeBetweenWaves.y) * ds_currentDifficulty.f_spawnFrequencyMult);
+        bool _b_spawnedWave = false;
 
         for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
         {
             if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
             {
+                _b_spawnedWave = true;
                 print("Checking the zones for players, and I found one");
                 StartCoroutine(SpawnWave(i));
                 if (iL_minibossZones.Contains(i))
@@ -64,6 +66,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                 }
             }
         }
+        if (_b_spawnedWave)
+            yield return new WaitForSeconds(f_timeBetweenHordes * i_numberOfHordesPerWave);
 
         StartCoroutine(CheckZoneForPlayers());
     }
