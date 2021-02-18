@@ -27,8 +27,11 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [SerializeField] private ZoneInfo[] ziA_enemySpawnZones = new ZoneInfo[0];
     [SerializeField] private LayerMask lm_zoneCheckMask;
 
+
     private void Start()
     {
+        x = this;
+
         ds_currentDifficulty = DifficultyManager.x.ReturnCurrentDifficulty();
 
         for (int i = 0; i < goA_waveEnemies.Length; i++)
@@ -70,8 +73,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         for (int i = 0; i < i_numberOfHordesPerWave; i++)
         {
             for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
-                if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)
-                    SpawnEnemy(PickRandomWaveEnemy(), _i_zoneToSpawnEnemiesIn);
+                SpawnEnemy(PickRandomWaveEnemy(), _i_zoneToSpawnEnemiesIn);
 
             yield return new WaitForSeconds(f_timeBetweenHordes);
         }
@@ -79,8 +81,11 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private void SpawnEnemy(GameObject _go_enemyToSpawn, int _i_zoneIndexToSpawnIt)
     {
-        PhotonNetwork.Instantiate(_go_enemyToSpawn.name, GetPositionWithinZone(_i_zoneIndexToSpawnIt), new Quaternion(0, Random.value, 0, Random.value));
-        i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
+        if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)
+        {
+            PhotonNetwork.Instantiate(_go_enemyToSpawn.name, GetPositionWithinZone(_i_zoneIndexToSpawnIt), new Quaternion(0, Random.value, 0, Random.value));
+            i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
+        }
     }
     private GameObject PickRandomWaveEnemy()
     {
