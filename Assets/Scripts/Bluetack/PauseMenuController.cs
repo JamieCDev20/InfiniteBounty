@@ -149,7 +149,13 @@ public class PauseMenuController : SubjectBase
     public void ReturnFromOptions()
     {
         //Debug.LogError("Are we back on the main pause-menu? Aight, sick.");
-        //c_pauseCanvas.enabled = true;
+        c_pauseCanvas.enabled = true;
+        SaveSettings();
+        c_settingsMenu.enabled = false;
+    }
+
+    public void SaveSettings()
+    {
         SettingsValues sv = new SettingsValues();
         sv.invert = new bool[] { b_mouseInverted };
         sv.A_settingFloats = A_options;
@@ -160,7 +166,6 @@ public class PauseMenuController : SubjectBase
             SaveEvent se = new SaveEvent(pd);
             Notify(se);
         }
-        //c_settingsMenu.enabled = false;
     }
 
     public void DoOptionThings()
