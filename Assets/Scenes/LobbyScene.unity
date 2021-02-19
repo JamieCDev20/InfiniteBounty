@@ -15262,22 +15262,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.68727815, y: 1.8363833, z: 0.62990505}
   m_Center: {x: -0.0000009536743, y: 0.000000029802322, z: 0.00000023841858}
---- !u!54 &1116194192
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116194190}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1127814088
 GameObject:
   m_ObjectHideFlags: 0
@@ -26128,6 +26112,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.17923145, y: 0.35744134, z: 0.21520346}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2073359965
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073359960}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2088992400
 GameObject:
   m_ObjectHideFlags: 0
@@ -27247,6 +27247,11 @@ PrefabInstance:
     - target: {fileID: 3069294152506540062, guid: 6e3a1b5e4b914f149b3a953eb299c0f2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763395699217208254, guid: 6e3a1b5e4b914f149b3a953eb299c0f2,
+        type: 3}
+      propertyPath: DopplerLevel
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
