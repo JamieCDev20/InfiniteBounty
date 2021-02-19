@@ -251,7 +251,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         {
             if (!ph.isDead)
             {
-                cc_cam.SetFollow(ph.transform, true);
+                cc_cam?.SetFollow(ph.transform, true);
             }
         }
 
