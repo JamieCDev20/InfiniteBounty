@@ -52,7 +52,13 @@ public class LoadingScreenManager : MonoBehaviourPun
         //SetSceneToLoad(_s_levelName);
         //StartCoroutine(BeginLoadingSceneAsync());
         if (PhotonNetwork.IsMasterClient)
+        {
+            if (_s_levelName.Contains("Lobby"))
+                PhotonNetwork.CurrentRoom.IsVisible = true;
+            else
+                PhotonNetwork.CurrentRoom.IsVisible = false;
             PhotonNetwork.LoadLevel(_s_levelName);
+        }
     }
 
     internal IEnumerator BeginLoadingSceneAsync()
