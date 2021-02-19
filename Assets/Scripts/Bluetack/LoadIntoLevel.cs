@@ -59,9 +59,15 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         if (PhotonNetwork.IsMasterClient)
         {
             if (levelname.Contains("Lobby"))
+            {
                 PhotonNetwork.CurrentRoom.IsVisible = true;
+                PhotonNetwork.CurrentRoom.IsOpen = true;
+            }
             else
+            {
                 PhotonNetwork.CurrentRoom.IsVisible = false;
+                PhotonNetwork.CurrentRoom.IsOpen = false;
+            }
         }
         i_playersCount = 0;
         if (levelname.Contains("Lobby"))
