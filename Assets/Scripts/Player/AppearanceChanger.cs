@@ -19,6 +19,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     [Header("Arm Things")]
     [SerializeField] private GameObjectList[] golA_arms = new GameObjectList[0];
     private int i_currentArm;
+    private bool b_showLeftArm = true;
+    private bool b_showRightArm = true;
 
     [Header("Feet Things")]
     [SerializeField] private GameObject[] goA_feet = new GameObject[0];
@@ -30,7 +32,6 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     private void Start()
     {
         if (!photonView.IsMine) return;
-        Debug.LogError("I AM CALLING START");
 
         i_currentBody = Random.Range(0, goA_bodies.Length);
         i_currentHead = Random.Range(0, goA_heads.Length);
@@ -147,8 +148,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         if (i_currentArm == golA_arms.Length)
             i_currentArm = 0;
 
-        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
-        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(b_showLeftArm);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(b_showRightArm);
 
         if (b_networked)
             photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
@@ -162,8 +163,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         if (i_currentArm < 0)
             i_currentArm = golA_arms.Length - 1;
 
-        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
-        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(b_showLeftArm);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(b_showRightArm);
 
         if (b_networked)
             photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
@@ -175,15 +176,23 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(false);
         golA_arms[i_currentArm].goL_theList[1].SetActive(false);
         i_currentArm = _i_armIndex;
-        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
-        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(b_showLeftArm);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(b_showRightArm);
     }
 
     public void SetArmActive(int _i_armIndex, bool _b_active)
     {
+        if (_i_armIndex == 0)
+            b_showLeftArm = _b_active;
+        if (_i_armIndex == 1)
+            b_showRightArm = _b_active;
+
         if (_i_armIndex < 2)
             for (int i = 0; i < golA_arms.Length; i++)
-                golA_arms[i].goL_theList[_i_armIndex].SetActive(_b_active);
+            {
+                golA_arms[i].goL_theList[0].SetActive(b_showLeftArm);
+                golA_arms[i].goL_theList[1].SetActive(b_showRightArm);
+            }
     }
 
     #endregion
