@@ -25,7 +25,8 @@ public class PauseMenuController : SubjectBase
     [Header("Option References")]
     [SerializeField] private Slider s_sensitivitySliderX;
     [SerializeField] private Slider s_sensitivitySliderY;
-    [SerializeField] private Toggle b_mouseInverted;
+    [SerializeField] private float f_cameraSpeedMult;
+    [Space, SerializeField] private Toggle b_mouseInverted;
     [SerializeField] private VolumeSliders vs_volSliders;
 
     [Header("Mixers")]
@@ -222,8 +223,8 @@ public class PauseMenuController : SubjectBase
     {
         if (cc_cam && s_sensitivitySliderX)
         {
-            A_options[(int)OptionNames.sensitivityX] = s_sensitivitySliderX.value;
-            cc_cam.v2_cameraSensitivity.x = s_sensitivitySliderX.value;
+            A_options[(int)OptionNames.sensitivityX] = s_sensitivitySliderX.value * f_cameraSpeedMult;
+            cc_cam.v2_cameraSensitivity.x = s_sensitivitySliderX.value * f_cameraSpeedMult;
         }
     }
 
@@ -231,8 +232,8 @@ public class PauseMenuController : SubjectBase
     {
         if (cc_cam && s_sensitivitySliderY)
         {
-            A_options[(int)OptionNames.sensitivityY] = s_sensitivitySliderY.value;
-            cc_cam.v2_cameraSensitivity.y = s_sensitivitySliderY.value;
+            A_options[(int)OptionNames.sensitivityY] = s_sensitivitySliderY.value * f_cameraSpeedMult;
+            cc_cam.v2_cameraSensitivity.y = s_sensitivitySliderY.value * f_cameraSpeedMult;
         }
     }
 
