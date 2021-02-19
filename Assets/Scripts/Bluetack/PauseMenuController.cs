@@ -46,8 +46,8 @@ public class PauseMenuController : SubjectBase
         c_playCanvas.enabled = true;
 
         cc_cam = GetComponentInParent<CameraController>();
-        SetXSensitivty();
-        SetYSensitivity();
+        //SetXSensitivty();
+        //SetYSensitivity();
         SetAmbienceVolume();
         SetMusicVolume();
         SetSFXVolume();
@@ -239,8 +239,8 @@ public class PauseMenuController : SubjectBase
 
     public void SetYSensitivity(float val)
     {
-        A_options[(int)OptionNames.sensitivityY] = s_sensitivitySliderY.value * f_cameraSpeedMult;
-        cc_cam.v2_cameraSensitivity.y = s_sensitivitySliderY.value * f_cameraSpeedMult;
+        A_options[(int)OptionNames.sensitivityY] = val * f_cameraSpeedMult;
+        cc_cam.v2_cameraSensitivity.y = val * f_cameraSpeedMult;
         //if (cc_cam && s_sensitivitySliderY)
         //{
         //}
