@@ -20,6 +20,8 @@ public class JukeBox : MonoBehaviour, IHitable
         as_source.clip = acA_songs[i_currentSong];
         as_source.Play();
         tmp_trackNameText.text = sA_trackNames[i_currentSong];
+
+        TogglePower();
     }
 
     private void Update()
