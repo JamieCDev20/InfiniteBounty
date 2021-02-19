@@ -125,12 +125,15 @@ public class Pool
         if (p_objects == null)
             p_objects = new HashSet<IPoolable>();
         // Create a new object
-        GameObject newGo;
+        GameObject newGo = null;
         //If the object is a networked object then spawn it across the network. Otherwise, don't
         if (b_isNetworkedPool)
             newGo = PhotonNetwork.Instantiate(string.Format("{0}{1}", s_path, go_poolType.name), PoolManager.x.transform.position, Quaternion.identity);
         else
+        {
+            Debug.Log($"newgo: {newGo} ||| go_pool: {go_poolType}");
             newGo = GameObject.Instantiate(go_poolType);
+        }
         newGo.transform.parent = PoolManager.x.transform;
         // Make the object searchable
         newGo.name = newGo.name.Replace("(Clone)", "");

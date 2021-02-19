@@ -32,12 +32,20 @@ public class PoolManager : MonoBehaviour
 
     public void Reset()
     {
+        //foreach (var i in pools)
+        //{
+        //    Debug.Log(i.Key);
+        //}
     }
 
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
 
-        
+    }
+
+    public void RemovePool(GameObject key)
+    {
+        pools.Remove(key.name);
     }
 
     private void ResetPools()
@@ -48,6 +56,8 @@ public class PoolManager : MonoBehaviour
             p.ResetPool();
         }
     }
+
+
 
     /// <summary>
     /// Make all the pools spawn load their assigned number of objects

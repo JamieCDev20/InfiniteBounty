@@ -139,6 +139,11 @@ public class Workbench : SubjectBase, IInteractible
 
     #endregion
 
+    private void OnDestroy()
+    {
+        PoolManager.x.RemovePool(go_propertyButton);
+    }
+
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
     {
         Transform _t = Camera.main.transform;
