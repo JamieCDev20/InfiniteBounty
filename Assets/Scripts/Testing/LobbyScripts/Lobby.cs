@@ -29,7 +29,10 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
             if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.CurrentRoom.IsOpen = true;
                 PhotonNetwork.CurrentRoom.IsVisible = true;
+            }
         if (sb_bar != null)
             sb_bar.value = 1;
         //PhotonNetwork.ConnectUsingSettings();
@@ -124,27 +127,30 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-
-        //PhotonNetwork.JoinLobby(TypedLobby.Default);
-        List<int> toRemove = new List<int>();
+        Debug.Log(roomList.Count);
+        
         for (int i = 0; i < roomList.Count; i++)
         {
-            if (riL_currentRooms.Contains(roomList[i]))
+            Debug.Log($"open: {roomList[i].IsOpen} | visible: {roomList[i].IsVisible} | removed: {roomList[i].RemovedFromList}");
+            if (roomList[i].RemovedFromList || !roomList[i].IsVisible || !roomList[i].IsOpen)
             {
-                toRemove.Add(i);
-                if (riL_currentRooms[i].PlayerCount < riL_currentRooms[i].MaxPlayers && riL_currentRooms[i].PlayerCount > 0)
-                    riL_currentRooms.Add(roomList[i]);
+                if (riL_currentRooms.Contains(roomList[i]))
+                {
+                    riL_currentRooms.Remove(roomList[i]);
+                    continue;
+                }
             }
             else
-                riL_currentRooms.Add(roomList[i]);
+            {
+                if (!riL_currentRooms.Contains(roomList[i]))
+                {
+                    riL_currentRooms.Remove(roomList[i]);
+                    riL_currentRooms.Add(roomList[i]);
+                }
+            }
+
         }
 
-        toRemove.Reverse();
-
-        for (int i = 0; i < toRemove.Count; i++)
-        {
-            riL_currentRooms.RemoveAt(toRemove[i]);
-        }
         UpdateRoomListDisplay();
     }
 
