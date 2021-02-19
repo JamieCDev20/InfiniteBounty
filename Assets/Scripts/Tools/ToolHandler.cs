@@ -77,7 +77,7 @@ public class ToolHandler : SubjectBase
                     ToolRack tr = (ToolRack)sr;
                     tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                     ac_changer.SetArmActive((int)ts, true);
-                    Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null)));
+                    Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null, 0)));
                     return true;
                 }
                 return false;
@@ -93,12 +93,12 @@ public class ToolHandler : SubjectBase
                             case WeaponTool wt:
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
-                                Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null)));
+                                Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null, 0)));
                                 return true;
                             case MobilityTool mt:
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
-                                Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null)));
+                                Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null, 0)));
                                 return true;
                         }
                     }
@@ -113,7 +113,7 @@ public class ToolHandler : SubjectBase
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
-                                Notify(new SaveEvent(new PlayerSaveData(0, currentNugs, A_tools, new ToolBase[] { tb }, null, null)));
+                                Notify(new SaveEvent(new PlayerSaveData(0, currentNugs, A_tools, new ToolBase[] { tb }, null, null, 0)));
                                 return true;
                             case MobilityTool mt:
                                 tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
@@ -121,7 +121,7 @@ public class ToolHandler : SubjectBase
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
-                                Notify(new SaveEvent(new PlayerSaveData(0, currentNugs, A_tools, new ToolBase[] { tb }, null, null)));
+                                Notify(new SaveEvent(new PlayerSaveData(0, currentNugs, A_tools, new ToolBase[] { tb }, null, null, 0)));
                                 return true;
                         }
                     }
