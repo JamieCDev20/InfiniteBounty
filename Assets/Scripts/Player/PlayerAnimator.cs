@@ -129,6 +129,7 @@ public class PlayerAnimator : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
     public void SetRemoteVelocity(Vector3 _vel)
     {
         v_vel = _vel;
@@ -150,12 +151,12 @@ public class PlayerAnimator : MonoBehaviourPun
     {
         if (b_canWalk)
         {
-            Vector3 vec = (transform.position - v_posLastFrame);
             if (photonView.IsMine)
                 v_vel = rb.velocity;
 
             anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(v_vel).x / 7, 0.3f));
             anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(v_vel).z / 7, 0.3f));
+
 
             if (rb.velocity.sqrMagnitude > 0.1f)
                 return;
