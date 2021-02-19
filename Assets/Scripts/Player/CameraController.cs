@@ -99,6 +99,11 @@ public class CameraController : MonoBehaviour
         transform.Rotate(_f_recoilSeverity, 0, 0);
     }
 
+    public void SetInvertedY(bool val)
+    {
+        v2_cameraSensitivity.y = Mathf.Abs(v2_cameraSensitivity.y) * (val ? 1 : -1);
+    }
+
     public void SetLookInput(Vector2 _v2_newLookInput)
     {
         v2_lookInputs = _v2_newLookInput;
