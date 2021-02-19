@@ -23,7 +23,7 @@ public class PauseMenuController : SubjectBase
     private Rigidbody rb_playerPhysics;
     private bool b_isSpectating;
     private int[] A_display = new int[2];
-    private float[] A_options = new float[5];
+    private float[] A_options = new float[6];
 
     [Header("Option References")]
     [SerializeField] private Slider s_sensitivitySliderX;
@@ -141,14 +141,12 @@ public class PauseMenuController : SubjectBase
 
     public void Options()
     {
-        //Debug.LogError("It should've optioned, maybe it did, I dunno;");
         c_pauseCanvas.enabled = false;
         c_settingsMenu.enabled = true;
     }
 
     public void ReturnFromOptions()
     {
-        //Debug.LogError("Are we back on the main pause-menu? Aight, sick.");
         c_pauseCanvas.enabled = true;
         SaveSettings();
         c_settingsMenu.enabled = false;
@@ -160,7 +158,6 @@ public class PauseMenuController : SubjectBase
         sv.invert = new bool[] { b_mouseInverted };
         sv.A_settingFloats = A_options;
         sv.displaySettings = A_display;
-        Debug.Log(A_display[(int)DisplaySettings.quality]);
         PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, null, sv, 0);
         if (sv != null)
         {
@@ -201,7 +198,6 @@ public class PauseMenuController : SubjectBase
     {
         A_display[(int)DisplaySettings.quality] = _i_qualityIndex;
         QualitySettings.SetQualityLevel(_i_qualityIndex);
-        Debug.Log(A_display[(int)DisplaySettings.quality] + " " + QualitySettings.GetQualityLevel());
     }
 
     public void SetResolutions(int _i_resolutionIndex)
@@ -215,12 +211,10 @@ public class PauseMenuController : SubjectBase
 
     public void InitOptions(bool _b_inv, float[] _options)
     {
-        Debug.Log("Blooble");
         if (s_sensitivitySliderX != null)
         {
             if (_options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult <= s_sensitivitySliderX.maxValue)
             {
-                Debug.Log("Xsen");
                 cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
                 s_sensitivitySliderX.value = _options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult;
             }
