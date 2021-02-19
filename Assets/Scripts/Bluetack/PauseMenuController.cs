@@ -40,7 +40,7 @@ public class PauseMenuController : SubjectBase
 
     private void Start()
     {
-        c_optionsMenu.enabled = false;
+        c_settingsMenu.enabled = false;
         c_pauseCanvas.enabled = false;
         c_playCanvas.enabled = true;
 
@@ -92,7 +92,7 @@ public class PauseMenuController : SubjectBase
         }
 
         c_pauseCanvas.enabled = false;
-        c_optionsMenu.enabled = false;
+        c_settingsMenu.enabled = false;
 
         pim.b_shouldPassInputs = true;
         cc_cam.enabled = true;
@@ -135,7 +135,7 @@ public class PauseMenuController : SubjectBase
     {
         //Debug.LogError("It should've optioned, maybe it did, I dunno;");
         c_pauseCanvas.enabled = false;
-        c_optionsMenu.enabled = true;
+        c_settingsMenu.enabled = true;
     }
 
     public void ReturnFromOptions()
@@ -151,7 +151,7 @@ public class PauseMenuController : SubjectBase
             SaveEvent se = new SaveEvent(pd);
             Notify(se);
         }
-        c_optionsMenu.enabled = false;
+        c_settingsMenu.enabled = false;
     }
 
     public void DoOptionThings()
