@@ -34,6 +34,7 @@ public class PauseMenuController : SubjectBase
     [SerializeField] private VolumeSliders vs_volSliders;
 
     [Header("Mixers")]
+    [SerializeField] private AudioMixer am_masterMixer;
     [SerializeField] private AudioMixer am_ambienceMixer;
     [SerializeField] private AudioMixer am_musicMixer;
     [SerializeField] private AudioMixer am_sfxMixer;
@@ -227,22 +228,22 @@ public class PauseMenuController : SubjectBase
         }
     }
 
-    public void SetXSensitivty()
+    public void SetXSensitivty(float val)
     {
-        if (cc_cam && s_sensitivitySliderX)
-        {
-            A_options[(int)OptionNames.sensitivityX] = s_sensitivitySliderX.value * f_cameraSpeedMult;
-            cc_cam.v2_cameraSensitivity.x = s_sensitivitySliderX.value * f_cameraSpeedMult;
-        }
+        A_options[(int)OptionNames.sensitivityX] = s_sensitivitySliderX.value * f_cameraSpeedMult;
+        cc_cam.v2_cameraSensitivity.x = s_sensitivitySliderX.value * f_cameraSpeedMult;
+        //if (cc_cam && s_sensitivitySliderX)
+        //{
+        //}
     }
 
-    public void SetYSensitivity()
+    public void SetYSensitivity(float val)
     {
-        if (cc_cam && s_sensitivitySliderY)
-        {
-            A_options[(int)OptionNames.sensitivityY] = s_sensitivitySliderY.value * f_cameraSpeedMult;
-            cc_cam.v2_cameraSensitivity.y = s_sensitivitySliderY.value * f_cameraSpeedMult;
-        }
+        A_options[(int)OptionNames.sensitivityY] = s_sensitivitySliderY.value * f_cameraSpeedMult;
+        cc_cam.v2_cameraSensitivity.y = s_sensitivitySliderY.value * f_cameraSpeedMult;
+        //if (cc_cam && s_sensitivitySliderY)
+        //{
+        //}
     }
 
     public void SetAmbienceVolume()
@@ -269,6 +270,7 @@ public class PauseMenuController : SubjectBase
     [System.Serializable]
     private struct VolumeSliders
     {
+        public Slider s_masterVolumeSlider;
         public Slider s_ambienceVolumeSlider;
         public Slider s_musicVolumeSilder;
         public Slider s_sfxVolumeSilder;
