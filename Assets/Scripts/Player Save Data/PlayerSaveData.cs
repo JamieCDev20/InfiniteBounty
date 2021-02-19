@@ -22,7 +22,7 @@ public struct PlayerSaveData
         if(_options != null)
         {
             A_playerSliderOptions = _options.A_settingFloats;
-            b_inverted = _options.invertY;
+            b_inverted = _options.invert[0];
         }
         else
         {

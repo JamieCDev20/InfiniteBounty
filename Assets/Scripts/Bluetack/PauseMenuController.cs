@@ -149,17 +149,18 @@ public class PauseMenuController : SubjectBase
     public void ReturnFromOptions()
     {
         //Debug.LogError("Are we back on the main pause-menu? Aight, sick.");
-        c_pauseCanvas.enabled = true;
+        //c_pauseCanvas.enabled = true;
         SettingsValues sv = new SettingsValues();
-        sv.invertY = b_mouseInverted;
+        sv.invert = new bool[] { b_mouseInverted };
         sv.A_settingFloats = A_options;
+        Debug.Log(sv.A_settingFloats[(int)OptionNames.sensitivityX]);
         PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, null, sv, 0);
         if (sv != null)
         {
             SaveEvent se = new SaveEvent(pd);
             Notify(se);
         }
-        c_settingsMenu.enabled = false;
+        //c_settingsMenu.enabled = false;
     }
 
     public void DoOptionThings()
@@ -205,6 +206,12 @@ public class PauseMenuController : SubjectBase
             {
                 cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
                 s_sensitivitySliderX.value = _options[(int)OptionNames.sensitivityX];
+            }
+        if(s_sensitivitySliderY != null)
+            if(_options[(int)OptionNames.sensitivityY] >= s_sensitivitySliderY.minValue && _options[(int)OptionNames.sensitivityY] <= s_sensitivitySliderY.maxValue)
+            {
+                cc_cam.v2_cameraSensitivity.y = _options[(int)OptionNames.sensitivityY];
+                s_sensitivitySliderY.value = _options[(int)OptionNames.sensitivityY];
             }
 
         if (s_sensitivitySliderY != null)
