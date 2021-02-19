@@ -209,7 +209,7 @@ public class PauseMenuController : SubjectBase
         Debug.Log("Blooble");
         if (s_sensitivitySliderX != null)
         {
-            if (_options[(int)OptionNames.sensitivityX]/f_cameraSpeedMult >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityX]/f_cameraSpeedMult <= s_sensitivitySliderX.maxValue)
+            if (_options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult <= s_sensitivitySliderX.maxValue)
             {
                 Debug.Log("Xsen");
                 cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
@@ -218,10 +218,10 @@ public class PauseMenuController : SubjectBase
         }
         if (s_sensitivitySliderY != null)
         {
-            if (_options[(int)OptionNames.sensitivityY] >= s_sensitivitySliderY.minValue && _options[(int)OptionNames.sensitivityY] <= s_sensitivitySliderY.maxValue)
+            if (_options[(int)OptionNames.sensitivityY] / f_cameraSpeedMult >= s_sensitivitySliderY.minValue && _options[(int)OptionNames.sensitivityY] / f_cameraSpeedMult <= s_sensitivitySliderY.maxValue)
             {
                 cc_cam.v2_cameraSensitivity.y = _options[(int)OptionNames.sensitivityY];
-                s_sensitivitySliderY.value = _options[(int)OptionNames.sensitivityY];
+                s_sensitivitySliderY.value = _options[(int)OptionNames.sensitivityY] / f_cameraSpeedMult;
             }
         }
 
