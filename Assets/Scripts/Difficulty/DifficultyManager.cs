@@ -17,6 +17,11 @@ public class DifficultyManager : SubjectBase
     [Header("Impossibles")]
     [SerializeField] private DifficultySet ds_changeInStatsPerImpossible;
 
+    public void Start()
+    {
+        FindObjectOfType<PiggyBank>().Init(this);
+    }
+
     private void Awake()
     {
         if (x) Destroy(gameObject);

@@ -8,6 +8,17 @@ public class PiggyBank : MonoBehaviour, IInteractible
     [SerializeField] private int i_inputAmount;
     [SerializeField] private int i_storedAmount;
     [SerializeField] GameObject go_portal;
+    private DifficultyManager dm_man;
+
+    public void Init(DifficultyManager _diffMan)
+    {
+        dm_man = _diffMan;
+        if (dm_man.MaximumDifficulty <= 10)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     public void Interacted()
     {
         
