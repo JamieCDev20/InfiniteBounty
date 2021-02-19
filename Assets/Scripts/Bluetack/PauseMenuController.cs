@@ -49,12 +49,12 @@ public class PauseMenuController : SubjectBase
         c_playCanvas.enabled = true;
 
         cc_cam = GetComponentInParent<CameraController>();
-        //SetXSensitivty();
-        //SetYSensitivity();
         SetAmbienceVolume();
         SetMusicVolume();
         SetSFXVolume();
         SaveManager sm = FindObjectOfType<SaveManager>();
+        //SetXSensitivty();
+        //SetYSensitivity();
         if (sm != null)
             if (sm.SaveData.A_playerSliderOptions != null)
                 if (sm.SaveData.A_playerSliderOptions.Length > 0)
