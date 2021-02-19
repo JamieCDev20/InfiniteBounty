@@ -93,6 +93,10 @@ public class PauseMenuController : SubjectBase
 
         c_pauseCanvas.enabled = false;
         c_settingsMenu.enabled = false;
+        c_mainMenu.enabled = true;
+        c_controlsMenu.enabled = false;
+        c_displayMenu.enabled = false;
+        c_audioMenu.enabled = false;
 
         pim.b_shouldPassInputs = true;
         cc_cam.enabled = true;
