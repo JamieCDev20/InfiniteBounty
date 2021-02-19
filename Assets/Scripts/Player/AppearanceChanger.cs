@@ -44,31 +44,11 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_feet[i_currentFeet].SetActive(true);
 
         photonView.RPC("UpdateHeadInOthers", RpcTarget.OthersBuffered, i_currentHead);
-        photonView.RPC("UpdateBodyInOthers", RpcTarget.OthersBuffered, i_currentHead);
-        photonView.RPC("UpdateArmsInOthers", RpcTarget.OthersBuffered, i_currentHead);
-        photonView.RPC("UpdateFeetInOthers", RpcTarget.OthersBuffered, i_currentHead);
-
-
-        /*
-        for (int i = 0; i < goA_heads.Length; i++)
-        {
-            NextHead();
-            NextBody();
-            NextArms();
-            NextFeet();
-
-        }
-        */
+        photonView.RPC("UpdateBodyInOthers", RpcTarget.OthersBuffered, i_currentBody);
+        photonView.RPC("UpdateArmsInOthers", RpcTarget.OthersBuffered, i_currentArm);
+        photonView.RPC("UpdateFeetInOthers", RpcTarget.OthersBuffered, i_currentFeet);
     }
-    /*
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
-        photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentHead);
-        photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentHead);
-        photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentHead);
-    }
-    */
+
 
     #region Head things
 
