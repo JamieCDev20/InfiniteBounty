@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.67409086, g: 0.33267143, b: 0.62968767, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2112,6 +2112,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171749708}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &177005492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6141589675508075667, guid: 586c883561684437593804fba6400912,
+    type: 3}
+  m_PrefabInstance: {fileID: 807949785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &177005493
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177005492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6872784, y: 1.8363833, z: 0.6299053}
+  m_Center: {x: 0.0000009536743, y: 0.000000029802322, z: -0.00000010430813}
 --- !u!1 &181047292
 GameObject:
   m_ObjectHideFlags: 0
@@ -15224,6 +15243,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1109096968}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1116194190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6141589675508075667, guid: 586c883561684437593804fba6400912,
+    type: 3}
+  m_PrefabInstance: {fileID: 31713647}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1116194191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116194190}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.68727815, y: 1.8363833, z: 0.62990505}
+  m_Center: {x: -0.0000009536743, y: 0.000000029802322, z: 0.00000023841858}
 --- !u!1 &1127814088
 GameObject:
   m_ObjectHideFlags: 0
@@ -17760,6 +17798,25 @@ Transform:
   m_Father: {fileID: 847932494}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1349611814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6141589675508075667, guid: 586c883561684437593804fba6400912,
+    type: 3}
+  m_PrefabInstance: {fileID: 1005469410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1349611815
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349611814}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6872782, y: 1.8363833, z: 0.6299051}
+  m_Center: {x: -0.0000009536743, y: 0.000000029802322, z: -0.000000059604645}
 --- !u!1001 &1351341662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18696,6 +18753,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d8e95c1000e62b4c86289e663e1a8e0, type: 3}
+--- !u!1 &1493163817 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6141589675508075667, guid: 586c883561684437593804fba6400912,
+    type: 3}
+  m_PrefabInstance: {fileID: 83577965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1493163818
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493163817}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.68727815, y: 1.8363833, z: 0.62990505}
+  m_Center: {x: 0, y: 0.000000029802322, z: 0.00000023841858}
 --- !u!1 &1494335185
 GameObject:
   m_ObjectHideFlags: 0
@@ -27135,7 +27211,7 @@ PrefabInstance:
     - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 207.6806
+      value: 207.34088
       objectReference: {fileID: 0}
     - target: {fileID: 6116306273585402338, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}

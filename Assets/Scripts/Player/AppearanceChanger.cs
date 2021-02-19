@@ -35,10 +35,14 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         i_currentHead = Random.Range(0, goA_heads.Length);
         i_currentArm = Random.Range(0, golA_arms.Length);
         i_currentFeet = Random.Range(0, goA_feet.Length);
-        NextHead();
-        NextBody();
-        NextArms();
-        NextFeet();
+        for (int i = 0; i < goA_heads.Length; i++)
+        {
+            NextHead();
+            NextBody();
+            NextArms();
+            NextFeet();
+
+        }
     }
 
     #region Head things
