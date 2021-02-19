@@ -127,11 +127,9 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-        Debug.Log(roomList.Count);
         
         for (int i = 0; i < roomList.Count; i++)
         {
-            Debug.Log($"open: {roomList[i].IsOpen} | visible: {roomList[i].IsVisible} | removed: {roomList[i].RemovedFromList}");
             if (roomList[i].RemovedFromList || !roomList[i].IsVisible || !roomList[i].IsOpen)
             {
                 if (riL_currentRooms.Contains(roomList[i]))
