@@ -48,7 +48,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (t_thisPlayer != null)
             Destroy(t_thisPlayer.gameObject);
-        Destroy(playerCamera.transform.parent.gameObject);
+        if (playerCamera != null)
+            Destroy(playerCamera.transform.parent.gameObject);
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)

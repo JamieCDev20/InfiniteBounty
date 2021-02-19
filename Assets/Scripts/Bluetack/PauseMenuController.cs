@@ -12,7 +12,11 @@ public class PauseMenuController : SubjectBase
     [Header("Canvas References")]
     [SerializeField] private Canvas c_playCanvas;
     [SerializeField] private Canvas c_pauseCanvas;
-    [SerializeField] private Canvas c_optionsMenu;
+    [SerializeField] private Canvas c_mainMenu;
+    [SerializeField] private Canvas c_settingsMenu;
+    [SerializeField] private Canvas c_controlsMenu;
+    [SerializeField] private Canvas c_displayMenu;
+    [SerializeField] private Canvas c_audioMenu;
     [SerializeField] private Canvas c_spectatingCanvas;
     private bool b_isPaused;
     private PlayerInputManager pim;
