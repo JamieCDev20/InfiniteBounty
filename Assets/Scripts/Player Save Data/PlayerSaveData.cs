@@ -11,7 +11,8 @@ public struct PlayerSaveData
     public Augment[] purchasedAugments;
     public float[] A_playerSliderOptions;
     public bool b_inverted;
-    public PlayerSaveData(int _i_total, int _i_current, ToolBase[] _tb_tools, ToolBase[] _tb_purchased, Augment[] _purchased, SettingsValues _options)
+    public int i_difficulty;
+    public PlayerSaveData(int _i_total, int _i_current, ToolBase[] _tb_tools, ToolBase[] _tb_purchased, Augment[] _purchased, SettingsValues _options, int _diff)
     {
         i_totalNugs = _i_total;
         i_currentNugs = _i_current;
@@ -28,6 +29,7 @@ public struct PlayerSaveData
             A_playerSliderOptions = null;
             b_inverted = false;
         }
+        i_difficulty = _diff;
     }
 
     public bool CheckNull()
