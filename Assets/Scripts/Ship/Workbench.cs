@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Workbench : MonoBehaviourPunCallbacks, IInteractible
+public class Workbench : SubjectBase, IInteractible
 {
 
     private PlayerInputManager pim;
@@ -52,6 +52,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         if(!PoolManager.x.CheckIfPoolExists(go_propertyButton))
             PoolManager.x.CreateNewPool(go_propertyButton, 20);
         augMan = FindObjectOfType<AugmentManager>();
+        AddObserver(saveMan);
     }
 
     public void Interacted(Transform interactor)
@@ -243,7 +244,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                     ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
                     if (pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
                     {
-
+                        SendSave();
                     }
                     else
                     {
@@ -262,7 +263,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                     ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
                     if (ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
                     {
-
+                        SendSave();
                     }
                     else
                     {
@@ -282,7 +283,7 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                     WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
                     if (wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
                     {
-
+                        SendSave();
                     }
                     else
                     {
@@ -294,10 +295,16 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
                     Debug.LogError("Incompatable Augment Type");
                 }
             }
-
-
         }
         //aL_allAugmentsOwned[i_currentAugmentIndex];
+    }
+
+    private void SendSave()
+    {
+        SaveEvent saveEvent = new SaveEvent(new PlayerSaveData(pim.transform.GetComponent<NugManager>().Nugs, 0,
+            new ToolBase[] { th_currentTh.GetToolBase((int)ToolSlot.leftHand), th_currentTh.GetToolBase((int)ToolSlot.rightHand),
+            th_currentTh.GetToolBase((int)ToolSlot.moblility) }, null, null, null));
+        Notify(saveEvent);
     }
 
     public void ClickAugment(int _i_augmentIndexClicked)
@@ -324,13 +331,6 @@ public class Workbench : MonoBehaviourPunCallbacks, IInteractible
         ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
         RemoveAugmentProperties();
         UpdatePropertyText(_i_augmentIndexClicked);
-
-        /*
-        aL_augmentsInPool[i_currentAugment].t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Level;
-        aL_augmentsInPool[i_currentAugment].t_augmentType.text = aA_avaliableAugments[i_currentAugmentIndex].type;
-        aL_augmentsInPool[i_currentAugment].t_augmentFits.text = aA_avaliableAugments[i_currentAugmentIndex].fits;
-        aL_augmentsInPool[i_currentAugment].t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;
-        */
     }
 
     #endregion

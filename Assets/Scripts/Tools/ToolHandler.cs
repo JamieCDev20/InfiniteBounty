@@ -71,13 +71,13 @@ public class ToolHandler : SubjectBase
             {
                 if (A_tools[(int)ts] == null)
                     return true;
-                Debug.Log(string.Format("Tool Slot: {0} Empty Rack Slot: {1}", A_tools[(int)ts].RackID, ets.RackID));
                 if (A_tools[(int)ts].RackID == ets.RackID)
                 {
                     CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                     ToolRack tr = (ToolRack)sr;
                     tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                     ac_changer.SetArmActive((int)ts, true);
+                    Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null)));
                     return true;
                 }
                 return false;
@@ -93,10 +93,12 @@ public class ToolHandler : SubjectBase
                             case WeaponTool wt:
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+                                Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null)));
                                 return true;
                             case MobilityTool mt:
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                Notify(new SaveEvent(new PlayerSaveData(0, GetComponent<NugManager>().Nugs, A_tools, new ToolBase[] { tb }, null, null)));
                                 return true;
                         }
                     }

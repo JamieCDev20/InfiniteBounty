@@ -158,12 +158,10 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 if(saveData.tb_purchasedTools == null && psd.SaveData.tb_purchasedTools != null)
                 {
                     saveData.tb_purchasedTools = psd.SaveData.tb_purchasedTools;
-                    Debug.Log("Purchased a Tool");
                 }
                 else if(saveData.tb_purchasedTools != null && psd.SaveData.tb_purchasedTools != null)
                 {
                     saveData.tb_purchasedTools = Utils.CombineArrays(saveData.tb_purchasedTools, psd.SaveData.tb_purchasedTools);
-                    Debug.Log("Purchased a Tool");
                 }
                 if (psd.SaveData.A_playerSliderOptions != null)
                 {
