@@ -131,7 +131,6 @@ public class Pool
             newGo = PhotonNetwork.Instantiate(string.Format("{0}{1}", s_path, go_poolType.name), PoolManager.x.transform.position, Quaternion.identity);
         else
         {
-            Debug.Log($"newgo: {newGo} ||| go_pool: {go_poolType}");
             newGo = GameObject.Instantiate(go_poolType);
         }
         newGo.transform.parent = PoolManager.x.transform;
