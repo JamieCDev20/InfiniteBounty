@@ -115,6 +115,13 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        Reset();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        Reset();
     }
 
     public void ReturnToMainMenu()
