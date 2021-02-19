@@ -82,6 +82,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         {
             if (i_currentHealth <= iA_healthIntervals[i])
             {
+                p_chunkEffect.Play();
                 if (PhotonNetwork.IsMasterClient)
                 {
                     for (int j = 0; j < i_nuggetsPerBurst; j++)
@@ -127,6 +128,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
             view.RPC("Death", RpcTarget.Others);
         }
 
+        p_chunkEffect.Play();
         gameObject.SetActive(false);
     }
 
@@ -135,7 +137,6 @@ public class LodeBase : Enemy, IPunObservable, IHitable
     {
         //Nick and byron did this
         Random.InitState(_seed);
-        p_chunkEffect.Play();
 
         GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
         nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
