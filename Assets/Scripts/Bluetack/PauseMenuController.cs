@@ -22,7 +22,7 @@ public class PauseMenuController : SubjectBase
     private CameraController cc_cam;
     private Rigidbody rb_playerPhysics;
     private bool b_isSpectating;
-
+    private int[] A_display = new int[2];
     private float[] A_options = new float[5];
 
     [Header("Option References")]
@@ -159,6 +159,7 @@ public class PauseMenuController : SubjectBase
         SettingsValues sv = new SettingsValues();
         sv.invert = new bool[] { b_mouseInverted };
         sv.A_settingFloats = A_options;
+        sv.displaySettings = A_display;
         Debug.Log(sv.A_settingFloats[(int)OptionNames.sensitivityX]);
         PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, null, sv, 0);
         if (sv != null)
@@ -198,8 +199,15 @@ public class PauseMenuController : SubjectBase
     #region John Stuff
     public void SetQuality(int _i_qualityIndex)
     {
+        A_display[(int)DisplaySettings.quality] = _i_qualityIndex;
         QualitySettings.SetQualityLevel(_i_qualityIndex);
     }
+
+    public void SetResolutions(int _i_resolutionIndex)
+    {
+        A_display[(int)DisplaySettings.resolution] = _i_resolutionIndex;
+    }
+
     #endregion
 
     #region Options
@@ -295,8 +303,8 @@ public class PauseMenuController : SubjectBase
 
     public void SetMasterVolume()
     {
-        A_options[(int)OptionNames.ambience] = (vs_volSliders.s_masterVolumeSlider.value == vs_volSliders.s_masterVolumeSlider.minValue ? -80 : vs_volSliders.s_masterVolumeSlider.value);
-        am_sfxMixer.SetFloat("Volume", (vs_volSliders.s_masterVolumeSlider.value == vs_volSliders.s_masterVolumeSlider.minValue ? -80 : vs_volSliders.s_masterVolumeSlider.value));
+        A_options[(int)OptionNames.master] = (vs_volSliders.s_masterVolumeSlider.value == vs_volSliders.s_masterVolumeSlider.minValue ? -80 : vs_volSliders.s_masterVolumeSlider.value);
+        am_masterMixer.SetFloat("Volume", (vs_volSliders.s_masterVolumeSlider.value == vs_volSliders.s_masterVolumeSlider.minValue ? -80 : vs_volSliders.s_masterVolumeSlider.value));
         if (acA_soundEffectsTestClips.Length > 0)
             AudioSource.PlayClipAtPoint(acA_soundEffectsTestClips[Random.Range(0, acA_soundEffectsTestClips.Length)], cc_cam.transform.position);
     }
@@ -320,5 +328,12 @@ public enum OptionNames
     sensitivityY,
     ambience,
     music,
-    sfx
+    sfx,
+    master
+}
+
+public enum DisplaySettings
+{
+    quality,
+    resolution
 }
