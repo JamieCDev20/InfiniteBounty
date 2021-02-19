@@ -43,12 +43,19 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
         goA_feet[i_currentFeet].SetActive(true);
 
-        photonView.RPC("UpdateHeadInOthers", RpcTarget.OthersBuffered, i_currentHead);
-        photonView.RPC("UpdateBodyInOthers", RpcTarget.OthersBuffered, i_currentBody);
-        photonView.RPC("UpdateArmsInOthers", RpcTarget.OthersBuffered, i_currentArm);
-        photonView.RPC("UpdateFeetInOthers", RpcTarget.OthersBuffered, i_currentFeet);
+        photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
+        photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
+        photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
+        photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
+        photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
+    }
 
     #region Head things
 
