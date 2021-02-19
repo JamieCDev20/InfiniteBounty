@@ -53,8 +53,8 @@ public class PauseMenuController : SubjectBase
         SetMusicVolume();
         SetSFXVolume();
         SaveManager sm = FindObjectOfType<SaveManager>();
-        //SetXSensitivty();
-        //SetYSensitivity();
+        //SetXSensitivty(sm.SaveData.A_playerSliderOptions[(int)OptionNames.sensitivityX]);
+        //SetYSensitivity(sm.SaveData.A_playerSliderOptions[(int)OptionNames.sensitivityY]);
         if (sm != null)
             if (sm.SaveData.A_playerSliderOptions != null)
                 if (sm.SaveData.A_playerSliderOptions.Length > 0)
@@ -206,40 +206,48 @@ public class PauseMenuController : SubjectBase
 
     public void InitOptions(bool _b_inv, float[] _options)
     {
+        Debug.Log("Blooble");
         if (s_sensitivitySliderX != null)
-            if (_options[(int)OptionNames.sensitivityX] >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityX] <= s_sensitivitySliderX.maxValue)
+        {
+            if (_options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult <= s_sensitivitySliderX.maxValue)
             {
+                Debug.Log("Xsen");
                 cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
-                s_sensitivitySliderX.value = _options[(int)OptionNames.sensitivityX];
+                s_sensitivitySliderX.value = _options[(int)OptionNames.sensitivityX] / f_cameraSpeedMult;
             }
-        if(s_sensitivitySliderY != null)
-            if(_options[(int)OptionNames.sensitivityY] >= s_sensitivitySliderY.minValue && _options[(int)OptionNames.sensitivityY] <= s_sensitivitySliderY.maxValue)
+        }
+        if (s_sensitivitySliderY != null)
+        {
+            if (_options[(int)OptionNames.sensitivityY] / f_cameraSpeedMult >= s_sensitivitySliderY.minValue && _options[(int)OptionNames.sensitivityY] / f_cameraSpeedMult <= s_sensitivitySliderY.maxValue)
             {
                 cc_cam.v2_cameraSensitivity.y = _options[(int)OptionNames.sensitivityY];
-                s_sensitivitySliderY.value = _options[(int)OptionNames.sensitivityY];
+                s_sensitivitySliderY.value = _options[(int)OptionNames.sensitivityY] / f_cameraSpeedMult;
             }
+        }
 
-        if (s_sensitivitySliderY != null)
-            if (_options[(int)OptionNames.sensitivityY] >= s_sensitivitySliderX.minValue && _options[(int)OptionNames.sensitivityY] <= s_sensitivitySliderX.maxValue)
-            {
-                cc_cam.v2_cameraSensitivity.x = _options[(int)OptionNames.sensitivityX];
-                s_sensitivitySliderX.value = _options[(int)OptionNames.sensitivityX];
-            }
-
-        if (_options[(int)OptionNames.ambience] >= vs_volSliders.s_ambienceVolumeSlider.minValue && _options[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
+        if (_options[(int)OptionNames.ambience] >= -80 && _options[(int)OptionNames.ambience] <= vs_volSliders.s_ambienceVolumeSlider.maxValue)
         {
             am_ambienceMixer.SetFloat("Volume", _options[(int)OptionNames.ambience]);
-            vs_volSliders.s_ambienceVolumeSlider.value = _options[(int)OptionNames.ambience];
+            if (_options[(int)OptionNames.ambience] < vs_volSliders.s_ambienceVolumeSlider.minValue)
+                vs_volSliders.s_ambienceVolumeSlider.value = vs_volSliders.s_ambienceVolumeSlider.minValue;
+            else
+                vs_volSliders.s_ambienceVolumeSlider.value = _options[(int)OptionNames.ambience];
         }
-        if (_options[(int)OptionNames.music] >= vs_volSliders.s_musicVolumeSilder.minValue && _options[(int)OptionNames.music] <= vs_volSliders.s_musicVolumeSilder.maxValue)
+        if (_options[(int)OptionNames.music] >= -80 && _options[(int)OptionNames.music] <= vs_volSliders.s_musicVolumeSilder.maxValue)
         {
             am_musicMixer.SetFloat("Volume", _options[(int)OptionNames.music]);
-            vs_volSliders.s_musicVolumeSilder.value = _options[(int)OptionNames.music];
+            if (_options[(int)OptionNames.music] < vs_volSliders.s_musicVolumeSilder.minValue)
+                vs_volSliders.s_musicVolumeSilder.value = vs_volSliders.s_musicVolumeSilder.minValue;
+            else
+                vs_volSliders.s_musicVolumeSilder.value = _options[(int)OptionNames.music];
         }
-        if (_options[(int)OptionNames.sfx] >= vs_volSliders.s_sfxVolumeSilder.minValue && _options[(int)OptionNames.sfx] <= vs_volSliders.s_sfxVolumeSilder.maxValue)
+        if (_options[(int)OptionNames.sfx] >= -80 && _options[(int)OptionNames.sfx] <= vs_volSliders.s_sfxVolumeSilder.maxValue)
         {
             am_sfxMixer.SetFloat("Volume", (int)OptionNames.sfx);
-            vs_volSliders.s_sfxVolumeSilder.value = _options[(int)OptionNames.sfx];
+            if (_options[(int)OptionNames.sfx] < vs_volSliders.s_sfxVolumeSilder.minValue)
+                vs_volSliders.s_sfxVolumeSilder.value = vs_volSliders.s_sfxVolumeSilder.minValue;
+            else
+                vs_volSliders.s_sfxVolumeSilder.value = _options[(int)OptionNames.sfx];
         }
     }
 
@@ -271,7 +279,7 @@ public class PauseMenuController : SubjectBase
 
     public void SetMusicVolume()
     {
-        A_options[(int)OptionNames.ambience] = (vs_volSliders.s_musicVolumeSilder.value == vs_volSliders.s_musicVolumeSilder.minValue ? -80 : vs_volSliders.s_musicVolumeSilder.value);
+        A_options[(int)OptionNames.music] = (vs_volSliders.s_musicVolumeSilder.value == vs_volSliders.s_musicVolumeSilder.minValue ? -80 : vs_volSliders.s_musicVolumeSilder.value);
         am_musicMixer.SetFloat("Volume", (vs_volSliders.s_musicVolumeSilder.value == vs_volSliders.s_musicVolumeSilder.minValue ? -80 : vs_volSliders.s_musicVolumeSilder.value));
         if (acA_musicTestClips.Length > 0)
             AudioSource.PlayClipAtPoint(acA_musicTestClips[Random.Range(0, acA_musicTestClips.Length)], cc_cam.transform.position);
@@ -279,7 +287,7 @@ public class PauseMenuController : SubjectBase
 
     public void SetSFXVolume()
     {
-        A_options[(int)OptionNames.ambience] = (vs_volSliders.s_sfxVolumeSilder.value == vs_volSliders.s_sfxVolumeSilder.minValue ? -80 : vs_volSliders.s_sfxVolumeSilder.value);
+        A_options[(int)OptionNames.sfx] = (vs_volSliders.s_sfxVolumeSilder.value == vs_volSliders.s_sfxVolumeSilder.minValue ? -80 : vs_volSliders.s_sfxVolumeSilder.value);
         am_sfxMixer.SetFloat("Volume", (vs_volSliders.s_sfxVolumeSilder.value == vs_volSliders.s_sfxVolumeSilder.minValue ? -80 : vs_volSliders.s_sfxVolumeSilder.value));
         if (acA_soundEffectsTestClips.Length > 0)
             AudioSource.PlayClipAtPoint(acA_soundEffectsTestClips[Random.Range(0, acA_soundEffectsTestClips.Length)], cc_cam.transform.position);
