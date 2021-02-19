@@ -259,6 +259,7 @@ public class PlayerMover : MonoBehaviour
 
     public void HitKnockback(Vector3 _dir, float _force)
     {
+        transform.forward = -_dir;
         rb.AddForce(_dir.normalized * _force, ForceMode.Impulse);
         StartCoroutine(ApplyDragDelay());
     }

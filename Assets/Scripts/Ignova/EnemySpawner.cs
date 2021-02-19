@@ -54,6 +54,14 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     }
 
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            SpawnEnemy(go_miniboss, 0);
+#endif
+    }
+
     private void PlaceStartingEnemiesInZones()
     {
         for (int i = 0; i < iA_numberOfEachStartingEnemyType.Length; i++)
@@ -105,7 +113,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private void SpawnEnemy(GameObject _go_enemyToSpawn, int _i_zoneIndexToSpawnIt)
     {
-        if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)
+        if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies || _go_enemyToSpawn == go_miniboss)
         {
             PhotonNetwork.Instantiate(_go_enemyToSpawn.name, GetPositionWithinZone(_i_zoneIndexToSpawnIt), new Quaternion(0, Random.value, 0, Random.value));
             i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
