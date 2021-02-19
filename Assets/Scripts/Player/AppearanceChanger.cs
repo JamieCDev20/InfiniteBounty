@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,13 +38,14 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         i_currentFeet = Random.Range(0, goA_feet.Length);
 
         goA_heads[i_currentHead].SetActive(true);
-        photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
         goA_bodies[i_currentBody].SetActive(true);
-        photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentHead);
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
-        photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentHead);
         goA_feet[i_currentFeet].SetActive(true);
+
+        photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentHead);
+        photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentHead);
         photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentHead);
 
 
@@ -58,6 +60,15 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         }
         */
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentHead);
+        photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentHead);
+        photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentHead);
+    }
+
 
     #region Head things
 
