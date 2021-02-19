@@ -46,7 +46,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Reset()
     {
-        Destroy(t_thisPlayer.gameObject);
+        if (t_thisPlayer != null)
+            Destroy(t_thisPlayer.gameObject);
         Destroy(playerCamera.transform.parent.gameObject);
     }
 
@@ -104,7 +105,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerIM.SetCamera(cam.GetComponent<CameraController>());
         playerCamera = cam.transform.GetChild(0).gameObject;
         nMan = t_thisPlayer.GetComponent<NugManager>();
-        
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -119,7 +120,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerIM.SyncNameOverNetwork();
         playerIM.b_shouldPassInputs = true;
         playerIM.enabled = true;
-        
+
     }
 
     public void Suicide()
