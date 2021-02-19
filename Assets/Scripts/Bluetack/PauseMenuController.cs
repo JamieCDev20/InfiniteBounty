@@ -248,22 +248,27 @@ public class PauseMenuController : SubjectBase
 
     public void SetAmbienceVolume()
     {
-        A_options[(int)OptionNames.ambience] = vs_volSliders.s_ambienceVolumeSlider.value;
+        A_options[(int)OptionNames.ambience] = (vs_volSliders.s_ambienceVolumeSlider.value == vs_volSliders.s_ambienceVolumeSlider.minValue ? -80 : vs_volSliders.s_ambienceVolumeSlider.value);
         am_ambienceMixer.SetFloat("Volume", vs_volSliders.s_ambienceVolumeSlider.value);
     }
 
     public void SetMusicVolume()
     {
-        A_options[(int)OptionNames.music] = vs_volSliders.s_musicVolumeSilder.value;
+        A_options[(int)OptionNames.ambience] = (vs_volSliders.s_musicVolumeSilder.value == vs_volSliders.s_musicVolumeSilder.minValue ? -80 : vs_volSliders.s_musicVolumeSilder.value);
         am_musicMixer.SetFloat("Volume", vs_volSliders.s_musicVolumeSilder.value);
     }
 
     public void SetSFXVolume()
     {
-        A_options[(int)OptionNames.sfx] = vs_volSliders.s_sfxVolumeSilder.value;
+        A_options[(int)OptionNames.ambience] = (vs_volSliders.s_sfxVolumeSilder.value == vs_volSliders.s_sfxVolumeSilder.minValue ? -80 : vs_volSliders.s_sfxVolumeSilder.value);
         am_sfxMixer.SetFloat("Volume", vs_volSliders.s_sfxVolumeSilder.value);
     }
 
+    public void SetMasterVolume()
+    {
+        A_options[(int)OptionNames.ambience] = (vs_volSliders.s_masterVolumeSlider.value == vs_volSliders.s_masterVolumeSlider.minValue ? -80 : vs_volSliders.s_masterVolumeSlider.value);
+        am_sfxMixer.SetFloat("Volume", vs_volSliders.s_masterVolumeSlider.value);
+    }
 
     #endregion
 
