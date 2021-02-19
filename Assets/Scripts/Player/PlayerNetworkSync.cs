@@ -15,6 +15,10 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
 
     private bool b_isSprinting;
     private bool b_isGrounded;
+    private bool b_shootingLeft;
+    private bool b_shootingRight;
+    private PlayerAnimator anim;
+    private PlayerInputManager pim;
 
     [SerializeField] private bool b_networked = true;
 
@@ -35,6 +39,9 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
 
             stream.SendNext(rb.velocity);
 
+            stream.SendNext(pim.GetToolBools().b_LToolHold);
+            stream.SendNext(pim.GetToolBools().b_RToolHold);
+
         }
         else
         {
@@ -47,6 +54,12 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             b_isSprinting = (bool)stream.ReceiveNext();
 
             v_vel = (Vector3)stream.ReceiveNext();
+            anim?.SetRemoteVelocity(v_vel);
+
+            b_shootingLeft = (bool)stream.ReceiveNext();
+            b_shootingRight = (bool)stream.ReceiveNext();
+
+            anim?.SetRemoteShooting(b_shootingLeft, b_shootingRight);
 
         }
 
@@ -55,6 +68,8 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<PlayerAnimator>();
+        pim = GetComponent<PlayerInputManager>();
     }
 
     private void Update()
@@ -65,7 +80,11 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
         transform.position = (transform.position - v_posVector).sqrMagnitude > 100 ? transform.position = v_posVector : Vector3.Lerp(transform.position, v_posVector, 0.3f);
 
 
+    }
 
+    public Vector3 GetVelocity()
+    {
+        return v_vel;
     }
 
     public bool GetIsSprinting()

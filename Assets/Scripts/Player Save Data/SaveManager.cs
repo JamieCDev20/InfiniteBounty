@@ -106,6 +106,10 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 }
                 psd.b_inverted = bool.Parse(totalNugsString[i + 1]);
             }
+            else if (totalNugsString[i].Contains("A_displaySettings"))
+            {
+                psd.A_displaySettings = ReadArrayFromJson<int>(_saveData, new string[] { "A_displaySettings\":[" }, '}');
+            }
             else if (totalNugsString[i].Contains("i_difficulty"))
             {
                 psd.i_difficulty = int.Parse(totalNugsString[i + 1]);
