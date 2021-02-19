@@ -15,6 +15,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
 
     private bool b_isSprinting;
     private bool b_isGrounded;
+    private PlayerAnimator anim;
 
     [SerializeField] private bool b_networked = true;
 
@@ -47,6 +48,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             b_isSprinting = (bool)stream.ReceiveNext();
 
             v_vel = (Vector3)stream.ReceiveNext();
+            anim.SetRemoteVelocity(v_vel);
 
         }
 
@@ -63,9 +65,13 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             return;
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rotVector, 0.3f);
         transform.position = (transform.position - v_posVector).sqrMagnitude > 100 ? transform.position = v_posVector : Vector3.Lerp(transform.position, v_posVector, 0.3f);
-        photonView.RPC("SetRemoteVelocity", RpcTarget.Others, rb.velocity);
 
 
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return v_vel;
     }
 
     public bool GetIsSprinting()

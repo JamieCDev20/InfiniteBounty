@@ -129,7 +129,6 @@ public class PlayerAnimator : MonoBehaviourPun
         }
     }
 
-    [PunRPC]
     public void SetRemoteVelocity(Vector3 _vel)
     {
         v_vel = _vel;
