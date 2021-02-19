@@ -101,7 +101,7 @@ public class CameraController : MonoBehaviour
 
     public void SetInvertedY(bool val)
     {
-        v2_cameraSensitivity.y = Mathf.Abs(v2_cameraSensitivity.y) * (val ? 1 : -1);
+        v2_cameraSensitivity.y = Mathf.Abs(v2_cameraSensitivity.y) * (val ? -1 : 1);
     }
 
     public void SetLookInput(Vector2 _v2_newLookInput)
