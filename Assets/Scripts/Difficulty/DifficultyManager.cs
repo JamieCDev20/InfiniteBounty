@@ -19,7 +19,7 @@ public class DifficultyManager : SubjectBase
 
     public void Start()
     {
-        FindObjectOfType<PiggyBank>().Init(this);
+        FindObjectOfType<PiggyBank>()?.Init(this);
     }
 
     private void Awake()
