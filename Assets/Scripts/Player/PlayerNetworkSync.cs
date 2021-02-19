@@ -57,6 +57,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
