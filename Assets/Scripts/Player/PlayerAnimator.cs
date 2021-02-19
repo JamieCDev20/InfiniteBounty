@@ -47,6 +47,8 @@ public class PlayerAnimator : MonoBehaviourPun
     internal bool b_isSprinting;
     private PlayerNetworkSync pns;
     private Vector3 v_vel;
+    private bool b_rShootLeft;
+    private bool b_rShootRight;
 
     #endregion
 
@@ -129,6 +131,12 @@ public class PlayerAnimator : MonoBehaviourPun
         }
     }
 
+    public void SetRemoteShooting(bool l, bool r)
+    {
+        b_rShootLeft = l;
+        b_rShootRight = r;
+    }
+
     public void SetRemoteVelocity(Vector3 _vel)
     {
         v_vel = _vel;
@@ -182,8 +190,16 @@ public class PlayerAnimator : MonoBehaviourPun
     {
         if (b_canShoot)
         {
-            anim.SetBool("ShootingLeft", pim_inputManager.GetToolBools().b_LToolHold);
-            anim.SetBool("ShootingRight", pim_inputManager.GetToolBools().b_RToolHold);
+            if (photonView.IsMine)
+            {
+                anim.SetBool("ShootingLeft", pim_inputManager.GetToolBools().b_LToolHold);
+                anim.SetBool("ShootingRight", pim_inputManager.GetToolBools().b_RToolHold);
+            }
+            else
+            {
+                anim.SetBool("ShootingLeft", b_rShootLeft);
+                anim.SetBool("ShootingRight", b_rShootRight);
+            }
         }
         else
         {
