@@ -173,6 +173,10 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 {
                     saveData.A_playerSliderOptions = psd.SaveData.A_playerSliderOptions;
                 }
+                if(psd.SaveData.A_displaySettings != null)
+                {
+                    saveData.A_displaySettings = psd.SaveData.A_displaySettings;
+                }
                 if (psd.SaveData.i_difficulty != 0)
                 {
                     saveData.i_difficulty = psd.SaveData.i_difficulty;

@@ -160,7 +160,7 @@ public class PauseMenuController : SubjectBase
         sv.invert = new bool[] { b_mouseInverted };
         sv.A_settingFloats = A_options;
         sv.displaySettings = A_display;
-        Debug.Log(sv.A_settingFloats[(int)OptionNames.sensitivityX]);
+        Debug.Log(A_display[(int)DisplaySettings.quality]);
         PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, null, sv, 0);
         if (sv != null)
         {
@@ -201,6 +201,7 @@ public class PauseMenuController : SubjectBase
     {
         A_display[(int)DisplaySettings.quality] = _i_qualityIndex;
         QualitySettings.SetQualityLevel(_i_qualityIndex);
+        Debug.Log(A_display[(int)DisplaySettings.quality] + " " + QualitySettings.GetQualityLevel());
     }
 
     public void SetResolutions(int _i_resolutionIndex)
