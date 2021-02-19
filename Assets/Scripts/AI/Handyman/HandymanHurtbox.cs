@@ -23,8 +23,8 @@ public class HandymanHurtbox : MonoBehaviour
             return;
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            other.GetComponent<PlayerMover>().HitKnockback(parent.forward, f_hitForce);
-            other.GetComponent<IHitable>().TakeDamage(i_actualDamage, false);
+            other.GetComponent<PlayerMover>()?.HitKnockback(parent.forward, f_hitForce);
+            other.GetComponent<IHitable>()?.TakeDamage(i_actualDamage, false);
         }
     }
 

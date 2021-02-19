@@ -17,8 +17,11 @@ public class NugSucker : ConeTool
         base.Use(_v_forwards);
         if (go_cone != null)
         {
-            ParticleSystem.ShapeModule sm = ps_cone.shape;
-            sm.angle = f_angle * 0.5f;
+            if (ps_cone != null)
+            {
+                ParticleSystem.ShapeModule sm = ps_cone.shape;
+                sm.angle = f_angle * 0.5f;
+            }
             PlayParticles(true);
         }
         PlayAudio(ac_activationSound);

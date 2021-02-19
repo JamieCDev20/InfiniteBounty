@@ -22,11 +22,11 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         {
             x = this;
             DontDestroyOnLoad(gameObject);
-        }
 
-        view = GetComponent<PhotonView>();
-        view.ViewID = 84520;
-        PhotonNetwork.RegisterPhotonView(view);
+            view = GetComponent<PhotonView>();
+            view.ViewID = 84520;
+            PhotonNetwork.RegisterPhotonView(view);
+        }
     }
 
     public void ReceiveDiversifiers(Diversifier[] _dA_diversGotten)

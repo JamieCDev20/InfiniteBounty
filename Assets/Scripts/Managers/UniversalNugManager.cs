@@ -59,6 +59,8 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     private void RefreshTotalNugCount()
     {
+        if (PhotonNetwork.CurrentRoom == null)
+            return;
         iA_totalNugCounts = new int[6];
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {

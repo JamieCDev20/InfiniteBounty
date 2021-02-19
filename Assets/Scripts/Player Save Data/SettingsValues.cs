@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SettingsValues
 {
-    public bool invertY;
+    public bool[] invert;
     public float[] A_settingFloats;
     public SettingsValues()
     {
 
     }
-    public SettingsValues(bool _y, float[] _A_settings)
+    public SettingsValues(bool[] _inv, float[] _A_settings)
     {
-        invertY = _y;
+        invert = _inv;
         A_settingFloats = _A_settings;
     }
 }

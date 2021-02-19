@@ -78,10 +78,19 @@ public class BubbleShield : MobilityTool
     private IEnumerator ReturnOrbToPool(GameObject _go_orb)
     {
         yield return new WaitForSeconds(f_orbLifeTime);
-        _go_orb.SetActive(false);
-        goL_shieldPool.Add(_go_orb);
-        rb_currentOrb = null;
-        _go_orb.transform.parent = transform;
+        if (_go_orb)
+        {
+            _go_orb.SetActive(false);
+            goL_shieldPool.Add(_go_orb);
+            rb_currentOrb = null;
+            _go_orb.transform.parent = transform;
+        }
+        else
+        {
+            GameObject _go = Instantiate(go_shieldPrefab, transform);
+            _go.SetActive(false);
+            goL_shieldPool.Add(_go);
+        }
     }
 
 
