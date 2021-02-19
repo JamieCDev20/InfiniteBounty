@@ -28,6 +28,17 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
 
     public void Die()
     {
+        GetComponentInChildren<Animator>().SetTrigger("Death");
+        GetComponentInChildren<Animator>().SetBool("WakeUp", false);
+        GetComponent<Rigidbody>().isKinematic = true;
+        StartCoroutine(DelayedDeath());
+    }
+
+    IEnumerator DelayedDeath()
+    {
+        GetComponent<Collider>().isTrigger = true;
+        yield return new WaitForSeconds(2.8f);
+        GetComponentInChildren<Animator>().SetBool("WakeUp", true);
         PhotonNetwork.Destroy(gameObject);
         if (photonView.IsMine)
             EnemySpawner.x?.EnemyDied();
