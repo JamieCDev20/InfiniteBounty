@@ -253,28 +253,32 @@ public class PauseMenuController : SubjectBase
     {
         A_options[(int)OptionNames.ambience] = (vs_volSliders.s_ambienceVolumeSlider.value == vs_volSliders.s_ambienceVolumeSlider.minValue ? -80 : vs_volSliders.s_ambienceVolumeSlider.value);
         am_ambienceMixer.SetFloat("Volume", (vs_volSliders.s_ambienceVolumeSlider.value == vs_volSliders.s_ambienceVolumeSlider.minValue ? -80 : vs_volSliders.s_ambienceVolumeSlider.value));
-        AudioSource.PlayClipAtPoint(acA_ambienceTestClips[Random.Range(0, acA_ambienceTestClips.Length)], cc_cam.transform.position);
+        if (acA_ambienceTestClips.Length > 0)
+            AudioSource.PlayClipAtPoint(acA_ambienceTestClips[Random.Range(0, acA_ambienceTestClips.Length)], cc_cam.transform.position);
     }
 
     public void SetMusicVolume()
     {
         A_options[(int)OptionNames.ambience] = (vs_volSliders.s_musicVolumeSilder.value == vs_volSliders.s_musicVolumeSilder.minValue ? -80 : vs_volSliders.s_musicVolumeSilder.value);
         am_musicMixer.SetFloat("Volume", (vs_volSliders.s_musicVolumeSilder.value == vs_volSliders.s_musicVolumeSilder.minValue ? -80 : vs_volSliders.s_musicVolumeSilder.value));
-        AudioSource.PlayClipAtPoint(acA_musicTestClips[Random.Range(0, acA_musicTestClips.Length)], cc_cam.transform.position);
+        if (acA_musicTestClips.Length > 0)
+            AudioSource.PlayClipAtPoint(acA_musicTestClips[Random.Range(0, acA_musicTestClips.Length)], cc_cam.transform.position);
     }
 
     public void SetSFXVolume()
     {
         A_options[(int)OptionNames.ambience] = (vs_volSliders.s_sfxVolumeSilder.value == vs_volSliders.s_sfxVolumeSilder.minValue ? -80 : vs_volSliders.s_sfxVolumeSilder.value);
         am_sfxMixer.SetFloat("Volume", (vs_volSliders.s_sfxVolumeSilder.value == vs_volSliders.s_sfxVolumeSilder.minValue ? -80 : vs_volSliders.s_sfxVolumeSilder.value));
-        AudioSource.PlayClipAtPoint(acA_soundEffectsTestClips[Random.Range(0, acA_soundEffectsTestClips.Length)], cc_cam.transform.position);
+        if (acA_soundEffectsTestClips.Length > 0)
+            AudioSource.PlayClipAtPoint(acA_soundEffectsTestClips[Random.Range(0, acA_soundEffectsTestClips.Length)], cc_cam.transform.position);
     }
 
     public void SetMasterVolume()
     {
         A_options[(int)OptionNames.ambience] = (vs_volSliders.s_masterVolumeSlider.value == vs_volSliders.s_masterVolumeSlider.minValue ? -80 : vs_volSliders.s_masterVolumeSlider.value);
         am_sfxMixer.SetFloat("Volume", (vs_volSliders.s_masterVolumeSlider.value == vs_volSliders.s_masterVolumeSlider.minValue ? -80 : vs_volSliders.s_masterVolumeSlider.value));
-        AudioSource.PlayClipAtPoint(acA_soundEffectsTestClips[Random.Range(0, acA_soundEffectsTestClips.Length)], cc_cam.transform.position);
+        if (acA_soundEffectsTestClips.Length > 0)
+            AudioSource.PlayClipAtPoint(acA_soundEffectsTestClips[Random.Range(0, acA_soundEffectsTestClips.Length)], cc_cam.transform.position);
     }
 
     #endregion
