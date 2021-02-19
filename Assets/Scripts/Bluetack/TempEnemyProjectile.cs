@@ -14,7 +14,7 @@ public class TempEnemyProjectile : MonoBehaviour
         {
             IHitable ih = collision.gameObject.GetComponent<IHitable>();
             if (ih != null)
-                ih.TakeDamage(i_damage, false);
+                ih.TakeDamage(Mathf.RoundToInt(i_damage * DifficultyManager.x.ReturnCurrentDifficulty().f_damageMult), false);
         }
         PoolManager.x?.ReturnObjectToPool(gameObject);
     }
