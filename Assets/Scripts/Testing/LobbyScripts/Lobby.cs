@@ -126,17 +126,24 @@ public class Lobby : MonoBehaviourPunCallbacks
         base.OnRoomListUpdate(roomList);
 
         //PhotonNetwork.JoinLobby(TypedLobby.Default);
-
+        List<int> toRemove = new List<int>();
         for (int i = 0; i < roomList.Count; i++)
         {
             if (riL_currentRooms.Contains(roomList[i]))
             {
-                riL_currentRooms.Remove(roomList[i]);
+                toRemove.Add(i);
                 if (riL_currentRooms[i].PlayerCount < riL_currentRooms[i].MaxPlayers && riL_currentRooms[i].PlayerCount > 0)
                     riL_currentRooms.Add(roomList[i]);
             }
             else
                 riL_currentRooms.Add(roomList[i]);
+        }
+
+        toRemove.Reverse();
+
+        for (int i = 0; i < toRemove.Count; i++)
+        {
+            riL_currentRooms.RemoveAt(toRemove[i]);
         }
         UpdateRoomListDisplay();
     }
