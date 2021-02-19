@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class JukeBox : MonoBehaviour
+public class JukeBox : MonoBehaviour, IHitable
 {
 
     private AudioSource as_source;
@@ -20,6 +20,8 @@ public class JukeBox : MonoBehaviour
         as_source.clip = acA_songs[i_currentSong];
         as_source.Play();
         tmp_trackNameText.text = sA_trackNames[i_currentSong];
+
+        TogglePower();
     }
 
     private void Update()
@@ -55,4 +57,17 @@ public class JukeBox : MonoBehaviour
         }
     }
 
+
+    public void TakeDamage(int damage, bool activatesThunder)
+    {
+        gameObject.SetActive(false);
+        b_isPoweredOn = true;
+        TogglePower();
+    }
+
+    public bool IsDead() { return false; }
+
+    public void Die() { }
+
+    public void TakeDamage(int damage, bool activatesThunder, float delay) { }
 }
