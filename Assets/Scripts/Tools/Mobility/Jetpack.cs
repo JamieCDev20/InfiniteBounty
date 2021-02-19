@@ -23,12 +23,11 @@ public class Jetpack : MobilityTool
     [SerializeField] private Material m_steamingMat;
 
     [Header("Jetpack Sound")]
-    [SerializeField] private AudioClip ac_steamingSound;
+    [SerializeField] private AudioSource as_steamSource;
     private AudioSource as_source;
 
     private Vector3 v_targetV;
     private float t;
-    private AudioSource as_steamSource;
     private PlayerMover pm_mover;
 
     private void Start()
@@ -38,8 +37,7 @@ public class Jetpack : MobilityTool
         f_currentFuel = f_maxFuel;
         as_source = GetComponent<AudioSource>();
         as_source.clip = ac_activationSound[0];
-        EndSteaming();
-        as_steamSource = gameObject.AddComponent<AudioSource>();
+        EndSteaming();      
 
         pm_mover = transform.root.GetComponent<PlayerMover>();
 
@@ -132,7 +130,7 @@ public class Jetpack : MobilityTool
 
         as_source.Stop();
         //as_source.clip = ac_steamingSound;
-        as_steamSource.PlayOneShot(ac_steamingSound);
+        as_steamSource.Play();
     }
 
     private void EndSteaming()
