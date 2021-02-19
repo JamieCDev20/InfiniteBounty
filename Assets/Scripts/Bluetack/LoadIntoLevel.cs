@@ -56,6 +56,13 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void LoadLevel(string levelname)
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (levelname.Contains("Lobby"))
+                PhotonNetwork.CurrentRoom.IsVisible = true;
+            else
+                PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
         i_playersCount = 0;
         if (levelname.Contains("Lobby"))
             ReturnToShip();        

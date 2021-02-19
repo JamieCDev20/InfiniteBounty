@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DifficultyManager : MonoBehaviour
+public class DifficultyManager : SubjectBase
 {
     public static DifficultyManager x;
 
@@ -17,12 +17,18 @@ public class DifficultyManager : MonoBehaviour
     [Header("Impossibles")]
     [SerializeField] private DifficultySet ds_changeInStatsPerImpossible;
 
+    public void Start()
+    {
+        FindObjectOfType<PiggyBank>()?.Init(this);
+    }
+
     private void Awake()
     {
         if (x) Destroy(gameObject);
         else x = this;
         DontDestroyOnLoad(gameObject);
         i_amountOfAuthoredDifs = dsL_difficulties.Count;
+        AddObserver(FindObjectOfType<SaveManager>());
     }
 
     internal DifficultySet ReturnCurrentDifficulty()
@@ -68,7 +74,7 @@ public class DifficultyManager : MonoBehaviour
     internal void IncreaseDifficultiesUnlocked()
     {
         i_maximumDifficulty++;
-        print("YOU'VE UNLOCKED A NEW DIFFICULTY! IT SHOULD'VE SAVED THAT, BUT I DONT KNOW HOW!");
+        Notify(new SaveEvent(new PlayerSaveData(0, 0, null, null, null, null, i_maximumDifficulty)));
     }
 
     #region Impossible Ranks

@@ -18,6 +18,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private CameraController cc_cam;
     public CameraController Cam { set { cc_cam = value; } }
 
+    private float f_lavaBounceTime = 0;
     private bool isDead = false;
     private bool b_canBeRevived = false;
     private float f_currentHealth;
@@ -284,13 +285,16 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void StartBurningBum(Vector3 _v_bounceDirection, bool _b_shouldCatchFire)
     {
+        if (Time.realtimeSinceStartup - f_lavaBounceTime < 0.5f)
+            return;
+        f_lavaBounceTime = Time.realtimeSinceStartup;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
         rb.AddForce(_v_bounceDirection);
-        anim.SetBool("LavaHit", true);
 
         if (_b_shouldCatchFire)
         {
+            anim.SetBool("LavaHit", true);
             ps_burningBumParticles.Play();
             Invoke("StopParticles", 1);
         }

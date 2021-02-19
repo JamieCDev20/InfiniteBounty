@@ -51,7 +51,7 @@ public class LoadingScreenManager : MonoBehaviourPun
         //print("I've been told to call the funuctyion");
         //SetSceneToLoad(_s_levelName);
         //StartCoroutine(BeginLoadingSceneAsync());
-        if (PhotonNetwork.IsMasterClient)
+        
             PhotonNetwork.LoadLevel(_s_levelName);
     }
 

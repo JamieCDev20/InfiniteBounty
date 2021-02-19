@@ -111,10 +111,17 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        base.OnMasterClientSwitched(newMasterClient);
-        PhotonNetwork.Disconnect();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        base.OnMasterClientSwitched(newMasterClient);
+        PhotonNetwork.Disconnect();
+        Reset();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        Reset();
     }
 
     public void ReturnToMainMenu()

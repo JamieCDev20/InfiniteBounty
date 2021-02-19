@@ -9,6 +9,10 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     private int i_numberOfEnemies;
     private DifficultySet ds_currentDifficulty;
 
+    [Header("Enemies in Level at Start")]
+    [SerializeField] private GameObject[] goA_startEnemies = new GameObject[1];
+    [SerializeField] private int[] iA_numberOfEachStartingEnemyType = new int[1];
+
     [Header("Waves")]
     [SerializeField] private GameObject[] goA_waveEnemies = new GameObject[2];
     [SerializeField] private int[] iA_enemyWeightings = new int[2];
@@ -31,8 +35,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     private void Start()
     {
         x = this;
-
         ds_currentDifficulty = DifficultyManager.x.ReturnCurrentDifficulty();
+
 
         for (int i = 0; i < goA_waveEnemies.Length; i++)
             for (int x = 0; x < iA_enemyWeightings[i]; x++)
@@ -43,18 +47,44 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             iL_minibossZones.Add(Random.Range(0, ziA_enemySpawnZones.Length));
 
         if (PhotonNetwork.IsMasterClient)
+        {
             StartCoroutine(CheckZoneForPlayers());
+            PlaceStartingEnemiesInZones();
+        }
 
+    }
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            SpawnEnemy(go_miniboss, 0);
+#endif
+    }
+
+    private void PlaceStartingEnemiesInZones()
+    {
+        for (int i = 0; i < iA_numberOfEachStartingEnemyType.Length; i++)
+        {
+            int _i_zone = Random.Range(0, ziA_enemySpawnZones.Length);
+
+            for (int x = 0; x < iA_numberOfEachStartingEnemyType[i]; x++)
+            {
+                SpawnEnemy(goA_startEnemies[i], _i_zone);
+            }
+        }
     }
 
     private IEnumerator CheckZoneForPlayers()
     {
         yield return new WaitForSeconds(Random.Range(v_timeBetweenWaves.x, v_timeBetweenWaves.y) * ds_currentDifficulty.f_spawnFrequencyMult);
+        bool _b_spawnedWave = false;
 
         for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
         {
             if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
             {
+                _b_spawnedWave = true;
                 print("Checking the zones for players, and I found one");
                 StartCoroutine(SpawnWave(i));
                 if (iL_minibossZones.Contains(i))
@@ -64,6 +94,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                 }
             }
         }
+        if (_b_spawnedWave)
+            yield return new WaitForSeconds(f_timeBetweenHordes * i_numberOfHordesPerWave);
 
         StartCoroutine(CheckZoneForPlayers());
     }
@@ -81,7 +113,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private void SpawnEnemy(GameObject _go_enemyToSpawn, int _i_zoneIndexToSpawnIt)
     {
-        if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)
+        if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies || _go_enemyToSpawn == go_miniboss)
         {
             PhotonNetwork.Instantiate(_go_enemyToSpawn.name, GetPositionWithinZone(_i_zoneIndexToSpawnIt), new Quaternion(0, Random.value, 0, Random.value));
             i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;

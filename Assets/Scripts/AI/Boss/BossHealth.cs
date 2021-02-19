@@ -9,6 +9,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
     private BossAI boss;
     [SerializeField] private int i_maxHealth;
     private int i_currentHealth;
+    private int i_maxHealthSCALED;
     [SerializeField] private GameObject go_deathParticles;
     [SerializeField] private RectTransform rt_healthBar;
     private Image i_healthBarImage;
@@ -25,6 +26,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
     [Header("Damage Feedback")]
     [SerializeField] private GameObject go_bossHitEffectPrefab;
     private List<GameObject> goL_bossHitEffectPool = new List<GameObject>();
+    private bool b_isDead;
 
     private IEnumerator Start()
     {
@@ -34,10 +36,10 @@ public class BossHealth : MonoBehaviourPun, IHitable
 
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult) * PhotonNetwork.CurrentRoom.PlayerCount;
+        i_maxHealthSCALED = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult) * PhotonNetwork.CurrentRoom.PlayerCount;
 
-
-        rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
-        rt_healthBarWhite.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
+        rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1);
+        rt_healthBarWhite.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1);
         i_healthBarImage = rt_healthBar.GetComponent<Image>();
         c_healthBaseColour = i_healthBarImage.color;
 
@@ -51,7 +53,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
     private void Update()
     {
         if (f_timeSinceDamage >= f_timeToWauitBeforeUpdatingWhite)
-            rt_healthBarWhite.localScale = Vector3.Lerp(rt_healthBarWhite.transform.localScale, new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1), 5 * Time.deltaTime);
+            rt_healthBarWhite.localScale = Vector3.Lerp(rt_healthBarWhite.transform.localScale, new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1), 5 * Time.deltaTime);
         f_timeSinceDamage += Time.deltaTime;
     }
 
@@ -91,8 +93,12 @@ public class BossHealth : MonoBehaviourPun, IHitable
     {
         i_currentHealth = _i_newHealth;
         if (i_currentHealth <= 0)
-            photonView.RPC(nameof(Die), RpcTarget.All);
-        rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealth, 0, Mathf.Infinity), 1, 1);
+        {
+            if (!b_isDead)
+                photonView.RPC(nameof(Die), RpcTarget.All);
+            b_isDead = true;
+        }
+        rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1);
         f_timeSinceDamage = 0;
 
         for (int i = 0; i < 3; i++)

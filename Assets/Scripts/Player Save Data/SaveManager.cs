@@ -106,9 +106,11 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 }
                 psd.b_inverted = bool.Parse(totalNugsString[i + 1]);
             }
+            else if (totalNugsString[i].Contains("i_difficulty"))
+            {
+                psd.i_difficulty = int.Parse(totalNugsString[i + 1]);
+            }
         }
-
-
         return psd;
     }
 
@@ -158,16 +160,18 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 if(saveData.tb_purchasedTools == null && psd.SaveData.tb_purchasedTools != null)
                 {
                     saveData.tb_purchasedTools = psd.SaveData.tb_purchasedTools;
-                    Debug.Log("Purchased a Tool");
                 }
                 else if(saveData.tb_purchasedTools != null && psd.SaveData.tb_purchasedTools != null)
                 {
                     saveData.tb_purchasedTools = Utils.CombineArrays(saveData.tb_purchasedTools, psd.SaveData.tb_purchasedTools);
-                    Debug.Log("Purchased a Tool");
                 }
                 if (psd.SaveData.A_playerSliderOptions != null)
                 {
                     saveData.A_playerSliderOptions = psd.SaveData.A_playerSliderOptions;
+                }
+                if (psd.SaveData.i_difficulty != 0)
+                {
+                    saveData.i_difficulty = psd.SaveData.i_difficulty;
                 }
                 string jsonData = JsonUtility.ToJson(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, jsonData);

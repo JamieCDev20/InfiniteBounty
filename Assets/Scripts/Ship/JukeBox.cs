@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class JukeBox : MonoBehaviour
+public class JukeBox : MonoBehaviour, IHitable
 {
 
     private AudioSource as_source;
+    [SerializeField] private string[] sA_trackNames = new string[0];
     [SerializeField] private AudioClip[] acA_songs = new AudioClip[0];
+    [Space, SerializeField] private TextMeshPro tmp_trackNameText;
     private int i_currentSong;
     private bool b_isPoweredOn;
 
@@ -16,6 +19,9 @@ public class JukeBox : MonoBehaviour
         b_isPoweredOn = true;
         as_source.clip = acA_songs[i_currentSong];
         as_source.Play();
+        tmp_trackNameText.text = sA_trackNames[i_currentSong];
+
+        TogglePower();
     }
 
     private void Update()
@@ -32,6 +38,7 @@ public class JukeBox : MonoBehaviour
             i_currentSong = 0;
 
         as_source.clip = acA_songs[i_currentSong];
+        tmp_trackNameText.text = sA_trackNames[i_currentSong];
         as_source.Play();
         b_isPoweredOn = true;
     }
@@ -50,4 +57,17 @@ public class JukeBox : MonoBehaviour
         }
     }
 
+
+    public void TakeDamage(int damage, bool activatesThunder)
+    {
+        gameObject.SetActive(false);
+        b_isPoweredOn = true;
+        TogglePower();
+    }
+
+    public bool IsDead() { return false; }
+
+    public void Die() { }
+
+    public void TakeDamage(int damage, bool activatesThunder, float delay) { }
 }
