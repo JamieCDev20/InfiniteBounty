@@ -26,6 +26,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
     [Header("Damage Feedback")]
     [SerializeField] private GameObject go_bossHitEffectPrefab;
     private List<GameObject> goL_bossHitEffectPool = new List<GameObject>();
+    private bool b_isDead;
 
     private IEnumerator Start()
     {
@@ -92,7 +93,11 @@ public class BossHealth : MonoBehaviourPun, IHitable
     {
         i_currentHealth = _i_newHealth;
         if (i_currentHealth <= 0)
-            photonView.RPC(nameof(Die), RpcTarget.All);
+        {
+            if (!b_isDead)
+                photonView.RPC(nameof(Die), RpcTarget.All);
+            b_isDead = true;
+        }
         rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1);
         f_timeSinceDamage = 0;
 
