@@ -38,6 +38,13 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_heads[i_currentHead].SetActive(true);
         photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        goA_bodies[i_currentBody].SetActive(true);
+        photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentHead);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
+        photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentHead);
+        goA_feet[i_currentFeet].SetActive(true);
+        photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentHead);
 
 
         /*
