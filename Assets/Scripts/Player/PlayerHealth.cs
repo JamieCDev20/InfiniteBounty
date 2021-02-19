@@ -291,10 +291,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - Vector3.up);
         rb.AddForce(_v_bounceDirection);
-        anim.SetBool("LavaHit", true);
 
         if (_b_shouldCatchFire)
         {
+            anim.SetBool("LavaHit", true);
             ps_burningBumParticles.Play();
             Invoke("StopParticles", 1);
         }
