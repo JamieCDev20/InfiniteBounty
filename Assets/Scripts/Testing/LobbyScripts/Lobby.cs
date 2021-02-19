@@ -27,6 +27,9 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        if (PhotonNetwork.IsConnected)
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.CurrentRoom.IsVisible = true;
         if (sb_bar != null)
             sb_bar.value = 1;
         //PhotonNetwork.ConnectUsingSettings();
