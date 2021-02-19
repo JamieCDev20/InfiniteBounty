@@ -38,8 +38,11 @@ public class Pool
     {
         // Create a new pool
         p_objects = new HashSet<IPoolable>();
-        b_isNetworkedPool = go_poolType.GetComponent<IPoolable>().IsNetworkedObject();
-        s_path = go_poolType.GetComponent<IPoolable>().ResourcePath();
+        if (go_poolType)
+        {
+            b_isNetworkedPool = go_poolType.GetComponent<IPoolable>().IsNetworkedObject();
+            s_path = go_poolType.GetComponent<IPoolable>().ResourcePath();
+        }
         i_aliveObjects = i_initialSize;
         // Create as many objects as your initial size
         for (int i = 0; i < i_initialSize; i++)
