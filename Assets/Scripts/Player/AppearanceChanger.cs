@@ -6,7 +6,6 @@ using UnityEngine;
 public class AppearanceChanger : MonoBehaviourPunCallbacks
 {
     [SerializeField] private PlayerInputManager pim_pim;
-    private PhotonView view;
 
     [Header("Head Things")]
     [SerializeField] private GameObject[] goA_heads = new GameObject[0];
@@ -29,12 +28,19 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        view = GetComponent<PhotonView>();
+        if (!photonView.IsMine) return;
+        Debug.LogError("I AM CALLING START");
 
         i_currentBody = Random.Range(0, goA_bodies.Length);
         i_currentHead = Random.Range(0, goA_heads.Length);
         i_currentArm = Random.Range(0, golA_arms.Length);
         i_currentFeet = Random.Range(0, goA_feet.Length);
+
+        goA_heads[i_currentHead].SetActive(true);
+        photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+
+
+        /*
         for (int i = 0; i < goA_heads.Length; i++)
         {
             NextHead();
@@ -43,6 +49,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
             NextFeet();
 
         }
+        */
     }
 
     #region Head things
@@ -58,7 +65,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_heads[i_currentHead].SetActive(true);
 
         if (b_networked)
-            view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+            photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
     }
     public void LastHead()
     {
@@ -71,7 +78,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_heads[i_currentHead].SetActive(true);
 
         if (b_networked)
-            view.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+            photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
     }
 
     [PunRPC]
@@ -97,7 +104,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_bodies[i_currentBody].SetActive(true);
 
         if (b_networked)
-            view.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
+            photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
     }
     public void LastBody()
     {
@@ -110,7 +117,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_bodies[i_currentBody].SetActive(true);
 
         if (b_networked)
-            view.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
+            photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
     }
 
 
@@ -138,8 +145,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
-        if(b_networked)
-        view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
+        if (b_networked)
+            photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
     }
     public void LastArms()
     {
@@ -153,8 +160,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         golA_arms[i_currentArm].goL_theList[0].SetActive(true);
         golA_arms[i_currentArm].goL_theList[1].SetActive(true);
 
-        if(b_networked)
-        view.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
+        if (b_networked)
+            photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
     }
 
     [PunRPC]
@@ -188,8 +195,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_feet[i_currentFeet].SetActive(true);
 
-        if(b_networked)
-        view.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
+        if (b_networked)
+            photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
     }
     public void LastFeet()
     {
@@ -201,8 +208,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_feet[i_currentFeet].SetActive(true);
 
-        if(b_networked)
-        view.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
+        if (b_networked)
+            photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
     }
 
     [PunRPC]
