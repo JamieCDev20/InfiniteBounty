@@ -56,6 +56,7 @@ public class PlayerMover : MonoBehaviour
     private FootstepAudioPlayer fap_audio;
     internal bool b_isSitting;
     private bool b_knockedback;
+    private Animator anim;
 
     #endregion
 
@@ -64,13 +65,14 @@ public class PlayerMover : MonoBehaviour
 
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         Init();
     }
 
     private void Update()
     {
         b_grounded = CheckGrounded();
-
+        anim.SetBool("Grounded", b_grounded);
         if (!view.IsMine && b_networked)
             return;
         Jump();
@@ -157,7 +159,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyDrag()
     {
-        if(b_applyDrag)
+        if (b_applyDrag)
             rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_dragVector);
     }
 
