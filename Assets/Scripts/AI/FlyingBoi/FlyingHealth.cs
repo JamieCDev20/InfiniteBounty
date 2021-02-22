@@ -7,18 +7,19 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
 {
 
     [SerializeField] private int i_maxHealth = 300;
-    
+    [SerializeField] private GameObject go_deathEffect;
     private int i_curHealth;
 
     private void OnEnable()
     {
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
-        i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);        
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
         transform.localScale = Vector3.one * _ds.f_scaleMult;
 
         i_curHealth = i_maxHealth;
         Invoke(nameof(TimedDeath), Random.Range(90, 130));
-
+        go_deathEffect.transform.parent = transform;
+        go_deathEffect.SetActive(false);
     }
 
     private void TimedDeath()
@@ -28,6 +29,9 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
 
     public void Die()
     {
+        go_deathEffect.SetActive(true);
+        go_deathEffect.transform.parent = null;
+
         PhotonNetwork.Destroy(gameObject);
         if (photonView.IsMine)
             EnemySpawner.x?.EnemyDied();
@@ -40,7 +44,7 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             MasterTakeDamage(damage, activatesThunder);
             return;
@@ -55,7 +59,7 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
             Die();
 
     }
-    
+
     [PunRPC]
     public void RemoteTakeDamage(int _dmg, bool _thun)
     {

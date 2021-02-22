@@ -152,7 +152,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8013386071279650137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -493,12 +493,37 @@ PrefabInstance:
     - target: {fileID: 6787777949204516063, guid: 62e2876e0042db9458f5deb1b08161d1,
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
-      value: 16
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6787777949204516063, guid: 62e2876e0042db9458f5deb1b08161d1,
         type: 3}
       propertyPath: InitialModule.maxNumParticles
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787777949204516063, guid: 62e2876e0042db9458f5deb1b08161d1,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787777949204516063, guid: 62e2876e0042db9458f5deb1b08161d1,
+        type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787777949204516063, guid: 62e2876e0042db9458f5deb1b08161d1,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 0.6513128
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787777949204516063, guid: 62e2876e0042db9458f5deb1b08161d1,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787777949204516063, guid: 62e2876e0042db9458f5deb1b08161d1,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7921880515141612302, guid: 62e2876e0042db9458f5deb1b08161d1,
         type: 3}
