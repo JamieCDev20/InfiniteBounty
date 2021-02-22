@@ -27,10 +27,14 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
         TakeDamage(10000, true);
     }
 
-    public void Die()
+    private void OnDestroy()
     {
         go_deathEffect.SetActive(true);
         go_deathEffect.transform.parent = null;
+    }
+
+    public void Die()
+    {
 
         PhotonNetwork.Destroy(gameObject);
         if (photonView.IsMine)
@@ -49,7 +53,7 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
             MasterTakeDamage(damage, activatesThunder);
             return;
         }
-        photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage, activatesThunder);
+        photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage, activatesThunder);        
     }
 
     private void MasterTakeDamage(int damage, bool activatesThunder)

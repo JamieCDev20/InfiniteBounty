@@ -34,7 +34,7 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
-
+        as_source = GetComponent<AudioSource>();
 
         //if (mr_mainRenderer)
         //   mr_mainRenderer.material.SetFloat("_emissionMult", f_baseEmission);
@@ -100,7 +100,8 @@ public class LodeBase : Enemy, IPunObservable, IHitable
 
                     }
                 }
-                as_source.PlayOneShot(ac_takeDamageClip);
+                if (as_source != null)
+                    as_source.PlayOneShot(ac_takeDamageClip);
                 goA_damageMeshes[i].SetActive(false);
                 iA_healthIntervals[i] = -10000000;
             }
@@ -135,7 +136,8 @@ public class LodeBase : Enemy, IPunObservable, IHitable
         }
 
         p_chunkEffect.Play();
-        as_source.PlayOneShot(ac_destroyedClip);
+
+        AudioSource.PlayClipAtPoint(ac_destroyedClip, transform.position);
         gameObject.SetActive(false);
     }
 
