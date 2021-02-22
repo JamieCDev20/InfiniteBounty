@@ -73,7 +73,8 @@ public class DifficultyManager : SubjectBase
 
     internal void IncreaseDifficultiesUnlocked()
     {
-        i_maximumDifficulty++;
+        if (i_currentDifficulty == i_maximumDifficulty)
+            i_maximumDifficulty++;
         Notify(new SaveEvent(new PlayerSaveData(0, 0, null, null, null, null, i_maximumDifficulty)));
     }
 
