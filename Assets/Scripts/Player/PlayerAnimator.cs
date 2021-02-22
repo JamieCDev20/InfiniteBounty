@@ -267,6 +267,14 @@ public class PlayerAnimator : MonoBehaviourPun
         camTransform = cam;
     }
 
+    [PunRPC]
+    public void RemoteDied()
+    {
+        anim.SetTrigger("GetKnockedDown");
+        anim.SetBool("GetRevived", false);
+        anim.SetBool("Knockdown", true);
+    }
+
     public void PlayerDied()
     {
         SetShootability(false);
@@ -274,6 +282,7 @@ public class PlayerAnimator : MonoBehaviourPun
         anim.SetBool("GetRevived", false);
         anim.SetBool("Knockdown", true);
         pm_mover.SetDown(true);
+        photonView.RPC("RemoteDied", RpcTarget.Others);
     }
 
     public void PlayerRevived()

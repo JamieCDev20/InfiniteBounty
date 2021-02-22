@@ -9,7 +9,10 @@ public class PlayerSoundOnEnter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        as_source.pitch = 1;
-        as_source.PlayOneShot(ac_clip);
+        if (!other.isTrigger)
+        {
+            as_source.pitch = 1;
+            as_source.PlayOneShot(ac_clip);
+        }
     }
 }
