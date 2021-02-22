@@ -6,6 +6,7 @@ using UnityEngine;
 public class GenericHittable : MonoBehaviour, IHitable
 {
     [SerializeField] private TextMeshPro tmp_damageText;
+    [SerializeField] private ParticleSystem p_hitEffect;
 
     private void Start()
     {
@@ -17,6 +18,7 @@ public class GenericHittable : MonoBehaviour, IHitable
     {
         tmp_damageText.text = damage + " DMG";
 
+        p_hitEffect.Play();
 
     }
 
