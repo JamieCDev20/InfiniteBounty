@@ -160,7 +160,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void FullRespawn()
     {
-        cc_cam.SetFollow(transform);
+        cc_cam?.SetFollow(transform);
         view.RPC("Respawn", RpcTarget.All);
     }
 
