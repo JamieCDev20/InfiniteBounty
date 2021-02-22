@@ -13,20 +13,16 @@ public class PiggyBank : MonoBehaviour, IInteractible
     [SerializeField] private TextMeshPro tmp_currentMoneyText;
 
 
-    public void Init(DifficultyManager _diffMan)
+    public void Start()
     {
-        dm_man = _diffMan;
-        if (dm_man.MaximumDifficulty <= 10)
+        if (DifficultyManager.x.MaximumDifficulty >= 9)
         {
             gameObject.SetActive(false);
         }
         transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
     }
 
-    public void Interacted()
-    {
-
-    }
+    public void Interacted() { }
 
     public void Interacted(Transform interactor)
     {

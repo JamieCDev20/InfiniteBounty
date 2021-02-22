@@ -29,6 +29,7 @@ public class VendingMachine : SubjectBase, IInteractible
     private AudioSource as_source;
     [SerializeField] private AudioClip[] acA_beeps = new AudioClip[0];
     private bool b_isBeingUsed;
+    [SerializeField] private AudioClip ac_coinsSound;
 
     [Header("Spittin' out Augments")]
     [SerializeField] private GameObject go_augmentPrefab;
@@ -177,6 +178,7 @@ public class VendingMachine : SubjectBase, IInteractible
     public void BuyAugment()
     {
         if (b_isBeingUsed)
+        {
             if (rbA_augmentRigidbodies[i_currentAugmentIndex])
             {
                 as_source.pitch = 1;
@@ -191,6 +193,8 @@ public class VendingMachine : SubjectBase, IInteractible
                 aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
                 rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
             }
+            as_source.PlayOneShot(ac_coinsSound);
+        }
     }
     private IEnumerator MoveAugmentForward(Rigidbody _rb)
     {

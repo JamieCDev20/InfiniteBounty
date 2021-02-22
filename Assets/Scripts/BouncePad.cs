@@ -7,6 +7,13 @@ public class BouncePad : MonoBehaviour
 
     [SerializeField] private LayerMask lm_layersToBounce;
     [SerializeField] private float f_bounceForce;
+    [SerializeField] private AudioClip ac_useSound;
+    private AudioSource as_source;
+
+    private void Start()
+    {
+        as_source = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -22,6 +29,9 @@ public class BouncePad : MonoBehaviour
         {
             _cA[i].GetComponent<Rigidbody>().AddForce(transform.up * f_bounceForce, ForceMode.Impulse);
         }
+        if (_cA.Length > 0)
+            as_source.PlayOneShot(ac_useSound);
+
     }
 
 
