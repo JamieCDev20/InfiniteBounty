@@ -16,7 +16,7 @@ public class BouncePad : MonoBehaviour
 
     public void Jump()
     {
-        Collider[] _cA = Physics.OverlapSphere(transform.position, 1, lm_layersToBounce);
+        Collider[] _cA = Physics.OverlapSphere(transform.position, 1, lm_layersToBounce, QueryTriggerInteraction.Ignore);
 
         for (int i = 0; i < _cA.Length; i++)
         {
