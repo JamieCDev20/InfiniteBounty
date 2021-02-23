@@ -34,20 +34,23 @@ public class Bullet : MonoBehaviour, IPoolable
     protected bool b_inPool;
     protected int i_poolIndex;
     protected AugmentExplosion ae_explosion;
+    [Space, SerializeField] private float f_minimumSpeedForSound;
+    private AudioSource as_source;
 
     public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae)
     {
+        as_source = GetComponent<AudioSource>();
         c_myCollider.isTrigger = true;
         i_damage = _i_damage;
         i_lodeDamage = _i_lodeDamage;
         rb = GetComponent<Rigidbody>();
         // Apply bullet augments here
         rb.mass = _ap.f_gravity;
-        if(_ap.f_gravity > 0)
+        if (_ap.f_gravity > 0)
             transform.localScale = Vector3.one * _ap.f_bulletScale;
         else
             transform.localScale = Vector3.one;
-        if(_ap.pm_phys != null)
+        if (_ap.pm_phys != null)
             pm_mat = _ap.pm_phys;
         // If there's an explosion to be had, create a hiteffect here
         ae_explosion = _ae;
@@ -55,6 +58,12 @@ public class Bullet : MonoBehaviour, IPoolable
         StartCoroutine(DeathTimer(f_lifeTime));
         //Invoke("BecomeCollidable", Time.deltaTime);
         BecomeCollidable(_c_playerCol);
+    }
+
+    private void Update()
+    {
+        if (rb.velocity.sqrMagnitude < f_minimumSpeedForSound * f_minimumSpeedForSound)
+            as_source.Pause();
     }
 
     private void BecomeCollidable(Collider playerCollider)
@@ -87,7 +96,7 @@ public class Bullet : MonoBehaviour, IPoolable
                 break;
         }
 
-        if(go_hitEffect != null)
+        if (go_hitEffect != null)
         {
             // Apply explosion augments
             SpawnOnHit(go_hitEffect, collision.contacts[0].normal);
