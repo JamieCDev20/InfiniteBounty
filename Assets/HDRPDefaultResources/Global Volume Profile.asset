@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5438581830205140975
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec08c789f09cebf47b9dfa879f470851, type: 3}
+  m_Name: HDRPOutline
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  mode:
+    m_OverrideState: 1
+    m_Value: 2
+  width:
+    m_OverrideState: 0
+    m_Value: 3
+  fillAmount:
+    m_OverrideState: 1
+    m_Value: 0
+    min: 0
+    max: 1
+  patternTexture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+  patternFillAmount:
+    m_OverrideState: 0
+    m_Value: 0.2
+    min: 0
+    max: 1
+  patternTile:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1}
+  iterations:
+    m_OverrideState: 0
+    m_Value: 1
+  blurRadius:
+    m_OverrideState: 0
+    m_Value: 2
+  blurIterations:
+    m_OverrideState: 0
+    m_Value: 1
+  overglow:
+    m_OverrideState: 0
+    m_Value: 1
+  softnessEnabled:
+    m_OverrideState: 0
+    m_Value: 1
+  softness:
+    m_OverrideState: 0
+    m_Value: 0.5
+    min: 0.001
+    max: 1
+  singlePassInstanced:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!114 &-3283242287512718478
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -106,3 +165,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: -3283242287512718478}
+  - {fileID: -5438581830205140975}
