@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -67,6 +68,7 @@ public class PlayerMover : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         Init();
+        SceneManager.sceneLoaded += SceneChange;
     }
 
     private void Update()
@@ -197,6 +199,18 @@ public class PlayerMover : MonoBehaviour
         fap_audio.PlayLandingSound();
     }
 
+    private void SceneChange(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name.Contains("Lobby"))
+        {
+            fap_audio.ChangeSurfaceEnum(Surface.ship);
+        }
+        else
+        {
+            fap_audio.ChangeSurfaceEnum(Surface.planet);
+        }
+    }
+
     #endregion
 
     #region Public Voids
@@ -303,7 +317,6 @@ public class PlayerMover : MonoBehaviour
         b_applyGravity = true;
         return false;
     }
-
     #endregion
 
     #region Public Returns

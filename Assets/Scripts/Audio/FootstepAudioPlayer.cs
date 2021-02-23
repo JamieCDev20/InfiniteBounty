@@ -50,4 +50,9 @@ public class FootstepAudioPlayer : MonoBehaviour
                 break;
         }
     }
+
+    public void ChangeFootstepSound(Surface surface)
+    {
+        e_surface = surface;
+    }
 }
