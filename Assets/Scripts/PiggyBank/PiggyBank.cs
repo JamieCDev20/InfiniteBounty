@@ -11,7 +11,7 @@ public class PiggyBank : MonoBehaviour, IInteractible
     [SerializeField] GameObject go_portal;
     private DifficultyManager dm_man;
     [SerializeField] private TextMeshPro tmp_currentMoneyText;
-
+    [SerializeField] private GameObject go_stand;
 
     public void Start()
     {
@@ -35,9 +35,7 @@ public class PiggyBank : MonoBehaviour, IInteractible
             tmp_currentMoneyText.text = "£" + i_storedAmount;
 
             if (i_storedAmount >= i_targetAmount)
-            {
                 EnablePortal();
-            }
         }
     }
 
@@ -49,6 +47,7 @@ public class PiggyBank : MonoBehaviour, IInteractible
     private void EnablePortal()
     {
         go_portal.SetActive(true);
-        gameObject.SetActive(false);
+        go_portal.transform.parent = null;
+
     }
 }
