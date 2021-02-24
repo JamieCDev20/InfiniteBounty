@@ -18,7 +18,6 @@ public class Utils
             if(t_arrayToResize.Length > 0)
             {
                 int newSize = t_arrayToResize.Length + 1;
-                Debug.Log(newSize);
                 T[] temp = new T[newSize];
                 for (int i = 0; i < t_arrayToResize.Length; i++)
                     temp[i] = t_arrayToResize[i];

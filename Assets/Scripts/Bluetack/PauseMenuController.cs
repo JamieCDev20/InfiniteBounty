@@ -53,8 +53,6 @@ public class PauseMenuController : SubjectBase
         SetMusicVolume();
         SetSFXVolume();
         SaveManager sm = FindObjectOfType<SaveManager>();
-        //SetXSensitivty(sm.SaveData.A_playerSliderOptions[(int)OptionNames.sensitivityX]);
-        //SetYSensitivity(sm.SaveData.A_playerSliderOptions[(int)OptionNames.sensitivityY]);
         if (sm != null)
             if (sm.SaveData.A_playerSliderOptions != null)
                 if (sm.SaveData.A_playerSliderOptions.Length > 0)
@@ -158,7 +156,7 @@ public class PauseMenuController : SubjectBase
         sv.invert = new bool[] { b_mouseInverted };
         sv.A_settingFloats = A_options;
         sv.displaySettings = A_display;
-        PlayerSaveData pd = new PlayerSaveData(0, 0, null, null, null, sv, 0);
+        PlayerSaveData pd = new PlayerSaveData(-1, -1, null, null, null, null, null, sv, -1);
         if (sv != null)
         {
             SaveEvent se = new SaveEvent(pd);

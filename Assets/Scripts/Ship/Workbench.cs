@@ -306,9 +306,9 @@ public class Workbench : SubjectBase, IInteractible
 
     private void SendSave()
     {
-        SaveEvent saveEvent = new SaveEvent(new PlayerSaveData(pim.transform.GetComponent<NugManager>().Nugs, 0,
-            new ToolBase[] { th_currentTh.GetToolBase((int)ToolSlot.leftHand), th_currentTh.GetToolBase((int)ToolSlot.rightHand),
-            th_currentTh.GetToolBase((int)ToolSlot.moblility) }, null, null, null, 0));
+        SaveEvent saveEvent = new SaveEvent(new PlayerSaveData(-1, 0, null, null, null,
+            new (int, int, Augment[])[] { (th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, null) },
+            null, null, 0));
         Notify(saveEvent);
     }
 

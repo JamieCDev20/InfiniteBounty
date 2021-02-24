@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
+using Newtonsoft.Json;
 
 public class SaveManager : MonoBehaviour, ObserverBase
 {
@@ -17,6 +19,9 @@ public class SaveManager : MonoBehaviour, ObserverBase
         DontDestroyOnLoad(gameObject);
     }
 
+    /// <summary>
+    /// Create Player Save Data reference from file
+    /// </summary>
     public void CreateSaveData()
     {
         if (File.Exists(Application.persistentDataPath + sv))
@@ -24,9 +29,14 @@ public class SaveManager : MonoBehaviour, ObserverBase
             string saveString = File.ReadAllText(Application.persistentDataPath + sv);
             if (saveString != string.Empty)
             {
-                saveData = JsonUtility.FromJson<PlayerSaveData>(saveString);
-                if (saveData.CheckNull())
+                // The save data must have all the required data to be read
+                if (CheckIfSaveDataClean(saveString))
                 {
+                    saveData = JsonConvert.DeserializeObject<PlayerSaveData>(saveString);
+                }
+                else
+                {
+                    // Rip out any usable data
                     saveData = UpdateSaveData(saveString);
                     File.WriteAllText(Application.persistentDataPath + sv, JsonUtility.ToJson(saveData));
                 }
@@ -36,12 +46,41 @@ public class SaveManager : MonoBehaviour, ObserverBase
             File.Create(Application.persistentDataPath + sv);
     }
 
+    /// <summary>
+    /// Checks if the save data contains all the data required
+    /// </summary>
+    /// <param name="_saveData">Save data to check</param>
+    /// <returns>true if the save data is clean</returns>
+    private bool CheckIfSaveDataClean(string _saveData)
+    {
+        if (!_saveData.Contains("i_totalNugs")) return false;
+        if (!_saveData.Contains("i_currentNugs")) return false;
+        if (!_saveData.Contains("A_appearance")) return false;
+        if (!_saveData.Contains("tu_equippedAugments")) return false;
+        if (!_saveData.Contains("tu_toolsPurchased")) return false;
+        if (!_saveData.Contains("tu_equippedAugments")) return false;
+        if (!_saveData.Contains("purchasedAugments")) return false;
+        if (!_saveData.Contains("A_playerSliderOptions")) return false;
+        if (!_saveData.Contains("A_displaySettings")) return false;
+        if (!_saveData.Contains("b_inverted")) return false;
+        if (!_saveData.Contains("i_difficulty")) return false;
+        return true;
+    }
+
+    /// <summary>
+    /// Replace all text in file with an empty string
+    /// </summary>
     public void ClearSaveData()
     {
         if (File.Exists(Application.persistentDataPath + sv))
             File.WriteAllText(Application.persistentDataPath + sv, string.Empty);
     }
 
+    /// <summary>
+    /// Read the data and take any usable field
+    /// </summary>
+    /// <param name="_saveData">Current Save File</param>
+    /// <returns>New Player Save data</returns>
     public PlayerSaveData UpdateSaveData(string _saveData)
     {
         PlayerSaveData psd = new PlayerSaveData();
@@ -53,21 +92,31 @@ public class SaveManager : MonoBehaviour, ObserverBase
             {
                 psd.i_totalNugs = int.Parse(totalNugsString[i+1].Split(',')[0]);
             }
-            else if (totalNugsString[i].Contains("i_currentNugs"))
+            if (totalNugsString[i].Contains("i_currentNugs"))
             {
                 psd.i_currentNugs = int.Parse(totalNugsString[i+1].Split(',')[0]);
             }
-            else if (totalNugsString[i].Contains("tb_equippedTools"))
+            if (totalNugsString[i].Contains("A_appearance"))
             {
-                psd.tb_equippedTools = ReadArrayFromJson<WeaponTool>(_saveData, new string[] { "tb_equippedTools\":["}, '}');
+                psd.A_appearance = ReadArrayFromJson<int>(_saveData, new string[] { "A_appearance\":[" }, '}');
             }
-            else if (totalNugsString[i].Contains("tb_purchasedTools"))
+            if (totalNugsString[i].Contains("tu_equipped"))
             {
-                psd.tb_purchasedTools = ReadArrayFromJson<ToolBase>(_saveData, new string[] { "tb_purchasedTools" }, '}');
+                psd.tu_equipped = ReadArrayFromJson<(int, int)>(_saveData, new string[] { "tu_equipped" }, '}');
+            }
+            if (totalNugsString[i].Contains("tu_toolsPurchased"))
+            {
+                psd.tu_toolsPurchased = ReadArrayFromJson<(int, int)>(_saveData, new string[] { "tu_toolsPurchased" }, '}');
+            }
+            if (totalNugsString[i].Contains("tu_equippedAugments"))
+            {
+                psd.tu_equippedAugments = ReadArrayFromJson<(int, int, Augment[])>(_saveData, new string[] { "tu_equippedAugments" }, '}');
             }
             else if (totalNugsString[i].Contains("purchasedAugments"))
             {
                 psd.purchasedAugments = ReadArrayFromJson<Augment>(_saveData, new string[] { "purchasedAugments\":["}, '}');
+                foreach (Augment aug in psd.purchasedAugments)
+                    Debug.Log(aug.Name);
             }
             else if (totalNugsString[i].Contains("A_playerSliderOptions"))
             {
@@ -90,11 +139,12 @@ public class SaveManager : MonoBehaviour, ObserverBase
                     if (newFloat.Contains("]"))
                     {
                         newFloat = newFloat.Replace(']', '\0');
-                        Debug.Log(newFloat);
-                        floatVals.Add(float.Parse(newFloat));
+                        if(string.IsNullOrEmpty(newFloat) || newFloat != "\0")
+                            floatVals.Add(float.Parse(newFloat));
                         break;
                     }
-                    floatVals.Add(float.Parse(newFloat));
+                    if(string.IsNullOrEmpty(newFloat) || newFloat != "\0")
+                        floatVals.Add(float.Parse(newFloat));
                 }
                 psd.A_playerSliderOptions = floatVals.ToArray();
             }
@@ -108,11 +158,18 @@ public class SaveManager : MonoBehaviour, ObserverBase
             }
             else if (totalNugsString[i].Contains("A_displaySettings"))
             {
-                psd.A_displaySettings = ReadArrayFromJson<int>(_saveData, new string[] { "A_displaySettings\":[" }, '}');
+                psd.A_displaySettings = ReadArrayFromJson<int>(_saveData, new string[] { "A_displaySettings\":[" }, ']');
             }
             else if (totalNugsString[i].Contains("i_difficulty"))
             {
-                psd.i_difficulty = int.Parse(totalNugsString[i + 1]);
+                string nugString = totalNugsString[i + 1];
+                if (nugString.Contains("}"))
+                {
+                    Debug.Log("wtf");
+                    nugString = nugString.Replace('}', '\0');
+                }
+                Debug.Log(nugString);
+                psd.i_difficulty = int.Parse(nugString);
             }
         }
         return psd;
@@ -133,16 +190,16 @@ public class SaveManager : MonoBehaviour, ObserverBase
             {
                 string jsonData = newData.Split(_lineSeperator)[i];
                 if (jsonData[0] == ']')
+                {
                     break;
+                }
                 if (jsonData[0] == ',')
                     jsonData = jsonData.Substring(1);
                 jsonData += '}';
-                Debug.Log(jsonData);
-                output.Add(JsonUtility.FromJson<T>(jsonData));
+                output.Add(JsonConvert.DeserializeObject<T>(jsonData));
             }
         }
         return output.ToArray();
-
     }
 
     public void OnNotify(ObserverEvent oe_event)
@@ -150,9 +207,58 @@ public class SaveManager : MonoBehaviour, ObserverBase
         switch (oe_event)
         {
             case SaveEvent psd:
-                saveData.i_currentNugs = psd.SaveData.i_currentNugs;
-                saveData.i_totalNugs = psd.SaveData.i_totalNugs;
-                saveData.tb_equippedTools = psd.SaveData.tb_equippedTools;
+                // Get current and Total nuggets
+                if(psd.SaveData.i_currentNugs != -1)
+                    saveData.i_currentNugs = psd.SaveData.i_currentNugs;
+
+                if(psd.SaveData.i_totalNugs != -1)
+                    saveData.i_totalNugs = psd.SaveData.i_totalNugs;
+
+                if (psd.SaveData.tu_equipped != null)
+                {
+                    // if there's no previously equipped tools, then just equip the tool.
+                    if(saveData.tu_equipped == null)
+                    {
+                        saveData.tu_equipped = psd.SaveData.tu_equipped;
+                    }
+                    else if(psd.SaveData.tu_equipped != null)
+                    {
+                        // Replace any weapons currently in your hands
+                        for(int i = 0; i < psd.SaveData.tu_equipped.Length; i++)
+                            for(int j = 0; j < saveData.tu_equipped.Length; j++)
+                                if (psd.SaveData.tu_equipped[i].slotID == saveData.tu_equipped[j].slotID)
+                                {
+                                    saveData.tu_equipped[j] = psd.SaveData.tu_equipped[i];
+                                    //psd.SaveData.tu_equipped[i] = null;
+                                }
+                        // Add any extra weapons
+                        foreach((int, int) tup in psd.SaveData.tu_equipped)
+                            saveData.tu_equipped = Utils.AddToArray(saveData.tu_equipped, tup);
+                    }
+                }
+
+                if(saveData.tu_equippedAugments == null && psd.SaveData.tu_equippedAugments != null)
+                {
+                    saveData.tu_equippedAugments = psd.SaveData.tu_equippedAugments;
+                }
+                else if(saveData.tu_equippedAugments != null && psd.SaveData.tu_equippedAugments != null)
+                {
+                    bool comb = false;
+                    for(int i = 0; i< psd.SaveData.tu_equippedAugments.Length; i++)
+                    {
+                        comb = false;
+                        for(int j = 0; j < saveData.tu_equippedAugments.Length; j++)
+                        {
+                            if(saveData.tu_equippedAugments[j].toolID == psd.SaveData.tu_equippedAugments[i].toolID && saveData.tu_equippedAugments[j].slotID == psd.SaveData.tu_equippedAugments[i].slotID)
+                            {
+                                saveData.tu_equippedAugments[j].equippedAugs = Utils.CombineArrays(saveData.tu_equippedAugments[j].equippedAugs, psd.SaveData.tu_equippedAugments[i].equippedAugs);
+                                comb = true;
+                            }
+                        }
+                        if (!comb)
+                            saveData.tu_equippedAugments = Utils.AddToArray(saveData.tu_equippedAugments, psd.SaveData.tu_equippedAugments[i]);
+                    }
+                }
                 if (saveData.purchasedAugments == null && psd.SaveData.purchasedAugments != null)
                 {
                     saveData.purchasedAugments = psd.SaveData.purchasedAugments;
@@ -161,27 +267,24 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 {
                     saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, psd.SaveData.purchasedAugments);
                 }
-                if(saveData.tb_purchasedTools == null && psd.SaveData.tb_purchasedTools != null)
-                {
-                    saveData.tb_purchasedTools = psd.SaveData.tb_purchasedTools;
-                }
-                else if(saveData.tb_purchasedTools != null && psd.SaveData.tb_purchasedTools != null)
-                {
-                    saveData.tb_purchasedTools = Utils.CombineArrays(saveData.tb_purchasedTools, psd.SaveData.tb_purchasedTools);
-                }
+
                 if (psd.SaveData.A_playerSliderOptions != null)
                 {
                     saveData.A_playerSliderOptions = psd.SaveData.A_playerSliderOptions;
                 }
+
                 if(psd.SaveData.A_displaySettings != null)
                 {
                     saveData.A_displaySettings = psd.SaveData.A_displaySettings;
                 }
-                if (psd.SaveData.i_difficulty != 0)
+
+                if (psd.SaveData.i_difficulty != -1)
                 {
                     saveData.i_difficulty = psd.SaveData.i_difficulty;
                 }
-                string jsonData = JsonUtility.ToJson(saveData);
+
+
+                string jsonData = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, jsonData);
                 break;
         }

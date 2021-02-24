@@ -1,24 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[System.Serializable]
 public struct PlayerSaveData
 {
+    
     public int i_totalNugs;
     public int i_currentNugs;
-    public ToolBase[] tb_equippedTools;
-    public ToolBase[] tb_purchasedTools;
+    public int[] A_appearance;
+    // TODO:
+    // Convert to (int, int) at some point
+    public (int toolID, int slotID)[] tu_equipped;
+    public (int toolID, int rackID)[] tu_toolsPurchased;
+    public (int toolID, int slotID, Augment[] equippedAugs)[] tu_equippedAugments;
     public Augment[] purchasedAugments;
     public float[] A_playerSliderOptions;
     public int[] A_displaySettings;
     public bool b_inverted;
     public int i_difficulty;
-    public PlayerSaveData(int _i_total, int _i_current, ToolBase[] _tb_tools, ToolBase[] _tb_purchased, Augment[] _purchased, SettingsValues _options, int _diff)
+
+    /// <summary>
+    /// Create save data to be sent to the save manager
+    /// </summary>
+    /// <param name="_i_total">Total number of nuggs. -1 if you don't want to send nuggs.</param>
+    /// <param name="_i_current">Current number of nuggs. -1 if you don't want to send nuggs.</param>
+    /// <param name="_tb_tools">The tools currently equipped. Null if you don't want to update.</param>
+    /// <param name="_tb_purchased">All purchased tools</param>
+    /// <param name="_purchased">All purchased augments</param>
+    /// <param name="_options">Settings</param>
+    /// <param name="_diff">Difficulty. -1 if no changes.</param>
+    public PlayerSaveData(int _i_total, int _i_current, int[] _appearance, (int, int)[] _tu_equip, (int, int)[] _tu_purchased, (int, int, Augment[])[] _tu_equippedAugs,  Augment[] _purchased, SettingsValues _options, int _diff)
     {
         i_totalNugs = _i_total;
         i_currentNugs = _i_current;
-        tb_equippedTools = _tb_tools;
-        tb_purchasedTools = _tb_purchased;
+        A_appearance = _appearance;
+        tu_equipped = _tu_equip;
+        tu_toolsPurchased = _tu_purchased;
+        tu_equippedAugments = _tu_equippedAugs;
         purchasedAugments = _purchased;
         if(_options != null)
         {
@@ -37,7 +57,7 @@ public struct PlayerSaveData
 
     public bool CheckNull()
     {
-        if (i_currentNugs == 0 && i_totalNugs == 0 && A_playerSliderOptions == null && tb_equippedTools == null && purchasedAugments == null)
+        if (i_currentNugs == 0 && i_totalNugs == 0 && A_playerSliderOptions == null && purchasedAugments == null)
             return true;
         return false;
     }

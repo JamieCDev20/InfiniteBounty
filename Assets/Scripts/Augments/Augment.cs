@@ -5,9 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class Augment
 {
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string s_name;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected int i_level;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected AugmentStage as_stage;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string mat_augColor;
     public string Name { get { return s_name; } }
     public int Level { get { return i_level; } set { i_level = value; } }
@@ -15,42 +19,64 @@ public class Augment
     public string AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
 
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string[] ac_useSound;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string[] ac_travelSound;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string[] ac_hitSound;
 
     #endregion
 
     #region Tool Information Properties
 
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_weight;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_recoil;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_speed;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_heatsink;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_knockback;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_energyGauge;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected int i_damage;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected int i_lodeDamage;
 
     #endregion
 
     #region Tool Physical Properties
 
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_trWidth;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_trLifetime;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected Color[] A_trKeys;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string go_weaponProjectile;
 
     #endregion
 
     #region EXPLOSION
 
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected int i_explosionDamage;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected int i_expLodeDamage;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected bool b_impact;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_explockBack;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_detonationTime;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_expRad;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string[] go_explarticles;
 
     #endregion
@@ -235,7 +261,7 @@ public class Augment
 
     /// <summary>
     /// UNFINISHED FUNCTION DO NOT USE
-    /// Todo:
+    /// TODO:
     /// Figure out how to seperate augments
     /// </summary>
     /// <param name="a"></param>
