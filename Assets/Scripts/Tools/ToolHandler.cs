@@ -42,8 +42,20 @@ public class ToolHandler : SubjectBase
         ac_changer = GetComponent<AppearanceChanger>();
         np_network = GetComponent<NetworkedPlayer>();
         view = GetComponent<PhotonView>();
-        AddObserver(FindObjectOfType<SaveManager>());
+        SaveManager _sm = FindObjectOfType<SaveManager>();
+        AddObserver(_sm);
         InitialiseTools();
+        LoadSavedTools(_sm);
+    }
+
+    private void LoadSavedTools(SaveManager _sm)
+    {
+        ToolRack tr = FindObjectOfType<ToolRack>();
+        if (_sm?.SaveData.tu_equipped != null)
+            foreach((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
+            {
+                CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
+            }
     }
 
     /// <summary>

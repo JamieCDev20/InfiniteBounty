@@ -6788,6 +6788,7 @@ GameObject:
   - component: {fileID: 1393388508010014515}
   - component: {fileID: 4717449718675417008}
   - component: {fileID: 5109036761130869709}
+  - component: {fileID: 530406373303497822}
   m_Layer: 0
   m_Name: DeleteSavesPopUp
   m_TagString: Untagged
@@ -6855,6 +6856,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &530406373303497822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745262543888331699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16c2232def392a4392cf38eb37ad60b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2772997303771611983
 GameObject:
   m_ObjectHideFlags: 0
@@ -26796,6 +26809,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 530406373303497822}
+        m_TargetAssemblyTypeName: SaveDataDestroyer, Assembly-CSharp
+        m_MethodName: DestroySaveData
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
