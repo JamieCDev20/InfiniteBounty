@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,10 +11,26 @@ public class ScoreboardManager : MonoBehaviour
     [SerializeField] private ScoreObjects[] so_playerScoreObjects;
     [SerializeField] private Text t_totalEarned;
 
-    public void Start()
+    [Header("Camera Locking Things")]
+    private PlayerInputManager pim;
+    private Camera c_cam;
+    [SerializeField] private Transform[] tA_playerPos = new Transform[0];
+    [SerializeField] private Transform t_camPos;
+    private Transform t_camPositionToReturnTo;
+    private bool b_isBeingUsed;
+
+    public IEnumerator Start()
     {
         if (PhotonNetwork.InRoom)
             UniversalNugManager.x?.DoScoring();
+
+        yield return new WaitForEndOfFrame();
+
+        if (FindObjectOfType<ScoreboardCamController>())
+        {
+            LockCam();
+            GetComponent<TurnOnObjectWhenAroundPlayers>().EnableScreen();
+        }
     }
 
     public void SetValues(int[][] values, string[] _names)
@@ -37,8 +54,99 @@ public class ScoreboardManager : MonoBehaviour
         NetworkedPlayer.x.CollectEndLevelNugs(totalEarned);
     }
 
-    
+    #region Camera Locking
 
+    private void Update()
+    {
+        if (b_isBeingUsed)
+            if (Input.anyKeyDown)
+                EndLockedCam();
+    }
+
+    private void LockCam()
+    {
+        Transform interactor = GameObject.FindGameObjectsWithTag("Player")[0].transform;
+
+        pim = interactor.GetComponent<PlayerInputManager>();
+        pim.enabled = false;
+
+        PlayerMover pm = pim.GetComponent<PlayerMover>();
+        c_cam = pim.GetCamera().GetComponentInChildren<Camera>();
+        pm.GetComponent<Rigidbody>().isKinematic = true;
+        pim.b_shouldPassInputs = false;
+
+        interactor.position = tA_playerPos[pim.GetID()].position;
+        interactor.transform.forward = tA_playerPos[pim.GetID()].forward;
+
+        pm.enabled = false;
+        t_camPositionToReturnTo = pim.GetCamera().transform;
+        pim.GetCamera().enabled = false;
+        pim.GetCamera().GetComponent<ToolTipper>().StopShowing();
+        pim.GetCamera().GetComponent<HUDController>().StopShowing();
+        Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
+        PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
+        _pa.SetShootability(false);
+        _pa.StopWalking();
+
+        StartCoroutine(MoveCamera(t_camPos, c_cam.transform, true));
+
+        b_isBeingUsed = true;
+    }
+
+    public void EndLockedCam()
+    {
+        StartCoroutine(MoveCamera(t_camPositionToReturnTo, c_cam.transform, false));
+
+        PlayerMover pm = pim?.GetComponent<PlayerMover>();
+        pm.GetComponent<Rigidbody>().isKinematic = false;
+        pim.b_shouldPassInputs = true;
+        pm.enabled = true;
+        pim.enabled = true;
+        pim.GetCamera().GetComponent<ToolTipper>().StartShowing();
+        pim.GetCamera().GetComponent<HUDController>().StartShowing();
+
+        pim.GetCamera().enabled = true;
+        PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
+        _pa.SetShootability(true);
+        _pa.StartWalking();
+
+        b_isBeingUsed = false;
+    }
+
+    #endregion
+
+    public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
+    {
+        Transform _t = Camera.main.transform;
+        float t = 0;
+        if (_b_comingIntoMachine)
+            _t.parent = t_camPos;
+        else
+            _t.parent = _t_transformToMoveTo;
+
+        Vector3 start = _t.localPosition;
+        Quaternion iRot = _t.rotation;
+
+        while (t < 1)
+        {
+            _t.localPosition = Vector3.Lerp(start, Vector3.zero, t);
+            _t.rotation = Quaternion.Lerp(iRot, _t_transformToMoveTo.rotation, t);
+            t += (Time.deltaTime * (1 / 0.3f));
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (_b_comingIntoMachine)
+        {
+            _t.localPosition = Vector3.zero;
+            _t.localEulerAngles = Vector3.zero;
+        }
+        else
+        {
+            Camera.main.GetComponent<CameraRespectWalls>().enabled = true;
+            Camera.main.transform.localPosition = new Vector3(0, 0, -4);
+            Camera.main.transform.localEulerAngles = new Vector3(10, 0, 0);
+        }
+    }
 }
 
 [System.Serializable]

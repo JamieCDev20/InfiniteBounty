@@ -9,12 +9,8 @@ public class TurnOnObjectWhenAroundPlayers : MonoBehaviour
     [SerializeField] private float f_radius;
     [SerializeField] private GameObject go_screenObject;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        CheckForPlayers();
-    }
 
-    private void OnTriggerExit(Collider other)
+    private void Update()
     {
         CheckForPlayers();
     }
@@ -33,7 +29,7 @@ public class TurnOnObjectWhenAroundPlayers : MonoBehaviour
         DisableScreen();
     }
 
-    private void EnableScreen()
+    internal void EnableScreen()
     {
         go_screenObject.SetActive(true);
     }
