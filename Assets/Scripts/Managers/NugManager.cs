@@ -9,9 +9,6 @@ using UnityEngine.UI;
 public class NugManager : SubjectBase, ObserverBase
 {
     private int i_totalNugs = 0;
-    /// <summary>
-    /// The amount of nugs collected since last network update
-    /// </summary>
     private int i_inLevelNugs = 0;
     private int i_playerID;
     private HUDController hud;
@@ -31,6 +28,13 @@ public class NugManager : SubjectBase, ObserverBase
             {
                 ngo.AddObserver(this);
             }
+        }
+
+        SaveManager _sm = FindObjectOfType<SaveManager>();
+        if(_sm != null)
+        {
+            i_totalNugs = _sm.SaveData.i_totalNugs;
+            //i_inLevelNugs = 
         }
 
 #if UNITY_EDITOR

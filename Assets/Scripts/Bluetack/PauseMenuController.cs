@@ -156,7 +156,7 @@ public class PauseMenuController : SubjectBase
         sv.invert = new bool[] { b_mouseInverted };
         sv.A_settingFloats = A_options;
         sv.displaySettings = A_display;
-        PlayerSaveData pd = new PlayerSaveData(-1, -1, null, null, null, null, null, sv, -1);
+        PlayerSaveData pd = new PlayerSaveData(-1, -1, -1, null, null, null, null, null, sv, -1);
         if (sv != null)
         {
             SaveEvent se = new SaveEvent(pd);

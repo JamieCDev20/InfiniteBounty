@@ -306,7 +306,7 @@ public class Workbench : SubjectBase, IInteractible
 
     private void SendSave()
     {
-        SaveEvent saveEvent = new SaveEvent(new PlayerSaveData(-1, 0, null, null, null,
+        SaveEvent saveEvent = new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null,
             new (int, int, Augment[])[] { (th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, null) },
             null, null, 0));
         Notify(saveEvent);

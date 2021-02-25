@@ -70,7 +70,7 @@ public class DifficultyManager : SubjectBase
     {
         if (i_currentDifficulty == i_maximumDifficulty)
             i_maximumDifficulty++;
-        Notify(new SaveEvent(new PlayerSaveData(0, 0, null, null, null, null, null, null, i_maximumDifficulty)));
+        Notify(new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null, null, null, null, i_maximumDifficulty)));
     }
 
     #region Impossible Ranks

@@ -188,7 +188,7 @@ public class VendingMachine : SubjectBase, IInteractible
                 Augment[] grabbedAugment = new Augment[1];
                 grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
                 // Player Save data needs: 0, Cost of Augment, Augment Reference
-                SaveEvent se = new SaveEvent(new PlayerSaveData(-1, -1, null, null, null, null, grabbedAugment, null, 0)); ;
+                SaveEvent se = new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null, null, grabbedAugment, null, 0)); ;
                 Notify(se);
                 aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
                 rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
