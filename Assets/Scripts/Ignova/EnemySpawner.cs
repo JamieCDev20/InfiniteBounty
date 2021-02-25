@@ -85,7 +85,6 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
             {
                 _b_spawnedWave = true;
-                print("Checking the zones for players, and I found one");
                 StartCoroutine(SpawnWave(i));
                 if (iL_minibossZones.Contains(i))
                 {

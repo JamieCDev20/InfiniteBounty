@@ -134,4 +134,8 @@ public struct DifficultySet
     public Diversifier[] dA_firstDiversifierSet;
     public Diversifier[] dA_secondDiversifierSet;
     public Diversifier[] dA_thirdDiversifierSet;
+
+    [Header("PvP")]
+    public bool b_pvp;
+
 }
