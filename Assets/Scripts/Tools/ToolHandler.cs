@@ -165,14 +165,14 @@ public class ToolHandler : SubjectBase
     private void SendSave(int _nuggets, ToolSlot _toolSlot)
     {
         (int, int) tup = (A_tools[(int)_toolSlot].ToolID, (int)_toolSlot);
-        Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, null,
+        Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, -1, null,
             new (int, int)[3] { tup, (-1, -1), (-1, -1) }, null, null, null, null, -1)));
     }
     private void SendSave(int _nuggets, ToolSlot _toolSlot, int _rackID)
     {
         (int, int) tup = (A_tools[(int)_toolSlot].ToolID, (int)_toolSlot);
         (int, int) purchasedTup = (A_tools[(int)_toolSlot].ToolID, A_tools[(int)_toolSlot].RackID);
-        Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, null,
+        Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, -1, null,
             new (int, int)[] { tup },
             new (int, int)[] { purchasedTup }, null, null, null, -1)));
     }

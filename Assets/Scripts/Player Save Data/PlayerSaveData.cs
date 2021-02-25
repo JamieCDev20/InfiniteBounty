@@ -9,6 +9,7 @@ public struct PlayerSaveData
     
     public int i_totalNugs;
     public int i_currentNugs;
+    public int i_zippyBank;
     public int[] A_appearance;
     public (int toolID, int slotID)[] tu_equipped;
     public (int toolID, int rackID)[] tu_toolsPurchased;
@@ -29,10 +30,11 @@ public struct PlayerSaveData
     /// <param name="_purchased">All purchased augments</param>
     /// <param name="_options">Settings</param>
     /// <param name="_diff">Difficulty. -1 if no changes.</param>
-    public PlayerSaveData(int _i_total, int _i_current, int[] _appearance, (int, int)[] _tu_equip, (int, int)[] _tu_purchased, (int, int, Augment[])[] _tu_equippedAugs,  Augment[] _purchased, SettingsValues _options, int _diff)
+    public PlayerSaveData(int _i_total, int _i_current, int _i_zip, int[] _appearance, (int, int)[] _tu_equip, (int, int)[] _tu_purchased, (int, int, Augment[])[] _tu_equippedAugs,  Augment[] _purchased, SettingsValues _options, int _diff)
     {
         i_totalNugs = _i_total;
         i_currentNugs = _i_current;
+        i_zippyBank = _i_zip;
         A_appearance = _appearance;
         tu_equipped = new (int toolID, int slotID)[3];
         foreach ((int toolID, int slotID) weapon in _tu_equip)
