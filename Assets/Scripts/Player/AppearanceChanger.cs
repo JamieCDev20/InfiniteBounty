@@ -40,8 +40,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         goA_heads[i_currentHead].SetActive(true);
         goA_bodies[i_currentBody].SetActive(true);
-        golA_arms[i_currentArm].goL_theList[0].SetActive(true);
-        golA_arms[i_currentArm].goL_theList[1].SetActive(true);
+        golA_arms[i_currentArm].goL_theList[0].SetActive(b_showLeftArm);
+        golA_arms[i_currentArm].goL_theList[1].SetActive(b_showRightArm);
         goA_feet[i_currentFeet].SetActive(true);
 
         photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
@@ -193,6 +193,19 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
                 golA_arms[i].goL_theList[0].SetActive(b_showLeftArm);
                 golA_arms[i].goL_theList[1].SetActive(b_showRightArm);
             }
+    }
+
+    public void SetCurrentArmActive(int _i_armIndex, bool _b_active)
+    {
+        if (_i_armIndex == 0)
+            b_showLeftArm = _b_active;
+        else if (_i_armIndex == 1)
+            b_showRightArm = _b_active;
+        else
+            return;
+        golA_arms[i_currentArm].goL_theList[_i_armIndex].SetActive(_b_active);
+        if (b_networked)
+            photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
     }
 
     #endregion

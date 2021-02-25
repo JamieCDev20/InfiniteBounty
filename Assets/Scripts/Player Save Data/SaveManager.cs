@@ -165,10 +165,8 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 string nugString = totalNugsString[i + 1];
                 if (nugString.Contains("}"))
                 {
-                    Debug.Log("wtf");
                     nugString = nugString.Replace('}', '\0');
                 }
-                Debug.Log(nugString);
                 psd.i_difficulty = int.Parse(nugString);
             }
         }
@@ -223,17 +221,21 @@ public class SaveManager : MonoBehaviour, ObserverBase
                     }
                     else if(psd.SaveData.tu_equipped != null)
                     {
-                        // Replace any weapons currently in your hands
-                        for(int i = 0; i < psd.SaveData.tu_equipped.Length; i++)
-                            for(int j = 0; j < saveData.tu_equipped.Length; j++)
-                                if (psd.SaveData.tu_equipped[i].slotID == saveData.tu_equipped[j].slotID)
-                                {
-                                    saveData.tu_equipped[j] = psd.SaveData.tu_equipped[i];
-                                    //psd.SaveData.tu_equipped[i] = null;
-                                }
-                        // Add any extra weapons
-                        foreach((int, int) tup in psd.SaveData.tu_equipped)
-                            saveData.tu_equipped = Utils.AddToArray(saveData.tu_equipped, tup);
+                        foreach((int toolID, int slotID) tool in psd.SaveData.tu_equipped)
+                        {
+                            switch (tool.slotID)
+                            {
+                                case (int)ToolSlot.leftHand:
+                                    saveData.tu_equipped[(int)ToolSlot.leftHand] = tool;
+                                    break;
+                                case (int)ToolSlot.rightHand:
+                                    saveData.tu_equipped[(int)ToolSlot.rightHand] = tool;
+                                    break;
+                                case (int)ToolSlot.moblility:
+                                    saveData.tu_equipped[(int)ToolSlot.moblility] = tool;
+                                    break;
+                            }
+                        }
                     }
                 }
 

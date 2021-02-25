@@ -55,6 +55,7 @@ public class ToolHandler : SubjectBase
             foreach((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
             {
                 CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
+                ac_changer.SetCurrentArmActive(tup.slotID, false);
             }
     }
 
@@ -165,7 +166,7 @@ public class ToolHandler : SubjectBase
     {
         (int, int) tup = (A_tools[(int)_toolSlot].ToolID, (int)_toolSlot);
         Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, null,
-            new (int, int)[] { tup }, null, null, null, null, -1)));
+            new (int, int)[3] { tup, (-1, -1), (-1, -1) }, null, null, null, null, -1)));
     }
     private void SendSave(int _nuggets, ToolSlot _toolSlot, int _rackID)
     {

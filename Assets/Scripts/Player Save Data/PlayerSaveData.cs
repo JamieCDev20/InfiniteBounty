@@ -10,8 +10,6 @@ public struct PlayerSaveData
     public int i_totalNugs;
     public int i_currentNugs;
     public int[] A_appearance;
-    // TODO:
-    // Convert to (int, int) at some point
     public (int toolID, int slotID)[] tu_equipped;
     public (int toolID, int rackID)[] tu_toolsPurchased;
     public (int toolID, int slotID, Augment[] equippedAugs)[] tu_equippedAugments;
@@ -36,6 +34,13 @@ public struct PlayerSaveData
         i_totalNugs = _i_total;
         i_currentNugs = _i_current;
         A_appearance = _appearance;
+        tu_equipped = new (int toolID, int slotID)[3];
+        foreach ((int toolID, int slotID) weapon in _tu_equip)
+        {
+            if (weapon.slotID <= 3)
+                if(weapon.toolID != -1 && weapon.slotID != -1)
+                    tu_equipped[weapon.slotID] = weapon;
+        }
         tu_equipped = _tu_equip;
         tu_toolsPurchased = _tu_purchased;
         tu_equippedAugments = _tu_equippedAugs;
