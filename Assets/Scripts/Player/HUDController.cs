@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -66,6 +67,15 @@ public class HUDController : MonoBehaviour
         texts.thunderText.text = _iA_nugCounts[3].ToString();
         texts.boomText.text = _iA_nugCounts[4].ToString();
         texts.magmaText.text = _iA_nugCounts[5].ToString();
+    }
+
+    internal void StartShowing()
+    {
+        hudCanvas.gameObject.SetActive(true);
+    }
+    internal void StopShowing()
+    {
+        hudCanvas.gameObject.SetActive(false);
     }
 
     public void SetBBTotal()
