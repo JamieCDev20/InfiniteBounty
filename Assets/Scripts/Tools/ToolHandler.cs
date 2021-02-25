@@ -42,10 +42,13 @@ public class ToolHandler : SubjectBase
         ac_changer = GetComponent<AppearanceChanger>();
         np_network = GetComponent<NetworkedPlayer>();
         view = GetComponent<PhotonView>();
-        SaveManager _sm = FindObjectOfType<SaveManager>();
-        AddObserver(_sm);
         InitialiseTools();
-        LoadSavedTools(_sm);
+        if(transform == NetworkedPlayer.x.GetPlayer())
+        {
+            SaveManager _sm = FindObjectOfType<SaveManager>();
+            AddObserver(_sm);
+            LoadSavedTools(_sm);
+        }
     }
 
     private void LoadSavedTools(SaveManager _sm)
@@ -57,6 +60,11 @@ public class ToolHandler : SubjectBase
                 CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
                 ac_changer.SetCurrentArmActive(tup.slotID, false);
             }
+    }
+
+    private void LoadAugmentsOnTool(SaveManager _sm)
+    {
+
     }
 
     /// <summary>

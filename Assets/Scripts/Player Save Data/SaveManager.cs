@@ -55,6 +55,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
     {
         if (!_saveData.Contains("i_totalNugs")) return false;
         if (!_saveData.Contains("i_currentNugs")) return false;
+        if (!_saveData.Contains("i_zippyBank")) return false;
         if (!_saveData.Contains("A_appearance")) return false;
         if (!_saveData.Contains("tu_equippedAugments")) return false;
         if (!_saveData.Contains("tu_toolsPurchased")) return false;
@@ -95,6 +96,10 @@ public class SaveManager : MonoBehaviour, ObserverBase
             if (totalNugsString[i].Contains("i_currentNugs"))
             {
                 psd.i_currentNugs = int.Parse(totalNugsString[i+1].Split(',')[0]);
+            }
+            if (totalNugsString[i].Contains("i_zippyBank"))
+            {
+                psd.i_zippyBank = int.Parse(totalNugsString[i + 1].Split(',')[0]);
             }
             if (totalNugsString[i].Contains("A_appearance"))
             {
@@ -212,6 +217,8 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 if(psd.SaveData.i_totalNugs != -1)
                     saveData.i_totalNugs = psd.SaveData.i_totalNugs;
 
+                if (psd.SaveData.i_zippyBank != -1)
+                    saveData.i_zippyBank = psd.SaveData.i_zippyBank;
                 if (psd.SaveData.tu_equipped != null)
                 {
                     // if there's no previously equipped tools, then just equip the tool.

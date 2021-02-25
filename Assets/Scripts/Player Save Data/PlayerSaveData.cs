@@ -37,12 +37,13 @@ public struct PlayerSaveData
         i_zippyBank = _i_zip;
         A_appearance = _appearance;
         tu_equipped = new (int toolID, int slotID)[3];
-        foreach ((int toolID, int slotID) weapon in _tu_equip)
-        {
-            if (weapon.slotID <= 3)
-                if(weapon.toolID != -1 && weapon.slotID != -1)
-                    tu_equipped[weapon.slotID] = weapon;
-        }
+        if(_tu_equip != null)
+            foreach ((int toolID, int slotID) weapon in _tu_equip)
+            {
+                if (weapon.slotID <= 3)
+                    if(weapon.toolID != -1 && weapon.slotID != -1)
+                        tu_equipped[weapon.slotID] = weapon;
+            }
         tu_equipped = _tu_equip;
         tu_toolsPurchased = _tu_purchased;
         tu_equippedAugments = _tu_equippedAugs;

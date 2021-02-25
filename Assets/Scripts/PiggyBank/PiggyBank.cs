@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PiggyBank : MonoBehaviour, IInteractible
+public class PiggyBank : SubjectBase, IInteractible
 {
     [SerializeField] private int i_targetAmount;
     [SerializeField] private int i_inputAmount;
@@ -19,6 +19,11 @@ public class PiggyBank : MonoBehaviour, IInteractible
         {
             gameObject.SetActive(false);
         }
+        SaveManager _sm = FindObjectOfType<SaveManager>();
+        i_storedAmount = _sm.SaveData.i_zippyBank;
+        if(i_storedAmount != 0)
+            tmp_currentMoneyText.text = "£" + i_storedAmount;
+        AddObserver(_sm);
         transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
     }
 
@@ -28,9 +33,11 @@ public class PiggyBank : MonoBehaviour, IInteractible
     {
         if (interactor?.GetComponent<NugManager>().Nugs >= i_inputAmount)
         {
-            interactor.GetComponent<NugManager>().CollectNugs(-i_inputAmount, false);
+            NugManager nugMan = interactor.GetComponent<NugManager>();
+            nugMan.GetComponent<NugManager>().CollectNugs(-i_inputAmount, false);
             i_storedAmount += i_inputAmount;
-
+            SaveEvent _se = new SaveEvent(new PlayerSaveData(nugMan.Nugs, -1, i_storedAmount, null, null, null, null, null, null, -1));
+            Notify(_se);
             transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
             tmp_currentMoneyText.text = "£" + i_storedAmount;
 
