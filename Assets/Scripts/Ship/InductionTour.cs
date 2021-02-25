@@ -122,11 +122,11 @@ public class InductionTour : MonoBehaviour, IInteractible
     {
         if (b_isBeingUsed)
         {
-            f_currentTime -= Time.deltaTime;
-            if (f_currentTime < 0)
-                NextStop();
+            //f_currentTime -= Time.deltaTime;
+            //if (f_currentTime < 0)
+            //    NextStop();
 
-            if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
                 NextStop();
         }
     }
