@@ -101,7 +101,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
             {
                 psd.i_zippyBank = int.Parse(totalNugsString[i + 1].Split(',')[0]);
             }
-            if (totalNugsString[i].Contains("A_appearance"))
+            if (totalNugsString[i].Contains("tu_appearance"))
             {
                 psd.A_appearance = ReadArrayFromJson<int>(_saveData, new string[] { "A_appearance\":[" }, '}');
             }
@@ -207,6 +207,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
 
     public void OnNotify(ObserverEvent oe_event)
     {
+        Debug.Log("Called");
         switch (oe_event)
         {
             case SaveEvent psd:
@@ -219,6 +220,9 @@ public class SaveManager : MonoBehaviour, ObserverBase
 
                 if (psd.SaveData.i_zippyBank != -1)
                     saveData.i_zippyBank = psd.SaveData.i_zippyBank;
+
+                if (psd.SaveData.A_appearance != null)
+                    saveData.A_appearance = psd.SaveData.A_appearance;
                 if (psd.SaveData.tu_equipped != null)
                 {
                     // if there's no previously equipped tools, then just equip the tool.

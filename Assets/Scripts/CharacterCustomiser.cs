@@ -55,6 +55,10 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        Debug.Log("Saving");
+        FindObjectOfType<SaveManager>().OnNotify(new SaveEvent(new PlayerSaveData(-1, -1, -1,
+            new int[] { ac_user.Body, ac_user.Head, ac_user.Arms, ac_user.Feet },
+            null, null, null, null, null, -1)));
     }
 
 

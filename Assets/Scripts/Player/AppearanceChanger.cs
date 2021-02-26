@@ -11,7 +11,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     [Header("Head Things")]
     [SerializeField] private GameObject[] goA_heads = new GameObject[0];
     private int i_currentHead;
-
+    
     [Header("Body Things")]
     [SerializeField] private GameObject[] goA_bodies = new GameObject[0];
     private int i_currentBody;
@@ -27,16 +27,33 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     private int i_currentFeet;
 
     [SerializeField] private bool b_networked = true;
+    public int Head { get { return i_currentHead; } }
+    public int Body { get { return i_currentBody; } }
+    public int Arms { get { return i_currentArm; } }
+    public int Feet { get { return i_currentFeet; } }
+
 
 
     private void Start()
     {
         if (!photonView.IsMine) return;
 
-        i_currentBody = Random.Range(0, goA_bodies.Length);
-        i_currentHead = Random.Range(0, goA_heads.Length);
-        i_currentArm = Random.Range(0, golA_arms.Length);
-        i_currentFeet = Random.Range(0, goA_feet.Length);
+        SaveManager _sm = FindObjectOfType<SaveManager>();
+
+        if(_sm.SaveData.A_appearance != null && _sm.SaveData.A_appearance.Length == 4)
+        {
+            i_currentBody = _sm.SaveData.A_appearance[0] != -1 ? _sm.SaveData.A_appearance[0] : Random.Range(0, goA_bodies.Length);
+            i_currentHead = _sm.SaveData.A_appearance[1] != -1 ? _sm.SaveData.A_appearance[1] : Random.Range(0, goA_heads.Length); ;
+            i_currentArm = _sm.SaveData.A_appearance[2] != -1 ? _sm.SaveData.A_appearance[2] : Random.Range(0, golA_arms.Length);
+            i_currentFeet = _sm.SaveData.A_appearance[3] != -1 ? _sm.SaveData.A_appearance[3] : Random.Range(0, goA_feet.Length);
+        }
+        else
+        {
+            i_currentBody = Random.Range(0, goA_bodies.Length);
+            i_currentHead = Random.Range(0, goA_heads.Length);
+            i_currentArm = Random.Range(0, golA_arms.Length);
+            i_currentFeet = Random.Range(0, goA_feet.Length);
+        }
 
         goA_heads[i_currentHead].SetActive(true);
         goA_bodies[i_currentBody].SetActive(true);
