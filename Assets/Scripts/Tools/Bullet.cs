@@ -91,6 +91,9 @@ public class Bullet : MonoBehaviour, IPoolable
             case NugGO n:
                 n.TakeDamage(i_damage, true);
                 break;
+            case LilyPad lp:
+                lp.TakeDamage(i_lodeDamage);
+                break;
             default:
                 temp.TakeDamage(i_damage, true);
                 break;
