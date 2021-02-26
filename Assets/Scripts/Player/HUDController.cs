@@ -41,6 +41,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private RectTransform[] rtA_healthBars = new RectTransform[0];
     [SerializeField] private Text[] tA_playerNamesTexts = new Text[0];
     private Dictionary<int, int> iiD_idMap = new Dictionary<int, int>();
+    [SerializeField] private GameObject[] goA_healthBarParents = new GameObject[0];
 
     private void Awake()
     {
@@ -128,6 +129,8 @@ public class HUDController : MonoBehaviour
 
     public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth)
     {
+        goA_healthBarParents[iiD_idMap[id]].SetActive(true);
+
         rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)_i_currentHealth / 100, 1, 1);
         tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;
     }
