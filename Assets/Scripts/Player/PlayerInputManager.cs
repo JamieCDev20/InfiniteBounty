@@ -199,6 +199,14 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
     #region Public Voids
 
+    public void RemoveAllPoolables()
+    {
+        foreach (IPoolable p in GetComponentsInChildren<IPoolable>())
+        {
+            p.Die();
+        }
+    }
+
     public void SetMoving(bool _val)
     {
         rb.velocity = _val? rb.velocity : Vector3.zero;

@@ -47,7 +47,10 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     public void Reset()
     {
         if (t_thisPlayer != null)
+        {
+            playerIM.RemoveAllPoolables();
             Destroy(t_thisPlayer.gameObject);
+        }
         if (playerCamera != null)
             Destroy(playerCamera.transform.parent.gameObject);
     }
