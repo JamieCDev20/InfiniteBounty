@@ -273,7 +273,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         transform.parent = null;
         for(int i = 0; i < toggles.Length; i++)
         {
-            toggles[i].SetActive(true);
+            toggles[i].SetActive(false);
         }
         if (SceneManager.GetActiveScene().name.Contains("Lobby"))
         {
