@@ -111,6 +111,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
             yield return new WaitForSeconds(f_timeBetweenHordes);
         }
+
     }
 
     private void SpawnEnemy(GameObject _go_enemyToSpawn, int _i_zoneIndexToSpawnIt)
@@ -131,10 +132,17 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         return ziA_enemySpawnZones[_i_zoneIndexToSpawnIt].t_zone.position + new Vector3(Random.Range(-50, 50), 0, Random.Range(-50, 50));
     }
 
-    internal void EnemyDied()
+    internal void EnemyDied(bool _b_isBoss)
     {
-        if (PhotonNetwork.IsMasterClient)
-            i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
+        //if (PhotonNetwork.IsMasterClient)
+        i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
+
+        if (i_numberOfEnemies < 5)
+        {
+            DynamicAudioManager.x.EndCombat();
+            if (_b_isBoss)
+                DynamicAudioManager.x.EndBoss();
+        }
     }
 }
 

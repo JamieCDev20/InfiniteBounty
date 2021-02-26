@@ -41,7 +41,7 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
         GetComponentInChildren<Animator>().SetBool("WakeUp", true);
         PhotonNetwork.Destroy(gameObject);
         if (photonView.IsMine)
-            EnemySpawner.x?.EnemyDied();
+            EnemySpawner.x?.EnemyDied(true);
     }
 
     public bool IsDead()

@@ -38,7 +38,7 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
 
         PhotonNetwork.Destroy(gameObject);
         if (photonView.IsMine)
-            EnemySpawner.x?.EnemyDied();
+            EnemySpawner.x?.EnemyDied(false);
     }
 
     public bool IsDead()

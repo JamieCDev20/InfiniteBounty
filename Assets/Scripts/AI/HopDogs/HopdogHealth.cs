@@ -73,7 +73,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
         //Invoke("SetDeathPartsInactive", 2);
         PoolManager.x.ReturnObjectToPool(gameObject);
         if (photonView.IsMine)
-            EnemySpawner.x?.EnemyDied();
+            EnemySpawner.x?.EnemyDied(false);
     }
 
     public void TakeDamage(int damage, bool activatesThunder, float delay)
