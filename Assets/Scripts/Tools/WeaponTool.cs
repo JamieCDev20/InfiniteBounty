@@ -88,7 +88,6 @@ public class WeaponTool : ToolBase
             augmentGameObject.transform.parent = A_augmentSlots[i].parent;
             augmentGameObject.transform.rotation = A_augmentSlots[i].transform.rotation;
             augmentGameObject.transform.position = A_augmentSlots[i].transform.position;
-            Debug.Log(augmentGameObject.name, augmentGameObject);
             augmentGameObject.GetComponent<Rigidbody>().isKinematic = true;
             augmentGameObject.GetComponent<Collider>().isTrigger = true;
             AugmentGo actualGo = augmentGameObject.GetComponent<AugmentGo>();

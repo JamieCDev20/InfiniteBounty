@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour, IPoolable
         else
             transform.localScale = Vector3.one;
         if (_ap.pm_phys != null)
-            pm_mat = _ap.pm_phys;
+            pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
         // If there's an explosion to be had, create a hiteffect here
         ae_explosion = _ae;
         transform.rotation = Quaternion.identity;

@@ -6,14 +6,15 @@ using UnityEngine;
 public class ProjectileAugment : Augment
 {
     [Newtonsoft.Json.JsonProperty]
-    [SerializeField] int i_shotsPerRound;
+    [SerializeField] protected int i_shotsPerRound;
     [Newtonsoft.Json.JsonProperty]
-    [SerializeField] float f_gravity;
-    [SerializeField] PhysicMaterial pm_physMat;
+    [SerializeField] protected float f_gravity;
     [Newtonsoft.Json.JsonProperty]
-    [SerializeField] float f_bulletScale;
+    [SerializeField] string pm_physMat;
+    [Newtonsoft.Json.JsonProperty]
+    [SerializeField] protected float f_bulletScale;
 
-    public void InitProjectile(int _i_shots, float _f_grav, PhysicMaterial _pm_mat, float _f_scale)
+    public void InitProjectile(int _i_shots, float _f_grav, string _pm_mat, float _f_scale)
     {
         i_shotsPerRound = _i_shots;
         f_gravity = _f_grav;

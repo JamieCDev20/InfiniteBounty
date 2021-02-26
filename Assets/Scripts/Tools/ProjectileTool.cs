@@ -69,7 +69,7 @@ public class ProjectileTool : WeaponTool
     {
         if(!base.AddStatChanges(aug))
             return false;
-        ProjectileAugment pa = (ProjectileAugment)aug;
+        ProjectileAugment pa = (ProjectileAugment)FindObjectOfType<AugmentManager>().GetAugment(aug.Name).Aug;
         AugmentProjectile augData = pa.GetProjectileData();
         i_shotsPerRound += augData.i_shotsPerRound;
         ap_projAugment.f_gravity += augData.f_gravity;
