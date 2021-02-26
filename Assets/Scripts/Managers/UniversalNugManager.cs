@@ -90,7 +90,8 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     public void FinishedLevel()
     {
-        photonView.RPC("RemoteFinished", RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC("RemoteFinished", RpcTarget.All);
     }
 
     [PunRPC]
