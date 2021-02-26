@@ -41,6 +41,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private AudioClip ac_fastHeartBeat;
     [SerializeField] private AudioSource as_heartBeatSource;
 
+    [Header("Toggles")]
+    [SerializeField] private GameObject[] toggles;
+
     private void Start()
     {
         view = GetComponent<PhotonView>();
@@ -155,7 +158,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         isDead = false;
         b_downed = false;
         ToggleAlive(true);
-        gameObject.SetActive(true);
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            toggles[i].SetActive(true);
+        }
+        
     }
 
     public void FullRespawn()
@@ -264,7 +271,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         ToggleAlive(false);
         b_downed = false;
         transform.parent = null;
-        gameObject.SetActive(false);
+        for(int i = 0; i < toggles.Length; i++)
+        {
+            toggles[i].SetActive(true);
+        }
         if (SceneManager.GetActiveScene().name.Contains("Lobby"))
         {
             FullRespawn();
