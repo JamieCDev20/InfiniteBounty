@@ -24,6 +24,8 @@ public class DynamicAudioManager : MonoBehaviour
     [SerializeField] private AudioMixer combatMixer;
     [SerializeField] private AudioMixer bossMixer;
 
+    [SerializeField] private float combatLerp = 0.3f;
+
     private bool inCombat;
     private bool isBoss;
 
@@ -76,7 +78,7 @@ public class DynamicAudioManager : MonoBehaviour
         }
 
         combatMixer.GetFloat("Volume", out cVol);
-        combatMixer.SetFloat("Volume", Mathf.Lerp(cVol, inCombat ? 0 : -80, 0.3f));
+        combatMixer.SetFloat("Volume", Mathf.Lerp(cVol, inCombat ? 0 : -80, combatLerp));
 
         bossMixer.SetFloat("Volume", isBoss ? 0 : -80);
 
