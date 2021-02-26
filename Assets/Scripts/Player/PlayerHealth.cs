@@ -155,7 +155,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         isDead = false;
         b_downed = false;
         ToggleAlive(true);
-
+        gameObject.SetActive(true);
     }
 
     public void FullRespawn()
@@ -264,6 +264,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         ToggleAlive(false);
         b_downed = false;
         transform.parent = null;
+        gameObject.SetActive(false);
         if (SceneManager.GetActiveScene().name.Contains("Lobby"))
         {
             FullRespawn();

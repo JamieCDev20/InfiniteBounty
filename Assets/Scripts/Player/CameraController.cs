@@ -32,6 +32,7 @@ public class CameraController : MonoBehaviour
     internal PlayerInputManager pim_inputs;
     private float f_firingTime;
     private float f_yLook;
+    private bool b_isSpectating;
 
     #endregion
 
@@ -67,7 +68,7 @@ public class CameraController : MonoBehaviour
 
     private void Follow()
     {
-        if(t_follow != null)
+        if (t_follow != null)
             transform.position = t_follow.position + v_offset;
     }
 
@@ -125,11 +126,16 @@ public class CameraController : MonoBehaviour
         t_follow = _t_newFollow;
         t_follow.GetComponentInChildren<Billboard>()?.gameObject.SetActive(false);
         GetComponentInChildren<PauseMenuController>().SetSpectating();
+        b_isSpectating = _b_isSpectating;
     }
 
     internal void StopSpectating()
     {
-        GetComponentInChildren<PauseMenuController>().StopSpectating();
+        if (b_isSpectating)
+        {
+            GetComponentInChildren<PauseMenuController>().StopSpectating();
+            b_isSpectating = false;
+        }
     }
 
     public void SetOffset(Vector3 _v_newOffset)
