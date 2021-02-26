@@ -157,6 +157,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         SetMaxHealth();
         isDead = false;
         b_downed = false;
+        b_canBeRevived = false;
         ToggleAlive(true);
         go_reviveObject.SetActive(false);
         for (int i = 0; i < toggles.Length; i++)
@@ -190,7 +191,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [PunRPC]
     public void RemoteDie()
     {
-        transform.parent = null;
+        //transform.parent = null;
         isDead = true;
         b_downed = true;
         b_canBeRevived = true;
