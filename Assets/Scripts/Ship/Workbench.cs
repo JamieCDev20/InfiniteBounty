@@ -249,7 +249,7 @@ public class Workbench : SubjectBase, IInteractible
                     ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
                     if (pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
                     {
-                        SendSave();
+                        SendSave(aL_allAugmentsOwned[i_currentAugmentIndex]);
                     }
                     else
                     {
@@ -268,7 +268,7 @@ public class Workbench : SubjectBase, IInteractible
                     ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
                     if (ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
                     {
-                        SendSave();
+                        SendSave(aL_allAugmentsOwned[i_currentAugmentIndex]);
                     }
                     else
                     {
@@ -288,7 +288,7 @@ public class Workbench : SubjectBase, IInteractible
                     WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
                     if (wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
                     {
-                        SendSave();
+                        SendSave(aL_allAugmentsOwned[i_currentAugmentIndex]);
                     }
                     else
                     {
@@ -304,10 +304,10 @@ public class Workbench : SubjectBase, IInteractible
         //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
 
-    private void SendSave()
+    private void SendSave(Augment _aug)
     {
         SaveEvent saveEvent = new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null,
-            new (int, int, Augment[])[] { (th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, null) },
+            new (int, int, Augment[])[] { (th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, new Augment[] { _aug }) },
             null, null, 0));
         Notify(saveEvent);
     }

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ConeTool : WeaponTool
 {
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_angle;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_radius;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected Transform t_conePoint;
-    private const AugmentType augType = AugmentType.cone;
 
     private bool CheckInCone(Transform _t_objectToCheck, Vector3 _t_camPos)
     {
@@ -34,7 +36,6 @@ public class ConeTool : WeaponTool
             return false;
         ConeAugment coneAug = (ConeAugment)aug;
         AugmentCone augData = coneAug.GetConeData();
-        Debug.Log(string.Format("Name: {0} | Angle: {1} | Radius: {2}", coneAug.Name, augData.f_angle, augData.f_radius));
         f_angle += augData.f_angle;
         f_radius += augData.f_radius;
         return true;
