@@ -175,9 +175,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public void ToggleAlive(bool val)
     {
         GetComponent<Rigidbody>().isKinematic = !val;
-        transform.GetChild(0).gameObject.SetActive(val);
+        //transform.GetChild(0).gameObject.SetActive(val);
         GetComponent<PlayerMover>().enabled = val;
         GetComponent<ToolHandler>().enabled = val;
+        GetComponent<Collider>().enabled = true;
     }
 
     private void ClientDie()
