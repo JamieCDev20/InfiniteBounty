@@ -587,7 +587,14 @@ namespace Photon.Pun
                 }
 
                 // registration might be too late when some script (on this GO) searches this view BUT GetPhotonView() can search ALL in that case
-                PhotonNetwork.RegisterPhotonView(this);
+                try
+                {
+                    PhotonNetwork.RegisterPhotonView(this);
+                }
+                catch
+                {
+                    print(name);
+                }
             }
 
             this.didAwake = true;
