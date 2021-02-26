@@ -143,6 +143,25 @@ public class PoolManager : MonoBehaviour
         return ob;
     }
 
+    public GameObject SpawnObject(string toSpawn)
+    {
+        // Get the next available object
+        foreach (string s in pools.Keys)
+            if (s == toSpawn)
+                return pools[s].SpawnObject();
+        return null;
+    }
+
+    public GameObject SpawnObject(string toSpawn, Transform parent, Quaternion rotation)
+    {
+        GameObject spawned = SpawnObject(toSpawn);
+        if (spawned == null)
+            return null;
+        spawned.transform.parent = parent;
+        spawned.transform.rotation = rotation;
+        return spawned;
+    }
+
     /// <summary>
     /// Set a new pool using the class name
     /// </summary>

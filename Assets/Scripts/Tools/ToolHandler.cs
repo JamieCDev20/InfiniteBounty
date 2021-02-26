@@ -58,13 +58,36 @@ public class ToolHandler : SubjectBase
             foreach((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
             {
                 CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
+                //LoadAugmentsOnTool(_sm, tup.slotID);
                 ac_changer.SetCurrentArmActive(tup.slotID, false);
             }
     }
 
-    private void LoadAugmentsOnTool(SaveManager _sm)
+    private void LoadAugmentsOnTool(SaveManager _sm, int currentSlot)
     {
+        if(_sm.SaveData.tu_equippedAugments != null)
+        {
+            for(int i = 0; i < _sm.SaveData.tu_equippedAugments.Length; i++)
+            {
+                if(_sm.SaveData.tu_equippedAugments[i].slotID == (int)ToolSlot.leftHand || _sm.SaveData.tu_equippedAugments[i].slotID == (int)ToolSlot.rightHand && _sm.SaveData.tu_equippedAugments[i].toolID != -1)
+                {
 
+                    if (A_tools[currentSlot].ToolID == _sm.SaveData.tu_equippedAugments[i].toolID && currentSlot == _sm.SaveData.tu_equippedAugments[i].slotID)
+                    {
+                        Augment[] augs = _sm.SaveData.tu_equippedAugments[i].equippedAugs;
+                        foreach(Augment aug in augs)
+                        {
+                            WeaponTool wt = (WeaponTool)A_tools[currentSlot];
+                            wt.AddStatChanges(aug);
+                            GameObject augGo = PoolManager.x.SpawnObject("Augment", wt.GetInactiveAugmentSlot(), wt.GetInactiveAugmentSlot().transform.rotation);
+                            Debug.Log(wt.GetInactiveAugmentIndex());
+                            augGo.GetComponent<AugmentGo>().Aug = aug;
+                            augGo.GetComponent<Rigidbody>().isKinematic = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
