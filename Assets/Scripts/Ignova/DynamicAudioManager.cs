@@ -10,6 +10,7 @@ public class DynamicAudioManager : MonoBehaviour
 
     [SerializeField] private AudioClip mainIntro;
     [SerializeField] private AudioClip mainLoop;
+    [SerializeField] private AudioClip combatIntro;
     [SerializeField] private AudioClip combatLoop;
     [SerializeField] private AudioClip bossIntro;
     [SerializeField] private AudioClip bossLoop;
@@ -48,6 +49,7 @@ public class DynamicAudioManager : MonoBehaviour
     public void StartCombat()
     {
         inCombat = true;
+        combatSource.PlayOneShot(combatIntro);
     }
 
     public void EndCombat()
