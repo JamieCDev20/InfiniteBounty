@@ -158,6 +158,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         isDead = false;
         b_downed = false;
         ToggleAlive(true);
+        go_reviveObject.SetActive(false);
         for (int i = 0; i < toggles.Length; i++)
         {
             toggles[i].SetActive(true);
