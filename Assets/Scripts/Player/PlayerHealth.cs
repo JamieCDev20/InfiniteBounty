@@ -305,4 +305,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         anim.SetBool("LavaHit", false);
     }
 
+    public float GetCurrentHealth()
+    {
+        return f_currentHealth;
+    }
+
 }

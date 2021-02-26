@@ -13,11 +13,14 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
 
     private Rigidbody rb;
 
+    private int ID;
     private bool b_isSprinting;
     private bool b_isGrounded;
     private bool b_shootingLeft;
     private bool b_shootingRight;
+    private float f_cHealth;
     private PlayerAnimator anim;
+    private PlayerHealth health;
     private PlayerInputManager pim;
 
     [SerializeField] private bool b_networked = true;
@@ -42,6 +45,8 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(pim.GetToolBools().b_LToolHold);
             stream.SendNext(pim.GetToolBools().b_RToolHold);
 
+            stream.SendNext(health.GetCurrentHealth());
+
         }
         else
         {
@@ -60,6 +65,8 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             b_shootingRight = (bool)stream.ReceiveNext();
 
             anim?.SetRemoteShooting(b_shootingLeft, b_shootingRight);
+
+            f_cHealth = (float)stream.ReceiveNext();
 
         }
 
@@ -105,6 +112,16 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     public void SetIsGrounded(bool _b_val)
     {
         b_isGrounded = _b_val;
+    }
+
+    public void SetID(int _id)
+    {
+        ID = _id;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return f_cHealth;
     }
 
 }
