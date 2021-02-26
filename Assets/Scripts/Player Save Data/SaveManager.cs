@@ -260,6 +260,23 @@ public class SaveManager : MonoBehaviour, ObserverBase
                         {
                             if(saveData.tu_equippedAugments[j].toolID == psd.SaveData.tu_equippedAugments[i].toolID && saveData.tu_equippedAugments[j].slotID == psd.SaveData.tu_equippedAugments[i].slotID)
                             {
+                                List<Augment> augs = new List<Augment>();
+                                foreach(Augment aug in psd.SaveData.tu_equippedAugments[i].equippedAugs)
+                                {
+                                    switch (aug.at_type)
+                                    {
+                                        case AugmentType.cone:
+                                            augs.Add((ConeAugment)aug);
+                                            break;
+                                        case AugmentType.projectile:
+                                            augs.Add((ProjectileAugment)aug);
+                                            break;
+                                        case AugmentType.standard:
+                                            augs.Add(aug);
+                                            break;
+                                    }
+                                }
+                                psd.SaveData.tu_equippedAugments[i].equippedAugs = augs.ToArray();
                                 saveData.tu_equippedAugments[j].equippedAugs = Utils.CombineArrays(saveData.tu_equippedAugments[j].equippedAugs, psd.SaveData.tu_equippedAugments[i].equippedAugs);
                                 comb = true;
                             }

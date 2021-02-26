@@ -6,10 +6,10 @@ public struct AugmentProjectile
 {
     public int i_shotsPerRound;
     public float f_gravity;
-    public PhysicMaterial pm_phys;
+    public string pm_phys;
     public float f_bulletScale;
 
-    public AugmentProjectile(int _i_shots, float _f_grav, PhysicMaterial _pm, float _f_scale)
+    public AugmentProjectile(int _i_shots, float _f_grav, string _pm, float _f_scale)
     {
         i_shotsPerRound = _i_shots;
         f_gravity = _f_grav;
