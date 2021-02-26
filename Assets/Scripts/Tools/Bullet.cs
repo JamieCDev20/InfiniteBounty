@@ -92,7 +92,7 @@ public class Bullet : MonoBehaviour, IPoolable
                 n.TakeDamage(i_damage, true);
                 break;
             case LilyPad lp:
-                lp.TakeDamage(i_lodeDamage);
+                lp.TakeDamage(i_lodeDamage, true);
                 break;
             default:
                 temp.TakeDamage(i_damage, true);
