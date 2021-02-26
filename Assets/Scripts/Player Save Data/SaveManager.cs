@@ -230,6 +230,8 @@ public class SaveManager : MonoBehaviour, ObserverBase
                     {
                         foreach((int toolID, int slotID) tool in psd.SaveData.tu_equipped)
                         {
+                            if (tool.toolID == -1 || tool.slotID == -1)
+                                continue;
                             switch (tool.slotID)
                             {
                                 case (int)ToolSlot.leftHand:
