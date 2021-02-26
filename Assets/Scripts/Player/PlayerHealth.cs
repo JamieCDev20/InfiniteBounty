@@ -159,6 +159,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_downed = false;
         b_canBeRevived = false;
         ToggleAlive(true);
+        pa_anim.PlayerRevived();
         go_reviveObject.SetActive(false);
         for (int i = 0; i < toggles.Length; i++)
         {
