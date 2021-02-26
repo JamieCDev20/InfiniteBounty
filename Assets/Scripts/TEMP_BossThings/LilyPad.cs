@@ -26,8 +26,15 @@ public class LilyPad : MonoBehaviour, IHitable
 
     internal void Setup(int _i_id)
     {
-        view.ViewID = 4000 + _i_id;
-        PhotonNetwork.RegisterPhotonView(view);
+        try
+        {
+            view.ViewID = 4000 + _i_id;
+            PhotonNetwork.RegisterPhotonView(view);
+        }
+        catch
+        {
+            print("I Failed, Cause I'm a stupid idiot head");
+        }
     }
 
     public bool IsDead()
