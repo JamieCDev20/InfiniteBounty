@@ -14,6 +14,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     private Rigidbody rb;
 
     private int ID;
+    private string Name;
     private bool b_isSprinting;
     private bool b_isGrounded;
     private bool b_shootingLeft;
@@ -67,6 +68,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             anim?.SetRemoteShooting(b_shootingLeft, b_shootingRight);
 
             f_cHealth = (float)stream.ReceiveNext();
+            HUDController.x.UpdateRemoteHealth(Name, ID, f_cHealth);
 
         }
 
@@ -114,14 +116,18 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
         b_isGrounded = _b_val;
     }
 
-    public void SetID(int _id)
+    public void SetID(int _id, string _name)
     {
         ID = _id;
+        Name = _name;
+        photonView.RPC("SetIDR", RpcTarget.Others);
     }
 
-    public float GetCurrentHealth()
+    [PunRPC]
+    public void SetIDR(int _id, string _n)
     {
-        return f_cHealth;
+        ID = _id;
+        Name = _n;
     }
 
 }

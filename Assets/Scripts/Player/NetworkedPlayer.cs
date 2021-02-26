@@ -97,7 +97,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         //set player pos, cam and IM
         t_thisPlayer = player.transform;
-        t_thisPlayer.GetComponent<PlayerNetworkSync>().SetID(PlayerID);
+        t_thisPlayer.GetComponent<PlayerNetworkSync>().SetID(PlayerID, PhotonNetwork.NickName);
         playerIM = player.GetComponent<PlayerInputManager>();
         playerIM.SetCanPickUpNugs(true);
         playerIM.SetPlayerNumber(playerInfo.playerID);

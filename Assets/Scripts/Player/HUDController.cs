@@ -126,7 +126,7 @@ public class HUDController : MonoBehaviour
 
     #region Other Player's Bars
 
-    internal void UpdateRemoteHealth(string _s_name, int id, int _i_currentHealth)
+    public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth)
     {
         rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)(_i_currentHealth / 100), 1);
         tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;
