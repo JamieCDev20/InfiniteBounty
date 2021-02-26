@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class LodeBase : Enemy, IPunObservable, IHitable
+public class LodeBase : Enemy, IHitable
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;

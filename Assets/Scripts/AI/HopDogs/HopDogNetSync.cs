@@ -13,8 +13,7 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         v_rot = transform.eulerAngles;
-        //Debug.Log($"time since last dick suck: {Time.realtimeSinceStartup - t}");
-        //t = Time.realtimeSinceStartup;
+
         if (stream.IsWriting)
         {
             stream.SendNext(transform.position.x);
