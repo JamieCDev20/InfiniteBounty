@@ -54,21 +54,31 @@ public class Teleporter : MobilityTool
             for (int i = 0; i < _hits.Length; i++)
                 if (_hits[i].transform.CompareTag("Player"))
                 {
-                    OpenPortalAtPoint(_hits[i], _v_lookDirection);
+                    OpenPortalAtPoint(_hits[i].point, _v_lookDirection);
+                    PlayAudio(ac_activationSound);
                     BeginCooldown();
                     return;
                 }
             if (_hits.Length > 0)
+            {
                 if (Vector3.Distance(transform.position, _hits[0].point) <= f_teleportDistance)
                 {
-                    OpenPortalAtPoint(_hits[0], _v_lookDirection);
+                    OpenPortalAtPoint(_hits[0].point, _v_lookDirection);
                     PlayAudio(ac_activationSound);
                     BeginCooldown();
                 }
+            }
+            else
+            {
+                OpenPortalAtPoint(transform.position + transform.forward * f_teleportDistance, _v_lookDirection);
+                PlayAudio(ac_activationSound);
+                BeginCooldown();
+
+            }
         }
     }
 
-    private void OpenPortalAtPoint(RaycastHit hit, Vector3 _v_lookDirection)
+    private void OpenPortalAtPoint(Vector3 _v_pos, Vector3 _v_lookDirection)
     {
         go_startPortal.transform.position = transform.position + _v_lookDirection * 5;
         go_startPortal.SetActive(true);
@@ -76,7 +86,7 @@ public class Teleporter : MobilityTool
         DontDestroyOnLoad(go_startPortal);
         go_startPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn);
 
-        go_endPortal.transform.position = hit.point - _v_lookDirection * 3;
+        go_endPortal.transform.position = _v_pos - _v_lookDirection * 3;
         go_endPortal.SetActive(true);
         go_endPortal.transform.parent = null;
         DontDestroyOnLoad(go_endPortal);
