@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,12 @@ public class HUDController : MonoBehaviour
 
     [Header("Other UI")]
     [SerializeField] private Transform hudCanvas;
+    [SerializeField] private Text t_myNameText;
 
+    [Header("Other Player's Health Bars")]
+    [SerializeField] private RectTransform[] rtA_healthBars = new RectTransform[0];
+    [SerializeField] private Text[] tA_playerNamesTexts = new Text[0];
+    private Dictionary<int, int> iiD_idMap = new Dictionary<int, int>();
 
     private void Awake()
     {
@@ -47,6 +53,17 @@ public class HUDController : MonoBehaviour
         SetHealthBarValue(1, 1);
         SetBBTotal();
         SceneManager.sceneLoaded += SceneLoad;
+
+        int _int = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (i != NetworkedPlayer.x.PlayerID)
+            {
+                iiD_idMap.Add(i, _int);
+                _int++;
+            }
+        }
+        t_myNameText.text = PhotonNetwork.NickName;
     }
 
     public void SetHealthBarValue(float _i_currentHealth, int _i_maxHealth)
@@ -96,6 +113,8 @@ public class HUDController : MonoBehaviour
         go_nugHudParent.SetActive(inLevel);
         go_bbObject.SetActive(!inLevel);
 
+
+
     }
 
     public Transform GetHudCanvasTransform()
@@ -103,4 +122,16 @@ public class HUDController : MonoBehaviour
         return hudCanvas;
     }
 
+
+
+    #region Other Player's Bars
+
+    private void UpdateRemoteHealth(string _s_name, int id, int _i_currentHealth)
+    {
+        rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)(_i_currentHealth / 100), 1);
+        tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;
+    }
+
+
+    #endregion
 }

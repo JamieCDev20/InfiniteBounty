@@ -15,13 +15,12 @@ public class PiggyBank : SubjectBase, IInteractible
 
     public void Start()
     {
-        if (DifficultyManager.x.MaximumDifficulty >= 9)
-        {
+        if (DifficultyManager.x.MaximumDifficulty < 9)
             gameObject.SetActive(false);
-        }
+                
         SaveManager _sm = FindObjectOfType<SaveManager>();
         i_storedAmount = _sm.SaveData.i_zippyBank;
-        if(i_storedAmount != 0)
+        if (i_storedAmount != 0)
             tmp_currentMoneyText.text = "£" + i_storedAmount;
         AddObserver(_sm);
         transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
