@@ -128,7 +128,7 @@ public class HUDController : MonoBehaviour
 
     public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth)
     {
-        rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)(_i_currentHealth / 100), 1);
+        rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)_i_currentHealth / 100, 1, 1);
         tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;
     }
 
