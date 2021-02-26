@@ -79,6 +79,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<PlayerAnimator>();
         pim = GetComponent<PlayerInputManager>();
+        health = GetComponent<PlayerHealth>();
     }
 
     private void Update()
