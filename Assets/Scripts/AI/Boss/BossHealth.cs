@@ -55,6 +55,11 @@ public class BossHealth : MonoBehaviourPun, IHitable
         if (f_timeSinceDamage >= f_timeToWauitBeforeUpdatingWhite)
             rt_healthBarWhite.localScale = Vector3.Lerp(rt_healthBarWhite.transform.localScale, new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1), 5 * Time.deltaTime);
         f_timeSinceDamage += Time.deltaTime;
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.X))
+            TakeDamage(100000, false);
+#endif
     }
 
     [PunRPC]
