@@ -88,6 +88,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                 StartCoroutine(SpawnWave(i));
                 if (iL_minibossZones.Contains(i))
                 {
+                    DynamicAudioManager.x.StartBoss();
                     SpawnEnemy(go_miniboss, i);
                     iL_minibossZones.Remove(i);
                 }
@@ -101,6 +102,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private IEnumerator SpawnWave(int _i_zoneToSpawnEnemiesIn)
     {
+        DynamicAudioManager.x.StartCombat();
+
         for (int i = 0; i < i_numberOfHordesPerWave; i++)
         {
             for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
