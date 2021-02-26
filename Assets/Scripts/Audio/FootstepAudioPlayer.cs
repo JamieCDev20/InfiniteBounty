@@ -10,8 +10,10 @@ public enum Surface
 public class FootstepAudioPlayer : MonoBehaviour
 {
     [SerializeField] private AudioSource as_feetAudio;
-    [SerializeField] private AudioClip ac_footstepShip;
-    [SerializeField] private AudioClip ac_footstepPlanet;
+    [SerializeField] private AudioClip ac_footstepShipL;
+    [SerializeField] private AudioClip ac_footstepShipR;
+    [SerializeField] private AudioClip ac_footstepPlanetR;
+    [SerializeField] private AudioClip ac_footstepPlanetL;
     [SerializeField] private AudioClip ac_planetLand;
     [SerializeField] private AudioClip ac_shipLand;
     [SerializeField] private float f_velocityToVolumeMultiplier = 0.035f;
@@ -46,17 +48,34 @@ public class FootstepAudioPlayer : MonoBehaviour
         }
     }
 
-    public void PlayFootstepSound()
+    public void PlayFootstepSoundL()
     {
         switch (e_surface)
         {
             case Surface.ship:
                 as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
-                as_feetAudio.PlayOneShot(ac_footstepShip, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
+                as_feetAudio.PlayOneShot(ac_footstepShipL, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
             case Surface.planet:
                 as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
-                as_feetAudio.PlayOneShot(ac_footstepPlanet, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
+                as_feetAudio.PlayOneShot(ac_footstepPlanetL, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void PlayFootstepSoundR()
+    {
+        switch (e_surface)
+        {
+            case Surface.ship:
+                as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
+                as_feetAudio.PlayOneShot(ac_footstepShipR, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
+                break;
+            case Surface.planet:
+                as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
+                as_feetAudio.PlayOneShot(ac_footstepPlanetR, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
             default:
                 break;
