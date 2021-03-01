@@ -33,6 +33,7 @@ public class Workbench : SubjectBase, IInteractible
     [SerializeField] private Scrollbar s_slider;
 
     [Header("Augment Display")]
+    [SerializeField] AugmentPropertyDisplayer apd;
     [SerializeField] private AugmentDisplay ad_display;
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private ToolHandler th_currentTh;
@@ -334,8 +335,9 @@ public class Workbench : SubjectBase, IInteractible
 
         ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
         ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
-        RemoveAugmentProperties();
-        UpdatePropertyText(_i_augmentIndexClicked);
+        apd.RemoveAugmentProperties();
+        apd.UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
+//        UpdatePropertyText(_i_augmentIndexClicked);
     }
 
     #endregion

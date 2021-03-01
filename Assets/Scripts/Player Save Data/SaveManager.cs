@@ -207,7 +207,6 @@ public class SaveManager : MonoBehaviour, ObserverBase
 
     public void OnNotify(ObserverEvent oe_event)
     {
-        Debug.Log("Called");
         switch (oe_event)
         {
             case SaveEvent psd:
