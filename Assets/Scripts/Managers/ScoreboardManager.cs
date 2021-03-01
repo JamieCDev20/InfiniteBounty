@@ -24,9 +24,6 @@ public class ScoreboardManager : MonoBehaviour
         if (PhotonNetwork.InRoom)
             UniversalNugManager.x?.DoScoring();
 
-
-        PoolManager.x.Reset();
-
         ////yield return new WaitForEndOfFrame();
 
         if (FindObjectOfType<ScoreboardCamController>())
