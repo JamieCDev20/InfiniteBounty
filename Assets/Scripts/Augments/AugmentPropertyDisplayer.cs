@@ -10,8 +10,67 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private int i_columnMax;
     [SerializeField] private GameObject go_propertyButton;
     [SerializeField] private GameObject go_propertyParent;
+    [SerializeField] private GameObject go_augmentButton;
+    [SerializeField] private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
     [SerializeField] private RectTransform rt_augmentButtonParent;
+    [SerializeField] private Scrollbar s_slider;
+    [SerializeField] private float f_augmentButtonHeight = 85;
+    public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
     private int i_displayIter = 0;
+
+    public void Start()
+    {
+        if (!PoolManager.x.CheckIfPoolExists(go_propertyButton))
+            PoolManager.x.CreateNewPool(go_propertyButton, 20);
+    }
+
+
+    public List<Augment> InitAugmentList(List<Augment> aL_augs, Augment[] _aA_augmentsInList, bool _b_shouldAddToExistingList)
+    {
+        // Clear the display
+        if (!_b_shouldAddToExistingList)
+            aL_augs.Clear();
+        // Update display from save file
+        aL_augs.AddRange(_aA_augmentsInList);
+        UpdateAugmentListDisplay(aL_augs, AugmentDisplayType.ShowAll);
+        return aL_augs;
+    }
+
+    private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
+    {
+        List<Augment> _aL_augmentsToShow = new List<Augment>();
+        // Currently only show all augments
+        switch (_adt_whichToShow)
+        {
+            case AugmentDisplayType.ShowAll:
+                _aL_augmentsToShow.AddRange(aL_augs);
+                break;
+
+            case AugmentDisplayType.ShowSameType:
+                for (int i = 0; i < aL_augs.Count; i++)
+                {
+                    /*
+                        if(aL_allAugmentsOwned[i].type == currentWeapon.type)
+                            _aL_augmentsToShow.Add(aL_allAugmentsOwned[i]);
+                    */
+                }
+                break;
+        }
+
+        for (int i = 0; i < aL_augs.Count; i++)
+        {
+            if (goL_augmentButtonPool.Count <= i)
+                goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
+            goL_augmentButtonPool[i].SetActive(true);
+            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
+            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_augs[i]?.Level.ToString();
+            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_augs[i]?.Name;
+            goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
+        }
+
+        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
+        s_slider.value = 1;
+    }
 
     public void UpdatePropertyText(Augment _aug)
     {

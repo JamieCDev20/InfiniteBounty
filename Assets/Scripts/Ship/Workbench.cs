@@ -23,14 +23,9 @@ public class Workbench : SubjectBase, IInteractible
     [SerializeField] private float f_cameraMovementT = 0.4f;
 
     [Header("Button Info")]
-    [SerializeField] private GameObject go_augmentButton;
-    [SerializeField] private RectTransform rt_augmentButtonParent;
-    [SerializeField] private float f_augmentButtonHeight = 85;
-    [SerializeField] private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
     [SerializeField] private List<WeaponTool> wt_toolsInHand = new List<WeaponTool>();
     private int i_currentAugmentIndex;
     private int i_currentWeaponIndex = 0;
-    [SerializeField] private Scrollbar s_slider;
 
     [Header("Augment Display")]
     [SerializeField] AugmentPropertyDisplayer apd;
@@ -50,8 +45,6 @@ public class Workbench : SubjectBase, IInteractible
             if (too.name.Contains("Weapon"))
                 tl = too;
         tl.LoadTools(transform);
-        if(!PoolManager.x.CheckIfPoolExists(go_propertyButton))
-            PoolManager.x.CreateNewPool(go_propertyButton, 20);
         augMan = FindObjectOfType<AugmentManager>();
         AddObserver(saveMan);
     }
@@ -102,7 +95,7 @@ public class Workbench : SubjectBase, IInteractible
                         if(augMan.GetAugment(augs[i].Name) != null)
                             castedAugs[i] = augMan.GetAugment(augs[i].Name).Aug;
                 }
-                InitAugmentList(castedAugs, false);
+                apd.InitAugmentList(aL_allAugmentsOwned, castedAugs, false);
                 ClickAugment(0);
             }
             // Enable cursor
@@ -176,52 +169,6 @@ public class Workbench : SubjectBase, IInteractible
             Camera.main.transform.localPosition = new Vector3(0, 0, -4);
             Camera.main.transform.localEulerAngles = new Vector3(10, 0, 0);
         }
-    }
-
-    internal void InitAugmentList(Augment[] _aA_augmentsInList, bool _b_shouldAddToExistingList)
-    {
-        // Clear the display
-        if (!_b_shouldAddToExistingList)
-            aL_allAugmentsOwned.Clear();
-        // Update display from save file
-        aL_allAugmentsOwned.AddRange(_aA_augmentsInList);
-        UpdateAugmentListDisplay(AugmentDisplayType.ShowAll);
-    }
-
-    private void UpdateAugmentListDisplay(AugmentDisplayType _adt_whichToShow)
-    {
-        List<Augment> _aL_augmentsToShow = new List<Augment>();
-        // Currently only show all augments
-        switch (_adt_whichToShow)
-        {
-            case AugmentDisplayType.ShowAll:
-                _aL_augmentsToShow.AddRange(aL_allAugmentsOwned);
-                break;
-
-            case AugmentDisplayType.ShowSameType:
-                for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
-                {
-                    /*
-                        if(aL_allAugmentsOwned[i].type == currentWeapon.type)
-                            _aL_augmentsToShow.Add(aL_allAugmentsOwned[i]);
-                    */
-                }
-                break;
-        }
-
-        for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
-        {
-            if (goL_augmentButtonPool.Count <= i)
-                goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
-            goL_augmentButtonPool[i].SetActive(true);
-            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_allAugmentsOwned[i]?.Level.ToString();
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[i]?.Name;
-            goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
-        }
-
-        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_allAugmentsOwned.Count + 1));
-        s_slider.value = 1;
     }
 
     private void DisplayWeapon()
@@ -315,9 +262,9 @@ public class Workbench : SubjectBase, IInteractible
 
     public void ClickAugment(int _i_augmentIndexClicked)
     {
-        goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
+        apd.AugmentButtons[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
         i_currentAugmentIndex = _i_augmentIndexClicked;
-        goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
+        apd.AugmentButtons[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
         ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
         switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
