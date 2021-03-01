@@ -12,6 +12,7 @@ public class PoolManager : MonoBehaviour
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         Init();
     }
     /// <summary>
@@ -224,4 +225,10 @@ public class PoolManager : MonoBehaviour
     {
         throw new NotImplementedException();
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ResetPools();
+    }
+
 }
