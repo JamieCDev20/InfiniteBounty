@@ -39,7 +39,7 @@ public class HammerHitbox : MonoBehaviour
                 return;
             }
 
-            other.attachedRigidbody.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
+            other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
             //else if (other.CompareTag("Nugget"))
             //    other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
 
