@@ -226,7 +226,7 @@ public class PoolManager : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ResetPools();
     }

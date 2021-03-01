@@ -81,7 +81,6 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         if (levelname.Contains("Lobby"))
             ReturnToShip();        
         LoadingScreenManager.x.CallLoadLevel(levelname);
-        PoolManager.x.Reset();
     }
 
     private void CheckPlayers()
