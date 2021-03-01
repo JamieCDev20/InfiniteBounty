@@ -32,6 +32,7 @@ public class PoolManager : MonoBehaviour
 
     public void Reset()
     {
+        ResetPools();
         //foreach (var i in pools)
         //{
         //    Debug.Log(i.Key);
