@@ -28,12 +28,16 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (b_FUCKINGLOAD)
             FuckingLoad();
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (other.CompareTag("Player"))
         {
             i_playersCount += 1;
@@ -45,6 +49,8 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void OnTriggerExit(Collider other)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (other.CompareTag("Player"))
         {
             i_playersCount += -1;
@@ -53,6 +59,8 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     internal void SetLevelToLoad(string _s_levelName)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         levelToLoad = _s_levelName;
         LoadingScreenManager.x.SetSceneToLoad(levelToLoad);
     }
@@ -63,11 +71,15 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void FuckingLoad()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         LoadLevel(levelToLoad);
     }
 
     private void LoadLevel(string levelname)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (PhotonNetwork.IsMasterClient)
         {
             if (levelname.Contains("Lobby"))
@@ -89,6 +101,8 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     private void CheckPlayers()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         int cCount = i_playersCount;
         foreach (PlayerHealth ph in FindObjectsOfType<PlayerHealth>())
         {
@@ -113,6 +127,8 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     public void Interacted(Transform interactor)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (interactor.GetComponent<PlayerInputManager>().GetID() == 0)
             CheckPlayers();
     }
@@ -120,6 +136,8 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     public void ReturnToShip()
     {
 
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         foreach (NugManager n in FindObjectsOfType<NugManager>())
         {
             UniversalNugManager.x.FinishedLevel();
