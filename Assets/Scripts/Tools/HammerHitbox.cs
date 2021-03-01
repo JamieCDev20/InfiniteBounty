@@ -46,7 +46,7 @@ public class HammerHitbox : MonoBehaviour
         other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
         //else if (other.CompareTag("Nugget"))
         //    other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
-
+        SetHitBoxActive(false);
     }
 
     internal void SetHitBoxActive(bool _b_active)

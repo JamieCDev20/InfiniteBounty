@@ -18,7 +18,7 @@ public class AsteroidShooter : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            goL_asteroidPool.Add(Instantiate(go_asteroidPrefab));
+            goL_asteroidPool.Add(Instantiate(go_asteroidPrefab, transform));
             goL_asteroidPool[i].SetActive(false);
         }
 
