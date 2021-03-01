@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 {
@@ -29,6 +30,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         rb = GetComponent<Rigidbody>();
         eO_elem = GetComponent<ElementalObject>();
+
+        SceneManager.sceneLoaded += OnSceneLoad;
 
     }
     private void OnTriggerEnter(Collider other)
@@ -148,6 +151,11 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         if (eO_elem)
             eO_elem.ActivateElement(activatesThunder);
+    }
+
+    private void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        Die();
     }
 
 }
