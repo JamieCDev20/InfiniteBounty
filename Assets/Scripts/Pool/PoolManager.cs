@@ -52,9 +52,9 @@ public class PoolManager : MonoBehaviour
     private void ResetPools()
     {
         if(pools.Values != null)
-        foreach (Pool p in pools.Values)
+        foreach (KeyValuePair<string, Pool> p in pools)
         {
-            p.ResetPool();
+            p.Value.ResetPool();
         }
     }
 
