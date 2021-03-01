@@ -60,13 +60,6 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     #region Private Voids
 
-    private void FuckingLoad()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-        LoadLevel(levelToLoad);
-    }
-
     private void LoadLevel(string levelname)
     {
         if (!PhotonNetwork.IsMasterClient)
@@ -88,6 +81,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         if (levelname.Contains("Lobby"))
             ReturnToShip();        
         LoadingScreenManager.x.CallLoadLevel(levelname);
+        PoolManager.x.Reset();
     }
 
     private void CheckPlayers()
