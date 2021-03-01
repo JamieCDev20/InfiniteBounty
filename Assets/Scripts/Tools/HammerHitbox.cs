@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HammerHitbox : MonoBehaviour
 {
-    private bool b_active;
+    private Collider c_hitbox;
     private float f_knockBack;
     private int i_damage;
     private int i_lodeDamage;
@@ -20,35 +20,32 @@ public class HammerHitbox : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
-        if (b_active)
+    {
+        p_hitParticles.Play();
+
+        if (other.CompareTag("Enemy"))
         {
-            p_hitParticles.Play();
-
-            if (other.CompareTag("Enemy"))
-            {
-                other.GetComponent<IHitable>().TakeDamage(i_damage, true);
-            }
-            else if (other.GetComponent<LodeBase>())
-            {
-                other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
-            }
-            else if (other.CompareTag("Player"))
-            {
-                other.GetComponent<PlayerMover>().HitKnockback(v_forward, f_knockBack);
-                return;
-            }
-
-            other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
-            //else if (other.CompareTag("Nugget"))
-            //    other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
-
+            other.GetComponent<IHitable>().TakeDamage(i_damage, true);
         }
+        else if (other.GetComponent<LodeBase>())
+        {
+            other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
+        }
+        else if (other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerMover>().HitKnockback(v_forward, f_knockBack);
+            return;
+        }
+
+        other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
+        //else if (other.CompareTag("Nugget"))
+        //    other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
+
     }
 
     internal void SetHitBoxActive(bool _b_active)
     {
-        b_active = _b_active;
+        c_hitbox.enabled = _b_active;
     }
 
 }
