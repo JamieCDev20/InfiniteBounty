@@ -26,11 +26,11 @@ public class ScoreboardManager : MonoBehaviour
 
         ////yield return new WaitForEndOfFrame();
 
-        //if (FindObjectOfType<ScoreboardCamController>())
-        //{
-        //    LockCam();
-        //    GetComponent<TurnOnObjectWhenAroundPlayers>().EnableScreen();
-        //}
+        if (FindObjectOfType<ScoreboardCamController>())
+        {
+            LockCam();
+            GetComponent<TurnOnObjectWhenAroundPlayers>().EnableScreen();
+        }
     }
 
     public void SetValues(int[][] values, string[] _names)
