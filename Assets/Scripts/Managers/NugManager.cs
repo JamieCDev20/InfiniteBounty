@@ -106,7 +106,9 @@ public class NugManager : SubjectBase, ObserverBase
             i_totalNugs += _i_value;
             HUDController.x?.SetBBTotal();
         }
-
+        PlayerSaveData psd = new PlayerSaveData(i_totalNugs, -1, -1, null, null, null, null, null, null, -1);
+        SaveEvent se = new SaveEvent(psd);
+        FindObjectOfType<SaveManager>().OnNotify(se);
     }
 
 

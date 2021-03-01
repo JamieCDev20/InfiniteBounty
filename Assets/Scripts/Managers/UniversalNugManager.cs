@@ -47,14 +47,14 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         localNugCount += nugCollected.i_worth;
 
         RefreshTotalNugCount();
-        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID, PhotonNetwork.NickName);
+        photonView.RPC(nameof(UpdateCount), RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID, PhotonNetwork.NickName);
     }
 
     public void Handshake(int id)
     {
         i_localID = id;
         RefreshTotalNugCount();
-        photonView.RPC("UpdateCount", RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID, PhotonNetwork.NickName);
+        photonView.RPC(nameof(UpdateCount), RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID, PhotonNetwork.NickName);
     }
 
     private void RefreshTotalNugCount()
