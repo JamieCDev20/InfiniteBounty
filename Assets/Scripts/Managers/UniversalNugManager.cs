@@ -98,7 +98,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     public void RemoteFinished()
     {
         b_levelFinished = true;
-        PoolManager.x.Reset();
+        //PoolManager.x.Reset();
     }
 
     private void ResetValues()
