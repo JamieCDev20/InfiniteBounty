@@ -12,7 +12,6 @@ public class PoolManager : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
         Init();
     }
     /// <summary>
@@ -224,11 +223,6 @@ public class PoolManager : MonoBehaviour
     internal void SpawnObject(object go_augmentPrefab, object position, Quaternion quaternion)
     {
         throw new NotImplementedException();
-    }
-
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        ResetPools();
     }
 
 }
