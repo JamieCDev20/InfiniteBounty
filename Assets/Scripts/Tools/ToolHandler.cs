@@ -138,7 +138,7 @@ public class ToolHandler : SubjectBase
                             case MobilityTool mt:
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
-                                SendSave(-1, ts);
+                                SendSave(-1, ToolSlot.moblility);
                                 return true;
                         }
                     }
@@ -191,7 +191,6 @@ public class ToolHandler : SubjectBase
 
     private void SendSave(int _nuggets, ToolSlot _toolSlot)
     {
-        Debug.Log(string.Format("Tool ID: {0} | Slot ID: {1}", A_tools[(int)_toolSlot].ToolID, _toolSlot));
         (int, int) tup = (A_tools[(int)_toolSlot].ToolID, (int)_toolSlot);
         Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, -1, null,
             new (int, int)[3] { tup, (-1, -1), (-1, -1) }, null, null, null, null, -1)));

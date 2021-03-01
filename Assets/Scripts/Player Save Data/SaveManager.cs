@@ -120,8 +120,6 @@ public class SaveManager : MonoBehaviour, ObserverBase
             else if (totalNugsString[i].Contains("purchasedAugments"))
             {
                 psd.purchasedAugments = ReadArrayFromJson<Augment>(_saveData, new string[] { "purchasedAugments\":["}, '}');
-                foreach (Augment aug in psd.purchasedAugments)
-                    Debug.Log(aug.Name);
             }
             else if (totalNugsString[i].Contains("A_playerSliderOptions"))
             {
