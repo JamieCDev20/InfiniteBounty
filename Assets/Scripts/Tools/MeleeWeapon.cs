@@ -16,7 +16,7 @@ public class MeleeWeapon : WeaponTool
 
     public override void Use(Vector3 _v_forward)
     {
-        hitbox.Setup(i_damage, f_knockback, i_lodeDamage);
+        hitbox.Setup(i_damage, f_knockback, i_lodeDamage, _v_forward);
         StartCoroutine(HitBoxControl());
         //base.Use();
     }
