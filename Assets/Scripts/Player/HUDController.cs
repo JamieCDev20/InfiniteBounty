@@ -129,6 +129,8 @@ public class HUDController : MonoBehaviour
 
     public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth)
     {
+        if (iiD_idMap.Count <= 0)
+            return;
         goA_healthBarParents[iiD_idMap[id]].SetActive(true);
 
         rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)_i_currentHealth / 100, 1, 1);
