@@ -19,18 +19,18 @@ public class ScoreboardManager : MonoBehaviour
     private Transform t_camPositionToReturnTo;
     private bool b_isBeingUsed;
 
-    public IEnumerator Start()
+    public void Start()
     {
         if (PhotonNetwork.InRoom)
             UniversalNugManager.x?.DoScoring();
 
-        yield return new WaitForEndOfFrame();
+        ////yield return new WaitForEndOfFrame();
 
-        if (FindObjectOfType<ScoreboardCamController>())
-        {
-            LockCam();
-            GetComponent<TurnOnObjectWhenAroundPlayers>().EnableScreen();
-        }
+        //if (FindObjectOfType<ScoreboardCamController>())
+        //{
+        //    LockCam();
+        //    GetComponent<TurnOnObjectWhenAroundPlayers>().EnableScreen();
+        //}
     }
 
     public void SetValues(int[][] values, string[] _names)

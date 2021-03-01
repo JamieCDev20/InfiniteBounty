@@ -13,6 +13,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     [SerializeField] internal string levelToLoad = "LobbyScene";
     [SerializeField] private bool loadOnButtonPress = true;
+    private bool b_FUCKINGLOAD;
 
     #endregion
 
@@ -24,6 +25,12 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     //Methods
     #region Unity Standards
+
+    private void Update()
+    {
+        if (b_FUCKINGLOAD)
+            FuckingLoad();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -54,6 +61,11 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     #region Private Voids
 
+    private void FuckingLoad()
+    {
+        LoadLevel(levelToLoad);
+    }
+
     private void LoadLevel(string levelname)
     {
         if (PhotonNetwork.IsMasterClient)
@@ -83,8 +95,11 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
             if (ph.GetIsDead())
                 cCount += 1;
         }
-        if (cCount >= PhotonNetwork.CurrentRoom.PlayerCount)
+        if (cCount >= FindObjectsOfType<PlayerHealth>().Length)
+        {
+            b_FUCKINGLOAD = true;
             LoadLevel(levelToLoad);
+        }
 
     }
 
