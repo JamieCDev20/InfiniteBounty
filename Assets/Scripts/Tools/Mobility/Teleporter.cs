@@ -70,7 +70,7 @@ public class Teleporter : MobilityTool
             }
             else
             {
-                OpenPortalAtPoint(transform.position + transform.forward * f_teleportDistance, _v_lookDirection);
+                OpenPortalAtPoint(transform.position + _v_lookDirection * f_teleportDistance, _v_lookDirection);
                 PlayAudio(ac_activationSound);
                 BeginCooldown();
 

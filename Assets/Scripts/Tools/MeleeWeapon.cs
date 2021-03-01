@@ -8,25 +8,38 @@ public class MeleeWeapon : WeaponTool
     [SerializeField] private float f_hitBoxActivationDelay;
     [SerializeField] private float f_hitBoxDur;
     private HammerHitbox hitbox;
+    private bool b_isActive;
+    private float f_currentTime;
 
     private void Start()
     {
         hitbox = GetComponentInChildren<HammerHitbox>();
     }
 
+    private void Update()
+    {
+        f_currentTime -= Time.deltaTime;
+    }
+
     public override void Use(Vector3 _v_forward)
     {
-        hitbox.Setup(i_damage, f_knockback, i_lodeDamage, _v_forward);
-        StartCoroutine(HitBoxControl());
-        //base.Use();
+        if (!b_isActive && f_currentTime < 0)
+        {
+            hitbox.Setup(i_damage, f_knockback, i_lodeDamage, _v_forward);
+            StartCoroutine(HitBoxControl());            
+            //base.Use();
+        }
     }
 
     private IEnumerator HitBoxControl()
     {
+        b_isActive = true;
         yield return new WaitForSeconds(f_hitBoxActivationDelay);
         hitbox.SetHitBoxActive(true);
         yield return new WaitForSeconds(f_hitBoxDur);
         hitbox.SetHitBoxActive(false);
+        b_isActive = false;
+        f_currentTime = f_timeBetweenUsage;
     }
 
 }
