@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class AugmentPropertyDisplayer : MonoBehaviour
 {
+    [SerializeField] private int i_xDisplacement;
+    [SerializeField] private int i_yDisplacement;
+    [SerializeField] private int i_columnMax;
     [SerializeField] private GameObject go_propertyButton;
     [SerializeField] private GameObject go_propertyParent;
     [SerializeField] private RectTransform rt_augmentButtonParent;
@@ -121,19 +124,18 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     }
     private Text PlaceAugmentProperties(GameObject _go_template)
     {
-        const int scailar = 7;
         GameObject btn = PoolManager.x.SpawnObject(go_propertyButton);
         RectTransform rt_button = btn.GetComponent<RectTransform>();
         btn.transform.parent = go_propertyParent.transform;
         btn.transform.localScale = Vector3.one;
-        if (i_displayIter <= scailar)
+        if (i_displayIter <= i_columnMax)
         {
 
-            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * i_displayIter));
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (i_yDisplacement * i_displayIter));
         }
         else
         {
-            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + 280, rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * (i_displayIter - scailar)));
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + i_xDisplacement, rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * (i_displayIter - i_columnMax)));
         }
         i_displayIter++;
         return btn?.GetComponent<Text>();
