@@ -65,7 +65,13 @@ public class WeaponTool : ToolBase
 
     public void SetAnimBool(bool _b_)
     {
-        a_playerAnims.SetBool(s_meleeAnim, _b_);
+        
+        a_playerAnims?.SetBool(s_meleeAnim, _b_);
+    }
+
+    public void SetAnimName(string nam)
+    {
+        s_meleeAnim = nam;
     }
 
     protected bool CheckAnimPlaying(string _s_animName)
@@ -185,4 +191,5 @@ public class WeaponTool : ToolBase
             tempObjects[i] = Resources.Load<T>(_s_newObjectPaths[i]);
         _tA_existingObjects = Utils.CombineArrays(_tA_existingObjects, tempObjects);
     }
+
 }

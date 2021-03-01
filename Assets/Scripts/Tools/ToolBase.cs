@@ -124,6 +124,11 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     }
 
+    public virtual void StopAnims()
+    {
+
+    }
+
     public bool GetActive()
     {
         return b_active;

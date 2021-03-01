@@ -20,6 +20,20 @@ public class ToolLoader : MonoBehaviour
     public ToolBase LoadTool(int _i_index, Transform _t_parent)
     {
         ToolBase go_tool = Instantiate(tb_tools[_i_index]);
+        if (go_tool.name.Contains("Ham"))
+        {
+            switch (ts_slot)
+            {
+                case ToolSlot.leftHand:
+                    go_tool.GetComponent<WeaponTool>().SetAnimName("HammerLeft");
+                    break;
+                case ToolSlot.rightHand:
+                    go_tool.GetComponent<WeaponTool>().SetAnimName("HammerRight");
+                    break;
+                default:
+                    break;
+            }
+        }
         go_tool.transform.position = _t_parent.position;
         go_tool.transform.rotation = _t_parent.rotation;
         go_tool.transform.parent = _t_parent;

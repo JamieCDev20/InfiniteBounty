@@ -137,6 +137,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        if (cause == DisconnectCause.ClientTimeout)
+            PhotonNetwork.ReconnectAndRejoin();
+        base.OnDisconnected(cause);
+    }
+
     #endregion
 
     #region Private Returns

@@ -36,7 +36,7 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private PlayerMover pm_mover;
     private PlayerInputManager pim_inputManager;
-
+    private ToolHandler tHandler;
     private Transform camTransform;
     private Animator anim;
     private Rigidbody rb;
@@ -61,6 +61,7 @@ public class PlayerAnimator : MonoBehaviourPun
         anim = GetComponentInChildren<Animator>();
         pm_mover = GetComponent<PlayerMover>();
         pim_inputManager = GetComponent<PlayerInputManager>();
+        tHandler = GetComponent<ToolHandler>();
         try
         {
             doDemoIK = NetworkedPlayer.x.GetPlayer() == transform;
@@ -192,8 +193,8 @@ public class PlayerAnimator : MonoBehaviourPun
         {
             if (photonView.IsMine)
             {
-                anim.SetBool("ShootingLeft", pim_inputManager.GetToolBools().b_LToolHold);
-                anim.SetBool("ShootingRight", pim_inputManager.GetToolBools().b_RToolHold);
+                anim.SetBool(tHandler.GetTool((int)ToolSlot.leftHand) != 4 ? "ShootingLeft" : "HammerLeft", pim_inputManager.GetToolBools().b_LToolHold);
+                anim.SetBool(tHandler.GetTool((int)ToolSlot.rightHand) != 4 ? "ShootingRight" : "HammerRight", pim_inputManager.GetToolBools().b_RToolHold);
             }
             else
             {
