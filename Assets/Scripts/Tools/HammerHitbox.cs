@@ -11,6 +11,12 @@ public class HammerHitbox : MonoBehaviour
     [SerializeField] private ParticleSystem p_hitParticles;
     private Vector3 v_forward;
 
+    private void Start()
+    {
+        c_hitbox = GetComponent<Collider>();
+        c_hitbox.enabled = false;
+    }
+
     internal void Setup(int _i_damage, float _f_knockback, int _i_lode, Vector3 _v_forward)
     {
         i_damage = _i_damage;
@@ -27,7 +33,7 @@ public class HammerHitbox : MonoBehaviour
         {
             other.GetComponent<IHitable>().TakeDamage(i_damage, true);
         }
-        else if (other.GetComponent<LodeBase>())
+        else if (other.GetComponent<LodeBase>() || other.GetComponent<GenericHittable>())
         {
             other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
         }
