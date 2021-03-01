@@ -20,8 +20,7 @@ public class HammerHitbox : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        print(b_active + "/" + other.name);
+    {        
         if (b_active)
         {
             p_hitParticles.Play();
@@ -49,7 +48,6 @@ public class HammerHitbox : MonoBehaviour
 
     internal void SetHitBoxActive(bool _b_active)
     {
-        print("Setting hitbox to " + _b_active);
         b_active = _b_active;
     }
 
