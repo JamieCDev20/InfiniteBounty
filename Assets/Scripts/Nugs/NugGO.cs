@@ -43,6 +43,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             b_collected = true;
             myLode?.NugCollected(i_lodeID);
             Notify(ce);
+            if (myLode == null)
+                Die();
         }
     }
 
