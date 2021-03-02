@@ -67,6 +67,7 @@ public class ScoreboardManager : MonoBehaviour
         }
         t_totalEarned.text = totalEarned.ToString();
         NetworkedPlayer.x.CollectEndLevelNugs(Mathf.RoundToInt(totalEarned / PhotonNetwork.CurrentRoom.PlayerCount));
+        
     }
 
     #region Camera Locking

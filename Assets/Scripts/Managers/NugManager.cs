@@ -53,7 +53,7 @@ public class NugManager : SubjectBase, ObserverBase
     public void SetID(int _id)
     {
         i_playerID = _id;
-        Debug.LogError($"MY ID IS {_id} AND I AM {PhotonNetwork.CurrentRoom.Players[_id+1]}");
+        //Debug.LogError($"MY ID IS {_id} AND I AM {PhotonNetwork.CurrentRoom.Players[_id+1]}");
     }
 
     public void EndedLevel()

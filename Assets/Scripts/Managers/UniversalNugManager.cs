@@ -92,7 +92,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     public void FinishedLevel()
     {
         if (PhotonNetwork.IsMasterClient)
-            photonView.RPC("RemoteFinished", RpcTarget.All);
+            photonView.RPC(nameof(RemoteFinished), RpcTarget.All);
     }
 
     [PunRPC]
@@ -100,6 +100,9 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     {
         b_levelFinished = true;
         //PoolManager.x.Reset();
+        PlayerSaveData psd = new PlayerSaveData(localNugCount, -1, -1, null, null, null, null, null, null, -1);
+        SaveEvent se = new SaveEvent(psd);
+        FindObjectOfType<SaveManager>().OnNotify(se);
     }
 
     private void ResetValues()
