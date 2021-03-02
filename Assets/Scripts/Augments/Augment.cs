@@ -95,15 +95,24 @@ public class Augment
 
     public void InitAudio(AudioClip[] _ac_use, AudioClip[] _ac_travel, AudioClip[] _ac_hit)
     {
-        ac_useSound = new string[_ac_use.Length];
-        ac_travelSound = new string[_ac_travel.Length];
-        ac_hitSound = new string[_ac_hit.Length];
-        for(int i = 0; i < _ac_use.Length; i++)
-            ac_useSound[i] = _ac_use[i].name;
-        for(int i = 0; i < _ac_travel.Length; i++)
-            ac_travelSound[i] = _ac_travel[i].name;
-        for(int i = 0; i < _ac_hit.Length; i++)
-            ac_hitSound[i] = _ac_hit[i].name;
+        if(_ac_use != null)
+        {
+            ac_useSound = new string[_ac_use.Length];
+            for(int i = 0; i < _ac_use.Length; i++)
+                ac_useSound[i] = _ac_use[i].name;
+        }
+        if(_ac_travel != null)
+        {
+            ac_travelSound = new string[_ac_travel.Length];
+            for(int i = 0; i < _ac_travel.Length; i++)
+                ac_travelSound[i] = _ac_travel[i].name;
+        }
+        if(_ac_hit != null)
+        {
+            ac_hitSound = new string[_ac_hit.Length];
+            for(int i = 0; i < _ac_hit.Length; i++)
+                ac_hitSound[i] = _ac_hit[i].name;
+        }
     }
     public void InitAudio(string[] _ac_use, string[] _ac_travel, string[] _ac_hit)
     {
