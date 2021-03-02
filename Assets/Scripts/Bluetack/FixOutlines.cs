@@ -15,12 +15,14 @@ public class FixOutlines : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        o.enabled = false;
+        if (o != null)
+            o.enabled = false;
     }
 
     private void OnBecameVisible()
     {
-        o.enabled = true;
+        if (o != null)
+            o.enabled = true;
     }
 
 }
