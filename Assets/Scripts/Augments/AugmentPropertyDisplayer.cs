@@ -23,9 +23,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     public void Init()
     {
-        if(go_propertyButton != null)
-            if (!PoolManager.x.CheckIfPoolExists(go_propertyButton))
-                PoolManager.x.CreateNewPool(go_propertyButton, 20);
+
     }
 
     private void OnDestroy()
