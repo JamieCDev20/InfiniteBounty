@@ -39,17 +39,17 @@ public class ScoreboardManager : MonoBehaviour
         int playerTotal;
         int pc = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        //string s = "";
-        //for (int i = 0; i < values.Length; i++)
-        //{
-        //    for (int j = 0; j < values[i].Length; j++)
-        //    {
-        //        s += $"{values[i][j]} ";
-        //    }
-        //    s += '\n';
-        //}
+        string s = "";
+        for (int i = 0; i < values.Length; i++)
+        {
+            for (int j = 0; j < values[i].Length; j++)
+            {
+                s += $"{values[i][j]} ";
+            }
+            s += '\n';
+        }
 
-        //Debug.Log(s);
+        Debug.Log(s);
 
         for (int i = 0; i < pc; i++)
         {
