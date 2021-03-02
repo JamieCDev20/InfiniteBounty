@@ -41,6 +41,7 @@ public class ProjectileAugment : Augment
         Augment ac = Augment.Combine(a, b);
         List<string[]> audioClips = ac.GetAudioProperties();
         c.s_name = ac.Name;
+        c.i_cost = ac.Cost;
         c.at_type = AugmentType.projectile;
         c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);
         c.InitPhysical(ac.GetPhysicalProperties());
