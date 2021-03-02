@@ -83,17 +83,16 @@ public class Lobby : MonoBehaviourPunCallbacks
         Debug.Log("Joined a room!!");
         if_gameTitleInput.interactable = false;
         if_playerName.interactable = false;
+
+        gr_menuRaycaster.enabled = false;
+        for (int i = 0; i < bA_buttonsToSetToNonInteractableWhenHostIsClicked.Length; i++)
+            bA_buttonsToSetToNonInteractableWhenHostIsClicked[i].enabled = false;
     }
 
     public void OnClickJoin()
     {
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
         t_camera.gameObject.SetActive(false);
-        gr_menuRaycaster.enabled = false;
-
-        for (int i = 0; i < bA_buttonsToSetToNonInteractableWhenHostIsClicked.Length; i++)
-            bA_buttonsToSetToNonInteractableWhenHostIsClicked[i].enabled = false;
-
     }
 
     public void OnClickLeave()
@@ -127,7 +126,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-        
+
         for (int i = 0; i < roomList.Count; i++)
         {
             if (roomList[i].RemovedFromList || !roomList[i].IsVisible || !roomList[i].IsOpen)
