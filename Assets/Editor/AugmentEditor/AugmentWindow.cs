@@ -155,7 +155,6 @@ public class AugmentWindow : EditorWindow
                     }
                 // Making the save data a tiny bit more readable
                 ap_toolProperties.s_name = s_augName;
-                ap_toolProperties.i_cost = i_cost;
             }
             else
             {
@@ -164,7 +163,9 @@ public class AugmentWindow : EditorWindow
                 return;
             }
 
+            ap_toolProperties.i_cost = i_cost;
             Augment outputAug = new Augment();
+            outputAug.Cost = i_cost;
             // Save variables time!
             switch (at_type)
             {
