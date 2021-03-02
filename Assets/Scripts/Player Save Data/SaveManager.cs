@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 
 public class SaveManager : MonoBehaviour, ObserverBase
 {
+
+    public static SaveManager x;
+
     private PlayerSaveData saveData;
     public PlayerSaveData SaveData { get { return saveData; } }
     private const string sv = "save.json";
@@ -14,6 +17,15 @@ public class SaveManager : MonoBehaviour, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
+        if (x != null)
+        {
+            if (x != this)
+                Destroy(gameObject);
+        }
+        else
+            x = this;
+
+
         CreateSaveData();
         FindObjectOfType<Workbench>().Init(this);
         DontDestroyOnLoad(gameObject);

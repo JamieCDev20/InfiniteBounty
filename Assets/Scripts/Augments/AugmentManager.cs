@@ -5,6 +5,7 @@ using System;
 
 public class AugmentManager : MonoBehaviour
 {
+    public static AugmentManager x;
     [SerializeField] GameObject augRef;
     [SerializeField] Augment[] A_augs;
     [SerializeField] ProjectileAugment[] A_projAugs;
@@ -13,6 +14,14 @@ public class AugmentManager : MonoBehaviour
 
     public void Start()
     {
+        if (x != null)
+        {
+            if (x != this)
+                Destroy(gameObject);
+        }
+        else
+            x = this;
+
         string augstr = AugmentLoader.LoadAugmentJson();
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);

@@ -39,6 +39,17 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         PhotonNetwork.SendRate = 15;
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKeyDown(KeyCode.RightControl))
+            {
+                PhotonNetwork.Disconnect();
+                Reset();
+                SceneManager.LoadScene(0);
+            }
+    }
+
     #endregion
 
     #region Private Voids
@@ -75,6 +86,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         TagManager.x.Reset();
         NetworkManager.x.Reset();
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(0);
     }
 
     public override void OnLeftRoom()
