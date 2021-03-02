@@ -30,6 +30,10 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_plummetMultiplier = 3; //the velocity at which below, gravity will increase
     [SerializeField] private Vector3 v_dragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
 
+    [Header("Getting Teleported")]
+    [SerializeField] private GameObject go_characterMesh;
+    [SerializeField] private GameObject go_goopyParticle;
+
     #endregion
 
     #region Private
@@ -297,6 +301,25 @@ public class PlayerMover : MonoBehaviour
         b_applyDrag = true;
         b_knockedback = false;
     }
+
+
+    internal void GetTeleported()
+    {
+        view.RPC(nameof(TeleportRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public IEnumerator TeleportRPC()
+    {
+        enabled = false;
+        go_characterMesh.SetActive(false);
+        go_goopyParticle.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        go_goopyParticle.SetActive(false);
+        go_characterMesh.SetActive(true);
+        enabled = true;
+    }
+
 
     #endregion
 

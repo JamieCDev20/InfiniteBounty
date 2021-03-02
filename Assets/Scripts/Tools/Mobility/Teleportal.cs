@@ -14,29 +14,49 @@ public class Teleportal : MonoBehaviour
         {
             Rigidbody _rb = other.GetComponent<Rigidbody>();
             if (_rb != null)
-            {
                 if (!rbL_recentlyTeleported.Contains(_rb))
                 {
-                    rbL_recentlyTeleported.Add(_rb);
-                    StartCoroutine(RemoveFromPool(_rb));
-
-                    other.transform.position = tp_otherPortal.transform.position;
+                    StartCoroutine(TeleportObject(other.gameObject, _rb));
                     tp_otherPortal.CloseForCooldown(_rb);
                 }
-            }
         }
     }
 
-    private IEnumerator RemoveFromPool(Rigidbody _rb)
+    private IEnumerator TeleportObject(GameObject _go_object, Rigidbody _rb)
     {
-        yield return new WaitForSeconds(0.5f);
+        if (_go_object.CompareTag("Player"))
+            _go_object.GetComponent<PlayerMover>().GetTeleported();
+        else
+            _go_object.SetActive(false);
+
+        for (int i = 0; i < 30; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            _go_object.transform.position = Vector3.Lerp(_go_object.transform.position, tp_otherPortal.transform.position, 0.3f);
+        }
+
+        _go_object.transform.position = tp_otherPortal.transform.position;
+        yield return new WaitForEndOfFrame();
+
+        rbL_recentlyTeleported.Add(_rb);
+        StartCoroutine(RemoveFromPool(_rb, false));
+
+        _go_object.SetActive(true);
+    }
+
+
+    private IEnumerator RemoveFromPool(Rigidbody _rb, bool _b)
+    {
+        yield return new WaitForSeconds(1);
+        if (_b)
+            yield return new WaitForSeconds(0.3f);
         rbL_recentlyTeleported.Remove(_rb);
     }
 
     internal void CloseForCooldown(Rigidbody _rb)
     {
         rbL_recentlyTeleported.Add(_rb);
-        StartCoroutine(RemoveFromPool(_rb));
+        StartCoroutine(RemoveFromPool(_rb, true));
     }
 
     internal void Setup(float _f_lifeSpan)
@@ -53,7 +73,7 @@ public class Teleportal : MonoBehaviour
         yield return new WaitForSeconds(_f_lifeSpan);
         GetComponentInChildren<ParticleSystem>().Stop();
         b_isOpen = false;
-        
+
 
         yield return new WaitForSeconds(1);
         gameObject.SetActive(false);
