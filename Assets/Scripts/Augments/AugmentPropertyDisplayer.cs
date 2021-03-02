@@ -66,15 +66,18 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 break;
         }
 
-        for (int i = 0; i < aL_augs.Count; i++)
+        if(aL_augs != null)
         {
-            if (goL_augmentButtonPool.Count <= i)
-                goL_augmentButtonPool.Add(PoolManager.x.SpawnObject(go_propertyButton));
-            goL_augmentButtonPool[i].SetActive(true);
-            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_augs[i]?.Level.ToString();
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_augs[i]?.Name;
-            goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
+            for (int i = 0; i < aL_augs.Count; i++)
+            {
+                if (goL_augmentButtonPool.Count <= i)
+                    goL_augmentButtonPool.Add(PoolManager.x.SpawnObject(go_augmentButton));
+                goL_augmentButtonPool[i].SetActive(true);
+                goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
+                goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_augs[i]?.Name;
+                goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_augs[i]?.Level.ToString();
+                goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
+            }
         }
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
@@ -199,11 +202,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         if (i_displayIter <= i_columnMax)
         {
 
-            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (i_yDisplacement * i_displayIter));
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), 0 - (i_yDisplacement * i_displayIter));
         }
         else
         {
-            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + i_xDisplacement, rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * (i_displayIter - i_columnMax)));
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + i_xDisplacement, 0 - (34 * (i_displayIter - i_columnMax)));
         }
         i_displayIter++;
         return btn?.GetComponent<Text>();
