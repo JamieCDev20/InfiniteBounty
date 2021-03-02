@@ -10,15 +10,15 @@ public class PlayerAnimator : MonoBehaviourPun
     //Variables
     #region Serialised
 
-    [SerializeField] private Transform armR;
-    [SerializeField] private Transform armL;
-    [SerializeField] private Transform chest;
-    [SerializeField] private Transform chestRef;
-    [SerializeField] private Transform spine;
-    [SerializeField] private Transform spineRef;
-    [SerializeField] private Transform stomach;
-    [SerializeField] private Transform stomachRef;
-    [SerializeField] private Transform hips;
+    [SerializeField] private Transform armR = null;
+    [SerializeField] private Transform armL = null;
+    [SerializeField] private Transform chest = null;
+    [SerializeField] private Transform chestRef = null;
+    [SerializeField] private Transform spine = null;
+    [SerializeField] private Transform spineRef = null;
+    [SerializeField] private Transform stomach = null;
+    [SerializeField] private Transform stomachRef = null;
+    [SerializeField] private Transform hips = null;
     [SerializeField] private float f_spineWeight = 0.55f;
     [SerializeField] private float f_stomachWeight = 0.2f;
     [SerializeField] private float f_maxBodyAngle = 80;
