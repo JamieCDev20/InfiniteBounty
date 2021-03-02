@@ -10,11 +10,14 @@ public class Augment
     [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected int i_level;
     [Newtonsoft.Json.JsonProperty]
+    [SerializeField] protected int i_cost;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected AugmentStage as_stage;
     [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string mat_augColor;
     public string Name { get { return s_name; } }
     public int Level { get { return i_level; } set { i_level = value; } }
+    public int Cost { get { return i_cost; } }
     public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
     public string AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
@@ -185,7 +188,7 @@ public class Augment
 
     public AugmentProperties GetAugmentProperties()
     {
-        return new AugmentProperties(s_name, f_weight, f_recoil, f_speed, f_heatsink, f_knockback, f_energyGauge, i_damage, i_lodeDamage);
+        return new AugmentProperties(s_name, i_cost, f_weight, f_recoil, f_speed, f_heatsink, f_knockback, f_energyGauge, i_damage, i_lodeDamage);
     }
 
     public AugmentPhysicals GetPhysicalProperties()
