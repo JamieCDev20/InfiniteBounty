@@ -127,7 +127,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
             GameObject _go_nugget = PoolManager.x.SpawnObject(goA_nuggetPrefabs[Random.Range(0, goA_nuggetPrefabs.Length)], transform.position, transform.rotation);
             _go_nugget.transform.parent = null;
             _go_nugget.SetActive(true);
-            _go_nugget.transform.position = transform.position + transform.localScale * (RandomMinusToPositive()) + Vector3.up;
+            _go_nugget.transform.position = new Vector3(transform.position.x, 10, transform.position.z);
             Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
             _rb.AddForce(new Vector3(RandomMinusToPositive(), Mathf.Abs(RandomMinusToPositive()), RandomMinusToPositive()) * f_nuggetForce, ForceMode.Impulse);
             _go_nugget.transform.rotation = new Quaternion(RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive());
