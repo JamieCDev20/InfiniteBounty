@@ -1,4 +1,5 @@
 ﻿
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ public class Teleporter : MobilityTool
             for (int i = 0; i < _hits.Length; i++)
                 if (_hits[i].transform.CompareTag("Player"))
                 {
-                    OpenPortalAtPoint(_hits[i].point, _v_lookDirection);
+                    photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, _hits[i].point, _v_lookDirection);
                     PlayAudio(ac_activationSound);
                     BeginCooldown();
                     return;
@@ -63,14 +64,15 @@ public class Teleporter : MobilityTool
             {
                 if (Vector3.Distance(transform.position, _hits[0].point) <= f_teleportDistance)
                 {
-                    OpenPortalAtPoint(_hits[0].point, _v_lookDirection);
+                    photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, _hits[0].point, _v_lookDirection);
+
                     PlayAudio(ac_activationSound);
                     BeginCooldown();
                 }
             }
             else
             {
-                OpenPortalAtPoint(transform.position + _v_lookDirection * f_teleportDistance, _v_lookDirection);
+                photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, transform.position + _v_lookDirection * f_teleportDistance, _v_lookDirection);
                 PlayAudio(ac_activationSound);
                 BeginCooldown();
 
@@ -78,6 +80,7 @@ public class Teleporter : MobilityTool
         }
     }
 
+    [PunRPC]
     private void OpenPortalAtPoint(Vector3 _v_pos, Vector3 _v_lookDirection)
     {
         go_startPortal.transform.position = transform.position + _v_lookDirection * 5;
