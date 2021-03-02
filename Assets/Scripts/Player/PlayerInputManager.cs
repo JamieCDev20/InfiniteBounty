@@ -97,7 +97,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         if (b_shouldPassInputs)
             TellStuffWhatToDo();
 
-        PhotonNetwork.OfflineMode = offline;
+        //PhotonNetwork.OfflineMode = offline;
 
     }
 

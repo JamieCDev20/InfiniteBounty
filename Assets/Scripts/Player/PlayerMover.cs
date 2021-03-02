@@ -109,7 +109,7 @@ public class PlayerMover : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
-        v_startPos = transform.position;
+        v_startPos = new Vector3(-8, 1, -4);
         SetMoveSpeeds(true);
         view = GetComponent<PhotonView>();
         fap_audio = GetComponentInChildren<FootstepAudioPlayer>();

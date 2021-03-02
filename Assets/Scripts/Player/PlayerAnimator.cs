@@ -90,11 +90,11 @@ public class PlayerAnimator : MonoBehaviourPun
         if (s_currentSofa != null)
             if (Input.anyKeyDown)
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright"))
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright"))
                 {
-                    if (anim.GetBool("SofaLeft"))
+                    if (anim.GetBool("Poop"))
                     {
-                        anim.SetBool("SofaLeft", false);
+                        anim.SetBool("Poop", false);
                         rb.isKinematic = false;
                         pm_mover.enabled = true;
                         s_currentSofa.EndSit();
@@ -104,7 +104,7 @@ public class PlayerAnimator : MonoBehaviourPun
                     }
                     if (anim.GetBool("SofaRight"))
                     {
-                        anim.SetBool("SofaRight", false);
+                        anim.SetBool("Poop", false);
                         rb.isKinematic = false;
                         pm_mover.enabled = true;
                         s_currentSofa.EndSit();
@@ -241,9 +241,9 @@ public class PlayerAnimator : MonoBehaviourPun
         s_currentSofa = _s_newSofa;
         photonView.RPC("RemoteSit", RpcTarget.Others, _s_newSofa.GetChairTrasnsform().forward);
         if (b_isRightSide)
-            anim.SetBool("SofaRight", true);
+            anim.SetBool("Poop", true);
         else
-            anim.SetBool("SofaLeft", true);
+            anim.SetBool("Poop", true);
     }
 
     [PunRPC]
