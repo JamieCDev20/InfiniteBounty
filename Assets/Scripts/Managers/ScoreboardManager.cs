@@ -41,7 +41,7 @@ public class ScoreboardManager : MonoBehaviour
         {
             try
             {
-            so_playerScoreObjects[i].nameText.text = PhotonNetwork.CurrentRoom.Players[i].NickName;
+                so_playerScoreObjects[i].nameText.text = PhotonNetwork.CurrentRoom.Players[i + 1].NickName;
 
             }
             catch { }
