@@ -27,26 +27,28 @@ public class HammerHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        p_hitParticles.Play();
 
         if (other.CompareTag("Enemy"))
         {
+            p_hitParticles.Play();
             other.GetComponent<IHitable>().TakeDamage(i_damage, true);
         }
         else if (other.GetComponent<LodeBase>() || other.GetComponent<GenericHittable>())
         {
             other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
+            p_hitParticles.Play();
         }
         else if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerMover>().HitKnockback(v_forward, f_knockBack);
+            p_hitParticles.Play();
             return;
         }
-
-        other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
-        //else if (other.CompareTag("Nugget"))
-        //    other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
-        SetHitBoxActive(false);
+        else if (other.attachedRigidbody != null)
+        {
+            other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
+            p_hitParticles.Play();
+        }
     }
 
     internal void SetHitBoxActive(bool _b_active)
