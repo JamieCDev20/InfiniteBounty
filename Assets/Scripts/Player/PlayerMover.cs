@@ -32,7 +32,7 @@ public class PlayerMover : MonoBehaviour
 
     [Header("Getting Teleported")]
     [SerializeField] private GameObject go_characterMesh;
-    [SerializeField] private GameObject go_goopyParticle;
+    [SerializeField] private ParticleSystem p_goopyParticle;
 
     #endregion
 
@@ -61,7 +61,7 @@ public class PlayerMover : MonoBehaviour
     private FootstepAudioPlayer fap_audio;
     internal bool b_isSitting;
     private bool b_knockedback;
-    private Animator anim;
+    private Animator anim;    
 
     #endregion
 
@@ -313,9 +313,11 @@ public class PlayerMover : MonoBehaviour
     {
         enabled = false;
         go_characterMesh.SetActive(false);
-        go_goopyParticle.SetActive(true);
+        p_goopyParticle.Play();
+
         yield return new WaitForSeconds(0.3f);
-        go_goopyParticle.SetActive(false);
+
+        p_goopyParticle.Stop();
         go_characterMesh.SetActive(true);
         enabled = true;
     }
