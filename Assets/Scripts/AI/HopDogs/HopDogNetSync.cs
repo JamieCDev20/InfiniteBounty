@@ -35,7 +35,7 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
 
     private void LateUpdate()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine || PhotonNetwork.IsMasterClient)
             return;
         transform.position = (transform.position - v_pos).sqrMagnitude > 100 ? transform.position = v_pos : Vector3.Lerp(transform.position, v_pos, 0.3f);
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rot, 0.3f);
