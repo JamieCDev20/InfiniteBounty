@@ -58,7 +58,10 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-
+    public void ResetPool(string p)
+    {
+        pools[p].ResetPool();
+    }
 
     /// <summary>
     /// Make all the pools spawn load their assigned number of objects
