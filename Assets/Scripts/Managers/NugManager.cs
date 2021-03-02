@@ -59,11 +59,10 @@ public class NugManager : SubjectBase, ObserverBase
     {
         i_playerID = GetComponent<PlayerInputManager>().GetID();
 
-        photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
+        //photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
         SendNugs();
     }
 
-    [PunRPC]
     public void Bridge()
     {
         photonView.RPC("SetRemoteNugs", RpcTarget.All, i_inLevelNugs);
@@ -106,9 +105,9 @@ public class NugManager : SubjectBase, ObserverBase
             i_totalNugs += _i_value;
             HUDController.x?.SetBBTotal();
         }
-        PlayerSaveData psd = new PlayerSaveData(i_totalNugs, -1, -1, null, null, null, null, null, null, -1);
-        SaveEvent se = new SaveEvent(psd);
-        FindObjectOfType<SaveManager>().OnNotify(se);
+        //PlayerSaveData psd = new PlayerSaveData(i_totalNugs, -1, -1, null, null, null, null, null, null, -1);
+        //SaveEvent se = new SaveEvent(psd);
+        //FindObjectOfType<SaveManager>().OnNotify(se);
     }
 
 
@@ -120,19 +119,12 @@ public class NugManager : SubjectBase, ObserverBase
 
     }
 
-    [PunRPC]
     public void SetRemoteNugs(int nugs)
     {
         //i_inLevelNugs += nugs;
         //CollectNugs(0);
         //SetPrefs();
         SendNugs();
-    }
-
-    [PunRPC]
-    public void SetPrefs()
-    {
-        PlayerPrefs.SetInt($"{i_playerID}NugCount", i_inLevelNugs);
     }
 
     public void ReceiveNugs(int _i_value)
