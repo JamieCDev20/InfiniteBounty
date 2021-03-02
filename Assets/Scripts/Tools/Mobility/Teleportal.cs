@@ -53,8 +53,9 @@ public class Teleportal : MonoBehaviour
         yield return new WaitForSeconds(_f_lifeSpan);
         GetComponentInChildren<ParticleSystem>().Stop();
         b_isOpen = false;
+        
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         gameObject.SetActive(false);
     }
 
