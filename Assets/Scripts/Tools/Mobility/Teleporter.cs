@@ -26,7 +26,8 @@ public class Teleporter : MobilityTool
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
-        photonView.ViewID += 26780 + GetComponentInParent<PlayerInputManager>().GetID() * 2 + 1;
+        if (GetComponentInParent<PlayerInputManager>() != null)
+            photonView.ViewID += 26780 + GetComponentInParent<PlayerInputManager>().GetID() * 2 + 1;
         PhotonNetwork.RegisterPhotonView(photonView);
     }
 
