@@ -11,6 +11,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private GameObject go_propertyButton;
     [SerializeField] private GameObject go_propertyParent;
     [SerializeField] private GameObject go_augmentButton;
+    [SerializeField] private GameObject go_listMover;
     [SerializeField] private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
     [SerializeField] private RectTransform rt_augmentButtonParent;
     [SerializeField] private Scrollbar s_slider;
@@ -73,6 +74,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 if (goL_augmentButtonPool.Count <= i)
                     goL_augmentButtonPool.Add(PoolManager.x.SpawnObject(go_augmentButton));
                 goL_augmentButtonPool[i].SetActive(true);
+                goL_augmentButtonPool[i].transform.parent = go_listMover.transform;
                 goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_augs[i]?.Name;
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_augs[i]?.Level.ToString();
@@ -80,7 +82,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             }
         }
 
-        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
+        //rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
     }
 
