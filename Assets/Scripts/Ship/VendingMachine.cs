@@ -51,6 +51,7 @@ public class VendingMachine : SubjectBase, IInteractible
         AddObserver(FindObjectOfType<SaveManager>());
         apd.Init();
         apd.UpdatePropertyText(aA_avaliableAugments[i_currentAugmentIndex].Aug);
+        ClickedAugment(0);
     }
 
     #region Interactions
@@ -80,6 +81,7 @@ public class VendingMachine : SubjectBase, IInteractible
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            ClickedAugment(0);
         }
     }
 
@@ -144,6 +146,7 @@ public class VendingMachine : SubjectBase, IInteractible
     {
         if (b_isBeingUsed)
         {
+            apd.RemoveAugmentProperties();
             i_currentAugmentIndex = _i_augmentIndex;
             t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
             UpdateAugmentDisplay();

@@ -263,6 +263,7 @@ public class Augment
         c.f_detonationTime = a.f_detonationTime + b.f_detonationTime;
         c.f_expRad = a.f_expRad + b.f_expRad;
         c.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
+        c.i_cost = a.Cost + b.Cost;
         // If any of them are set to impact, set to be impact
         if (a.b_impact)
             c.b_impact = true;
