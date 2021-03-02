@@ -39,7 +39,7 @@ public class ScoreboardManager : MonoBehaviour
         int playerTotal;
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
-            so_playerScoreObjects[i].nameText.text = _names[i];
+            so_playerScoreObjects[i].nameText.text = PhotonNetwork.CurrentRoom.Players[i].NickName;
             so_playerScoreObjects[i].gooText.text = values[i][0].ToString();
             so_playerScoreObjects[i].hydroText.text = values[i][1].ToString();
             so_playerScoreObjects[i].tastyText.text = values[i][2].ToString();
