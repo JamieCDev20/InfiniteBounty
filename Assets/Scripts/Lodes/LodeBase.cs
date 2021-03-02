@@ -197,15 +197,15 @@ public class LodeBase : Enemy, IHitable
 
     }
 
-    public void NugCollected(int id)
+    public void NugCollected(int id, bool coll)
     {
-        view.RPC("DestroyNug", RpcTarget.All, id);
+        view.RPC("DestroyNug", RpcTarget.All, id, coll);
     }
 
     [PunRPC]
-    public void DestroyNug(int id)
+    public void DestroyNug(int id, bool coll)
     {
-        nuggets[id]?.SetCanDie();
+        nuggets[id]?.SetCanDie(coll);
         nuggets[id]?.Die();
         nuggets[id] = null;
     }

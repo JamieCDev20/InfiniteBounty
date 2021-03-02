@@ -122,8 +122,8 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        base.OnDisconnected(cause);
         Reset();
+        base.OnDisconnected(cause);
     }
 
     public void ReturnToMainMenu()

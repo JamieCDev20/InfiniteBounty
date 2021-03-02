@@ -44,21 +44,21 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true, nug);
 
             b_collected = true;
-            myLode?.NugCollected(i_lodeID);
+            myLode?.NugCollected(i_lodeID, b_collected);
             Notify(ce);
             if (myLode == null)
                 Die();
         }
     }
 
-    public void OnEnable()
+    public override void OnEnable()
     {
         b_canBeHit = false;
         Invoke("RemoveSpawnImmunity", f_spawnImmunityDuration);
         Invoke("Die", 60);
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         CancelInvoke("RemoveSpawnImmunity");
         CancelInvoke("Die");
@@ -84,9 +84,10 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
-    public void SetCanDie()
+    public void SetCanDie(bool collected)
     {
         b_canBeHit = true;
+        b_collected = collected;
     }
 
     public GameObject GetGameObject()
