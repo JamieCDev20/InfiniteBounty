@@ -136,6 +136,8 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     {
         Reset();
         base.OnDisconnected(cause);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ReturnToMainMenu()
