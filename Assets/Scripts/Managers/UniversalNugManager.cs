@@ -118,7 +118,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
-        photonView.RPC("DoRemoteScoring", RpcTarget.All);
+        photonView.RPC(nameof(DoRemoteScoring), RpcTarget.All);
 
     }
 
