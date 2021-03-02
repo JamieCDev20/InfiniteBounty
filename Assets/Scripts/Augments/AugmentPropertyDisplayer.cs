@@ -69,7 +69,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         for (int i = 0; i < aL_augs.Count; i++)
         {
             if (goL_augmentButtonPool.Count <= i)
-                goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
+                goL_augmentButtonPool.Add(PoolManager.x.SpawnObject(go_propertyButton));
             goL_augmentButtonPool[i].SetActive(true);
             goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
             goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_augs[i]?.Level.ToString();
@@ -77,7 +77,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
         }
 
-        //rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
+        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
     }
 
