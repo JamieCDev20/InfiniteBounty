@@ -17,6 +17,7 @@ public class PauseMenuController : SubjectBase
     [SerializeField] private Canvas c_displayMenu;
     [SerializeField] private Canvas c_audioMenu;
     [SerializeField] private Canvas c_spectatingCanvas;
+    [SerializeField] private Canvas c_deleteSaveCanvas;
     private bool b_isPaused;
     private PlayerInputManager pim;
     private CameraController cc_cam;
@@ -99,6 +100,7 @@ public class PauseMenuController : SubjectBase
         c_controlsMenu.enabled = false;
         c_displayMenu.enabled = false;
         c_audioMenu.enabled = false;
+        c_deleteSaveCanvas.enabled = false;
 
         pim.b_shouldPassInputs = true;
         cc_cam.enabled = true;
