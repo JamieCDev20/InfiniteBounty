@@ -166,9 +166,8 @@ public class LodeBase : Enemy, IHitable
         return gameObject;
     }
 
-    public override void Die()
+    public void Die()
     {
-
         burst = false;
         Death();
     }

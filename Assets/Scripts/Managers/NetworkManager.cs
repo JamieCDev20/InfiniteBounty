@@ -14,8 +14,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Serialised
 
     [SerializeField] private byte maxPlayersPerRoom = 4;
-    [SerializeField] private string roomName = "";
-    [SerializeField] private GameObject UI = null;
+    [SerializeField] private string roomName;
+    [SerializeField] private GameObject UI;
 
     #endregion
 

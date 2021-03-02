@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VendingButton : MonoBehaviour
 {
-    [SerializeField] private int i_buttonIndex = 0;
+    [SerializeField] private int i_buttonIndex;
     [SerializeField] private VendingMachine vm_machine;
 
     private void Update()

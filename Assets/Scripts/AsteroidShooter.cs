@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AsteroidShooter : MonoBehaviour
 {
-    [SerializeField] private GameObject go_asteroidPrefab = null;
+    [SerializeField] private GameObject go_asteroidPrefab;
     private List<GameObject> goL_asteroidPool = new List<GameObject>();
     [SerializeField] private Vector2 v_lifeTime;
     [Space]

@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
         gameObject.SetActive(false);
     }
 
-    public virtual void Die()
+    public void Die()
     {
 
     }
