@@ -51,6 +51,7 @@ public class Pool
         // Create as many objects as your initial size
         for (int i = 0; i < i_initialSize; i++)
         {
+            //Debug.Log($"Initialise {s_path}");
             AddNewObject();
         }
     }
@@ -75,6 +76,7 @@ public class Pool
             }
         }
         // Create a new object because you haven't found one
+        Debug.Log("Spawn");
         GameObject newGo = AddNewObject();
         newGo.SetActive(true);
         return newGo;

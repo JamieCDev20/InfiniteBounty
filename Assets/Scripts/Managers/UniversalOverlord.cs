@@ -62,6 +62,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
         canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
+        SceneManager.sceneLoaded += OnSceneLoad;
         //GM persist through scenes
         DontDestroyOnLoad(gameObject);
 
@@ -100,10 +101,19 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (!scene.name.Contains("Lobby"))
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-        else
-            PhotonNetwork.CurrentRoom.IsOpen = true;
+        //if (!scene.name.Contains("Lobby"))
+        //    PhotonNetwork.CurrentRoom.IsOpen = false;
+        //else
+        //    PhotonNetwork.CurrentRoom.IsOpen = true;
+
+        PoolManager.x.ResetPool("BoomNug");
+        PoolManager.x.ResetPool("GooNug");
+        PoolManager.x.ResetPool("HydroNug");
+        PoolManager.x.ResetPool("MagmaNug");
+        PoolManager.x.ResetPool("TastyNug");
+        PoolManager.x.ResetPool("ThunderNug");
+        PoolManager.x.ResetPool("TEnemyProjectile");
+
     }
 
     #endregion
