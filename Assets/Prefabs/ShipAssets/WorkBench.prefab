@@ -2251,7 +2251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864791618291231689}
   m_LocalRotation: {x: -0, y: 0.93795437, z: -0, w: 0.34675893}
-  m_LocalPosition: {x: -1.16, y: -0.52, z: 1.26}
+  m_LocalPosition: {x: -1.965, y: -0.52, z: 1.329}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7211629806612318131}
@@ -3152,7 +3152,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 207.44604}
+  m_AnchoredPosition: {x: 15, y: 207.27362}
   m_SizeDelta: {x: -90, y: 20}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7211629807479709921
@@ -3710,15 +3710,6 @@ MonoBehaviour:
   f_cameraMovementT: 0.4
   wt_toolsInHand: []
   apd: {fileID: 1784018470491749889}
-  ad_display:
-    t_levelNumber: {fileID: 1096037574}
-    t_augmentName: {fileID: 140176217}
-    t_augmentFits: {fileID: 636297864}
-    t_augmentEffects: {fileID: 776373194}
-    t_augmentCost: {fileID: 0}
-  go_propertyButton: {fileID: 776373192}
-  go_propertyParent: {fileID: 8781076818996083804}
-  rt_bounds: {fileID: 8044818078957841827}
 --- !u!65 &3859615887861356107
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3759,16 +3750,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857cb06eaabeb1845b00a40dd544130e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  i_xDisplacement: 0
-  i_yDisplacement: 0
-  i_columnMax: 0
+  i_xDisplacement: 280
+  i_yDisplacement: 34
+  i_columnMax: 5
   go_propertyButton: {fileID: 776373192}
   go_propertyParent: {fileID: 8781076818996083804}
-  go_augmentButton: {fileID: 0}
+  go_augmentButton: {fileID: 2166756961505315583}
   goL_augmentButtonPool: []
   rt_augmentButtonParent: {fileID: 3565259527052178646}
-  s_slider: {fileID: 0}
+  s_slider: {fileID: 30761653}
   f_augmentButtonHeight: 85
+  ad_display:
+    t_levelNumber: {fileID: 1096037574}
+    t_augmentName: {fileID: 140176217}
+    t_augmentFits: {fileID: 636297864}
+    t_augmentEffects: {fileID: 776373194}
+    t_augmentCost: {fileID: 0}
 --- !u!114 &1089883854304582915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5612,6 +5609,12 @@ PrefabInstance:
 --- !u!224 &1927167965060014742 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6663853776258300072, guid: 145474bc246b66a4dac6bba0674816f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5099322441670285886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2166756961505315583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6401219565984829633, guid: 145474bc246b66a4dac6bba0674816f0,
     type: 3}
   m_PrefabInstance: {fileID: 5099322441670285886}
   m_PrefabAsset: {fileID: 0}
