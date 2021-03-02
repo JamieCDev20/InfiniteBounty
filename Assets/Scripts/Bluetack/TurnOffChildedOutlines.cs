@@ -12,6 +12,10 @@ public class TurnOffChildedOutlines : MonoBehaviour
         {
             o.enabled = false;
         }
+        foreach (FixOutlines f in GetComponentsInChildren<FixOutlines>())
+        {
+            f.enabled = false;
+        }
     }
 
 }

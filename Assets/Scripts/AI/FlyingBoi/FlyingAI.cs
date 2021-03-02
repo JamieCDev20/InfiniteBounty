@@ -94,17 +94,23 @@ public class FlyingAI : AIBase
 
     public void Move()
     {
-        Vector3 pos = Vector3.zero;
-        int c = 0;
-
-        foreach (GameObject p in TagManager.x.GetTagSet("Player"))
+        if (t_target != null)
+            mover.Move(((t_target.position + (Vector3.up * 10)) - transform.position));
+        else
         {
-            pos += p.transform.position;
-            c++;
-        }
-        pos /= c;
+            Vector3 pos = Vector3.zero;
+            int c = 0;
 
-        mover.Move(((pos + (Vector3.up * 10)) - transform.position));
+            foreach (GameObject p in TagManager.x.GetTagSet("Player"))
+            {
+                pos += p.transform.position;
+                c++;
+            }
+            pos /= c;
+
+            mover.Move(((pos + (Vector3.up * 10)) - transform.position));
+        }
+
 
     }
 
