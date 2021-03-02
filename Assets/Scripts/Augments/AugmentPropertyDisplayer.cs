@@ -15,15 +15,23 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private RectTransform rt_augmentButtonParent;
     [SerializeField] private Scrollbar s_slider;
     [SerializeField] private float f_augmentButtonHeight = 85;
+    [SerializeField] private AugmentDisplay ad_display;
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
+    public AugmentDisplay AugDisplay { get { return ad_display; } }
     private int i_displayIter = 0;
 
-    public void Start()
+    public void Init()
     {
-        if (!PoolManager.x.CheckIfPoolExists(go_propertyButton))
-            PoolManager.x.CreateNewPool(go_propertyButton, 20);
+        if(go_propertyButton != null)
+            if (!PoolManager.x.CheckIfPoolExists(go_propertyButton))
+                PoolManager.x.CreateNewPool(go_propertyButton, 20);
     }
 
+    private void OnDestroy()
+    {
+        if(!PoolManager.x.CheckIfPoolExists(go_propertyButton))
+            PoolManager.x.RemovePool(go_propertyButton);
+    }
 
     public List<Augment> InitAugmentList(List<Augment> aL_augs, Augment[] _aA_augmentsInList, bool _b_shouldAddToExistingList)
     {
@@ -35,6 +43,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         UpdateAugmentListDisplay(aL_augs, AugmentDisplayType.ShowAll);
         return aL_augs;
     }
+
 
     private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
     {

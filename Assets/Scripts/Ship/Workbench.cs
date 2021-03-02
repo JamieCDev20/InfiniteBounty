@@ -29,12 +29,8 @@ public class Workbench : SubjectBase, IInteractible
 
     [Header("Augment Display")]
     [SerializeField] AugmentPropertyDisplayer apd;
-    [SerializeField] private AugmentDisplay ad_display;
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private ToolHandler th_currentTh;
-    [SerializeField] private GameObject go_propertyButton;
-    [SerializeField] private GameObject go_propertyParent;
-    [SerializeField] private RectTransform rt_bounds;
     private int displayIter = 0;
     #region Interactions
 
@@ -47,6 +43,7 @@ public class Workbench : SubjectBase, IInteractible
         tl.LoadTools(transform);
         augMan = FindObjectOfType<AugmentManager>();
         AddObserver(saveMan);
+        apd.Init();
     }
 
     public void Interacted(Transform interactor)
@@ -132,11 +129,6 @@ public class Workbench : SubjectBase, IInteractible
     }
 
     #endregion
-
-    private void OnDestroy()
-    {
-        PoolManager.x.RemovePool(go_propertyButton);
-    }
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
     {
@@ -266,22 +258,22 @@ public class Workbench : SubjectBase, IInteractible
         i_currentAugmentIndex = _i_augmentIndexClicked;
         apd.AugmentButtons[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
-        ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
+        apd.AugDisplay.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
         switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
         {
             case AugmentType.standard:
-                ad_display.t_augmentFits.text = "Hammer";
+                apd.AugDisplay.t_augmentFits.text = "Hammer";
                 break;
             case AugmentType.projectile:
-                ad_display.t_augmentFits.text = "Blaster - Shredder - Cannon";
+                apd.AugDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
                 break;
             case AugmentType.cone:
-                ad_display.t_augmentFits.text = "Nuggsucker";
+                apd.AugDisplay.t_augmentFits.text = "Nuggsucker";
                 break;
         }
 
-        ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
-        ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
+        apd.AugDisplay.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
+        apd.AugDisplay.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
         apd.RemoveAugmentProperties();
         apd.UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
 //        UpdatePropertyText(_i_augmentIndexClicked);
@@ -332,12 +324,6 @@ public class Workbench : SubjectBase, IInteractible
         base.OnPlayerEnteredRoom(newPlayer);
         if (b_isBeingUsed)
             EndInteract();
-    }
-
-    public void RemoveAugmentProperties()
-    {
-        displayIter = 0;
-        PoolManager.x.KillAllObjects(go_propertyButton);
     }
 
 }
