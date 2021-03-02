@@ -24,14 +24,20 @@ public class BouncePad : MonoBehaviour
     public void Jump()
     {
         Collider[] _cA = Physics.OverlapSphere(transform.position, 1, lm_layersToBounce, QueryTriggerInteraction.Ignore);
+        bool _b_sound = false;
 
+        print(_cA.Length);
         for (int i = 0; i < _cA.Length; i++)
         {
-            _cA[i].GetComponent<Rigidbody>().AddForce(transform.up * f_bounceForce, ForceMode.Impulse);
+            if (_cA[i].attachedRigidbody != null)
+            {
+                _cA[i].attachedRigidbody.AddForce(transform.up * f_bounceForce, ForceMode.Impulse);
+                _b_sound = true;
+            }
         }
-        if (_cA.Length > 0)
-            as_source.PlayOneShot(ac_useSound);
 
+        if (_b_sound)
+            as_source.PlayOneShot(ac_useSound);
     }
 
 
