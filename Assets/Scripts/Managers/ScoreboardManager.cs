@@ -42,13 +42,13 @@ public class ScoreboardManager : MonoBehaviour
         {
             so_playerScoreObjects[i].nameText.text = PhotonNetwork.CurrentRoom.Players[i + 1].NickName;
 
-            so_playerScoreObjects[i].gooText.text = values[pc-i][0].ToString();
-            so_playerScoreObjects[i].hydroText.text = values[pc-i][1].ToString();
-            so_playerScoreObjects[i].tastyText.text = values[pc-i][2].ToString();
-            so_playerScoreObjects[i].thunderText.text = values[pc-i][3].ToString();
-            so_playerScoreObjects[i].boomText.text = values[pc-i][4].ToString();
-            so_playerScoreObjects[i].magmaText.text = values[pc-i][5].ToString();
-            playerTotal = UniversalNugManager.x.CalculateValues(values[pc-i]);
+            so_playerScoreObjects[i].gooText.text = values[i][0].ToString();
+            so_playerScoreObjects[i].hydroText.text = values[i][1].ToString();
+            so_playerScoreObjects[i].tastyText.text = values[i][2].ToString();
+            so_playerScoreObjects[i].thunderText.text = values[i][3].ToString();
+            so_playerScoreObjects[i].boomText.text = values[i][4].ToString();
+            so_playerScoreObjects[i].magmaText.text = values[i][5].ToString();
+            playerTotal = UniversalNugManager.x.CalculateValues(values[i]);
             so_playerScoreObjects[i].bucksText.text = playerTotal.ToString();
             totalEarned += playerTotal;
         }

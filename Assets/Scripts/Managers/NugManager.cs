@@ -53,6 +53,7 @@ public class NugManager : SubjectBase, ObserverBase
     public void SetID(int _id)
     {
         i_playerID = _id;
+        Debug.LogError($"MY ID IS {_id}");
     }
 
     public void EndedLevel()
