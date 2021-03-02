@@ -214,7 +214,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5755328650882000064}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &5522374538379880195
 ParticleSystem:
@@ -10071,12 +10071,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5755328650882000064}
-  m_RootOrder: 3
+  m_Father: {fileID: 611989444317883885}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &2510803200915575237
@@ -10913,7 +10913,7 @@ RectTransform:
   m_LocalScale: {x: 0.005, y: 0.005, z: 1}
   m_Children: []
   m_Father: {fileID: 5755328650882000064}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11102,7 +11102,7 @@ Transform:
   - {fileID: 5543328625661889707}
   - {fileID: 4275274864389672659}
   m_Father: {fileID: 5755328650882000064}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &927964703924173512
 BoxCollider:
@@ -11171,7 +11171,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1462372680189949599}
   m_Father: {fileID: 5755328650882000064}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11739,7 +11740,6 @@ Transform:
   - {fileID: 2653756006729720567}
   - {fileID: 561502231499368622}
   - {fileID: 611989444317883885}
-  - {fileID: 1462372680189949599}
   - {fileID: 4569050595315138923}
   - {fileID: 8208377796868386237}
   - {fileID: 8354679781433868307}
@@ -11778,7 +11778,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5755328650882000064}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &343530335628409373
 MonoBehaviour:
@@ -11865,7 +11865,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a30b9a1c36abcea4d9caf98cb820a431,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a30b9a1c36abcea4d9caf98cb820a431,
         type: 3}
