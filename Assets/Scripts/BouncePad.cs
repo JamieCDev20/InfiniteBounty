@@ -26,7 +26,6 @@ public class BouncePad : MonoBehaviour
         Collider[] _cA = Physics.OverlapSphere(transform.position, 1, lm_layersToBounce, QueryTriggerInteraction.Ignore);
         bool _b_sound = false;
 
-        print(_cA.Length);
         for (int i = 0; i < _cA.Length; i++)
         {
             if (_cA[i].attachedRigidbody != null)
