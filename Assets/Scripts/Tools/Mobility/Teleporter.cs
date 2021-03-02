@@ -26,6 +26,8 @@ public class Teleporter : MobilityTool
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
+        photonView.ViewID += 26780 + GetComponentInParent<PlayerInputManager>().GetID() * 2 + 1;
+        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     private void Update()
@@ -81,7 +83,7 @@ public class Teleporter : MobilityTool
     }
 
     [PunRPC]
-    private void OpenPortalAtPoint(Vector3 _v_pos, Vector3 _v_lookDirection)
+    public void OpenPortalAtPoint(Vector3 _v_pos, Vector3 _v_lookDirection)
     {
         go_startPortal.transform.position = transform.position + _v_lookDirection * 5;
         go_startPortal.SetActive(true);
