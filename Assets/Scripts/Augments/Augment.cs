@@ -17,7 +17,7 @@ public class Augment
     [SerializeField] protected string mat_augColor;
     public string Name { get { return s_name; } }
     public int Level { get { return i_level; } set { i_level = value; } }
-    public int Cost { get { return i_cost; } }
+    public int Cost { get { return i_cost; } set { i_cost = value; } }
     public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
     public string AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
