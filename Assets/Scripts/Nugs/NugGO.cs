@@ -31,7 +31,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         rb = GetComponent<Rigidbody>();
         eO_elem = GetComponent<ElementalObject>();
 
-        //SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneLoaded += OnSceneLoad;
 
     }
     private void OnTriggerEnter(Collider other)

@@ -106,13 +106,13 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         //else
         //    PhotonNetwork.CurrentRoom.IsOpen = true;
 
-        PoolManager.x.ResetPool("BoomNug");
-        PoolManager.x.ResetPool("GooNug");
-        PoolManager.x.ResetPool("HydroNug");
-        PoolManager.x.ResetPool("MagmaNug");
-        PoolManager.x.ResetPool("TastyNug");
-        PoolManager.x.ResetPool("ThunderNug");
-        PoolManager.x.ResetPool("TEnemyProjectile");
+        //PoolManager.x.ResetPool("BoomNug");
+        //PoolManager.x.ResetPool("GooNug");
+        //PoolManager.x.ResetPool("HydroNug");
+        //PoolManager.x.ResetPool("MagmaNug");
+        //PoolManager.x.ResetPool("TastyNug");
+        //PoolManager.x.ResetPool("ThunderNug");
+        //PoolManager.x.ResetPool("TEnemyProjectile");
 
     }
 
