@@ -54,6 +54,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     public override void OnEnable()
     {
         b_canBeHit = false;
+        b_collected = false;
         Invoke("RemoveSpawnImmunity", f_spawnImmunityDuration);
         Invoke("Die", 60);
     }

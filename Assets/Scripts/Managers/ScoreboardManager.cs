@@ -37,7 +37,7 @@ public class ScoreboardManager : MonoBehaviour
     {
         int totalEarned = 0;
         int playerTotal;
-        for (int i = 0; i < values.Length; i++)
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             so_playerScoreObjects[i].nameText.text = _names[i];
             so_playerScoreObjects[i].gooText.text = values[i][0].ToString();
