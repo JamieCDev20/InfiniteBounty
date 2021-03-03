@@ -12,7 +12,7 @@ public class AugmentManager : MonoBehaviour
     [SerializeField] ConeAugment[] A_coneAugs;
     [SerializeField] private List<GameObject> go_augments = new List<GameObject>();
 
-    public void Start()
+    public void Init()
     {
         if (x != null)
         {
@@ -26,8 +26,8 @@ public class AugmentManager : MonoBehaviour
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
         A_coneAugs = AugmentLoader.ReadAugmentData<ConeAugment>(augstr);
-        GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
+        GetAllAugmentGameObjects();
         FindObjectOfType<VendingMachine>().Init(this);
         DontDestroyOnLoad(gameObject);
 
