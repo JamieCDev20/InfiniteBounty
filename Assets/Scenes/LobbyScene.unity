@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.15864259, g: 0.14843445, b: 0.44550845, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8539,6 +8539,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15.3, y: 0.5, z: 2.17}
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!1 &349246583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 349246584}
+  m_Layer: 0
+  m_Name: DangerLevelStop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &349246584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349246583}
+  m_LocalRotation: {x: -0.00063946296, y: -0.99810886, z: 0.0605574, w: -0.010539647}
+  m_LocalPosition: {x: 4.9, y: 2.57, z: -26.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 439335929753607187}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 6.944, y: -181.21, z: 0}
 --- !u!1 &352776548
 GameObject:
   m_ObjectHideFlags: 0
@@ -63103,6 +63133,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7783071748239644308}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1779493840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1779493841}
+  m_Layer: 0
+  m_Name: GameModeStop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1779493841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779493840}
+  m_LocalRotation: {x: 0.008061935, y: -0.9892806, z: 0.06002177, w: 0.13287705}
+  m_LocalPosition: {x: 3.7, y: 2.9, z: -26.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 439335929753607187}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 6.944, y: -164.7, z: 0}
 --- !u!1001 &1790699833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83228,6 +83288,8 @@ Transform:
   - {fileID: 9162756243756059532}
   - {fileID: 6630304410406371945}
   - {fileID: 3206395294248330025}
+  - {fileID: 1779493841}
+  - {fileID: 349246584}
   - {fileID: 2864327040361986080}
   - {fileID: 2347560314399466495}
   m_Father: {fileID: 0}
@@ -83535,7 +83597,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3233364294558733305}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -83768,7 +83830,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 439335929753607187}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 7.62, y: 108.765, z: 0}
 --- !u!114 &2571930211017324165
 MonoBehaviour:
@@ -83878,7 +83940,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 439335929753607187}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 6.719, y: -117.863, z: 0}
 --- !u!4 &2949556543635164512
 Transform:
@@ -83950,7 +84012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7377903611761635516}
   m_LocalRotation: {x: 0.02427696, y: -0.9144494, z: 0.055480246, w: 0.4001435}
-  m_LocalPosition: {x: 4.49, y: 3, z: -25.39}
+  m_LocalPosition: {x: 3.7, y: 3.06, z: -26.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 439335929753607187}
@@ -84057,8 +84119,8 @@ Transform:
   m_Children:
   - {fileID: 8350449850660008528}
   - {fileID: 3725454008440856818}
-  - {fileID: 1806334317}
   - {fileID: 1358925826866066576}
+  - {fileID: 1806334317}
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: -114.439, z: 0}
@@ -85070,7 +85132,7 @@ MonoBehaviour:
   tsA_tourStops:
   - s_name: Mirror
     t_cameraPos: {fileID: 9162756243756059532}
-    s_textToShow: Use our patented REFLECTRON to change your appearance.
+    s_textToShow: Use our patented REFLECTRON machine to change your appearance.
     f_timeToWait: 4
   - s_name: Tool Rack
     t_cameraPos: {fileID: 6630304410406371945}
@@ -85081,6 +85143,28 @@ MonoBehaviour:
     t_cameraPos: {fileID: 3206395294248330025}
     s_textToShow: 'Crowd around the Teleporter and have your Infinite Bounty allocated
       captain press the button to get blasted down onto IGNOVA. '
+    f_timeToWait: 4
+  - s_name: GameMode
+    t_cameraPos: {fileID: 1779493841}
+    s_textToShow: 'Before teleporting, hit the GAME MODE button to change between
+      game modes.
+
+
+      NUGGET RUN:  Go to IGNOVA to Harvest precious Nuggs and
+      earn BountyBucks.
+
+
+      MOTHERLODE: Fight the Motherlode for Bucks, glory
+      and to unlock the next DANGER LEVEL.
+
+
+      DE-ESCALATION: Blow off steam
+      and challenge your team mates to a fiery duel.'
+    f_timeToWait: 4
+  - s_name: DangerLevel
+    t_cameraPos: {fileID: 349246584}
+    s_textToShow: Beaten the MOTHERLODE yet? If so, hit the red arrows to change
+      the DANGER LEVEL of your missions for increased workplace satisfaction!
     f_timeToWait: 4
   - s_name: Vending Machine
     t_cameraPos: {fileID: 2864327040361986080}
@@ -85557,7 +85641,7 @@ PrefabInstance:
     - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 207.44278
+      value: 207.91193
       objectReference: {fileID: 0}
     - target: {fileID: 6116306273585402338, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
