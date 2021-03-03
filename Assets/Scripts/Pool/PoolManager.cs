@@ -205,7 +205,9 @@ public class PoolManager : MonoBehaviour
     public HashSet<IPoolable> GetPooledObjects(GameObject type)
     {
         if (pools.Contains(type.name))
+        {
             return pools[type.name].GetPooledObjects();
+        }
         else
         {
             CreateNewPool(type);
