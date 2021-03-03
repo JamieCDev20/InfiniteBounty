@@ -12,6 +12,7 @@ public class JukeBox : MonoBehaviour, IHitable
     [Space, SerializeField] private TextMeshPro tmp_trackNameText;
     private int i_currentSong;
     private bool b_isPoweredOn;
+    [SerializeField] private ParticleSystem p_deathEffect;
 
     private void Start()
     {
@@ -60,6 +61,8 @@ public class JukeBox : MonoBehaviour, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
+        p_deathEffect.transform.parent = null;
+        p_deathEffect.Play();
         gameObject.SetActive(false);
         b_isPoweredOn = true;
         TogglePower();

@@ -11,7 +11,7 @@ public class BossArenaManager : MonoBehaviour
     [Space, SerializeField] private KillBox kb_lava;
     [SerializeField] private GameObject go_tractorBeam;
 
-    void Start()
+    void Awake()
     {
         x = this;
         LilyPad[] _lpA = FindObjectsOfType<LilyPad>();

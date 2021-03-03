@@ -53,9 +53,10 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         if (Input.GetKey(KeyCode.LeftControl))
             if (Input.GetKeyDown(KeyCode.RightControl))
             {
-                PhotonNetwork.Disconnect();
-                Reset();
-                SceneManager.LoadScene(0);
+                ReturnToMainMenu();
+                //PhotonNetwork.Disconnect();
+                //Reset();
+                //SceneManager.LoadScene(0);
             }
     }
 

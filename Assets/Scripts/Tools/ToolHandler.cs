@@ -250,11 +250,11 @@ public class ToolHandler : SubjectBase
     public void SyncToolOverNetwork()
     {
 
-        for (int i = 0; i < A_tools.Length; i++)
-        {
-            if (A_tools[i] != null)
-                view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
-        }
+        //for (int i = 0; i < A_tools.Length; i++)
+        //{
+        //    if (A_tools[i] != null)
+        //        view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
+        //}
 
     }
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)

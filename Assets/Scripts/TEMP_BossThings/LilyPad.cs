@@ -11,6 +11,10 @@ public class LilyPad : MonoBehaviour, IHitable
     private bool b_isHost;
     [SerializeField] private GameObject go_deathEffects;
 
+    [Header("Boss Things")]
+    [SerializeField] private BossHealth bh_ifArmourUseThis;
+    private int i_armourID;
+
     private void Awake()
     {
         view = GetComponent<PhotonView>();
@@ -24,16 +28,20 @@ public class LilyPad : MonoBehaviour, IHitable
         go_deathEffects.transform.parent = null;
     }
 
+
     internal void Setup(int _i_id)
     {
-        try
+        if (bh_ifArmourUseThis == null)
         {
-            view.ViewID = 4000 + _i_id;
-            PhotonNetwork.RegisterPhotonView(view);
+            if (view != null)
+            {
+                view.ViewID = 4000 + _i_id;
+                PhotonNetwork.RegisterPhotonView(view);
+            }
         }
-        catch
+        else
         {
-            print("I Failed, Cause I'm a stupid idiot head");
+            i_armourID = _i_id;
         }
     }
 
@@ -44,19 +52,24 @@ public class LilyPad : MonoBehaviour, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
-        if (b_isHost)
-            view.RPC("ActualTakeDamage", RpcTarget.All, damage);
+        if (bh_ifArmourUseThis == null)
+        {
+            if (b_isHost)
+                view.RPC(nameof(TakeDamageRPC), RpcTarget.All, damage);
+        }
+        else
+        {
+            if (b_isHost)
+                bh_ifArmourUseThis.ArmourDamaged(i_armourID, damage);
+        }
     }
     [PunRPC]
-    public void ActualTakeDamage(int damage)
+    public void TakeDamageRPC(int damage)
     {
         i_currentHealth -= damage;
         if (i_currentHealth <= 0)
             Die();
     }
 
-    public void TakeDamage(int damage, bool activatesThunder, float delay)
-    {
-
-    }
+    public void TakeDamage(int damage, bool activatesThunder, float delay) { }
 }
