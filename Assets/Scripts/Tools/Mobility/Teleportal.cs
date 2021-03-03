@@ -7,6 +7,7 @@ public class Teleportal : MonoBehaviour
     private bool b_isOpen;
     [SerializeField] private Teleportal tp_otherPortal;
     private List<Rigidbody> rbL_recentlyTeleported = new List<Rigidbody>();
+    [SerializeField] private float f_hyuckForce;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,6 +37,7 @@ public class Teleportal : MonoBehaviour
         }
 
         _go_object.transform.position = tp_otherPortal.transform.position;
+        _rb.AddForce(transform.forward * f_hyuckForce, ForceMode.Impulse);
         yield return new WaitForEndOfFrame();
 
         rbL_recentlyTeleported.Add(_rb);
