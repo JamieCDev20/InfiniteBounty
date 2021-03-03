@@ -131,7 +131,11 @@ public class HUDController : MonoBehaviour
     {
         if (iiD_idMap.Count <= 0)
             return;
-        goA_healthBarParents[iiD_idMap[id]].SetActive(true);
+        try
+        {
+            goA_healthBarParents[iiD_idMap[id]].SetActive(true);
+        }
+        catch { }
 
         rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)_i_currentHealth / 100, 1, 1);
         tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;

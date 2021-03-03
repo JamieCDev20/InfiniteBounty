@@ -23,10 +23,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (x != null)
-            Destroy(gameObject);
-        else
-            x = this;
     }
 
     private void Start()
@@ -36,11 +32,19 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     public void Reset()
     {
         ResetValues();
+
     }
 
 
     public void Init()
     {
+        if (x != null)
+        {
+            if (x != this)
+                Destroy(gameObject);
+        }
+        else
+            x = this;
         DontDestroyOnLoad(gameObject);
         photonView.ViewID = 99999;
         PhotonNetwork.RegisterPhotonView(photonView);
@@ -64,7 +68,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         photonView.RPC(nameof(UpdateCount), RpcTarget.AllViaServer, i2A_playerNugCounts[i_localID], localNugCount, i_localID, PhotonNetwork.NickName);
     }
 
-    private void RefreshTotalNugCount() 
+    private void RefreshTotalNugCount()
     {
         if (PhotonNetwork.CurrentRoom == null)
             return;
