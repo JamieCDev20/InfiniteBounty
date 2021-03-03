@@ -26,8 +26,8 @@ public class AugmentManager : MonoBehaviour
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
         A_coneAugs = AugmentLoader.ReadAugmentData<ConeAugment>(augstr);
-        SpawnPhysicalAugments();
         GetAllAugmentGameObjects();
+        SpawnPhysicalAugments();
         FindObjectOfType<VendingMachine>().Init(this);
         DontDestroyOnLoad(gameObject);
 
