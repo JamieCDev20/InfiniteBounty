@@ -53,6 +53,8 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         if (Input.GetKey(KeyCode.LeftControl))
             if (Input.GetKeyDown(KeyCode.RightControl))
             {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 ReturnToMainMenu();
                 //PhotonNetwork.Disconnect();
                 //Reset();
