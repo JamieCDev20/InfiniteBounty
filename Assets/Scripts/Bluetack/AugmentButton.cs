@@ -14,7 +14,7 @@ public class AugmentButton : MonoBehaviour, IPoolable
 
     public void Die()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(false);
     }
 
     public GameObject GetGameObject()
