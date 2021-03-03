@@ -22,6 +22,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     #region Private
 
     private bool canLoadScene = true;
+    private bool b_die;
 
     #endregion
 
@@ -31,12 +32,20 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     private void Awake()
     {
         if (x != null)
+        {
+            b_die = true;
             Destroy(gameObject);
+        }
         else
             x = this;
-        Init();
         PhotonNetwork.SerializationRate = 15;
         PhotonNetwork.SendRate = 15;
+        if(!b_die)
+            Init();
+    }
+
+    private void Start()
+    {
     }
 
     private void Update()
@@ -59,7 +68,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     /// </summary>
     private void Init()
     {
-
+        Debug.Log("Init");
         canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -92,6 +101,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+
         base.OnLeftRoom();
         if (!canLoadScene)
             return;

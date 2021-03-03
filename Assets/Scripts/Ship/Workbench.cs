@@ -12,7 +12,6 @@ public class Workbench : SubjectBase, IInteractible
     private bool b_isBeingUsed;
     private Transform t_camPositionToReturnTo;
     private SaveManager saveMan;
-    private AugmentManager augMan;
     [SerializeField] private ToolLoader tl;
     [SerializeField] private Canvas c_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
@@ -41,7 +40,6 @@ public class Workbench : SubjectBase, IInteractible
             if (too.name.Contains("Weapon"))
                 tl = too;
         tl.LoadTools(transform);
-        augMan = FindObjectOfType<AugmentManager>();
         AddObserver(saveMan);
         apd.Init();
     }
@@ -89,8 +87,8 @@ public class Workbench : SubjectBase, IInteractible
                 if(augs != null && augs.Length != 0)
                 {
                     for (int i = 0; i < castedAugs.Length; i++)
-                        if(augMan.GetAugment(augs[i].Name) != null)
-                            castedAugs[i] = augMan.GetAugment(augs[i].Name).Aug;
+                        if(AugmentManager.x.GetAugment(augs[i].Name) != null)
+                            castedAugs[i] = AugmentManager.x.GetAugment(augs[i].Name).Aug;
                 }
                 apd.InitAugmentList(aL_allAugmentsOwned, castedAugs, false);
                 ClickAugment(0);

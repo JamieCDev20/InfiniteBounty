@@ -28,8 +28,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(!PoolManager.x.CheckIfPoolExists(go_propertyButton))
-            PoolManager.x.RemovePool(go_propertyButton);
+        //if(!PoolManager.x.CheckIfPoolExists(go_propertyButton))
+        //    PoolManager.x.RemovePool(go_propertyButton);
     }
 
     public List<Augment> InitAugmentList(List<Augment> aL_augs, Augment[] _aA_augmentsInList, bool _b_shouldAddToExistingList)

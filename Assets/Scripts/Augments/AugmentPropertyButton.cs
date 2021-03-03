@@ -21,6 +21,6 @@ public class AugmentPropertyButton : MonoBehaviour, IPoolable
 
     public string ResourcePath()
     {
-        return string.Empty;
+        return "\\";
     }
 }
