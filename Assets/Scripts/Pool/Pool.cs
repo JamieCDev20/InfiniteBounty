@@ -76,7 +76,6 @@ public class Pool
             }
         }
         // Create a new object because you haven't found one
-        Debug.Log("Spawn");
         GameObject newGo = AddNewObject();
         newGo.SetActive(true);
         return newGo;
