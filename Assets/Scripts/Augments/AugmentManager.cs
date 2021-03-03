@@ -12,7 +12,7 @@ public class AugmentManager : MonoBehaviour
     [SerializeField] ConeAugment[] A_coneAugs;
     [SerializeField] private List<GameObject> go_augments = new List<GameObject>();
 
-    public void Start()
+    public void Init()
     {
         if (x != null)
         {
