@@ -22,6 +22,12 @@ public class AugmentManager : MonoBehaviour
         else
             x = this;
 
+        DontDestroyOnLoad(gameObject);
+
+    }
+
+    public void JoinedRoom()
+    {
         string augstr = AugmentLoader.LoadAugmentJson();
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
@@ -29,7 +35,6 @@ public class AugmentManager : MonoBehaviour
         GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
         FindObjectOfType<VendingMachine>().Init(this);
-        DontDestroyOnLoad(gameObject);
 
     }
 

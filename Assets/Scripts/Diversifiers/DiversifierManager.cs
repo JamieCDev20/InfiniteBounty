@@ -16,6 +16,11 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+    }
+
+    public void Init()
+    {
+
         transform.parent = null;
         if (x != null) Destroy(gameObject);
         else

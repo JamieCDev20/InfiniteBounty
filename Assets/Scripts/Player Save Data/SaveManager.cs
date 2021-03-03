@@ -17,6 +17,11 @@ public class SaveManager : MonoBehaviour, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+
+    public void Init()
+    {
         if (x != null)
         {
             if (x != this)
@@ -29,6 +34,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
         CreateSaveData();
         FindObjectOfType<Workbench>().Init(this);
         DontDestroyOnLoad(gameObject);
+
     }
 
     /// <summary>

@@ -14,11 +14,15 @@ public class LoadingScreenManager : MonoBehaviourPun
 
     private void Awake()
     {
+    }
+
+    public void Init()
+    {
         x = this;
         photonView.ViewID = 9898989;
         PhotonNetwork.RegisterPhotonView(photonView);
-    }
 
+    }
     internal void SetSceneToLoad(string _s_scene)
     {
         s_sceneNameToLoad = _s_scene;

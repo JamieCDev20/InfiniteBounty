@@ -12,7 +12,6 @@ public class PoolManager : MonoBehaviour
 
     private void Start()
     {
-        Init();
     }
     /// <summary>
     /// Make this a singleton and initialise all the pools

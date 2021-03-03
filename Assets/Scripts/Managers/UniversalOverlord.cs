@@ -74,7 +74,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             //spawn all managers
             for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
             {
-                Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity);
+                Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity).SendMessage("Init");
             }
         }
 
@@ -130,6 +130,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         //initialise the pools in pool manager when you join a room
         PoolManager.x.InitialisePools();
         UniversalNugManager.x.DoScoring();
+        AugmentManager.x.JoinedRoom();
 
     }
 

@@ -6,9 +6,10 @@ public class AugmentButton : MonoBehaviour, IPoolable
 {
     public int i_buttonIndex;
 
-    public void Clicked(GameObject wb)
+    public void Clicked(/*GameObject wb*/)
     {
-        wb?.GetComponent<Workbench>()?.ClickAugment(i_buttonIndex);
+        //wb?.GetComponent<Workbench>()?.ClickAugment(i_buttonIndex);
+        FindObjectOfType<Workbench>()?.ClickAugment(i_buttonIndex);
     }
 
     public void Die()
@@ -28,6 +29,6 @@ public class AugmentButton : MonoBehaviour, IPoolable
 
     public string ResourcePath()
     {
-        throw new System.NotImplementedException();
+        return "\\Augments\\";
     }
 }

@@ -19,13 +19,17 @@ public class DifficultyManager : SubjectBase
 
     private void Awake()
     {
+    }
+
+    public void Init()
+    {
         if (x) Destroy(gameObject);
         else x = this;
         DontDestroyOnLoad(gameObject);
         i_amountOfAuthoredDifs = dsL_difficulties.Count;
         AddObserver(FindObjectOfType<SaveManager>());
-    }
 
+    }
     internal DifficultySet ReturnCurrentDifficulty()
     {
         if (i_currentDifficulty >= dsL_difficulties.Count)

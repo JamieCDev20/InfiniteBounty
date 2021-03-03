@@ -31,14 +31,20 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        photonView.ViewID = 99999;
-        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     public void Reset()
     {
         ResetValues();
+    }
+
+
+    public void Init()
+    {
+        DontDestroyOnLoad(gameObject);
+        photonView.ViewID = 99999;
+        PhotonNetwork.RegisterPhotonView(photonView);
+
     }
 
     public void RecieveNugs(Nug nugCollected)
