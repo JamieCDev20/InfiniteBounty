@@ -57,10 +57,9 @@ public class LodeBase : Enemy, IHitable
         //this is the networked take damage func, this is called by the host to sync health
         i_currentHealth -= _i_damage;
 
-
         //check if dead and stuff
         if (PhotonNetwork.IsMasterClient)
-            photonView.RPC("SetHealth", RpcTarget.Others, i_currentHealth);
+            photonView.RPC(nameof(SetHealth), RpcTarget.Others, i_currentHealth);
         CheckHealth();
 
     }
