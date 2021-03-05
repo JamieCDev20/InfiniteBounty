@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tp_otherPortal: {fileID: 8895917689139300698}
-  f_hyuckForce: 250
+  f_hyuckForce: 50
 --- !u!1 &916109593420181474
 GameObject:
   m_ObjectHideFlags: 0
@@ -19552,7 +19552,7 @@ MonoBehaviour:
   t_raycastPoint: {fileID: 0}
   b_releaseActivated: 1
   go_particles: []
-  f_teleportDistance: 200
+  f_teleportDistance: 150
   f_teleportDelay: 0
   go_chargeEffects: {fileID: 6555137232502950924}
   redMat: {fileID: 2100000, guid: 1760a033440bae141ab3ca286302a6d9, type: 2}
@@ -19740,7 +19740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tp_otherPortal: {fileID: 758003954079274540}
-  f_hyuckForce: 250
+  f_hyuckForce: 50
 --- !u!1 &5455541937113050157
 GameObject:
   m_ObjectHideFlags: 0
@@ -35175,6 +35175,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133037164650500399, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7356448449100653551, guid: 27f9e6cf83cb0514db0de684cb563f0c,
         type: 3}
