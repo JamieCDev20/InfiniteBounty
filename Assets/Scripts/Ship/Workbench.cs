@@ -28,6 +28,7 @@ public class Workbench : SubjectBase, IInteractible
 
     [Header("Augment Display")]
     [SerializeField] AugmentPropertyDisplayer apd;
+    public AugmentPropertyDisplayer AugPropertyDisplay { get { return apd; } }
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private ToolHandler th_currentTh;
     private int displayIter = 0;
@@ -79,20 +80,7 @@ public class Workbench : SubjectBase, IInteractible
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
             // Find any saved augments and load them
-            saveMan = FindObjectOfType<SaveManager>();
-            if (saveMan.SaveData.purchasedAugments != null)
-            {
-                Augment[] augs = saveMan.SaveData.purchasedAugments;
-                Augment[] castedAugs = new Augment[augs.Length];
-                if(augs != null && augs.Length != 0)
-                {
-                    for (int i = 0; i < castedAugs.Length; i++)
-                        if(AugmentManager.x.GetAugment(augs[i].Name) != null)
-                            castedAugs[i] = AugmentManager.x.GetAugment(augs[i].Name).Aug;
-                }
-                apd.InitAugmentList(aL_allAugmentsOwned, castedAugs, false);
-                ClickAugment(0);
-            }
+            apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -248,33 +236,6 @@ public class Workbench : SubjectBase, IInteractible
             new (int, int, Augment[])[] { (th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, new Augment[] { _aug }) },
             null, null, 0));
         Notify(saveEvent);
-    }
-
-    public void ClickAugment(int _i_augmentIndexClicked)
-    {
-        apd.AugmentButtons[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
-        i_currentAugmentIndex = _i_augmentIndexClicked;
-        apd.AugmentButtons[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
-
-        apd.AugDisplay.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
-        switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
-        {
-            case AugmentType.standard:
-                apd.AugDisplay.t_augmentFits.text = "Hammer";
-                break;
-            case AugmentType.projectile:
-                apd.AugDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
-                break;
-            case AugmentType.cone:
-                apd.AugDisplay.t_augmentFits.text = "Nuggsucker";
-                break;
-        }
-
-        apd.AugDisplay.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
-        apd.AugDisplay.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
-        apd.RemoveAugmentProperties();
-        apd.UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
-//        UpdatePropertyText(_i_augmentIndexClicked);
     }
 
     #endregion

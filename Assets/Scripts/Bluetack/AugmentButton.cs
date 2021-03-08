@@ -9,7 +9,7 @@ public class AugmentButton : MonoBehaviour, IPoolable
     public void Clicked(/*GameObject wb*/)
     {
         //wb?.GetComponent<Workbench>()?.ClickAugment(i_buttonIndex);
-        FindObjectOfType<Workbench>()?.ClickAugment(i_buttonIndex);
+        FindObjectOfType<Workbench>()?.AugPropertyDisplay.ClickAugment(i_buttonIndex);
     }
 
     public void Die()
