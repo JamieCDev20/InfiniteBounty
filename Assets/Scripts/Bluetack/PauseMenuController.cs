@@ -50,9 +50,7 @@ public class PauseMenuController : SubjectBase
         #region JAM's Resolution Code
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
-
         List<string> options = new List<string>();
-
         int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
@@ -65,7 +63,6 @@ public class PauseMenuController : SubjectBase
                 currentResolutionIndex = i;
             }
         }
-
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
@@ -220,6 +217,12 @@ public class PauseMenuController : SubjectBase
     #endregion
 
     #region John Stuff
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
     public void SetQuality(int _i_qualityIndex)
     {
         A_display[(int)DisplaySettings.quality] = _i_qualityIndex;
