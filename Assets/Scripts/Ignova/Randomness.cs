@@ -12,14 +12,12 @@ public class Randomness : MonoBehaviourPunCallbacks
     [SerializeField] private bool randomSeed;
     [SerializeField] private int seed = 42;
 
-    [Header("Zone Spawns")]
-    [SerializeField] private LodeSpawnZone[] ldzA_zoneSpawns = new LodeSpawnZone[0];
-    [SerializeField] private LayerMask lm_lodeSpawnLayer;
 
     #endregion
 
     #region Private
 
+    private LodeSpawnZone[] ldzA_zoneSpawns = new LodeSpawnZone[0];
     private int i_numberOfZoneDone;
     private List<GameObject> goL_allLodes = new List<GameObject>();
 
@@ -30,6 +28,8 @@ public class Randomness : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        ldzA_zoneSpawns = FindObjectsOfType<LodeSpawnZone>();
+
         //if the you're not the master client then don't spawn anything
         if (!PhotonNetwork.IsMasterClient)
             return;
@@ -45,7 +45,7 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         //spawn the lodes
         SpawnLodes(seed);
-        photonView.RPC("SpawnLodes", RpcTarget.Others);
+        photonView.RPC("SpawnLodes", RpcTarget.Others, seed);
 
     }
 
@@ -70,9 +70,11 @@ public class Randomness : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SpawnLodes(int seed)
     {
+        print("Spawning Lodes");
+
         for (int i = 0; i < ldzA_zoneSpawns.Length; i++)
             ldzA_zoneSpawns[i].SpawnLode(this, seed);
-            
+
 
     }
 

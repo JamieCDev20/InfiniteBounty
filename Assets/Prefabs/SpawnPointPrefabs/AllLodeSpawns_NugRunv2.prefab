@@ -26,7 +26,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8341335405540286867}
+  - {fileID: 8341335405529495114}
+  - {fileID: 8341335404256458065}
+  - {fileID: 8341335405776376965}
+  - {fileID: 8341335405919127600}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -39,6 +44,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424666030068841196}
+  - component: {fileID: 3732754598543361987}
+  - component: {fileID: 475322134450509096}
   m_Layer: 0
   m_Name: AllLodeSpawns_NugRunv2
   m_TagString: Untagged
@@ -68,6 +75,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3732754598543361987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424666030068841199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b741043184b4944ad4c11fc4ae7b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomSeed: 1
+  seed: 42
+--- !u!114 &475322134450509096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424666030068841199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &424666030400322339
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +137,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8341335405568246736}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,7 +168,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8341335404207347616}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -154,7 +199,13 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8341335404126042815}
+  - {fileID: 8341335405896474092}
+  - {fileID: 8341335405518003189}
+  - {fileID: 8341335404330568981}
+  - {fileID: 8341335404629398812}
+  - {fileID: 8341335403996179083}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,7 +235,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8341335404930561575}
+  - {fileID: 8341335403942270469}
+  - {fileID: 8341335405397713107}
+  - {fileID: 8341335405581765770}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -214,7 +269,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3719091316191375865}
+  - {fileID: 3153381528066806130}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -248,6 +305,11 @@ Transform:
   - {fileID: 424666029976091015}
   - {fileID: 8513729477306722086}
   - {fileID: 8513729478652563148}
+  - {fileID: 8341335404127114437}
+  - {fileID: 8341335404238912614}
+  - {fileID: 8341335405793739835}
+  - {fileID: 8341335404489045214}
+  - {fileID: 8341335404722012117}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -277,10 +339,3725 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8341335404755837869}
+  - {fileID: 8341335405900328535}
   m_Father: {fileID: 424666030068841196}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &235179107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666031003711828}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -599.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 454.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 667.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404489045214 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 235179107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &271173480
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666031003711828}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -236.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 483.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 923.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404722012117 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 271173480}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &396553633
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030662652154}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 453.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 565.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 766.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404629398812 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 396553633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &506305296
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666031193252946}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 216.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1635.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404755837869 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 506305296}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &761598518
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030662652154}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 682.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 533
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 750.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335403996179083 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 761598518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &783265464
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030759015363}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -319.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 330.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1591
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335403942270469 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 783265464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &898837624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666031003711828}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -420.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 448.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 820.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404127114437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 898837624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &899908098
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030662652154}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 50.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 552.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 308.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404126042815 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 899908098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &963818920
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030662652154}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 313.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 443.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 923.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404330568981 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 963818920}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1023231195
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666031003711828}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -619.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 483.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 895.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404238912614 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1023231195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1038716396
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666029595959167}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 555.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 462
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1437.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404256458065 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1038716396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1054535453
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030531616878}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 413
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1113.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404207347616 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1054535453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1074302711
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666029595959167}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 215.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 345.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1545
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405529495114 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1074302711}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1086055240
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030662652154}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 228.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 490.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 663.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405518003189 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1086055240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1097849134
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666029595959167}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 139.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 358.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1372
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405540286867 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1097849134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1290204215
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030759015363}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 93.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -512.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 391.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1725.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405581765770 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1290204215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1337539437
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030400322336}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 288
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405568246736 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1337539437}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1346927750
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666031003711828}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -389.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 413.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1067.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405793739835 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1346927750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1396796472
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666029595959167}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 350.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 303.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1765.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405776376965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1396796472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1489186957
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666029595959167}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 236.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1948
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405919127600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1489186957}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1512629585
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030662652154}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 176.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 528.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 408.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405896474092 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1512629585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1541543658
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666031193252946}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 207.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2083.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405900328535 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1541543658}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1706528410
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030759015363}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -153.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 332.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1374
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335404930561575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1706528410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2045728878
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030759015363}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -264.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 270.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1817.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &8341335405397713107 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2045728878}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &424666030603919259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -297,6 +4074,92 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 101.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
         type: 3}
@@ -378,6 +4241,92 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 126.8
       objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -441,6 +4390,290 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 424666030869739121}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4638353040102017348
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030826961907}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 437.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 778.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &3719091316191375865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 4638353040102017348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6341472423090760143
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 424666030826961907}
+    m_Modifications:
+    - target: {fileID: 278161911711407948, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Name
+      value: LodeSpawn_v2 (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 475.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 539
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0012777182
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0011843534
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0024185332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.277
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b3a0b772466b24d8b495ff066103f4, type: 3}
+--- !u!4 &3153381528066806130 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6341472423090760143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8513729477935071546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -452,6 +4685,97 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LodeSpawn_v2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283769911366958045, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: vi_numberOfLodes.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[4]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[5]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[6]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[7]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[8]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[9]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: goA_lodesTypesToSpawn.Array.data[10]
+      value: 
+      objectReference: {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4,
+        type: 3}
+    - target: {fileID: 6691811873264305585, guid: 69b3a0b772466b24d8b495ff066103f4,
+        type: 3}
+      propertyPath: b_doRayCastSpawning
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8341335404455262397, guid: 69b3a0b772466b24d8b495ff066103f4,
         type: 3}
