@@ -11,15 +11,17 @@ public class Randomness : MonoBehaviourPunCallbacks
 
     [SerializeField] private bool randomSeed;
     [SerializeField] private int seed = 42;
-    [SerializeField] private Vector2 v2_lodeCountRange = new Vector2(180, 220);
-    [SerializeField] private List<Transform> Lt_lodeSpawns = new List<Transform>();
-    [SerializeField] private GameObject[] lodes;
+
+    [Header("Zone Spawns")]
+    [SerializeField] private LodeSpawnZone[] ldzA_zoneSpawns = new LodeSpawnZone[0];
+    [SerializeField] private LayerMask lm_lodeSpawnLayer;
 
     #endregion
 
     #region Private
 
-    private int i_lodeCount;
+    private int i_numberOfZoneDone;
+    private List<GameObject> goL_allLodes = new List<GameObject>();
 
     #endregion
 
@@ -39,14 +41,11 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         //sew that seed into the fabrik of reality
         Random.InitState(seed);
-        Debug.Log("Seed: " + seed);
-
-        //generate how many lodes we want
-        i_lodeCount = Mathf.RoundToInt(RandomValue(v2_lodeCountRange.y - v2_lodeCountRange.x) + v2_lodeCountRange.x);
+        //Debug.Log("Seed: " + seed);
 
         //spawn the lodes
-        SpawnLodes(i_lodeCount);
-        photonView.RPC("SpawnLodes", RpcTarget.Others, i_lodeCount);
+        SpawnLodes(seed);
+        photonView.RPC("SpawnLodes", RpcTarget.Others);
 
     }
 
@@ -59,7 +58,7 @@ public class Randomness : MonoBehaviourPunCallbacks
         //generate a random value between 0-range
         return Random.value * range;
     }
-    
+
     [PunRPC]
     public void RecieveSeed(int seed)
     {
@@ -67,41 +66,32 @@ public class Randomness : MonoBehaviourPunCallbacks
         float burnTheFirst = Random.value;
         Debug.Log(seed);
     }
-    
+
     [PunRPC]
-    private void SpawnLodes(int count)
+    private void SpawnLodes(int seed)
     {
+        for (int i = 0; i < ldzA_zoneSpawns.Length; i++)
+            ldzA_zoneSpawns[i].SpawnLode(this, seed);
+            
 
-        GameObject parent = new GameObject("Lodes");
-        //spwan a random lode at a random spawn point at a random rotation and add it to lists
-        //spawn points are removed from the list to prevent duplicate spawning
-        LodeSynchroniser.x.InitialiseLodeArrayLength(count);
-        for (int i = 0; i < count; i++)
-        {
-            if (Lt_lodeSpawns.Count <= 0)
-                return;
-            float rand = RandomValue(lodes.Length - 1);
-            int num = Mathf.RoundToInt(RandomValue(Lt_lodeSpawns.Count - 1));
-            GameObject ob = Instantiate(lodes[Mathf.RoundToInt(rand)], Lt_lodeSpawns[num].position, Quaternion.AngleAxis(RandomValue(360), Vector3.up));
-            ob.transform.parent = parent.transform;
-            PhotonView view = ob.GetComponent<PhotonView>();
-            view.ViewID = 600000 + i;
-            PhotonNetwork.RegisterPhotonView(view);
-            LodeSynchroniser.x.AddLode(ob.GetComponent<LodeBase>(), i);
-            ob.name += Lt_lodeSpawns[num].position;
-            Lt_lodeSpawns.RemoveAt(num);
-        }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        throw new System.NotImplementedException();
     }
 
     #endregion
 
     #region Public Voids
 
+    internal void LodeSpawned(GameObject _go_lode)
+    {
+        i_numberOfZoneDone++;
+
+        if (i_numberOfZoneDone >= ldzA_zoneSpawns.Length)
+            for (int i = 0; i < goL_allLodes.Count; i++)
+            {
+                PhotonView view = goL_allLodes[i].GetComponent<PhotonView>();
+                view.ViewID = 600000 + i;
+                PhotonNetwork.RegisterPhotonView(view);
+            }
+    }
 
     #endregion
 
@@ -114,5 +104,7 @@ public class Randomness : MonoBehaviourPunCallbacks
 
 
     #endregion
+
+
 
 }
