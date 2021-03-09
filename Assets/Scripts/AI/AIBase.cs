@@ -40,7 +40,6 @@ public class AIBase : MonoBehaviourPun
 
     public bool StillHasTarget()
     {
-
         if (t_target != null)
         {
             bool canSee = CanSeeTransform(t_target);

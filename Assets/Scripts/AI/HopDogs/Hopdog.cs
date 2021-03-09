@@ -57,7 +57,7 @@ public class Hopdog : AIBase
     {
         SelectorNode hasGetTargetSelector = new SelectorNode(RetargetSelector());
         SelectorNode targettedActionNode = new SelectorNode(TargetedActionSelectorDefinition());
-        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, targettedActionNode);
+        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, new ActionNode(DebugTarget), targettedActionNode);
         return targAttackSequence;
     }
 
@@ -116,6 +116,7 @@ public class Hopdog : AIBase
 
     public bool IsWithinAttackRange()
     {
+        Debug.Log("Checking target in range");
         return (transform.position - t_target.position).sqrMagnitude < f_attackRange * f_attackRange;
     }
 
@@ -125,6 +126,7 @@ public class Hopdog : AIBase
 
     public void AttackAction()
     {
+        Debug.Log("attacking");
         if (f_attackStart != 0)
         {
             if (Time.realtimeSinceStartup - f_attackStart > f_attackDuration)
@@ -141,6 +143,7 @@ public class Hopdog : AIBase
     public void MoveTowardsTargetAction()
     {
         mover.Move(t_target.position - transform.position);
+        Debug.Log("moving towards target");
     }
 
     public void IdleAction()

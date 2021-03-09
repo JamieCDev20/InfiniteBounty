@@ -46,37 +46,68 @@ MonoBehaviour:
   goA_startEnemies:
   - {fileID: 3893965790758993077, guid: 43733e73a8478b447872e96d752b3b83, type: 3}
   iA_numberOfEachStartingEnemyType: 1e000000
-  goA_waveEnemies:
+  goA_groundWaveEnemies:
   - {fileID: 3893965790758993077, guid: 7d85fb0ebab24e048a53b76216748d82, type: 3}
+  goA_flyingWaveEnemies:
   - {fileID: 3248881737621194202, guid: 957f80801963b16499423f6f4a532944, type: 3}
-  iA_enemyWeightings: 0500000001000000
-  v_timeBetweenWaves: {x: 35, y: 45}
+  v_timeBetweenWaves: {x: 10, y: 15}
   i_numberOfHordesPerWave: 7
   f_timeBetweenHordes: 5
-  v_enemiesPerHorde: {x: 5, y: 8}
+  v_groundEnemiesPerHorde: {x: 5, y: 7}
+  v_flyingEnemiesPerHorde: {x: 5, y: 7}
   go_miniboss: {fileID: 5132836936626586392, guid: 45f05c325ac1dcb42bdbfd61a959905d,
     type: 3}
   ziA_enemySpawnZones:
   - t_zone: {fileID: 0}
     f_zoneRadius: 110
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 110
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 110
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 60
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 80
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 80
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 100
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 80
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 110
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   - t_zone: {fileID: 0}
     f_zoneRadius: 250
+    tA_groundEnemySpawns: []
+    tA_flyingEnemySpawns: []
+    t_bossSpawn: {fileID: 0}
   lm_zoneCheckMask:
     serializedVersion: 2
     m_Bits: 1024
