@@ -24,6 +24,12 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     private bool canLoadScene = true;
     private bool b_die;
 
+    private float secondsToNextChange = 1;
+    private float fractionDeltaStep = 0.1f;
+    private float currentScale = 1;
+    private float directionOfChange = -1;
+    private float elapsedTimeSinceChange = 0;
+
     #endregion
 
     //Methods
@@ -40,12 +46,13 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             x = this;
         PhotonNetwork.SerializationRate = 15;
         PhotonNetwork.SendRate = 15;
-        if(!b_die)
+        if (!b_die)
             Init();
     }
 
     private void Start()
     {
+        DynamicResolutionHandler.SetDynamicResScaler(SetDynamicResolutionScale, DynamicResScalePolicyType.ReturnsMinMaxLerpFactor);
     }
 
     private void Update()
@@ -65,6 +72,24 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     #endregion
 
     #region Private Voids
+
+    public float SetDynamicResolutionScale()
+    {
+        elapsedTimeSinceChange += Time.deltaTime;
+
+        if( elapsedTimeSinceChange>= secondsToNextChange)
+        {
+            currentScale += directionOfChange * fractionDeltaStep;
+
+            if(currentScale <= 0 || currentScale >= 1)
+            {
+                directionOfChange *= -1;
+            }
+            elapsedTimeSinceChange = 0;
+        }
+        return currentScale;
+
+    }
 
     /// <summary>
     /// Init function for the Game Manager, handles all the start functions
