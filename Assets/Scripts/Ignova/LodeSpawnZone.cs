@@ -23,7 +23,7 @@ public class LodeSpawnZone : MonoBehaviour
         Random.InitState(seed);
         GameObject _go_lode;
         int _i_lodeCount = Random.Range(vi_numberOfLodes.x, vi_numberOfLodes.y);
-        print("Spawning " + _i_lodeCount + " Lodes");
+
         if (b_doRayCastSpawning)
         {
             RaycastHit hit;

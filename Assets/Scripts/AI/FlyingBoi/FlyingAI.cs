@@ -126,6 +126,7 @@ public class FlyingAI : AIBase
     [PunRPC]
     public void RemoteThrow(Vector3 dir)
     {
+        print("Throwing Fire");
         GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
         ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_throwForce, ForceMode.Impulse);
     }

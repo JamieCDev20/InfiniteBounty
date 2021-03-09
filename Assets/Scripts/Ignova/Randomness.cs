@@ -85,8 +85,9 @@ public class Randomness : MonoBehaviourPunCallbacks
     internal void LodeSpawned(GameObject _go_lode)
     {
         i_numberOfZoneDone++;
+        goL_allLodes.Add(_go_lode);
 
-        if (i_numberOfZoneDone >= ldzA_zoneSpawns.Length)
+        if (i_numberOfZoneDone >= ldzA_zoneSpawns.Length - 1)
             for (int i = 0; i < goL_allLodes.Count; i++)
             {
                 PhotonView view = goL_allLodes[i].GetComponent<PhotonView>();
