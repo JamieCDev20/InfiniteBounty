@@ -11,7 +11,7 @@ public class LodeSpawnZone : MonoBehaviour
     [Header("Raycast Things")]
     [SerializeField] private bool b_doRayCastSpawning;
     [SerializeField] private LayerMask lm_lodeSpawnLayer;
-
+    [SerializeField] private string s_namesToNotSpawnOn = "*";
 
     private void Awake()
     {
@@ -33,11 +33,18 @@ public class LodeSpawnZone : MonoBehaviour
 
                 if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer))
                 {
-                    _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)]);
-                    _go_lode.transform.position = hit.point;
-                    _go_lode.transform.up = hit.normal;
-                    _random.LodeSpawned(_go_lode);
+                    if (hit.transform.gameObject.layer == lm_lodeSpawnLayer)
+                    {
+                        _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)]);
+                        _go_lode.transform.position = hit.point;
+                        _go_lode.transform.up = hit.normal;
+                        _random.LodeSpawned(_go_lode);
+                    }
+                    else
+                        x--;
                 }
+                else
+                    x--;
             }
         }
         else
@@ -49,4 +56,5 @@ public class LodeSpawnZone : MonoBehaviour
             }
         }
     }
+
 }
