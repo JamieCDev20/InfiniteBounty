@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LodeSpawnZone : MonoBehaviour
 {
-    private float f_zoneRadius;
+    internal float f_zoneRadius;
     [SerializeField] private Vector2Int vi_numberOfLodes;
     [SerializeField] private GameObject[] goA_lodesTypesToSpawn;
 

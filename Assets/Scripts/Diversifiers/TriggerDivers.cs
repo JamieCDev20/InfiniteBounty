@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class TriggerDivers : MonoBehaviour
 {
-    [Header("Zone Info")]
-    [SerializeField] private ZoneInfo[] ziA_diversifiableZone = new ZoneInfo[0];
+
+    private LodeSpawnZone[] ziA_diversifiableZone = new LodeSpawnZone[0];
 
     void Start()
     {
+        ziA_diversifiableZone = FindObjectsOfType<LodeSpawnZone>();
         DiversifierManager.x.ApplyDiversifiers(ziA_diversifiableZone);
     }
 }

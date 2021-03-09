@@ -8,7 +8,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     public static DiversifierManager x;
     private PhotonView view;
     private Diversifier[] dA_activeDivers = new Diversifier[3];
-    private ZoneInfo[] ziA_allZones;
+    private LodeSpawnZone[] ziA_allZones;
 
     [Header("Geyser Things")]
     [SerializeField] private string s_geyserPath;
@@ -47,7 +47,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     }
 
 
-    public void ApplyDiversifiers(ZoneInfo[] _ziA_spawnableZones)
+    public void ApplyDiversifiers(LodeSpawnZone[] _ziA_spawnableZones)
     {
         ziA_allZones = _ziA_spawnableZones;
 
@@ -96,9 +96,9 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-    private Vector3 ReturnPositionWithinZone(ZoneInfo _zi_zone)
+    private Vector3 ReturnPositionWithinZone(LodeSpawnZone _zi_zone)
     {
-        return new Vector3(Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative()), 500, Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative())) + _zi_zone.t_zone.position;
+        return new Vector3(Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative()), 500, Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative())) + _zi_zone.transform.position;
     }
 
     private float RandomiseToNegative()
