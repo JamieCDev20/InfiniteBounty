@@ -31,7 +31,7 @@ public class LodeSpawnZone : MonoBehaviour
             {
                 transform.localEulerAngles = new Vector3(Random.Range(-85, 85), Random.Range(-85, 85), 0);
 
-                if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer))
+                if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer, QueryTriggerInteraction.Ignore))
                 {
                     if (!hit.transform.name.Contains(s_namesToIgnore))
                     {
