@@ -27,12 +27,17 @@ public class Microwave : SubjectBase, IInteractible
 
     public void Interacted(Transform interactor)
     {
-        pim = interactor.GetComponent<PlayerInputManager>();
-        interactor.position = t_playerPos.position;
-        // Move camera & other tings
+        if (!b_inUse)
+        {
+            pim = interactor.GetComponent<PlayerInputManager>();
+            interactor.position = t_playerPos.position;
+            interactor.transform.forward = t_playerPos.forward;
+            // Move camera & other tings
 
-        apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
-        apd.ClickAugment(0);
+
+            apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+            apd.ClickAugment(0);
+        }
     }
     public void Interacted(){ }
 
