@@ -19,7 +19,7 @@ public class TargetManager : MonoBehaviour
         List<GameObject> temp = new List<GameObject>();
         foreach (GameObject g in TagManager.x.GetTagSet(_tag))
         {
-            if ((g.transform.position - _centre).sqrMagnitude < (_range * _range))
+            if ((g.transform.position - _centre).magnitude < _range)
             {
                 temp.Add(g);
             }

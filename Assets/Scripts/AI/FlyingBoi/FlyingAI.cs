@@ -18,8 +18,10 @@ public class FlyingAI : AIBase
     [SerializeField] private GameObject go_throwProjectile;
     [SerializeField] private float f_throwDistance = 20;
     [SerializeField] private float f_throwForce = 20;
+    [SerializeField] private float f_throwDelay = 3;
 
     private FlyingMover mover;
+    private float f_lastThrowTime = 0;
 
     private void Start()
     {
@@ -63,7 +65,7 @@ public class FlyingAI : AIBase
         QueryNode canSee = new QueryNode(CanSeeTarget);
         ActionNode throwA = new ActionNode(Throw);
 
-        SequencerNode throwSeq = new SequencerNode(HasGetHas(), inRange, canSee, throwA);
+        SequencerNode throwSeq = new SequencerNode(new QueryNode(OverThrowSickness), HasGetHas(), inRange, canSee, throwA);
         return throwSeq;
     }
 
@@ -73,9 +75,11 @@ public class FlyingAI : AIBase
         QueryNode has = new QueryNode(StillHasTarget);
         ActionNode get = new ActionNode(GetTargetAction);
 
-        SequencerNode gh = new SequencerNode(get, has);
+        SequencerNode getHas = new SequencerNode(get, has);
 
-        SelectorNode hgh = new SelectorNode(has, gh);
+        Debug.Log(getHas.GetChildren().Length);
+
+        SelectorNode hgh = new SelectorNode(has, getHas);
         return hgh;
     }
 
@@ -85,7 +89,7 @@ public class FlyingAI : AIBase
 
     public bool InRangeOfTarget()
     {
-        return (t_target.position - transform.position).sqrMagnitude < f_throwDistance * f_throwDistance;
+        return (t_target.position - transform.position).magnitude < f_throwDistance;
     }
 
     #endregion
@@ -119,14 +123,18 @@ public class FlyingAI : AIBase
         if (!PhotonNetwork.IsMasterClient)
             return;
         Vector3 _dir = t_target.position - transform.position;
-        photonView.RPC("RemoteThrow", RpcTarget.AllViaServer, _dir);
-        f_timeStarted = Time.realtimeSinceStartup;
+        photonView.RPC(nameof(RemoteThrow), RpcTarget.AllViaServer, _dir);
+        f_lastThrowTime = Time.realtimeSinceStartup;
+    }
+
+    public bool OverThrowSickness()
+    {
+        return Time.realtimeSinceStartup - f_lastThrowTime > f_throwDelay;
     }
 
     [PunRPC]
     public void RemoteThrow(Vector3 dir)
     {
-        print("Throwing Fire");
         GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
         ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_throwForce, ForceMode.Impulse);
     }

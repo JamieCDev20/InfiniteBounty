@@ -29,8 +29,7 @@ public class Hopdog : AIBase
 
     private void Update()
     {
-        tree.DoTreeIteration();
-        //anima.SetGrounded(Physics.Raycast(transform.position + (Vector3.up * 0.01f), Vector3.down, 0.1f));
+        //tree.DoTreeIteration();
     }
 
     #region BehaviourNodeDefinitions
@@ -57,7 +56,7 @@ public class Hopdog : AIBase
     {
         SelectorNode hasGetTargetSelector = new SelectorNode(RetargetSelector());
         SelectorNode targettedActionNode = new SelectorNode(TargetedActionSelectorDefinition());
-        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, new ActionNode(DebugTarget), targettedActionNode);
+        SequencerNode targAttackSequence = new SequencerNode(hasGetTargetSelector, targettedActionNode);
         return targAttackSequence;
     }
 
@@ -116,7 +115,6 @@ public class Hopdog : AIBase
 
     public bool IsWithinAttackRange()
     {
-        Debug.Log("Checking target in range");
         return (transform.position - t_target.position).sqrMagnitude < f_attackRange * f_attackRange;
     }
 
@@ -126,7 +124,6 @@ public class Hopdog : AIBase
 
     public void AttackAction()
     {
-        Debug.Log("attacking");
         if (f_attackStart != 0)
         {
             if (Time.realtimeSinceStartup - f_attackStart > f_attackDuration)
@@ -143,7 +140,6 @@ public class Hopdog : AIBase
     public void MoveTowardsTargetAction()
     {
         mover.Move(t_target.position - transform.position);
-        Debug.Log("moving towards target");
     }
 
     public void IdleAction()
