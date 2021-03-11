@@ -11,6 +11,7 @@ public class Hopdog : AIBase
     [SerializeField] private float f_attackDuration = 3;
 
     private float f_attackStart;
+    private float f_attackSickness;
     private HopdogMover mover;
     private HopdogAnimator anima;
 
@@ -113,9 +114,14 @@ public class Hopdog : AIBase
 
     #region Queries
 
+    public bool OverAttackSequence()
+    {
+        return Time.realtimeSinceStartup - f_attackSickness < 2;
+    }
+
     public bool IsWithinAttackRange()
     {
-        return (transform.position - t_target.position).sqrMagnitude < f_attackRange * f_attackRange;
+        return (transform.position - t_target.position).magnitude < f_attackRange;
     }
 
     #endregion
@@ -135,6 +141,7 @@ public class Hopdog : AIBase
         }
         f_attackStart = Time.realtimeSinceStartup;
         mover.Launch(t_target.position);
+        f_attackSickness = Time.realtimeSinceStartup;
     }
 
     public void MoveTowardsTargetAction()

@@ -31,7 +31,7 @@ public class AIBase : MonoBehaviourPun
     protected bool CanSeeTransform(Transform _targ)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, _targ.position - transform.position, out hit, f_spottingDistance, lm_spottingMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position, (Vector3.up + _targ.position) - transform.position, out hit, f_spottingDistance, lm_spottingMask, QueryTriggerInteraction.Ignore))
         {
             return hit.collider.transform == _targ;
         }
