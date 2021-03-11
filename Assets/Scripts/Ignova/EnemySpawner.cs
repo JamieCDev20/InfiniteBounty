@@ -106,6 +106,12 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Instantiate(_go_enemyToSpawn.name, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
             i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
+
+            Collider[] _cA = Physics.OverlapSphere(_v_spawnPos, 3);
+            for (int i = 0; i < _cA.Length; i++)
+                if (!_cA[i].CompareTag("Enemy"))
+                    _cA[i].GetComponent<IHitable>().TakeDamage(10, false);
+
         }
     }
 
