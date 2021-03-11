@@ -9,6 +9,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     private int i_numberOfEnemies;
     private DifficultySet ds_currentDifficulty;
     private EnemySpawnZone[] eszA_allEnemyZones;
+    [SerializeField] private LayerMask lm_notEnemyLayer;
+
     [Header("Enemies in Level at Start")]
     [SerializeField] private GameObject[] goA_startEnemies = new GameObject[1];
     [SerializeField] private int[] iA_numberOfEachStartingEnemyType = new int[1];
@@ -26,7 +28,6 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [Header("Miniboss")]
     [SerializeField] private GameObject go_miniboss;
     private List<int> iL_minibossZones = new List<int>();
-
 
     private void Start()
     {
@@ -107,10 +108,9 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             PhotonNetwork.Instantiate(_go_enemyToSpawn.name, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
             i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
-            Collider[] _cA = Physics.OverlapSphere(_v_spawnPos, 3);
+            Collider[] _cA = Physics.OverlapSphere(_v_spawnPos, 3, lm_notEnemyLayer);
             for (int i = 0; i < _cA.Length; i++)
-                if (!_cA[i].CompareTag("Enemy"))
-                    _cA[i].GetComponent<IHitable>().TakeDamage(10, false);
+                _cA[i].GetComponent<IHitable>()?.TakeDamage(10, false);
 
         }
     }
