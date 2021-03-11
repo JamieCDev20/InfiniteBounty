@@ -29,7 +29,7 @@ public class Hopdog : AIBase
 
     private void Update()
     {
-        //tree.DoTreeIteration();
+        tree.DoTreeIteration();
     }
 
     #region BehaviourNodeDefinitions
