@@ -47,7 +47,7 @@ public class EnemySpawnZone : MonoBehaviour
                 EnemySpawner.x.SpawnEnemy(goA_groundEnemies[Random.Range(0, goA_groundEnemies.Length)], tA_groundEnemySpawns[Random.Range(0, tA_groundEnemySpawns.Length)].position + RandomVector3(), false);            
 
             for (int x = 0; x < Random.Range(v_flyingEnemiesPerHorde.x, v_flyingEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
-                EnemySpawner.x.SpawnEnemy(goA_flyingEnemies[Random.Range(0, goA_flyingEnemies.Length)], tA_flyingEnemySpawns[Random.Range(0, tA_flyingEnemySpawns.Length)].position, true);
+                EnemySpawner.x.SpawnEnemy(goA_flyingEnemies[Random.Range(0, goA_flyingEnemies.Length)], tA_flyingEnemySpawns[Random.Range(0, tA_flyingEnemySpawns.Length)].position + RandomVector3(), true);
 
             yield return new WaitForSeconds(f_timeBetweenHordes);
         }
