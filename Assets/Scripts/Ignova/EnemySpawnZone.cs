@@ -55,6 +55,6 @@ public class EnemySpawnZone : MonoBehaviour
 
     private Vector3 RandomVector3()
     {
-        return new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+        return new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
     }
 }
