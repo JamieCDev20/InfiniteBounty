@@ -18,12 +18,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private float f_augmentButtonHeight = 85;
     [SerializeField] private AugmentDisplay ad_display;
     List<Augment> aL_allAugmentsOwned = new List<Augment>();
-    int i_currentAugmentIndex = 0;
+    private int i_currentAugmentIndex = 0;
 
     private AugmentType at_type;
     public AugmentType AugType { set { at_type = value; } }
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
     public AugmentDisplay AugDisplay { get { return ad_display; } }
+    public int CurrentAugIndex { get { return i_currentAugmentIndex; } }
     private int i_displayIter = 0;
 
     public void Init()
@@ -104,11 +105,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
-                goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
+                AugmentButton btn = goL_augmentButtonPool[i].GetComponent<AugmentButton>();
+                btn.i_buttonIndex = i;
+                btn.Parent = transform.root.gameObject;
             }
         }
 
-        //rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
+        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
     }
 
