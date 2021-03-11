@@ -9,8 +9,8 @@ public class EnemySpawnZone : MonoBehaviour
     [SerializeField] private int f_timeBetweenHordes;
     [Space]
     [SerializeField] private float f_zoneRadius;
-    private List<Transform> tA_groundEnemySpawns = new List<Transform>();
-    private List<Transform> tA_flyingEnemySpawns = new List<Transform>();
+    private List<Transform> tL_groundEnemySpawns = new List<Transform>();
+    private List<Transform> tL_flyingEnemySpawns = new List<Transform>();
     private Transform t_bossSpawn;
     [SerializeField] private LayerMask lm_playerLayer;
     [Space]
@@ -28,9 +28,9 @@ public class EnemySpawnZone : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).name.Contains("Ground"))
-                tA_groundEnemySpawns.Add(transform.GetChild(i));
+                tL_groundEnemySpawns.Add(transform.GetChild(i));
             else if (transform.GetChild(i).name.Contains("Flying"))
-                tA_flyingEnemySpawns.Add(transform.GetChild(i));
+                tL_flyingEnemySpawns.Add(transform.GetChild(i));
             else if (transform.GetChild(i).name.Contains("Boss"))
                 t_bossSpawn = (transform.GetChild(i));
         }
@@ -54,10 +54,10 @@ public class EnemySpawnZone : MonoBehaviour
         for (int i = 0; i < i_numberOfHordesPerWave; i++)
         {
             for (int x = 0; x < Random.Range(v_groundEnemiesPerHorde.x, v_groundEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
-                EnemySpawner.x.SpawnEnemy(goA_groundEnemies[Random.Range(0, goA_groundEnemies.Length)], tA_groundEnemySpawns[Random.Range(0, tA_groundEnemySpawns.Length)].position + RandomVector3(), false);
+                EnemySpawner.x.SpawnEnemy(goA_groundEnemies[Random.Range(0, goA_groundEnemies.Length)], tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position + RandomVector3(), false);
 
             for (int x = 0; x < Random.Range(v_flyingEnemiesPerHorde.x, v_flyingEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
-                EnemySpawner.x.SpawnEnemy(goA_flyingEnemies[Random.Range(0, goA_flyingEnemies.Length)], tA_flyingEnemySpawns[Random.Range(0, tA_flyingEnemySpawns.Length)].position + RandomVector3(), true);
+                EnemySpawner.x.SpawnEnemy(goA_flyingEnemies[Random.Range(0, goA_flyingEnemies.Length)], tL_flyingEnemySpawns[Random.Range(0, tL_flyingEnemySpawns.Count)].position + RandomVector3(), true);
 
             yield return new WaitForSeconds(f_timeBetweenHordes);
         }
