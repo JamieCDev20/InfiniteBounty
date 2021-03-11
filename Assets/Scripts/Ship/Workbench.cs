@@ -76,7 +76,7 @@ public class Workbench : SubjectBase, IInteractible
             PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
             _pa.SetShootability(false);
             _pa.StopWalking();
-
+            // Move camera
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
             // Find any saved augments and load them
