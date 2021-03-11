@@ -20,6 +20,7 @@ public class EnemySpawnZone : MonoBehaviour
     [Space]
     [SerializeField] private GameObject[] goA_flyingEnemies = new GameObject[0];
     [SerializeField] private Vector2Int v_flyingEnemiesPerHorde;
+    [SerializeField] private float f_spawnRadius;
     private DifficultySet ds_currentDifficulty;
 
     private void Start()
@@ -53,8 +54,8 @@ public class EnemySpawnZone : MonoBehaviour
 
         for (int i = 0; i < i_numberOfHordesPerWave; i++)
         {
-            for (int x = 0; x < Random.Range(v_groundEnemiesPerHorde.x, v_groundEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
-                EnemySpawner.x.SpawnEnemy(goA_groundEnemies[Random.Range(0, goA_groundEnemies.Length)], tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position + RandomVector3(), false);
+            for (int x = 0; x < Random.Range(v_groundEnemiesPerHorde.x, v_groundEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++) { }
+            EnemySpawner.x.SpawnEnemy(goA_groundEnemies[Random.Range(0, goA_groundEnemies.Length)], tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position + RandomVector3(), false);
 
             for (int x = 0; x < Random.Range(v_flyingEnemiesPerHorde.x, v_flyingEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
                 EnemySpawner.x.SpawnEnemy(goA_flyingEnemies[Random.Range(0, goA_flyingEnemies.Length)], tL_flyingEnemySpawns[Random.Range(0, tL_flyingEnemySpawns.Count)].position + RandomVector3(), true);
@@ -65,6 +66,6 @@ public class EnemySpawnZone : MonoBehaviour
 
     private Vector3 RandomVector3()
     {
-        return new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
+        return new Vector3(Random.Range(-f_spawnRadius, f_spawnRadius), 0, Random.Range(-f_spawnRadius, f_spawnRadius));
     }
 }
