@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class DynamicAudioManager : MonoBehaviour
+public class DynamicAudioManager : MonoBehaviourPun
 {
 
     public static DynamicAudioManager x;
@@ -39,6 +40,8 @@ public class DynamicAudioManager : MonoBehaviour
     private void Awake()
     {
         x = this;
+        photonView.ViewID = 232323;
+        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     private void Start()
@@ -53,14 +56,28 @@ public class DynamicAudioManager : MonoBehaviour
 
     public void StartCombat()
     {
+        photonView.RPC(nameof(RemoteCombat), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteCombat()
+    {
         inCombat = true;
         lerpMain = false;
         CancelInvoke(nameof(SetLerpMain));
-        combatSource.PlayOneShot(combatIntro);
+        combatSource.clip = combatIntro;
+        combatSource.Play();
         combatMixer.SetFloat("Volume", 0);
+
     }
 
     public void EndCombat()
+    {
+        photonView.RPC(nameof(RemoteEndCombat), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteEndCombat()
     {
         inCombat = false;
         Invoke(nameof(SetLerpMain), postCombatLoopDelay);
@@ -68,12 +85,25 @@ public class DynamicAudioManager : MonoBehaviour
 
     public void StartBoss()
     {
+        photonView.RPC(nameof(RemoteBossStart), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteBossStart()
+    {
         isBoss = true;
-        bossSource.PlayOneShot(bossIntro);
+        bossSource.clip = bossIntro;
+        bossSource.Play();
         bossMixer.SetFloat("Volume", 0);
     }
 
     public void EndBoss()
+    {
+        photonView.RPC(nameof(RemoteBossEnd), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteBossEnd()
     {
         isBoss = false;
     }
@@ -117,16 +147,6 @@ public class DynamicAudioManager : MonoBehaviour
                 bossSource.clip = bossLoop;
                 bossSource.Play();
             }
-
-    }
-
-    private void StartLoops()
-    {
-        mainSource.clip = mainLoop;
-        combatSource.clip = combatLoop;
-
-        mainSource.Play();
-        combatSource.Play();
 
     }
 
