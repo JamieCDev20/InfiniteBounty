@@ -429,6 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7385016060641455053}
   - component: {fileID: 7385016060641455042}
+  - component: {fileID: 8413071206657537175}
   m_Layer: 0
   m_Name: DynamicAudioManager
   m_TagString: Untagged
@@ -464,8 +465,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainIntro: {fileID: 8300000, guid: a77a6a705213e124fb32f361377f9971, type: 3}
   mainLoop: {fileID: 8300000, guid: 27de3ceac71eb394980451618437c031, type: 3}
-  combatIntro: {fileID: 8300000, guid: 29dbca40e9bcc2d40bee6bc774e457a1, type: 3}
-  combatLoop: {fileID: 8300000, guid: 6a68916262e8d9d4483a9f99954104b2, type: 3}
+  combatIntro: {fileID: 8300000, guid: 16ea15af3c7258648961c836b04bccf0, type: 3}
+  combatLoop: {fileID: 8300000, guid: 50d90455bf3b1ea4bbda5bc1fd3b41bf, type: 3}
   bossIntro: {fileID: 8300000, guid: 6dc388967f5b7c1459f7067929597fef, type: 3}
   bossLoop: {fileID: 8300000, guid: 0b55c74605f63354ea6d0e33280ed4f0, type: 3}
   mainSource: {fileID: 7385016061380639712}
@@ -478,6 +479,28 @@ MonoBehaviour:
   mainLerp: 0.3
   bossLerp: 0.3
   postCombatLoopDelay: 10
+--- !u!114 &8413071206657537175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385016060641455052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7385016061380639714
 GameObject:
   m_ObjectHideFlags: 0
