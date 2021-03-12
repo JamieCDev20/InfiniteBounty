@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 31524918435728461}
-  - component: {fileID: 5214081194739648037}
+  - component: {fileID: 879472613157194863}
   m_Layer: 14
   m_Name: PhysicalCollider
   m_TagString: Untagged
@@ -31,19 +31,19 @@ Transform:
   m_Father: {fileID: 4308096341704676512}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5214081194739648037
-BoxCollider:
+--- !u!135 &879472613157194863
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69966260307241692}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2d2b74a4b9d781d4382790da8f4c2af6, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.4, z: 0.6}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0.26, z: 0}
 --- !u!1 &2720207710688081759
 GameObject:
   m_ObjectHideFlags: 0

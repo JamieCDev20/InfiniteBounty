@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [SerializeField] private int[] iA_numberOfEachStartingEnemyType = new int[1];
 
     [Header("Waves")]
+    [SerializeField] private float f_startDelay = 50f;
     [SerializeField] private GameObject[] goA_groundWaveEnemies = new GameObject[1];
     [SerializeField] private GameObject[] goA_flyingWaveEnemies = new GameObject[1];
     [SerializeField] private Vector2 v_timeBetweenWaves = new Vector2(35, 45);
@@ -29,9 +30,10 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject go_miniboss;
     private List<int> iL_minibossZones = new List<int>();
 
-    private void Start()
+    private IEnumerator Start()
     {
         x = this;
+        yield return new WaitForEndOfFrame();
         ds_currentDifficulty = DifficultyManager.x.ReturnCurrentDifficulty();
 
         eszA_allEnemyZones = FindObjectsOfType<EnemySpawnZone>();
@@ -45,6 +47,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
+            yield return new WaitForSeconds(f_startDelay);
             StartCoroutine(CheckZoneForPlayers());
             PlaceStartingEnemiesInZones();
         }
