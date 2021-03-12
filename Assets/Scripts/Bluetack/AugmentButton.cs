@@ -21,6 +21,7 @@ public class AugmentButton : MonoBehaviour, IPoolable
     public void Die()
     {
         gameObject.SetActive(false);
+        Debug.Log("Ohh Ahh I am dead");
     }
 
     public GameObject GetGameObject()

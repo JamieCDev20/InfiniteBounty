@@ -19,6 +19,7 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private Transform t_camParent;
     [SerializeField] private Canvas microwaveCanvas;
     [SerializeField] private Button fuseButton;
+    [SerializeField] private Button selectButton;
     [SerializeField] private AugmentFuser fuser;
     public AugmentPropertyDisplayer AugPropertyDisplay { get { return apd; } }
 
@@ -58,7 +59,7 @@ public class Microwave : SubjectBase, IInteractible
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             microwaveCanvas.enabled = true;
             // Display the UI
-            apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
             apd.ClickAugment(0);
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
@@ -93,6 +94,7 @@ public class Microwave : SubjectBase, IInteractible
 
     public void SetAugment()
     {
+        Debug.Log(i_currentlyClickedAugment);
         // Put an augment in the empty slot
         if (aug_slotA == null)
         {
@@ -115,18 +117,18 @@ public class Microwave : SubjectBase, IInteractible
         }
     }
 
-    public void RemoveAugment(int _slotID)
+    public void RemoveAugment(bool _slotID)
     {
-        if (_slotID == 0)
+        if (_slotID)
             aug_slotA = null;
-        else if (_slotID == 1)
+        else if (!_slotID)
             aug_slotB = null;
-        fuseButton.interactable = false;
+        RevealSelectButton();
     }
 
     public void Fuse()
     {
-        fuseButton.interactable = false;
+        RevealSelectButton();
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         apd.UpdatePropertyText(fusedAug);
         PlayerSaveData psd = new PlayerSaveData(-1, -1, -1, null, null, null, null, new Augment[] { fusedAug }, null, -1);
@@ -138,7 +140,17 @@ public class Microwave : SubjectBase, IInteractible
 
     private void RevealFuseButton()
     {
+        Debug.Log("Bing bong. Could Employee 4 please clean out the microwave!");
+        fuseButton.gameObject.SetActive(true);
+        selectButton.gameObject.SetActive(false);
         fuseButton.interactable = true;
+    }
+
+    private void RevealSelectButton()
+    {
+        selectButton.gameObject.SetActive(true);
+        fuseButton.gameObject.SetActive(false);
+        selectButton.interactable = true;
     }
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
@@ -168,9 +180,10 @@ public class Microwave : SubjectBase, IInteractible
         }
         else
         {
-            Camera.main.GetComponent<CameraRespectWalls>().enabled = true;
-            Camera.main.transform.localPosition = new Vector3(0, 0, -4);
-            Camera.main.transform.localEulerAngles = new Vector3(10, 0, 0);
+            Camera mainCam = Camera.main;
+            mainCam.GetComponent<CameraRespectWalls>().enabled = true;
+            mainCam.transform.localPosition = new Vector3(0, 0, -4);
+            mainCam.transform.localEulerAngles = new Vector3(10, 0, 0);
         }
     }
 }

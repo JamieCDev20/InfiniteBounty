@@ -43,7 +43,12 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         List<Augment> _augmentsInList = new List<Augment>();
         // Clear the display
         if (!_b_shouldAddToExistingList)
+        {
             aL_augs.Clear();
+            aL_allAugmentsOwned.Clear();
+            foreach (GameObject btn in goL_augmentButtonPool)
+                btn.GetComponent<IPoolable>().Die();
+        }
         // Find all purchased Augments
         SaveManager saveMan = FindObjectOfType<SaveManager>();
         if (saveMan.SaveData.purchasedAugments != null)
@@ -57,14 +62,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                     {
                         castedAugs[i] = AugmentManager.x.GetAugment(augs[i].Name).Aug;
                         _augmentsInList.Add(castedAugs[i]);
-                        Debug.Log(castedAugs[i].Name);
                     }
             }
         }
         // Update display from save file
         aL_allAugmentsOwned.AddRange(_augmentsInList);
         UpdateAugmentListDisplay(aL_allAugmentsOwned, adt);
-        return aL_augs;
+        return aL_allAugmentsOwned;
     }
 
     private List<Augment> DisplayAugmentsOfType(List<Augment> aL_augs)
@@ -105,6 +109,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
+                goL_augmentButtonPool[i].transform.localScale = Vector3.one;
                 AugmentButton btn = goL_augmentButtonPool[i].GetComponent<AugmentButton>();
                 btn.i_buttonIndex = i;
                 btn.Parent = transform.root.gameObject;
