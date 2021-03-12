@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour, IPoolable
     protected AugmentExplosion ae_explosion;
     [Space, SerializeField] private float f_minimumSpeedForSound;
     private AudioSource as_source;
+    [SerializeField] private float f_knockBack = 5;
 
     public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae)
     {
@@ -97,6 +98,13 @@ public class Bullet : MonoBehaviour, IPoolable
             default:
                 temp.TakeDamage(i_damage, true);
                 break;
+        }
+
+        if (temp != null)
+        {
+            ISuckable _iSuck = collision.transform.GetComponent<ISuckable>();
+            if (_iSuck != null)
+                _iSuck.GetRigidbody().AddForce(transform.forward * f_knockBack);
         }
 
         if (go_hitEffect != null)
