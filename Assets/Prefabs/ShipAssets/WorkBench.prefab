@@ -665,6 +665,7 @@ GameObject:
   - component: {fileID: 502859697}
   - component: {fileID: 502859699}
   - component: {fileID: 502859698}
+  - component: {fileID: 8495242906610458663}
   m_Layer: 0
   m_Name: Tab (2)
   m_TagString: Untagged
@@ -714,7 +715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.22572438, g: 0.18378428, b: 0.6603774, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -730,6 +731,61 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8495242906610458663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502859696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 502859698}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4868943948158857479}
+        m_TargetAssemblyTypeName: Workbench, Assembly-CSharp
+        m_MethodName: EquippedTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &580564324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,7 +1804,7 @@ GameObject:
   - component: {fileID: 2073216056}
   - component: {fileID: 2073216055}
   m_Layer: 0
-  m_Name: LevelText
+  m_Name: AttachedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2410,7 +2466,7 @@ GameObject:
   - component: {fileID: 8915785180777915751}
   - component: {fileID: 2548135554854968827}
   m_Layer: 0
-  m_Name: LevelText
+  m_Name: AllText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3060,7 +3116,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 207.6835}
+  m_AnchoredPosition: {x: 15, y: 207.71103}
   m_SizeDelta: {x: -90, y: 20}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7211629807479709921
@@ -3305,6 +3361,7 @@ GameObject:
   - component: {fileID: 1319966468689653482}
   - component: {fileID: 6370575626160908698}
   - component: {fileID: 7307554372258389125}
+  - component: {fileID: 6271947916261738689}
   m_Layer: 0
   m_Name: Tab (3)
   m_TagString: Untagged
@@ -3354,7 +3411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.18743321, g: 0.14391243, b: 0.6226415, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3370,6 +3427,61 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6271947916261738689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6872721382277797887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 7307554372258389125}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4868943948158857479}
+        m_TargetAssemblyTypeName: Workbench, Assembly-CSharp
+        m_MethodName: AllTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6931861162050979904
 GameObject:
   m_ObjectHideFlags: 0
@@ -4314,7 +4426,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7211629807821442926}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -5535,15 +5647,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 145474bc246b66a4dac6bba0674816f0, type: 3}
---- !u!1 &2166756961505315583 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6401219565984829633, guid: 145474bc246b66a4dac6bba0674816f0,
-    type: 3}
-  m_PrefabInstance: {fileID: 5099322441670285886}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1927167965060014742 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6663853776258300072, guid: 145474bc246b66a4dac6bba0674816f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5099322441670285886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2166756961505315583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6401219565984829633, guid: 145474bc246b66a4dac6bba0674816f0,
     type: 3}
   m_PrefabInstance: {fileID: 5099322441670285886}
   m_PrefabAsset: {fileID: 0}
@@ -5746,6 +5858,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00aad5ed14d3ee843875016f403b3327, type: 3}
+--- !u!1 &776373192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7005985359593543819, guid: 00aad5ed14d3ee843875016f403b3327,
+    type: 3}
+  m_PrefabInstance: {fileID: 7005985359161957187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &776373193 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7005985359593543818, guid: 00aad5ed14d3ee843875016f403b3327,
+    type: 3}
+  m_PrefabInstance: {fileID: 7005985359161957187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &776373194 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7005985359593543817, guid: 00aad5ed14d3ee843875016f403b3327,
@@ -5758,18 +5882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &776373193 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7005985359593543818, guid: 00aad5ed14d3ee843875016f403b3327,
-    type: 3}
-  m_PrefabInstance: {fileID: 7005985359161957187}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &776373192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7005985359593543819, guid: 00aad5ed14d3ee843875016f403b3327,
-    type: 3}
-  m_PrefabInstance: {fileID: 7005985359161957187}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7211629806396936445
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,8 +20,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private int i_currentAugmentIndex = 0;
 
+    private string s_augName;
     private AugmentType at_type;
     public AugmentType AugType { set { at_type = value; } }
+    public string AugmentName { set { s_augName = value; } }
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
     public AugmentDisplay AugDisplay { get { return ad_display; } }
     public int CurrentAugIndex { get { return i_currentAugmentIndex; } }
@@ -80,6 +82,15 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         return _augList;
     }
 
+    private List<Augment> DisplayAugmentsWithName(List<Augment> aL_augs)
+    {
+        List<Augment> _augList = new List<Augment>();
+        foreach (Augment aug in aL_augs)
+            if (aug.Name == s_augName)
+                _augList.Add(aug);
+        return _augList;
+    }
+
     private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
     {
         List<Augment> _aL_augmentsToShow = new List<Augment>();
@@ -89,9 +100,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             case AugmentDisplayType.ShowAll:
                 _aL_augmentsToShow.AddRange(aL_augs);
                 break;
-
             case AugmentDisplayType.ShowSameType:
                 _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs));
+                break;
+            case AugmentDisplayType.ShowSameName:
+                _aL_augmentsToShow.AddRange(DisplayAugmentsWithName(aL_augs));
                 break;
         }
 
@@ -275,4 +288,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         i_displayIter = 0;
         PoolManager.x.KillAllObjects(go_propertyButton);
     }
+}
+
+public enum AugmentDisplayType
+{
+    ShowAll, ShowEquipped, ShowSameType, ShowSameName
 }
