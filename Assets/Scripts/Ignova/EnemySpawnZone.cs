@@ -52,10 +52,15 @@ public class EnemySpawnZone : MonoBehaviour
     {
         DynamicAudioManager.x.StartCombat();
 
+        RaycastHit hit;
+
         for (int i = 0; i < i_numberOfHordesPerWave; i++)
         {
             for (int x = 0; x < Random.Range(v_groundEnemiesPerHorde.x, v_groundEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
-                EnemySpawner.x.SpawnEnemy(goA_groundEnemies[Random.Range(0, goA_groundEnemies.Length)], tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position + RandomVector3(), false);
+            {
+                Physics.Raycast(tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position + RandomVector3(), Vector3.down, out hit, Mathf.Infinity, LayerMask.NameToLayer("Ignore Raycasts"), QueryTriggerInteraction.Ignore);
+                EnemySpawner.x.SpawnEnemy(goA_groundEnemies[Random.Range(0, goA_groundEnemies.Length)], hit.point, false);
+            }
 
             for (int x = 0; x < Random.Range(v_flyingEnemiesPerHorde.x, v_flyingEnemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
                 EnemySpawner.x.SpawnEnemy(goA_flyingEnemies[Random.Range(0, goA_flyingEnemies.Length)], tL_flyingEnemySpawns[Random.Range(0, tL_flyingEnemySpawns.Count)].position + RandomVector3(), true);
