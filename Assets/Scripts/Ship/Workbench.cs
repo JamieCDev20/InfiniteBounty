@@ -238,6 +238,22 @@ public class Workbench : SubjectBase, IInteractible
         Notify(saveEvent);
     }
 
+    public void AllTab()
+    {
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+    }
+    public void SameTab()
+    {
+        //apd.AugType = the type you want to show?
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+    }
+    public void EquippedTab()
+    {
+        List<Augment> augList = new List<Augment>();
+        augList.AddRange(wt_toolsInHand[i_currentWeaponIndex].Augs);
+        aL_allAugmentsOwned = apd.InitAugmentList(augList, AugmentDisplayType.ShowEquipped, false);
+    }
+
     #endregion
 
     #region Swap Weapons
@@ -287,8 +303,3 @@ public class Workbench : SubjectBase, IInteractible
 
 }
 
-
-public enum AugmentDisplayType
-{
-    ShowAll, ShowEquipped, ShowSameType
-}
