@@ -33,6 +33,12 @@ public class Workbench : SubjectBase, IInteractible
     private ToolHandler th_currentTh;
     private int displayIter = 0;
     #region Interactions
+    [Header("Tab info")]
+    [SerializeField] private Image img_all;
+    [SerializeField] private Image img_equip;
+    [SerializeField] private Image img_sameType;
+    [SerializeField] private Color col_selected;
+    [SerializeField] private Color col_unselected;
 
     public void Init(SaveManager _sm)
     {
@@ -240,15 +246,24 @@ public class Workbench : SubjectBase, IInteractible
 
     public void AllTab()
     {
+        img_all.color = col_selected;
+        img_equip.color = col_unselected;
+        img_sameType.color = col_unselected;
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
     }
     public void SameTab()
     {
+        img_sameType.color = col_selected;
+        img_all.color = col_unselected;
+        img_equip.color = col_unselected;
         //apd.AugType = the type you want to show?
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
     }
     public void EquippedTab()
     {
+        img_equip.color = col_selected;
+        img_all.color = col_unselected;
+        img_sameType.color = col_unselected;
         List<Augment> augList = new List<Augment>();
         augList.AddRange(wt_toolsInHand[i_currentWeaponIndex].Augs);
         aL_allAugmentsOwned = apd.InitAugmentList(augList, AugmentDisplayType.ShowEquipped, false);

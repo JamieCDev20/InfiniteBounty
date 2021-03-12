@@ -407,7 +407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 102, y: -5}
+  m_AnchoredPosition: {x: 503, y: -5}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &157605459
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2784314, g: 0.23529413, b: 0.7372549, a: 1}
+  m_Color: {r: 0.19607845, g: 0.14901961, b: 0.61960787, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.22572438, g: 0.18378428, b: 0.6603774, a: 1}
+  m_Color: {r: 0.19607845, g: 0.14901961, b: 0.61960787, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3386,7 +3386,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 502, y: -5}
+  m_AnchoredPosition: {x: 102.9, y: -5}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6370575626160908698
@@ -3410,7 +3410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18743321, g: 0.14391243, b: 0.6226415, a: 1}
+  m_Color: {r: 0.2784314, g: 0.23529413, b: 0.7372549, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3731,6 +3731,11 @@ MonoBehaviour:
   f_cameraMovementT: 0.4
   wt_toolsInHand: []
   apd: {fileID: 1784018470491749889}
+  img_all: {fileID: 7307554372258389125}
+  img_equip: {fileID: 502859698}
+  img_sameType: {fileID: 157605458}
+  col_selected: {r: 0.2784314, g: 0.23529413, b: 0.7372549, a: 0}
+  col_unselected: {r: 0.19607845, g: 0.14901961, b: 0.61960787, a: 0}
 --- !u!65 &3859615887861356107
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4426,7 +4431,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7211629807821442926}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
