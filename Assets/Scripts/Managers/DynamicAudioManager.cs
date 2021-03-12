@@ -26,6 +26,7 @@ public class DynamicAudioManager : MonoBehaviour
     [SerializeField] private AudioMixer bossMixer;
 
     [SerializeField] private float combatLerp = 0.3f;
+    [SerializeField] private float mainLerp = 0.3f;
 
     private bool inCombat;
     private bool isBoss;
@@ -43,6 +44,7 @@ public class DynamicAudioManager : MonoBehaviour
         combatSource.clip = combatLoop;
         bossSource.clip = bossIntro;
 
+        mainMixer.SetFloat("Volume", 0);
         mainSource.Play();
     }
 
@@ -50,6 +52,7 @@ public class DynamicAudioManager : MonoBehaviour
     {
         inCombat = true;
         combatSource.PlayOneShot(combatIntro);
+        combatMixer.SetFloat("Volume", 0);
     }
 
     public void EndCombat()
@@ -60,6 +63,8 @@ public class DynamicAudioManager : MonoBehaviour
     public void StartBoss()
     {
         isBoss = true;
+        bossSource.PlayOneShot(bossIntro);
+        bossMixer.SetFloat("Volume", 0);
     }
 
     public void EndBoss()
@@ -70,19 +75,35 @@ public class DynamicAudioManager : MonoBehaviour
     private void Update()
     {
 
-        if (!mainSource.isPlaying)
-            StartLoops();
+        float cMain;
+        mainMixer.GetFloat("Volume", out cMain);
 
-        if (!bossSource.isPlaying && isBoss)
-        {
-            bossSource.clip = bossLoop;
-            bossSource.Play();
-        }
+        float cCombat;
+        combatMixer.GetFloat("Volume", out cCombat);
 
-        combatMixer.GetFloat("Volume", out cVol);
-        combatMixer.SetFloat("Volume", Mathf.Lerp(cVol, inCombat ? 0 : -80, combatLerp));
+        combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -80, combatLerp));
+        mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, inCombat ? -80 : 0, mainLerp));
 
         bossMixer.SetFloat("Volume", isBoss ? 0 : -80);
+
+        if (!combatSource.isPlaying)
+        {
+            combatSource.clip = combatLoop;
+            combatSource.Play();
+        }
+
+        if (!mainSource.isPlaying)
+        {
+            mainSource.clip = mainLoop;
+            mainSource.Play();
+        }
+
+        if (isBoss)
+            if (!bossSource.isPlaying)
+            {
+                bossSource.clip = bossLoop;
+                bossSource.Play();
+            }
 
     }
 
