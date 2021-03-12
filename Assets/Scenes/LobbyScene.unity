@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4834981, g: 0.77175266, b: 1.8144392, a: 1}
+  m_IndirectSpecularColor: {r: 0.4833061, g: 0.77154773, b: 1.8140148, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -69919,6 +69919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2035018355}
   - component: {fileID: 2035018356}
+  - component: {fileID: 2035018357}
   m_Layer: 0
   m_Name: CannonSeatManager
   m_TagString: Untagged
@@ -69952,6 +69953,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd42a82cb5820f48bea1f5e5a287376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2035018357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035018354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 6
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2035352013
 GameObject:
   m_ObjectHideFlags: 0
@@ -83385,7 +83408,7 @@ PrefabInstance:
     - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 207.10184
+      value: 207.69287
       objectReference: {fileID: 0}
     - target: {fileID: 6116306273585402338, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
