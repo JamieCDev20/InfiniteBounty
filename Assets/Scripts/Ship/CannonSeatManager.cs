@@ -13,6 +13,8 @@ public class CannonSeatManager : MonoBehaviourPun
     private void Awake()
     {
         x = this;
+        photonView.ViewID = 700556;
+        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     public void StartedSitting()
