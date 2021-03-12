@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: RabbitMat
-  m_Shader: {fileID: -6465566751694194690, guid: 1057d2d947c237445a4b0e60c64fda21,
+  m_Shader: {fileID: -6465566751694194690, guid: 2d9261a5493bf3f4ea284fe9dca93b83,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -26,6 +26,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - BaseColour:
+        m_Texture: {fileID: 2800000, guid: e00c108033f15f7469ce4e833a9708b9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 2800000, guid: f32c881bdefbcc3409add6bb1c6d6324, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 2800000, guid: 7e1ca667b98811c4aa4c056a1bef6985, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RGBAMap:
+        m_Texture: {fileID: 2800000, guid: cb785fac8a9a96744b94992360a4b16a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -267,6 +283,7 @@ Material:
     - _ZTestModeDistortion: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
+    - _emissionMult: 7.5
     m_Colors:
     - Color_A5C210E0: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

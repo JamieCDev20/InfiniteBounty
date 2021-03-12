@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ReflectronMat
-  m_Shader: {fileID: -6465566751694194690, guid: 5b87581a504ad8940ba990f5f8dac713,
+  m_Shader: {fileID: -6465566751694194690, guid: 2d9261a5493bf3f4ea284fe9dca93b83,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -39,6 +39,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - BaseColour:
+        m_Texture: {fileID: 2800000, guid: eb401cf8791a1af479cb3a59a6090f3c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 2800000, guid: 5945ab987ff084f44a07094bbc57700d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 2800000, guid: 545c8901b0da6a24585502643721379c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RGBAMap:
+        m_Texture: {fileID: 2800000, guid: 0773abd4ce67412408774ed9a22ac886, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -260,6 +276,7 @@ Material:
     - _ZTestModeDistortion: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
+    - _emissionMult: 7.5
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
