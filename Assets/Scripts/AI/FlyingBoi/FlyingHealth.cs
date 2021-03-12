@@ -9,6 +9,7 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
     [SerializeField] private int i_maxHealth = 300;
     [SerializeField] private GameObject go_deathEffect;
     private int i_curHealth;
+    [SerializeField] private ParticleSystem p_damageParticles;
 
     private void OnEnable()
     {
@@ -53,12 +54,13 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
             MasterTakeDamage(damage, activatesThunder);
             return;
         }
-        photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage, activatesThunder);        
+        photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage, activatesThunder);
     }
 
     private void MasterTakeDamage(int damage, bool activatesThunder)
     {
         i_curHealth -= damage;
+        p_damageParticles.Play();
         if (i_curHealth <= 0)
             Die();
 
