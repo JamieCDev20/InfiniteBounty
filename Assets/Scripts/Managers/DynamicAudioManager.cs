@@ -27,11 +27,14 @@ public class DynamicAudioManager : MonoBehaviour
 
     [SerializeField] private float combatLerp = 0.3f;
     [SerializeField] private float mainLerp = 0.3f;
+    [SerializeField] private float bossLerp = 0.3f;
+
+    [SerializeField] private float postCombatLoopDelay = 10;
 
     private bool inCombat;
     private bool isBoss;
 
-    private float cVol;
+    private bool lerpMain = true;
 
     private void Awake()
     {
@@ -51,6 +54,8 @@ public class DynamicAudioManager : MonoBehaviour
     public void StartCombat()
     {
         inCombat = true;
+        lerpMain = false;
+        CancelInvoke(nameof(SetLerpMain));
         combatSource.PlayOneShot(combatIntro);
         combatMixer.SetFloat("Volume", 0);
     }
@@ -58,6 +63,7 @@ public class DynamicAudioManager : MonoBehaviour
     public void EndCombat()
     {
         inCombat = false;
+        Invoke(nameof(SetLerpMain), postCombatLoopDelay);
     }
 
     public void StartBoss()
@@ -72,6 +78,11 @@ public class DynamicAudioManager : MonoBehaviour
         isBoss = false;
     }
 
+    private void SetLerpMain()
+    {
+        lerpMain = true;
+    }
+
     private void Update()
     {
 
@@ -81,10 +92,12 @@ public class DynamicAudioManager : MonoBehaviour
         float cCombat;
         combatMixer.GetFloat("Volume", out cCombat);
 
-        combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -80, combatLerp));
-        mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, inCombat ? -80 : 0, mainLerp));
+        float cBoss;
+        bossMixer.GetFloat("Volume", out cBoss);
 
-        bossMixer.SetFloat("Volume", isBoss ? 0 : -80);
+        combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -80, combatLerp));
+        mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, lerpMain? 0 : -80, mainLerp));
+        bossMixer.SetFloat("Volume", Mathf.Lerp(cBoss, isBoss ? 0 : -80, bossLerp));
 
         if (!combatSource.isPlaying)
         {
