@@ -61,7 +61,7 @@ public class PlayerMover : MonoBehaviour
     private FootstepAudioPlayer fap_audio;
     internal bool b_isSitting;
     private bool b_knockedback;
-    private Animator anim;    
+    private Animator anim;
 
     #endregion
 
@@ -203,8 +203,16 @@ public class PlayerMover : MonoBehaviour
         fap_audio.PlayLandingSound();
     }
 
+    private void ResetResetPoint()
+    {
+        v_startPos = transform.position;
+    }
+
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
+        b_isSitting = false;
+        Invoke(nameof(ResetResetPoint), 0.5f);
+
         if (scene.name.Contains("Lobby"))
         {
             fap_audio.ChangeSurfaceEnum(Surface.ship);

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAnimator : MonoBehaviourPun
 {
@@ -57,6 +58,7 @@ public class PlayerAnimator : MonoBehaviourPun
 
     private void Start()
     {
+        SceneManager.sceneLoaded += SceneLoaded;
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         pm_mover = GetComponent<PlayerMover>();
@@ -88,32 +90,27 @@ public class PlayerAnimator : MonoBehaviourPun
         SetShootingBools();
 
         if (s_currentSofa != null)
+        {
             if (Input.anyKeyDown)
             {
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright"))
                 {
                     if (anim.GetBool("Poop"))
                     {
-                        anim.SetBool("Poop", false);
-                        rb.isKinematic = false;
-                        pm_mover.enabled = true;
-                        s_currentSofa.EndSit();
-                        s_currentSofa = null;
-                        transform.parent = null;
-                        GetComponent<Collider>().enabled = true;
+                        EndSitAnim("Poop");
                     }
                     if (anim.GetBool("SofaRight"))
                     {
-                        anim.SetBool("Poop", false);
-                        rb.isKinematic = false;
-                        pm_mover.enabled = true;
-                        s_currentSofa.EndSit();
-                        s_currentSofa = null;
-                        transform.parent = null;
-                        GetComponent<Collider>().enabled = true;
+                        EndSitAnim("SofaRight");
                     }
                 }
             }
+        }
+        else
+        {
+            EndSitAnim("Poop");
+            EndSitAnim("SofaRight");
+        }
         v_posLastFrame = transform.position;
     }
 
@@ -130,6 +127,22 @@ public class PlayerAnimator : MonoBehaviourPun
                 ArmUpDownRespect(armR, anim.GetBool("ShootingRight"));
             }
         }
+    }
+
+    private void EndSitAnim(string n)
+    {
+        anim.SetBool(n, false);
+        rb.isKinematic = false;
+        pm_mover.enabled = true;
+        s_currentSofa?.EndSit();
+        s_currentSofa = null;
+        transform.parent = null;
+        GetComponent<Collider>().enabled = true;
+    }
+
+    private void SceneLoaded(Scene s, LoadSceneMode m)
+    {
+        s_currentSofa = null;
     }
 
     public void SetRemoteShooting(bool l, bool r)
