@@ -57,10 +57,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59341311f869e848afea4efe23ae385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  f_zoneRadius: 0
-  vi_numberOfLodes: {x: 0, y: 0}
-  goA_lodesTypesToSpawn: []
+  vi_numberOfLodes: {x: 10, y: 20}
+  goA_lodesTypesToSpawn:
+  - {fileID: 2720207710688081759, guid: c5bcdafe827a11c4e938699479a4bc6a, type: 3}
+  - {fileID: 2720207710688081759, guid: ca882db867b467346b0cadccdcf75ece, type: 3}
+  - {fileID: 2720207710688081759, guid: d4478567c583c86409be26b15d25c31a, type: 3}
+  - {fileID: 2720207710688081759, guid: 2de213860cc6297459842cf8a8617670, type: 3}
+  - {fileID: 2720207710688081759, guid: 2421a68e479cc3f4c86a05283588cce5, type: 3}
+  - {fileID: 2720207710688081759, guid: 5b1128eb2b1b7a14084f75853a2492f4, type: 3}
   b_doRayCastSpawning: 0
   lm_lodeSpawnLayer:
     serializedVersion: 2
     m_Bits: 1
+  s_namesToIgnore: '*'
