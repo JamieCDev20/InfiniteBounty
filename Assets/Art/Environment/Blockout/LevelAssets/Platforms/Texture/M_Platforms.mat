@@ -8,13 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Platforms
-  m_Shader: {fileID: -6465566751694194690, guid: 1496d9e792ec812429ed3c0366d2ba3f,
+  m_Shader: {fileID: -6465566751694194690, guid: 2d9261a5493bf3f4ea284fe9dca93b83,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -25,6 +25,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - BaseColour:
+        m_Texture: {fileID: 2800000, guid: bfeeb95eee122da469de0b6f6c2128d8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 2800000, guid: 0461d775d556cc74998300101aa0929a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 2800000, guid: 4d0eae3a1738d224a959c57b0d705224, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RGBAMap:
+        m_Texture: {fileID: 2800000, guid: 3aff99490286f6549a7c8689e59469ed, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_5E985C4A_Texture_1:
         m_Texture: {fileID: 2800000, guid: 0461d775d556cc74998300101aa0929a, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -77,6 +93,7 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
+    - _emissionMult: 7.5
     m_Colors:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}

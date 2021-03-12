@@ -21,13 +21,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_LavaRocks
-  m_Shader: {fileID: -6465566751694194690, guid: 209ec1ca6c247104aac67ddb4df499a0,
+  m_Shader: {fileID: -6465566751694194690, guid: 2d9261a5493bf3f4ea284fe9dca93b83,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -38,6 +38,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - BaseColour:
+        m_Texture: {fileID: 2800000, guid: 6bd9a75c67a76c649b92ab5565a20c3c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - EmissiveMap:
+        m_Texture: {fileID: 2800000, guid: e4220658feddd3f44af3dd273529d30b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - NormalMap:
+        m_Texture: {fileID: 2800000, guid: 62e4a791c84e9394a937d83778ee76c7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - RGBAMap:
+        m_Texture: {fileID: 2800000, guid: 7500c6b96a423fe4790bec5d508ce377, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_3E3E7C86_Texture_1:
         m_Texture: {fileID: 2800000, guid: e4220658feddd3f44af3dd273529d30b, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -90,6 +106,7 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
+    - _emissionMult: 7.5
     m_Colors:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
