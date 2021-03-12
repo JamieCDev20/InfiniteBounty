@@ -21,6 +21,8 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private Button fuseButton;
     [SerializeField] private Button selectButton;
     [SerializeField] private AugmentFuser fuser;
+    [SerializeField] private GameObject go_augButtonA;
+    [SerializeField] private GameObject go_augButtonB;
     public AugmentPropertyDisplayer AugPropertyDisplay { get { return apd; } }
 
 
@@ -101,12 +103,16 @@ public class Microwave : SubjectBase, IInteractible
             Debug.Log(aL_allAugmentsOwned[apd.CurrentAugIndex].Name + " Selected in slot 1");
             aug_slotA = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
+            go_augButtonA.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
+            go_augButtonA.GetComponentsInChildren<Text>()[1].text = "Lv " + aL_allAugmentsOwned[apd.CurrentAugIndex].Level.ToString();
         }
         else if (aug_slotB == null)
         {
             Debug.Log(aL_allAugmentsOwned[apd.CurrentAugIndex].Name + " Selected in slot 2");
             aug_slotB = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
+            go_augButtonB.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
+            go_augButtonB.GetComponentsInChildren<Text>()[1].text = "Lv " + aL_allAugmentsOwned[apd.CurrentAugIndex].Level.ToString();
         }
         // Reveal fusion button, or reload augment list
         if (aug_slotA != null && aug_slotB != null)
@@ -120,9 +126,18 @@ public class Microwave : SubjectBase, IInteractible
     public void RemoveAugment(bool _slotID)
     {
         if (_slotID)
+        {
             aug_slotA = null;
+            go_augButtonA.GetComponentsInChildren<Text>()[0].text = "";
+            go_augButtonA.GetComponentsInChildren<Text>()[1].text = "";
+        }
         else if (!_slotID)
+        {
             aug_slotB = null;
+            go_augButtonB.GetComponentsInChildren<Text>()[0].text = "";
+            go_augButtonB.GetComponentsInChildren<Text>()[1].text = "";
+
+        }
         RevealSelectButton();
     }
 
