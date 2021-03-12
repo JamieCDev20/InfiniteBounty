@@ -100,6 +100,7 @@ public class Microwave : SubjectBase, IInteractible
         {
             aug_slotA = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
+            apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
             go_augButtonA.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
             go_augButtonA.GetComponentsInChildren<Text>()[1].text = "Lv " + aL_allAugmentsOwned[apd.CurrentAugIndex].Level.ToString();
         }
@@ -107,6 +108,7 @@ public class Microwave : SubjectBase, IInteractible
         {
             aug_slotB = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
+            apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
             go_augButtonB.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
             go_augButtonB.GetComponentsInChildren<Text>()[1].text = "Lv " + aL_allAugmentsOwned[apd.CurrentAugIndex].Level.ToString();
         }
