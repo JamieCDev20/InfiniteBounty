@@ -246,24 +246,30 @@ public class Workbench : SubjectBase, IInteractible
 
     public void AllTab()
     {
-        img_all.color = col_selected;
-        img_equip.color = col_unselected;
-        img_sameType.color = col_unselected;
+        Color sel = new Color(col_selected.r, col_selected.g, col_selected.b, 1f);
+        Color unSel = new Color(col_unselected.r, col_unselected.g, col_unselected.b, 1f);
+        img_all.color = sel;
+        img_equip.color = unSel;
+        img_sameType.color = unSel;
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
     }
     public void SameTab()
     {
-        img_sameType.color = col_selected;
-        img_all.color = col_unselected;
-        img_equip.color = col_unselected;
+        Color sel = new Color(col_selected.r, col_selected.g, col_selected.b, 1f);
+        Color unSel = new Color(col_unselected.r, col_unselected.g, col_unselected.b, 1f);
+        img_sameType.color = sel;
+        img_all.color = unSel;
+        img_equip.color = unSel;
         //apd.AugType = the type you want to show?
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
     }
     public void EquippedTab()
     {
-        img_equip.color = col_selected;
-        img_all.color = col_unselected;
-        img_sameType.color = col_unselected;
+        Color sel = new Color(col_selected.r, col_selected.g, col_selected.b, 1f);
+        Color unSel = new Color(col_unselected.r, col_unselected.g, col_unselected.b, 1f);
+        img_equip.color = sel;
+        img_all.color = unSel;
+        img_sameType.color = unSel;
         List<Augment> augList = new List<Augment>();
         augList.AddRange(wt_toolsInHand[i_currentWeaponIndex].Augs);
         aL_allAugmentsOwned = apd.InitAugmentList(augList, AugmentDisplayType.ShowEquipped, false);
