@@ -211,7 +211,7 @@ public class PlayerMover : MonoBehaviour
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
         b_isSitting = false;
-        Invoke(nameof(ResetResetPoint), 0.5f);
+        //Invoke(nameof(ResetResetPoint), 0.5f);
 
         if (scene.name.Contains("Lobby"))
         {
