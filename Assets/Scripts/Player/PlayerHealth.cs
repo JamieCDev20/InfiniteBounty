@@ -40,6 +40,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [SerializeField] private AudioClip ac_slowHeartBeat;
     [SerializeField] private AudioClip ac_fastHeartBeat;
     [SerializeField] private AudioSource as_heartBeatSource;
+    private AudioSource as_mainAudioSource;
 
     [Header("Toggles")]
     [SerializeField] private GameObject[] toggles;
@@ -50,6 +51,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         SetMaxHealth();
         pim = GetComponent<PlayerInputManager>();
         anim = GetComponentInChildren<Animator>();
+        as_mainAudioSource = GetComponent<AudioSource>();
     }
 
 
@@ -97,7 +99,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         //print(damage + " DMG taken");
 
         if (acA_hurtClips.Length > 0 && damage != 0)
-            AudioSource.PlayClipAtPoint(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)], transform.position);
+            as_mainAudioSource.PlayOneShot(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)]);
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
         hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
 
