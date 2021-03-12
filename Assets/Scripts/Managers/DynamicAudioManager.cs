@@ -56,16 +56,17 @@ public class DynamicAudioManager : MonoBehaviourPun
 
     public void StartCombat()
     {
-        photonView.RPC(nameof(RemoveCombat), RpcTarget.All);
+        photonView.RPC(nameof(RemoteCombat), RpcTarget.All);
     }
 
     [PunRPC]
-    public void RemoveCombat()
+    public void RemoteCombat()
     {
         inCombat = true;
         lerpMain = false;
         CancelInvoke(nameof(SetLerpMain));
-        combatSource.PlayOneShot(combatIntro);
+        combatSource.clip = combatIntro;
+        combatSource.Play();
         combatMixer.SetFloat("Volume", 0);
 
     }
@@ -91,7 +92,8 @@ public class DynamicAudioManager : MonoBehaviourPun
     public void RemoteBossStart()
     {
         isBoss = true;
-        bossSource.PlayOneShot(bossIntro);
+        bossSource.clip = bossIntro;
+        bossSource.Play();
         bossMixer.SetFloat("Volume", 0);
     }
 
