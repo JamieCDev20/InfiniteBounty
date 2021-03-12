@@ -62,7 +62,8 @@ public class Microwave : SubjectBase, IInteractible
             microwaveCanvas.enabled = true;
             // Display the UI
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
-            apd.ClickAugment(0);
+            if(aL_allAugmentsOwned.Count != 0)
+                apd.ClickAugment(0);
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
