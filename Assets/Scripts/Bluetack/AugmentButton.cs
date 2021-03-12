@@ -20,8 +20,10 @@ public class AugmentButton : MonoBehaviour, IPoolable
 
     public void Die()
     {
-        gameObject.SetActive(false);
-        Debug.Log("Ohh Ahh I am dead");
+        if (PoolManager.x != null)
+        {
+            PoolManager.x.ReturnObjectToPool(gameObject);
+        }
     }
 
     public GameObject GetGameObject()
