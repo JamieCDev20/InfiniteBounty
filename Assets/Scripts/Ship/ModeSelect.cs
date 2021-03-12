@@ -6,6 +6,8 @@ using UnityEngine;
 public class ModeSelect : MonoBehaviourPun, IInteractible
 {
 
+    public static ModeSelect x;
+
     private int i_currentIndex;
     [SerializeField] private LoadIntoLevel lil_teleportButton;
     [Space, SerializeField] private GameObject[] goA_highlightPositions = new GameObject[3];
@@ -13,6 +15,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
 
     private void Start()
     {
+        x = this;
         PhotonNetwork.RegisterPhotonView(photonView);
         if (PhotonNetwork.IsMasterClient)
             Interacted();
@@ -28,7 +31,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
             i_currentIndex = 0;
 
         goA_highlightPositions[i_currentIndex].SetActive(true);
-        lil_teleportButton.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
+        lil_teleportButton?.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
         photonView.RPC(nameof(SetCurrentMode), RpcTarget.Others, i_currentIndex);
     }
 
@@ -43,6 +46,10 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         lil_teleportButton.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
     }
 
+    public string GetModeName()
+    {
+        return sA_sceneNames[i_currentIndex];
+    }
 
     public void Interacted(Transform interactor) { }
 
