@@ -85,7 +85,8 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
         if (go_audioSourceObject)
             go_audioSourceObject.SetActive(false);
         b_isBeingUsed = false;
-        //sitter.GetComponent<PlayerMover>().b_isSitting = false;
+        if(sitter != null)
+            sitter.GetComponent<PlayerMover>().b_isSitting = false;
         sitter = null;
         if (b_cannonSeat)
             CannonSeatManager.x.EndedSitting();
