@@ -15,7 +15,10 @@ public class AugmentButton : MonoBehaviour, IPoolable
         if(wb != null)
             wb.AugPropertyDisplay.ClickAugment(i_buttonIndex);
         else if(mw != null)
+        {
             mw.AugPropertyDisplay.ClickAugment(i_buttonIndex);
+            mw.SetAugment();
+        }
     }
 
     public void Die()
