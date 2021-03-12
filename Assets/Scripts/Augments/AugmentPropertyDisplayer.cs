@@ -45,9 +45,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         if (!_b_shouldAddToExistingList)
         {
             aL_augs.Clear();
-            aL_allAugmentsOwned.Clear();
             foreach (GameObject btn in goL_augmentButtonPool)
                 btn.GetComponent<IPoolable>().Die();
+            aL_allAugmentsOwned.Clear();
         }
         // Find all purchased Augments
         SaveManager saveMan = FindObjectOfType<SaveManager>();
@@ -91,10 +91,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 break;
 
             case AugmentDisplayType.ShowSameType:
-                for (int i = 0; i < aL_augs.Count; i++)
-                {
-                    _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs));
-                }
+                _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs));
                 break;
         }
 

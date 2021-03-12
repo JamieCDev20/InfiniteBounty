@@ -96,11 +96,9 @@ public class Microwave : SubjectBase, IInteractible
 
     public void SetAugment()
     {
-        Debug.Log(i_currentlyClickedAugment);
         // Put an augment in the empty slot
         if (aug_slotA == null)
         {
-            Debug.Log(aL_allAugmentsOwned[apd.CurrentAugIndex].Name + " Selected in slot 1");
             aug_slotA = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
             go_augButtonA.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
@@ -108,7 +106,6 @@ public class Microwave : SubjectBase, IInteractible
         }
         else if (aug_slotB == null)
         {
-            Debug.Log(aL_allAugmentsOwned[apd.CurrentAugIndex].Name + " Selected in slot 2");
             aug_slotB = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
             go_augButtonB.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
@@ -119,7 +116,8 @@ public class Microwave : SubjectBase, IInteractible
             RevealFuseButton();
         else
         {
-            apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+            aL_allAugmentsOwned.Clear();
+            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
         }
     }
 
@@ -155,7 +153,6 @@ public class Microwave : SubjectBase, IInteractible
 
     private void RevealFuseButton()
     {
-        Debug.Log("Bing bong. Could Employee 4 please clean out the microwave!");
         fuseButton.gameObject.SetActive(true);
         selectButton.gameObject.SetActive(false);
         fuseButton.interactable = true;
