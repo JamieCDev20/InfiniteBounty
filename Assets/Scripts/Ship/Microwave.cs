@@ -117,7 +117,10 @@ public class Microwave : SubjectBase, IInteractible
         else
         {
             aL_allAugmentsOwned.Clear();
-            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+            if (aug_slotA?.Stage == AugmentStage.full || aug_slotB.Stage == AugmentStage.full)
+                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+            else if (aug_slotA?.Stage == AugmentStage.fused || aug_slotB.Stage == AugmentStage.fused)
+                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameName, false);
         }
     }
 

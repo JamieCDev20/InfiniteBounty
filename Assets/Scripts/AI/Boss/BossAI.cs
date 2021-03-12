@@ -216,7 +216,7 @@ public class BossAI : AIBase
         yield return new WaitForSeconds(2);
 
 
-        transform.position = Vector3.Scale(_v_newPos, Vector3.one - Vector3.up) + Vector3.down * 30;
+        transform.position = Vector3.Scale(_v_newPos, Vector3.one - Vector3.up) + Vector3.down * 40;
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)

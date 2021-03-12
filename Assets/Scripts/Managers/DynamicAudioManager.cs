@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class DynamicAudioManager : MonoBehaviour
+public class DynamicAudioManager : MonoBehaviourPun
 {
 
     public static DynamicAudioManager x;
@@ -27,15 +28,20 @@ public class DynamicAudioManager : MonoBehaviour
 
     [SerializeField] private float combatLerp = 0.3f;
     [SerializeField] private float mainLerp = 0.3f;
+    [SerializeField] private float bossLerp = 0.3f;
+
+    [SerializeField] private float postCombatLoopDelay = 10;
 
     private bool inCombat;
     private bool isBoss;
 
-    private float cVol;
+    private bool lerpMain = true;
 
     private void Awake()
     {
         x = this;
+        photonView.ViewID = 232323;
+        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     private void Start()
@@ -50,26 +56,61 @@ public class DynamicAudioManager : MonoBehaviour
 
     public void StartCombat()
     {
+        photonView.RPC(nameof(RemoteCombat), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteCombat()
+    {
         inCombat = true;
-        combatSource.PlayOneShot(combatIntro);
+        lerpMain = false;
+        CancelInvoke(nameof(SetLerpMain));
+        combatSource.clip = combatIntro;
+        combatSource.Play();
         combatMixer.SetFloat("Volume", 0);
+
     }
 
     public void EndCombat()
     {
+        photonView.RPC(nameof(RemoteEndCombat), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteEndCombat()
+    {
         inCombat = false;
+        Invoke(nameof(SetLerpMain), postCombatLoopDelay);
     }
 
     public void StartBoss()
     {
+        photonView.RPC(nameof(RemoteBossStart), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteBossStart()
+    {
         isBoss = true;
-        bossSource.PlayOneShot(bossIntro);
+        bossSource.clip = bossIntro;
+        bossSource.Play();
         bossMixer.SetFloat("Volume", 0);
     }
 
     public void EndBoss()
     {
+        photonView.RPC(nameof(RemoteBossEnd), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RemoteBossEnd()
+    {
         isBoss = false;
+    }
+
+    private void SetLerpMain()
+    {
+        lerpMain = true;
     }
 
     private void Update()
@@ -81,10 +122,12 @@ public class DynamicAudioManager : MonoBehaviour
         float cCombat;
         combatMixer.GetFloat("Volume", out cCombat);
 
-        combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -80, combatLerp));
-        mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, inCombat ? -80 : 0, mainLerp));
+        float cBoss;
+        bossMixer.GetFloat("Volume", out cBoss);
 
-        bossMixer.SetFloat("Volume", isBoss ? 0 : -80);
+        combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -80, combatLerp));
+        mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, lerpMain? 0 : -80, mainLerp));
+        bossMixer.SetFloat("Volume", Mathf.Lerp(cBoss, isBoss ? 0 : -80, bossLerp));
 
         if (!combatSource.isPlaying)
         {
@@ -104,16 +147,6 @@ public class DynamicAudioManager : MonoBehaviour
                 bossSource.clip = bossLoop;
                 bossSource.Play();
             }
-
-    }
-
-    private void StartLoops()
-    {
-        mainSource.clip = mainLoop;
-        combatSource.clip = combatLoop;
-
-        mainSource.Play();
-        combatSource.Play();
 
     }
 
