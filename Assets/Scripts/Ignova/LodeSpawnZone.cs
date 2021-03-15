@@ -38,6 +38,7 @@ public class LodeSpawnZone : MonoBehaviour
                         _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)]);
                         _go_lode.transform.position = hit.point;
                         _go_lode.transform.up = hit.normal;
+                        _go_lode.transform.Rotate(Vector3.up * Random.Range(0, 360), Space.Self);
                         _random.LodeSpawned(_go_lode);
                     }
                     else x--;
