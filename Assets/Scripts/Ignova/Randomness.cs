@@ -43,9 +43,8 @@ public class Randomness : MonoBehaviourPunCallbacks
         Random.InitState(seed);
         //Debug.Log("Seed: " + seed);
 
-        //spawn the lodes
-        SpawnLodes(seed);
-        photonView.RPC("SpawnLodes", RpcTarget.Others, seed);
+        //spawn the lodes        
+        photonView.RPC("SpawnLodes", RpcTarget.All, seed);
 
     }
 
