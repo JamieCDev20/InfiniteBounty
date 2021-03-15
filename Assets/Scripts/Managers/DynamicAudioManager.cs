@@ -62,9 +62,13 @@ public class DynamicAudioManager : MonoBehaviourPun
     [PunRPC]
     public void RemoteCombat()
     {
+        
         inCombat = true;
         lerpMain = false;
         CancelInvoke(nameof(SetLerpMain));
+        if (inCombat)
+            return;
+
         combatSource.clip = combatIntro;
         combatSource.Play();
         combatMixer.SetFloat("Volume", 0);
