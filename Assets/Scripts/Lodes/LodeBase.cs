@@ -93,6 +93,10 @@ public class LodeBase : Enemy, IHitable
             if (i_currentHealth <= iL_healthIntervals[i])
             {
                 p_chunkEffect.Play();
+                transform.localScale *= 0.95f;
+
+                
+
                 if (PhotonNetwork.IsMasterClient)
                 {
                     for (int j = 0; j < i_nuggetsPerBurst; j++)
