@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BossAI : AIBase
 {
+    private Animator anim;
     private bool b_canAttack;
     internal List<Transform> tL_potentialTargets = new List<Transform>();
     private int i_currentTarget;
@@ -29,6 +30,7 @@ public class BossAI : AIBase
 
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         QueryNode _q_canAttack = new QueryNode(CheckCanAttack);
         SequencerNode _s = new SequencerNode(_q_canAttack, AttackDefine());
 
@@ -203,32 +205,23 @@ public class BossAI : AIBase
     }
     private IEnumerator TimedMove(Vector3 _v_newPos, float _f_timeToWait)
     {
-        for (int i = 0; i < 80; i++)
-        {
-            yield return new WaitForSeconds(0.01f);
-            transform.position += Vector3.down * 0.5f;
-        }
+        anim.SetBool("Emerging", false);
+        anim.SetBool("Submerging", true);    
 
         yield return new WaitForSeconds(_f_timeToWait - 1);
 
         go_movementTelegraph.transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
-
         yield return new WaitForSeconds(2);
 
-
-        transform.position = Vector3.Scale(_v_newPos, Vector3.one - Vector3.up) + Vector3.down * 40;
+        anim.SetBool("Submerging", false);
+        transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             if (_cA[i].transform.root != transform)
                 _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
 
-
-        for (int i = 0; i < 80; i++)
-        {
-            yield return new WaitForSeconds(0.01f);
-            transform.position += Vector3.up * 0.5f;
-        }
+        anim.SetBool("Emerging", true);
         go_movementTelegraph.transform.position = Vector3.down * 100;
 
         if (PhotonNetwork.IsMasterClient)
