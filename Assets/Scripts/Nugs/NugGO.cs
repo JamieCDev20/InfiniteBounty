@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,6 +37,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         if (other.transform.tag == "Player")
         {
+            Debug.Log($"I HAVE BEEN TRIGGERED BY <b>{other.gameObject.name}</b> at: <b>{transform.position}</b>");
             if (!other.GetComponent<PlayerInputManager>().CanPickUpNugs())
                 return;
 
@@ -55,14 +55,14 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         b_canBeHit = false;
         b_collected = false;
-        Invoke("RemoveSpawnImmunity", f_spawnImmunityDuration);
-        Invoke("Die", 60);
+        Invoke(nameof(RemoveSpawnImmunity), f_spawnImmunityDuration);
+        Invoke(nameof(Die), 60);
     }
 
     public override void OnDisable()
     {
-        CancelInvoke("RemoveSpawnImmunity");
-        CancelInvoke("Die");
+        CancelInvoke(nameof(RemoveSpawnImmunity));
+        CancelInvoke(nameof(Die));
     }
 
     private void RemoveSpawnImmunity()
@@ -72,14 +72,15 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void Die()
     {
+
         if (!b_canBeHit)
             return;
         CancelInvoke();
         StopAllCoroutines();
-        GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
+        GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected ? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
-        if(rb != null)
+        if (rb != null)
             rb.velocity = Vector3.zero;
         eO_elem?.ResetElements();
         PoolManager.x.ReturnObjectToPool(gameObject);
@@ -87,6 +88,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void SetCanDie(bool collected)
     {
+        Debug.Log("Set can die : " + collected);
         b_canBeHit = true;
         b_collected = collected;
     }
@@ -123,7 +125,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             return;
         if (eO_elem)
         {
-            eO_elem.ActivateElement(activatesThunder); 
+            eO_elem.ActivateElement(activatesThunder);
             Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
             for (int i = 0; i < cols.Length; i++)
             {
@@ -146,6 +148,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     IEnumerator DelayedTakeDamage(int damage, bool activatesThunder, float _delay)
     {
         yield return new WaitForSeconds(_delay);
+        Debug.Log("THIS IS PROBABLY IT");
         TakeDamage(damage, activatesThunder);
     }
 
