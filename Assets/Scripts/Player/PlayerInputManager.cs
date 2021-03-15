@@ -149,8 +149,8 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         b_sprintHold = Input.GetButton(s_sprintButton);
         b_sprintRelease = Input.GetButtonUp(s_sprintButton);
 
-        v2_lookVector.x = Input.GetAxisRaw(s_cameraLookLR);
-        v2_lookVector.y = Input.GetAxisRaw(s_cameraLookUD);
+        v2_lookVector.x = Input.GetAxis(s_cameraLookLR);
+        v2_lookVector.y = Input.GetAxis(s_cameraLookUD);
 
         toolBools.b_MToolDown = Input.GetButtonDown(s_mobilityUse);
         toolBools.b_MToolHold = Input.GetButton(s_mobilityUse);
