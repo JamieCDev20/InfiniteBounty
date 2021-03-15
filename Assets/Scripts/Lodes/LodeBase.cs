@@ -10,8 +10,7 @@ public class LodeBase : Enemy, IHitable
     //[SerializeField] private int i_nuggetToSpawn;
     [SerializeField] private int i_nuggetsPerBurst;
     [SerializeField] private float f_nuggetForce;
-    [SerializeField] private int[] iA_healthIntervals = new int[3];
-    [SerializeField] private GameObject[] goA_damageMeshes = new GameObject[3];
+    private List<int> iL_healthIntervals = new List<int>();
     [Space, SerializeField] private bool b_isNetworkedObject;
     [SerializeField] private string s_path;
     [SerializeField] private MeshRenderer mr_mainRenderer;
@@ -31,10 +30,17 @@ public class LodeBase : Enemy, IHitable
 
     protected override void Start()
     {
-        nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 3)];
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * transform.localScale.y);
+        for (int i = 0; i < i_maxHealth; i++)
+        {
+            iL_healthIntervals.Add(i_maxHealth - (25 * i));
+        }
+
+        nuggets = new NugGO[i_nuggetsPerBurst * ((i_maxHealth / 25) + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
         as_source = GetComponent<AudioSource>();
+
 
         //if (mr_mainRenderer)
         //   mr_mainRenderer.material.SetFloat("_emissionMult", f_baseEmission);
@@ -82,9 +88,9 @@ public class LodeBase : Enemy, IHitable
     private void CheckHealth()
     {
 
-        for (int i = 0; i < iA_healthIntervals.Length; i++)
+        for (int i = 0; i < iL_healthIntervals.Count; i++)
         {
-            if (i_currentHealth <= iA_healthIntervals[i])
+            if (i_currentHealth <= iL_healthIntervals[i])
             {
                 p_chunkEffect.Play();
                 if (PhotonNetwork.IsMasterClient)
@@ -101,8 +107,8 @@ public class LodeBase : Enemy, IHitable
                 }
                 if (as_source != null)
                     as_source.PlayOneShot(ac_takeDamageClip);
-                goA_damageMeshes[i].SetActive(false);
-                iA_healthIntervals[i] = -10000000;
+
+                iL_healthIntervals.RemoveAt(i);
             }
         }
         if (i_currentHealth <= 0) Death();
