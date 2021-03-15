@@ -129,13 +129,13 @@ public class HUDController : MonoBehaviour
 
     public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth)
     {
+        for (int i = 0; i < goA_healthBarParents.Length; i++)
+            goA_healthBarParents[i].SetActive(false);
+
         if (iiD_idMap.Count <= 0)
             return;
-        try
-        {
-            goA_healthBarParents[iiD_idMap[id]].SetActive(true);
-        }
-        catch { }
+
+        goA_healthBarParents[iiD_idMap[id]].SetActive(true);
 
         rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)_i_currentHealth / 100, 1, 1);
         tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;
