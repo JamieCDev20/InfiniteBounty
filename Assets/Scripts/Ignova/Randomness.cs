@@ -68,12 +68,15 @@ public class Randomness : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void SpawnLodes(int seed)
+    private IEnumerator SpawnLodes(int seed)
     {
         print("Spawning Lodes");
 
         for (int i = 0; i < ldzA_zoneSpawns.Length; i++)
+        {
+            yield return new WaitForEndOfFrame();
             ldzA_zoneSpawns[i].SpawnLode(this, seed);
+        }
 
 
     }
