@@ -92,6 +92,7 @@ public class LodeBase : Enemy, IHitable
 
     private void CheckHealth()
     {
+        as_source.PlayOneShot(ac_takeDamageClip);
 
         for (int i = 0; i < iL_healthIntervals.Count; i++)
             if (i_currentHealth <= iL_healthIntervals[i])
