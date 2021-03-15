@@ -35,7 +35,7 @@ public class BossAI : AIBase
         SequencerNode _s = new SequencerNode(_q_canAttack, AttackDefine());
 
         tree = new BehaviourTree(_s);
-        Invoke(nameof(StartAttacking), 6);
+        Invoke(nameof(StartAttacking), 10);
     }
     private void StartAttacking()
     {
@@ -114,7 +114,7 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.6f;
+        return Random.value < 0.7f;
     }
 
     private void DoHomingAttack()
@@ -191,37 +191,42 @@ public class BossAI : AIBase
 
     private void MoveAttack()
     {
-        photonView.RPC(nameof(MoveAttack), RpcTarget.All, PickTargetPosition(), Random.Range(1f, 5f));
+        if (b_canAttack)
+            photonView.RPC(nameof(MoveAttack), RpcTarget.All, PickTargetPosition());
     }
 
     [PunRPC]
-    private void MoveAttack(Vector3 _v_newPos, float _f_timeToWait)
+    private void MoveAttack(Vector3 _v_newPos)
     {
         b_canAttack = false;
         if (PhotonNetwork.IsMasterClient)
+        {
             photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
-
-        StartCoroutine(TimedMove(_v_newPos, _f_timeToWait));
+            StartCoroutine(TimedMove(_v_newPos));
+        }
     }
-    private IEnumerator TimedMove(Vector3 _v_newPos, float _f_timeToWait)
+    private IEnumerator TimedMove(Vector3 _v_newPos)
     {
+        b_canAttack = false;
         anim.SetBool("Emerging", false);
-        anim.SetBool("Submerging", true);    
+        anim.SetBool("Submerging", true);
 
-        yield return new WaitForSeconds(_f_timeToWait - 1);
+        yield return new WaitForSeconds(4);
 
         go_movementTelegraph.transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
-        yield return new WaitForSeconds(2);
+        transform.position = new Vector3(_v_newPos.x, -100, _v_newPos.z);
 
-        anim.SetBool("Submerging", false);
+        yield return new WaitForSeconds(2);
         transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
+        anim.SetBool("Submerging", false);
+        anim.SetBool("Emerging", true);
+
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             if (_cA[i].transform.root != transform)
                 _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
 
-        anim.SetBool("Emerging", true);
         go_movementTelegraph.transform.position = Vector3.down * 100;
 
         if (PhotonNetwork.IsMasterClient)
