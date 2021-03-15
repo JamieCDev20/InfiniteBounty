@@ -21,6 +21,10 @@ public class LodeSpawnZone : MonoBehaviour
 
     internal void SpawnLode(Randomness _random, int seed)
     {
+        StartCoroutine(ActualPawnLodes(_random, seed));
+    }
+    private IEnumerator ActualPawnLodes(Randomness _random, int seed)
+    {
         Random.InitState(seed);
         GameObject _go_lode;
         int _i_lodeCount = Random.Range(vi_numberOfLodes.x, vi_numberOfLodes.y);
@@ -30,6 +34,7 @@ public class LodeSpawnZone : MonoBehaviour
             RaycastHit hit;
             for (int x = 0; x < _i_lodeCount; x++)
             {
+                yield return new WaitForEndOfFrame();
                 transform.localEulerAngles = new Vector3(Random.Range(-85, 85), Random.Range(-85, 85), 0);
 
                 if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer, QueryTriggerInteraction.Ignore))

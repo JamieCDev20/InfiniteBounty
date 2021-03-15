@@ -73,7 +73,7 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < ldzA_zoneSpawns.Length; i++)
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.5f);
             ldzA_zoneSpawns[i].SpawnLode(this, seed);
         }
 
