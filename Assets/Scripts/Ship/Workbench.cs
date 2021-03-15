@@ -43,10 +43,14 @@ public class Workbench : SubjectBase, IInteractible
     public void Init(SaveManager _sm)
     {
         saveMan = _sm;
-        foreach (ToolLoader too in FindObjectsOfType<ToolLoader>())
-            if (too.name.Contains("Weapon"))
-                tl = too;
         tl.LoadTools(transform);
+        if(wt_toolsInHand.Count > 0)
+        {
+            if (wt_toolsInHand[0] != null)
+                tl.GetPrefabTool(wt_toolsInHand[0].ToolID).SetActive(true);
+            else if (wt_toolsInHand[1] != null)
+                tl.GetPrefabTool(wt_toolsInHand[1].ToolID).SetActive(true);
+        }
         AddObserver(saveMan);
         apd.Init();
     }
@@ -158,7 +162,10 @@ public class Workbench : SubjectBase, IInteractible
     private void DisplayWeapon()
     {
         if (tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
+        {
             tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(true);
+            Debug.Log("GlarBooble");
+        }
     }
 
     private void UndisplayWeapon()

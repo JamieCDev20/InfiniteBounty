@@ -334,6 +334,16 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 string jsonData = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, jsonData);
                 break;
+            case RemoveAugmentEvent rae:
+                saveData.purchasedAugments = Utils.OrderedRemove<Augment>(saveData.purchasedAugments, rae.augIndex);
+                string removedPurchaseData = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, removedPurchaseData);
+                break;
+            case AddAugmentEvent aae:
+                saveData.purchasedAugments = Utils.AddToArray<Augment>(saveData.purchasedAugments, aae.augToAdd);
+                string addedPurchaseData = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, addedPurchaseData);
+                break;
         }
     }
 
