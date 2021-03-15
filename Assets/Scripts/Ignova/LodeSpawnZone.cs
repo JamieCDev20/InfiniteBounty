@@ -39,7 +39,7 @@ public class LodeSpawnZone : MonoBehaviour
 
                 if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer, QueryTriggerInteraction.Ignore))
                 {
-                    if (!hit.transform.name.Contains(s_namesToIgnore))
+                    if (!hit.transform.name.Contains(s_namesToIgnore) && !hit.transform.name.Contains("Lode"))
                     {
                         _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)]);
                         _go_lode.transform.position = hit.point;
