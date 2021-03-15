@@ -48,6 +48,7 @@ public class KillBox : MonoBehaviour
             DealDamage();
 
     }
+    /*
 
     private void OnTriggerEnter(Collider other)
     {
@@ -69,6 +70,7 @@ public class KillBox : MonoBehaviour
         if (hL_thingsWithinCloud.Contains(_h))
             hL_thingsWithinCloud.Remove(_h);
     }
+    */
 
     private void OnCollisionEnter(Collision collision)
     {
