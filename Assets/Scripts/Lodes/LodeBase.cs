@@ -95,19 +95,9 @@ public class LodeBase : Enemy, IHitable
                 p_chunkEffect.Play();
                 transform.localScale *= 0.95f;
 
-                
-
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    for (int j = 0; j < i_nuggetsPerBurst; j++)
-                    {
-                        float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-                        int newSeed = Mathf.RoundToInt(Random.value * 10000);
-
-                        NuggetBurst(newSeed, v);
-                        view.RPC("NuggetBurst", RpcTarget.Others, newSeed, v);
-
-                    }
+                    view.RPC(nameof(SpawnNuggs), RpcTarget.All, Mathf.RoundToInt(Random.value * 10000));
                 }
                 if (as_source != null)
                     as_source.PlayOneShot(ac_takeDamageClip);
@@ -123,35 +113,13 @@ public class LodeBase : Enemy, IHitable
     }
 
     [PunRPC]
-    internal override void Death()
+    public void SpawnNuggs(int newSeed)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (burst)
-            {
-                for (int i = 0; i < i_nuggetsPerBurst; i++)
-                {
-                    float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-                    int newSeed = Mathf.RoundToInt(Random.value * 10000);
-                    NuggetBurst(newSeed, v);
-                    view.RPC("NuggetBurst", RpcTarget.Others, newSeed, v);
-
-                }
-
-            }
-            burst = true;
-            //RPC death function so that all instances of a lode die together
-            view.RPC("Death", RpcTarget.Others);
-        }
-
-        p_chunkEffect.Play();
-
-        AudioSource.PlayClipAtPoint(ac_destroyedClip, transform.position);
-        gameObject.SetActive(false);
+        for (int j = 0; j < i_nuggetsPerBurst; j++)
+            NuggetBurst(newSeed);
     }
 
-    [PunRPC]
-    private void NuggetBurst(int _seed, params float[] v)
+    private void NuggetBurst(int _seed)
     {
         //Nick and byron did this
         Random.InitState(_seed);
@@ -162,14 +130,39 @@ public class LodeBase : Enemy, IHitable
         nugCount += 1;
         _go_nugget.SetActive(true);
         _go_nugget.transform.parent = null;
-        _go_nugget.transform.position = transform.position + transform.localScale * (-1 + v[0] * 2) + Vector3.up;
+        _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2) + Vector3.up;
         //_go_nugget.transform.localScale = Vector3.one;
         Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
-        _rb.AddForce(new Vector3(-1 + v[1] * 2, v[2] * 2, -1 + v[3] * 2) * f_nuggetForce, ForceMode.Impulse);
-        _go_nugget.transform.rotation = new Quaternion(v[4], v[5], v[6], v[7]);
+        _rb.AddForce(new Vector3(-1 + Random.value * 2, Random.value * 2, -1 + Random.value * 2) * f_nuggetForce, ForceMode.Impulse);
+        _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
 
     }
 
+    [PunRPC]
+    internal override void Death()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (burst)
+            {
+                for (int i = 0; i < i_nuggetsPerBurst; i++)
+                {
+                    int newSeed = Mathf.RoundToInt(Random.value * 10000);
+
+                    view.RPC(nameof(NuggetBurst), RpcTarget.Others, newSeed);
+                }
+
+            }
+            burst = true;
+            //RPC death function so that all instances of a lode die together
+            view.RPC(nameof(Death), RpcTarget.Others);
+        }
+
+        p_chunkEffect.Play();
+
+        AudioSource.PlayClipAtPoint(ac_destroyedClip, transform.position);
+        gameObject.SetActive(false);
+    }
     public GameObject GetGameObject()
     {
         return gameObject;
