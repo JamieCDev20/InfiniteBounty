@@ -22,6 +22,8 @@ public class LodeBase : Enemy, IHitable
     private PhotonView view;
     private NugGO[] nuggets;
     [SerializeField] private ParticleSystem p_chunkEffect;
+    private List<int> iL_chunkableThreshold = new List<int>();
+    [SerializeField] private GameObject[] goA_chunkables = new GameObject[0];
 
     [Header("Audio")]
     [SerializeField] private AudioClip ac_takeDamageClip;
@@ -32,9 +34,11 @@ public class LodeBase : Enemy, IHitable
     {
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * transform.localScale.y);
         for (int i = 0; i < i_maxHealth; i++)
-        {
             iL_healthIntervals.Add(i_maxHealth - (25 * i));
-        }
+
+        for (int i = 0; i < goA_chunkables.Length; i++)
+            iL_chunkableThreshold.Add((i_maxHealth / goA_chunkables.Length) * i);
+
 
         nuggets = new NugGO[i_nuggetsPerBurst * ((i_maxHealth / 25) + 3)];
         base.Start();
@@ -89,11 +93,10 @@ public class LodeBase : Enemy, IHitable
     {
 
         for (int i = 0; i < iL_healthIntervals.Count; i++)
-        {
             if (i_currentHealth <= iL_healthIntervals[i])
             {
                 p_chunkEffect.Play();
-                transform.localScale *= 0.95f;
+                transform.localScale *= 0.97f;
 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -104,7 +107,13 @@ public class LodeBase : Enemy, IHitable
 
                 iL_healthIntervals.RemoveAt(i);
             }
-        }
+
+        for (int i = 0; i < iL_chunkableThreshold.Count; i++)
+            if (i_currentHealth <= iL_chunkableThreshold[i])
+            {
+                goA_chunkables[i].SetActive(false);
+            }
+
         if (i_currentHealth <= 0) Death();
 
         if (mr_mainRenderer)
@@ -184,24 +193,9 @@ public class LodeBase : Enemy, IHitable
         return s_path;
     }
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //Sync your health
-        if (stream.IsWriting)
-        {
-            //stream.SendNext(i_currentHealth);
-        }
-        else
-        {
-            //if(stream.Count > 0)
-            //TakeTrueDamage(i_currentHealth - (int)stream.ReceiveNext(), true);
-        }
-
-    }
-
     public void NugCollected(int id, bool coll)
     {
-        view.RPC("DestroyNug", RpcTarget.All, id, coll);
+        view.RPC(nameof(DestroyNug), RpcTarget.All, id, coll);
     }
 
     [PunRPC]
@@ -214,7 +208,7 @@ public class LodeBase : Enemy, IHitable
 
     public void NugGotHit(int _index, int _dmg, bool _thunderActivate)
     {
-        photonView.RPC("RemoteNugHit", RpcTarget.Others, _index, _dmg, _thunderActivate);
+        photonView.RPC(nameof(RemoteNugHit), RpcTarget.Others, _index, _dmg, _thunderActivate);
     }
 
     [PunRPC]
