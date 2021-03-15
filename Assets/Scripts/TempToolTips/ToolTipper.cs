@@ -28,7 +28,7 @@ public class ToolTipper : MonoBehaviour
         if (b_shouldShow)
             if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10, lm_mask, QueryTriggerInteraction.Ignore))
             {
-                ToolTip _tt_ = hit.transform.GetComponent<ToolTip>();
+                ToolTip _tt_ = hit.collider.transform.GetComponent<ToolTip>();
 
                 if (_tt_)
                 {
