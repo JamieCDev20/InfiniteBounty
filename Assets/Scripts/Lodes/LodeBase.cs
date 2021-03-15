@@ -10,8 +10,7 @@ public class LodeBase : Enemy, IHitable
     //[SerializeField] private int i_nuggetToSpawn;
     [SerializeField] private int i_nuggetsPerBurst;
     [SerializeField] private float f_nuggetForce;
-    [SerializeField] private int[] iA_healthIntervals = new int[3];
-    [SerializeField] private GameObject[] goA_damageMeshes = new GameObject[3];
+    private List<int> iL_healthIntervals = new List<int>();
     [Space, SerializeField] private bool b_isNetworkedObject;
     [SerializeField] private string s_path;
     [SerializeField] private MeshRenderer mr_mainRenderer;
@@ -31,10 +30,17 @@ public class LodeBase : Enemy, IHitable
 
     protected override void Start()
     {
-        nuggets = new NugGO[i_nuggetsPerBurst * (iA_healthIntervals.Length + 3)];
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * transform.localScale.y);
+        for (int i = 0; i < i_maxHealth; i++)
+        {
+            iL_healthIntervals.Add(i_maxHealth - (25 * i));
+        }
+
+        nuggets = new NugGO[i_nuggetsPerBurst * ((i_maxHealth / 25) + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
         as_source = GetComponent<AudioSource>();
+
 
         //if (mr_mainRenderer)
         //   mr_mainRenderer.material.SetFloat("_emissionMult", f_baseEmission);
@@ -82,33 +88,53 @@ public class LodeBase : Enemy, IHitable
     private void CheckHealth()
     {
 
-        for (int i = 0; i < iA_healthIntervals.Length; i++)
+        for (int i = 0; i < iL_healthIntervals.Count; i++)
         {
-            if (i_currentHealth <= iA_healthIntervals[i])
+            if (i_currentHealth <= iL_healthIntervals[i])
             {
                 p_chunkEffect.Play();
+                transform.localScale *= 0.95f;
+
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    for (int j = 0; j < i_nuggetsPerBurst; j++)
-                    {
-                        float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
-                        int newSeed = Mathf.RoundToInt(Random.value * 10000);
-
-                        NuggetBurst(newSeed, v);
-                        view.RPC("NuggetBurst", RpcTarget.Others, newSeed, v);
-
-                    }
+                    view.RPC(nameof(SpawnNuggs), RpcTarget.All, Mathf.RoundToInt(Random.value * 10000));
                 }
                 if (as_source != null)
                     as_source.PlayOneShot(ac_takeDamageClip);
-                goA_damageMeshes[i].SetActive(false);
-                iA_healthIntervals[i] = -10000000;
+
+                iL_healthIntervals.RemoveAt(i);
             }
         }
         if (i_currentHealth <= 0) Death();
 
         if (mr_mainRenderer)
             mr_mainRenderer.material.SetFloat("_emissionMult", (((float)i_currentHealth / i_maxHealth)) * 7.5f);
+
+    }
+
+    [PunRPC]
+    public void SpawnNuggs(int newSeed)
+    {
+        for (int j = 0; j < i_nuggetsPerBurst; j++)
+            NuggetBurst(newSeed);
+    }
+
+    private void NuggetBurst(int _seed)
+    {
+        //Nick and byron did this
+        Random.InitState(_seed);
+
+        GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
+        nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
+        nuggets[nugCount].SetLodeInfo(nugCount, this);
+        nugCount += 1;
+        _go_nugget.SetActive(true);
+        _go_nugget.transform.parent = null;
+        _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2) + Vector3.up;
+        //_go_nugget.transform.localScale = Vector3.one;
+        Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
+        _rb.AddForce(new Vector3(-1 + Random.value * 2, Random.value * 2, -1 + Random.value * 2) * f_nuggetForce, ForceMode.Impulse);
+        _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
 
     }
 
@@ -121,17 +147,15 @@ public class LodeBase : Enemy, IHitable
             {
                 for (int i = 0; i < i_nuggetsPerBurst; i++)
                 {
-                    float[] v = new float[] { Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value, Random.value };
                     int newSeed = Mathf.RoundToInt(Random.value * 10000);
-                    NuggetBurst(newSeed, v);
-                    view.RPC("NuggetBurst", RpcTarget.Others, newSeed, v);
 
+                    view.RPC(nameof(NuggetBurst), RpcTarget.Others, newSeed);
                 }
 
             }
             burst = true;
             //RPC death function so that all instances of a lode die together
-            view.RPC("Death", RpcTarget.Others);
+            view.RPC(nameof(Death), RpcTarget.Others);
         }
 
         p_chunkEffect.Play();
@@ -139,27 +163,6 @@ public class LodeBase : Enemy, IHitable
         AudioSource.PlayClipAtPoint(ac_destroyedClip, transform.position);
         gameObject.SetActive(false);
     }
-
-    [PunRPC]
-    private void NuggetBurst(int _seed, params float[] v)
-    {
-        //Nick and byron did this
-        Random.InitState(_seed);
-
-        GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
-        nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
-        nuggets[nugCount].SetLodeInfo(nugCount, this);
-        nugCount += 1;
-        _go_nugget.SetActive(true);
-        _go_nugget.transform.parent = null;
-        _go_nugget.transform.position = transform.position + transform.localScale * (-1 + v[0] * 2) + Vector3.up;
-        //_go_nugget.transform.localScale = Vector3.one;
-        Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
-        _rb.AddForce(new Vector3(-1 + v[1] * 2, v[2] * 2, -1 + v[3] * 2) * f_nuggetForce, ForceMode.Impulse);
-        _go_nugget.transform.rotation = new Quaternion(v[4], v[5], v[6], v[7]);
-
-    }
-
     public GameObject GetGameObject()
     {
         return gameObject;

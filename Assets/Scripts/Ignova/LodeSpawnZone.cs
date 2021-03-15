@@ -7,6 +7,7 @@ public class LodeSpawnZone : MonoBehaviour
     internal float f_zoneRadius;
     [SerializeField] private Vector2Int vi_numberOfLodes;
     [SerializeField] private GameObject[] goA_lodesTypesToSpawn;
+    [SerializeField] private Vector2 v_lodeSize = new Vector2(0.5f, 2);
 
     [Header("Raycast Things")]
     [SerializeField] private bool b_doRayCastSpawning;
@@ -39,6 +40,7 @@ public class LodeSpawnZone : MonoBehaviour
                         _go_lode.transform.position = hit.point;
                         _go_lode.transform.up = hit.normal;
                         _go_lode.transform.Rotate(Vector3.up * Random.Range(0, 360), Space.Self);
+                        _go_lode.transform.localScale = Vector3.one * Random.Range(v_lodeSize.x, v_lodeSize.y);
                         _random.LodeSpawned(_go_lode);
                     }
                     else x--;
