@@ -24,6 +24,7 @@ public class LodeBase : Enemy, IHitable
     [SerializeField] private ParticleSystem p_chunkEffect;
     private List<int> iL_chunkableThreshold = new List<int>();
     [SerializeField] private GameObject[] goA_chunkables = new GameObject[0];
+    [SerializeField] private int i_damageBetweenBursts = 35;
 
     [Header("Audio")]
     [SerializeField] private AudioClip ac_takeDamageClip;
@@ -34,13 +35,13 @@ public class LodeBase : Enemy, IHitable
     {
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * transform.localScale.y);
         for (int i = 0; i < i_maxHealth; i++)
-            iL_healthIntervals.Add(i_maxHealth - (25 * i));
+            iL_healthIntervals.Add(i_maxHealth - (i_damageBetweenBursts * i));
 
         for (int i = 0; i < goA_chunkables.Length; i++)
             iL_chunkableThreshold.Add((i_maxHealth / goA_chunkables.Length) * i);
 
 
-        nuggets = new NugGO[i_nuggetsPerBurst * ((i_maxHealth / 25) + 3)];
+        nuggets = new NugGO[i_nuggetsPerBurst * ((i_maxHealth / i_damageBetweenBursts) + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
         as_source = GetComponent<AudioSource>();

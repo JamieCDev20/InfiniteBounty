@@ -77,6 +77,7 @@ public class Randomness : MonoBehaviourPunCallbacks
             ldzA_zoneSpawns[i].SpawnLode(this, seed);
         }
 
+        print("Finished Spawning Lodes");
 
     }
 
