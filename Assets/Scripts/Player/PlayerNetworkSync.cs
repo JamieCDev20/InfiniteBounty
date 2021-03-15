@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -120,14 +121,20 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     public void SetID(int _id, string _name)
     {
         ID = _id;
-        Debug.Log($"I HAVE AN ID: {_id}");
         Name = _name;
+        Debug.Log($"I HAVE AN ID: {_id}");
         photonView.RPC("SetIDR", RpcTarget.Others, _id, _name);
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        photonView.RPC(nameof(SetIDR), RpcTarget.Others, ID, Name);
     }
 
     [PunRPC]
     public void SetIDR(int _id, string _n)
     {
+        Debug.Log($"I HAVE AN ID: {_id}");
         ID = _id;
         Name = _n;
     }
