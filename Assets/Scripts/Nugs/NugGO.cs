@@ -37,7 +37,6 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         if (other.transform.tag == "Player")
         {
-            Debug.Log($"I HAVE BEEN TRIGGERED BY <b>{other.gameObject.name}</b> at: <b>{transform.position}</b>");
             if (!other.GetComponent<PlayerInputManager>().CanPickUpNugs())
                 return;
 
@@ -88,7 +87,6 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void SetCanDie(bool collected)
     {
-        Debug.Log("Set can die : " + collected);
         b_canBeHit = true;
         b_collected = collected;
     }
@@ -121,6 +119,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
+
         if (!b_canBeHit)
             return;
         if (eO_elem)
@@ -148,7 +147,6 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     IEnumerator DelayedTakeDamage(int damage, bool activatesThunder, float _delay)
     {
         yield return new WaitForSeconds(_delay);
-        Debug.Log("THIS IS PROBABLY IT");
         TakeDamage(damage, activatesThunder);
     }
 
