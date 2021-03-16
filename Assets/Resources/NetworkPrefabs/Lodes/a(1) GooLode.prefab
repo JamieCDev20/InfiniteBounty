@@ -4889,7 +4889,7 @@ GameObject:
   m_TagString: Hittable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 18
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4308096341704676512
 Transform:
@@ -4947,6 +4947,7 @@ MonoBehaviour:
   - {fileID: 7195651418756310513}
   - {fileID: 5880859744841950197}
   - {fileID: 3190549043901032592}
+  i_damageBetweenBursts: 35
   ac_takeDamageClip: {fileID: 8300000, guid: fe6b7f77b5aecc6428ca96e9a23b6c3e, type: 3}
   ac_destroyedClip: {fileID: 8300000, guid: fe6b7f77b5aecc6428ca96e9a23b6c3e, type: 3}
 --- !u!114 &7922576137469366026
@@ -5161,10 +5162,35 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: -4047491188072022937, guid: 9319715905c53b544b43059ebe80c78d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1137413360103276840, guid: 9319715905c53b544b43059ebe80c78d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -750561660283717021, guid: 9319715905c53b544b43059ebe80c78d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9319715905c53b544b43059ebe80c78d,
         type: 3}
       propertyPath: m_Name
       value: GooBreakable
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9319715905c53b544b43059ebe80c78d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4183410302369232642, guid: 9319715905c53b544b43059ebe80c78d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9319715905c53b544b43059ebe80c78d, type: 3}
