@@ -81,8 +81,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424666030068841196}
-  - component: {fileID: 3732754598543361987}
   - component: {fileID: 475322134450509096}
+  - component: {fileID: 5019106464867621779}
   m_Layer: 0
   m_Name: AllLodeSpawns_NugRunv2
   m_TagString: Untagged
@@ -114,20 +114,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3732754598543361987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424666030068841199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b741043184b4944ad4c11fc4ae7b83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomSeed: 1
-  seed: 42
 --- !u!114 &475322134450509096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +136,18 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5019106464867621779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424666030068841199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82b528f3cbd754d4ab14a05113e9d2a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &424666030400322339
 GameObject:
   m_ObjectHideFlags: 0
