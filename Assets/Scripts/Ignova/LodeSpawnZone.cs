@@ -19,39 +19,49 @@ public class LodeSpawnZone : MonoBehaviour
         f_zoneRadius = GetComponent<SphereCollider>().radius;
     }
 
-    internal void SpawnLode(Randomness _random)
+    internal LodeBase[] SpawnLode()
     {
-        StartCoroutine(ActualPawnLodes(_random));
-    }
-    private IEnumerator ActualPawnLodes(Randomness _random)
-    {
-        //Random.InitState(seed);
-        //Debug.LogError("THIS IS MY SEED NOW " + seed);
+        List<LodeBase> _lbL_spawnedLodes = new List<LodeBase>();
         GameObject _go_lode;
         int _i_lodeCount = Random.Range(vi_numberOfLodes.x, vi_numberOfLodes.y);
+        int _i_timeAttempted = 0;
 
         if (b_doRayCastSpawning)
         {
             RaycastHit hit;
             for (int x = 0; x < _i_lodeCount; x++)
             {
-                yield return new WaitForEndOfFrame();
-                transform.localEulerAngles = new Vector3(Random.Range(-85, 85), Random.Range(-85, 85), 0);
+                transform.localEulerAngles = Vector3.zero;
+                transform.Rotate(new Vector3(Random.Range(-85, 85), Random.Range(0, 360), 0), Space.Self);
 
                 if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer, QueryTriggerInteraction.Ignore))
                 {
                     if (!hit.transform.name.Contains(s_namesToIgnore) && !hit.transform.name.Contains("Lode"))
                     {
                         _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)]);
+                        _lbL_spawnedLodes.Add(_go_lode.GetComponent<LodeBase>());
                         _go_lode.transform.position = hit.point;
                         _go_lode.transform.up = hit.normal;
                         _go_lode.transform.Rotate(Vector3.up * Random.Range(0, 360), Space.Self);
                         _go_lode.transform.localScale = Vector3.one * Random.Range(v_lodeSize.x, v_lodeSize.y);
-                        _random.LodeSpawned(_go_lode);
                     }
-                    else x--;
+                    else
+                    {
+                        _i_timeAttempted++;
+                        x--;
+                    }
                 }
-                else x--;
+                else
+                {
+                    _i_timeAttempted++;
+                    x--;
+                }
+
+                if (_i_timeAttempted > 5)
+                {
+                    _i_timeAttempted = 0;
+                    x++;
+                }
             }
         }
         else
@@ -59,9 +69,10 @@ public class LodeSpawnZone : MonoBehaviour
             for (int x = 0; x < _i_lodeCount; x++)
             {
                 _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)], transform);
-                _random.LodeSpawned(_go_lode);
             }
         }
+
+        return _lbL_spawnedLodes.ToArray();
         //print("Done with me seed");
     }
 

@@ -16,9 +16,8 @@ public class LodeBase : Enemy, IHitable
     [SerializeField] private MeshRenderer mr_mainRenderer;
     [SerializeField] private float f_baseEmission = 7.5f;
 
-    private int index;    
+    private int index;
     private bool burst = true;
-    private PhotonView view;
     private List<NugGO> nuggets = new List<NugGO>();
     [SerializeField] private ParticleSystem p_chunkEffect;
     private List<int> iL_chunkableThreshold = new List<int>();
@@ -29,6 +28,7 @@ public class LodeBase : Enemy, IHitable
     [SerializeField] private AudioClip ac_takeDamageClip;
     [SerializeField] private AudioClip ac_destroyedClip;
     private AudioSource as_source;
+    private int i_myID;
 
     protected override void Start()
     {
@@ -42,13 +42,17 @@ public class LodeBase : Enemy, IHitable
 
         //nuggets = new NugGO[i_nuggetsPerBurst * (2*(i_maxHealth / i_damageBetweenBursts) + 3)];
         base.Start();
-        view = GetComponent<PhotonView>();
         as_source = GetComponent<AudioSource>();
 
 
         //if (mr_mainRenderer)
         //   mr_mainRenderer.material.SetFloat("_emissionMult", f_baseEmission);
 
+    }
+
+    public void SetID(int _i_id)
+    {
+        i_myID = _i_id;
     }
 
     public override void TakeDamage(int _i_damage, bool activatesThunder)
@@ -69,8 +73,8 @@ public class LodeBase : Enemy, IHitable
 
         //check if dead and stuff
         if (PhotonNetwork.IsMasterClient)
-            photonView.RPC(nameof(SetHealth), RpcTarget.Others, i_currentHealth);
-        CheckHealth();
+            LodeSynchroniser.x.LodeTookDamage(i_myID, _i_damage);
+
 
     }
 
@@ -100,9 +104,8 @@ public class LodeBase : Enemy, IHitable
                 transform.localScale *= 0.97f;
 
                 if (PhotonNetwork.IsMasterClient)
-                {
-                    view.RPC(nameof(SpawnNuggs), RpcTarget.All, Mathf.RoundToInt(Random.value * 10000));
-                }
+                    LodeSynchroniser.x.SpawnNuggsFromLode(i_myID);
+
                 if (as_source != null)
                     as_source.PlayOneShot(ac_takeDamageClip);
 
@@ -122,7 +125,6 @@ public class LodeBase : Enemy, IHitable
 
     }
 
-    [PunRPC]
     public void SpawnNuggs(int newSeed)
     {
         for (int j = 0; j < i_nuggetsPerBurst; j++)
@@ -132,15 +134,15 @@ public class LodeBase : Enemy, IHitable
     private void NuggetBurst(int _seed)
     {
         //Nick and byron did this
-        Random.InitState(_seed); 
+        Random.InitState(_seed);
         Debug.LogError("THIS IS MY SEED NOW " + _seed);
 
 
         GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
         NugGO ngo = _go_nugget.GetComponent<NugGO>();
         nuggets.Add(ngo);
-        ngo.SetLodeInfo(nuggets.Count -1, this);
-        
+        ngo.SetLodeInfo(nuggets.Count - 1, this);
+
         _go_nugget.SetActive(true);
         _go_nugget.transform.parent = null;
         _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2) + Vector3.up;
@@ -151,25 +153,10 @@ public class LodeBase : Enemy, IHitable
 
     }
 
-    [PunRPC]
+
     internal override void Death()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (burst)
-            {
-                for (int i = 0; i < i_nuggetsPerBurst; i++)
-                {
-                    int newSeed = Mathf.RoundToInt(Random.value * 10000);
-
-                    view.RPC(nameof(SpawnNuggs), RpcTarget.Others, newSeed);
-                }
-
-            }
-            burst = true;
-            //RPC death function so that all instances of a lode die together
-            view.RPC(nameof(Death), RpcTarget.Others);
-        }
+        SpawnNuggs(6750);
 
         p_chunkEffect.Play();
 
@@ -199,10 +186,10 @@ public class LodeBase : Enemy, IHitable
 
     public void NugCollected(int id, bool coll)
     {
-        view.RPC(nameof(DestroyNug), RpcTarget.All, id, coll);
+        LodeSynchroniser.x.DestroyUpNugg(i_myID, id, coll);
     }
 
-    [PunRPC]
+
     public void DestroyNug(int id, bool coll)
     {
         nuggets[id]?.SetCanDie(coll);
@@ -220,6 +207,11 @@ public class LodeBase : Enemy, IHitable
     {
         if (nuggets[_index] != null)
             nuggets[_index].TakeDamageFromRemote(_dmg, _thunderActivate);
+    }
+
+    public int GetHealth()
+    {
+        return i_currentHealth;
     }
 
 }
