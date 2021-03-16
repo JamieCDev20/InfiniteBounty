@@ -20,7 +20,6 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks
     public int RegisterLode(LodeBase l)
     {
         lbL_allLodes.Add(l);
-        Debug.Log(lbL_allLodes.Count - 1);
         return lbL_allLodes.Count - 1;
     }
 
@@ -30,7 +29,6 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks
 
     public void LodeTookDamage(int _i_lodeIndex, int _i_damage)
     {
-        Debug.Log($"{_i_lodeIndex}/{lbL_allLodes.Count}");
         photonView.RPC(nameof(LodeDamageRPC), RpcTarget.All, _i_lodeIndex, lbL_allLodes[_i_lodeIndex].GetHealth() - _i_lodeIndex);
     }
 

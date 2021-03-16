@@ -11,14 +11,14 @@ public class TheOneTrueSpawner : MonoBehaviourPun
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
-            photonView.RPC(nameof(SyncSeed), RpcTarget.All, 1);
+            photonView.RPC(nameof(SyncSeed), RpcTarget.All, Random.Range(0, 999999));
     }
 
     [PunRPC]
     private void SyncSeed(int seed)
     {
         Debug.Log("seeding");
-        Random.InitState(1);
+        Random.InitState(seed);
         DoASpawn();
 
     }

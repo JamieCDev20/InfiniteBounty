@@ -23,7 +23,7 @@ public class LodeSpawnZone : MonoBehaviour
     {
         List<LodeBase> _lbL_spawnedLodes = new List<LodeBase>();
         GameObject _go_lode;
-        int _i_lodeCount = 1;// UnityEngine.Random.Range(vi_numberOfLodes.x, vi_numberOfLodes.y);
+        int _i_lodeCount = UnityEngine.Random.Range(vi_numberOfLodes.x, vi_numberOfLodes.y);
         int _i_timeAttempted = 0;
 
         if (b_doRayCastSpawning)
@@ -32,12 +32,11 @@ public class LodeSpawnZone : MonoBehaviour
             for (int x = 0; x < _i_lodeCount; x++)
             {
                 transform.localEulerAngles = Vector3.zero;
-                transform.Rotate(new Vector3(UnityEngine.Random.Range(-85, 85), UnityEngine.Random.Range(0, 360), 0), Space.Self);
+                transform.Rotate(new Vector3(UnityEngine.Random.Range(-85, 85), UnityEngine.Random.Range(0, 360), 0), Space.World);
                 //Debug.Log(transform.eulerAngles + " | " + x);
 
                 if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer, QueryTriggerInteraction.Ignore))
                 {
-                    Debug.Log(hit.collider.name + " | " + (!hit.transform.name.Contains(s_namesToIgnore) && !hit.transform.name.Contains("Lode")));
                     if (!hit.transform.name.Contains(s_namesToIgnore) && !hit.transform.name.Contains("Lode"))
                     {
                         _go_lode = Instantiate(goA_lodesTypesToSpawn[UnityEngine.Random.Range(0, goA_lodesTypesToSpawn.Length)]);
@@ -53,20 +52,22 @@ public class LodeSpawnZone : MonoBehaviour
                     }
                     else
                     {
-                        _i_timeAttempted++;                        
+                        _i_timeAttempted++;
+                        x--;
                     }
                 }
                 else
                 {
-                    _i_timeAttempted++;                    
+                    _i_timeAttempted++;
+                    x--;
                 }
-                /*
+
                 if (_i_timeAttempted > 5)
                 {
                     _i_timeAttempted = 0;
                     x++;
                 }
-                */
+
             }
         }
         else
