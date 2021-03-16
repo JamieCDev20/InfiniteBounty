@@ -33,9 +33,11 @@ public class LodeSpawnZone : MonoBehaviour
             {
                 transform.localEulerAngles = Vector3.zero;
                 transform.Rotate(new Vector3(Random.Range(-85, 85), Random.Range(0, 360), 0), Space.Self);
+                //Debug.Log(transform.eulerAngles + " | " + x);
 
                 if (Physics.Raycast(transform.position, -transform.forward, out hit, f_zoneRadius, lm_lodeSpawnLayer, QueryTriggerInteraction.Ignore))
                 {
+                    //Debug.Log(hit.collider.name + " | " + (!hit.transform.name.Contains(s_namesToIgnore) && !hit.transform.name.Contains("Lode")));
                     if (!hit.transform.name.Contains(s_namesToIgnore) && !hit.transform.name.Contains("Lode"))
                     {
                         _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)]);
@@ -71,7 +73,6 @@ public class LodeSpawnZone : MonoBehaviour
                 _go_lode = Instantiate(goA_lodesTypesToSpawn[Random.Range(0, goA_lodesTypesToSpawn.Length)], transform);
             }
         }
-
         return _lbL_spawnedLodes.ToArray();
         //print("Done with me seed");
     }
