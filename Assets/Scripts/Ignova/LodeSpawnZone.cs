@@ -25,8 +25,8 @@ public class LodeSpawnZone : MonoBehaviour
     }
     private IEnumerator ActualPawnLodes(Randomness _random, int seed)
     {
-        Random.InitState(seed);
-        Debug.LogError("THIS IS MY SEED NOW " + seed);
+        //Random.InitState(seed);
+        //Debug.LogError("THIS IS MY SEED NOW " + seed);
         GameObject _go_lode;
         int _i_lodeCount = Random.Range(vi_numberOfLodes.x, vi_numberOfLodes.y);
 
@@ -62,7 +62,7 @@ public class LodeSpawnZone : MonoBehaviour
                 _random.LodeSpawned(_go_lode);
             }
         }
-        print("Done with me seed");
+        //print("Done with me seed");
     }
 
 }

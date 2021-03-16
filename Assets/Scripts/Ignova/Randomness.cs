@@ -60,6 +60,12 @@ public class Randomness : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    public void SetSeed(int seed)
+    {
+        Random.InitState(seed);
+    }
+
+    [PunRPC]
     private IEnumerator SpawnLodes(int seed)
     {
         print("Spawning Lodes");
