@@ -44,10 +44,9 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         photonView.RPC(nameof(SetSeed), RpcTarget.All, seed);
 
-        //Debug.Log("Seed: " + seed);
 
         //spawn the lodes        
-        photonView.RPC(nameof(SpawnLodes), RpcTarget.All, seed);
+        photonView.RPC(nameof(SpawnLodes), RpcTarget.All);
 
     }
 
@@ -65,19 +64,19 @@ public class Randomness : MonoBehaviourPunCallbacks
     public void SetSeed(int seed)
     {
         Random.InitState(seed);
+        Debug.Log("Seed: " + seed);
     }
 
     [PunRPC]
-    private IEnumerator SpawnLodes(int seed)
+    private IEnumerator SpawnLodes()
     {
         print("Spawning Lodes");
 
         for (int i = 0; i < ldzA_zoneSpawns.Length; i++)
         {
             yield return new WaitForSeconds(0.1f);
-            ldzA_zoneSpawns[i].SpawnLode(this, seed);
+            ldzA_zoneSpawns[i].SpawnLode(this);
         }
-        print(seed);
 
         print("Finished Spawning Lodes");
 

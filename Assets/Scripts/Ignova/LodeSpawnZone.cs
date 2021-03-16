@@ -19,11 +19,11 @@ public class LodeSpawnZone : MonoBehaviour
         f_zoneRadius = GetComponent<SphereCollider>().radius;
     }
 
-    internal void SpawnLode(Randomness _random, int seed)
+    internal void SpawnLode(Randomness _random)
     {
-        StartCoroutine(ActualPawnLodes(_random, seed));
+        StartCoroutine(ActualPawnLodes(_random));
     }
-    private IEnumerator ActualPawnLodes(Randomness _random, int seed)
+    private IEnumerator ActualPawnLodes(Randomness _random)
     {
         //Random.InitState(seed);
         //Debug.LogError("THIS IS MY SEED NOW " + seed);

@@ -81,6 +81,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     public void GigaGeysersRPC(int _i_seed)
     {
         Random.InitState(_i_seed);
+        Debug.LogError("MY SEED IS " + _i_seed);
 
         RaycastHit _hit;
 
