@@ -16,11 +16,10 @@ public class LodeBase : Enemy, IHitable
     [SerializeField] private MeshRenderer mr_mainRenderer;
     [SerializeField] private float f_baseEmission = 7.5f;
 
-    private int index;
-    private int nugCount;
+    private int index;    
     private bool burst = true;
     private PhotonView view;
-    private NugGO[] nuggets;
+    private List<NugGO> nuggets = new List<NugGO>();
     [SerializeField] private ParticleSystem p_chunkEffect;
     private List<int> iL_chunkableThreshold = new List<int>();
     [SerializeField] private GameObject[] goA_chunkables = new GameObject[0];
@@ -41,7 +40,7 @@ public class LodeBase : Enemy, IHitable
             iL_chunkableThreshold.Add((i_maxHealth / goA_chunkables.Length) * i);
 
 
-        nuggets = new NugGO[i_nuggetsPerBurst * (2*(i_maxHealth / i_damageBetweenBursts) + 3)];
+        //nuggets = new NugGO[i_nuggetsPerBurst * (2*(i_maxHealth / i_damageBetweenBursts) + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
         as_source = GetComponent<AudioSource>();
@@ -136,9 +135,10 @@ public class LodeBase : Enemy, IHitable
         Random.InitState(_seed);
 
         GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
-        nuggets[nugCount] = _go_nugget.GetComponent<NugGO>();
-        nuggets[nugCount].SetLodeInfo(nugCount, this);
-        nugCount += 1;
+        NugGO ngo = _go_nugget.GetComponent<NugGO>();
+        nuggets.Add(ngo);
+        ngo.SetLodeInfo(nuggets.Count -1, this);
+        
         _go_nugget.SetActive(true);
         _go_nugget.transform.parent = null;
         _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2) + Vector3.up;
