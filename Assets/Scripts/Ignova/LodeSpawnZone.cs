@@ -71,6 +71,8 @@ public class LodeSpawnZone : MonoBehaviour
             for (int x = 0; x < _i_lodeCount; x++)
             {
                 _go_lode = Instantiate(goA_lodesTypesToSpawn[UnityEngine.Random.Range(0, goA_lodesTypesToSpawn.Length)], transform);
+                LodeBase l = _go_lode.GetComponent<LodeBase>();
+                l.SetID(LodeSynchroniser.x.RegisterLode(l));
             }
         }
         return _lbL_spawnedLodes.ToArray();

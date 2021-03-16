@@ -15,28 +15,12 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks
         x = this;
     }
 
-    private void Start()
-    {
-        if (PhotonNetwork.IsMasterClient)
-            photonView.RPC(nameof(SpawnLodes), RpcTarget.All, Random.Range(0, 999999));
-    }
-
     #region Lode Spawning
 
-    [PunRPC]
-    private void SpawnLodes(int seed)
+    public int RegisterLode(LodeBase l)
     {
-        Random.InitState(seed);
-        //yield return new WaitForEndOfFrame();
-
-        foreach (LodeSpawnZone item in FindObjectsOfType<LodeSpawnZone>())
-        {
-            //yield return new WaitForEndOfFrame();
-            lbL_allLodes.AddRange(item.SpawnLode());
-        }
-
-        for (int i = 0; i < lbL_allLodes.Count; i++)
-            lbL_allLodes[i].SetID(i);
+        lbL_allLodes.Add(l);
+        return lbL_allLodes.Count - 1;
     }
 
     #endregion
