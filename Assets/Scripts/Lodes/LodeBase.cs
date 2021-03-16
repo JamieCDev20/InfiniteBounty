@@ -160,7 +160,7 @@ public class LodeBase : Enemy, IHitable
                 {
                     int newSeed = Mathf.RoundToInt(Random.value * 10000);
 
-                    view.RPC(nameof(NuggetBurst), RpcTarget.Others, newSeed);
+                    view.RPC(nameof(SpawnNuggs), RpcTarget.Others, newSeed);
                 }
 
             }
