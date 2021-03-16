@@ -164,6 +164,7 @@ public class BossAI : AIBase
         if (PhotonNetwork.IsMasterClient)
         {
             Random.InitState(_i_seed);
+
             p_mortarParticle.Play();
             yield return new WaitForSeconds(2);
 

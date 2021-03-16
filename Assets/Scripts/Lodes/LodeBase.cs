@@ -132,7 +132,9 @@ public class LodeBase : Enemy, IHitable
     private void NuggetBurst(int _seed)
     {
         //Nick and byron did this
-        Random.InitState(_seed);
+        Random.InitState(_seed); 
+        Debug.LogError("THIS IS MY SEED NOW " + _seed);
+
 
         GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);
         NugGO ngo = _go_nugget.GetComponent<NugGO>();

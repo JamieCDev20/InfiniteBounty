@@ -40,6 +40,8 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         //sew that seed into the fabrik of reality
         Random.InitState(seed);
+        Debug.LogError("THIS IS MY SEED NOW " + seed);
+
         //Debug.Log("Seed: " + seed);
 
         //spawn the lodes        
