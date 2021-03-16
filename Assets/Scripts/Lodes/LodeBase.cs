@@ -41,7 +41,7 @@ public class LodeBase : Enemy, IHitable
             iL_chunkableThreshold.Add((i_maxHealth / goA_chunkables.Length) * i);
 
 
-        nuggets = new NugGO[i_nuggetsPerBurst * ((i_maxHealth / i_damageBetweenBursts) + 3)];
+        nuggets = new NugGO[i_nuggetsPerBurst * (2*(i_maxHealth / i_damageBetweenBursts) + 3)];
         base.Start();
         view = GetComponent<PhotonView>();
         as_source = GetComponent<AudioSource>();

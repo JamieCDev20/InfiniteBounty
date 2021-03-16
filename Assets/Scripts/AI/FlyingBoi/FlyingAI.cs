@@ -77,7 +77,7 @@ public class FlyingAI : AIBase
 
         SequencerNode getHas = new SequencerNode(get, has);
 
-        Debug.Log(getHas.GetChildren().Length);
+        //Debug.Log(getHas.GetChildren().Length);
 
         SelectorNode hgh = new SelectorNode(has, getHas);
         return hgh;
