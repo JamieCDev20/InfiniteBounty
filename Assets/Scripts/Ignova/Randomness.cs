@@ -44,7 +44,7 @@ public class Randomness : MonoBehaviourPunCallbacks
         //Debug.Log("Seed: " + seed);
 
         //spawn the lodes        
-        photonView.RPC("SpawnLodes", RpcTarget.All, seed);
+        photonView.RPC(nameof(SpawnLodes), RpcTarget.All, seed);
 
     }
 
@@ -76,6 +76,7 @@ public class Randomness : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(0.1f);
             ldzA_zoneSpawns[i].SpawnLode(this, seed);
         }
+        print(seed);
 
         print("Finished Spawning Lodes");
 
