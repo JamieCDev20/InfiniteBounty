@@ -67,15 +67,9 @@ public class LodeBase : Enemy, IHitable
 
     public void TakeTrueDamage(int _i_damage)
     {
-
-        //this is the networked take damage func, this is called by the host to sync health
-        i_currentHealth -= _i_damage;
-
         //check if dead and stuff
         if (PhotonNetwork.IsMasterClient)
             LodeSynchroniser.x.LodeTookDamage(i_myID, _i_damage);
-
-
     }
 
     [PunRPC]
@@ -83,7 +77,7 @@ public class LodeBase : Enemy, IHitable
     {
         //it's a psuedo set health func so that thresholds are still respected
         //Debug.Log("SettingHealth");
-        TakeTrueDamage(i_currentHealth - health);
+        i_currentHealth = health;
         CheckHealth();
 
     }
@@ -135,7 +129,7 @@ public class LodeBase : Enemy, IHitable
     {
         //Nick and byron did this
         Random.InitState(_seed);
-        Debug.LogError("THIS IS MY SEED NOW " + _seed);
+        //Debug.LogError("THIS IS MY SEED NOW " + _seed);
 
 
         GameObject _go_nugget = PoolManager.x.SpawnObject(go_nuggetPrefab, transform.position, transform.rotation);

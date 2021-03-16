@@ -77,7 +77,7 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks
     [PunRPC]
     internal void NuggRPC(int lodeID, int nugid, bool collected)
     {
-        lbL_allLodes[lodeID].NugCollected(nugid, collected);
+        lbL_allLodes[lodeID].DestroyNug(nugid, collected);
     }
 
     #endregion
