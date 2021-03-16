@@ -42,7 +42,10 @@ public class LodeSpawnZone : MonoBehaviour
                     {
                         _go_lode = Instantiate(goA_lodesTypesToSpawn[UnityEngine.Random.Range(0, goA_lodesTypesToSpawn.Length)]);
                         Debug.Log("spawned");
+
                         _lbL_spawnedLodes.Add(_go_lode.GetComponent<LodeBase>());
+                        LodeBase l = _go_lode.GetComponent<LodeBase>();
+                        l.SetID(LodeSynchroniser.x.RegisterLode(l));
                         _go_lode.transform.position = hit.point;
                         _go_lode.transform.up = hit.normal;
                         _go_lode.transform.Rotate(Vector3.up * UnityEngine.Random.Range(0, 360), Space.Self);
@@ -71,8 +74,6 @@ public class LodeSpawnZone : MonoBehaviour
             for (int x = 0; x < _i_lodeCount; x++)
             {
                 _go_lode = Instantiate(goA_lodesTypesToSpawn[UnityEngine.Random.Range(0, goA_lodesTypesToSpawn.Length)], transform);
-                LodeBase l = _go_lode.GetComponent<LodeBase>();
-                l.SetID(LodeSynchroniser.x.RegisterLode(l));
             }
         }
         return _lbL_spawnedLodes.ToArray();
