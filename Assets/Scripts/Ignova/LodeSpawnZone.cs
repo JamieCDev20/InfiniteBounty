@@ -62,6 +62,7 @@ public class LodeSpawnZone : MonoBehaviour
                 _random.LodeSpawned(_go_lode);
             }
         }
+        print("Done with me seed");
     }
 
 }
