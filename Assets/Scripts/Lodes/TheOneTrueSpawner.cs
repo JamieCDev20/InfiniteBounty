@@ -19,18 +19,18 @@ public class TheOneTrueSpawner : MonoBehaviourPun
     {
         Debug.Log("seeding");
         Random.InitState(1);
-        StartCoroutine(DoASpawn());
+        DoASpawn();
 
     }
 
-    IEnumerator DoASpawn()
+    private void DoASpawn()
     {
         for (int i = 0; i < lszA_zones.Length; i++)
         {
             lszA_zones[i].SpawnLode();
             //Debug.LogError("done with: " + lszA_zones[i].gameObject.name + " #" + i);
         }
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
         Debug.Log("done");
     }
 
