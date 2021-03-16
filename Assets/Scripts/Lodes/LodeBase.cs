@@ -193,7 +193,7 @@ public class LodeBase : Enemy, IHitable
 
     public void NugGotHit(int _index, int _dmg, bool _thunderActivate)
     {
-        photonView.RPC(nameof(RemoteNugHit), RpcTarget.Others, _index, _dmg, _thunderActivate);
+        LodeSynchroniser.x.DestroyUpNugg(i_myID, _index, false);
     }
 
     [PunRPC]
