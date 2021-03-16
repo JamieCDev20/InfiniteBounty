@@ -49,18 +49,18 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
+        p_damageParticles.Play();
         if (PhotonNetwork.IsMasterClient)
         {
             MasterTakeDamage(damage, activatesThunder);
             return;
         }
-        photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage, activatesThunder);
+        photonView.RPC(nameof(RemoteTakeDamage), RpcTarget.Others, damage, activatesThunder);
     }
 
     private void MasterTakeDamage(int damage, bool activatesThunder)
     {
         i_curHealth -= damage;
-        p_damageParticles.Play();
         if (i_curHealth <= 0)
             Die();
 

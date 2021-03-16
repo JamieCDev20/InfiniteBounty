@@ -17,7 +17,7 @@ public class BouncePad : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
             Jump();
     }
 
