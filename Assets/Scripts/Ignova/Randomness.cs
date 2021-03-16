@@ -36,7 +36,6 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         if (randomSeed)
             seed = Random.Range(0, 1000000);
-        photonView.RPC("RecieveSeed", RpcTarget.Others, seed);
 
 
         //sew that seed into the fabrik of reality
@@ -44,7 +43,7 @@ public class Randomness : MonoBehaviourPunCallbacks
         //Debug.Log("Seed: " + seed);
 
         //spawn the lodes        
-        photonView.RPC("SpawnLodes", RpcTarget.All, seed);
+        photonView.RPC(nameof(SpawnLodes), RpcTarget.All, seed);
 
     }
 
@@ -59,14 +58,6 @@ public class Randomness : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RecieveSeed(int seed)
-    {
-        Random.InitState(seed);
-        float burnTheFirst = Random.value;
-        Debug.Log(seed);
-    }
-
-    [PunRPC]
     private IEnumerator SpawnLodes(int seed)
     {
         print("Spawning Lodes");
@@ -76,6 +67,7 @@ public class Randomness : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(0.1f);
             ldzA_zoneSpawns[i].SpawnLode(this, seed);
         }
+        print(seed);
 
         print("Finished Spawning Lodes");
 
