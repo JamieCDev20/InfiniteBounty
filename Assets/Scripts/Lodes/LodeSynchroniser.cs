@@ -24,14 +24,14 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks
     #region Lode Spawning
 
     [PunRPC]
-    private IEnumerator SpawnLodes(int seed)
+    private void SpawnLodes(int seed)
     {
         Random.InitState(seed);
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
 
         foreach (LodeSpawnZone item in FindObjectsOfType<LodeSpawnZone>())
         {
-            yield return new WaitForEndOfFrame();
+            //yield return new WaitForEndOfFrame();
             lbL_allLodes.AddRange(item.SpawnLode());
         }
 
