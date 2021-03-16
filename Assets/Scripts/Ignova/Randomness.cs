@@ -36,7 +36,6 @@ public class Randomness : MonoBehaviourPunCallbacks
 
         if (randomSeed)
             seed = Random.Range(0, 1000000);
-        photonView.RPC("RecieveSeed", RpcTarget.Others, seed);
 
 
         //sew that seed into the fabrik of reality
@@ -56,14 +55,6 @@ public class Randomness : MonoBehaviourPunCallbacks
     {
         //generate a random value between 0-range
         return Random.value * range;
-    }
-
-    [PunRPC]
-    public void RecieveSeed(int seed)
-    {
-        Random.InitState(seed);
-        float burnTheFirst = Random.value;
-        Debug.Log(seed);
     }
 
     [PunRPC]
