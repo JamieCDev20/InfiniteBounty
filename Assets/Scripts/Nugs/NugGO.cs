@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
@@ -9,6 +10,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     [SerializeField] private GameObject go_pickupParticles;
     [SerializeField] private GameObject go_destroyParticles;
     [SerializeField] private AudioClip ac_pickupSound;
+    [SerializeField] private AudioMixer am_nugMixer;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
     [SerializeField] private float f_spawnImmunityDuration = 0.5f;
@@ -77,8 +79,12 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         CancelInvoke();
         StopAllCoroutines();
         GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected ? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
+        float vol = 0;
+        if (am_nugMixer)
+            am_nugMixer.GetFloat("Volume", out vol);
+        vol = -vol / 80;
         if (ac_pickupSound)
-            AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
+            AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position, vol);
         if (rb != null)
             rb.velocity = Vector3.zero;
         eO_elem?.ResetElements();
