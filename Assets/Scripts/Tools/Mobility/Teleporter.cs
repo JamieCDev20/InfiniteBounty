@@ -29,15 +29,24 @@ public class Teleporter : MobilityTool
         if (GetComponentInParent<PlayerInputManager>() != null)
             photonView.ViewID += 26780 + GetComponentInParent<PlayerInputManager>().GetID() * 2 + 1;
         PhotonNetwork.RegisterPhotonView(photonView);
+        t_cam = Camera.main.transform;
     }
 
     private void Update()
     {
+        HUDController.x.HideTeleportSign();
         if (!b_isActive)
         {
             f_coolDown -= Time.deltaTime;
             if (f_coolDown < 0) ComeOffCooldown();
         }
+        if (b_isActive)
+            foreach (GameObject player in TagManager.x.GetTagSet("Player"))
+                if (Vector3.Angle(player.transform.position - transform.position, t_cam.transform.forward) < 5)
+                {
+                    HUDController.x.ShowTeleportSign();
+                    return;
+                }
     }
 
     public override void Use(Vector3 _v_lookDirection)

@@ -35,6 +35,7 @@ public class HUDController : MonoBehaviour
 
     [Header("Other UI")]
     [SerializeField] private Transform hudCanvas;
+
     [SerializeField] private Text t_myNameText;
 
     [Header("Other Player's Health Bars")]
@@ -42,6 +43,9 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Text[] tA_playerNamesTexts = new Text[0];
     private Dictionary<int, int> iiD_idMap = new Dictionary<int, int>();
     [SerializeField] private GameObject[] goA_healthBarParents = new GameObject[0];
+
+    [Header("Tools")]
+    [SerializeField] private GameObject go_teleportSign;
 
     private void Awake()
     {
@@ -143,4 +147,18 @@ public class HUDController : MonoBehaviour
 
 
     #endregion
+
+    #region Teleported
+    internal void HideTeleportSign()
+    {
+        go_teleportSign.SetActive(false);
+    }
+
+    internal void ShowTeleportSign()
+    {
+        go_teleportSign.SetActive(true);
+    }
+
+    #endregion
+
 }
