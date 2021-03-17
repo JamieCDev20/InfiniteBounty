@@ -119,7 +119,7 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.7f;
+        return Random.value < 0.8f;
     }
 
     private void PlayHomingAnim()
@@ -230,22 +230,25 @@ public class BossAI : AIBase
     {
         b_canAttack = false;
 
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(1);
+        transform.position = new Vector3(_v_newPos.x, -100, _v_newPos.z);
+        yield return new WaitForSeconds(2);
 
         go_movementTelegraph.transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
-        transform.position = new Vector3(_v_newPos.x, -100, _v_newPos.z);
 
         yield return new WaitForSeconds(2);
         transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
         anim.SetBool("Submerging", false);
         anim.SetBool("Emerging", true);
 
-        /*
+        yield return new WaitForSeconds(1);
+
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             if (_cA[i].transform.root != transform)
-                _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
-        */
+                if (_cA[i].transform.CompareTag("Lilypad"))
+                    _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
+
         go_movementTelegraph.transform.position = Vector3.down * 100;
 
         if (PhotonNetwork.IsMasterClient)
