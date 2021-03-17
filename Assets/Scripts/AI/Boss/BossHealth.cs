@@ -74,6 +74,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
     public void Die()
     {
         GetComponentInChildren<Animator>().SetTrigger("Death");
+        GetComponent<BossAI>().enabled = false;
         StartCoroutine(ActualDie());
         rt_healthBarWhite.transform.localScale = Vector3.zero;
         BossArenaManager.x.BossDied();

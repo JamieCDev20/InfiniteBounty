@@ -26,10 +26,11 @@ public class BossAI : AIBase
 
     [Header("Movement Stats")]
     [SerializeField] private GameObject go_movementTelegraph;
-
+    private GameObject go_looker;
 
     private void Start()
     {
+        go_looker = new GameObject("Boss Looker");
         anim = GetComponentInChildren<Animator>();
         QueryNode _q_canAttack = new QueryNode(CheckCanAttack);
         SequencerNode _s = new SequencerNode(_q_canAttack, AttackDefine());
@@ -54,7 +55,11 @@ public class BossAI : AIBase
             tree.DoTreeIteration();
 
         if (tL_potentialTargets.Count > 0)
-            transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+        {
+            go_looker.transform.position = transform.position;
+            go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+            transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
+        }
     }
 
     #region Defines
@@ -69,8 +74,8 @@ public class BossAI : AIBase
     private SelectorNode RangedDefine()
     {
         QueryNode _qn_randomChance = new QueryNode(RandomValue);
-        ActionNode _an_homing = new ActionNode(DoHomingAttack);
-        ActionNode _an_mortar = new ActionNode(DoMortarAttack);
+        ActionNode _an_homing = new ActionNode(PlayHomingAnim);
+        ActionNode _an_mortar = new ActionNode(PlayMetoerAnim);
         SequencerNode _sn_isHoming = new SequencerNode(_qn_randomChance, _an_homing);
         SequencerNode _sn_isMortar = new SequencerNode(_qn_randomChance, _an_mortar);
 
@@ -79,7 +84,7 @@ public class BossAI : AIBase
 
     private SelectorNode AttackDefine()
     {
-        ActionNode _a_move = new ActionNode(MoveAttack);
+        ActionNode _a_move = new ActionNode(PlayMoveAnim);
         return new SelectorNode(MeleeDefine(), RangedDefine(), _a_move);
     }
 
@@ -117,27 +122,27 @@ public class BossAI : AIBase
         return Random.value < 0.7f;
     }
 
-    private void DoHomingAttack()
+    private void PlayHomingAnim()
     {
-        if (b_canAttack)
-        {
-            StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_homingOrbAmount.x, v_homingOrbAmount.y)), t_target));
-            StopAttackingForPeriod();
-        }
+        anim.SetTrigger("Missile");
+    }
+
+    internal void DoHomingAttack()
+    {
+        StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_homingOrbAmount.x, v_homingOrbAmount.y)), t_target));
+        StopAttackingForPeriod();
     }
     private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
-        anim.SetTrigger("Missile");
-        yield return new WaitForSeconds(1);
         List<GameObject> _goL_orbs = new List<GameObject>();
         for (int i = 0; i < _i_amount; i++)
         {
-            yield return new WaitForSeconds(1);
             GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
             _go.transform.position = transform.position + transform.forward + transform.up * 20;
             _go.transform.forward = transform.forward;
             _goL_orbs.Add(_go);
+            yield return new WaitForSeconds(1);
         }
 
         while (_goL_orbs.Count > 0)
@@ -151,7 +156,12 @@ public class BossAI : AIBase
         }
     }
 
-    private void DoMortarAttack()
+    private void PlayMetoerAnim()
+    {
+        anim.SetBool("Meteor", true);
+    }
+
+    internal void DoMortarAttack()
     {
         photonView.RPC(nameof(MortarAttackRPC), RpcTarget.All, Random.Range(0, 9999999));
     }
@@ -164,9 +174,6 @@ public class BossAI : AIBase
 
     private IEnumerator MortarAttackActual(int _i_seed)
     {
-        anim.SetBool("Meteor", true);
-        yield return new WaitForSeconds(3);
-
         if (PhotonNetwork.IsMasterClient)
         {
             Random.InitState(_i_seed);
@@ -182,7 +189,7 @@ public class BossAI : AIBase
             }
         }
         else
-            yield return new WaitForSeconds(v_numberOfMortarShots.x * 0.2f);
+            yield return new WaitForSeconds(2 + (v_numberOfMortarShots.x * 0.2f));
         anim.SetBool("Meteor", false);
     }
     private Vector3 PickArenaPosition()
@@ -199,27 +206,29 @@ public class BossAI : AIBase
         return tL_potentialTargets[Random.Range(0, tL_potentialTargets.Count)].position;
     }
 
-    private void MoveAttack()
+    private void PlayMoveAnim()
     {
-        if (b_canAttack)
-            photonView.RPC(nameof(MoveAttack), RpcTarget.All, PickTargetPosition());
+        anim.SetBool("Emerging", false);
+        anim.SetBool("Submerging", true);
+    }
+
+    internal void MoveAttack()
+    {
+        photonView.RPC(nameof(MoveAttackRPC), RpcTarget.All, PickTargetPosition());
     }
 
     [PunRPC]
-    private void MoveAttack(Vector3 _v_newPos)
+    private void MoveAttackRPC(Vector3 _v_newPos)
     {
         b_canAttack = false;
         if (PhotonNetwork.IsMasterClient)
-        {
             photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
-            StartCoroutine(TimedMove(_v_newPos));
-        }
+        StartCoroutine(TimedMove(_v_newPos));
+
     }
     private IEnumerator TimedMove(Vector3 _v_newPos)
     {
         b_canAttack = false;
-        anim.SetBool("Emerging", false);
-        anim.SetBool("Submerging", true);
 
         yield return new WaitForSeconds(4);
 
@@ -231,12 +240,12 @@ public class BossAI : AIBase
         anim.SetBool("Submerging", false);
         anim.SetBool("Emerging", true);
 
-
+        /*
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             if (_cA[i].transform.root != transform)
                 _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
-
+        */
         go_movementTelegraph.transform.position = Vector3.down * 100;
 
         if (PhotonNetwork.IsMasterClient)

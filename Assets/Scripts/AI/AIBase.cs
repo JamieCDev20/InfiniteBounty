@@ -41,7 +41,6 @@ public class AIBase : MonoBehaviourPun
 
     protected void OnEnable()
     {
-        Debug.Log("IsEnabled");
         if (SceneManager.GetActiveScene().buildIndex == 0)
             GetComponent<IHitable>().Die();
     }
