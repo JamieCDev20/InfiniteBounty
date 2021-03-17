@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
@@ -44,6 +45,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += SceneLoad;
         if (!networkedCamera)
         {
             pim_inputs = transform.root.GetComponentInChildren<PlayerInputManager>();
@@ -64,6 +66,12 @@ public class CameraController : MonoBehaviour
     #endregion
 
     #region Private Voids
+
+    private void SceneLoad(Scene s, LoadSceneMode m)
+    {
+        transform.eulerAngles = Vector3.zero;
+        f_yLook = 0;
+    }
 
     private void Detach()
     {

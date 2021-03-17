@@ -82,7 +82,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         float vol = 0;
         if (am_nugMixer)
             am_nugMixer.GetFloat("Volume", out vol);
-        vol = -vol / 80;
+        vol = (vol + 80) / 80;
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position, vol);
         if (rb != null)
