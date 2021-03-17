@@ -28,6 +28,7 @@ public class RollingAverageFramerate : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         can = GetComponentInChildren<Canvas>();
+        can.enabled = false;
 
     }
 
@@ -47,7 +48,8 @@ public class RollingAverageFramerate : MonoBehaviour
 
         t = 1 / t;
 
-        can.enabled = Input.GetKey(KeyCode.Tab);
+        if(Input.GetKeyDown(KeyCode.Tab))
+            can.enabled = !can.enabled;
 
         frText.text = $"FPS: {t}";
         pingText.text = $"Ping: {PhotonNetwork.GetPing()}ms";
