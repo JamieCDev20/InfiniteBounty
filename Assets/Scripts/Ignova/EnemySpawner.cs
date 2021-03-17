@@ -68,7 +68,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
             for (int x = 0; x < iA_numberOfEachStartingEnemyType[i]; x++)
             {
-                SpawnEnemy(goA_startEnemies[i], eszA_allEnemyZones[_i_zone].transform.position, false);
+                SpawnEnemy(goA_startEnemies[i], eszA_allEnemyZones[i].transform.position, false);
             }
         }
     }
