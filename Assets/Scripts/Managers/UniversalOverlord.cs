@@ -139,10 +139,10 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        //if (!scene.name.Contains("Lobby"))
-        //    PhotonNetwork.CurrentRoom.IsOpen = false;
-        //else
-        //    PhotonNetwork.CurrentRoom.IsOpen = true;
+        if (!scene.name.Contains("Lobby"))
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+        else
+            PhotonNetwork.CurrentRoom.IsOpen = true;
 
         //PoolManager.x.ResetPool("BoomNug");
         //PoolManager.x.ResetPool("GooNug");
@@ -167,6 +167,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     {
         //initialise the pools in pool manager when you join a room
         PoolManager.x.InitialisePools();
+
         UniversalNugManager.x.DoScoring();
         AugmentManager.x.JoinedRoom();
 
