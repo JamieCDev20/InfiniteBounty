@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     public static EnemySpawner x;
     private int i_numberOfEnemies;
     private DifficultySet ds_currentDifficulty;
-    private EnemySpawnZone[] eszA_allEnemyZones;
+    [SerializeField] private EnemySpawnZone[] eszA_allEnemyZones;
     [SerializeField] private LayerMask lm_notEnemyLayer;
 
     [Header("Enemies in Level at Start")]
@@ -36,14 +36,11 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         yield return new WaitForEndOfFrame();
         ds_currentDifficulty = DifficultyManager.x.ReturnCurrentDifficulty();
 
-        eszA_allEnemyZones = FindObjectsOfType<EnemySpawnZone>();
-
-        /*for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
-            ziA_enemySpawnZones[i].f_zoneRadius = ziA_enemySpawnZones[i].t_zone.GetComponent<SphereCollider>().radius;*/
-
         iL_minibossZones = new List<int>();
         for (int i = 0; i < ds_currentDifficulty.i_numberOfMiniBosses; i++)
             iL_minibossZones.Add(Random.Range(0, eszA_allEnemyZones.Length));
+        //Adds the middle arena to the list
+        iL_minibossZones.Add(7);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -51,7 +48,6 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             StartCoroutine(CheckZoneForPlayers());
             PlaceStartingEnemiesInZones();
         }
-
     }
 
     /*
@@ -72,7 +68,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
             for (int x = 0; x < iA_numberOfEachStartingEnemyType[i]; x++)
             {
-                SpawnEnemy(goA_startEnemies[i], eszA_allEnemyZones[i].transform.position, false);
+                SpawnEnemy(goA_startEnemies[i], eszA_allEnemyZones[_i_zone].transform.position, false);
             }
         }
     }
@@ -84,19 +80,31 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < eszA_allEnemyZones.Length; i++)
             if (eszA_allEnemyZones[i].CheckForPlayersAndSpawnWave())
+            {
                 _b_spawnedWave = true;
+                if (iL_minibossZones.Contains(i))
+                {
+                    print("Boss has spawned in area: " + i);
+                    SpawnEnemy(go_miniboss, eszA_allEnemyZones[i].ReturnSpawnPoint(), false);
+                    iL_minibossZones.RemoveAt(i);
+                }
+            }
 
         while (i_numberOfEnemies > 5)
             yield return new WaitForSeconds(1);
+
+        EndWave();
 
         if (_b_spawnedWave)
             yield return new WaitForSeconds(f_timeBetweenHordes * i_numberOfHordesPerWave);
         StartCoroutine(CheckZoneForPlayers());
     }
 
-    private void SpawnWave(int _i_zoneToSpawnEnemiesIn)
+    private void EndWave()
     {
+        DynamicAudioManager.x.EndCombat();
     }
+
     private GameObject PickRandomGroundWaveEnemy()
     {
         return goA_groundWaveEnemies[Random.Range(0, goA_groundWaveEnemies.Length)];
@@ -126,10 +134,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
         if (i_numberOfEnemies < 5)
-        {
-            DynamicAudioManager.x.EndCombat();
             if (_b_isBoss)
                 DynamicAudioManager.x.EndBoss();
-        }
     }
 }

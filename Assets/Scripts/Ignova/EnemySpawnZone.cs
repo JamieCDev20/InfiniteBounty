@@ -73,4 +73,9 @@ public class EnemySpawnZone : MonoBehaviour
     {
         return new Vector3(Random.Range(-f_spawnRadius, f_spawnRadius), 0, Random.Range(-f_spawnRadius, f_spawnRadius));
     }
+    internal Vector3 ReturnSpawnPoint()
+    {
+        return tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position + RandomVector3();
+    }
+
 }
