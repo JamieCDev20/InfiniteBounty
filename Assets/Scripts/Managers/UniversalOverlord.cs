@@ -177,7 +177,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         base.OnMasterClientSwitched(newMasterClient);
-        PhotonNetwork.Disconnect();
+        //PhotonNetwork.Disconnect();
         Reset();
     }
 
