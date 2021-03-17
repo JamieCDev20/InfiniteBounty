@@ -77,15 +77,16 @@ public class BossHealth : MonoBehaviourPun, IHitable
         StartCoroutine(ActualDie());
         rt_healthBarWhite.transform.localScale = Vector3.zero;
         BossArenaManager.x.BossDied();
+
+        foreach (BossProjectile bp in FindObjectsOfType<BossProjectile>())
+            bp.Die();
     }
     private IEnumerator ActualDie()
     {
         yield return new WaitForSeconds(5);
+
         go_deathParticles.SetActive(true);
         go_deathParticles.transform.parent = null;
-
-        foreach (BossProjectile bp in FindObjectsOfType<BossProjectile>())
-            bp.Die();
 
         yield return new WaitForSeconds(1);
 
