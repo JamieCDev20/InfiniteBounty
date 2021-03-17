@@ -73,18 +73,21 @@ public class BossHealth : MonoBehaviourPun, IHitable
     [PunRPC]
     public void Die()
     {
-        go_deathParticles.SetActive(true);
-        go_deathParticles.transform.parent = null;
+        GetComponentInChildren<Animator>().SetTrigger("Death");
         StartCoroutine(ActualDie());
         rt_healthBarWhite.transform.localScale = Vector3.zero;
         BossArenaManager.x.BossDied();
     }
     private IEnumerator ActualDie()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
+        go_deathParticles.SetActive(true);
+        go_deathParticles.transform.parent = null;
 
         foreach (BossProjectile bp in FindObjectsOfType<BossProjectile>())
             bp.Die();
+
+        yield return new WaitForSeconds(1);
 
         if (PhotonNetwork.IsMasterClient)
             photonView.RPC(nameof(NuggetBurst), RpcTarget.All, Random.Range(0, 9999999));
