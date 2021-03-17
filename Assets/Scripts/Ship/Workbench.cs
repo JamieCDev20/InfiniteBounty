@@ -26,7 +26,7 @@ public class Workbench : SubjectBase, IInteractible
     private int i_currentAugmentIndex;
     private int i_currentWeaponIndex = 0;
 
-    [Header("Augment Display")]
+    [Header("Augment Info Display")]
     [SerializeField] AugmentPropertyDisplayer apd;
     public AugmentPropertyDisplayer AugPropertyDisplay { get { return apd; } }
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
@@ -90,7 +90,7 @@ public class Workbench : SubjectBase, IInteractible
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
             // Find any saved augments and load them
-            apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -164,7 +164,6 @@ public class Workbench : SubjectBase, IInteractible
         if (tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
         {
             tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(true);
-            Debug.Log("GlarBooble");
         }
     }
 
@@ -183,12 +182,12 @@ public class Workbench : SubjectBase, IInteractible
             if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ProjectileTool)
             {
 
-                if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.projectile)
+                if (aL_allAugmentsOwned[apd.CurrentAugIndex].at_type == AugmentType.projectile)
                 {
                     ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
-                    if (pt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    if (pt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                     {
-                        SendSave(aL_allAugmentsOwned[i_currentAugmentIndex]);
+                        SendAttachSave(aL_allAugmentsOwned[apd.CurrentAugIndex]);
                     }
                     else
                     {
@@ -205,9 +204,9 @@ public class Workbench : SubjectBase, IInteractible
                 if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.cone)
                 {
                     ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
-                    if (ct.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                     {
-                        SendSave(aL_allAugmentsOwned[i_currentAugmentIndex]);
+                        SendAttachSave(aL_allAugmentsOwned[apd.CurrentAugIndex]);
                     }
                     else
                     {
@@ -221,13 +220,12 @@ public class Workbench : SubjectBase, IInteractible
             }
             else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is WeaponTool)
             {
-
                 if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.standard)
                 {
                     WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
-                    if (wt.AddStatChanges(aL_allAugmentsOwned[i_currentAugmentIndex]))
+                    if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                     {
-                        SendSave(aL_allAugmentsOwned[i_currentAugmentIndex]);
+                        SendAttachSave(aL_allAugmentsOwned[apd.CurrentAugIndex]);
                     }
                     else
                     {
@@ -243,12 +241,14 @@ public class Workbench : SubjectBase, IInteractible
         //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
 
-    private void SendSave(Augment _aug)
+    private void SendAttachSave(Augment _aug)
     {
-        SaveEvent saveEvent = new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null,
-            new (int, int, Augment[])[] { (th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, new Augment[] { _aug }) },
-            null, null, 0));
-        Notify(saveEvent);
+        // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
+        RemoveAugmentEvent rae = new RemoveAugmentEvent(_aug, apd.CurrentAugIndex);
+        Notify(rae);
+        EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, new Augment[1] { _aug }));
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
+        Notify(eae);
     }
 
     public void AllTab()
@@ -278,7 +278,7 @@ public class Workbench : SubjectBase, IInteractible
         img_all.color = unSel;
         img_sameType.color = unSel;
         List<Augment> augList = new List<Augment>();
-        augList.AddRange(wt_toolsInHand[i_currentWeaponIndex].Augs);
+        apd.ToolToCheck = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         aL_allAugmentsOwned = apd.InitAugmentList(augList, AugmentDisplayType.ShowEquipped, false);
     }
 
@@ -291,7 +291,6 @@ public class Workbench : SubjectBase, IInteractible
         if(wt_toolsInHand != null && wt_toolsInHand.Count -1 > 0)
             if (wt_toolsInHand[0] != null && wt_toolsInHand[1] != null)
             {
-                Debug.Log("Blumnbo");
                 UndisplayWeapon();
                 if (i_currentWeaponIndex == wt_toolsInHand?.Count - 1)
                 {

@@ -19,10 +19,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private AugmentDisplay ad_display;
     List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private int i_currentAugmentIndex = 0;
-
+    private AugmentDisplayType adt_currentDisplayType;
+    private WeaponTool wt_toolToCheck;
     private string s_augName;
     private AugmentType at_type;
+    public WeaponTool ToolToCheck { set { wt_toolToCheck = value; } }
     public AugmentType AugType { set { at_type = value; } }
+    public AugmentDisplayType CurrentDisplayType { get { return adt_currentDisplayType; } }
     public string AugmentName { set { s_augName = value; } }
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
     public AugmentDisplay AugDisplay { get { return ad_display; } }
@@ -70,6 +73,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         // Update display from save file
         aL_allAugmentsOwned.AddRange(_augmentsInList);
         UpdateAugmentListDisplay(aL_allAugmentsOwned, adt);
+        adt_currentDisplayType = adt;
         return aL_allAugmentsOwned;
     }
 
@@ -91,6 +95,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         return _augList;
     }
 
+    private List<Augment> DisplayAttachedAugments()
+    {
+        List<Augment> _augList = new List<Augment>();
+
+        return _augList;
+    }
+
     private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
     {
         List<Augment> _aL_augmentsToShow = new List<Augment>();
@@ -105,6 +116,14 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 break;
             case AugmentDisplayType.ShowSameName:
                 _aL_augmentsToShow.AddRange(DisplayAugmentsWithName(aL_augs));
+                break;
+            case AugmentDisplayType.ShowEquipped:
+                if(wt_toolToCheck != null)
+                {
+                    foreach(Augment auggy in wt_toolToCheck.Augs)
+                        if(auggy != null)
+                            _aL_augmentsToShow.Add(auggy);
+                }
                 break;
         }
 

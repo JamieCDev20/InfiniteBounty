@@ -43,7 +43,7 @@ public class VendingMachine : SubjectBase, IInteractible
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
         augMan = _am;
-        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments()));
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
 
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = 0;

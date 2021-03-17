@@ -87,11 +87,27 @@ public class AugmentManager : MonoBehaviour
         return null;
     }
 
-    public AugmentGo[] GetRandomAugments(int _i_size)
+    public AugmentGo[] GetRandomAugments(int _i_size, Transform[] _transforms)
     {
         AugmentGo[] augs = new AugmentGo[_i_size];
-        for (int i = 0; i < _i_size; i++)
-            augs[i] = go_augments[UnityEngine.Random.Range(0, go_augments.Count - 1)].GetComponent<AugmentGo>();
+        for(int i = 0; i < augs.Length; i++)
+        {
+            augs[i] = PoolManager.x.SpawnObject(augRef, _transforms[i].position).GetComponent<AugmentGo>();
+            augs[i].GetComponent<Rigidbody>().isKinematic = true;
+            int augIndex = UnityEngine.Random.Range(0, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
+            if(augIndex < A_augs.Length)
+            {
+                augs[i].Aug = A_augs[augIndex];
+            }
+            else if(augIndex < A_augs.Length + A_projAugs.Length)
+            {
+                augs[i].Aug = A_projAugs[augIndex - A_augs.Length];
+            }
+            else if(augIndex < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
+            {
+                augs[i].Aug = A_coneAugs[augIndex - (A_augs.Length + A_projAugs.Length)];
+            }
+        }
         return augs;
     }
 

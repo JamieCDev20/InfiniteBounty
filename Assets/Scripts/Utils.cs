@@ -105,7 +105,7 @@ public class Utils
         return Swap(_arrayToSwap, _first, _second);
     }
 
-    private static bool ArrayIsNullOrZero<T>(T[] _arrayToCheck)
+    public static bool ArrayIsNullOrZero<T>(T[] _arrayToCheck)
     {
         if (_arrayToCheck == null)
             return true;
@@ -126,9 +126,10 @@ public class Utils
     {
         if (ArrayIsNullOrZero<T>(_arrayToRemove))
             return null;
-        T[] tmp = AddToArray<T>(_arrayToRemove, _arrayToRemove[_arrayToRemove.Length]);
-        T dupeItem = tmp[tmp.Length];
-        tmp = Swap<T>(tmp, _itemToRemove, tmp.Length);
+        T[] tmp = new T[_arrayToRemove.Length + 1];
+        tmp = AddToArray<T>(_arrayToRemove, _arrayToRemove[_arrayToRemove.Length-1]);
+        T dupeItem = tmp[tmp.Length-1];
+        tmp = Swap<T>(tmp, _itemToRemove, tmp.Length-1);
         tmp = ReduceArraySize<T>(_arrayToRemove);
         if(_itemToRemove < tmp.Length)
         {
