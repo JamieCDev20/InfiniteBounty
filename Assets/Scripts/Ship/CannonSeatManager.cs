@@ -43,7 +43,7 @@ public class CannonSeatManager : MonoBehaviourPun
 
     public void EndedSitting()
     {
-        photonView?.RPC(nameof(RemoteStopSitting), RpcTarget.All);
+        //photonView?.RPC(nameof(RemoteStopSitting), RpcTarget.All);
     }
 
 }

@@ -77,11 +77,11 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     {
         elapsedTimeSinceChange += Time.deltaTime;
 
-        if( elapsedTimeSinceChange>= secondsToNextChange)
+        if (elapsedTimeSinceChange >= secondsToNextChange)
         {
             currentScale += directionOfChange * fractionDeltaStep;
 
-            if(currentScale <= 0 || currentScale >= 1)
+            if (currentScale <= 0 || currentScale >= 1)
             {
                 directionOfChange *= -1;
             }
@@ -139,10 +139,13 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (!scene.name.Contains("Lobby"))
             PhotonNetwork.CurrentRoom.IsOpen = false;
         else
-            PhotonNetwork.CurrentRoom.IsOpen = true;
+            if (PhotonNetwork.CurrentRoom != null)
+                PhotonNetwork.CurrentRoom.IsOpen = true;
 
         //PoolManager.x.ResetPool("BoomNug");
         //PoolManager.x.ResetPool("GooNug");

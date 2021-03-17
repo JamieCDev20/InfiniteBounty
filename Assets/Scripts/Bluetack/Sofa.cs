@@ -89,7 +89,7 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
             sitter.GetComponent<PlayerMover>().b_isSitting = false;
         sitter = null;
         if (b_cannonSeat)
-            CannonSeatManager.x.EndedSitting();
+            CannonSeatManager.x?.EndedSitting();
     }
 
     private void OnDisable()

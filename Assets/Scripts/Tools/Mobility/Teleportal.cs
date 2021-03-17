@@ -8,6 +8,7 @@ public class Teleportal : MonoBehaviour
     [SerializeField] private Teleportal tp_otherPortal;
     private List<Rigidbody> rbL_recentlyTeleported = new List<Rigidbody>();
     [SerializeField] private float f_hyuckForce;
+    [SerializeField] private float travelTime = 0.3f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,14 +31,21 @@ public class Teleportal : MonoBehaviour
         else
             _go_object.SetActive(false);
 
-        for (int i = 0; i < 30; i++)
+        Vector3 vel = _rb.velocity;
+
+        Vector3 start = _go_object.transform.position;
+        Vector3 end = tp_otherPortal.transform.position;
+
+        float t = 0;
+        while (t < 1)
         {
-            yield return new WaitForSeconds(0.01f);
-            _go_object.transform.position = Vector3.Lerp(_go_object.transform.position, tp_otherPortal.transform.position, 0.3f);
+            _go_object.transform.position = Vector3.Lerp(start, end, t);
+            t += Time.deltaTime * (1 / travelTime);
+            yield return new WaitForEndOfFrame();
         }
 
         _go_object.transform.position = tp_otherPortal.transform.position;
-        _rb.velocity *= 2;// (transform.forward * f_hyuckForce, ForceMode.Impulse);
+        _rb.velocity = vel;// (transform.forward * f_hyuckForce, ForceMode.Impulse);
         yield return new WaitForEndOfFrame();
 
         rbL_recentlyTeleported.Add(_rb);
