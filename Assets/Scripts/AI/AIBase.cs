@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.SceneManagement;
 
 public class AIBase : MonoBehaviourPun
 {
@@ -36,6 +37,13 @@ public class AIBase : MonoBehaviourPun
             return hit.collider.transform == _targ;
         }
         return false;
+    }
+
+    protected void OnEnable()
+    {
+        Debug.Log("IsEnabled");
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            GetComponent<IHitable>().Die();
     }
 
     public bool StillHasTarget()
