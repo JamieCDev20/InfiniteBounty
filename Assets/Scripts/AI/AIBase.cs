@@ -88,6 +88,8 @@ public class AIBase : MonoBehaviourPun
 
     public void GetTargetAction()
     {
+        if (TagManager.x == null)
+            GetComponent<IHitable>().Die();
         GameObject t = TargetManager.x.GetTaggableInRange("Player", f_spottingDistance, transform.position);
         if (t != null)
             t_target = t.transform;
