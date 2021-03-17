@@ -27,7 +27,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
     private void Start()
     {
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
-        transform.localScale = Vector3.one * _ds.f_scaleMult;
+        transform.localScale = Vector3.one * _ds.f_scaleMult * 2;
         i_actualDamage = Mathf.RoundToInt(i_explosionDamage * _ds.f_damageMult);
         i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
 

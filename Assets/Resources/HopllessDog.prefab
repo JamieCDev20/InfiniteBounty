@@ -5300,7 +5300,7 @@ Transform:
   m_GameObject: {fileID: 3196216024278006001}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6250868308553697560}
   m_Father: {fileID: 4414079512200226319}
@@ -5520,8 +5520,8 @@ MonoBehaviour:
   lm_spottingMask:
     serializedVersion: 2
     m_Bits: 524083
-  f_attackRange: 10
-  f_attackDuration: 3
+  f_attackRange: 15
+  f_attackDuration: 2
 --- !u!114 &-4327951449901491873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5534,7 +5534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011bdef7a9b0a944590b09e886a675e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  f_moveSpeed: 50
+  f_moveSpeed: 30
   f_airControlMultiplier: 0.2
   v_drag: {x: 0.1, y: 0, z: 0.1}
   t_groundCheckPoint: {fileID: 6810489101046752727}
@@ -5551,7 +5551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbdb4496b366df42aaf9cda3eb98652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  i_maxHealth: 10
+  i_maxHealth: 15
   i_explosionDamage: 5
   f_explosionRadius: 1.5
   f_impactExplosionVelocty: 10
@@ -5917,7 +5917,7 @@ Transform:
   m_GameObject: {fileID: 6515144924544824566}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4414079512200226319}
   m_RootOrder: 0
@@ -11119,7 +11119,7 @@ Transform:
   m_GameObject: {fileID: 8127518458129211122}
   m_LocalRotation: {x: -0.4906988, y: 0.4906988, z: 0.5091313, w: 0.5091313}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1036178689624250092}
   m_Father: {fileID: 4414079512200226319}
@@ -16644,7 +16644,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -21454,6 +21454,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.b
       value: 0.5804081
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120446146509236930, guid: 0d0bad357b4799a44bfaf8fa0bd0e8db,
+        type: 3}
+      propertyPath: ShapeModule.m_Rotation.x
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7248185478098424514, guid: 0d0bad357b4799a44bfaf8fa0bd0e8db,
         type: 3}
