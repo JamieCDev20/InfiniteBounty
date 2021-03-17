@@ -50,6 +50,15 @@ public class Teleporter : MobilityTool
 
     private void DoTheTeleport(Vector3 _v_lookDirection)
     {
+        foreach (GameObject player in TagManager.x.GetTagSet("Player"))
+            if (Vector3.Angle(player.transform.position - transform.position, _v_lookDirection) < 5)
+            {
+                photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, player.transform.position, _v_lookDirection);
+                PlayAudio(ac_activationSound);
+                BeginCooldown();
+                return;
+            }
+
         if (b_isActive)
         {
             RaycastHit[] _hits;
