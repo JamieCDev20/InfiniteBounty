@@ -130,7 +130,7 @@ public class Utils
         tmp = AddToArray<T>(_arrayToRemove, _arrayToRemove[_arrayToRemove.Length-1]);
         T dupeItem = tmp[tmp.Length-1];
         tmp = Swap<T>(tmp, _itemToRemove, tmp.Length-1);
-        tmp = ReduceArraySize<T>(_arrayToRemove);
+        tmp = ReduceArraySize<T>(tmp);
         if(_itemToRemove < tmp.Length)
         {
             for(int i = _itemToRemove; i < tmp.Length -1; i++)
