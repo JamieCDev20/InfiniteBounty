@@ -127,6 +127,8 @@ public class BossAI : AIBase
     }
     private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
+        anim.SetTrigger("Missile");
+        yield return new WaitForSeconds(1);
         List<GameObject> _goL_orbs = new List<GameObject>();
         for (int i = 0; i < _i_amount; i++)
         {
@@ -162,6 +164,9 @@ public class BossAI : AIBase
 
     private IEnumerator MortarAttackActual(int _i_seed)
     {
+        anim.SetBool("Meteor", true);
+        yield return new WaitForSeconds(3);
+
         if (PhotonNetwork.IsMasterClient)
         {
             Random.InitState(_i_seed);
@@ -169,13 +174,16 @@ public class BossAI : AIBase
             p_mortarParticle.Play();
             yield return new WaitForSeconds(2);
 
-            for (int i = 0; i < Random.Range(v_numberOfMortarShots.x, v_numberOfMortarShots.y); i++)
+            for (int i = 0; i < v_numberOfMortarShots.x; i++)
             {
                 yield return new WaitForSeconds(0.2f);
                 Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
                 PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
             }
         }
+        else
+            yield return new WaitForSeconds(v_numberOfMortarShots.x * 0.2f);
+        anim.SetBool("Meteor", false);
     }
     private Vector3 PickArenaPosition()
     {
