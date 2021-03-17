@@ -29,7 +29,7 @@ public class LodeSynchroniser : MonoBehaviourPunCallbacks
 
     public void LodeTookDamage(int _i_lodeIndex, int _i_damage)
     {
-        photonView.RPC(nameof(LodeDamageRPC), RpcTarget.All, _i_lodeIndex, lbL_allLodes[_i_lodeIndex].GetHealth() - _i_lodeIndex);
+        photonView.RPC(nameof(LodeDamageRPC), RpcTarget.All, _i_lodeIndex, lbL_allLodes[_i_lodeIndex].GetHealth() - _i_damage);
     }
 
     [PunRPC]
