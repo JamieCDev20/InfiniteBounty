@@ -131,9 +131,9 @@ public class BossAI : AIBase
         for (int i = 0; i < _i_amount; i++)
         {
             yield return new WaitForSeconds(1);
-            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward + transform.up * 20, Quaternion.identity);
+            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
-            _go.transform.position = transform.position + transform.forward * i;
+            _go.transform.position = transform.position + transform.forward + transform.up * 20;
             _go.transform.forward = transform.forward;
             _goL_orbs.Add(_go);
         }
@@ -159,6 +159,7 @@ public class BossAI : AIBase
         StartCoroutine(MortarAttackActual(_i_seed));
         StopAttackingForPeriod();
     }
+
     private IEnumerator MortarAttackActual(int _i_seed)
     {
         if (PhotonNetwork.IsMasterClient)
