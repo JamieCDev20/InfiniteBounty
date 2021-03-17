@@ -67,12 +67,9 @@ public class LodeBase : Enemy, IHitable
 
     public void TakeTrueDamage(int _i_damage)
     {
-        //check if dead and stuff
-        if (PhotonNetwork.IsMasterClient)
-            LodeSynchroniser.x.LodeTookDamage(i_myID, _i_damage);
+        LodeSynchroniser.x.LodeTookDamage(i_myID, _i_damage);
     }
 
-    [PunRPC]
     public void SetHealth(int health)
     {
         //it's a psuedo set health func so that thresholds are still respected
