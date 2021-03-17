@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,9 @@ public class RollingAverageFramerate : MonoBehaviour
     private List<float> lastFrames = new List<float>();
 
     [SerializeField] private Text frText;
+    [SerializeField] private Text pingText;
+
+    private Canvas can;
 
     private void Awake()
     {
@@ -22,6 +26,8 @@ public class RollingAverageFramerate : MonoBehaviour
         else
             x = this;
         DontDestroyOnLoad(gameObject);
+
+        can = GetComponentInChildren<Canvas>();
 
     }
 
@@ -41,8 +47,10 @@ public class RollingAverageFramerate : MonoBehaviour
 
         t = 1 / t;
 
-        frText.text = t.ToString();
+        can.enabled = Input.GetKey(KeyCode.Tab);
 
+        frText.text = $"FPS: {t}";
+        pingText.text = $"Ping: {PhotonNetwork.GetPing()}ms";
     }
 
 }
