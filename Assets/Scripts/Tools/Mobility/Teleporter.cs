@@ -103,14 +103,14 @@ public class Teleporter : MobilityTool
     [PunRPC]
     public void OpenPortalAtPoint(Vector3 _v_pos, Vector3 _v_lookDirection)
     {
-        go_startPortal.transform.position = transform.position + _v_lookDirection * 5;
+        go_startPortal.transform.position = transform.position + _v_lookDirection * 5 + Vector3.up;
         go_startPortal.transform.parent = null;
         go_startPortal.transform.forward = _v_lookDirection;
         DontDestroyOnLoad(go_startPortal);
         go_startPortal.SetActive(true);
         go_startPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn);
 
-        go_endPortal.transform.position = _v_pos - _v_lookDirection * 3;
+        go_endPortal.transform.position = _v_pos - _v_lookDirection * 3 + Vector3.up;
         go_endPortal.transform.parent = null;
         go_endPortal.transform.forward = -_v_lookDirection;
         DontDestroyOnLoad(go_endPortal);
