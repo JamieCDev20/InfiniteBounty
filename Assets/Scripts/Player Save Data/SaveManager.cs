@@ -9,7 +9,6 @@ public class SaveManager : MonoBehaviour, ObserverBase
 {
 
     public static SaveManager x;
-
     private PlayerSaveData saveData;
     public PlayerSaveData SaveData { get { return saveData; } }
     private const string sv = "save.json";

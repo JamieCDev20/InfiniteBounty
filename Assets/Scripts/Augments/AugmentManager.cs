@@ -76,6 +76,29 @@ public class AugmentManager : MonoBehaviour
         return A_augs.Length + A_projAugs.Length + A_coneAugs.Length;
     }
 
+    public Augment GetStandardAugment(string _s_augName)
+    {
+        foreach (Augment aug in A_augs)
+            if (aug.Name == _s_augName)
+                return aug;
+        return null;
+    }
+
+    public ProjectileAugment GetProjectileAugment(string _s_augName)
+    {
+        foreach (ProjectileAugment aug in A_projAugs)
+            if (aug.Name == _s_augName)
+                return aug;
+        return null;
+    }
+    public ConeAugment GetConeAugment(string _s_augName)
+    {
+        foreach (ConeAugment aug in A_coneAugs)
+            if (aug.Name == _s_augName)
+                return aug;
+        return null;
+    }
+
     public AugmentGo GetAugment(string _s_augName)
     {
         foreach (GameObject augGo in go_augments)
