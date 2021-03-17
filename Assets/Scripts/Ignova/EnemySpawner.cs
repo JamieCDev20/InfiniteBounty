@@ -86,6 +86,8 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
             if (eszA_allEnemyZones[i].CheckForPlayersAndSpawnWave())
                 _b_spawnedWave = true;
 
+        while (i_numberOfEnemies > 5)
+            yield return new WaitForSeconds(1);
 
         if (_b_spawnedWave)
             yield return new WaitForSeconds(f_timeBetweenHordes * i_numberOfHordesPerWave);
