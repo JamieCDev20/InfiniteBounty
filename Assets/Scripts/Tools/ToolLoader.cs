@@ -17,6 +17,7 @@ public class ToolLoader : MonoBehaviour
             LoadTool(i, _t_parent);
         }
     }
+
     public ToolBase LoadTool(int _i_index, Transform _t_parent)
     {
         ToolBase go_tool = Instantiate(tb_tools[_i_index]);

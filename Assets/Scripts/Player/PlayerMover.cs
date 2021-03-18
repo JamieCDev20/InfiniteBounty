@@ -180,9 +180,9 @@ public class PlayerMover : MonoBehaviour
             rb.velocity -= Vector3.up * 1f * Time.deltaTime;
     }
 
-    private void ResetIfOffMap()
+    public void ResetIfOffMap()
     {
-        if (transform.position.y < -25 && view.IsMine)
+        if (transform.position.y < -100 && view.IsMine)
         {
             transform.position = v_startPos + (Vector3.up);// * 5);                      
         }

@@ -248,6 +248,9 @@ public class SaveManager : MonoBehaviour, ObserverBase
                     {
                         foreach((int toolID, int slotID) tool in psd.SaveData.tu_equipped)
                         {
+                            // TODO:
+                            // Create a new ToolBase[3] and read any existing tools into it
+                            // Then replace it with the new tool being sent.
                             if (tool.toolID == -1 || tool.slotID == -1)
                                 continue;
                             switch (tool.slotID)
