@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d93cce7fbbb18a04088c24677d066aa3
+guid: 6ee1ca5153ad60a45b8349f5ccd8c739
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
@@ -7,9 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: -876546973899608171, guid: 026aab2a68cbe814990a4a7f82f8a47d,
-      type: 3}
+      name: Toilet
+    second: {fileID: 2100000, guid: 4e2e2b2c60a01094ba55aee96802d71c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TrimSheet_1Material
+    second: {fileID: 2100000, guid: 83f629d2ea6beaf4d9a1d1e8256cad91, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Trimmington
+    second: {fileID: 2100000, guid: 109aed3ca63b554488a38e52e9f51b6b, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -42,7 +51,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
@@ -51,7 +60,7 @@ ModelImporter:
     importLights: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
