@@ -27,6 +27,7 @@ public class AugmentWindow : EditorWindow
     #region Augment Vars
 
     string s_augName;
+    int i_cost;
     AugmentStage as_stage;
 
     #endregion
@@ -102,6 +103,7 @@ public class AugmentWindow : EditorWindow
         GUILayout.Label("Augment Name", EditorStyles.label);
         s_augName = EditorGUILayout.TextArea(s_augName);
         as_stage = (AugmentStage)EditorGUILayout.EnumPopup("Augment Stage", as_stage);
+        i_cost = EditorGUILayout.IntField("Cost", i_cost);
         DisplayGameObjectArgs();
 
         EditorGUILayout.BeginVertical("box");
@@ -161,7 +163,9 @@ public class AugmentWindow : EditorWindow
                 return;
             }
 
+            ap_toolProperties.i_cost = i_cost;
             Augment outputAug = new Augment();
+            outputAug.Cost = i_cost;
             // Save variables time!
             switch (at_type)
             {

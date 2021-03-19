@@ -28,6 +28,10 @@ public class BossHealth : MonoBehaviourPun, IHitable
     private List<GameObject> goL_bossHitEffectPool = new List<GameObject>();
     private bool b_isDead;
 
+    [Header("Armour Info")]
+    [SerializeField] private LilyPad[] lpA_armourPlates = new LilyPad[0];
+    [SerializeField] private int[] iA_armourHealths = new int[0];
+
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(1);
@@ -48,6 +52,10 @@ public class BossHealth : MonoBehaviourPun, IHitable
             goL_bossHitEffectPool.Add(Instantiate(go_bossHitEffectPrefab, transform.position, Quaternion.identity, transform));
             goL_bossHitEffectPool[i].SetActive(false);
         }
+
+        for (int i = 0; i < lpA_armourPlates.Length; i++)
+            lpA_armourPlates[i].Setup(i);
+
     }
 
     private void Update()
@@ -65,18 +73,23 @@ public class BossHealth : MonoBehaviourPun, IHitable
     [PunRPC]
     public void Die()
     {
-        go_deathParticles.SetActive(true);
-        go_deathParticles.transform.parent = null;
+        GetComponentInChildren<Animator>().SetTrigger("Death");
+        GetComponent<BossAI>().enabled = false;
         StartCoroutine(ActualDie());
         rt_healthBarWhite.transform.localScale = Vector3.zero;
         BossArenaManager.x.BossDied();
-    }
-    private IEnumerator ActualDie()
-    {
-        yield return new WaitForSeconds(1);
 
         foreach (BossProjectile bp in FindObjectsOfType<BossProjectile>())
             bp.Die();
+    }
+    private IEnumerator ActualDie()
+    {
+        yield return new WaitForSeconds(5);
+
+        go_deathParticles.SetActive(true);
+        go_deathParticles.transform.parent = null;
+
+        yield return new WaitForSeconds(1);
 
         if (PhotonNetwork.IsMasterClient)
             photonView.RPC(nameof(NuggetBurst), RpcTarget.All, Random.Range(0, 9999999));
@@ -127,7 +140,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
             GameObject _go_nugget = PoolManager.x.SpawnObject(goA_nuggetPrefabs[Random.Range(0, goA_nuggetPrefabs.Length)], transform.position, transform.rotation);
             _go_nugget.transform.parent = null;
             _go_nugget.SetActive(true);
-            _go_nugget.transform.position = transform.position + transform.localScale * (RandomMinusToPositive()) + Vector3.up;
+            _go_nugget.transform.position = new Vector3(transform.position.x, 10, transform.position.z);
             Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
             _rb.AddForce(new Vector3(RandomMinusToPositive(), Mathf.Abs(RandomMinusToPositive()), RandomMinusToPositive()) * f_nuggetForce, ForceMode.Impulse);
             _go_nugget.transform.rotation = new Quaternion(RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive(), RandomMinusToPositive());
@@ -137,6 +150,21 @@ public class BossHealth : MonoBehaviourPun, IHitable
     private float RandomMinusToPositive()
     {
         return (float)(-1 + (Random.value * 2));
+    }
+
+
+    internal void ArmourDamaged(int _i_armourIndex, int damage)
+    {
+        photonView.RPC(nameof(ArmourDamagedRPC), RpcTarget.All, _i_armourIndex, iA_armourHealths[_i_armourIndex] - damage);
+    }
+
+    [PunRPC]
+    public void ArmourDamagedRPC(int _i_armourIndex, int _i_newHealth)
+    {
+        iA_armourHealths[_i_armourIndex] = _i_newHealth;
+
+        if (iA_armourHealths[_i_armourIndex] < 0)
+            lpA_armourPlates[_i_armourIndex].Die();
     }
 
 }

@@ -14869,6 +14869,8 @@ GameObject:
   - component: {fileID: 4696581291034405043}
   - component: {fileID: 1152283534803282734}
   - component: {fileID: 179426901209789678}
+  - component: {fileID: 7652389825559369412}
+  - component: {fileID: 4501514055535361235}
   m_Layer: 13
   m_Name: Visuals
   m_TagString: Untagged
@@ -14939,6 +14941,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6068543575357826941}
   m_Mesh: {fileID: 5933985936546779251, guid: 50ea7240801d411478c2cd38442f7ba5, type: 3}
+--- !u!114 &7652389825559369412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068543575357826941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  c_onColour: {r: 1, g: 0, b: 0, a: 1}
+  c_offColour: {r: 1, g: 0, b: 0, a: 0}
+--- !u!114 &4501514055535361235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068543575357826941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 29bdebf04b0d26d408cb1d3380d43eba, type: 2}
+  color: {r: 1, g: 0, b: 0, a: 1}
+  mask: {fileID: 0}
+  fresnelScale: 2
+  fresnelPower: 2
+  alphaThreshold: 0.5
 --- !u!1 &6164068517849687259
 GameObject:
   m_ObjectHideFlags: 0
@@ -14967,8 +15001,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6164068517849687259}
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0.4}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.8}
   m_Children: []
   m_Father: {fileID: 8805088956741588284}
   m_RootOrder: 3
@@ -15033,8 +15067,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.8}
-  m_Center: {x: 0, y: 0.05, z: 0.4}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5124567004566746798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20153,9 +20187,11 @@ MonoBehaviour:
     f_coolDownRate: 0
     f_heatingSpeed: 0
     can_Gauge: {fileID: 0}
-  f_timeBetweenUsage: 0.25
-  ac_activationSound: []
-  ac_hitSound: []
+  f_timeBetweenUsage: 0.0125
+  ac_activationSound:
+  - {fileID: 8300000, guid: 099c9246c1d438640b335d64eca66a04, type: 3}
+  ac_hitSound:
+  - {fileID: 8300000, guid: 3aa5f052ed2d9354980c6b3bb60f7642, type: 3}
   ac_diegeticAudio: []
   b_oneTimeAudio: 0
   t_raycastPoint: {fileID: 0}
@@ -20189,6 +20225,6 @@ MonoBehaviour:
   s_meleeAnim: 
   a_playerAnims: {fileID: 0}
   A_augs: []
-  augGo: {fileID: 0}
+  augGo: {fileID: 7970241254651023256, guid: 91d968a9612d5854fa5765e3bcb0f238, type: 3}
   f_hitBoxActivationDelay: 0.2
-  f_hitBoxDur: 0.25
+  f_hitBoxDur: 0.3

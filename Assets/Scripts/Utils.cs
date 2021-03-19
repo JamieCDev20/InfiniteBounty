@@ -13,29 +13,51 @@ public class Utils
     /// <returns></returns>
     public static T[] AddToArray<T>(T[] t_arrayToResize, T t_objectToAdd)
     {
-        if(t_arrayToResize != null)
-        {
-            if(t_arrayToResize.Length > 0)
-            {
-                int newSize = t_arrayToResize.Length + 1;
-                T[] temp = new T[newSize];
-                for (int i = 0; i < t_arrayToResize.Length; i++)
-                    temp[i] = t_arrayToResize[i];
-                temp[newSize - 1] = t_objectToAdd;
-                t_arrayToResize = temp;
-            }
-            else
-            {
-                t_arrayToResize = new T[1];
-                t_arrayToResize[0] = t_objectToAdd;
-            }
-        }
-        else
+        if (ArrayIsNullOrZero<T>(t_arrayToResize))
         {
             t_arrayToResize = new T[1];
             t_arrayToResize[0] = t_objectToAdd;
         }
+        else if (t_arrayToResize.Length > 0)
+        {
+            int newSize = t_arrayToResize.Length + 1;
+            T[] temp = new T[newSize];
+            for (int i = 0; i < t_arrayToResize.Length; i++)
+                temp[i] = t_arrayToResize[i];
+            temp[newSize - 1] = t_objectToAdd;
+            t_arrayToResize = temp;
+        }
         return t_arrayToResize;
+    }
+
+    /// <summary>
+    /// Reduce the number of items in the array. by a given amount. If no size is provided, 1 item is removed by default.
+    /// </summary>
+    /// <typeparam name="T">Type of array.</typeparam>
+    /// <param name="_arrayToReduce">Array to be reduced.</param>
+    /// <returns>The newly reduced array.</returns>
+    public static T[] ReduceArraySize<T>(T[] _arrayToReduce)
+    {
+        return ReduceArraySize<T>(_arrayToReduce, 1);
+    }
+    /// <summary>
+    /// Reduce the number of items in the array by a given amount. If no size is provided, 1 item is removed by default.
+    /// </summary>
+    /// <typeparam name="T">Type of array</typeparam>
+    /// <param name="_arrayToReduce">Array to be reduced.</param>
+    /// <param name="_amountToReduce">Amount to reduce the array by.</param>
+    /// <returns>The newly reduced array.</returns>
+    public static T[] ReduceArraySize<T>(T[] _arrayToReduce, int _amountToReduce)
+    {
+        if (ArrayIsNullOrZero<T>(_arrayToReduce))
+            return null;
+        T[] tmp = new T[_arrayToReduce.Length - _amountToReduce];
+        for (int i = 0; i < tmp.Length; i++)
+        {
+            tmp[i] = _arrayToReduce[i];
+        }
+        _arrayToReduce = tmp;
+        return _arrayToReduce;
     }
 
     /// <summary>
@@ -81,5 +103,43 @@ public class Utils
         if (_first == -1 || _second == -1)
             return _arrayToSwap;
         return Swap(_arrayToSwap, _first, _second);
+    }
+
+    public static bool ArrayIsNullOrZero<T>(T[] _arrayToCheck)
+    {
+        if (_arrayToCheck == null)
+            return true;
+        if (_arrayToCheck.Length == 0)
+            return true;
+        return false;
+    }
+
+    public static T[] Remove<T>(T[] _arrayToRemove, T _itemToRemove)
+    {
+        if (ArrayIsNullOrZero<T>(_arrayToRemove))
+            return null;
+        _arrayToRemove = Swap<T>(_arrayToRemove, _itemToRemove, _arrayToRemove[_arrayToRemove.Length]);
+        return ReduceArraySize<T>(_arrayToRemove);
+    }
+
+    public static T[] OrderedRemove<T>(T[] _arrayToRemove, int _itemToRemove)
+    {
+        if (ArrayIsNullOrZero<T>(_arrayToRemove))
+            return null;
+        T[] tmp = new T[_arrayToRemove.Length + 1];
+        tmp = AddToArray<T>(_arrayToRemove, _arrayToRemove[_arrayToRemove.Length-1]);
+        T dupeItem = tmp[tmp.Length-1];
+        tmp = Swap<T>(tmp, _itemToRemove, tmp.Length-1);
+        tmp = ReduceArraySize<T>(tmp);
+        if(_itemToRemove < tmp.Length)
+        {
+            for(int i = _itemToRemove; i < tmp.Length -1; i++)
+            {
+                tmp = Swap<T>(tmp, i, i + 1);
+            }
+        }
+        tmp = ReduceArraySize<T>(_arrayToRemove);
+        _arrayToRemove = tmp;
+        return _arrayToRemove;
     }
 }

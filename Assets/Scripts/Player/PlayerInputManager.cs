@@ -88,7 +88,10 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
             {
                 transform.position = Vector3.zero;
             }
+
 #endif
+        if (Input.GetKeyDown(KeyCode.PageUp))
+            rb.AddForce(Vector3.up * 50, ForceMode.Impulse);
 
         if (!view.IsMine && b_networked)
             return;
@@ -97,7 +100,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         if (b_shouldPassInputs)
             TellStuffWhatToDo();
 
-        PhotonNetwork.OfflineMode = offline;
+        //PhotonNetwork.OfflineMode = offline;
 
     }
 
@@ -146,8 +149,8 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         b_sprintHold = Input.GetButton(s_sprintButton);
         b_sprintRelease = Input.GetButtonUp(s_sprintButton);
 
-        v2_lookVector.x = Input.GetAxisRaw(s_cameraLookLR);
-        v2_lookVector.y = Input.GetAxisRaw(s_cameraLookUD);
+        v2_lookVector.x = Input.GetAxis(s_cameraLookLR);
+        v2_lookVector.y = Input.GetAxis(s_cameraLookUD);
 
         toolBools.b_MToolDown = Input.GetButtonDown(s_mobilityUse);
         toolBools.b_MToolHold = Input.GetButton(s_mobilityUse);

@@ -28,7 +28,8 @@ public class HopdogMover : MoverBase
         anim.SetLaunchAnims(true);
         b_canMove = false;
         Invoke(nameof(UnLaunch), 2);
-        rb.AddForce((_targetPos - transform.position).normalized * f_launchForce, ForceMode.VelocityChange);
+        rb.velocity = rb.velocity + (Vector3.up * 5);
+        rb.AddForce((_targetPos - (transform.position + Vector3.up)).normalized * f_launchForce, ForceMode.VelocityChange);
 
     }
 

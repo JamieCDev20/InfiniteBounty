@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 
 public class SaveManager : MonoBehaviour, ObserverBase
 {
+
+    public static SaveManager x;
     private PlayerSaveData saveData;
     public PlayerSaveData SaveData { get { return saveData; } }
     private const string sv = "save.json";
@@ -14,9 +16,24 @@ public class SaveManager : MonoBehaviour, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+
+    public void Init()
+    {
+        if (x != null)
+        {
+            if (x != this)
+                Destroy(gameObject);
+        }
+        else
+            x = this;
+
+
         CreateSaveData();
         FindObjectOfType<Workbench>().Init(this);
         DontDestroyOnLoad(gameObject);
+
     }
 
     /// <summary>
@@ -231,6 +248,9 @@ public class SaveManager : MonoBehaviour, ObserverBase
                     {
                         foreach((int toolID, int slotID) tool in psd.SaveData.tu_equipped)
                         {
+                            // TODO:
+                            // Create a new ToolBase[3] and read any existing tools into it
+                            // Then replace it with the new tool being sent.
                             if (tool.toolID == -1 || tool.slotID == -1)
                                 continue;
                             switch (tool.slotID)
@@ -255,38 +275,8 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 }
                 else if(saveData.tu_equippedAugments != null && psd.SaveData.tu_equippedAugments != null)
                 {
-                    bool comb = false;
-                    for(int i = 0; i< psd.SaveData.tu_equippedAugments.Length; i++)
-                    {
-                        comb = false;
-                        for(int j = 0; j < saveData.tu_equippedAugments.Length; j++)
-                        {
-                            if(saveData.tu_equippedAugments[j].toolID == psd.SaveData.tu_equippedAugments[i].toolID && saveData.tu_equippedAugments[j].slotID == psd.SaveData.tu_equippedAugments[i].slotID)
-                            {
-                                List<Augment> augs = new List<Augment>();
-                                foreach(Augment aug in psd.SaveData.tu_equippedAugments[i].equippedAugs)
-                                {
-                                    switch (aug.at_type)
-                                    {
-                                        case AugmentType.cone:
-                                            augs.Add((ConeAugment)aug);
-                                            break;
-                                        case AugmentType.projectile:
-                                            augs.Add((ProjectileAugment)aug);
-                                            break;
-                                        case AugmentType.standard:
-                                            augs.Add(aug);
-                                            break;
-                                    }
-                                }
-                                psd.SaveData.tu_equippedAugments[i].equippedAugs = augs.ToArray();
-                                saveData.tu_equippedAugments[j].equippedAugs = Utils.CombineArrays(saveData.tu_equippedAugments[j].equippedAugs, psd.SaveData.tu_equippedAugments[i].equippedAugs);
-                                comb = true;
-                            }
-                        }
-                        if (!comb)
-                            saveData.tu_equippedAugments = Utils.AddToArray(saveData.tu_equippedAugments, psd.SaveData.tu_equippedAugments[i]);
-                    }
+                    foreach((int, int, Augment[]) blaug in psd.SaveData.tu_equippedAugments)
+                        EquipNewAugment(blaug);
                 }
                 if (saveData.purchasedAugments == null && psd.SaveData.purchasedAugments != null)
                 {
@@ -311,11 +301,108 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 {
                     saveData.i_difficulty = psd.SaveData.i_difficulty;
                 }
-
-
                 string jsonData = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, jsonData);
                 break;
+            case RemoveAugmentEvent rae:
+                saveData.purchasedAugments = Utils.OrderedRemove<Augment>(saveData.purchasedAugments, rae.augIndex);
+                string removedPurchaseData = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, removedPurchaseData);
+                break;
+            case AddAugmentEvent aae:
+                saveData.purchasedAugments = Utils.AddToArray<Augment>(saveData.purchasedAugments, aae.augToAdd);
+                string addedPurchaseData = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, addedPurchaseData);
+                break;
+            case UpdateToolsEvent ute:
+                if (Utils.ArrayIsNullOrZero(saveData.tu_equipped))
+                {
+                    saveData.tu_equipped = new (int, int)[1] { (ute.toolToEquip.ToolID, (int)ute.slotToEquipIn) };
+                    break;
+                }
+                for (int i = 0; i < saveData.tu_equipped.Length; i++)
+                {
+                    if(saveData.tu_equipped[i].slotID == (int)ute.slotToEquipIn)
+                    {
+                        saveData.tu_equipped[i] = (ute.toolToEquip.ToolID, (int)ute.slotToEquipIn);
+                        break;
+                    }
+                }
+                saveData.tu_equipped = Utils.AddToArray(saveData.tu_equipped, (ute.toolToEquip.ToolID, (int)ute.slotToEquipIn));
+                string updatedTools = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, updatedTools);
+                break;
+            case EquipAugEvent eae:
+                EquipNewAugment(eae.iia_equippedAugment);
+                string equippedAugs = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, equippedAugs);
+                break;
+            case UnequipAugmentEvent uae:
+                saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, uae.augsToUnequip.augs);
+                RemoveEquippedAugments(uae.augsToUnequip);
+                string unequippedAugs = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
+                break;
+        }
+    }
+
+    private void EquipNewAugment((int _toolID, int _slotID, Augment[] _aug) newEquip)
+    {
+        // If the array doesn't already exist, add the incoming equipped augs.
+        if (Utils.ArrayIsNullOrZero(saveData.tu_equippedAugments))
+        {
+            saveData.tu_equippedAugments = new (int, int, Augment[])[] { newEquip };
+        }
+        else
+        {
+            // Check the current passed in augment
+            for (int j = 0; j < newEquip._aug.Length; j++)
+            {
+                bool _jCombined = false;
+                for (int i = 0; i < saveData.tu_equippedAugments.Length; i++)
+                {
+                    // When the tool and slot ID's match, add the augments together.
+                    if (saveData.tu_equippedAugments[i].toolID == newEquip._toolID && saveData.tu_equippedAugments[i].slotID == newEquip._slotID)
+                    {
+                        saveData.tu_equippedAugments[i].equippedAugs = Utils.CombineArrays(saveData.tu_equippedAugments[i].equippedAugs, newEquip._aug);
+                        _jCombined = true;
+                    }
+                }
+                if (!_jCombined)
+                {
+                    // It hasn't been combined so add it to the end of the arrays.
+                    saveData.tu_equippedAugments = Utils.AddToArray(saveData.tu_equippedAugments, newEquip);
+                }
+            }
+        }
+    }
+
+    private void RemoveEquippedAugments((int _toolID, int _slotID, Augment[] _aug) augToDetach)
+    {
+        if (Utils.ArrayIsNullOrZero(saveData.tu_equippedAugments))
+        {
+            return;
+        }
+        for(int i = 0; i < augToDetach._aug.Length; i++)
+        {
+            RemoveAugment((augToDetach._toolID, augToDetach._slotID, augToDetach._aug[i]));
+        }
+    }
+
+    private void RemoveAugment((int _toolID, int _slotID, Augment _aug) augToDetach)
+    {
+        for(int i = 0; i < saveData.tu_equippedAugments.Length; i++)
+        {
+            if(augToDetach._toolID == saveData.tu_equippedAugments[i].toolID && augToDetach._slotID == saveData.tu_equippedAugments[i].slotID)
+            {
+                for(int j = 0; j < saveData.tu_equippedAugments[i].equippedAugs.Length; j++)
+                {
+                    if (saveData.tu_equippedAugments[i].equippedAugs[j].Name == augToDetach._aug.Name)
+                    {
+                        saveData.tu_equippedAugments[i].equippedAugs = Utils.OrderedRemove(saveData.tu_equippedAugments[i].equippedAugs, j);
+                    }
+                }
+            }
         }
     }
 

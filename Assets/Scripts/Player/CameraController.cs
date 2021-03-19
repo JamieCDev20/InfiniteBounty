@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
@@ -10,7 +11,7 @@ public class CameraController : MonoBehaviour
     //Variables
     #region Serialised
 
-    [SerializeField] internal Vector2 v2_cameraSensitivity = Vector2.one * 225;
+    [SerializeField] internal Vector2 v2_cameraSensitivity = Vector2.one;
     [SerializeField] private bool b_invertY;
     [SerializeField] private bool networkedCamera = false;
     [SerializeField] private Text nugCountText;
@@ -28,6 +29,8 @@ public class CameraController : MonoBehaviour
     #region Private
 
     private Vector2 v2_lookInputs;
+    private float frametime;
+    private float mydeltatime;
     private Transform t_follow;
     internal PlayerInputManager pim_inputs;
     private float f_firingTime;
@@ -42,6 +45,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += SceneLoad;
         if (!networkedCamera)
         {
             pim_inputs = transform.root.GetComponentInChildren<PlayerInputManager>();
@@ -53,13 +57,21 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         //DoStuff
+        mydeltatime = Time.realtimeSinceStartup - frametime;
         Look();
         Follow();
+        frametime = Time.realtimeSinceStartup;
     }
 
     #endregion
 
     #region Private Voids
+
+    private void SceneLoad(Scene s, LoadSceneMode m)
+    {
+        transform.eulerAngles = Vector3.zero;
+        f_yLook = 0;
+    }
 
     private void Detach()
     {
@@ -74,8 +86,12 @@ public class CameraController : MonoBehaviour
 
     private void Look()
     {
-        f_yLook = Mathf.Clamp(f_yLook + v2_lookInputs.y * v2_cameraSensitivity.y * Time.deltaTime, -80, 40);
-        transform.Rotate(transform.up.normalized * v2_lookInputs.x * v2_cameraSensitivity.x * Time.deltaTime, Space.World);
+
+        float x = v2_cameraSensitivity.x * mydeltatime;
+        float y = v2_cameraSensitivity.y * mydeltatime;
+
+        f_yLook = Mathf.Clamp(f_yLook + (v2_lookInputs.y * y), -80, 40);
+        transform.Rotate(transform.up.normalized * (v2_lookInputs.x * x), Space.World);
         transform.eulerAngles = new Vector3(f_yLook, transform.eulerAngles.y, 0);
 
         transform.eulerAngles = Vector3.Scale(transform.eulerAngles, Vector3.one - Vector3.forward);

@@ -49,7 +49,7 @@ public class ToolRack : Shop
             EmptyToolSlot parent = isWeapon ? _t_toolTransform[i * 2] : _t_toolTransform[i];
             ToolBase tb = _tl_loader.LoadTool(i, parent.transform.root);
             tb.transform.position = parent.transform.position;
-
+            tb.transform.rotation = parent.transform.rotation;
             // Unpurchased weapons set their material to a silhouette
             ApplyMaterials(tb);
             if (!tb.Purchased)
@@ -78,6 +78,7 @@ public class ToolRack : Shop
                 {
                     ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1].transform.root);
                     dupe.transform.position = _t_toolTransform[i * 2 + 1].transform.position;
+                    dupe.transform.rotation = _t_toolTransform[i * 2 + 1].transform.rotation;
                     toolRackID++;
                     dupe.RackID = toolRackID;
                     dupe.Purchased = true;

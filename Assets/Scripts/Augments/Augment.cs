@@ -10,11 +10,14 @@ public class Augment
     [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected int i_level;
     [Newtonsoft.Json.JsonProperty]
+    [SerializeField] protected int i_cost;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected AugmentStage as_stage;
     [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected string mat_augColor;
     public string Name { get { return s_name; } }
     public int Level { get { return i_level; } set { i_level = value; } }
+    public int Cost { get { return i_cost; } set { i_cost = value; } }
     public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
     public string AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
     #region Audio
@@ -92,15 +95,24 @@ public class Augment
 
     public void InitAudio(AudioClip[] _ac_use, AudioClip[] _ac_travel, AudioClip[] _ac_hit)
     {
-        ac_useSound = new string[_ac_use.Length];
-        ac_travelSound = new string[_ac_travel.Length];
-        ac_hitSound = new string[_ac_hit.Length];
-        for(int i = 0; i < _ac_use.Length; i++)
-            ac_useSound[i] = _ac_use[i].name;
-        for(int i = 0; i < _ac_travel.Length; i++)
-            ac_travelSound[i] = _ac_travel[i].name;
-        for(int i = 0; i < _ac_hit.Length; i++)
-            ac_hitSound[i] = _ac_hit[i].name;
+        if(_ac_use != null)
+        {
+            ac_useSound = new string[_ac_use.Length];
+            for(int i = 0; i < _ac_use.Length; i++)
+                ac_useSound[i] = _ac_use[i].name;
+        }
+        if(_ac_travel != null)
+        {
+            ac_travelSound = new string[_ac_travel.Length];
+            for(int i = 0; i < _ac_travel.Length; i++)
+                ac_travelSound[i] = _ac_travel[i].name;
+        }
+        if(_ac_hit != null)
+        {
+            ac_hitSound = new string[_ac_hit.Length];
+            for(int i = 0; i < _ac_hit.Length; i++)
+                ac_hitSound[i] = _ac_hit[i].name;
+        }
     }
     public void InitAudio(string[] _ac_use, string[] _ac_travel, string[] _ac_hit)
     {
@@ -185,7 +197,7 @@ public class Augment
 
     public AugmentProperties GetAugmentProperties()
     {
-        return new AugmentProperties(s_name, f_weight, f_recoil, f_speed, f_heatsink, f_knockback, f_energyGauge, i_damage, i_lodeDamage);
+        return new AugmentProperties(s_name, i_cost, f_weight, f_recoil, f_speed, f_heatsink, f_knockback, f_energyGauge, i_damage, i_lodeDamage);
     }
 
     public AugmentPhysicals GetPhysicalProperties()
@@ -251,6 +263,7 @@ public class Augment
         c.f_detonationTime = a.f_detonationTime + b.f_detonationTime;
         c.f_expRad = a.f_expRad + b.f_expRad;
         c.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
+        c.i_cost = a.Cost + b.Cost;
         // If any of them are set to impact, set to be impact
         if (a.b_impact)
             c.b_impact = true;

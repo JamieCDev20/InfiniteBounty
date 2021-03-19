@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -9,6 +10,11 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_pos;
     private Vector3 v_rot;
     private float t;
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -35,10 +41,15 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
 
     private void LateUpdate()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine || PhotonNetwork.IsMasterClient)
             return;
         transform.position = (transform.position - v_pos).sqrMagnitude > 100 ? transform.position = v_pos : Vector3.Lerp(transform.position, v_pos, 0.3f);
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rot, 0.3f);
+    }
+
+    private void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        GetComponent<IHitable>().Die();
     }
 
 }

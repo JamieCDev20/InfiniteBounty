@@ -21,6 +21,7 @@ public class TempEnemyProjectile : MonoBehaviour
         go_deathParticle.SetActive(false);
         go_deathParticle.transform.parent = null;
         go_deathParticle.transform.position = transform.position;
+        go_deathParticle.transform.forward = collision.GetContact(0).normal;
         go_deathParticle.SetActive(true);
 
         PoolManager.x?.ReturnObjectToPool(gameObject);

@@ -11,29 +11,95 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private GameObject go_propertyButton;
     [SerializeField] private GameObject go_propertyParent;
     [SerializeField] private GameObject go_augmentButton;
+    [SerializeField] private GameObject go_listMover;
     [SerializeField] private List<GameObject> goL_augmentButtonPool = new List<GameObject>();
     [SerializeField] private RectTransform rt_augmentButtonParent;
     [SerializeField] private Scrollbar s_slider;
     [SerializeField] private float f_augmentButtonHeight = 85;
+    [SerializeField] private AugmentDisplay ad_display;
+    List<Augment> aL_allAugmentsOwned = new List<Augment>();
+    private int i_currentAugmentIndex = 0;
+    private AugmentDisplayType adt_currentDisplayType;
+    private WeaponTool wt_toolToCheck;
+    private string s_augName;
+    private AugmentType at_type;
+    public WeaponTool ToolToCheck { set { wt_toolToCheck = value; } }
+    public AugmentType AugType { set { at_type = value; } }
+    public AugmentDisplayType CurrentDisplayType { get { return adt_currentDisplayType; } }
+    public string AugmentName { set { s_augName = value; } }
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
+    public AugmentDisplay AugDisplay { get { return ad_display; } }
+    public int CurrentAugIndex { get { return i_currentAugmentIndex; } }
     private int i_displayIter = 0;
 
-    public void Start()
+    public void Init()
     {
-        if (!PoolManager.x.CheckIfPoolExists(go_propertyButton))
-            PoolManager.x.CreateNewPool(go_propertyButton, 20);
+
     }
 
-
-    public List<Augment> InitAugmentList(List<Augment> aL_augs, Augment[] _aA_augmentsInList, bool _b_shouldAddToExistingList)
+    private void OnDestroy()
     {
+        //if(!PoolManager.x.CheckIfPoolExists(go_propertyButton))
+        //    PoolManager.x.RemovePool(go_propertyButton);
+    }
+
+    public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList)
+    {
+        List<Augment> _augmentsInList = new List<Augment>();
         // Clear the display
         if (!_b_shouldAddToExistingList)
+        {
             aL_augs.Clear();
+            foreach (GameObject btn in goL_augmentButtonPool)
+                btn.GetComponent<IPoolable>().Die();
+            aL_allAugmentsOwned.Clear();
+        }
+        // Find all purchased Augments
+        SaveManager saveMan = FindObjectOfType<SaveManager>();
+        if (saveMan.SaveData.purchasedAugments != null)
+        {
+            Augment[] augs = saveMan.SaveData.purchasedAugments;
+            Augment[] castedAugs = new Augment[augs.Length];
+            if (augs != null && augs.Length != 0)
+            {
+                for (int i = 0; i < castedAugs.Length; i++)
+                    if (AugmentManager.x.GetAugment(augs[i].Name) != null)
+                    {
+                        castedAugs[i] = AugmentManager.x.GetAugment(augs[i].Name).Aug;
+                        _augmentsInList.Add(castedAugs[i]);
+                    }
+            }
+        }
         // Update display from save file
-        aL_augs.AddRange(_aA_augmentsInList);
-        UpdateAugmentListDisplay(aL_augs, AugmentDisplayType.ShowAll);
-        return aL_augs;
+        aL_allAugmentsOwned.AddRange(_augmentsInList);
+        UpdateAugmentListDisplay(aL_allAugmentsOwned, adt);
+        adt_currentDisplayType = adt;
+        return aL_allAugmentsOwned;
+    }
+
+    private List<Augment> DisplayAugmentsOfType(List<Augment> aL_augs)
+    {
+        List<Augment> _augList = new List<Augment>();
+        foreach (Augment aug in aL_augs)
+            if (aug.at_type == at_type)
+                _augList.Add(aug);
+        return _augList;
+    }
+
+    private List<Augment> DisplayAugmentsWithName(List<Augment> aL_augs)
+    {
+        List<Augment> _augList = new List<Augment>();
+        foreach (Augment aug in aL_augs)
+            if (aug.Name == s_augName)
+                _augList.Add(aug);
+        return _augList;
+    }
+
+    private List<Augment> DisplayAttachedAugments()
+    {
+        List<Augment> _augList = new List<Augment>();
+
+        return _augList;
     }
 
     private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
@@ -45,33 +111,70 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             case AugmentDisplayType.ShowAll:
                 _aL_augmentsToShow.AddRange(aL_augs);
                 break;
-
             case AugmentDisplayType.ShowSameType:
-                for (int i = 0; i < aL_augs.Count; i++)
+                _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs));
+                break;
+            case AugmentDisplayType.ShowSameName:
+                _aL_augmentsToShow.AddRange(DisplayAugmentsWithName(aL_augs));
+                break;
+            case AugmentDisplayType.ShowEquipped:
+                if(wt_toolToCheck != null)
                 {
-                    /*
-                        if(aL_allAugmentsOwned[i].type == currentWeapon.type)
-                            _aL_augmentsToShow.Add(aL_allAugmentsOwned[i]);
-                    */
+                    foreach(Augment auggy in wt_toolToCheck.Augs)
+                        if(auggy != null)
+                            _aL_augmentsToShow.Add(auggy);
                 }
                 break;
         }
 
-        for (int i = 0; i < aL_augs.Count; i++)
+        if(_aL_augmentsToShow != null)
         {
-            if (goL_augmentButtonPool.Count <= i)
-                goL_augmentButtonPool.Add(Instantiate(go_augmentButton, rt_augmentButtonParent));
-            goL_augmentButtonPool[i].SetActive(true);
-            goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + aL_augs[i]?.Level.ToString();
-            goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = aL_augs[i]?.Name;
-            goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
+            for (int i = 0; i < _aL_augmentsToShow.Count; i++)
+            {
+                if (goL_augmentButtonPool.Count <= i)
+                    goL_augmentButtonPool.Add(PoolManager.x.SpawnObject(go_augmentButton));
+                goL_augmentButtonPool[i].SetActive(true);
+                goL_augmentButtonPool[i].transform.parent = go_listMover.transform;
+                goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
+                goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
+                goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
+                goL_augmentButtonPool[i].transform.localScale = Vector3.one;
+                AugmentButton btn = goL_augmentButtonPool[i].GetComponent<AugmentButton>();
+                btn.i_buttonIndex = i;
+                btn.Parent = transform.root.gameObject;
+            }
         }
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
     }
 
+    public void ClickAugment(int _i_augmentIndexClicked)
+    {
+        goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
+        i_currentAugmentIndex = _i_augmentIndexClicked;
+        goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
+
+        ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
+        switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
+        {
+            case AugmentType.standard:
+                ad_display.t_augmentFits.text = "Hammer";
+                break;
+            case AugmentType.projectile:
+                ad_display.t_augmentFits.text = "Blaster - Shredder - Cannon";
+                break;
+            case AugmentType.cone:
+                ad_display.t_augmentFits.text = "Nuggsucker";
+                break;
+        }
+
+        ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
+        ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
+        RemoveAugmentProperties();
+        UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
+        //        UpdatePropertyText(_i_augmentIndexClicked);
+    }
     public void UpdatePropertyText(Augment _aug)
     {
         AugmentProperties ap = _aug.GetAugmentProperties();
@@ -190,11 +293,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         if (i_displayIter <= i_columnMax)
         {
 
-            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (i_yDisplacement * i_displayIter));
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), 0 - (i_yDisplacement * i_displayIter));
         }
         else
         {
-            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + i_xDisplacement, rt_augmentButtonParent.rect.yMax + (rt_button.rect.height) - (34 * (i_displayIter - i_columnMax)));
+            rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + i_xDisplacement, 0 - (34 * (i_displayIter - i_columnMax)));
         }
         i_displayIter++;
         return btn?.GetComponent<Text>();
@@ -204,4 +307,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         i_displayIter = 0;
         PoolManager.x.KillAllObjects(go_propertyButton);
     }
+}
+
+public enum AugmentDisplayType
+{
+    ShowAll, ShowEquipped, ShowSameType, ShowSameName
 }

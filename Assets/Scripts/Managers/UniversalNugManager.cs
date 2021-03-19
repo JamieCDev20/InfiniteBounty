@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,22 +23,32 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (x != null)
-            Destroy(gameObject);
-        else
-            x = this;
     }
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        photonView.ViewID = 99999;
-        PhotonNetwork.RegisterPhotonView(photonView);
     }
 
     public void Reset()
     {
         ResetValues();
+
+    }
+
+
+    public void Init()
+    {
+        if (x != null)
+        {
+            if (x != this)
+                Destroy(gameObject);
+        }
+        else
+            x = this;
+        DontDestroyOnLoad(gameObject);
+        photonView.ViewID = 99999;
+        PhotonNetwork.RegisterPhotonView(photonView);
+
     }
 
     public void RecieveNugs(Nug nugCollected)
@@ -91,7 +102,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     public void FinishedLevel()
     {
         if (PhotonNetwork.IsMasterClient)
-            photonView.RPC("RemoteFinished", RpcTarget.All);
+            photonView.RPC(nameof(RemoteFinished), RpcTarget.All);
     }
 
     [PunRPC]
@@ -99,6 +110,9 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     {
         b_levelFinished = true;
         //PoolManager.x.Reset();
+        PlayerSaveData psd = new PlayerSaveData(localNugCount, -1, -1, null, null, null, null, null, null, -1);
+        SaveEvent se = new SaveEvent(psd);
+        FindObjectOfType<SaveManager>().OnNotify(se);
     }
 
     private void ResetValues()
@@ -114,7 +128,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
-        photonView.RPC("DoRemoteScoring", RpcTarget.All);
+        photonView.RPC(nameof(DoRemoteScoring), RpcTarget.All);
 
     }
 

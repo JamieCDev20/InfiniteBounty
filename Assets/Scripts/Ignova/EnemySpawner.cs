@@ -8,69 +8,67 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     public static EnemySpawner x;
     private int i_numberOfEnemies;
     private DifficultySet ds_currentDifficulty;
+    [SerializeField] private EnemySpawnZone[] eszA_allEnemyZones;
+    [SerializeField] private LayerMask lm_notEnemyLayer;
 
     [Header("Enemies in Level at Start")]
     [SerializeField] private GameObject[] goA_startEnemies = new GameObject[1];
     [SerializeField] private int[] iA_numberOfEachStartingEnemyType = new int[1];
 
     [Header("Waves")]
-    [SerializeField] private GameObject[] goA_waveEnemies = new GameObject[2];
-    [SerializeField] private int[] iA_enemyWeightings = new int[2];
-    private List<GameObject> goL_enemyWeightedList = new List<GameObject>();
+    [SerializeField] private float f_startDelay = 50f;
+    [SerializeField] private GameObject[] goA_groundWaveEnemies = new GameObject[1];
+    [SerializeField] private GameObject[] goA_flyingWaveEnemies = new GameObject[1];
     [SerializeField] private Vector2 v_timeBetweenWaves = new Vector2(35, 45);
     [Space]
     [SerializeField] private int i_numberOfHordesPerWave = 7;
     [SerializeField] private float f_timeBetweenHordes = 5;
-    [SerializeField] private Vector2 v_enemiesPerHorde = new Vector2(5, 7);
+    [SerializeField] private Vector2 v_groundEnemiesPerHorde = new Vector2(5, 7);
+    [SerializeField] private Vector2 v_flyingEnemiesPerHorde = new Vector2(5, 7);
 
     [Header("Miniboss")]
     [SerializeField] private GameObject go_miniboss;
     private List<int> iL_minibossZones = new List<int>();
 
-    [Header("Zone Things")]
-    [SerializeField] private ZoneInfo[] ziA_enemySpawnZones = new ZoneInfo[0];
-    [SerializeField] private LayerMask lm_zoneCheckMask;
-
-
-    private void Start()
+    private IEnumerator Start()
     {
         x = this;
+        yield return new WaitForEndOfFrame();
         ds_currentDifficulty = DifficultyManager.x.ReturnCurrentDifficulty();
-
-
-        for (int i = 0; i < goA_waveEnemies.Length; i++)
-            for (int x = 0; x < iA_enemyWeightings[i]; x++)
-                goL_enemyWeightedList.Add(goA_waveEnemies[i]);
 
         iL_minibossZones = new List<int>();
         for (int i = 0; i < ds_currentDifficulty.i_numberOfMiniBosses; i++)
-            iL_minibossZones.Add(Random.Range(0, ziA_enemySpawnZones.Length));
+            iL_minibossZones.Add(Random.Range(0, eszA_allEnemyZones.Length));
+        //Adds the middle arena to the list
+        iL_minibossZones.Add(7);
 
         if (PhotonNetwork.IsMasterClient)
         {
+            yield return new WaitForSeconds(f_startDelay);
             StartCoroutine(CheckZoneForPlayers());
             PlaceStartingEnemiesInZones();
         }
-
     }
 
+    /*
     private void Update()
     {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Alpha0))
-            SpawnEnemy(go_miniboss, 0);
+            SpawnEnemy(go_miniboss, 0, false);
 #endif
     }
+    */
 
     private void PlaceStartingEnemiesInZones()
     {
         for (int i = 0; i < iA_numberOfEachStartingEnemyType.Length; i++)
         {
-            int _i_zone = Random.Range(0, ziA_enemySpawnZones.Length);
+            int _i_zone = Random.Range(0, eszA_allEnemyZones.Length);
 
             for (int x = 0; x < iA_numberOfEachStartingEnemyType[i]; x++)
             {
-                SpawnEnemy(goA_startEnemies[i], _i_zone);
+                SpawnEnemy(goA_startEnemies[i], eszA_allEnemyZones[i].transform.position, false);
             }
         }
     }
@@ -80,56 +78,54 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(Random.Range(v_timeBetweenWaves.x, v_timeBetweenWaves.y) * ds_currentDifficulty.f_spawnFrequencyMult);
         bool _b_spawnedWave = false;
 
-        for (int i = 0; i < ziA_enemySpawnZones.Length; i++)
-        {
-            if (Physics.OverlapSphere(ziA_enemySpawnZones[i].t_zone.position, ziA_enemySpawnZones[i].f_zoneRadius, lm_zoneCheckMask).Length > 0)
+        for (int i = 0; i < eszA_allEnemyZones.Length; i++)
+            if (eszA_allEnemyZones[i].CheckForPlayersAndSpawnWave())
             {
                 _b_spawnedWave = true;
-                StartCoroutine(SpawnWave(i));
                 if (iL_minibossZones.Contains(i))
                 {
-                    DynamicAudioManager.x.StartBoss();
-                    SpawnEnemy(go_miniboss, i);
-                    iL_minibossZones.Remove(i);
+                    print("Boss has spawned in area: " + i);
+                    SpawnEnemy(go_miniboss, eszA_allEnemyZones[i].ReturnSpawnPoint(), false);
+                    iL_minibossZones.RemoveAt(i);
                 }
             }
-        }
+
+        while (i_numberOfEnemies > 5)
+            yield return new WaitForSeconds(1);
+
+        EndWave();
+
         if (_b_spawnedWave)
             yield return new WaitForSeconds(f_timeBetweenHordes * i_numberOfHordesPerWave);
-
         StartCoroutine(CheckZoneForPlayers());
     }
 
-    private IEnumerator SpawnWave(int _i_zoneToSpawnEnemiesIn)
+    private void EndWave()
     {
-        DynamicAudioManager.x.StartCombat();
-
-        for (int i = 0; i < i_numberOfHordesPerWave; i++)
-        {
-            for (int x = 0; x < Random.Range(v_enemiesPerHorde.x, v_enemiesPerHorde.y) * ds_currentDifficulty.f_spawnAmountMult; x++)
-                SpawnEnemy(PickRandomWaveEnemy(), _i_zoneToSpawnEnemiesIn);
-
-            yield return new WaitForSeconds(f_timeBetweenHordes);
-        }
-
+        DynamicAudioManager.x.EndCombat();
     }
 
-    private void SpawnEnemy(GameObject _go_enemyToSpawn, int _i_zoneIndexToSpawnIt)
+    private GameObject PickRandomGroundWaveEnemy()
+    {
+        return goA_groundWaveEnemies[Random.Range(0, goA_groundWaveEnemies.Length)];
+    }
+    private GameObject PickRandomFlyingWaveEnemy()
+    {
+        return goA_flyingWaveEnemies[Random.Range(0, goA_flyingWaveEnemies.Length)];
+    }
+
+    internal void SpawnEnemy(GameObject _go_enemyToSpawn, Vector3 _v_spawnPos, bool _b_isFlyingEnemy)
     {
         if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)// || _go_enemyToSpawn == go_miniboss)
         {
-            PhotonNetwork.Instantiate(_go_enemyToSpawn.name, GetPositionWithinZone(_i_zoneIndexToSpawnIt), new Quaternion(0, Random.value, 0, Random.value));
+            PhotonNetwork.Instantiate(_go_enemyToSpawn.name, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
             i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
-        }
-    }
-    private GameObject PickRandomWaveEnemy()
-    {
-        return goL_enemyWeightedList[Random.Range(0, goL_enemyWeightedList.Count)];
-    }
 
-    private Vector3 GetPositionWithinZone(int _i_zoneIndexToSpawnIt)
-    {
-        return ziA_enemySpawnZones[_i_zoneIndexToSpawnIt].t_zone.position + new Vector3(Random.Range(-50, 50), 0, Random.Range(-50, 50));
+            Collider[] _cA = Physics.OverlapSphere(_v_spawnPos, 3, lm_notEnemyLayer);
+            for (int i = 0; i < _cA.Length; i++)
+                _cA[i].GetComponent<IHitable>()?.TakeDamage(10, false);
+
+        }
     }
 
     internal void EnemyDied(bool _b_isBoss)
@@ -138,17 +134,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
         if (i_numberOfEnemies < 5)
-        {
-            DynamicAudioManager.x.EndCombat();
             if (_b_isBoss)
                 DynamicAudioManager.x.EndBoss();
-        }
     }
-}
-
-[System.Serializable]
-public struct ZoneInfo
-{
-    public Transform t_zone;
-    public float f_zoneRadius;
 }

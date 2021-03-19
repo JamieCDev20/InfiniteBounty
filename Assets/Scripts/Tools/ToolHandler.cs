@@ -75,10 +75,22 @@ public class ToolHandler : SubjectBase
                     if (A_tools[currentSlot].ToolID == _sm.SaveData.tu_equippedAugments[i].toolID && currentSlot == _sm.SaveData.tu_equippedAugments[i].slotID)
                     {
                         Augment[] augs = _sm.SaveData.tu_equippedAugments[i].equippedAugs;
+                        AugmentManager am = FindObjectOfType<AugmentManager>();
+                        WeaponTool wt = (WeaponTool)A_tools[currentSlot];
                         foreach(Augment aug in augs)
                         {
-                            WeaponTool wt = (WeaponTool)A_tools[currentSlot];
-                            wt.AddStatChanges(aug);
+                            switch (aug.at_type)
+                            {
+                                case AugmentType.standard:
+                                    wt.AddStatChanges(am.GetStandardAugment(aug.Name));
+                                    break;
+                                case AugmentType.projectile:
+                                    wt.AddStatChanges(am.GetProjectileAugment(aug.Name));
+                                    break;
+                                case AugmentType.cone:
+                                    wt.AddStatChanges(am.GetConeAugment(aug.Name));
+                                    break;
+                            }
                         }
                     }
                 }
@@ -250,11 +262,11 @@ public class ToolHandler : SubjectBase
     public void SyncToolOverNetwork()
     {
 
-        for (int i = 0; i < A_tools.Length; i++)
-        {
-            if (A_tools[i] != null)
-                view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
-        }
+        //for (int i = 0; i < A_tools.Length; i++)
+        //{
+        //    if (A_tools[i] != null)
+        //        view.RPC("SwapTool", RpcTarget.Others, (ToolSlot)i, A_tools[i].ToolID);
+        //}
 
     }
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)

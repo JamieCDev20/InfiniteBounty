@@ -17,21 +17,26 @@ public class BouncePad : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
             Jump();
     }
 
     public void Jump()
     {
         Collider[] _cA = Physics.OverlapSphere(transform.position, 1, lm_layersToBounce, QueryTriggerInteraction.Ignore);
+        bool _b_sound = false;
 
         for (int i = 0; i < _cA.Length; i++)
         {
-            _cA[i].GetComponent<Rigidbody>().AddForce(transform.up * f_bounceForce, ForceMode.Impulse);
+            if (_cA[i].attachedRigidbody != null)
+            {
+                _cA[i].attachedRigidbody.AddForce(transform.up * f_bounceForce, ForceMode.Impulse);
+                _b_sound = true;
+            }
         }
-        if (_cA.Length > 0)
-            as_source.PlayOneShot(ac_useSound);
 
+        if (_b_sound)
+            as_source.PlayOneShot(ac_useSound);
     }
 
 

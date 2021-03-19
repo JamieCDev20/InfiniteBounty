@@ -6,6 +6,7 @@ public class FlyingMover : MoverBase
 {
 
     [SerializeField] private float f_flyForce;
+    float stillTime;
 
     public override void Move(Vector3 _dir)
     {
@@ -32,6 +33,11 @@ public class FlyingMover : MoverBase
             down = 1 - (hit.distance / dDis);
 
         rb.AddForce((Vector3.up * 9) + (((transform.up * forw) + (transform.up * down)) * f_flyForce));
+
+        if (rb.velocity.sqrMagnitude > 1)
+            stillTime = Time.realtimeSinceStartup;
+        if (stillTime >= 5)
+            GetComponent<IHitable>().Die();
 
     }
 

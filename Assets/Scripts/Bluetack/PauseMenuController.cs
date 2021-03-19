@@ -17,6 +17,7 @@ public class PauseMenuController : SubjectBase
     [SerializeField] private Canvas c_displayMenu;
     [SerializeField] private Canvas c_audioMenu;
     [SerializeField] private Canvas c_spectatingCanvas;
+    [SerializeField] private Canvas c_deleteSaveCanvas;
     private bool b_isPaused;
     private PlayerInputManager pim;
     private CameraController cc_cam;
@@ -31,6 +32,7 @@ public class PauseMenuController : SubjectBase
     [SerializeField] private float f_cameraSpeedMult;
     [Space, SerializeField] private Toggle b_mouseInverted;
     [SerializeField] private VolumeSliders vs_volSliders;
+    [SerializeField] private Dropdown resolutionDropdown;
 
     [Header("Mixers")]
     [SerializeField] private AudioMixer am_masterMixer;
@@ -41,9 +43,31 @@ public class PauseMenuController : SubjectBase
     [SerializeField] private AudioClip[] acA_ambienceTestClips = new AudioClip[0];
     [SerializeField] private AudioClip[] acA_soundEffectsTestClips = new AudioClip[0];
 
+    Resolution[] resolutions;
 
     private void Start()
     {
+        #region JAM's Resolution Code
+        resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
+        #endregion
+
         c_settingsMenu.enabled = false;
         c_pauseCanvas.enabled = false;
         c_playCanvas.enabled = true;
@@ -99,6 +123,7 @@ public class PauseMenuController : SubjectBase
         c_controlsMenu.enabled = false;
         c_displayMenu.enabled = false;
         c_audioMenu.enabled = false;
+        c_deleteSaveCanvas.enabled = false;
 
         pim.b_shouldPassInputs = true;
         cc_cam.enabled = true;
@@ -192,6 +217,12 @@ public class PauseMenuController : SubjectBase
     #endregion
 
     #region John Stuff
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
     public void SetQuality(int _i_qualityIndex)
     {
         A_display[(int)DisplaySettings.quality] = _i_qualityIndex;

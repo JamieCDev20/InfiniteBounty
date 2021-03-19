@@ -22,6 +22,13 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     #region Private
 
     private bool canLoadScene = true;
+    private bool b_die;
+
+    private float secondsToNextChange = 1;
+    private float fractionDeltaStep = 0.1f;
+    private float currentScale = 1;
+    private float directionOfChange = -1;
+    private float elapsedTimeSinceChange = 0;
 
     #endregion
 
@@ -31,26 +38,68 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     private void Awake()
     {
         if (x != null)
+        {
+            b_die = true;
             Destroy(gameObject);
+        }
         else
             x = this;
-        Init();
         PhotonNetwork.SerializationRate = 15;
         PhotonNetwork.SendRate = 15;
+        if (!b_die)
+            Init();
+    }
+
+    private void Start()
+    {
+        DynamicResolutionHandler.SetDynamicResScaler(SetDynamicResolutionScale, DynamicResScalePolicyType.ReturnsMinMaxLerpFactor);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKeyDown(KeyCode.RightControl))
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                ReturnToMainMenu();
+                //PhotonNetwork.Disconnect();
+                //Reset();
+                //SceneManager.LoadScene(0);
+            }
     }
 
     #endregion
 
     #region Private Voids
 
+    public float SetDynamicResolutionScale()
+    {
+        elapsedTimeSinceChange += Time.deltaTime;
+
+        if (elapsedTimeSinceChange >= secondsToNextChange)
+        {
+            currentScale += directionOfChange * fractionDeltaStep;
+
+            if (currentScale <= 0 || currentScale >= 1)
+            {
+                directionOfChange *= -1;
+            }
+            elapsedTimeSinceChange = 0;
+        }
+        return currentScale;
+
+    }
+
     /// <summary>
     /// Init function for the Game Manager, handles all the start functions
     /// </summary>
     private void Init()
     {
-
+        Debug.Log("Init");
         canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
+        SceneManager.sceneLoaded += OnSceneLoad;
         //GM persist through scenes
         DontDestroyOnLoad(gameObject);
 
@@ -62,7 +111,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             //spawn all managers
             for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
             {
-                Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity);
+                Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity).SendMessage("Init");
             }
         }
 
@@ -75,10 +124,12 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         TagManager.x.Reset();
         NetworkManager.x.Reset();
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(0);
     }
 
     public override void OnLeftRoom()
     {
+
         base.OnLeftRoom();
         if (!canLoadScene)
             return;
@@ -88,10 +139,22 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (!scene.name.Contains("Lobby"))
             PhotonNetwork.CurrentRoom.IsOpen = false;
         else
-            PhotonNetwork.CurrentRoom.IsOpen = true;
+            if (PhotonNetwork.CurrentRoom != null)
+                PhotonNetwork.CurrentRoom.IsOpen = true;
+
+        //PoolManager.x.ResetPool("BoomNug");
+        //PoolManager.x.ResetPool("GooNug");
+        //PoolManager.x.ResetPool("HydroNug");
+        //PoolManager.x.ResetPool("MagmaNug");
+        //PoolManager.x.ResetPool("TastyNug");
+        //PoolManager.x.ResetPool("ThunderNug");
+        //PoolManager.x.ResetPool("TEnemyProjectile");
+
     }
 
     #endregion
@@ -107,7 +170,9 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     {
         //initialise the pools in pool manager when you join a room
         PoolManager.x.InitialisePools();
+
         UniversalNugManager.x.DoScoring();
+        AugmentManager.x.JoinedRoom();
 
     }
 
@@ -116,14 +181,16 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         base.OnMasterClientSwitched(newMasterClient);
-        PhotonNetwork.Disconnect();
+        //PhotonNetwork.Disconnect();
         Reset();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        base.OnDisconnected(cause);
         Reset();
+        base.OnDisconnected(cause);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ReturnToMainMenu()

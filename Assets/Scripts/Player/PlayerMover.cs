@@ -30,6 +30,10 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_plummetMultiplier = 3; //the velocity at which below, gravity will increase
     [SerializeField] private Vector3 v_dragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
 
+    [Header("Getting Teleported")]
+    [SerializeField] private GameObject go_characterMesh;
+    [SerializeField] private ParticleSystem p_goopyParticle;
+
     #endregion
 
     #region Private
@@ -109,7 +113,7 @@ public class PlayerMover : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
-        v_startPos = transform.position;
+        v_startPos = new Vector3(-8, 1, -4);
         SetMoveSpeeds(true);
         view = GetComponent<PhotonView>();
         fap_audio = GetComponentInChildren<FootstepAudioPlayer>();
@@ -176,9 +180,9 @@ public class PlayerMover : MonoBehaviour
             rb.velocity -= Vector3.up * 1f * Time.deltaTime;
     }
 
-    private void ResetIfOffMap()
+    public void ResetIfOffMap()
     {
-        if (transform.position.y < -25 && view.IsMine)
+        if (transform.position.y < -100 && view.IsMine)
         {
             transform.position = v_startPos + (Vector3.up);// * 5);                      
         }
@@ -199,8 +203,16 @@ public class PlayerMover : MonoBehaviour
         fap_audio.PlayLandingSound();
     }
 
+    private void ResetResetPoint()
+    {
+        v_startPos = transform.position;
+    }
+
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
+        b_isSitting = false;
+        //Invoke(nameof(ResetResetPoint), 0.5f);
+
         if (scene.name.Contains("Lobby"))
         {
             fap_audio.ChangeSurfaceEnum(Surface.ship);
@@ -297,6 +309,27 @@ public class PlayerMover : MonoBehaviour
         b_applyDrag = true;
         b_knockedback = false;
     }
+
+
+    internal void GetTeleported()
+    {
+        view.RPC(nameof(TeleportRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public IEnumerator TeleportRPC()
+    {
+        enabled = false;
+        go_characterMesh.SetActive(false);
+        p_goopyParticle.Play();
+
+        yield return new WaitForSeconds(0.3f);
+
+        p_goopyParticle.Stop();
+        go_characterMesh.SetActive(true);
+        enabled = true;
+    }
+
 
     #endregion
 

@@ -12,7 +12,6 @@ public class PoolManager : MonoBehaviour
 
     private void Start()
     {
-        Init();
     }
     /// <summary>
     /// Make this a singleton and initialise all the pools
@@ -58,7 +57,10 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-
+    public void ResetPool(string p)
+    {
+        pools[p].ResetPool();
+    }
 
     /// <summary>
     /// Make all the pools spawn load their assigned number of objects
@@ -202,7 +204,9 @@ public class PoolManager : MonoBehaviour
     public HashSet<IPoolable> GetPooledObjects(GameObject type)
     {
         if (pools.Contains(type.name))
+        {
             return pools[type.name].GetPooledObjects();
+        }
         else
         {
             CreateNewPool(type);

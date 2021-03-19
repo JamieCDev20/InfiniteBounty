@@ -5,6 +5,7 @@ using UnityEngine;
 public struct AugmentProperties
 {
     public string s_name;
+    public int i_cost;
     public int i_damage;
     public int i_lodeDamage;
     public float f_weight;
@@ -13,9 +14,10 @@ public struct AugmentProperties
     public float f_heatsink;
     public float f_knockback;
     public float f_energyGauge;
-    public AugmentProperties(string _s_name, float _f_weight, float _f_recoil, float _f_speed, float _f_heatsink, float _f_knockback, float _f_energyGauge, int _i_dmg, int _i_lodeDmg)
+    public AugmentProperties(string _s_name, int _i_cost, float _f_weight, float _f_recoil, float _f_speed, float _f_heatsink, float _f_knockback, float _f_energyGauge, int _i_dmg, int _i_lodeDmg)
     {
         s_name = _s_name;
+        i_cost = _i_cost;
         f_weight = _f_weight;
         f_recoil = _f_recoil;
         f_speed = _f_speed;

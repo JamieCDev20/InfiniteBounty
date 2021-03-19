@@ -40,16 +40,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
 
         //singleton and persist
-        DontDestroyOnLoad(gameObject);
-
-        if (x != null)
-            Destroy(gameObject);
-        else
-            x = this;
-
-        //connect to the network and store reference to the players networked
-        Connect();
-        netPlayer = FindObjectOfType<NetworkedPlayer>();
     }
 
     public void Reset()
@@ -61,6 +51,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Private Voids
+
+    public void Init()
+    {
+
+        DontDestroyOnLoad(gameObject);
+
+        if (x != null)
+            Destroy(gameObject);
+        else
+            x = this;
+
+        //connect to the network and store reference to the players networked
+        Connect();
+        netPlayer = FindObjectOfType<NetworkedPlayer>();
+    }
 
     #endregion
 

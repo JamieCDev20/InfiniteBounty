@@ -27,7 +27,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
     private void Start()
     {
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
-        transform.localScale = Vector3.one * _ds.f_scaleMult;
+        transform.localScale = Vector3.one * _ds.f_scaleMult * 2;
         i_actualDamage = Mathf.RoundToInt(i_explosionDamage * _ds.f_damageMult);
         i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
 
@@ -39,10 +39,10 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
 
     private void OnCollisionEnter(Collision collision)
     {
+
         if (rb != null)
-            if (Vector3.Dot((collision.contacts[0].point - transform.position).normalized, rb.velocity.normalized) < 0.3f)
-                if (rb.velocity.sqrMagnitude > f_impactExplosionVelocty * f_impactExplosionVelocty)
-                    photonView.RPC("Explode", RpcTarget.AllViaServer);
+            if (collision.relativeVelocity.magnitude > f_impactExplosionVelocty)
+                photonView.RPC("Explode", RpcTarget.AllViaServer);
     }
 
     [PunRPC]

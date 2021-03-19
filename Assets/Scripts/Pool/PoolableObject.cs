@@ -12,6 +12,7 @@ public class PoolableObject : MonoBehaviour, IPoolable
 
     public void Die()
     {
+        CancelInvoke(nameof(Die));
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
@@ -19,7 +20,7 @@ public class PoolableObject : MonoBehaviour, IPoolable
     {
         if(f_lifetime > 0)
         {
-            Invoke("Die", f_lifetime);
+            Invoke(nameof(Die), f_lifetime);
         }
     }
 

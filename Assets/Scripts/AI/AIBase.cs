@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.SceneManagement;
 
 public class AIBase : MonoBehaviourPun
 {
@@ -31,16 +32,21 @@ public class AIBase : MonoBehaviourPun
     protected bool CanSeeTransform(Transform _targ)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, _targ.position - transform.position, out hit, f_spottingDistance))
+        if (Physics.Raycast(transform.position, (Vector3.up + _targ.position) - transform.position, out hit, f_spottingDistance, lm_spottingMask, QueryTriggerInteraction.Ignore))
         {
             return hit.collider.transform == _targ;
         }
         return false;
     }
 
+    protected void OnEnable()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            GetComponent<IHitable>().Die();
+    }
+
     public bool StillHasTarget()
     {
-
         if (t_target != null)
         {
             bool canSee = CanSeeTransform(t_target);
@@ -81,6 +87,8 @@ public class AIBase : MonoBehaviourPun
 
     public void GetTargetAction()
     {
+        if (TagManager.x == null)
+            GetComponent<IHitable>().Die();
         GameObject t = TargetManager.x.GetTaggableInRange("Player", f_spottingDistance, transform.position);
         if (t != null)
             t_target = t.transform;

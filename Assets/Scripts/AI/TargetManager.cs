@@ -17,16 +17,16 @@ public class TargetManager : MonoBehaviour
     {
         GameObject _toReturn = null;
         List<GameObject> temp = new List<GameObject>();
-
         foreach (GameObject g in TagManager.x.GetTagSet(_tag))
         {
-            if ((g.transform.position - _centre).sqrMagnitude < _range * _range)
+            if ((g.transform.position - _centre).magnitude < _range)
+            {
                 temp.Add(g);
+            }
         }
 
         if (temp.Count > 0)
             _toReturn = temp[Random.Range(0, temp.Count)];
-
         return _toReturn;
     }
 

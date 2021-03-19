@@ -45,6 +45,11 @@ public class TagManager : MonoBehaviour
 
     #region Private Voids
 
+    public void Init()
+    {
+
+    }
+
     private void GetAllTaggedObjects()
     {
 

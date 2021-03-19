@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2151797259066108222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961556667442560935}
+  - component: {fileID: 708037923762466336}
+  - component: {fileID: 1078438149210879788}
+  m_Layer: 0
+  m_Name: AreaSpawnTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1961556667442560935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2151797259066108222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 168.6, y: 496.6, z: 413.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &708037923762466336
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2151797259066108222}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 111
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1078438149210879788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2151797259066108222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9fbab8ae95c0a49b5f5a2bb8b89958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  i_numberOfHordesPerWave: 7
+  f_timeBetweenHordes: 5
+  f_zoneRadius: 111
+  lm_playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  goA_groundEnemies:
+  - {fileID: 3893965790758993077, guid: 7d85fb0ebab24e048a53b76216748d82, type: 3}
+  v_groundEnemiesPerHorde: {x: 6, y: 10}
+  goA_flyingEnemies:
+  - {fileID: 3248881737621194202, guid: 957f80801963b16499423f6f4a532944, type: 3}
+  v_flyingEnemiesPerHorde: {x: 3, y: 5}
+  f_spawnRadius: 0

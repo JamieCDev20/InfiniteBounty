@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BossAI : AIBase
 {
+    private Animator anim;
     private bool b_canAttack;
     internal List<Transform> tL_potentialTargets = new List<Transform>();
     private int i_currentTarget;
@@ -25,15 +26,17 @@ public class BossAI : AIBase
 
     [Header("Movement Stats")]
     [SerializeField] private GameObject go_movementTelegraph;
-
+    private GameObject go_looker;
 
     private void Start()
     {
+        go_looker = new GameObject("Boss Looker");
+        anim = GetComponentInChildren<Animator>();
         QueryNode _q_canAttack = new QueryNode(CheckCanAttack);
         SequencerNode _s = new SequencerNode(_q_canAttack, AttackDefine());
 
         tree = new BehaviourTree(_s);
-        Invoke(nameof(StartAttacking), 6);
+        Invoke(nameof(StartAttacking), 10);
     }
     private void StartAttacking()
     {
@@ -52,7 +55,11 @@ public class BossAI : AIBase
             tree.DoTreeIteration();
 
         if (tL_potentialTargets.Count > 0)
-            transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+        {
+            go_looker.transform.position = transform.position;
+            go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+            transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
+        }
     }
 
     #region Defines
@@ -67,8 +74,8 @@ public class BossAI : AIBase
     private SelectorNode RangedDefine()
     {
         QueryNode _qn_randomChance = new QueryNode(RandomValue);
-        ActionNode _an_homing = new ActionNode(DoHomingAttack);
-        ActionNode _an_mortar = new ActionNode(DoMortarAttack);
+        ActionNode _an_homing = new ActionNode(PlayHomingAnim);
+        ActionNode _an_mortar = new ActionNode(PlayMetoerAnim);
         SequencerNode _sn_isHoming = new SequencerNode(_qn_randomChance, _an_homing);
         SequencerNode _sn_isMortar = new SequencerNode(_qn_randomChance, _an_mortar);
 
@@ -77,7 +84,7 @@ public class BossAI : AIBase
 
     private SelectorNode AttackDefine()
     {
-        ActionNode _a_move = new ActionNode(MoveAttack);
+        ActionNode _a_move = new ActionNode(PlayMoveAnim);
         return new SelectorNode(MeleeDefine(), RangedDefine(), _a_move);
     }
 
@@ -112,28 +119,30 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.6f;
+        return Random.value < 0.8f;
     }
 
-    private void DoHomingAttack()
+    private void PlayHomingAnim()
     {
-        if (b_canAttack)
-        {
-            StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_homingOrbAmount.x, v_homingOrbAmount.y)), t_target));
-            StopAttackingForPeriod();
-        }
+        anim.SetTrigger("Missile");
+    }
+
+    internal void DoHomingAttack()
+    {
+        StartCoroutine(HomingAttack(Mathf.RoundToInt(Random.Range(v_homingOrbAmount.x, v_homingOrbAmount.y)), t_target));
+        StopAttackingForPeriod();
     }
     private IEnumerator HomingAttack(int _i_amount, Transform _t_target)
     {
         List<GameObject> _goL_orbs = new List<GameObject>();
         for (int i = 0; i < _i_amount; i++)
         {
-            yield return new WaitForSeconds(1);
             GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
-            _go.transform.position = transform.position + transform.forward * i;
+            _go.transform.position = transform.position + transform.forward + transform.up * 20;
             _go.transform.forward = transform.forward;
             _goL_orbs.Add(_go);
+            yield return new WaitForSeconds(1);
         }
 
         while (_goL_orbs.Count > 0)
@@ -147,7 +156,12 @@ public class BossAI : AIBase
         }
     }
 
-    private void DoMortarAttack()
+    private void PlayMetoerAnim()
+    {
+        anim.SetBool("Meteor", true);
+    }
+
+    internal void DoMortarAttack()
     {
         photonView.RPC(nameof(MortarAttackRPC), RpcTarget.All, Random.Range(0, 9999999));
     }
@@ -157,21 +171,26 @@ public class BossAI : AIBase
         StartCoroutine(MortarAttackActual(_i_seed));
         StopAttackingForPeriod();
     }
+
     private IEnumerator MortarAttackActual(int _i_seed)
     {
         if (PhotonNetwork.IsMasterClient)
         {
             Random.InitState(_i_seed);
+
             p_mortarParticle.Play();
             yield return new WaitForSeconds(2);
 
-            for (int i = 0; i < Random.Range(v_numberOfMortarShots.x, v_numberOfMortarShots.y); i++)
+            for (int i = 0; i < v_numberOfMortarShots.x; i++)
             {
                 yield return new WaitForSeconds(0.2f);
                 Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
                 PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
             }
         }
+        else
+            yield return new WaitForSeconds(2 + (v_numberOfMortarShots.x * 0.2f));
+        anim.SetBool("Meteor", false);
     }
     private Vector3 PickArenaPosition()
     {
@@ -187,48 +206,49 @@ public class BossAI : AIBase
         return tL_potentialTargets[Random.Range(0, tL_potentialTargets.Count)].position;
     }
 
-    private void MoveAttack()
+    private void PlayMoveAnim()
     {
-        photonView.RPC(nameof(MoveAttack), RpcTarget.All, PickTargetPosition(), Random.Range(1f, 5f));
+        anim.SetBool("Emerging", false);
+        anim.SetBool("Submerging", true);
+    }
+
+    internal void MoveAttack()
+    {
+        photonView.RPC(nameof(MoveAttackRPC), RpcTarget.All, PickTargetPosition());
     }
 
     [PunRPC]
-    private void MoveAttack(Vector3 _v_newPos, float _f_timeToWait)
+    private void MoveAttackRPC(Vector3 _v_newPos)
     {
         b_canAttack = false;
         if (PhotonNetwork.IsMasterClient)
             photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
+        StartCoroutine(TimedMove(_v_newPos));
 
-        StartCoroutine(TimedMove(_v_newPos, _f_timeToWait));
     }
-    private IEnumerator TimedMove(Vector3 _v_newPos, float _f_timeToWait)
+    private IEnumerator TimedMove(Vector3 _v_newPos)
     {
-        for (int i = 0; i < 80; i++)
-        {
-            yield return new WaitForSeconds(0.01f);
-            transform.position += Vector3.down * 0.5f;
-        }
+        b_canAttack = false;
 
-        yield return new WaitForSeconds(_f_timeToWait - 1);
+        yield return new WaitForSeconds(1);
+        transform.position = new Vector3(_v_newPos.x, -100, _v_newPos.z);
+        yield return new WaitForSeconds(2);
 
         go_movementTelegraph.transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
 
         yield return new WaitForSeconds(2);
+        transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
+        anim.SetBool("Submerging", false);
+        anim.SetBool("Emerging", true);
 
-
-        transform.position = Vector3.Scale(_v_newPos, Vector3.one - Vector3.up) + Vector3.down * 30;
+        yield return new WaitForSeconds(1);
 
         Collider[] _cA = Physics.OverlapCapsule(transform.position, transform.position + Vector3.up * 30, 10);
         for (int i = 0; i < _cA.Length; i++)
             if (_cA[i].transform.root != transform)
-                _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
+                if (_cA[i].transform.CompareTag("Lilypad"))
+                    _cA[i].GetComponent<IHitable>()?.TakeDamage(50, false);
 
-
-        for (int i = 0; i < 80; i++)
-        {
-            yield return new WaitForSeconds(0.01f);
-            transform.position += Vector3.up * 0.5f;
-        }
         go_movementTelegraph.transform.position = Vector3.down * 100;
 
         if (PhotonNetwork.IsMasterClient)

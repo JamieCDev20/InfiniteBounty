@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class VendingMachine : SubjectBase, IInteractible
 {
-
+    [SerializeField] private AugmentPropertyDisplayer apd;
     [SerializeField] private Transform t_camParent;
     private Transform t_camPositionToReturnTo;
     private PlayerInputManager pim;
@@ -43,13 +43,15 @@ public class VendingMachine : SubjectBase, IInteractible
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
         augMan = _am;
-        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments()));
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
 
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = 0;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
-        UpdateAugmentDisplay();
         AddObserver(FindObjectOfType<SaveManager>());
+        apd.Init();
+        apd.UpdatePropertyText(aA_avaliableAugments[i_currentAugmentIndex].Aug);
+        ClickedAugment(0);
     }
 
     #region Interactions
@@ -79,6 +81,7 @@ public class VendingMachine : SubjectBase, IInteractible
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            ClickedAugment(0);
         }
     }
 
@@ -143,9 +146,11 @@ public class VendingMachine : SubjectBase, IInteractible
     {
         if (b_isBeingUsed)
         {
+            apd.RemoveAugmentProperties();
             i_currentAugmentIndex = _i_augmentIndex;
             t_augmentHighlight.position = tA_augmentPositions[_i_augmentIndex].position;
             UpdateAugmentDisplay();
+            apd.UpdatePropertyText(aA_avaliableAugments[i_currentAugmentIndex].Aug);
 
             as_source.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
             as_source.PlayOneShot(acA_beeps[UnityEngine.Random.Range(0, acA_beeps.Length)]);
@@ -154,46 +159,51 @@ public class VendingMachine : SubjectBase, IInteractible
 
     private void UpdateAugmentDisplay()
     {
-        vmd_vendingMachineDisplay.t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Name;
+        apd.AugDisplay.t_augmentName.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Name;
         switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
         {
             case AugmentType.standard:
-                vmd_vendingMachineDisplay.t_augmentFits.text = "Hammer";
+                apd.AugDisplay.t_augmentFits.text = "Hammer";
                 break;
             case AugmentType.projectile:
-                vmd_vendingMachineDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
+                apd.AugDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
                 break;
             case AugmentType.cone:
-                vmd_vendingMachineDisplay.t_augmentFits.text = "Nuggsucker";
+                apd.AugDisplay.t_augmentFits.text = "Nuggsucker";
                 break;
         }
 
-        vmd_vendingMachineDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level.ToString();
-        /*
-        vmd_vendingMachineDisplay.t_augmentEffects.text = aA_avaliableAugments[i_currentAugmentIndex].effects;
-        vmd_vendingMachineDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].cost;
-        */
+        apd.AugDisplay.t_levelNumber.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Level.ToString();
+        apd.AugDisplay.t_augmentCost.text = aA_avaliableAugments[i_currentAugmentIndex].Aug.Cost.ToString();
     }
 
     public void BuyAugment()
     {
         if (b_isBeingUsed)
         {
-            if (rbA_augmentRigidbodies[i_currentAugmentIndex])
+            if(pim.GetComponent<NugManager>().Nugs >= aA_avaliableAugments[i_currentAugmentIndex].Aug.Cost)
             {
-                as_source.pitch = 1;
-                as_source.PlayOneShot(ac_whirringClip);
-                StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
-                StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
-                Augment[] grabbedAugment = new Augment[1];
-                grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
-                // Player Save data needs: 0, Cost of Augment, Augment Reference
-                SaveEvent se = new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null, null, grabbedAugment, null, 0)); ;
-                Notify(se);
-                aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
-                rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
+                if (rbA_augmentRigidbodies[i_currentAugmentIndex])
+                {
+                    as_source.pitch = 1;
+                    as_source.PlayOneShot(ac_whirringClip);
+                    StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
+                    StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
+                    Augment[] grabbedAugment = new Augment[1];
+                    grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
+                    pim.GetComponent<NugManager>().OnNotify(new CurrencyEvent(pim.GetID(), aA_avaliableAugments[i_currentAugmentIndex].Aug.Cost, false, null));
+                    // Player Save data needs: 0, Cost of Augment, Augment Reference
+                    SaveEvent se = new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null, null, grabbedAugment, null, 0)); ;
+                    Notify(se);
+                    aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
+                    rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
+                }
+                as_source.PlayOneShot(ac_coinsSound);
             }
-            as_source.PlayOneShot(ac_coinsSound);
+            else
+            {
+                // Play unable to buy sound
+            }
         }
     }
     private IEnumerator MoveAugmentForward(Rigidbody _rb)

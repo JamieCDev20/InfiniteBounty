@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
@@ -10,6 +10,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     [SerializeField] private GameObject go_pickupParticles;
     [SerializeField] private GameObject go_destroyParticles;
     [SerializeField] private AudioClip ac_pickupSound;
+    [SerializeField] private AudioMixer am_nugMixer;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
     [SerializeField] private float f_spawnImmunityDuration = 0.5f;
@@ -44,24 +45,25 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             CurrencyEvent ce = new CurrencyEvent(0, nug.i_worth, true, nug);
 
             b_collected = true;
-            myLode?.NugCollected(i_lodeID);
+            myLode?.NugCollected(i_lodeID, b_collected);
             Notify(ce);
             if (myLode == null)
                 Die();
         }
     }
 
-    public void OnEnable()
+    public override void OnEnable()
     {
         b_canBeHit = false;
-        Invoke("RemoveSpawnImmunity", f_spawnImmunityDuration);
-        Invoke("Die", 60);
+        b_collected = false;
+        Invoke(nameof(RemoveSpawnImmunity), f_spawnImmunityDuration);
+        Invoke(nameof(Die), 60);
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
-        CancelInvoke("RemoveSpawnImmunity");
-        CancelInvoke("Die");
+        CancelInvoke(nameof(RemoveSpawnImmunity));
+        CancelInvoke(nameof(Die));
     }
 
     private void RemoveSpawnImmunity()
@@ -71,22 +73,28 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void Die()
     {
+
         if (!b_canBeHit)
             return;
         CancelInvoke();
         StopAllCoroutines();
-        GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
+        GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected ? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
+        float vol = 0;
+        if (am_nugMixer)
+            am_nugMixer.GetFloat("Volume", out vol);
+        vol = (vol + 80) / 80;
         if (ac_pickupSound)
-            AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position);
-        if(rb != null)
+            AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position, vol);
+        if (rb != null)
             rb.velocity = Vector3.zero;
         eO_elem?.ResetElements();
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
-    public void SetCanDie()
+    public void SetCanDie(bool collected)
     {
         b_canBeHit = true;
+        b_collected = collected;
     }
 
     public GameObject GetGameObject()
@@ -117,11 +125,12 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
+
         if (!b_canBeHit)
             return;
         if (eO_elem)
         {
-            eO_elem.ActivateElement(activatesThunder); 
+            eO_elem.ActivateElement(activatesThunder);
             Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
             for (int i = 0; i < cols.Length; i++)
             {
