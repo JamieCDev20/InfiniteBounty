@@ -109,7 +109,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         ph_health = playerIM.GetComponent<PlayerHealth>();
         GameObject cam = Instantiate(playerInfo.go_camPrefab);
         playerIM.SetCamera(cam.GetComponent<CameraController>());
-        playerCamera = cam.transform.GetChild(0).gameObject;
+        playerCamera = cam.transform.GetComponentInChildren<Camera>().gameObject;
         nMan = t_thisPlayer.GetComponent<NugManager>();
 
         Instantiate(HUD, Vector3.zero, Quaternion.identity);
