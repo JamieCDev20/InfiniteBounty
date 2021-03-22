@@ -19,7 +19,6 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private Transform t_camParent;
     [SerializeField] private Canvas microwaveCanvas;
     [SerializeField] private Button fuseButton;
-    [SerializeField] private Button selectButton;
     [SerializeField] private AugmentFuser fuser;
     [SerializeField] private GameObject go_augButtonA;
     [SerializeField] private GameObject go_augButtonB;
@@ -71,7 +70,8 @@ public class Microwave : SubjectBase, IInteractible
 
     public void UnInteract()
     {
-        // NIIICK DO FANCY DANCY UI SHIT HERE MY BOII
+        // TODO:
+        // Make the camera stuff its own class becasue we dupe this code like 3 times bruh
         // Make the player able to move
         PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
@@ -140,12 +140,12 @@ public class Microwave : SubjectBase, IInteractible
             go_augButtonB.GetComponentsInChildren<Text>()[1].text = "";
 
         }
-        RevealSelectButton();
+        UnrevealFuseButton();
     }
 
     public void Fuse()
     {
-        RevealSelectButton();
+        UnrevealFuseButton();
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         apd.UpdatePropertyText(fusedAug);
         //RemoveAugmentEvent rae = new RemoveAugmentEvent(aug_slotB);
@@ -158,15 +158,12 @@ public class Microwave : SubjectBase, IInteractible
     private void RevealFuseButton()
     {
         fuseButton.gameObject.SetActive(true);
-        selectButton.gameObject.SetActive(false);
         fuseButton.interactable = true;
     }
-
-    private void RevealSelectButton()
+    private void UnrevealFuseButton()
     {
-        selectButton.gameObject.SetActive(true);
         fuseButton.gameObject.SetActive(false);
-        selectButton.interactable = true;
+        fuseButton.interactable = false;
     }
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
