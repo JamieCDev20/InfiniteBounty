@@ -28,7 +28,7 @@ public class BossAI : AIBase
     [SerializeField] private GameObject go_movementTelegraph;
     private GameObject go_looker;
     [SerializeField] private float f_timeBetweenMoves;
-    private bool b_canMove;
+    private bool b_canMove = true;
 
     private void Start()
     {
