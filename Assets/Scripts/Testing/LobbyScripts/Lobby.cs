@@ -34,7 +34,7 @@ public class Lobby : MonoBehaviourPunCallbacks
                 PhotonNetwork.CurrentRoom.IsVisible = true;
             }
         if (sb_bar != null)
-            sb_bar.value = 1;
+            sb_bar.value = 1f;
         //PhotonNetwork.ConnectUsingSettings();
         if (HostButton != null)
             HostButton.interactable = false;

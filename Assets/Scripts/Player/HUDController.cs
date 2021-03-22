@@ -11,7 +11,7 @@ public class HUDController : MonoBehaviour
     public static HUDController x;
 
 
-    [Header("Heat Guages")]
+    [Header("Heat Gauges")]
     [SerializeField] private RectTransform rt_healthBar;
     [SerializeField] private Image i_healthBar;
     [SerializeField] private GameObject go_healthbarParent;
@@ -51,6 +51,7 @@ public class HUDController : MonoBehaviour
     {
         x = this;
 
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

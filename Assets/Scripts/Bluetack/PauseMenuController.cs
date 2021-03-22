@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class PauseMenuController : SubjectBase
 {
     [Header("Canvas References")]
-    [SerializeField] private Canvas c_playCanvas;
-    [SerializeField] private Canvas c_pauseCanvas;
+    [SerializeField] private GameObject c_HUDCanvas;
+    [SerializeField] private GameObject c_pauseCanvas;
     [SerializeField] private Canvas c_mainMenu;
     [SerializeField] private Canvas c_settingsMenu;
     [SerializeField] private Canvas c_controlsMenu;
@@ -69,10 +69,11 @@ public class PauseMenuController : SubjectBase
         #endregion
 
         c_settingsMenu.enabled = false;
-        c_pauseCanvas.enabled = false;
-        c_playCanvas.enabled = true;
+        c_pauseCanvas.SetActive(false);
+        c_HUDCanvas.SetActive(true);
 
-        cc_cam = GetComponentInParent<CameraController>();
+        Debug.LogError(cc_cam);
+        cc_cam = FindObjectOfType<CameraController>();
         SetAmbienceVolume();
         SetMusicVolume();
         SetSFXVolume();
@@ -114,10 +115,10 @@ public class PauseMenuController : SubjectBase
         }
         else
         {
-            c_playCanvas.enabled = true;
+            c_HUDCanvas.SetActive(true);
         }
 
-        c_pauseCanvas.enabled = false;
+        c_pauseCanvas.SetActive(false);
         c_settingsMenu.enabled = false;
         c_mainMenu.enabled = true;
         c_controlsMenu.enabled = false;
@@ -139,10 +140,14 @@ public class PauseMenuController : SubjectBase
         if (b_isSpectating)
             c_spectatingCanvas.enabled = false;
         else
-            c_playCanvas.enabled = false;
+            c_HUDCanvas.SetActive(false);
 
-        c_pauseCanvas.enabled = true;
+        c_pauseCanvas.SetActive(true);
         pim.b_shouldPassInputs = false;
+        if (cc_cam == null)
+        {
+            cc_cam = FindObjectOfType<CameraController>();
+        }
         cc_cam.enabled = false;
         pim.GetComponent<PlayerAnimator>().SetShootability(false);
         rb_playerPhysics.isKinematic = true;
@@ -164,13 +169,13 @@ public class PauseMenuController : SubjectBase
 
     public void Options()
     {
-        c_pauseCanvas.enabled = false;
+        c_pauseCanvas.SetActive(false);
         c_settingsMenu.enabled = true;
     }
 
     public void ReturnFromOptions()
     {
-        c_pauseCanvas.enabled = true;
+        c_pauseCanvas.SetActive(true);
         SaveSettings();
         c_settingsMenu.enabled = false;
     }
@@ -203,14 +208,14 @@ public class PauseMenuController : SubjectBase
     internal void SetSpectating()
     {
         b_isSpectating = true;
-        c_playCanvas.enabled = false;
+        c_HUDCanvas.SetActive(false);
         c_spectatingCanvas.enabled = true;
     }
 
     internal void StopSpectating()
     {
         b_isSpectating = false;
-        c_playCanvas.enabled = true;
+        c_HUDCanvas.SetActive(true);
         c_spectatingCanvas.enabled = false;
     }
 

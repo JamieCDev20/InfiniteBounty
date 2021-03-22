@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ToolTipper : MonoBehaviour
 {
-    [SerializeField] Transform t_cam;
+    private Transform t_cam;
     [SerializeField] Text ta_canvasText;
     [SerializeField] GameObject[] goA_buttonPrompts = new GameObject[0];
     private RaycastHit hit;
@@ -16,8 +16,6 @@ public class ToolTipper : MonoBehaviour
 
     private void Start()
     {
-        pim = GetComponent<CameraController>().pim_inputs;
-
         for (int i = 0; i < goA_buttonPrompts.Length; i++)
             goA_buttonPrompts[i].SetActive(false);
     }
@@ -25,6 +23,12 @@ public class ToolTipper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (t_cam == null)
+        {
+            t_cam = NetworkedPlayer.x?.GetCamera().transform;
+            pim = t_cam.GetComponentInParent<CameraController>().pim_inputs;
+            return;
+        }
         if (b_shouldShow)
             if (Physics.Raycast(t_cam.position, t_cam.forward, out hit, 10, lm_mask, QueryTriggerInteraction.Ignore))
             {
