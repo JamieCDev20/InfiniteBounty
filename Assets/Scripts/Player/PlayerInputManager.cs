@@ -267,7 +267,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         //pc_capture.RecieveCameraController(camControl);
 
         //camControl.GetComponentInChildren<PauseMenuController>().SetPIM(this);
-        FindObjectOfType<PauseMenuController>().SetPIM(this);
+        FindObjectOfType<PauseMenuController>()?.SetPIM(this);
     }
 
     public void ResetCamFollow()
