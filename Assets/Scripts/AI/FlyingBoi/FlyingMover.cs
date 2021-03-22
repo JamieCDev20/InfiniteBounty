@@ -15,6 +15,11 @@ public class FlyingMover : MoverBase
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up)), 0.3f);
     }
 
+    private void OnEnable()
+    {
+        stillTime = Time.realtimeSinceStartup;
+    }
+
     private void FixedUpdate()
     {
 
@@ -36,7 +41,7 @@ public class FlyingMover : MoverBase
 
         if (rb.velocity.sqrMagnitude > 1)
             stillTime = Time.realtimeSinceStartup;
-        if (stillTime >= 5)
+        if (Time.realtimeSinceStartup - stillTime >= 5)
             GetComponent<IHitable>().Die();
 
     }
