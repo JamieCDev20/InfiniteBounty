@@ -6,7 +6,7 @@ using UnityEngine;
 public class BossAI : AIBase
 {
     private Animator anim;
-    private bool b_canAttack;
+    private bool b_canAttack = true;
     internal List<Transform> tL_potentialTargets = new List<Transform>();
     private int i_currentTarget;
     [SerializeField] private float f_timeBetweenAttacks;
@@ -27,6 +27,8 @@ public class BossAI : AIBase
     [Header("Movement Stats")]
     [SerializeField] private GameObject go_movementTelegraph;
     private GameObject go_looker;
+    [SerializeField] private float f_timeBetweenMoves;
+    private bool b_canMove;
 
     private void Start()
     {
@@ -49,17 +51,34 @@ public class BossAI : AIBase
         Invoke(nameof(StartAttacking), f_timeBetweenAttacks);
     }
 
+    private void StartMoving()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            b_canMove = true;
+    }
+    private void StopMovingForPeriod()
+    {
+        b_canMove = false;
+        Invoke(nameof(StartMoving), f_timeBetweenMoves);
+
+    }
+
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient)
-            tree.DoTreeIteration();
 
-        if (tL_potentialTargets.Count > 0)
-        {
-            go_looker.transform.position = transform.position;
-            go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
-            transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
-        }
+            if (tL_potentialTargets.Count > 0)
+            {
+                go_looker.transform.position = transform.position;
+                go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+                transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
+            }
+    }
+
+    public void ChooseAction()
+    {
+        tree.DoTreeIteration();
+
     }
 
     #region Defines
@@ -84,7 +103,7 @@ public class BossAI : AIBase
 
     private SelectorNode AttackDefine()
     {
-        ActionNode _a_move = new ActionNode(PlayMoveAnim);
+        SequencerNode _a_move = new SequencerNode(new QueryNode(CheckCanMove), new ActionNode(PlayMoveAnim));
         return new SelectorNode(MeleeDefine(), RangedDefine(), _a_move);
     }
 
@@ -95,6 +114,11 @@ public class BossAI : AIBase
     private bool CheckCanAttack()
     {
         return b_canAttack;
+    }
+
+    private bool CheckCanMove()
+    {
+        return b_canMove;
     }
 
     #endregion
@@ -119,7 +143,8 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.8f;
+        float a = Random.value;
+        return a < 0.5f;
     }
 
     private void PlayHomingAnim()
@@ -208,6 +233,7 @@ public class BossAI : AIBase
 
     private void PlayMoveAnim()
     {
+        StopMovingForPeriod();
         anim.SetBool("Emerging", false);
         anim.SetBool("Submerging", true);
     }
