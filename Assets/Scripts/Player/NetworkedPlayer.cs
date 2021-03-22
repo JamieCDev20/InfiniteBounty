@@ -113,6 +113,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         nMan = t_thisPlayer.GetComponent<NugManager>();
 
         Instantiate(HUD, Vector3.zero, Quaternion.identity);
+        FindObjectOfType<PauseMenuController>().SetPIM(playerIM);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
