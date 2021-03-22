@@ -63402,6 +63402,39 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &6470068123485339503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887142146697617699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: Submerging
+  - Type: 4
+    SynchronizeType: 2
+    Name: Emerging
+  - Type: 4
+    SynchronizeType: 2
+    Name: Meteor
+  - Type: 9
+    SynchronizeType: 2
+    Name: Missile
+  - Type: 9
+    SynchronizeType: 2
+    Name: Death
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!114 &8847648449356558928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63485,7 +63518,8 @@ MonoBehaviour:
   observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6470068123485339503}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -63508,13 +63542,15 @@ MonoBehaviour:
     m_Bits: 1024
   f_timeBetweenAttacks: 1
   f_meleeRange: 5
-  s_mortarShotPath: NetworkPrefabs\BossThings\MortarProjectile
+  go_mortarBall: {fileID: 6490366852119617076, guid: aeacf924942a8dc48a266e666f3da738,
+    type: 3}
   v_numberOfMortarShots: {x: 15, y: 30}
   p_mortarParticle: {fileID: 6520989874241016879}
   s_homingMissilePath: NetworkPrefabs\BossThings\BossHomingSphere
   v_homingOrbAmount: {x: 1, y: 1}
   f_homingForwardMovement: 15
   go_movementTelegraph: {fileID: 0}
+  f_timeBetweenMoves: 0
 --- !u!114 &854295852546178409
 MonoBehaviour:
   m_ObjectHideFlags: 0

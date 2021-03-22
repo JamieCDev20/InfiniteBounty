@@ -15,7 +15,7 @@ public class BossAI : AIBase
     [SerializeField] private float f_meleeRange;
 
     [Header("Mortar Attack")]
-    [SerializeField] private string s_mortarShotPath;
+    [SerializeField] private GameObject go_mortarBall;
     [SerializeField] private Vector2 v_numberOfMortarShots;
     [SerializeField] private ParticleSystem p_mortarParticle;
 
@@ -65,14 +65,14 @@ public class BossAI : AIBase
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        //if (PhotonNetwork.IsMasterClient)
 
-            if (tL_potentialTargets.Count > 0)
-            {
-                go_looker.transform.position = transform.position;
-                go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
-                transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
-            }
+        if (tL_potentialTargets.Count > 0)
+        {
+            go_looker.transform.position = transform.position;
+            go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+            transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
+        }
     }
 
     public void ChooseAction()
@@ -199,24 +199,21 @@ public class BossAI : AIBase
 
     private IEnumerator MortarAttackActual(int _i_seed)
     {
-        if (PhotonNetwork.IsMasterClient)
+        p_mortarParticle.Play();
+
+        Random.InitState(_i_seed);
+
+        yield return new WaitForSeconds(2);
+
+        for (int i = 0; i < v_numberOfMortarShots.x; i++)
         {
-            Random.InitState(_i_seed);
-
-            p_mortarParticle.Play();
-            yield return new WaitForSeconds(2);
-
-            for (int i = 0; i < v_numberOfMortarShots.x; i++)
-            {
-                yield return new WaitForSeconds(0.2f);
-                Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
-                PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
-            }
+            yield return new WaitForSeconds(0.2f);
+            Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
+            Instantiate(go_mortarBall, _v_posToDropOn, Quaternion.identity);
         }
-        else
-            yield return new WaitForSeconds(2 + (v_numberOfMortarShots.x * 0.2f));
         anim.SetBool("Meteor", false);
     }
+
     private Vector3 PickArenaPosition()
     {
         Vector3 _v = new Vector3(Random.Range(-75, 75), 0, Random.Range(-75, 75));

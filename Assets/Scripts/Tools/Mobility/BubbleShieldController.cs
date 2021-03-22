@@ -52,10 +52,13 @@ public class BubbleShieldController : MonoBehaviour
             m_shieldRenderer.material.SetFloat("_CellDensity", Mathf.Clamp(f_currentTime, 0, 60));
             m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.2f;
         }
+
+        yield return new WaitForSeconds(3);
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
-    {        
+    {
         if (transform.parent == null)
         {
             transform.SetParent(collision.transform, true);
