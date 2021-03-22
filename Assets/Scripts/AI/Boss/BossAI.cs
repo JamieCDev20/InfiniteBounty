@@ -65,14 +65,14 @@ public class BossAI : AIBase
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        //if (PhotonNetwork.IsMasterClient)
 
-            if (tL_potentialTargets.Count > 0)
-            {
-                go_looker.transform.position = transform.position;
-                go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
-                transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
-            }
+        if (tL_potentialTargets.Count > 0)
+        {
+            go_looker.transform.position = transform.position;
+            go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
+            transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
+        }
     }
 
     public void ChooseAction()
