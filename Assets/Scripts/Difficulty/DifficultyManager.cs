@@ -143,4 +143,8 @@ public struct DifficultySet
     [Header("PvP")]
     public bool b_pvp;
 
+    [Header("Boss")]
+    public float f_bossHealthMult;
+    public Vector2Int vi_enemiesPerBossWave;
+    
 }

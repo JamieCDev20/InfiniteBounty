@@ -39,8 +39,9 @@ public class BossHealth : MonoBehaviourPun, IHitable
         boss = GetComponent<BossAI>();
 
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
-        i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult) * PhotonNetwork.CurrentRoom.PlayerCount;
-        i_maxHealthSCALED = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult) * PhotonNetwork.CurrentRoom.PlayerCount;
+        i_maxHealthSCALED = Mathf.RoundToInt(i_maxHealth * _ds.f_bossHealthMult) * PhotonNetwork.CurrentRoom.PlayerCount;
+        i_currentHealth = i_maxHealthSCALED;
+
 
         rt_healthBar.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1);
         rt_healthBarWhite.localScale = new Vector3(Mathf.Clamp((float)i_currentHealth / i_maxHealthSCALED, 0, Mathf.Infinity), 1, 1);
@@ -55,6 +56,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
 
         for (int i = 0; i < lpA_armourPlates.Length; i++)
             lpA_armourPlates[i].Setup(i);
+
 
     }
 

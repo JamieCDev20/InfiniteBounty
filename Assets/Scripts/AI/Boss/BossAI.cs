@@ -30,6 +30,11 @@ public class BossAI : AIBase
     [SerializeField] private float f_timeBetweenMoves;
     private bool b_canMove = true;
 
+    [Header("Enemies")]
+    [SerializeField] private float f_timeBetweenEnemies = 20;
+    [SerializeField] private string s_enemyPath;
+    private Vector2Int vi_enemiesPerWave;
+
     private void Start()
     {
         go_looker = new GameObject("Boss Looker");
@@ -39,11 +44,18 @@ public class BossAI : AIBase
 
         tree = new BehaviourTree(_s);
         Invoke(nameof(StartAttacking), 10);
+
+        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
+        vi_enemiesPerWave = _ds.vi_enemiesPerBossWave;
+
     }
     private void StartAttacking()
     {
         if (PhotonNetwork.IsMasterClient)
+        {
             b_canAttack = true;
+            StartCoroutine(SummonEnemies());
+        }
     }
     private void StopAttackingForPeriod()
     {
@@ -291,6 +303,16 @@ public class BossAI : AIBase
                 tL_potentialTargets.RemoveAt(i_currentTarget);
                 photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
             }
+    }
+
+    private IEnumerator SummonEnemies()
+    {
+        for (int i = 0; i < Random.Range(vi_enemiesPerWave.x, vi_enemiesPerWave.y); i++)
+            PhotonNetwork.Instantiate(s_enemyPath, PickArenaPosition().normalized * 300 + Vector3.up * 200, Quaternion.identity);
+
+        yield return new WaitForSeconds(f_timeBetweenEnemies);
+
+        StartCoroutine(SummonEnemies());
     }
 
 }
