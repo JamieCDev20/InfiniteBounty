@@ -87,7 +87,6 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         //Initialise player info and stuff
         GameObject player = PhotonNetwork.Instantiate(playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
-        Instantiate(HUD, Vector3.zero, Quaternion.identity);
         t_thisPlayer = player.transform;
 
         view = player.GetComponent<PhotonView>();
@@ -113,6 +112,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerCamera = cam.transform.GetChild(0).gameObject;
         nMan = t_thisPlayer.GetComponent<NugManager>();
 
+        Instantiate(HUD, Vector3.zero, Quaternion.identity);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
