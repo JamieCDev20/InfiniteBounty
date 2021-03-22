@@ -12,7 +12,6 @@ public class AugmentFuser : MonoBehaviour
         {
             // Increase level of fused augment
             newAug = a;
-            // Delete Augment B
             newAug.Level++;
             return newAug;
         }

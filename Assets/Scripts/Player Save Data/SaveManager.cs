@@ -343,6 +343,8 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 string unequippedAugs = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
                 break;
+            case FuseEvent fuseEvent:
+                break;
         }
     }
 
