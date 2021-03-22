@@ -10,7 +10,6 @@ public class ToolRack : Shop
     [SerializeField] private List<EmptyToolSlot> L_weaponToolPos;
     [SerializeField] private List<EmptyToolSlot> L_mobToolPos;
     [SerializeField] private Material m_silhouette;
-    [SerializeField] private Material m_purchased;
     [SerializeField] private TMP_Text txt_exampleText;
     [SerializeField] private Vector3 t_textOffset;
     [SerializeField] private float f_maxShake;
