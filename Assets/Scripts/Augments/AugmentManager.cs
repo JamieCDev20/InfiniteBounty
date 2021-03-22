@@ -29,9 +29,22 @@ public class AugmentManager : MonoBehaviour
     public void JoinedRoom()
     {
         string augstr = AugmentLoader.LoadAugmentJson();
+        string fusedstr = AugmentLoader.LoadFusedAugmentJson();
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
         A_coneAugs = AugmentLoader.ReadAugmentData<ConeAugment>(augstr);
+        if(fusedstr != null)
+        {
+            Augment[] fusedAugs = AugmentLoader.ReadAugmentData<Augment>(fusedstr);
+            ProjectileAugment[] fusedProj = AugmentLoader.ReadAugmentData<ProjectileAugment>(fusedstr);
+            ConeAugment[] fusedCone = AugmentLoader.ReadAugmentData<ConeAugment>(fusedstr);
+            if (fusedAugs != null && fusedAugs.Length > 0)
+                A_augs = Utils.CombineArrays(A_augs, fusedAugs);
+            if(fusedProj != null)
+                A_projAugs = Utils.CombineArrays(A_projAugs, fusedProj);
+            if(fusedCone != null)
+                A_coneAugs = Utils.CombineArrays(A_coneAugs, fusedCone);
+        }
         GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
         FindObjectOfType<VendingMachine>().Init(this);
