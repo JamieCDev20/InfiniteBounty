@@ -13,6 +13,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_spawnPoint;
     [SerializeField]
     private PlayerInfo playerInfo;
+    [SerializeField] private GameObject HUD;
     private Transform t_thisPlayer;
     private PlayerInputManager playerIM;
     private NugManager nMan;
@@ -86,6 +87,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         //Initialise player info and stuff
         GameObject player = PhotonNetwork.Instantiate(playerInfo.go_playerPrefab.name, v_spawnPoint, Quaternion.identity);
+        Instantiate(HUD, Vector3.zero, Quaternion.identity);
         t_thisPlayer = player.transform;
 
         view = player.GetComponent<PhotonView>();
