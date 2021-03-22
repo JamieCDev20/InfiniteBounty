@@ -148,8 +148,8 @@ public class Microwave : SubjectBase, IInteractible
         RevealSelectButton();
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         apd.UpdatePropertyText(fusedAug);
-        PlayerSaveData psd = new PlayerSaveData(-1, -1, -1, null, null, null, null, new Augment[] { fusedAug }, null, -1);
-        Notify(new SaveEvent(psd));
+        //RemoveAugmentEvent rae = new RemoveAugmentEvent(aug_slotB);
+        //Notify(new SaveEvent(rae));
         // TODO:
         // Create fused augments file for all fused augments to be saved at.
         // Make ClearSaveData clear fused augments list
