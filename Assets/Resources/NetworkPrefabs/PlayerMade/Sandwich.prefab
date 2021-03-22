@@ -4916,6 +4916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7873069036841710894}
   - component: {fileID: 5126435868927076348}
+  - component: {fileID: 1338164234624343759}
   - component: {fileID: 3391856277175117121}
   - component: {fileID: 6713361044915393202}
   - component: {fileID: 7357586004802500935}
@@ -4955,8 +4956,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb183dbca367a54399beefbe7dd2579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  i_healthGain: 20
+  i_healthGain: 50
   go_pickedUpEffect: {fileID: 6470414928757875821}
+--- !u!114 &1338164234624343759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2972824084299585877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d77735f621f9141934b7243908adfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &3391856277175117121
 BoxCollider:
   m_ObjectHideFlags: 0
