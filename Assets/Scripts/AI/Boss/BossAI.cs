@@ -23,6 +23,7 @@ public class BossAI : AIBase
     [SerializeField] private string s_homingMissilePath;
     [SerializeField] private Vector2 v_homingOrbAmount;
     [SerializeField] private float f_homingForwardMovement;
+    [SerializeField] private Transform t_firePoint;
 
     [Header("Movement Stats")]
     [SerializeField] private GameObject go_movementTelegraph;
@@ -174,9 +175,9 @@ public class BossAI : AIBase
         List<GameObject> _goL_orbs = new List<GameObject>();
         for (int i = 0; i < _i_amount; i++)
         {
-            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward, Quaternion.identity);
+            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, t_firePoint.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
-            _go.transform.position = transform.position + transform.forward + transform.up * 20;
+            //_go.transform.position = t_firePoint.position + transform.forward ;
             _go.transform.forward = transform.forward;
             _goL_orbs.Add(_go);
             yield return new WaitForSeconds(1);
