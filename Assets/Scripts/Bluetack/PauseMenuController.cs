@@ -72,7 +72,6 @@ public class PauseMenuController : SubjectBase
         c_pauseCanvas.SetActive(false);
         c_HUDCanvas.SetActive(true);
 
-        Debug.LogError(cc_cam);
         cc_cam = FindObjectOfType<CameraController>();
         SetAmbienceVolume();
         SetMusicVolume();
