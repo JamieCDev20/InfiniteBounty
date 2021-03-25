@@ -63,6 +63,8 @@ public class PlayerMover : MonoBehaviour
     private bool b_knockedback;
     private Animator anim;
 
+    private Vector3[] groundCheckMods = new Vector3[] { Vector3.zero, Vector3.forward * 0.5f, Vector3.right * 0.5f, Vector3.forward * -0.5f, Vector3.right * -0.5f };
+
     #endregion
 
     //Methods
@@ -130,10 +132,14 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyMovement()
     {
-        Vector3 dir = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up), v_groundNormal);
+        Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), v_groundNormal);
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
-            rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
+            //rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
+            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * f_currentMoveSpeed * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), 0.2f);
+            t.y += rb.velocity.y;
+            rb.velocity = t;
+
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
     }
@@ -174,6 +180,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyGravity()
     {
+
         if (b_applyGravity)
             rb.velocity -= Vector3.up * f_gravityScale * (rb.velocity.y < f_plummetPoint ? f_plummetMultiplier : 1) * Time.deltaTime;
         else
@@ -333,25 +340,30 @@ public class PlayerMover : MonoBehaviour
     private bool CheckGrounded()
     {
         RaycastHit hit;
-        Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.5f);
-        if (hit.collider != null)
+        for (int i = 0; i < groundCheckMods.Length; i++)
         {
-            b_applyGravity = hit.distance > 0.15f;
-            v_groundNormal = hit.normal;
-            f_lastOnGround = Time.realtimeSinceStartup;
+            Physics.Raycast(transform.position + (Vector3.up * 0.1f) + transform.TransformDirection(groundCheckMods[i]), Vector3.down, out hit, 0.5f);
 
-            ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
-            if (iS != null)
-                s_currentSurface = iS.GetSurface();
+            if (hit.collider != null)
+            {
+                b_applyGravity = hit.distance > 0.15f;
+                v_groundNormal = hit.normal;
+                Debug.DrawRay(transform.position, hit.normal * 5, Color.red);
+                f_lastOnGround = Time.realtimeSinceStartup;
 
-            if (!b_grounded)
-                Landed();
+                ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
+                if (iS != null)
+                    s_currentSurface = iS.GetSurface();
 
-            return true;
+                if (!b_grounded)
+                    Landed();
 
+                return true;
+
+            }
+            v_groundNormal = Vector3.up;
+            b_applyGravity = true;
         }
-        v_groundNormal = Vector3.up;
-        b_applyGravity = true;
         return false;
     }
     #endregion
