@@ -87,6 +87,7 @@ public class DifficultyManager : SubjectBase
 
         //Display Things
         impossibleX.s_name = "Impossible " + (_i_currentImpossible > 1 ? _i_currentImpossible.ToString() : "");
+        impossibleX.f_moneyMult += (ds_changeInStatsPerImpossible.f_moneyMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_moneyMult;
 
         //Enemy Stats
         impossibleX.f_maxHealthMult += (ds_changeInStatsPerImpossible.f_maxHealthMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_maxHealthMult;
@@ -121,8 +122,9 @@ public class DifficultyManager : SubjectBase
 [System.Serializable]
 public struct DifficultySet
 {
-    [Header("Display Things")]
+    [Header("Display & Common")]
     public string s_name;
+    public float f_moneyMult;
 
     [Header("Enemy Stats")]
     public float f_maxHealthMult; //A creature's current health value is set their max multiplied by this on start

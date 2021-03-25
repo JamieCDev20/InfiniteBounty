@@ -62,12 +62,12 @@ public class ScoreboardManager : MonoBehaviour
             so_playerScoreObjects[i].boomText.text = values[pc - 1 - i][4].ToString();
             so_playerScoreObjects[i].magmaText.text = values[pc - 1 - i][5].ToString();
             playerTotal = UniversalNugManager.x.CalculateValues(values[pc - 1 - i]);
-            so_playerScoreObjects[i].bucksText.text = playerTotal.ToString();
+            so_playerScoreObjects[i].bucksText.text = Mathf.RoundToInt(DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult * playerTotal).ToString();
             totalEarned += playerTotal;
         }
-        t_totalEarned.text = totalEarned.ToString();
-        NetworkedPlayer.x.CollectEndLevelNugs(Mathf.RoundToInt(totalEarned / PhotonNetwork.CurrentRoom.PlayerCount));
-        
+        t_totalEarned.text = Mathf.RoundToInt(DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult * totalEarned).ToString();
+        NetworkedPlayer.x.CollectEndLevelNugs(Mathf.RoundToInt(DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult * (totalEarned / PhotonNetwork.CurrentRoom.PlayerCount)));
+
     }
 
     #region Camera Locking
@@ -117,9 +117,9 @@ public class ScoreboardManager : MonoBehaviour
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
         pm.enabled = true;
-        pim.enabled = true;        
+        pim.enabled = true;
         FindObjectOfType<ToolTipper>().StopShowing();
-        FindObjectOfType<HUDController>().StopShowing();        
+        FindObjectOfType<HUDController>().StopShowing();
 
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
