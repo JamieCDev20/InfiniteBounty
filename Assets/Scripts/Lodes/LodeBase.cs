@@ -19,10 +19,12 @@ public class LodeBase : Enemy, IHitable
     private int index;
     private bool burst = true;
     private List<NugGO> nuggets = new List<NugGO>();
-    [SerializeField] private ParticleSystem p_chunkEffect;
     private List<int> iL_chunkableThreshold = new List<int>();
     [SerializeField] private GameObject[] goA_chunkables = new GameObject[0];
     [SerializeField] private int i_damageBetweenBursts = 35;
+    [Space]
+    [SerializeField] private ParticleSystem p_hitEffect;
+    [SerializeField] private ParticleSystem p_chunkEffect;
 
     [Header("Audio")]
     [SerializeField] private AudioClip ac_takeDamageClip;
@@ -91,7 +93,7 @@ public class LodeBase : Enemy, IHitable
         for (int i = 0; i < iL_healthIntervals.Count; i++)
             if (i_currentHealth <= iL_healthIntervals[i])
             {
-                p_chunkEffect.Play();
+                p_hitEffect.Play();
                 transform.localScale *= 0.97f;
 
                 if (PhotonNetwork.IsMasterClient)
@@ -106,7 +108,11 @@ public class LodeBase : Enemy, IHitable
         for (int i = 0; i < iL_chunkableThreshold.Count; i++)
             if (i_currentHealth <= iL_chunkableThreshold[i])
             {
+                p_chunkEffect.Play();
                 goA_chunkables[i].SetActive(false);
+
+                iL_chunkableThreshold.RemoveAt(i);
+                iL_chunkableThreshold.RemoveAt(i);
             }
 
         if (i_currentHealth <= 0) Death();
@@ -149,7 +155,7 @@ public class LodeBase : Enemy, IHitable
     {
         SpawnNuggs(6750);
 
-        p_chunkEffect.Play();
+        p_hitEffect.Play();
 
         AudioSource.PlayClipAtPoint(ac_destroyedClip, transform.position);
         gameObject.SetActive(false);
