@@ -306,7 +306,6 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
     public void SyncNameOverNetwork()
     {
         view.RPC(nameof(SetName), RpcTarget.Others, playerID, PhotonNetwork.NickName);
-        GetComponent<PlayerWaypointer>().SetNames(PhotonNetwork.NickName);
 
     }
 
@@ -318,6 +317,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
             _Name += " (Host)";
         }
         nameText.text = _Name;
+        GetComponent<PlayerWaypointer>().SetNames(_Name); 
     }
 
     public void SetCanPickUpNugs(bool val)
