@@ -56,6 +56,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         b_canBeHit = false;
         b_collected = false;
+        gameObject.layer = 8;
         Invoke(nameof(RemoveSpawnImmunity), f_spawnImmunityDuration);
         Invoke(nameof(Die), 60);
     }
@@ -69,6 +70,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     private void RemoveSpawnImmunity()
     {
         b_canBeHit = true;
+        gameObject.layer = 9;
     }
 
     public void Die()
