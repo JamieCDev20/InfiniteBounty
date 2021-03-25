@@ -107,6 +107,10 @@ public class DifficultyManager : SubjectBase
         impossibleX.dA_secondDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_secondDiversifierSet;
         impossibleX.dA_thirdDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_thirdDiversifierSet;
 
+        //Boss
+        impossibleX.f_bossHealthMult += (ds_changeInStatsPerImpossible.f_bossHealthMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_bossHealthMult;
+        impossibleX.vi_enemiesPerBossWave += (ds_changeInStatsPerImpossible.vi_enemiesPerBossWave * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].vi_enemiesPerBossWave;
+
         dsL_difficulties.Add(impossibleX);
     }
 
@@ -130,7 +134,7 @@ public struct DifficultySet
     public float f_spawnFrequencyMult; //The number of seconds between waves is multiplied by this amount
     public float f_spawnAmountMult; //The number of enemies per wave is multiplied by this amount
     [Tooltip("The actual cap on the number of enemies that can be alive at any given time")]
-    public float f_maxNumberOfEnemies; //Used in the if statement when check the number of living enemies
+    public float f_maxNumberOfEnemies; //Used in the if statement when checking the number of living enemies
     public float f_enemyVariantChance;
     public float f_goldEnemyChance;
     public int i_numberOfMiniBosses;
@@ -146,5 +150,5 @@ public struct DifficultySet
     [Header("Boss")]
     public float f_bossHealthMult;
     public Vector2Int vi_enemiesPerBossWave;
-    
+
 }
