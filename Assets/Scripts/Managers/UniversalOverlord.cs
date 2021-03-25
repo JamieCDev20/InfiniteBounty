@@ -96,7 +96,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     /// </summary>
     private void Init()
     {
-        Debug.Log("Init");
+        //Debug.Log("Init");
         canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
         SceneManager.sceneLoaded += OnSceneLoad;

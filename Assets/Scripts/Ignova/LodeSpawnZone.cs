@@ -40,7 +40,7 @@ public class LodeSpawnZone : MonoBehaviour
                     if (!hit.transform.name.Contains(s_namesToIgnore) && !hit.transform.name.Contains("Lode"))
                     {
                         _go_lode = Instantiate(goA_lodesTypesToSpawn[UnityEngine.Random.Range(0, goA_lodesTypesToSpawn.Length)]);
-                        Debug.Log("spawned");
+                        //Debug.Log("spawned");
 
                         _lbL_spawnedLodes.Add(_go_lode.GetComponent<LodeBase>());
                         LodeBase l = _go_lode.GetComponent<LodeBase>();

@@ -122,7 +122,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     {
         ID = _id;
         Name = _name;
-        Debug.Log($"I HAVE AN ID: {_id}");
+        //Debug.Log($"I HAVE AN ID: {_id}");
         photonView.RPC("SetIDR", RpcTarget.Others, _id, _name);
     }
 
@@ -134,7 +134,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void SetIDR(int _id, string _n)
     {
-        Debug.Log($"I HAVE AN ID: {_id}");
+        //Debug.Log($"I HAVE AN ID: {_id}");
         ID = _id;
         Name = _n;
     }
