@@ -117,6 +117,12 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         //Instantiate(test, Vector3.one, Quaternion.identity);
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        playerIM.SyncNameOverNetwork();
+    }
+
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         playerIM.SyncNameOverNetwork();
