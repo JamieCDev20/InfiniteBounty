@@ -97,8 +97,8 @@ public class ScoreboardManager : MonoBehaviour
         pm.enabled = false;
         t_camPositionToReturnTo = pim.GetCamera().transform;
         pim.GetCamera().enabled = false;
-        pim.GetCamera().GetComponent<ToolTipper>().StopShowing();
-        pim.GetCamera().GetComponent<HUDController>().StopShowing();
+        FindObjectOfType<ToolTipper>().StopShowing();
+        FindObjectOfType<HUDController>().StopShowing();
         Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(false);
@@ -117,9 +117,9 @@ public class ScoreboardManager : MonoBehaviour
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
         pm.enabled = true;
-        pim.enabled = true;
-        pim.GetCamera().GetComponent<ToolTipper>().StartShowing();
-        pim.GetCamera().GetComponent<HUDController>().StartShowing();
+        pim.enabled = true;        
+        FindObjectOfType<ToolTipper>().StopShowing();
+        FindObjectOfType<HUDController>().StopShowing();        
 
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
