@@ -188,7 +188,7 @@ public class VendingMachine : SubjectBase, IInteractible
                     as_source.pitch = 1;
                     as_source.PlayOneShot(ac_whirringClip);
                     StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
-                    StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
+                    //StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
                     Augment[] grabbedAugment = new Augment[1];
                     grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
                     pim.GetComponent<NugManager>().CollectNugs(-grabbedAugment[0].Cost, false);
