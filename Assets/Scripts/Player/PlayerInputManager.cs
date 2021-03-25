@@ -305,7 +305,9 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
     public void SyncNameOverNetwork()
     {
-        view.RPC("SetName", RpcTarget.Others, playerID, PhotonNetwork.NickName);
+        view.RPC(nameof(SetName), RpcTarget.Others, playerID, PhotonNetwork.NickName);
+        GetComponent<PlayerWaypointer>().SetNames(PhotonNetwork.NickName);
+
     }
 
     [PunRPC]
@@ -336,7 +338,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
     public void LocalGetOnChair()
     {
-        photonView.RPC("SetPosition", RpcTarget.Others, transform.position);
+        photonView.RPC(nameof(SetPosition), RpcTarget.Others, transform.position);
     }
 
     [PunRPC]
