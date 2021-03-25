@@ -300,6 +300,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
         //Debug.Log($"Nickname: {playerNickname} / {id}");
         nameText.text = playerNickname;
+        GetComponent<PlayerWaypointer>().SetNames(nickName);
     }
 
     public void SyncNameOverNetwork()

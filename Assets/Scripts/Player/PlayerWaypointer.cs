@@ -9,12 +9,12 @@ public class PlayerWaypointer : MonoBehaviour
     [SerializeField] private GameObject go_onScreenMarker;
     [SerializeField] private GameObject go_offScreenMarker;
     [SerializeField] private float f_xRadius;
-    [SerializeField] private float f_yRadius;
     [SerializeField] private float f_yOnScreenOffset;
-    [SerializeField] private float f_maxDistance;
+    [SerializeField] private float f_displayRange = 10;
 
     private int i_scrWidth;
     private int i_scrHeight;
+    private float curRadius;
 
     private Camera cam;
     private RectTransform canRect;
@@ -27,10 +27,20 @@ public class PlayerWaypointer : MonoBehaviour
 
     private GameObject go_offMarker;
     private RectTransform rt_off;
+    private string playerName = "Samuel L Jackson";
+    private Text onText;
+    private Text offText;
 
-    void Start()
+    private bool run = true;
+
+    private void Start()
     {
         t_targetPlayer = NetworkedPlayer.x.GetPlayer();
+        if (t_targetPlayer == transform)
+        {
+            run = false;
+            return;
+        }
         t_hudCanvas = HUDController.x.GetHudCanvasTransform();
 
         go_onMarker = Instantiate(go_onScreenMarker, t_hudCanvas);
@@ -44,36 +54,63 @@ public class PlayerWaypointer : MonoBehaviour
         cam = NetworkedPlayer.x.GetCamera();
 
         canRect = t_hudCanvas.GetComponent<RectTransform>();
+        curRadius = f_xRadius;
+
+        onText = go_onMarker.transform.GetChild(0).GetComponent<Text>();
+        offText = go_offMarker.transform.GetChild(0).GetComponent<Text>();
+
 
     }
 
-    void Update()
+    private void Update()
     {
+        if (!run)
+            return;
         PositionWaypoint();
+    }
+
+    public void SetNames(string _name)
+    {
+        playerName = _name;
+        onText.text = playerName;
+        offText.text = $"{playerName}   {playerName}";
     }
 
     private void PositionWaypoint()
     {
+
+        if((transform.position - t_targetPlayer.position).magnitude < f_displayRange)
+        {
+            go_offMarker.SetActive(false);
+            go_onMarker.SetActive(false);
+            return;
+        }
+
         Vector2 screenPos = cam.WorldToScreenPoint(transform.position + (f_yOnScreenOffset * Vector3.up));
         float w = Screen.width;
         float h = Screen.height;
-        //screenPos.x /= t_hudCanvas.GetComponent<RectTransform>().rect.width;
-        //screenPos.y /= t_hudCanvas.GetComponent<RectTransform>().rect.height;
+
         screenPos.x /= w;
         screenPos.y /= h;
 
-        rt_on.anchoredPosition = new Vector2(canRect.rect.width * screenPos.x, canRect.rect.height * screenPos.y);
-        rt_off.anchoredPosition = new Vector2((screenPos.x > 0.5 ? canRect.rect.width - f_xRadius : f_xRadius), canRect.rect.height * screenPos.y);
+        float dot = Vector3.Dot(cam.transform.forward, transform.position - cam.transform.position);
 
-        if(Vector3.Dot(cam.transform.forward, transform.position - cam.transform.position) < 0)
+        if (dot < 0)
         {
-            if(screenPos.x < 0.5f)
-                rt_off.anchoredPosition = new Vector2(canRect.rect.width - f_xRadius, canRect.rect.height * screenPos.y);
+            rt_on.gameObject.SetActive(false);
+            rt_off.gameObject.SetActive(true);
+
+            if (screenPos.x < 0.5f)
+            {
+                screenPos.x = 1;
+            }
             else
-                rt_off.anchoredPosition = new Vector2(f_xRadius, canRect.rect.height * screenPos.y);
-            screenPos.x = -1;
+            {
+                screenPos.x = 0;
+            }
         }
-        if(screenPos.x < 0.01f || screenPos.x > 0.99f)
+
+        if (screenPos.x < 0.01f || screenPos.x > 0.99f)
         {
             rt_on.gameObject.SetActive(false);
             rt_off.gameObject.SetActive(true);
@@ -84,6 +121,14 @@ public class PlayerWaypointer : MonoBehaviour
             rt_off.gameObject.SetActive(false);
 
         }
+
+        screenPos.x = Mathf.Clamp(screenPos.x, 0, 1);
+        screenPos.y = Mathf.Clamp(screenPos.y, 0, 1);
+
+        rt_on.anchoredPosition = new Vector2(canRect.rect.width * screenPos.x, canRect.rect.height * screenPos.y);
+        rt_off.anchoredPosition = new Vector2(canRect.rect.width * screenPos.x, canRect.rect.height * screenPos.y);
+
+
 
     }
 

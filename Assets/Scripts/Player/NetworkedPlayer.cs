@@ -21,7 +21,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private PhotonView view;
     private GameObject playerCamera;
     private PlayerHealth ph_health;
-
+    //[SerializeField] private GameObject test;
     public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
     private List<string> dataToSend = new List<string>();
@@ -114,6 +114,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         Instantiate(HUD, Vector3.zero, Quaternion.identity);
         FindObjectOfType<PauseMenuController>().SetPIM(playerIM);
+        //Instantiate(test, Vector3.one, Quaternion.identity);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
