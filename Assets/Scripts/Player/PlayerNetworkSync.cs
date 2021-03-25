@@ -69,7 +69,7 @@ public class PlayerNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
             anim?.SetRemoteShooting(b_shootingLeft, b_shootingRight);
 
             f_cHealth = (float)stream.ReceiveNext();
-            HUDController.x.UpdateRemoteHealth(Name, ID, f_cHealth);
+            HUDController.x.UpdateRemoteHealth(Name, ID, f_cHealth, f_cHealth < 1);
 
         }
 
