@@ -144,6 +144,7 @@ public class LodeBase : Enemy, IHitable
         _go_nugget.transform.parent = null;
         _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2) + Vector3.up;
         //_go_nugget.transform.localScale = Vector3.one;
+        _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
         Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
         _rb.AddForce(new Vector3(-1 + Random.value * 2, Random.value * 2, -1 + Random.value * 2) * f_nuggetForce, ForceMode.Impulse);
         _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
