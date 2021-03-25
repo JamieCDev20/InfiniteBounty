@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 952172094305256597}
   - component: {fileID: 1358505354298287619}
   - component: {fileID: 7699429447912535034}
+  - component: {fileID: 6413840308385194402}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Untagged
@@ -62,6 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   i_currentHealth: 5
   go_deathEffects: {fileID: 2202496073443802668}
+  bh_ifArmourUseThis: {fileID: 0}
 --- !u!54 &7699429447912535034
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -78,6 +80,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6413840308385194402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544450011450004535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d77735f621f9141934b7243908adfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1329602534923677256
 GameObject:
   m_ObjectHideFlags: 0
