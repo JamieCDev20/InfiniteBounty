@@ -33,7 +33,14 @@ public class PlayerWaypointer : MonoBehaviour
 
     private bool run = true;
 
-    private void Start()
+    private void Update()
+    {
+        if (!run)
+            return;
+        PositionWaypoint();
+    }
+
+    public void SetNames(string _name)
     {
         t_targetPlayer = NetworkedPlayer.x.GetPlayer();
         if (t_targetPlayer == transform)
@@ -55,22 +62,9 @@ public class PlayerWaypointer : MonoBehaviour
 
         canRect = t_hudCanvas.GetComponent<RectTransform>();
         curRadius = f_xRadius;
-
         onText = go_onMarker.transform.GetChild(0).GetComponent<Text>();
         offText = go_offMarker.transform.GetChild(0).GetComponent<Text>();
 
-
-    }
-
-    private void Update()
-    {
-        if (!run)
-            return;
-        PositionWaypoint();
-    }
-
-    public void SetNames(string _name)
-    {
         playerName = _name;
         onText.text = playerName;
         offText.text = $"{playerName}   {playerName}";
