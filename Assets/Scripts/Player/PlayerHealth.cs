@@ -28,7 +28,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private bool b_downed = false;
     private int playerID;
     private PhotonView view;
-    internal HUDController hudControl;
     private PlayerAnimator pa_anim;
     [Space, SerializeField] private RectTransform rt_downedTimer;
     private PlayerInputManager pim;
@@ -75,7 +74,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             if (!b_downed)
             {
                 f_currentHealth = Mathf.Clamp(f_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
-                hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+                HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
             }
         }
         else
@@ -101,7 +100,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (acA_hurtClips.Length > 0 && damage != 0)
             as_mainAudioSource.PlayOneShot(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)]);
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
-        hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
 
         if (f_currentHealth <= 0)
         {
@@ -149,7 +148,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         f_currentHealth = i_maxHealth;
         f_downHealth = f_downTime;
         f_maxDownTime = f_downTime;
-        hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
         cc_cam?.StopSpectating();
     }
 

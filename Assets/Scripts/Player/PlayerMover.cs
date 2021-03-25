@@ -188,11 +188,6 @@ public class PlayerMover : MonoBehaviour
         }
     }
 
-    internal void SetHUDController(HUDController _HUDController)
-    {
-        GetComponent<PlayerHealth>().hudControl = _HUDController;
-    }
-
     private void Quit()
     {
         Application.Quit();

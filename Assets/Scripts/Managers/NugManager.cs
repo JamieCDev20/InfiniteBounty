@@ -18,7 +18,6 @@ public class NugManager : SubjectBase, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
-        hud = gameObject.GetComponent<PlayerHealth>().hudControl;
         //SceneManager.sceneLoaded += OnSceneLoad;
 
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())

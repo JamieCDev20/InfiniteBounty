@@ -110,7 +110,12 @@ public class HUDController : MonoBehaviour
     {
         if (this == null)
             return;
-        HudInLevel(!scene.name.Contains("Lobby"));
+        bool inLevel = !scene.name.Contains("Lobby");
+        HudInLevel(inLevel);
+        foreach (int i in iiD_idMap.Keys)
+        {
+            RemovePlayersBar(i);
+        }
     }
 
     private void HudInLevel(bool inLevel)
@@ -134,9 +139,6 @@ public class HUDController : MonoBehaviour
 
     public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth)
     {
-        for (int i = 0; i < goA_healthBarParents.Length; i++)
-            goA_healthBarParents[i].SetActive(false);
-
         if (iiD_idMap.Count <= 0)
             return;
 
@@ -146,6 +148,10 @@ public class HUDController : MonoBehaviour
         tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;
     }
 
+    public void RemovePlayersBar(int id)
+    {
+        goA_healthBarParents[iiD_idMap[id]].SetActive(false);
+    }
 
     #endregion
 

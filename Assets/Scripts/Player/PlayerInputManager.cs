@@ -247,7 +247,6 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
         if (mover == null)
             mover = GetComponent<PlayerMover>();
-        mover.SetHUDController(camControl.GetComponent<HUDController>());
 
         mover.SetCameraTranfsorm(camControl.transform.GetChild(0));
 
