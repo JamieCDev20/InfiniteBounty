@@ -110,8 +110,7 @@ public class LodeBase : Enemy, IHitable
             {
                 p_chunkEffect.Play();
                 goA_chunkables[i].SetActive(false);
-
-                iL_chunkableThreshold.RemoveAt(i);
+                
                 iL_chunkableThreshold.RemoveAt(i);
             }
 
