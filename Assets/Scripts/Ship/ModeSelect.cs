@@ -7,7 +7,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
 {
 
     public static ModeSelect x;
-
+    private AudioSource as_source;
     private int i_currentIndex;
     [SerializeField] private LoadIntoLevel lil_teleportButton;
     [Space, SerializeField] private GameObject[] goA_highlightPositions = new GameObject[3];
@@ -16,6 +16,8 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
     private void Start()
     {
         x = this;
+        as_source = GetComponent<AudioSource>();
+
         PhotonNetwork.RegisterPhotonView(photonView);
         if (PhotonNetwork.IsMasterClient)
             Interacted();
@@ -29,10 +31,10 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
 
         if (i_currentIndex >= goA_highlightPositions.Length)
             i_currentIndex = 0;
-
         goA_highlightPositions[i_currentIndex].SetActive(true);
         lil_teleportButton?.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
         photonView.RPC(nameof(SetCurrentMode), RpcTarget.Others, i_currentIndex);
+        as_source.Play();
     }
 
     [PunRPC]

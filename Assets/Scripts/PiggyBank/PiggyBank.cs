@@ -12,12 +12,15 @@ public class PiggyBank : SubjectBase, IInteractible
     private DifficultyManager dm_man;
     [SerializeField] private TextMeshPro tmp_currentMoneyText;
     [SerializeField] private GameObject go_stand;
+    private AudioSource as_source;
 
     public void Start()
     {
+        as_source = GetComponent<AudioSource>();
+
         if (DifficultyManager.x.MaximumDifficulty < 9)
             gameObject.SetActive(false);
-                
+
         SaveManager _sm = FindObjectOfType<SaveManager>();
         i_storedAmount = _sm.SaveData.i_zippyBank;
         if (i_storedAmount != 0)
@@ -32,6 +35,7 @@ public class PiggyBank : SubjectBase, IInteractible
     {
         if (interactor?.GetComponent<NugManager>().Nugs >= i_inputAmount)
         {
+            as_source.Play();
             NugManager nugMan = interactor.GetComponent<NugManager>();
             nugMan.GetComponent<NugManager>().CollectNugs(-i_inputAmount, false);
             i_storedAmount += i_inputAmount;

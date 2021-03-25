@@ -9,15 +9,10 @@ public class PvPManager : MonoBehaviour
     public static PvPManager x;
     private int i_playersStillAlive;
 
-    IEnumerator Start()
+    private void Start()
     {
         x = this;
-
-        for (int i = 0; i < 2; i++)
-            yield return new WaitForEndOfFrame();
-
-        i_playersStillAlive = GameObject.FindGameObjectsWithTag("Player").Length;
-
+        i_playersStillAlive = PhotonNetwork.CurrentRoom.PlayerCount;
     }
 
     public void PlayerDied()

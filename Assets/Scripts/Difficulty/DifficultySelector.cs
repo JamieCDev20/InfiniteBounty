@@ -12,10 +12,12 @@ public class DifficultySelector : MonoBehaviour, IInteractible
     [SerializeField] private TextMeshPro tmp_difficultyBelow;
     [Space, SerializeField] private Transform t_textParent;
     [SerializeField] private int i_difficultyChangeOnClick;
-
+    private AudioSource as_source;
 
     private void Start()
     {
+        as_source = GetComponent<AudioSource>();
+
         ChangeDifficulty(1);
         ChangeDifficulty(-1);
     }
@@ -55,6 +57,7 @@ public class DifficultySelector : MonoBehaviour, IInteractible
     public void Interacted()
     {
         ChangeDifficulty(i_difficultyChangeOnClick);
+        as_source.Play();
     }
 
     public void Interacted(Transform interactor) { }
