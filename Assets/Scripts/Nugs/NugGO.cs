@@ -81,12 +81,14 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         CancelInvoke();
         StopAllCoroutines();
         GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected ? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
+        /*
         float vol = 0;
         if (am_nugMixer)
             am_nugMixer.GetFloat("Volume", out vol);
         vol = (vol + 80) / 80;
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position, vol);
+        */
         if (rb != null)
             rb.velocity = Vector3.zero;
         eO_elem?.ResetElements();
