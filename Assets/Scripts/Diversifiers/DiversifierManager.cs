@@ -78,17 +78,18 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     #region Diver Functions
 
     [PunRPC]
-    public void GigaGeysersRPC(int _i_seed)
+    public IEnumerator GigaGeysersRPC(int _i_seed)
     {
+        yield return null;
         Random.InitState(_i_seed);
-        Debug.LogError("MY SEED IS " + _i_seed);
+        //Debug.LogError("MY SEED IS " + _i_seed);
 
         RaycastHit _hit;
 
         for (int i = 0; i < Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y); i++)
         {
-            Physics.Raycast(ReturnPositionWithinZone(ziA_allZones[Random.Range(0, ziA_allZones.Length)]), Vector3.down, out _hit, Mathf.Infinity);
-            if (_hit.transform.name.Contains("Mushroom")) return;
+            Physics.Raycast(ReturnPositionWithinZone(ziA_allZones[Random.Range(0, ziA_allZones.Length)]), Vector3.down, out _hit, Mathf.Infinity, LayerMask.NameToLayer("UGG"), QueryTriggerInteraction.Ignore);
+            if (_hit.transform.name.Contains("Mushroom")) continue;
 
             GameObject _go = PhotonNetwork.Instantiate(s_geyserPath, _hit.point, Quaternion.identity);
             _go.transform.up = _hit.normal;
