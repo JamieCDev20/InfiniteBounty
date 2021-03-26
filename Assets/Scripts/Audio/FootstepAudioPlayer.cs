@@ -16,6 +16,8 @@ public class FootstepAudioPlayer : MonoBehaviour
     [SerializeField] private AudioClip ac_footstepPlanetL;
     [SerializeField] private AudioClip ac_planetLand;
     [SerializeField] private AudioClip ac_shipLand;
+    [SerializeField] private ParticleSystem LfootParticle;
+    [SerializeField] private ParticleSystem RfootParticle;
     [SerializeField] private float f_velocityToVolumeMultiplier = 0.035f;
 
     private Rigidbody rb_playerRB;
@@ -57,6 +59,7 @@ public class FootstepAudioPlayer : MonoBehaviour
                 as_feetAudio.PlayOneShot(ac_footstepShipL, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
             case Surface.planet:
+                LfootParticle?.Play();
                 as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
                 as_feetAudio.PlayOneShot(ac_footstepPlanetL, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
@@ -74,6 +77,7 @@ public class FootstepAudioPlayer : MonoBehaviour
                 as_feetAudio.PlayOneShot(ac_footstepShipR, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
             case Surface.planet:
+                RfootParticle?.Play();
                 as_feetAudio.pitch = Random.Range(0.95f, 1.05f);
                 as_feetAudio.PlayOneShot(ac_footstepPlanetR, (float)rb_playerRB.velocity.magnitude * f_velocityToVolumeMultiplier);
                 break;
