@@ -126,4 +126,13 @@ public class PlayerWaypointer : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        if (run)
+        {
+            Destroy(go_offMarker);
+            Destroy(go_onMarker);
+        }
+    }
+
 }
