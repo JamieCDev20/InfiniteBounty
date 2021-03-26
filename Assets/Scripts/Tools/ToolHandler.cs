@@ -273,7 +273,7 @@ public class ToolHandler : SubjectBase
     {
         SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
         PlaySwapNoise();
-        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
+        view.RPC(nameof(SwapTool), RpcTarget.Others, _ts_slot, _i_toolID);
 
     }
 
@@ -453,7 +453,10 @@ public class ToolHandler : SubjectBase
                         if (hit.distance > 7)
                             dir = hit.point - A_toolTransforms[(int)ts].position;
                     }
-                    view.RPC("UseTool", RpcTarget.Others, ts, dir);
+                    float spread = A_tools[(int)ts].GetSpread();
+                    dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.up) * dir;
+                    dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.right) * dir;
+                    view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
                     A_tools[(int)ts].Use(dir);
                 }
         }

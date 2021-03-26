@@ -32,6 +32,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
     [SerializeField] protected GameObject[] go_particles;
+    [SerializeField] protected float f_spreadAngle;
 
     #endregion
 
@@ -146,4 +147,10 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
                 if(partic != null)
                     partic?.SetActive(val);
     }
+
+    public float GetSpread()
+    {
+        return f_spreadAngle;
+    }
+
 }
