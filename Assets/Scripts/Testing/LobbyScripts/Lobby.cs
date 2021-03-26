@@ -51,6 +51,12 @@ public class Lobby : MonoBehaviourPunCallbacks
             _go.SetActive(false);
             goL_listings.Add(_go.GetComponent<Listing>());
         }
+        if(PhotonNetwork.CurrentRoom == null)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+        }
 
     }
 

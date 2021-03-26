@@ -69,6 +69,8 @@ public class CameraController : MonoBehaviour
 
     private void SceneLoad(Scene s, LoadSceneMode m)
     {
+        if (this == null)
+            return;
         transform.eulerAngles = Vector3.zero;
         f_yLook = 0;
     }

@@ -21,6 +21,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private PhotonView view;
     private GameObject playerCamera;
     private PlayerHealth ph_health;
+    private GameObject hud;
     //[SerializeField] private GameObject test;
     public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
@@ -112,7 +113,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         playerCamera = cam.transform.GetComponentInChildren<Camera>().gameObject;
         nMan = t_thisPlayer.GetComponent<NugManager>();
 
-        Instantiate(HUD, Vector3.zero, Quaternion.identity);
+        hud = Instantiate(HUD, Vector3.zero, Quaternion.identity);
         FindObjectOfType<PauseMenuController>().SetPIM(playerIM);
         //Instantiate(test, Vector3.one, Quaternion.identity);
     }
@@ -126,6 +127,12 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         playerIM.SyncNameOverNetwork();
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        //Destroy(hud);
     }
 
     public void SyncInfo()
