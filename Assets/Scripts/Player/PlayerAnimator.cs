@@ -25,6 +25,7 @@ public class PlayerAnimator : MonoBehaviourPun
     [SerializeField] private float f_maxBodyAngle = 80;
     [SerializeField] private float f_maxArmAngle = 80;
     [SerializeField] private float f_armOffset = -20;
+    [SerializeField] private float f_animatorDivisor = 7;
     [Space]
     [Header("Tester")]
     [SerializeField] private bool doDemoIK = true;
@@ -175,8 +176,8 @@ public class PlayerAnimator : MonoBehaviourPun
             if (photonView.IsMine)
                 v_vel = rb.velocity;
 
-            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(v_vel).x / 7, 0.3f));
-            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(v_vel).z / 7, 0.3f));
+            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(v_vel).x / f_animatorDivisor, 0.3f));
+            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(v_vel).z / f_animatorDivisor, 0.3f));
 
 
             if (rb.velocity.sqrMagnitude > 0.1f)
