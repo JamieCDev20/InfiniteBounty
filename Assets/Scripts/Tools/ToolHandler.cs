@@ -35,6 +35,7 @@ public class ToolHandler : SubjectBase
     private PhotonView view;
     private ToolSlot ts_removeToolSlot;
     private int i_removableRackSlot;
+    private Rigidbody rb;
     #endregion
 
     private void Start()
@@ -49,6 +50,7 @@ public class ToolHandler : SubjectBase
             AddObserver(_sm);
             LoadSavedTools(_sm);
         }
+        rb = GetComponent<Rigidbody>();
     }
 
     private void LoadSavedTools(SaveManager _sm)
@@ -453,7 +455,7 @@ public class ToolHandler : SubjectBase
                         if (hit.distance > 7)
                             dir = hit.point - A_toolTransforms[(int)ts].position;
                     }
-                    float spread = A_tools[(int)ts].GetSpread();
+                    float spread = A_tools[(int)ts].GetSpread() * (rb.velocity.magnitude * 0.05f);
                     dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.up) * dir;
                     dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.right) * dir;
                     view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
@@ -478,7 +480,7 @@ public class ToolHandler : SubjectBase
             if (_b_released)
             {
                 A_tools[(int)ts].SetActive(true);
-                view.RPC("StopUsingTool", RpcTarget.All, ts);
+                view.RPC(nameof(StopUsingTool), RpcTarget.All, ts);
 
             }
             if (_b_released && A_tools[(int)ts].ReleaseActivated)
