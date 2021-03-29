@@ -49,6 +49,11 @@ public class BossAI : AIBase
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         vi_enemiesPerWave = _ds.vi_enemiesPerBossWave;
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject go = PhotonNetwork.Instantiate(s_enemyPath, PickArenaPosition().normalized * 300 + Vector3.up * 200, Quaternion.identity);
+            PhotonNetwork.Destroy(go);
+        }
     }
     private void StartAttacking()
     {
@@ -309,8 +314,11 @@ public class BossAI : AIBase
     private IEnumerator SummonEnemies()
     {
         for (int i = 0; i < Random.Range(vi_enemiesPerWave.x, vi_enemiesPerWave.y); i++)
+        {
+            print(TagManager.x.name);
             if (TagManager.x.GetTagSet("Enemy").Count < 21)
                 PhotonNetwork.Instantiate(s_enemyPath, PickArenaPosition().normalized * 300 + Vector3.up * 200, Quaternion.identity);
+        }
 
         yield return new WaitForSeconds(f_timeBetweenEnemies);
 
