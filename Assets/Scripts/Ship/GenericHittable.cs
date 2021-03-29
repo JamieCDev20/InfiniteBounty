@@ -17,7 +17,10 @@ public class GenericHittable : MonoBehaviour, IHitable
     private int i_currentLode;
     private bool b_canBeHit;
     [SerializeField] private string[] sA_lodeNames = new string[0];
-    [SerializeField]private string s_loadingMessage;
+    [SerializeField] private string s_loadingMessage;
+    [Space]
+    [SerializeField] private ParticleSystem p_creationParticles;
+
 
     private void Start()
     {
@@ -53,6 +56,10 @@ public class GenericHittable : MonoBehaviour, IHitable
         b_canBeHit = false;
         i_currentHealth = i_maxHealth;
         tmp_damageText.text = s_loadingMessage;
+        yield return new WaitForSeconds(0.25f);
+
+        p_creationParticles.Play();
+        yield return new WaitForSeconds(0.25f);
 
         for (int i = 0; i < 100; i++)
         {
