@@ -52,6 +52,8 @@ public class DifficultySelector : MonoBehaviour, IInteractible
             yield return new WaitForEndOfFrame();
             t_textParent.position += Vector3.up * _i_change * 0.05f;
         }
+
+        TutorialManager.x.UsedRiskSelector();
     }
 
     public void Interacted()

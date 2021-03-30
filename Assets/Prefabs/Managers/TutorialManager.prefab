@@ -285,6 +285,66 @@ MonoBehaviour:
       data1: 0
       data2: 0
   defaultFrameSettings: 0
+--- !u!1 &5449599309742012113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6654605394662457730}
+  m_Layer: 0
+  m_Name: LodeDistanceChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6654605394662457730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5449599309742012113}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.82, y: -12.44, z: 1.44}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 7385016059390513745}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5673551308694481925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3458368232133140910}
+  m_Layer: 0
+  m_Name: DropPodDistanceChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3458368232133140910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5673551308694481925}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -37.9}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 7385016059390513745}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5918182284124333497
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +572,8 @@ Transform:
   - {fileID: 6638132375087845563}
   - {fileID: 2117603134176552875}
   - {fileID: 7401044112677887948}
+  - {fileID: 6654605394662457730}
+  - {fileID: 3458368232133140910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -540,10 +602,11 @@ MonoBehaviour:
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 658c444a39af51b4184d7d0266465e9c, type: 3}
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0
@@ -551,6 +614,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: Look Around with Mouse
+      go_distanceChecker: {fileID: 0}
     - s_name: Input Check
       tst_stepType: 3
       f_timeToWaitBeforeNextStep: 0
@@ -558,6 +622,7 @@ MonoBehaviour:
       b_hold: 1
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: Confetti
       tst_stepType: 1
       f_timeToWaitBeforeNextStep: 0.5
@@ -565,15 +630,17 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
   - s_name: Move
     tsdA_stepsInChunk:
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 114f7e7a81e87d84fbdc938397dac8e7, type: 3}
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0
@@ -581,6 +648,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: Look Around with Mouse
+      go_distanceChecker: {fileID: 0}
     - s_name: Input Check
       tst_stepType: 3
       f_timeToWaitBeforeNextStep: 0
@@ -588,6 +656,7 @@ MonoBehaviour:
       b_hold: 1
       it_inputToWaitFor: 0
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: Confetti
       tst_stepType: 1
       f_timeToWaitBeforeNextStep: 0.5
@@ -595,15 +664,17 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
   - s_name: Sprint
     tsdA_stepsInChunk:
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: d606c9494d6693b48a237dbf2008cfc1, type: 3}
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0
@@ -611,6 +682,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 4
       s_textMessage: Hold Shift whilst moving
+      go_distanceChecker: {fileID: 0}
     - s_name: Input Check
       tst_stepType: 3
       f_timeToWaitBeforeNextStep: 0
@@ -618,6 +690,7 @@ MonoBehaviour:
       b_hold: 1
       it_inputToWaitFor: 4
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: Confetti
       tst_stepType: 1
       f_timeToWaitBeforeNextStep: 0.5
@@ -625,6 +698,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD Reset
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0.5
@@ -632,22 +706,25 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 2
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 0882d1b6af0de96479924ad005595b13, type: 3}
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
   - s_name: Jump
     tsdA_stepsInChunk:
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 941eac0d20cda13499acd3608abdeb6c, type: 3}
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0
@@ -655,6 +732,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 4
       s_textMessage: Spacebar to Jump
+      go_distanceChecker: {fileID: 0}
     - s_name: Input Check
       tst_stepType: 3
       f_timeToWaitBeforeNextStep: 0
@@ -662,6 +740,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 1
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: Confetti
       tst_stepType: 1
       f_timeToWaitBeforeNextStep: 0
@@ -669,13 +748,15 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 1a952e9e958d55b42bb9065a57d6a7fa, type: 3}
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD Reset
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 2
@@ -683,15 +764,17 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
   - s_name: Reflectron Interact
     tsdA_stepsInChunk:
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 7c481f2de5a7e994986320bacb311a9a, type: 3}
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0
@@ -699,6 +782,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 4
       s_textMessage: Use E to interact with the Reflectron
+      go_distanceChecker: {fileID: 0}
     - s_name: Reflectron Check
       tst_stepType: 4
       f_timeToWaitBeforeNextStep: 0
@@ -706,6 +790,7 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 1
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: Confetti
       tst_stepType: 1
       f_timeToWaitBeforeNextStep: 0
@@ -713,13 +798,15 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 2f28e0f74de383a4e94b953621b6f74a, type: 3}
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD Reset
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 2
@@ -727,15 +814,17 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
   - s_name: Hand Tools
     tsdA_stepsInChunk:
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 63eed9d7acc661e418fc30f9bf934050, type: 3}
       b_hold: 0
       it_inputToWaitFor: 0
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0
@@ -743,13 +832,15 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 4
       s_textMessage: Use the Mouse Buttons to pickup a tool in each hand.
-    - s_name: Reflectron Check
-      tst_stepType: 4
+      go_distanceChecker: {fileID: 0}
+    - s_name: Tool Check
+      tst_stepType: 6
       f_timeToWaitBeforeNextStep: 0
       ac_voiceLine: {fileID: 0}
       b_hold: 0
       it_inputToWaitFor: 1
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: Confetti
       tst_stepType: 1
       f_timeToWaitBeforeNextStep: 0
@@ -757,13 +848,15 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: VO
       tst_stepType: 0
       f_timeToWaitBeforeNextStep: 0
-      ac_voiceLine: {fileID: 0}
+      ac_voiceLine: {fileID: 8300000, guid: 763cccef238ea9449aa59145f03c77e2, type: 3}
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: HUD Reset
       tst_stepType: 2
       f_timeToWaitBeforeNextStep: 2
@@ -771,6 +864,481 @@ MonoBehaviour:
       b_hold: 0
       it_inputToWaitFor: 5
       s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Use Tools
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: a5227349d25368b4fa37a9e8137f9358, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Use your tools with RMB & LMB
+      go_distanceChecker: {fileID: 0}
+    - s_name: Button Check
+      tst_stepType: 3
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 2
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: 70ab84eafa7a1c44c8d6565db01fc530, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Pickup Backpack Tool
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: b4589994374e4d343b6339dfa74cfb96, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Pickup  the Lunchbox from the Toolrack
+      go_distanceChecker: {fileID: 0}
+    - s_name: Backpack Check
+      tst_stepType: 7
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 2
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: 3ff86f8beef8c0342ac0064eebaf6bd4, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Use Backpack Tool
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: 5f69b9b8ca90a604b90d1b34ee06c1b0, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Press Q to use your backpack tool
+      go_distanceChecker: {fileID: 0}
+    - s_name: Q Check
+      tst_stepType: 3
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 3
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: 7fca1e105004db24e82e56fe40ae9319, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Shoot Lodes
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 1
+      ac_voiceLine: {fileID: 8300000, guid: 62fdb9e3d693a7845a4588a60fc4910d, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Shoot and destroy the Lode on the lower deck
+      go_distanceChecker: {fileID: 0}
+    - s_name: DistanceCheck
+      tst_stepType: 8
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 3
+      s_textMessage: 
+      go_distanceChecker: {fileID: 5449599309742012113}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: b0de7343bd26bbc418ce9e75b9828dee, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: Destroy the Lode.
+      go_distanceChecker: {fileID: 0}
+    - s_name: Lode Check
+      tst_stepType: 9
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: b4425e860cdc61746a49a786cb405661, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Shoot Enemy
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 1
+      ac_voiceLine: {fileID: 8300000, guid: 3dbdcbbeff935a9438bce32f4444be82, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Destroy the Bunny
+      go_distanceChecker: {fileID: 0}
+    - s_name: Enemy Check
+      tst_stepType: 10
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: 543211a6547bce34d875a0aeae2bc17e, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Change Shift
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 1
+      ac_voiceLine: {fileID: 8300000, guid: 401f426103fbe5e468f7aaafebdd3d39, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Interact with the Shift selector
+      go_distanceChecker: {fileID: 0}
+    - s_name: Shift Check
+      tst_stepType: 11
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: 4c7dbe9346decee478873a8473d921e2, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Change Risk
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 1
+      ac_voiceLine: {fileID: 8300000, guid: c84e6b1ef636d184d8a520e95744e724, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Go to the Risk selector & change the Risk level
+      go_distanceChecker: {fileID: 0}
+    - s_name: Risk Check
+      tst_stepType: 12
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: ead56c26134577943a681888b5b8658a, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Zippy Bank
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 1
+      ac_voiceLine: {fileID: 8300000, guid: 0ccb7c00cf891f846a7d10140e633319, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Deposit Bountybucks into your Zippy Bank
+      go_distanceChecker: {fileID: 0}
+    - s_name: Wait for Zippy
+      tst_stepType: 5
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 8300000, guid: a6a2f19672d4d1b4aa7ba321e2e517f1, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+  - s_name: Go to Level
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 1
+      ac_voiceLine: {fileID: 8300000, guid: 85e83445e99820645bae8938c13f2d4f, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Go to the DropPod at the back of the ship
+      go_distanceChecker: {fileID: 0}
+    - s_name: Wait for Dist
+      tst_stepType: 8
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 5673551308694481925}
+    - s_name: confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 4
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: Press E to climb into the drop pod
+      go_distanceChecker: {fileID: 0}
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
 --- !u!1 &8759254311470482734
 GameObject:
   m_ObjectHideFlags: 0

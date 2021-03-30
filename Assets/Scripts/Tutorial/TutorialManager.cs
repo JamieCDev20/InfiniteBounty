@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +27,11 @@ public class TutorialManager : MonoBehaviour
     private bool b_reflectronUsed;
     private bool b_zippyInvested;
     private bool b_hasTools;
-
+    private bool b_hasBackPack;
+    private bool b_lodeDestroyed;
+    private bool b_enemyDestroyed;
+    private bool b_hasChangedRisk;
+    private bool b_hasChangedShift;
 
     private void Awake()
     {
@@ -53,6 +58,14 @@ public class TutorialManager : MonoBehaviour
         b_reflectronUsed = true;
     }
 
+    internal void ThingDestroyed(bool _b_isEnemy)
+    {
+        if (_b_isEnemy)
+            b_enemyDestroyed = true;
+        else
+            b_lodeDestroyed = true;
+    }
+
     public void InteractedWithZippyBack()
     {
         b_zippyInvested = true;
@@ -62,6 +75,22 @@ public class TutorialManager : MonoBehaviour
     {
         b_hasTools = true;
     }
+
+    public void PickedUpBackPack()
+    {
+        b_hasBackPack = true;
+    }
+
+    public void UsedShiftChanger()
+    {
+        b_hasChangedShift = true;
+    }
+
+    public void UsedRiskSelector()
+    {
+        b_hasChangedRisk = true;
+    }
+
 
     private IEnumerator DoTutorialSection(TutorialChunk[] _tcA_chunksToWorkThrough)
     {
@@ -100,7 +129,7 @@ public class TutorialManager : MonoBehaviour
                                         if (Input.GetButton("Jump"))
                                             f_inputTime += Time.deltaTime;
                                         break;
-                                    case InputType.Mouse:
+                                    case InputType.MouseButtons:
                                         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
                                             f_inputTime += Time.deltaTime;
                                         break;
@@ -134,7 +163,7 @@ public class TutorialManager : MonoBehaviour
                                         if (Input.GetButton("Jump"))
                                             _b_shouldContinue = false;
                                         break;
-                                    case InputType.Mouse:
+                                    case InputType.MouseButtons:
                                         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
                                             _b_shouldContinue = false;
                                         break;
@@ -180,11 +209,43 @@ public class TutorialManager : MonoBehaviour
                         while (!b_hasTools)
                             yield return new WaitForEndOfFrame();
                         break;
+
+                    case TutorialStepType.WaitForBackPack:
+                        while (!b_hasBackPack)
+                            yield return new WaitForEndOfFrame();
+                        break;
+
+                    case TutorialStepType.WaitForProximity:
+                        while (Vector3.Distance(pim_player.transform.position, _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].go_distanceChecker.transform.position) > 5)
+                            yield return new WaitForEndOfFrame();
+                        break;
+
+                    case TutorialStepType.WaitForLodeDestroyed:
+                        while (!b_lodeDestroyed)
+                            yield return new WaitForEndOfFrame();
+                        break;
+
+                    case TutorialStepType.WaitForEnemyDestroyed:
+                        while (!b_enemyDestroyed)
+                            yield return new WaitForEndOfFrame();
+                        break;
+
+                    case TutorialStepType.WaitForGameMode:
+                        while (!b_hasChangedShift)
+                            yield return new WaitForEndOfFrame();
+                        break;
+
+                    case TutorialStepType.WaitForRiskLevel:
+                        while (!b_hasChangedRisk)
+                            yield return new WaitForEndOfFrame();
+                        break;
                 }
 
                 yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].f_timeToWaitBeforeNextStep);
             }
         }
+
+        go_tutorialCanvas.SetActive(false);
     }
 
     [System.Serializable]
@@ -210,6 +271,9 @@ public class TutorialManager : MonoBehaviour
 
         [Header("Text Prompt")]
         public string s_textMessage;
+
+        [Header("Proximity")]
+        public GameObject go_distanceChecker;
     }
 
     private enum TutorialStepType
@@ -221,11 +285,17 @@ public class TutorialManager : MonoBehaviour
         WaitForReflectron,
         WaitForZippy,
         WaitForTools,
+        WaitForBackPack,
+        WaitForProximity,
+        WaitForLodeDestroyed,
+        WaitForEnemyDestroyed,
+        WaitForGameMode,
+        WaitForRiskLevel
     }
 
     private enum InputType
     {
-        WASD, Space, Mouse, Q, Shift, MouseMovement
+        WASD, Space, MouseButtons, Q, Shift, MouseMovement
     }
 
 }

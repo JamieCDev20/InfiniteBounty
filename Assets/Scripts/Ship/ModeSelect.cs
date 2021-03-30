@@ -35,6 +35,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         lil_teleportButton?.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
         photonView.RPC(nameof(SetCurrentMode), RpcTarget.Others, i_currentIndex);
         as_source.Play();
+        TutorialManager.x.UsedShiftChanger();
     }
 
     [PunRPC]

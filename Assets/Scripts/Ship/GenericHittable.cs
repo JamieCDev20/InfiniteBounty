@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GenericHittable : MonoBehaviour, IHitable
 {
+    [SerializeField] private bool b_isEnemy;
+    [Space]
     [SerializeField] private int i_maxHealth;
     private int i_currentHealth;
     [SerializeField] private TextMeshPro tmp_damageText;
@@ -20,7 +22,6 @@ public class GenericHittable : MonoBehaviour, IHitable
     [SerializeField] private string s_loadingMessage;
     [Space]
     [SerializeField] private ParticleSystem p_creationParticles;
-
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class GenericHittable : MonoBehaviour, IHitable
         p_deathEffect.Play();
         mrA_visuals[i_currentLode].material.SetFloat("Visibility", 1);
         StartCoroutine(NewLode());
+        TutorialManager.x.ThingDestroyed(b_isEnemy);
     }
 
     private IEnumerator NewLode()
