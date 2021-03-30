@@ -37,7 +37,7 @@ public class NugManager : SubjectBase, ObserverBase
         }
 
 #if UNITY_EDITOR
-        //CollectNugs(5000, false);
+        CollectNugs(15000, false);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
         SceneManager.sceneLoaded += OnSceneLoad;
