@@ -22,12 +22,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject go_videoObject;
 
     [Header("Pre-level")]
-    [SerializeField] private TutorialStepData[] tsdA_preLevelSteps = new TutorialStepData[0];
+    [SerializeField] private TutorialChunk[] tcA_tutorial = new TutorialChunk[0];
     private bool b_reflectronUsed;
-
-    [Header("Zippy Things")]
-    [SerializeField] private AudioClip ac_notEnoughMoneyLine;
     private bool b_zippyInvested;
+    private bool b_hasTools;
+
 
     private void Awake()
     {
@@ -46,7 +45,7 @@ public class TutorialManager : MonoBehaviour
         go_videoObject.SetActive(false);
 
         go_tutorialCanvas.SetActive(true);
-        StartCoroutine(DoTutorialSection(tsdA_preLevelSteps));
+        StartCoroutine(DoTutorialSection(tcA_tutorial));
     }
 
     public void InteractedWithReflectron()
@@ -59,7 +58,12 @@ public class TutorialManager : MonoBehaviour
         b_zippyInvested = true;
     }
 
-    private IEnumerator DoTutorialSection(TutorialStepData[] _tsdA_stepToWorkThrough)
+    public void PickedUpBothTools()
+    {
+        b_hasTools = true;
+    }
+
+    private IEnumerator DoTutorialSection(TutorialChunk[] _tcA_chunksToWorkThrough)
     {
         while (pim_player == null)
         {
@@ -68,99 +72,127 @@ public class TutorialManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        for (int i = 0; i < _tsdA_stepToWorkThrough.Length; i++)
+        for (int i = 0; i < _tcA_chunksToWorkThrough.Length; i++)
         {
-            f_inputTime = 0;
-            //print($"Doing {i}, which is a {_tsdA_stepToWorkThrough[i].tst_stepType}-type.");
-
-            switch (_tsdA_stepToWorkThrough[i].tst_stepType)
+            for (int x = 0; x < _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk.Length; x++)
             {
-                case TutorialStepType.PlayVoiceline:
-                    as_source.clip = _tsdA_stepToWorkThrough[i].ac_voiceLine;
-                    as_source.Play();
-                    break;
+                f_inputTime = 0;
+                //print($"Doing {i}, which is a {_tsdA_stepToWorkThrough[i].tst_stepType}-type.");
 
-                case TutorialStepType.WaitForInput:
-                    if (_tsdA_stepToWorkThrough[i].b_hold)
-                        while (f_inputTime < f_inputTimeToLookFor)
-                        {
-                            switch (tsdA_preLevelSteps[i].it_inputToWaitFor)
+                switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].tst_stepType)
+                {
+                    case TutorialStepType.PlayVoiceline:
+                        as_source.clip = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine;
+                        as_source.Play();
+                        break;
+
+                    case TutorialStepType.WaitForInput:
+                        if (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].b_hold)
+                            while (f_inputTime < f_inputTimeToLookFor)
                             {
-                                case InputType.WASD:
-                                    if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
-                                        f_inputTime += Time.deltaTime;
-                                    break;
-                                case InputType.Space:
-                                    if (Input.GetButton("Jump"))
-                                        f_inputTime += Time.deltaTime;
-                                    break;
-                                case InputType.Mouse:
-                                    if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
-                                        f_inputTime += Time.deltaTime;
-                                    break;
-                                case InputType.Q:
-                                    if (Input.GetButton("Mobility"))
-                                        f_inputTime += Time.deltaTime;
-                                    break;
+                                switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].it_inputToWaitFor)
+                                {
+                                    case InputType.WASD:
+                                        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
+                                            f_inputTime += Time.deltaTime;
+                                        break;
+                                    case InputType.Space:
+                                        if (Input.GetButton("Jump"))
+                                            f_inputTime += Time.deltaTime;
+                                        break;
+                                    case InputType.Mouse:
+                                        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                                            f_inputTime += Time.deltaTime;
+                                        break;
+                                    case InputType.Q:
+                                        if (Input.GetButton("Mobility"))
+                                            f_inputTime += Time.deltaTime;
+                                        break;
+                                    case InputType.Shift:
+                                        if (Input.GetButton("Sprint"))
+                                            f_inputTime += Time.deltaTime;
+                                        break;
+                                    case InputType.MouseMovement:
+                                        if (Mathf.Abs(Input.GetAxisRaw("Mouse X")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("Mouse Y")) > 0.3f)
+                                            f_inputTime += Time.deltaTime;
+                                        break;
+                                }
+                                yield return new WaitForEndOfFrame();
                             }
-                            yield return new WaitForEndOfFrame();
-                        }
-                    else
-                    {
-                        bool _b_shouldContinue = true;
-                        while (_b_shouldContinue)
+                        else
                         {
-                            switch (tsdA_preLevelSteps[i].it_inputToWaitFor)
+                            bool _b_shouldContinue = true;
+                            while (_b_shouldContinue)
                             {
-                                case InputType.WASD:
-                                    if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
-                                        _b_shouldContinue = false;
-                                    break;
-                                case InputType.Space:
-                                    if (Input.GetButton("Jump"))
-                                        _b_shouldContinue = false;
-                                    break;
-                                case InputType.Mouse:
-                                    if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
-                                        _b_shouldContinue = false;
-                                    break;
-                                case InputType.Q:
-                                    if (Input.GetButton("Mobility"))
-                                        _b_shouldContinue = false;
-                                    break;
+                                switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].it_inputToWaitFor)
+                                {
+                                    case InputType.WASD:
+                                        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
+                                            _b_shouldContinue = false;
+                                        break;
+                                    case InputType.Space:
+                                        if (Input.GetButton("Jump"))
+                                            _b_shouldContinue = false;
+                                        break;
+                                    case InputType.Mouse:
+                                        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                                            _b_shouldContinue = false;
+                                        break;
+                                    case InputType.Q:
+                                        if (Input.GetButton("Mobility"))
+                                            _b_shouldContinue = false;
+                                        break;
+                                    case InputType.Shift:
+                                        if (Input.GetButton("Sprint"))
+                                            _b_shouldContinue = false;
+                                        break;
+                                    case InputType.MouseMovement:
+                                        if (Mathf.Abs(Input.GetAxisRaw("Mouse X")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("Mouse Y")) > 0.3f)
+                                            _b_shouldContinue = false;
+                                        break;
+                                }
+                                yield return new WaitForEndOfFrame();
                             }
-                            yield return new WaitForEndOfFrame();
                         }
-                    }
-                    break;
+                        break;
 
-                case TutorialStepType.ConfettiShower:
-                    go_confetti.transform.position = pim_player.transform.position;
-                    go_confetti.SetActive(false);
-                    go_confetti.SetActive(true);
-                    break;
+                    case TutorialStepType.ConfettiShower:
+                        go_confetti.transform.position = pim_player.transform.position;
+                        go_confetti.SetActive(false);
+                        go_confetti.SetActive(true);
+                        break;
 
-                case TutorialStepType.SetTextPrompt:
-                    t_promptText.text = _tsdA_stepToWorkThrough[i].s_textMessage;
-                    break;
+                    case TutorialStepType.SetTextPrompt:
+                        t_promptText.text = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].s_textMessage;
+                        break;
 
-                case TutorialStepType.WaitForReflectron:
-                    while (!b_reflectronUsed)
-                        yield return new WaitForEndOfFrame();
-                    break;
+                    case TutorialStepType.WaitForReflectron:
+                        while (!b_reflectronUsed)
+                            yield return new WaitForEndOfFrame();
+                        break;
 
-                case TutorialStepType.WaitForZippy:
-                    while (!b_zippyInvested)
-                        yield return new WaitForEndOfFrame();
-                    break;
+                    case TutorialStepType.WaitForZippy:
+                        while (!b_zippyInvested)
+                            yield return new WaitForEndOfFrame();
+                        break;
+
+                    case TutorialStepType.WaitForTools:
+                        while (!b_hasTools)
+                            yield return new WaitForEndOfFrame();
+                        break;
+                }
+
+                yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].f_timeToWaitBeforeNextStep);
             }
-
-            yield return new WaitForSeconds(_tsdA_stepToWorkThrough[i].f_timeToWaitBeforeNextStep);
         }
     }
 
-
-
+    [System.Serializable]
+    private struct TutorialChunk
+    {
+        public string s_name;
+        public TutorialStepData[] tsdA_stepsInChunk;
+    }
 
     [System.Serializable]
     private struct TutorialStepData
@@ -182,13 +214,18 @@ public class TutorialManager : MonoBehaviour
 
     private enum TutorialStepType
     {
-        PlayVoiceline, WaitForInput, ConfettiShower, SetTextPrompt,
-        WaitForReflectron, WaitForZippy
+        PlayVoiceline,
+        ConfettiShower,
+        SetTextPrompt,
+        WaitForInput,
+        WaitForReflectron,
+        WaitForZippy,
+        WaitForTools,
     }
 
     private enum InputType
     {
-        WASD, Space, Mouse, Q
+        WASD, Space, Mouse, Q, Shift, MouseMovement
     }
 
 }

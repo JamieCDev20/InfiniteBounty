@@ -534,101 +534,243 @@ MonoBehaviour:
   go_tutorialCanvas: {fileID: 5918182284124333497}
   t_promptText: {fileID: 2657053494103281643}
   go_videoObject: {fileID: 3830106116207431271}
-  tsdA_preLevelSteps:
-  - s_name: Walk-Command
-    tst_stepType: 3
-    f_timeToWaitBeforeNextStep: 1
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 0
-    s_textMessage: Walk somewhere
-  - s_name: Walk-Wait
-    tst_stepType: 1
-    f_timeToWaitBeforeNextStep: 0
-    ac_voiceLine: {fileID: 0}
-    b_hold: 1
-    it_inputToWaitFor: 0
-    s_textMessage: Play the Game
-  - s_name: Walk-Confetti
-    tst_stepType: 2
-    f_timeToWaitBeforeNextStep: 0
-    ac_voiceLine: {fileID: 0}
-    b_hold: 1
-    it_inputToWaitFor: 0
-    s_textMessage: Play the Game
-  - s_name: Walk-Complete-Text
-    tst_stepType: 3
-    f_timeToWaitBeforeNextStep: 1
-    ac_voiceLine: {fileID: 0}
-    b_hold: 1
-    it_inputToWaitFor: 0
-    s_textMessage: You did it!
-  - s_name: Jump-Command
-    tst_stepType: 3
-    f_timeToWaitBeforeNextStep: 1
-    ac_voiceLine: {fileID: 0}
-    b_hold: 1
-    it_inputToWaitFor: 0
-    s_textMessage: Now try jumping
-  - s_name: Jump-Wait
-    tst_stepType: 1
-    f_timeToWaitBeforeNextStep: 0
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: 
-  - s_name: Jump-Confetti
-    tst_stepType: 2
-    f_timeToWaitBeforeNextStep: 0
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: 
-  - s_name: Jump-Complete-Text
-    tst_stepType: 3
-    f_timeToWaitBeforeNextStep: 2
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: Excellent!
-  - s_name: Reflectron-Command
-    tst_stepType: 3
-    f_timeToWaitBeforeNextStep: 0
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: We here at InfiniteBounty ltd hate you. Use the Reflectron so
-      we hate you less.
-  - s_name: Reflectron-Wait
-    tst_stepType: 4
-    f_timeToWaitBeforeNextStep: 0
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: We here at InfiniteBounty ltd hate you. Use the Reflectron so
-      we hate you less.
-  - s_name: Reflectron-Complete-Text
-    tst_stepType: 3
-    f_timeToWaitBeforeNextStep: 0
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: Noice
-  - s_name: Reflectron-Complete-Confetti
-    tst_stepType: 2
-    f_timeToWaitBeforeNextStep: 2
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: Noice
-  - s_name: Reset-Txt
-    tst_stepType: 3
-    f_timeToWaitBeforeNextStep: 2
-    ac_voiceLine: {fileID: 0}
-    b_hold: 0
-    it_inputToWaitFor: 1
-    s_textMessage: 
-  ac_notEnoughMoneyLine: {fileID: 0}
+  tcA_tutorial:
+  - s_name: Look Around
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: Look Around with Mouse
+    - s_name: Input Check
+      tst_stepType: 3
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 1
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0.5
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+  - s_name: Move
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: Look Around with Mouse
+    - s_name: Input Check
+      tst_stepType: 3
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 1
+      it_inputToWaitFor: 0
+      s_textMessage: 
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0.5
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+  - s_name: Sprint
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Hold Shift whilst moving
+    - s_name: Input Check
+      tst_stepType: 3
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 1
+      it_inputToWaitFor: 4
+      s_textMessage: 
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0.5
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0.5
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+  - s_name: Jump
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Spacebar to Jump
+    - s_name: Input Check
+      tst_stepType: 3
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 1
+      s_textMessage: 
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+  - s_name: Reflectron Interact
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Use E to interact with the Reflectron
+    - s_name: Reflectron Check
+      tst_stepType: 4
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 1
+      s_textMessage: 
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+  - s_name: Hand Tools
+    tsdA_stepsInChunk:
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+    - s_name: HUD
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 4
+      s_textMessage: Use the Mouse Buttons to pickup a tool in each hand.
+    - s_name: Reflectron Check
+      tst_stepType: 4
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 1
+      s_textMessage: 
+    - s_name: Confetti
+      tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: VO
+      tst_stepType: 0
+      f_timeToWaitBeforeNextStep: 0
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+    - s_name: HUD Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 2
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
 --- !u!1 &8759254311470482734
 GameObject:
   m_ObjectHideFlags: 0
