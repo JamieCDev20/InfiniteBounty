@@ -66,7 +66,7 @@ public class Microwave : SubjectBase, IInteractible
             Cursor.visible = true;
         }
     }
-    public void Interacted(){ }
+    public void Interacted() { }
 
     public void UnInteract()
     {
@@ -98,30 +98,42 @@ public class Microwave : SubjectBase, IInteractible
         // Put an augment in the empty slot
         if (aug_slotA == null)
         {
+            Debug.Log(1);
             aug_slotA = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
-            apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
+            //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
+            //apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
             go_augButtonA.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
             go_augButtonA.GetComponentsInChildren<Text>()[1].text = "Lv " + aL_allAugmentsOwned[apd.CurrentAugIndex].Level.ToString();
         }
         else if (aug_slotB == null)
         {
+            Debug.Log(2);
             aug_slotB = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
-            apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
+            //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
+            //apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
             go_augButtonB.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
             go_augButtonB.GetComponentsInChildren<Text>()[1].text = "Lv " + aL_allAugmentsOwned[apd.CurrentAugIndex].Level.ToString();
         }
         // Reveal fusion button, or reload augment list
         if (aug_slotA != null && aug_slotB != null)
+        {
+            Debug.Log(3);
+            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameTypeExcluding, false, aug_slotA.Name, aug_slotB.Name);
             RevealFuseButton();
+        }
         else
         {
+            Debug.Log(4);
+
             aL_allAugmentsOwned.Clear();
+
             if (aug_slotA?.Stage == AugmentStage.full || aug_slotB.Stage == AugmentStage.full)
-                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameTypeExcluding, false, aug_slotA != null? aug_slotA.Name : aug_slotB != null? aug_slotB.Name : "");
             else if (aug_slotA?.Stage == AugmentStage.fused || aug_slotB.Stage == AugmentStage.fused)
                 aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameName, false);
+
         }
     }
 
@@ -137,7 +149,7 @@ public class Microwave : SubjectBase, IInteractible
             go_augButtonA.GetComponentsInChildren<Text>()[1].text = "";
             if (aug_slotB != null)
             {
-                type = AugmentDisplayType.ShowSameType;
+                type = AugmentDisplayType.ShowSameTypeExcluding;
                 apd.AugType = aug_slotB.at_type;
             }
         }
@@ -148,14 +160,17 @@ public class Microwave : SubjectBase, IInteractible
             go_augButtonB.GetComponentsInChildren<Text>()[1].text = "";
             if (aug_slotA != null)
             {
-                type = AugmentDisplayType.ShowSameType;
+                type = AugmentDisplayType.ShowSameTypeExcluding;
                 apd.AugType = aug_slotA.at_type;
             }
 
         }
 
+        if(aug_slotA != null || aug_slotB != null)
+            apd.InitAugmentList(aL_allAugmentsOwned, type, false, _slotID? aug_slotB.Name : aug_slotA.Name);
+        else
+            apd.InitAugmentList(aL_allAugmentsOwned, type, false);
 
-        apd.InitAugmentList(aL_allAugmentsOwned, type, false);
         UnrevealFuseButton();
     }
 
