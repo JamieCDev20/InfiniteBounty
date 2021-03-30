@@ -25,10 +25,14 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private TutorialStepData[] tsdA_preLevelSteps = new TutorialStepData[0];
     private bool b_reflectronUsed;
 
+    [Header("Zippy Things")]
+    [SerializeField] private AudioClip ac_notEnoughMoneyLine;
+    private bool b_zippyInvested;
+
     private void Awake()
     {
         x = this;
-        //Uncomment the line below to only start tutorial when you should
+
         if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
             StartCoroutine(StartTutorial());
     }
@@ -48,6 +52,11 @@ public class TutorialManager : MonoBehaviour
     public void InteractedWithReflectron()
     {
         b_reflectronUsed = true;
+    }
+
+    public void InteractedWithZippyBack()
+    {
+        b_zippyInvested = true;
     }
 
     private IEnumerator DoTutorialSection(TutorialStepData[] _tsdA_stepToWorkThrough)
@@ -139,6 +148,11 @@ public class TutorialManager : MonoBehaviour
                     while (!b_reflectronUsed)
                         yield return new WaitForEndOfFrame();
                     break;
+
+                case TutorialStepType.WaitForZippy:
+                    while (!b_zippyInvested)
+                        yield return new WaitForEndOfFrame();
+                    break;
             }
 
             yield return new WaitForSeconds(_tsdA_stepToWorkThrough[i].f_timeToWaitBeforeNextStep);
@@ -169,7 +183,7 @@ public class TutorialManager : MonoBehaviour
     private enum TutorialStepType
     {
         PlayVoiceline, WaitForInput, ConfettiShower, SetTextPrompt,
-        WaitForReflectron
+        WaitForReflectron, WaitForZippy
     }
 
     private enum InputType

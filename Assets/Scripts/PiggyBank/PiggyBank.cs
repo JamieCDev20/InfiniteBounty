@@ -18,8 +18,8 @@ public class PiggyBank : SubjectBase, IInteractible
     {
         as_source = GetComponent<AudioSource>();
 
-        if (DifficultyManager.x.MaximumDifficulty < 9)
-            gameObject.SetActive(false);
+        //if (DifficultyManager.x.MaximumDifficulty < 9)
+        //    gameObject.SetActive(false);
 
         SaveManager _sm = FindObjectOfType<SaveManager>();
         i_storedAmount = _sm.SaveData.i_zippyBank;
@@ -47,6 +47,8 @@ public class PiggyBank : SubjectBase, IInteractible
             if (i_storedAmount >= i_targetAmount)
                 EnablePortal();
         }
+
+        TutorialManager.x.InteractedWithZippyBack();
     }
 
     public void SetInputAmount(int _input)
