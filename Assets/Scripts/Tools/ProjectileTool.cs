@@ -71,10 +71,10 @@ public class ProjectileTool : WeaponTool
             return false;
         ProjectileAugment pa = (ProjectileAugment)FindObjectOfType<AugmentManager>().GetAugment(aug.Name).Aug;
         AugmentProjectile augData = pa.GetProjectileData();
-        i_shotsPerRound += augData.i_shotsPerRound;
+        i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level) * 0.25f));
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
-        ap_projAugment.f_bulletScale += augData.f_bulletScale;
+        ap_projAugment.f_bulletScale += Mathf.RoundToInt(augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level) * 0.25f));
         return true;
     }
 

@@ -84,6 +84,11 @@ public class WeaponTool : ToolBase
         else return false;
     }
 
+    protected float GetAugmentLevelModifier(int level)
+    {
+        return (1 / ((0.00053f * -level) + 0.0336f)) + 30.3f;
+    }
+
     public virtual bool AddStatChanges(Augment aug)
     {
         if (A_augs != null && A_augs.Length >= 0)
@@ -91,6 +96,9 @@ public class WeaponTool : ToolBase
             int i = GetInactiveAugmentIndex();
             if (i == -1)
                 return false;
+
+            float mod = GetAugmentLevelModifier(aug.Level);
+
             GameObject augmentGameObject = PoolManager.x.SpawnObject(augGo);
             augmentGameObject.transform.parent = A_augmentSlots[i].parent;
             augmentGameObject.transform.rotation = A_augmentSlots[i].transform.rotation;
@@ -102,10 +110,10 @@ public class WeaponTool : ToolBase
             actualGo.Mat = Resources.Load<Material>(aug.AugmentMaterial);            
 
             A_augs[i] = aug;
-            AddToAugmentProperties(aug.GetAugmentProperties());
+            AddToAugmentProperties(aug.GetAugmentProperties(), mod);
             AddToPhysicalProperties(aug.GetPhysicalProperties());
             AddToAudioProperties(aug.GetAudioProperties());
-            AddToExplosionProperties(aug.GetExplosionProperties());
+            AddToExplosionProperties(aug.GetExplosionProperties(), mod);
             return true;
         }
         return false;
@@ -134,16 +142,16 @@ public class WeaponTool : ToolBase
         return -1;
     }
 
-    private void AddToAugmentProperties(AugmentProperties ap)
+    private void AddToAugmentProperties(AugmentProperties ap, float mod)
     {
-        i_damage        += ap.i_damage;
-        i_lodeDamage    += ap.i_lodeDamage;
-        f_weight        += ap.f_weight;
-        f_recoil        += ap.f_recoil;
-        f_speed         += ap.f_speed;
-        f_heatsink      += ap.f_heatsink;
-        f_knockback     += ap.f_knockback;
-        f_energyGauge   += ap.f_energyGauge;
+        i_damage        += Mathf.RoundToInt(mod * ap.i_damage);
+        i_lodeDamage    += Mathf.RoundToInt(mod * ap.i_lodeDamage);
+        f_weight        += mod * ap.f_weight;
+        f_recoil        += mod * ap.f_recoil;
+        f_speed         += mod * ap.f_speed;
+        f_heatsink      += mod * ap.f_heatsink;
+        f_knockback     += mod * ap.f_knockback;
+        f_energyGauge   += mod * ap.f_energyGauge;
     }
 
     private void AddToPhysicalProperties(AugmentPhysicals ap)
@@ -152,6 +160,7 @@ public class WeaponTool : ToolBase
         {
             tr_trail.startWidth = ap.f_trWidth;
             tr_trail.endWidth = ap.f_trWidth;
+            tr_trail.time = ap.f_trLifetime;
         }
         // Add the keys here
         //tr_trail.colorGradient.SetKeys(new GradientColorKey(ap.A_trKeys));
@@ -173,7 +182,7 @@ public class WeaponTool : ToolBase
             LoadAndAddObjectArray<AudioClip>(ac_hitSound, hit);
     }
 
-    protected void AddToExplosionProperties(AugmentExplosion ae)
+    protected void AddToExplosionProperties(AugmentExplosion ae, float mod)
     {
         ae_explode.b_impact = ae_explode.b_impact == true || ae.b_impact == true ? true : false;
         ae_explode.f_detonationTime += ae.f_detonationTime;

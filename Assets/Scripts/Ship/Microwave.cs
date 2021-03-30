@@ -127,19 +127,35 @@ public class Microwave : SubjectBase, IInteractible
 
     public void RemoveAugment(bool _slotID)
     {
+
+        AugmentDisplayType type = AugmentDisplayType.ShowAll;
+
         if (_slotID)
         {
             aug_slotA = null;
             go_augButtonA.GetComponentsInChildren<Text>()[0].text = "";
             go_augButtonA.GetComponentsInChildren<Text>()[1].text = "";
+            if (aug_slotB != null)
+            {
+                type = AugmentDisplayType.ShowSameType;
+                apd.AugType = aug_slotB.at_type;
+            }
         }
         else if (!_slotID)
         {
             aug_slotB = null;
             go_augButtonB.GetComponentsInChildren<Text>()[0].text = "";
             go_augButtonB.GetComponentsInChildren<Text>()[1].text = "";
+            if (aug_slotA != null)
+            {
+                type = AugmentDisplayType.ShowSameType;
+                apd.AugType = aug_slotA.at_type;
+            }
 
         }
+
+
+        apd.InitAugmentList(aL_allAugmentsOwned, type, false);
         UnrevealFuseButton();
     }
 

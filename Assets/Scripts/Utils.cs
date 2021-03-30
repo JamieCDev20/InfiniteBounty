@@ -126,20 +126,35 @@ public class Utils
     {
         if (ArrayIsNullOrZero<T>(_arrayToRemove))
             return null;
-        T[] tmp = new T[_arrayToRemove.Length + 1];
-        tmp = AddToArray<T>(_arrayToRemove, _arrayToRemove[_arrayToRemove.Length-1]);
-        T dupeItem = tmp[tmp.Length-1];
-        tmp = Swap<T>(tmp, _itemToRemove, tmp.Length-1);
-        tmp = ReduceArraySize<T>(tmp);
-        if(_itemToRemove < tmp.Length)
+        //T[] tmp = new T[_arrayToRemove.Length + 1];
+        //tmp = AddToArray<T>(_arrayToRemove, _arrayToRemove[_arrayToRemove.Length-1]);
+        //T dupeItem = tmp[tmp.Length-1];
+        //tmp = Swap<T>(tmp, _itemToRemove, tmp.Length-1);
+        //tmp = ReduceArraySize<T>(tmp);
+        //if(_itemToRemove < tmp.Length)
+        //{
+        //    for(int i = _itemToRemove; i < tmp.Length -1; i++)
+        //    {
+        //        tmp = Swap<T>(tmp, i, i + 1);
+        //    }
+        //}
+        //tmp = ReduceArraySize<T>(_arrayToRemove);
+        //_arrayToRemove = tmp;
+        //return _arrayToRemove;
+
+        bool skipped = false;
+        T[] newArray = new T[_arrayToRemove.Length - 1];
+        for (int i = 0; i < _arrayToRemove.Length; i++)
         {
-            for(int i = _itemToRemove; i < tmp.Length -1; i++)
+            if (i == _itemToRemove)
             {
-                tmp = Swap<T>(tmp, i, i + 1);
+                skipped = true;
+                continue;
             }
+            newArray[skipped ? i - 1 : i] = _arrayToRemove[i];
         }
-        tmp = ReduceArraySize<T>(_arrayToRemove);
-        _arrayToRemove = tmp;
-        return _arrayToRemove;
+
+        return newArray;
+
     }
 }
