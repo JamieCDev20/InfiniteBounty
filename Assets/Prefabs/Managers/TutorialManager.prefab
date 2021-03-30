@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3a139bd87068f479411966747c6c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  b_shouldTutorialAlways: 0
+  b_shouldTutorialAlways: 1
   go_confetti: {fileID: 7231220718643619310}
   f_inputTimeToLookFor: 1
   f_videoLength: 18
@@ -591,14 +591,43 @@ MonoBehaviour:
     b_hold: 0
     it_inputToWaitFor: 1
     s_textMessage: Excellent!
-  - s_name: Text-Reset
+  - s_name: Reflectron-Command
     tst_stepType: 3
     f_timeToWaitBeforeNextStep: 0
     ac_voiceLine: {fileID: 0}
     b_hold: 0
     it_inputToWaitFor: 1
+    s_textMessage: We here at InfiniteBounty ltd hate you. Use the Reflectron so
+      we hate you less.
+  - s_name: Reflectron-Wait
+    tst_stepType: 4
+    f_timeToWaitBeforeNextStep: 0
+    ac_voiceLine: {fileID: 0}
+    b_hold: 0
+    it_inputToWaitFor: 1
+    s_textMessage: We here at InfiniteBounty ltd hate you. Use the Reflectron so
+      we hate you less.
+  - s_name: Reflectron-Complete-Text
+    tst_stepType: 3
+    f_timeToWaitBeforeNextStep: 0
+    ac_voiceLine: {fileID: 0}
+    b_hold: 0
+    it_inputToWaitFor: 1
+    s_textMessage: Noice
+  - s_name: Reflectron-Complete-Confetti
+    tst_stepType: 2
+    f_timeToWaitBeforeNextStep: 2
+    ac_voiceLine: {fileID: 0}
+    b_hold: 0
+    it_inputToWaitFor: 1
+    s_textMessage: Noice
+  - s_name: Reset-Txt
+    tst_stepType: 3
+    f_timeToWaitBeforeNextStep: 2
+    ac_voiceLine: {fileID: 0}
+    b_hold: 0
+    it_inputToWaitFor: 1
     s_textMessage: 
-  tsdA_postLevelSteps: []
 --- !u!1 &8759254311470482734
 GameObject:
   m_ObjectHideFlags: 0

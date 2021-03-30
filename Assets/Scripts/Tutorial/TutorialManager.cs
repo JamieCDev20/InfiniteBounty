@@ -23,9 +23,6 @@ public class TutorialManager : MonoBehaviour
 
     [Header("Pre-level")]
     [SerializeField] private TutorialStepData[] tsdA_preLevelSteps = new TutorialStepData[0];
-
-    [Header("Post-level")]
-    [SerializeField] private TutorialStepData[] tsdA_postLevelSteps = new TutorialStepData[0];
     private bool b_reflectronUsed;
 
     private void Awake()
@@ -140,7 +137,7 @@ public class TutorialManager : MonoBehaviour
 
                 case TutorialStepType.WaitForReflectron:
                     while (!b_reflectronUsed)
-                        yield return null;
+                        yield return new WaitForEndOfFrame();
                     break;
             }
 

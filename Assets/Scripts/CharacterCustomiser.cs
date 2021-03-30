@@ -37,6 +37,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
             Cursor.visible = true;
 
             b_isBeingUsed = true;
+
         }
     }
 
@@ -59,6 +60,8 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
         FindObjectOfType<SaveManager>().OnNotify(new SaveEvent(new PlayerSaveData(-1, -1, -1,
             new int[] { ac_user.Body, ac_user.Head, ac_user.Arms, ac_user.Feet },
             null, null, null, null, null, -1)));
+
+        TutorialManager.x.InteractedWithReflectron();
     }
 
 
@@ -101,7 +104,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-            EndInteract();
+        EndInteract();
     }
 
 }
