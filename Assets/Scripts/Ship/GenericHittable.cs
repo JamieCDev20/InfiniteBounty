@@ -36,8 +36,8 @@ public class GenericHittable : MonoBehaviour, IHitable
             print($"OUCH , I'VE TAKEN {damage} DMG.");
 
             p_hitEffect.Play();
-            t_healthBarObject.transform.localScale = new Vector3(1, 1, (float)i_currentHealth / i_maxHealth);
             i_currentHealth -= damage;
+            t_healthBarObject.transform.localScale = new Vector3(1, 1, (float)i_currentHealth / i_maxHealth);
 
             if (i_currentHealth <= 0)
                 Die();
