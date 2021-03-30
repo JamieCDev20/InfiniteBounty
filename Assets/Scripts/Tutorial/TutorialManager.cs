@@ -250,7 +250,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        go_tutorialCanvas.SetActive(false);
+        //go_tutorialCanvas.SetActive(false);
     }
 
     [System.Serializable]
