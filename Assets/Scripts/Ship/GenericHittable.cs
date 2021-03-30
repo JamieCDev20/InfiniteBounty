@@ -32,7 +32,7 @@ public class GenericHittable : MonoBehaviour, IHitable
     {
         if (b_canBeHit)
         {
-            print($"OUCH , I'VE TAKEN {damage}.");
+            print($"OUCH , I'VE TAKEN {damage} DMG.");
 
             p_hitEffect.Play();
             t_healthBarObject.transform.localScale = new Vector3(1, 1, (float)i_currentHealth / i_maxHealth);
@@ -53,6 +53,7 @@ public class GenericHittable : MonoBehaviour, IHitable
     private IEnumerator NewLode()
     {
         i_currentLode = Random.Range(0, mrA_visuals.Length);
+        t_healthBarObject.transform.localScale = new Vector3(1, 1, 0);
         b_canBeHit = false;
         i_currentHealth = i_maxHealth;
         tmp_damageText.text = s_loadingMessage;
