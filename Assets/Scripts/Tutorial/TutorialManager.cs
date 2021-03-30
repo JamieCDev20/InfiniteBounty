@@ -39,6 +39,8 @@ public class TutorialManager : MonoBehaviour
 
         if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
             StartCoroutine(StartTutorial());
+
+        as_source = GetComponent<AudioSource>();
     }
 
     public IEnumerator StartTutorial()
@@ -113,6 +115,9 @@ public class TutorialManager : MonoBehaviour
                     case TutorialStepType.PlayVoiceline:
                         as_source.clip = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine;
                         as_source.Play();
+
+                        if (as_source.isPlaying)
+                            yield return new WaitForEndOfFrame();
                         break;
 
                     case TutorialStepType.WaitForInput:
@@ -216,7 +221,7 @@ public class TutorialManager : MonoBehaviour
                         break;
 
                     case TutorialStepType.WaitForProximity:
-                        while (Vector3.Distance(pim_player.transform.position, _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].go_distanceChecker.transform.position) > 5)
+                        while (Vector3.Distance(pim_player.transform.position, _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].go_distanceChecker.transform.position) > 3)
                             yield return new WaitForEndOfFrame();
                         break;
 
