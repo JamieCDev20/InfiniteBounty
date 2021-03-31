@@ -53,7 +53,10 @@ public class TutorialManager : MonoBehaviour
     {
         if (b_isPlayingVideo)
             if (Input.anyKeyDown)
+            {
                 go_videoObject.SetActive(false);
+                b_isPlayingVideo = false;
+            }
     }
 
     public IEnumerator StartTutorial()
@@ -62,7 +65,10 @@ public class TutorialManager : MonoBehaviour
         b_isPlayingVideo = true;
         go_videoObject.SetActive(true);
 
-        yield return new WaitForSeconds(f_videoLength);
+        for (int i = 0; i < f_videoLength; i++)
+            if (b_isPlayingVideo)
+                yield return new WaitForSeconds(1);
+
         go_videoObject.SetActive(false);
         b_isPlayingVideo = false;
 
