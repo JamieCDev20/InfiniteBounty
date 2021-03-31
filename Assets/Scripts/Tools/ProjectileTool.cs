@@ -12,6 +12,7 @@ public class ProjectileTool : WeaponTool
     private Ray r_flightPath;
     private CameraController cc_cam;
     private const AugmentType augType = AugmentType.projectile;
+    public override AugmentType AugType { get { return augType; } }
     AugmentProjectile ap_projAugment;
 
     public override void SetActive(bool val)

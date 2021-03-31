@@ -91,6 +91,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList)
     {
+
+        #region MyRegion
+
         //List<Augment> _augmentsInList = new List<Augment>();
         //// Clear the display
         //if (!_b_shouldAddToExistingList)
@@ -120,8 +123,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         //aL_allAugmentsOwned.AddRange(_augmentsInList);
         //UpdateAugmentListDisplay(aL_allAugmentsOwned, adt);
         //adt_currentDisplayType = adt;
-        //return aL_allAugmentsOwned;
+        //return aL_allAugmentsOwned; 
+        #endregion
+
         return InitAugmentList(aL_augs, adt, _b_shouldAddToExistingList, "");
+        
     }
 
     private List<Augment> DisplayAugmentsOfTypeExcluding(List<Augment> aL_augs, string _toExclude)

@@ -92,9 +92,13 @@ public class Workbench : SubjectBase, IInteractible
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
             // Find any saved augments and load them
-            apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
-            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
-            goA_tools[wt_toolsInHand[0].ToolID].SetActive(true);
+            if (wt_toolsInHand.Count > 0)
+            {
+                Debug.Log(wt_toolsInHand[i_currentWeaponIndex].AugType.ToString());
+                apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
+                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+                DisplayWeapon();
+            }
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -169,6 +173,8 @@ public class Workbench : SubjectBase, IInteractible
 
     private void DisplayWeapon()
     {
+        if (wt_toolsInHand.Count <= 0)
+            return;
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(true);
 
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
@@ -177,6 +183,8 @@ public class Workbench : SubjectBase, IInteractible
 
     private void HideWeapon()
     {
+        if (wt_toolsInHand.Count <= 0)
+            return;
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(false);
     }
 

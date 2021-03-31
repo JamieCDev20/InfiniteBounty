@@ -34,7 +34,7 @@ public class WeaponTool : ToolBase
     [SerializeField] private string s_meleeAnim;
     [SerializeField] private Animator a_playerAnims;
     private const AugmentType augType = AugmentType.standard;
-    public AugmentType AugType { get { return augType; } }
+    public virtual AugmentType AugType { get { return augType; } }
     #endregion
 
     // Detonation is if it explodes immediately, on impact or on a timer
