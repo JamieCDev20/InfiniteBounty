@@ -20,7 +20,6 @@ public class AugmentLoader : MonoBehaviour
     {
         if (Resources.Load("FusedAugmentData"))
         {
-            Debug.Log("Loaded fused String");
             return Resources.Load("FusedAugmentData").ToString();
         }
         Debug.Log("Didn't load fused");
