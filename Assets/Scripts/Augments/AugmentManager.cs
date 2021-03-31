@@ -50,9 +50,9 @@ public class AugmentManager : MonoBehaviour
         }
         GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
+        FindObjectOfType<FuseSaver>().Init();
         FindObjectOfType<VendingMachine>().Init(this);
         FindObjectOfType<Microwave>().Init();
-        FindObjectOfType<FuseSaver>().Init();
     }
 
     /// <summary>
