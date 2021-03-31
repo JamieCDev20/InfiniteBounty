@@ -44,7 +44,7 @@ public class ToolHandler : SubjectBase
         np_network = GetComponent<NetworkedPlayer>();
         view = GetComponent<PhotonView>();
         InitialiseTools();
-        if(transform == NetworkedPlayer.x.GetPlayer())
+        if (transform == NetworkedPlayer.x.GetPlayer())
         {
             SaveManager _sm = FindObjectOfType<SaveManager>();
             AddObserver(_sm);
@@ -57,10 +57,10 @@ public class ToolHandler : SubjectBase
     {
         ToolRack tr = FindObjectOfType<ToolRack>();
         if (_sm?.SaveData.tu_equipped != null)
-            foreach((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
+            foreach ((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
             {
                 CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
-                if(tup.toolID != -1 && tup.slotID != -1)
+                if (tup.toolID != -1 && tup.slotID != -1)
                     LoadAugmentsOnTool(_sm, tup.slotID);
                 ac_changer.SetCurrentArmActive(tup.slotID, false);
             }
@@ -69,48 +69,52 @@ public class ToolHandler : SubjectBase
     private void LoadAugmentsOnTool(SaveManager _sm, int currentSlot)
     {
         // Go through each augment, and check if it's the correct ID and Slot.
-        WeaponTool wt = (WeaponTool)A_tools[currentSlot];
-        if(_sm.SaveData.tu_equippedAugments != null)
-            for(int i = 0; i < _sm.SaveData.tu_equippedAugments.Length; i++)
-            {
-                if(_sm.SaveData.tu_equippedAugments[i].toolID == A_tools[currentSlot].ToolID && _sm.SaveData.tu_equippedAugments[i].slotID == currentSlot)
+        try
+        {
+            WeaponTool wt = (WeaponTool)A_tools[currentSlot];
+            if (_sm.SaveData.tu_equippedAugments != null)
+                for (int i = 0; i < _sm.SaveData.tu_equippedAugments.Length; i++)
                 {
-                    for(int j = 0; j < _sm.SaveData.tu_equippedAugments[i].equippedAugs.Length; j++)
+                    if (_sm.SaveData.tu_equippedAugments[i].toolID == A_tools[currentSlot].ToolID && _sm.SaveData.tu_equippedAugments[i].slotID == currentSlot)
                     {
-                        switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augStage)
+                        for (int j = 0; j < _sm.SaveData.tu_equippedAugments[i].equippedAugs.Length; j++)
                         {
-                            case AugmentStage.full:
-                                switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
-                                {
-                                    case AugmentType.projectile:
-                                        wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
-                                        break;
-                                    case AugmentType.cone:
-                                        wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
-                                        break;
-                                    case AugmentType.standard:
-                                        wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
-                                        break;
-                                }
-                                break;
-                            case AugmentStage.fused:
-                                switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
-                                {
-                                    case AugmentType.projectile:
-                                        wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
-                                        break;
-                                    case AugmentType.cone:
-                                        wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
-                                        break;
-                                    case AugmentType.standard:
-                                        wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
-                                        break;
-                                }
-                                break;
+                            switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augStage)
+                            {
+                                case AugmentStage.full:
+                                    switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
+                                    {
+                                        case AugmentType.projectile:
+                                            wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                            break;
+                                        case AugmentType.cone:
+                                            wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                            break;
+                                        case AugmentType.standard:
+                                            wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                            break;
+                                    }
+                                    break;
+                                case AugmentStage.fused:
+                                    switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
+                                    {
+                                        case AugmentType.projectile:
+                                            wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                            break;
+                                        case AugmentType.cone:
+                                            wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                            break;
+                                        case AugmentType.standard:
+                                            wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                            break;
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }
-            }
+        }
+        catch (System.InvalidCastException e) { return; }
     }
 
     /// <summary>
@@ -349,7 +353,7 @@ public class ToolHandler : SubjectBase
 
     public int GetTool(int index)
     {
-        if(A_tools[index] != null)
+        if (A_tools[index] != null)
             return A_tools[index].ToolID;
         return -1;
     }
