@@ -211,13 +211,17 @@ public class TutorialManager : MonoBehaviour
                         break;
 
                     case TutorialStepType.WaitForTools:
-                        while (!b_hasTools)
+                        /*
+                         while (!b_hasTools)
                             yield return new WaitForEndOfFrame();
+                        */
                         break;
 
                     case TutorialStepType.WaitForBackPack:
+                        /*
                         while (!b_hasBackPack)
                             yield return new WaitForEndOfFrame();
+                        */
                         break;
 
                     case TutorialStepType.WaitForProximity:
