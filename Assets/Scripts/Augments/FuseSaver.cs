@@ -42,11 +42,14 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         if(Resources.Load("FusedAugmentData") != null)
         {
             string fusedstring = AugmentLoader.LoadFusedAugmentJson();
-            AugmentSave[] _augSave = JsonConvert.DeserializeObject<AugmentSave[]>(fusedstring);
+            if (fusedstring == string.Empty)
+                return;
+
+            _savedData = JsonConvert.DeserializeObject<AugmentSave[]>(fusedstring);
             List<Augment> _newAugs = new List<Augment>();
             List<ProjectileAugment> _newProj = new List<ProjectileAugment>();
             List<ConeAugment> _newCone = new List<ConeAugment>();
-            foreach(AugmentSave saved in _augSave)
+            foreach(AugmentSave saved in _savedData)
             {
                 switch (saved.SavedAugment.augType)
                 {
@@ -64,7 +67,6 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             fusedAugs = _newAugs.ToArray();
             fusedProj = _newProj.ToArray();
             fusedCone = _newCone.ToArray();
-            DebugTheArraysMaaang();
         }
         else
         {
@@ -76,7 +78,9 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (oe_event)
         {
             case FuseEvent fuseEvent:
+                Debug.Log(_savedData.Length);
                 _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
+                Debug.Log(_savedData.Length);
                 SaveFusedAugments();
                 break;
         }
