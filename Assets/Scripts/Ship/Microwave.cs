@@ -29,6 +29,7 @@ public class Microwave : SubjectBase, IInteractible
     public void Init()
     {
         AddObserver(FindObjectOfType<SaveManager>());
+        AddObserver(FindObjectOfType<FuseSaver>());
     }
 
     public void Interacted(Transform interactor)
@@ -179,6 +180,8 @@ public class Microwave : SubjectBase, IInteractible
         UnrevealFuseButton();
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         apd.UpdatePropertyText(fusedAug);
+        FuseEvent fe = new FuseEvent(new AugmentSave(AugmentStage.fused, aug_slotA.at_type, new int[2] {AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name), AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }));
+        Notify(fe);
         // TODO:
         // Create fused augments file for all fused augments to be saved at.
         // Make ClearSaveData clear fused augments list

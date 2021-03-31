@@ -33,7 +33,6 @@ public class AugmentManager : MonoBehaviour
     public void JoinedRoom()
     {
         string augstr = AugmentLoader.LoadAugmentJson();
-        string fusedstr = AugmentLoader.LoadFusedAugmentJson();
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
         A_coneAugs = AugmentLoader.ReadAugmentData<ConeAugment>(augstr);
@@ -51,6 +50,7 @@ public class AugmentManager : MonoBehaviour
         }
         GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
+        FindObjectOfType<FuseSaver>().Init();
         FindObjectOfType<VendingMachine>().Init(this);
         FindObjectOfType<Microwave>().Init();
     }
@@ -126,18 +126,17 @@ public class AugmentManager : MonoBehaviour
 
     public Augment GetStandardAugmentAt(AugmentStage _stage, int[] _index)
     {
-        return _stage == AugmentStage.full ? A_augs[_index[0]] : Augment.Combine(A_augs[unfusedStandard - 1 + _index[0]], A_augs[unfusedStandard -1 + _index[1]]);
-        
+        return _stage == AugmentStage.full ? A_augs[_index[0]] : Augment.Combine(A_augs[_index[0]], A_augs[_index[1]]);
     }
 
     public ProjectileAugment GetProjectileAugmentAt(AugmentStage _stage, int[] _index)
     {
-        return _stage == AugmentStage.full ? A_projAugs[_index[0]] : ProjectileAugment.Combine(A_projAugs[unfusedProjectile - 1 + _index[0]], A_projAugs[unfusedProjectile - 1 + _index[1]]);
+        return _stage == AugmentStage.full ? A_projAugs[_index[0]] : ProjectileAugment.Combine(A_projAugs[_index[0]], A_projAugs[_index[1]]);
     }
 
     public ConeAugment GetConeAugmentAt(AugmentStage _stage, int[] _index)
     {
-        return _stage == AugmentStage.full ? A_coneAugs[_index[0]] : ConeAugment.Combine(A_coneAugs[unfusedCone - 1 + _index[0]], A_coneAugs[unfusedCone - 1 + _index[1]]);
+        return _stage == AugmentStage.full ? A_coneAugs[_index[0]] : ConeAugment.Combine(A_coneAugs[_index[0]], A_coneAugs[_index[1]]);
     }
 
     public Augment GetStandardAugment(string _s_augName)

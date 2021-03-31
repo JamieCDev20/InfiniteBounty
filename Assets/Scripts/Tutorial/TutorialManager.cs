@@ -32,6 +32,7 @@ public class TutorialManager : MonoBehaviour
     private bool b_enemyDestroyed;
     private bool b_hasChangedRisk;
     private bool b_hasChangedShift;
+    private bool b_isPlayingVideo;
 
     private void Awake()
     {
@@ -48,13 +49,28 @@ public class TutorialManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (b_isPlayingVideo)
+            if (Input.anyKeyDown)
+            {
+                go_videoObject.SetActive(false);
+                b_isPlayingVideo = false;
+            }
+    }
+
     public IEnumerator StartTutorial()
     {
         print("Starting Tutorial 'cause you had no data");
+        b_isPlayingVideo = true;
         go_videoObject.SetActive(true);
 
-        yield return new WaitForSeconds(f_videoLength);
+        for (int i = 0; i < f_videoLength; i++)
+            if (b_isPlayingVideo)
+                yield return new WaitForSeconds(1);
+
         go_videoObject.SetActive(false);
+        b_isPlayingVideo = false;
 
         go_tutorialCanvas.SetActive(true);
         StartCoroutine(DoTutorialSection(tcA_tutorial));
@@ -121,8 +137,7 @@ public class TutorialManager : MonoBehaviour
                         as_source.clip = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine;
                         as_source.Play();
 
-                        if (as_source.isPlaying)
-                            yield return new WaitForEndOfFrame();
+                        yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine.length);
                         break;
 
                     case TutorialStepType.WaitForInput:

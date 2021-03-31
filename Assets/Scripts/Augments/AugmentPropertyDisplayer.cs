@@ -78,9 +78,21 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                         augs[i] = AugmentManager.x.GetStandardAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
                         break;
                 }
-                _augmentsInList.Add(augs[i]);
-                Debug.Log(augs[i].Name);
             }
+            FuseSaver fs = FindObjectOfType<FuseSaver>();
+            switch (augs[0].at_type)
+            {
+                case AugmentType.projectile:
+                    augs = Utils.CombineArrays(augs, fs.FusedProjectiles);
+                    break;
+                case AugmentType.cone:
+                    augs = Utils.CombineArrays(augs, fs.FusedCones);
+                    break;
+                case AugmentType.standard:
+                    augs = Utils.CombineArrays(augs, fs.FusedAugments);
+                    break;
+            }
+            _augmentsInList.AddRange(augs);
         }
         // Update display from save file
         aL_allAugmentsOwned.AddRange(_augmentsInList);

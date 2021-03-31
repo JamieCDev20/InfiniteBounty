@@ -61,10 +61,6 @@ public class SaveManager : MonoBehaviour, ObserverBase
         }
         else
             File.Create(Application.persistentDataPath + sv);
-        if(saveData.purchasedAugments != null)
-            foreach (AugmentSave aug in saveData.purchasedAugments)
-                foreach(int ind in aug.SavedAugment.indicies)
-                    Debug.Log(ind);
     }
 
     /// <summary>
