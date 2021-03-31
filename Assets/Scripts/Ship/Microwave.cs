@@ -26,7 +26,7 @@ public class Microwave : SubjectBase, IInteractible
 
 
     // Start is called before the first frame update
-    void Init()
+    public void Init()
     {
         AddObserver(FindObjectOfType<SaveManager>());
     }

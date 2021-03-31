@@ -194,7 +194,8 @@ public class Workbench : SubjectBase, IInteractible
                     ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
                     if (pt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                     {
-                        SendAttachSave(aL_allAugmentsOwned[apd.CurrentAugIndex]);
+                        Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
+                        SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                     }
                     else
                     {
@@ -213,7 +214,8 @@ public class Workbench : SubjectBase, IInteractible
                     ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
                     if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                     {
-                        SendAttachSave(aL_allAugmentsOwned[apd.CurrentAugIndex]);
+                        Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
+                        SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                     }
                     else
                     {
@@ -232,7 +234,8 @@ public class Workbench : SubjectBase, IInteractible
                     WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
                     if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                     {
-                        SendAttachSave(aL_allAugmentsOwned[apd.CurrentAugIndex]);
+                        Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
+                        SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                     }
                     else
                     {
@@ -248,12 +251,12 @@ public class Workbench : SubjectBase, IInteractible
         //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
 
-    private void SendAttachSave(Augment _aug)
+    private void SendAttachSave(Augment _aug, AugmentSave[] _save)
     {
         // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
         RemoveAugmentEvent rae = new RemoveAugmentEvent(_aug, apd.CurrentAugIndex);
         Notify(rae);
-        EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, new Augment[1] { _aug }));
+        EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, _save));
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
         Notify(eae);
     }

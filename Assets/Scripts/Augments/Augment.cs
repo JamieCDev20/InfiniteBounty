@@ -238,9 +238,9 @@ public class Augment
             c.s_name = newName;
         }
         // Audio data
-        c.ac_useSound = Utils.CombineArrays(a.ac_useSound, b.ac_useSound);
-        c.ac_travelSound = Utils.CombineArrays(a.ac_travelSound, b.ac_travelSound);
-        c.ac_hitSound = Utils.CombineArrays(a.ac_hitSound, b.ac_hitSound);
+        c.ac_useSound = CombineFusionArrays(a.ac_useSound, b.ac_useSound);
+        c.ac_travelSound = CombineFusionArrays(a.ac_travelSound, b.ac_travelSound);
+        c.ac_hitSound = CombineFusionArrays(a.ac_hitSound, b.ac_hitSound);
         // Info data
         c.i_damage = a.i_damage + b.i_damage;
         c.i_lodeDamage = a.i_lodeDamage + b.i_lodeDamage;
@@ -252,7 +252,7 @@ public class Augment
         // Physical data
         c.f_trWidth = a.f_trWidth + b.f_trWidth;
         c.f_trLifetime = a.f_trLifetime + b.f_trLifetime;
-        c.A_trKeys = Utils.CombineArrays(a.A_trKeys, b.A_trKeys);
+        c.A_trKeys = CombineFusionArrays(a.A_trKeys, b.A_trKeys);
         ///TODO:
         ///figure out how to deal with projectiles
         c.go_weaponProjectile = a.go_weaponProjectile;
@@ -262,7 +262,7 @@ public class Augment
         c.f_explockBack = a.f_explockBack + b.f_explockBack;
         c.f_detonationTime = a.f_detonationTime + b.f_detonationTime;
         c.f_expRad = a.f_expRad + b.f_expRad;
-        c.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
+        c.go_explarticles = CombineFusionArrays(a.go_explarticles, b.go_explarticles);
         c.i_cost = a.Cost + b.Cost;
         // If any of them are set to impact, set to be impact
         if (a.b_impact)
@@ -270,6 +270,20 @@ public class Augment
         else
             c.b_impact = false;
         return c;
+    }
+
+    private static T[] CombineFusionArrays<T>(T[] _a, T[] _b)
+    {
+        bool aNull = Utils.ArrayIsNullOrZero(_a);
+        bool bNull = Utils.ArrayIsNullOrZero(_b);
+        if (!aNull && !bNull)
+            return Utils.CombineArrays(_a, _b);
+        else if (!aNull)
+            return _a;
+        else if (!bNull)
+            return _b;
+        else
+            return null;
     }
 
     /// <summary>

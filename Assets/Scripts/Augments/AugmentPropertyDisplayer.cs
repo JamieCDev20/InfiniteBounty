@@ -62,19 +62,24 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         if (saveMan.SaveData.purchasedAugments != null)
         {
-            Augment[] augs = saveMan.SaveData.purchasedAugments;
-            Augment[] castedAugs = new Augment[augs.Length];
-            if (augs != null && augs.Length != 0)
+            AugmentSave[] as_data = saveMan.SaveData.purchasedAugments;
+            Augment[] augs = new Augment[as_data.Length];
+            for (int i = 0; i < augs.Length; i++)
             {
-                for (int i = 0; i < castedAugs.Length; i++)
-                    if (AugmentManager.x.GetAugment(augs[i].Name) != null)
-                    {
-                        castedAugs[i] = AugmentManager.x.GetAugment(augs[i].Name).Aug;
-                        if (exclusionList.Contains(castedAugs[i].Name) && excluded <= exclusionList.Count)
-                            excluded++;
-                        else
-                            _augmentsInList.Add(castedAugs[i]);
-                    }
+                switch (saveMan.SaveData.purchasedAugments[i].SavedAugment.augType)
+                {
+                    case AugmentType.projectile:
+                        augs[i] = AugmentManager.x.GetProjectileAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
+                        break;
+                    case AugmentType.cone:
+                        augs[i] = AugmentManager.x.GetConeAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
+                        break;
+                    case AugmentType.standard:
+                        augs[i] = AugmentManager.x.GetStandardAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
+                        break;
+                }
+                _augmentsInList.Add(augs[i]);
+                Debug.Log(augs[i].Name);
             }
         }
         // Update display from save file

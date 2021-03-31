@@ -55,6 +55,13 @@ public class NugManager : SubjectBase, ObserverBase
         //Debug.LogError($"MY ID IS {_id} AND I AM {PhotonNetwork.CurrentRoom.Players[_id+1]}");
     }
 
+    public void RemoveAllNugs()
+    {
+        i_inLevelNugs = 0;
+        i_totalNugs = 0;
+        HUDController.x.SetBBTotal();
+    }
+
     public void EndedLevel()
     {
         i_playerID = GetComponent<PlayerInputManager>().GetID();

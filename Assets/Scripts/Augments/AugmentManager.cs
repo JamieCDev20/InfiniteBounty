@@ -6,11 +6,15 @@ using System;
 public class AugmentManager : MonoBehaviour
 {
     public static AugmentManager x;
+    FuseSaver fuseSave;
     [SerializeField] GameObject augRef;
     [SerializeField] Augment[] A_augs;
     [SerializeField] ProjectileAugment[] A_projAugs;
     [SerializeField] ConeAugment[] A_coneAugs;
     [SerializeField] private List<GameObject> go_augments = new List<GameObject>();
+    private int unfusedStandard;
+    private int unfusedProjectile;
+    private int unfusedCone;
 
     public void Init()
     {
@@ -23,7 +27,7 @@ public class AugmentManager : MonoBehaviour
             x = this;
 
         DontDestroyOnLoad(gameObject);
-
+        fuseSave = FindObjectOfType<FuseSaver>();
     }
 
     public void JoinedRoom()
@@ -33,22 +37,22 @@ public class AugmentManager : MonoBehaviour
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
         A_coneAugs = AugmentLoader.ReadAugmentData<ConeAugment>(augstr);
-        if(fusedstr != null)
+        unfusedStandard = A_augs.Length;
+        unfusedProjectile = A_projAugs.Length;
+        unfusedCone = A_coneAugs.Length;
+        if (fuseSave != null)
         {
-            Augment[] fusedAugs = AugmentLoader.ReadAugmentData<Augment>(fusedstr);
-            ProjectileAugment[] fusedProj = AugmentLoader.ReadAugmentData<ProjectileAugment>(fusedstr);
-            ConeAugment[] fusedCone = AugmentLoader.ReadAugmentData<ConeAugment>(fusedstr);
-            if (fusedAugs != null && fusedAugs.Length > 0)
-                A_augs = Utils.CombineArrays(A_augs, fusedAugs);
-            if(fusedProj != null)
-                A_projAugs = Utils.CombineArrays(A_projAugs, fusedProj);
-            if(fusedCone != null)
-                A_coneAugs = Utils.CombineArrays(A_coneAugs, fusedCone);
+            if (fuseSave.FusedAugments != null)
+                A_augs = Utils.CombineArrays(A_augs, fuseSave.FusedAugments);
+            if (fuseSave.FusedProjectiles != null)
+                A_projAugs = Utils.CombineArrays(A_projAugs, fuseSave.FusedProjectiles);
+            if (fuseSave.FusedCones != null)
+                A_coneAugs = Utils.CombineArrays(A_coneAugs, fuseSave.FusedCones);
         }
         GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
         FindObjectOfType<VendingMachine>().Init(this);
-
+        FindObjectOfType<Microwave>().Init();
     }
 
     /// <summary>
@@ -87,6 +91,53 @@ public class AugmentManager : MonoBehaviour
     public int GetNumberOfAugments()
     {
         return A_augs.Length + A_projAugs.Length + A_coneAugs.Length;
+    }
+
+    public int[] GetAugmentIndicies(AugmentType _type, Augment[] _augs)
+    {
+        int[] _augInds = new int[_augs.Length];
+        for (int i = 0; i < _augInds.Length; i++)
+            _augInds[i] = GetAugmentIndex(_type, _augs[i].Name);
+        return _augInds;
+    }
+
+    public int GetAugmentIndex(AugmentType _type, string _name)
+    {
+        switch (_type)
+        {
+            case AugmentType.projectile:
+                for (int i = 0; i < A_projAugs.Length; i++)
+                    if (A_projAugs[i].Name == _name)
+                        return i;
+                break;
+            case AugmentType.cone:
+                for (int i = 0; i < A_coneAugs.Length; i++)
+                    if (A_coneAugs[i].Name == _name)
+                        return i;
+                break;
+            case AugmentType.standard:
+                for (int i = 0; i < A_augs.Length; i++)
+                    if (A_augs[i].Name == _name)
+                        return i;
+                break;
+        }
+        return -1;
+    }
+
+    public Augment GetStandardAugmentAt(AugmentStage _stage, int[] _index)
+    {
+        return _stage == AugmentStage.full ? A_augs[_index[0]] : Augment.Combine(A_augs[unfusedStandard - 1 + _index[0]], A_augs[unfusedStandard -1 + _index[1]]);
+        
+    }
+
+    public ProjectileAugment GetProjectileAugmentAt(AugmentStage _stage, int[] _index)
+    {
+        return _stage == AugmentStage.full ? A_projAugs[_index[0]] : ProjectileAugment.Combine(A_projAugs[unfusedProjectile - 1 + _index[0]], A_projAugs[unfusedProjectile - 1 + _index[1]]);
+    }
+
+    public ConeAugment GetConeAugmentAt(AugmentStage _stage, int[] _index)
+    {
+        return _stage == AugmentStage.full ? A_coneAugs[_index[0]] : ConeAugment.Combine(A_coneAugs[unfusedCone - 1 + _index[0]], A_coneAugs[unfusedCone - 1 + _index[1]]);
     }
 
     public Augment GetStandardAugment(string _s_augName)

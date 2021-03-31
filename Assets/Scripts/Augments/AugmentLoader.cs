@@ -35,7 +35,7 @@ public class AugmentLoader : MonoBehaviour
         // Make sure that you're only getting augments that are pure augs
         for (int i = 0; i < augments.Length; i++)
         {
-            if (augments[i] != string.Empty)
+            if (augments[i] != string.Empty && !augments[i].Contains("null"))
             {
                 if (GetAugmentType(augments[i]) == AugmentType.standard && typeof(T).Equals(typeof(Augment)))
                     augs.Add(JsonUtility.FromJson<T>(augments[i]));

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AddAugmentEvent : ObserverEvent
 {
-    public Augment augToAdd;
-    public AddAugmentEvent(Augment _aug)
+    public AugmentSave augToAdd;
+    public AddAugmentEvent(AugmentSave _aug)
     {
         augToAdd = _aug;
     }

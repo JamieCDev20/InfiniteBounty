@@ -61,6 +61,10 @@ public class SaveManager : MonoBehaviour, ObserverBase
         }
         else
             File.Create(Application.persistentDataPath + sv);
+        if(saveData.purchasedAugments != null)
+            foreach (AugmentSave aug in saveData.purchasedAugments)
+                foreach(int ind in aug.SavedAugment.indicies)
+                    Debug.Log(ind);
     }
 
     /// <summary>
@@ -91,7 +95,16 @@ public class SaveManager : MonoBehaviour, ObserverBase
     public void ClearSaveData()
     {
         if (File.Exists(Application.persistentDataPath + sv))
-            File.WriteAllText(Application.persistentDataPath + sv, string.Empty);
+        {
+            FindObjectOfType<ToolHandler>().ClearTools();
+            FindObjectOfType<NugManager>().RemoveAllNugs();
+            FindObjectOfType<AppearanceChanger>().SetArmActive(0, true);
+            FindObjectOfType<AppearanceChanger>().SetArmActive(1, true);
+            saveData = new PlayerSaveData();
+            File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
+            Debug.Log(File.ReadAllText(Application.persistentDataPath + sv));
+        }
+        
     }
 
     /// <summary>
@@ -132,11 +145,11 @@ public class SaveManager : MonoBehaviour, ObserverBase
             }
             if (totalNugsString[i].Contains("tu_equippedAugments"))
             {
-                psd.tu_equippedAugments = ReadArrayFromJson<(int, int, Augment[])>(_saveData, new string[] { "tu_equippedAugments" }, '}');
+                psd.tu_equippedAugments = ReadArrayFromJson<(int, int, AugmentSave[])>(_saveData, new string[] { "tu_equippedAugments" }, '}');
             }
             else if (totalNugsString[i].Contains("purchasedAugments"))
             {
-                psd.purchasedAugments = ReadArrayFromJson<Augment>(_saveData, new string[] { "purchasedAugments\":["}, '}');
+                psd.purchasedAugments = ReadArrayFromJson<AugmentSave>(_saveData, new string[] { "purchasedAugments\":["}, '}');
             }
             else if (totalNugsString[i].Contains("A_playerSliderOptions"))
             {
@@ -275,7 +288,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 }
                 else if(saveData.tu_equippedAugments != null && psd.SaveData.tu_equippedAugments != null)
                 {
-                    foreach((int, int, Augment[]) blaug in psd.SaveData.tu_equippedAugments)
+                    foreach((int, int, AugmentSave[]) blaug in psd.SaveData.tu_equippedAugments)
                         EquipNewAugment(blaug);
                 }
                 if (saveData.purchasedAugments == null && psd.SaveData.purchasedAugments != null)
@@ -305,12 +318,12 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, jsonData);
                 break;
             case RemoveAugmentEvent rae:
-                saveData.purchasedAugments = Utils.OrderedRemove<Augment>(saveData.purchasedAugments, rae.augIndex);
+                saveData.purchasedAugments = Utils.OrderedRemove<AugmentSave>(saveData.purchasedAugments, rae.augIndex);
                 string removedPurchaseData = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, removedPurchaseData);
                 break;
             case AddAugmentEvent aae:
-                saveData.purchasedAugments = Utils.AddToArray<Augment>(saveData.purchasedAugments, aae.augToAdd);
+                saveData.purchasedAugments = Utils.AddToArray<AugmentSave>(saveData.purchasedAugments, aae.augToAdd);
                 string addedPurchaseData = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, addedPurchaseData);
                 break;
@@ -338,7 +351,8 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, equippedAugs);
                 break;
             case UnequipAugmentEvent uae:
-                saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, uae.augsToUnequip.augs);
+                AugmentSave augSave = new AugmentSave(uae.augsToUnequip.augs[0].Stage, uae.augsToUnequip.augs[0].at_type, AugmentManager.x.GetAugmentIndicies(uae.augsToUnequip.augs[0].at_type, uae.augsToUnequip.augs));
+                saveData.purchasedAugments = Utils.AddToArray(saveData.purchasedAugments, augSave);
                 RemoveEquippedAugments(uae.augsToUnequip);
                 string unequippedAugs = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
@@ -348,12 +362,12 @@ public class SaveManager : MonoBehaviour, ObserverBase
         }
     }
 
-    private void EquipNewAugment((int _toolID, int _slotID, Augment[] _aug) newEquip)
+    private void EquipNewAugment((int _toolID, int _slotID, AugmentSave[] _aug) newEquip)
     {
         // If the array doesn't already exist, add the incoming equipped augs.
         if (Utils.ArrayIsNullOrZero(saveData.tu_equippedAugments))
         {
-            saveData.tu_equippedAugments = new (int, int, Augment[])[] { newEquip };
+            saveData.tu_equippedAugments = new (int, int, AugmentSave[])[] { newEquip };
         }
         else
         {
@@ -399,9 +413,23 @@ public class SaveManager : MonoBehaviour, ObserverBase
             {
                 for(int j = 0; j < saveData.tu_equippedAugments[i].equippedAugs.Length; j++)
                 {
-                    if (saveData.tu_equippedAugments[i].equippedAugs[j].Name == augToDetach._aug.Name)
+                    switch (saveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
                     {
-                        saveData.tu_equippedAugments[i].equippedAugs = Utils.OrderedRemove(saveData.tu_equippedAugments[i].equippedAugs, j);
+                        case AugmentType.projectile:
+                            ProjectileAugment proj = AugmentManager.x.GetProjectileAugmentAt(saveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augStage, saveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                            if(proj.Name == augToDetach._aug.Name)
+                                saveData.tu_equippedAugments[i].equippedAugs = Utils.OrderedRemove(saveData.tu_equippedAugments[i].equippedAugs, j);
+                            break;
+                        case AugmentType.cone:
+                            ConeAugment cone = AugmentManager.x.GetConeAugmentAt(saveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augStage, saveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                            if (cone.Name == augToDetach._aug.Name)
+                                saveData.tu_equippedAugments[i].equippedAugs = Utils.OrderedRemove(saveData.tu_equippedAugments[i].equippedAugs, j);
+                            break;
+                        case AugmentType.standard:
+                            Augment stand = AugmentManager.x.GetStandardAugmentAt(saveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augStage, saveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                            if(stand.Name == augToDetach._aug.Name)
+                                saveData.tu_equippedAugments[i].equippedAugs = Utils.OrderedRemove(saveData.tu_equippedAugments[i].equippedAugs, j);
+                            break;
                     }
                 }
             }
