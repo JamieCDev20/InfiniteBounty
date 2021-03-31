@@ -111,7 +111,16 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             //spawn all managers
             for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
             {
-                Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity).SendMessage("Init");
+                GameObject g = Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity);
+                try
+                {
+                    g.SendMessage("Init");
+
+                }
+                catch
+                {
+
+                }
             }
         }
 
