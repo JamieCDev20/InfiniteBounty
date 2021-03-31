@@ -61,6 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tp_otherPortal: {fileID: 8895917689139300698}
   f_hyuckForce: 50
+  travelTime: 0.3
 --- !u!1 &916109593420181474
 GameObject:
   m_ObjectHideFlags: 0
@@ -4894,6 +4895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  c_onColour: {r: 1, g: 0, b: 0, a: 1}
+  c_offColour: {r: 1, g: 0, b: 0, a: 0}
 --- !u!114 &6973839700375727814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19552,6 +19555,7 @@ MonoBehaviour:
   t_raycastPoint: {fileID: 0}
   b_releaseActivated: 1
   go_particles: []
+  f_spreadAngle: 0
   f_teleportDistance: 150
   f_teleportDelay: 0
   go_chargeEffects: {fileID: 6555137232502950924}
@@ -19581,7 +19585,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 6
   MaxDistance: 200
   Pan2D: 0
@@ -19741,6 +19745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tp_otherPortal: {fileID: 758003954079274540}
   f_hyuckForce: 50
+  travelTime: 0.3
 --- !u!1 &5455541937113050157
 GameObject:
   m_ObjectHideFlags: 0
