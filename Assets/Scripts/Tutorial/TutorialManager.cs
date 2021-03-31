@@ -43,6 +43,11 @@ public class TutorialManager : MonoBehaviour
         as_source = GetComponent<AudioSource>();
     }
 
+    public void Init()
+    {
+
+    }
+
     public IEnumerator StartTutorial()
     {
         print("Starting Tutorial 'cause you had no data");

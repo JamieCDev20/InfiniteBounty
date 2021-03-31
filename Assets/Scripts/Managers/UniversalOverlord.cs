@@ -112,15 +112,9 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
             {
                 GameObject g = Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity);
-                try
-                {
-                    g.SendMessage("Init");
 
-                }
-                catch
-                {
+                g.SendMessage("Init");
 
-                }
             }
         }
 
@@ -154,7 +148,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = false;
         else
             if (PhotonNetwork.CurrentRoom != null)
-                PhotonNetwork.CurrentRoom.IsOpen = true;
+            PhotonNetwork.CurrentRoom.IsOpen = true;
 
         //PoolManager.x.ResetPool("BoomNug");
         //PoolManager.x.ResetPool("GooNug");
