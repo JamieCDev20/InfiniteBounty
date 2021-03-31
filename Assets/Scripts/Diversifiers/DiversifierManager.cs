@@ -5,12 +5,13 @@ using UnityEngine;
 
 public enum Diversifier
 {
-    None,
+    None, //It implements itself
+
     JumboLodes, //Triggered in LodeSpawnZone, increases size by 50%
     LotsOLodes, //Triggered in LodeSpawnZone
     GeysersGalore, //Triggered in DiversiferManager
-    MiniMiniboss,
-    MiniBunny,
+    MiniMiniboss, //Triggered in HandymanHealth
+    MiniBunny, //Triggered in HopDogHealth
     GoofyGroobers,
     MiniFlying,
 
@@ -18,8 +19,8 @@ public enum Diversifier
     LessLodes, //Triggered in LodeSpawnZone
     LethalLava, //Triggered in KillBox
     ZeroGNuggs, //Triggered in NugGo in start
-    Maxiboss,
-    MegaBunnies,
+    Maxiboss, //Triggered in HandymanHealth
+    MegaBunnies, //Triggered in HopDogHealth
     NastyGroobers,
     MaxiFlying,
 }

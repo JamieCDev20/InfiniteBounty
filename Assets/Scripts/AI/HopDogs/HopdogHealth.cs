@@ -27,9 +27,23 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
     private void Start()
     {
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
-        transform.localScale = Vector3.one * _ds.f_scaleMult * 2;
         i_actualDamage = Mathf.RoundToInt(i_explosionDamage * _ds.f_damageMult);
         i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
+        transform.localScale = Vector3.one * _ds.f_scaleMult * 2;
+        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniMiniboss))
+        {
+            transform.localScale *= 0.75f;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 0.75f);
+            i_actualDamage = Mathf.RoundToInt(i_actualDamage * 0.75f);
+        }
+        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.Maxiboss))
+        {
+            transform.localScale *= 1.5f;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 1.5f);
+            i_actualDamage = Mathf.RoundToInt(i_actualDamage * 1.5f);
+        }
+
+
 
         eo_elemO = GetComponent<ElementalObject>();
         b_isHost = PhotonNetwork.IsMasterClient;
