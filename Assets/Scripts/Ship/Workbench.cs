@@ -94,7 +94,6 @@ public class Workbench : SubjectBase, IInteractible
             // Find any saved augments and load them
             if (wt_toolsInHand.Count > 0)
             {
-                Debug.Log(wt_toolsInHand[i_currentWeaponIndex].AugType.ToString());
                 apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
                 aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
                 DisplayWeapon();
@@ -192,69 +191,57 @@ public class Workbench : SubjectBase, IInteractible
 
     public void ApplyAugment()
     {
-        if (wt_toolsInHand.Count != 0)
-        {
-            if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ProjectileTool)
-            {
+        if (wt_toolsInHand.Count == 0)
+            return;
 
-                if (aL_allAugmentsOwned[apd.CurrentAugIndex].at_type == AugmentType.projectile)
-                {
-                    ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
-                    if (pt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
-                    {
-                        Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                        SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
-                    }
-                    else
-                    {
-                        Debug.LogError("Augments Full");
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Incompatable Augment Type");
-                }
-            }
-            else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ConeTool)
+        if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ProjectileTool)
+        {
+
+            if (aL_allAugmentsOwned[apd.CurrentAugIndex].at_type == AugmentType.projectile)
             {
-                if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.cone)
+                ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
+                if (pt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
-                    ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
-                    if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
-                    {
-                        Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                        SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
-                    }
-                    else
-                    {
-                        Debug.LogError("Augments Full");
-                    }
+                    Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                 }
                 else
-                {
-                    Debug.LogError("Incompatable Augment Type");
-                }
+                    Debug.LogError("Augments Full");
             }
-            else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is WeaponTool)
+            else
+                Debug.LogError("Incompatable Augment Type");
+        }
+        else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ConeTool)
+        {
+            if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.cone)
             {
-                if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.standard)
+                ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
+                if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
-                    WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
-                    if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
-                    {
-                        Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                        SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
-                    }
-                    else
-                    {
-                        Debug.LogError("Augments Full");
-                    }
+                    Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                 }
                 else
-                {
-                    Debug.LogError("Incompatable Augment Type");
-                }
+                    Debug.LogError("Augments Full");
             }
+            else
+                Debug.LogError("Incompatable Augment Type");
+        }
+        else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is WeaponTool)
+        {
+            if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.standard)
+            {
+                WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
+                if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
+                {
+                    Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
+                }
+                else
+                    Debug.LogError("Augments Full");
+            }
+            else
+                Debug.LogError("Incompatable Augment Type");
         }
         //aL_allAugmentsOwned[i_currentAugmentIndex];
     }
