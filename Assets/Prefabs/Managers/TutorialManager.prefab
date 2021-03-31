@@ -309,7 +309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5449599309742012113}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.82, y: -12.44, z: 1.44}
+  m_LocalPosition: {x: 10.82, y: 8, z: 1.44}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 7385016059390513745}
@@ -339,7 +339,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5673551308694481925}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -37.9}
+  m_LocalPosition: {x: 0, y: 20, z: -37.9}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 7385016059390513745}
@@ -590,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3a139bd87068f479411966747c6c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  b_shouldTutorialAlways: 0
+  b_shouldTutorialAlways: 1
   go_confetti: {fileID: 7231220718643619310}
   f_inputTimeToLookFor: 1
   f_videoLength: 18
@@ -632,6 +632,14 @@ MonoBehaviour:
       it_inputToWaitFor: 5
       s_textMessage: 
       go_distanceChecker: {fileID: 0}
+    - s_name: Reset
+      tst_stepType: 2
+      f_timeToWaitBeforeNextStep: 0.5
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
   - s_name: Move
     tsdA_stepsInChunk:
     - s_name: VO
@@ -660,6 +668,14 @@ MonoBehaviour:
       go_distanceChecker: {fileID: 0}
     - s_name: Confetti
       tst_stepType: 1
+      f_timeToWaitBeforeNextStep: 0.5
+      ac_voiceLine: {fileID: 0}
+      b_hold: 0
+      it_inputToWaitFor: 5
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
+    - s_name: Reset HUD
+      tst_stepType: 2
       f_timeToWaitBeforeNextStep: 0.5
       ac_voiceLine: {fileID: 0}
       b_hold: 0
