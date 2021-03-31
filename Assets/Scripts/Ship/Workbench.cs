@@ -13,6 +13,7 @@ public class Workbench : SubjectBase, IInteractible
     private Transform t_camPositionToReturnTo;
     private SaveManager saveMan;
     [SerializeField] private ToolLoader tl;
+    [SerializeField] private GameObject[] goA_tools;
     [SerializeField] private Canvas c_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
     [Header("Camera & Movement")]
@@ -44,7 +45,7 @@ public class Workbench : SubjectBase, IInteractible
     {
         saveMan = _sm;
         tl.LoadTools(transform);
-        if(wt_toolsInHand.Count > 0)
+        if (wt_toolsInHand.Count > 0)
         {
             if (wt_toolsInHand[0] != null)
                 tl.GetPrefabTool(wt_toolsInHand[0].ToolID).SetActive(true);
@@ -59,6 +60,7 @@ public class Workbench : SubjectBase, IInteractible
     {
         if (!b_isBeingUsed)
         {
+            wt_toolsInHand.Clear();
             // Move player to cinimatic point
             interactor.position = t_playerPos.position;
             interactor.transform.forward = t_playerPos.forward;
@@ -90,10 +92,15 @@ public class Workbench : SubjectBase, IInteractible
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
             // Find any saved augments and load them
-            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+            apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
+            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+            goA_tools[wt_toolsInHand[0].ToolID].SetActive(true);
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+
+
         }
     }
 
@@ -102,6 +109,7 @@ public class Workbench : SubjectBase, IInteractible
     public void EndInteract()
     {
         // Make the player able to move
+        HideWeapon();
         PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
@@ -161,16 +169,15 @@ public class Workbench : SubjectBase, IInteractible
 
     private void DisplayWeapon()
     {
-        if (tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
-        {
-            tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(true);
-        }
+        goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(true);
+
+        apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
     }
 
-    private void UndisplayWeapon()
+    private void HideWeapon()
     {
-        if (tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]) != null)
-            tl.GetPrefabTool(wt_toolsInHand[i_currentWeaponIndex]).SetActive(false);
+        goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(false);
     }
 
     #region Button Functions
@@ -286,37 +293,19 @@ public class Workbench : SubjectBase, IInteractible
 
     #region Swap Weapons
 
-    public void ChangeWeaponPos()
+    public void ChangeWeaponPos(int lr)
     {
-        if(wt_toolsInHand != null && wt_toolsInHand.Count -1 > 0)
-            if (wt_toolsInHand[0] != null && wt_toolsInHand[1] != null)
-            {
-                UndisplayWeapon();
-                if (i_currentWeaponIndex == wt_toolsInHand?.Count - 1)
-                {
-                    i_currentWeaponIndex = 0;
-                }
-                else
-                {
-                    i_currentWeaponIndex++;
-                }
-                DisplayWeapon();
-            }
-    }
-    public void ChangeWeaponNeg()
-    {
-        if (wt_toolsInHand != null && wt_toolsInHand.Count - 1 > 0)
-        {
-            if(wt_toolsInHand[0] != null && wt_toolsInHand[1] != null)
-            {
-                UndisplayWeapon();
-                if (i_currentWeaponIndex == 0)
-                    i_currentWeaponIndex = wt_toolsInHand.Count - 1;
-                else
-                    i_currentWeaponIndex--;
-                DisplayWeapon();
-            }
-        }
+
+        HideWeapon();
+
+        i_currentWeaponIndex += lr;
+        if (i_currentWeaponIndex >= wt_toolsInHand.Count)
+            i_currentWeaponIndex = 0;
+        else if (i_currentWeaponIndex <= 0)
+            i_currentWeaponIndex = wt_toolsInHand.Count - 1;
+
+        DisplayWeapon();
+
     }
 
     #endregion

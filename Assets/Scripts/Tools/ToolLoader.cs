@@ -66,4 +66,14 @@ public class ToolLoader : MonoBehaviour
         return null;
     }
 
+    public int GetIndex(ToolBase _tb_toolRef)
+    {
+        for (int i = 0; i < tb_tools.Length; i++)
+        {
+            if (_tb_toolRef == tb_tools[i])
+                return i;
+        }
+        return -1;
+    }
+
 }
