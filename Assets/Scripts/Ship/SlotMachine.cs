@@ -7,13 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Diversifier
-{
-    None, JackedRabbits, GigaGeysers, SolarStorm,
-
-}
-
-
 public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 {
     private Animator anim;

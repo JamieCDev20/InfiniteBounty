@@ -48,8 +48,8 @@ public class KillBox : MonoBehaviour
             DealDamage();
 
     }
-    /*
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (enabled)
@@ -82,10 +82,10 @@ public class KillBox : MonoBehaviour
             IHitable _h = collision.collider.GetComponent<IHitable>();
 
             if (!collision.transform.CompareTag("Lilypad"))
-                _h?.TakeDamage(i_damageToDeal, false);
+                _h?.TakeDamage(i_damageToDeal * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 2 : 1), false);
 
             if (b_shouldCauseKnockback && collision.transform.tag == "Player")
-                collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
+                collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 3 : 1), b_dealsFire);
 
             if (as_source)
                 as_source.PlayOneShot(ac_burnEffect);

@@ -23,7 +23,13 @@ public class LodeSpawnZone : MonoBehaviour
     {
         List<LodeBase> _lbL_spawnedLodes = new List<LodeBase>();
         GameObject _go_lode;
+
         int _i_lodeCount = UnityEngine.Random.Range(vi_numberOfLodes.x, vi_numberOfLodes.y);
+        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LotsOLodes))
+            _i_lodeCount = vi_numberOfLodes.y;
+        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LessLodes))
+            _i_lodeCount = vi_numberOfLodes.x;
+
         int _i_timeAttempted = 0;
 
         if (b_doRayCastSpawning)
@@ -49,6 +55,11 @@ public class LodeSpawnZone : MonoBehaviour
                         _go_lode.transform.up = hit.normal;
                         _go_lode.transform.Rotate(Vector3.up * UnityEngine.Random.Range(0, 360), Space.Self);
                         _go_lode.transform.localScale = Vector3.one * UnityEngine.Random.Range(v_lodeSize.x, v_lodeSize.y);
+
+                        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.JumboLodes))
+                            _go_lode.transform.localScale *= 1.5f;
+                        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.BabyLodes))
+                            _go_lode.transform.localScale *= 0.75f;
                     }
                     else
                     {

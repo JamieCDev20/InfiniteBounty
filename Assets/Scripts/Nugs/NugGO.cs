@@ -34,6 +34,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
         SceneManager.sceneLoaded += OnSceneLoad;
 
+        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.ZeroGNuggs))
+            rb.useGravity = false;
     }
     private void OnTriggerEnter(Collider other)
     {

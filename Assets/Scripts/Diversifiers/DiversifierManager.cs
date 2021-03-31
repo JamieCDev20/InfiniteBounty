@@ -3,6 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Diversifier
+{
+    None,
+    JumboLodes, //Triggered in LodeSpawnZone, increases size by 50%
+    LotsOLodes, //Triggered in LodeSpawnZone
+    GeysersGalore, //Triggered in DiversiferManager
+    MiniMiniboss,
+    MiniBunny,
+    GoofyGroobers,
+    MiniFlying,
+
+    BabyLodes, //Triggered in LodeSpawnZone, reduces size by 25%
+    LessLodes, //Triggered in LodeSpawnZone
+    LethalLava, //Triggered in KillBox
+    ZeroGNuggs, //Triggered in NugGo in start
+    Maxiboss,
+    MegaBunnies,
+    NastyGroobers,
+    MaxiFlying,
+}
+
 public class DiversifierManager : MonoBehaviourPunCallbacks
 {
     public static DiversifierManager x;
@@ -14,14 +35,11 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     [SerializeField] private string s_geyserPath;
     [SerializeField] private Vector2 v_numberOfGeysers;
 
-    private void Awake()
-    {
-    }
 
     public void Init()
     {
-
         transform.parent = null;
+
         if (x != null) Destroy(gameObject);
         else
         {
@@ -41,11 +59,14 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         dA_activeDivers[2] = _dA_diversGotten[2];
     }
 
-    public Diversifier[] ReturnActiveDivers()
+    public bool ReturnIfDiverIsActive(Diversifier _d_toCheck)
     {
-        return dA_activeDivers;
-    }
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            if (dA_activeDivers[i] == _d_toCheck)
+                return true;
 
+        return false;
+    }
 
     public void ApplyDiversifiers(LodeSpawnZone[] _ziA_spawnableZones)
     {
@@ -56,21 +77,13 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
             {
                 switch (dA_activeDivers[i])
                 {
-                    case Diversifier.None: break;
-
-                    case Diversifier.JackedRabbits:
-                        print("THERE ARE JACKED RABBITS");
+                    default:
                         break;
 
-                    case Diversifier.GigaGeysers:
-                        view.RPC(nameof(GigaGeysersRPC), RpcTarget.All, Random.Range(0, 9999999));
+                    case Diversifier.GeysersGalore:
+                        view.RPC(nameof(GeysersGaloreRPC), RpcTarget.All, Random.Range(0, 9999999));
                         break;
 
-                    case Diversifier.SolarStorm:
-                        print("THE SUN IS A DEADLY LASER");
-                        break;
-
-                    default: break;
                 }
             }
     }
@@ -78,7 +91,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     #region Diver Functions
 
     [PunRPC]
-    public IEnumerator GigaGeysersRPC(int _i_seed)
+    public IEnumerator GeysersGaloreRPC(int _i_seed)
     {
         yield return null;
         Random.InitState(_i_seed);
