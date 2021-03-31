@@ -11,6 +11,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
     private Augment[] fusedAugs;
     private ProjectileAugment[] fusedProj;
     private ConeAugment[] fusedCone;
+    private AugmentSave[] _savedData;
     private string filePath;
 
     #region Get/Sets
@@ -41,12 +42,28 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         if(Resources.Load("FusedAugmentData") != null)
         {
             string fusedstring = AugmentLoader.LoadFusedAugmentJson();
-            if(fusedstring != null)
+            AugmentSave[] _augSave = JsonConvert.DeserializeObject<AugmentSave[]>(fusedstring);
+            List<Augment> _newAugs = new List<Augment>();
+            List<ProjectileAugment> _newProj = new List<ProjectileAugment>();
+            List<ConeAugment> _newCone = new List<ConeAugment>();
+            foreach(AugmentSave saved in _augSave)
             {
-                fusedAugs = AugmentLoader.ReadAugmentData<Augment>(fusedstring);
-                fusedProj = AugmentLoader.ReadAugmentData<ProjectileAugment>(fusedstring);
-                fusedCone = AugmentLoader.ReadAugmentData<ConeAugment>(fusedstring);
+                switch (saved.SavedAugment.augType)
+                {
+                    case AugmentType.projectile:
+                        _newProj.Add(AugmentManager.x.GetProjectileAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                        break;
+                    case AugmentType.cone:
+                        _newCone.Add(AugmentManager.x.GetConeAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                        break;
+                    case AugmentType.standard:
+                        _newAugs.Add(AugmentManager.x.GetStandardAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                        break;
+                }
             }
+            fusedAugs = _newAugs.ToArray();
+            fusedProj = _newProj.ToArray();
+            fusedCone = _newCone.ToArray();
             DebugTheArraysMaaang();
         }
         else
@@ -59,25 +76,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (oe_event)
         {
             case FuseEvent fuseEvent:
-                switch (fuseEvent.Augs[2].at_type)
-                {
-                    case AugmentType.standard:
-                        if (!CheckDuplicateAugment(fusedAugs, fuseEvent.Augs[2].Name))
-                            fusedAugs = AddToArray(fusedAugs, fuseEvent.Augs[2]);
-                        break;
-                    case AugmentType.projectile:
-                        if (!CheckDuplicateAugment(fusedProj, fuseEvent.Augs[2].Name))
-                        {
-                            ProjectileAugment proj = fuseEvent.Proj[2];
-                            fusedProj = AddToArray(fusedProj, proj);
-                        }
-                        break;
-                    case AugmentType.cone:
-                        if (!CheckDuplicateAugment(fusedCone, fuseEvent.Augs[2].Name))
-                            fusedCone = AddToArray(fusedCone, fuseEvent.Cone[2]);
-                        break;
-                }
-                Debug.Log(fuseEvent.Augs[2].Name);
+                _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
                 SaveFusedAugments();
                 break;
         }
@@ -102,13 +101,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
 
     private void SaveFusedAugments()
     {
-        string fusedData = string.Empty;
-        if(!Utils.ArrayIsNullOrZero(fusedAugs))
-            fusedData = JsonConvert.SerializeObject(fusedAugs);
-        if(!Utils.ArrayIsNullOrZero(fusedProj))
-            fusedData += JsonConvert.SerializeObject(fusedProj);
-        if(!Utils.ArrayIsNullOrZero(fusedCone))
-            fusedData += JsonConvert.SerializeObject(fusedCone);
+        string fusedData = JsonConvert.SerializeObject(_savedData);
         File.WriteAllText(filePath, fusedData);
     }
     private void DebugTheArraysMaaang()
