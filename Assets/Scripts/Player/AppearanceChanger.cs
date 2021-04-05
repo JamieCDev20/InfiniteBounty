@@ -116,6 +116,11 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_heads[i_currentHead].SetActive(true);
     }
 
+    public int ReturnHeadIndex()
+    {
+        return i_currentHead;
+    }
+
     #endregion
 
     #region Body Things
