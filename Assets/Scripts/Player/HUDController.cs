@@ -20,7 +20,7 @@ public class HUDController : MonoBehaviour
     [Header("Health Stats")]
     [SerializeField] private List<SpriteArray> saA_faceSprites = new List<SpriteArray>();
     [Space, SerializeField] private Image i_faceImage;
-    [Space, SerializeField] private Image i_faceBackgroundImage;
+
     [SerializeField] private Gradient g_healthBarGradient;
 
     [Header("Nug Counter")]
@@ -86,7 +86,8 @@ public class HUDController : MonoBehaviour
 
         i_healthBar.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
         rt_healthBar.localScale = new Vector3((float)_i_currentHealth / _i_maxHealth, 1, 1);
-        i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[Mathf.Clamp(Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * saA_faceSprites.Count), 0, 4)];
+        print(i_headSprite + "/" + saA_faceSprites[i_headSprite].sA_sprites.Length);
+        i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[Mathf.Clamp(Mathf.RoundToInt((float)_i_currentHealth / _i_maxHealth) * saA_faceSprites[i_headSprite].sA_sprites.Length - 1, 0, 4)];
     }
 
     public void SetNugValues(int[] _iA_nugCounts)
