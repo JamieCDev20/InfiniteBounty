@@ -74,7 +74,7 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
     private void PositionWaypoint()
     {
 
-        if((transform.position - t_targetPlayer.position).magnitude < f_displayRange)
+        if ((transform.position - t_targetPlayer.position).magnitude < f_displayRange)
         {
             go_offMarker.SetActive(false);
             go_onMarker.SetActive(false);
@@ -127,22 +127,31 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     }
 
-    private void OnDestroy()
+    public void Remove()
     {
         if (run)
         {
             Destroy(go_offMarker);
             Destroy(go_onMarker);
         }
+
+    }
+
+    private void OnDisable()
+    {
+        Remove();
+    }
+
+    private void OnDestroy()
+    {
+        Remove();
     }
 
     public override void OnLeftRoom()
     {
-        base.OnLeftRoom();
-        if (run)
+        foreach (PlayerWaypointer pw in FindObjectsOfType<PlayerWaypointer>())
         {
-            Destroy(go_offMarker);
-            Destroy(go_onMarker);
+            pw.Remove();
         }
     }
 
