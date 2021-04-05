@@ -60,6 +60,7 @@ public class PiggyBank : SubjectBase, IInteractible
     {
         go_portal.SetActive(true);
         go_portal.transform.parent = null;
+        go_portal.transform.localScale = Vector3.one;
 
     }
 }
