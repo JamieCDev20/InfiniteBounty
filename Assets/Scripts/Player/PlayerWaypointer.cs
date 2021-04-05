@@ -43,32 +43,44 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     public void SetNames(string _name)
     {
+        StartCoroutine(WhyDoIHaveToDoThis(_name));
+    }
+
+    IEnumerator WhyDoIHaveToDoThis(string _name)
+    {
+
+        yield return new WaitForSeconds(0.5f);
+
         t_targetPlayer = NetworkedPlayer.x.GetPlayer();
         if (t_targetPlayer == transform)
         {
             run = false;
-            return;
         }
-        t_hudCanvas = HUDController.x.GetHudCanvasTransform();
+        else
+        {
+            t_hudCanvas = HUDController.x.GetHudCanvasTransform();
 
-        go_onMarker = Instantiate(go_onScreenMarker, t_hudCanvas);
-        rt_on = go_onMarker.GetComponent<RectTransform>();
-        go_offMarker = Instantiate(go_offScreenMarker, t_hudCanvas);
-        rt_off = go_offMarker.GetComponent<RectTransform>();
+            go_onMarker = Instantiate(go_onScreenMarker, t_hudCanvas);
+            rt_on = go_onMarker.GetComponent<RectTransform>();
+            go_offMarker = Instantiate(go_offScreenMarker, t_hudCanvas);
+            rt_off = go_offMarker.GetComponent<RectTransform>();
 
-        rt_on.anchorMin = Vector2.zero;
-        rt_off.anchorMin = Vector2.zero;
+            rt_on.anchorMin = Vector2.zero;
+            rt_off.anchorMin = Vector2.zero;
 
-        cam = NetworkedPlayer.x.GetCamera();
+            cam = NetworkedPlayer.x.GetCamera();
 
-        canRect = t_hudCanvas.GetComponent<RectTransform>();
-        curRadius = f_xRadius;
-        onText = go_onMarker.transform.GetChild(0).GetComponent<Text>();
-        offText = go_offMarker.transform.GetChild(0).GetComponent<Text>();
+            canRect = t_hudCanvas.GetComponent<RectTransform>();
+            curRadius = f_xRadius;
+            onText = go_onMarker.transform.GetChild(0).GetComponent<Text>();
+            offText = go_offMarker.transform.GetChild(0).GetComponent<Text>();
 
-        playerName = _name;
-        onText.text = playerName;
-        offText.text = $"{playerName}   {playerName}";
+            playerName = _name;
+            onText.text = playerName;
+            offText.text = $"{playerName}   {playerName}";
+
+        }
+
     }
 
     private void PositionWaypoint()
@@ -147,17 +159,17 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     private void OnDisable()
     {
-        ForRemove();   
+        Remove();
     }
 
     private void OnDestroy()
     {
-        ForRemove();   
+        Remove();
     }
 
     public override void OnLeftRoom()
     {
-        ForRemove();   
+        ForRemove();
     }
 
 }
