@@ -117,6 +117,14 @@ public class ToolHandler : SubjectBase
         catch (System.InvalidCastException e) { return; }
     }
 
+    internal float ReturnWeaponWeight(int _i_toolIndex)
+    {
+        if (A_tools[_i_toolIndex] != null)
+            return (A_tools[_i_toolIndex] as WeaponTool).f_weight;
+        else
+            return 0;
+    }
+
     /// <summary>
     /// Whatcha buyin'?
     /// </summary>

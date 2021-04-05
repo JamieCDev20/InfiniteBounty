@@ -9,7 +9,7 @@ public class WeaponTool : ToolBase
     [Header("Weapon Stats")]
     [SerializeField] protected int i_damage;
     [SerializeField] protected int i_lodeDamage;
-    [SerializeField] protected float f_weight;
+    [SerializeField] internal float f_weight;
     [SerializeField] protected float f_recoil;
     [SerializeField] protected float f_speed;
     [SerializeField] protected float f_heatsink;

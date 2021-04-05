@@ -59,6 +59,8 @@ public class PlayerMover : MonoBehaviour
     private Transform t_camTransform;
     private PhotonView view;
     private FootstepAudioPlayer fap_audio;
+    private ToolHandler th_handler;
+    private PlayerInputManager pim_inputs;
     internal bool b_isSitting;
     private bool b_knockedback;
     private Animator anim;
@@ -72,6 +74,8 @@ public class PlayerMover : MonoBehaviour
 
     private void Start()
     {
+        th_handler = GetComponent<ToolHandler>();
+        pim_inputs = GetComponent<PlayerInputManager>();
         anim = GetComponentInChildren<Animator>();
         Init();
         SceneManager.sceneLoaded += SceneChange;
@@ -136,12 +140,30 @@ public class PlayerMover : MonoBehaviour
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
             //rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
-            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * f_currentMoveSpeed * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), 0.2f);
+            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * (f_currentMoveSpeed / GetWeaponWeighting()) * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), 0.2f);
             t.y += rb.velocity.y;
             rb.velocity = t;
 
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
+    }
+
+    private float GetWeaponWeighting()
+    {
+        float _f_totalWeight = 2;
+
+        if (pim_inputs.GetToolBools().b_RToolHold || pim_inputs.GetToolBools().b_LToolHold)
+        {
+            _f_totalWeight += th_handler.ReturnWeaponWeight(0);
+            _f_totalWeight += th_handler.ReturnWeaponWeight(1);
+        }
+        else
+        {
+            _f_totalWeight += th_handler.ReturnWeaponWeight(0) * 0.25f;
+            _f_totalWeight += th_handler.ReturnWeaponWeight(1) * 0.25f;
+        }
+
+        return (_f_totalWeight * 0.5f);
     }
 
     /// <summary>
