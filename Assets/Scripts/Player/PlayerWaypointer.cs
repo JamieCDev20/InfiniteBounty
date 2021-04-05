@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerWaypointer : MonoBehaviour
+public class PlayerWaypointer : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] private GameObject go_onScreenMarker;
@@ -128,6 +129,16 @@ public class PlayerWaypointer : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (run)
+        {
+            Destroy(go_offMarker);
+            Destroy(go_onMarker);
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
         if (run)
         {
             Destroy(go_offMarker);
