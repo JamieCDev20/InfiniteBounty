@@ -48,6 +48,10 @@ public class HUDController : MonoBehaviour
     [SerializeField] private GameObject go_teleportSign;
     private int i_headSprite;
 
+    [Header("Crosshair")]
+    [SerializeField] private RectTransform rt_crossHairBits;
+
+
     private void Awake()
     {
         x = this;
@@ -86,8 +90,15 @@ public class HUDController : MonoBehaviour
 
         i_healthBar.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
         rt_healthBar.localScale = new Vector3((float)_i_currentHealth / _i_maxHealth, 1, 1);
-        print(i_headSprite + "/" + saA_faceSprites[i_headSprite].sA_sprites.Length);
-        i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[Mathf.Clamp(Mathf.RoundToInt((float)_i_currentHealth / _i_maxHealth) * saA_faceSprites[i_headSprite].sA_sprites.Length - 1, 0, 4)];
+
+
+        i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[2];
+
+        if (_i_currentHealth < _i_maxHealth * 0.5f)
+            i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[1];
+
+        if (_i_currentHealth <= 0)
+            i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[0];
     }
 
     public void SetNugValues(int[] _iA_nugCounts)
@@ -131,9 +142,6 @@ public class HUDController : MonoBehaviour
         go_healthbarParent.gameObject.SetActive(inLevel);
         go_nugHudParent.SetActive(inLevel);
         go_bbObject.SetActive(!inLevel);
-
-
-
     }
 
     public Transform GetHudCanvasTransform()
@@ -141,6 +149,10 @@ public class HUDController : MonoBehaviour
         return hudCanvas;
     }
 
+    public void SetCrosshairSize(float _f_size)
+    {
+        rt_crossHairBits.localScale = Vector3.one * _f_size;
+    }
 
 
     #region Other Player's Bars
