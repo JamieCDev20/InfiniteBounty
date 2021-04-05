@@ -43,7 +43,12 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         {
             string fusedstring = AugmentLoader.LoadFusedAugmentJson();
             if (fusedstring == string.Empty)
+            {
+                fusedAugs = new Augment[0];
+                fusedProj = new ProjectileAugment[0];
+                fusedCone = new ConeAugment[0];
                 return;
+            }
 
             _savedData = JsonConvert.DeserializeObject<AugmentSave[]>(fusedstring);
             List<Augment> _newAugs = new List<Augment>();
