@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,9 @@ public class ProjectileTool : WeaponTool
     private PlayerInputManager pim;
     internal bool b_isLeftHandWeapon;
     [SerializeField] private float f_heatVolumeMult;
+    private bool b_isOverheating;
+    [SerializeField] private ParticleSystem ps_overHeatEffects;
+    [SerializeField] private AudioClip ac_overHeatClip;
 
     public override void SetActive(bool val)
     {
@@ -43,7 +47,7 @@ public class ProjectileTool : WeaponTool
 
         if (b_usable)
         {
-            if (f_currentHeat >= f_maxHeat)
+            if (b_isOverheating)
                 return;
             base.Use(_v_forwards);
             SpawnBullet(_v_forwards);
@@ -58,10 +62,33 @@ public class ProjectileTool : WeaponTool
 
     private void Update()
     {
-        if (f_currentHeat > 0 && !(b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold))
+        if (f_currentHeat > 0 && (!(b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold) || b_isOverheating))
             f_currentHeat -= Time.deltaTime * f_heatsink;
+
+        if (f_currentHeat >= f_maxHeat)
+            StartOverheating();
+
+        if (f_currentHeat <= 0)
+            EndOverHeat();
         DoHeatSound();
     }
+
+    private void StartOverheating()
+    {
+        if (!b_isOverheating)
+        {
+            PlayAudio(ac_overHeatClip);
+            ps_overHeatEffects?.Play();
+            b_isOverheating = true;
+        }
+    }
+
+    private void EndOverHeat()
+    {
+        ps_overHeatEffects?.Stop();
+        b_isOverheating = false;
+    }
+
 
     public void DoHeatSound()
     {
