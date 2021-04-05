@@ -129,26 +129,35 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     public void Remove()
     {
-        foreach (PlayerWaypointer pw in FindObjectsOfType<PlayerWaypointer>())
+        if (run)
         {
-            pw.Remove();
+            Destroy(go_offMarker);
+            Destroy(go_onMarker);
         }
 
     }
 
+    public void ForRemove()
+    {
+        foreach (PlayerWaypointer pw in FindObjectsOfType<PlayerWaypointer>())
+        {
+            pw.Remove();
+        }
+    }
+
     private void OnDisable()
     {
-        Remove();
+        ForRemove();   
     }
 
     private void OnDestroy()
     {
-        Remove();
+        ForRemove();   
     }
 
     public override void OnLeftRoom()
     {
-        Remove();
+        ForRemove();   
     }
 
 }
