@@ -15,11 +15,24 @@ public class ProjectileTool : WeaponTool
     public override AugmentType AugType { get { return augType; } }
     AugmentProjectile ap_projAugment;
 
+    [Header("Heat")]
+    [SerializeField] private float f_maxHeat;
+    [SerializeField] private float f_heatPerShot;
+    [SerializeField] private AudioSource as_heatGuageSource;
+    private float f_currentHeat;
+    [SerializeField] private float f_maxHeatPitch;
+    private PlayerInputManager pim;
+    internal bool b_isLeftHandWeapon;
+    [SerializeField] private float f_heatVolumeMult;
+
     public override void SetActive(bool val)
     {
         b_active = val;
-        if(transform.root.GetComponent<PlayerInputManager>() != null)
-            cc_cam = transform.root.GetComponent<PlayerInputManager>().GetCamera();
+        if (transform.root.GetComponent<PlayerInputManager>() != null)
+        {
+            pim = transform.root.GetComponent<PlayerInputManager>();
+            cc_cam = pim.GetCamera();
+        }
         c_playerCollider = transform.root.GetComponent<Collider>();
     }
 
@@ -27,8 +40,11 @@ public class ProjectileTool : WeaponTool
     {
         if (!b_active)
             return;
+
         if (b_usable)
         {
+            if (f_currentHeat >= f_maxHeat)
+                return;
             base.Use(_v_forwards);
             SpawnBullet(_v_forwards);
             b_usable = false;
@@ -36,7 +52,21 @@ public class ProjectileTool : WeaponTool
             PlayParticles(true);
             cc_cam?.Recoil(f_recoil);
             PlayAudio(ac_activationSound);
+            f_currentHeat += f_heatPerShot;
         }
+    }
+
+    private void Update()
+    {
+        if (f_currentHeat > 0 && !(b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold))
+            f_currentHeat -= Time.deltaTime * f_heatsink;
+        DoHeatSound();
+    }
+
+    public void DoHeatSound()
+    {
+        as_heatGuageSource.volume = ((float)(f_maxHeat / f_currentHeat)) * f_heatVolumeMult;
+        as_heatGuageSource.pitch = Mathf.Lerp(0, f_maxHeatPitch, (float)f_maxHeat / f_currentHeat);
     }
 
     public override void NetUse(Vector3 _v_forwards)
@@ -55,9 +85,9 @@ public class ProjectileTool : WeaponTool
     {
         if (go_particles.Length != 0)
         {
-            foreach(GameObject partics in go_particles)
+            foreach (GameObject partics in go_particles)
             {
-                if(partics != null)
+                if (partics != null)
                 {
                     partics.SetActive(false);
                     partics.SetActive(true);
@@ -68,7 +98,7 @@ public class ProjectileTool : WeaponTool
 
     public override bool AddStatChanges(Augment aug)
     {
-        if(!base.AddStatChanges(aug))
+        if (!base.AddStatChanges(aug))
             return false;
         ProjectileAugment pa = (ProjectileAugment)FindObjectOfType<AugmentManager>().GetAugment(aug.Name).Aug;
         AugmentProjectile augData = pa.GetProjectileData();

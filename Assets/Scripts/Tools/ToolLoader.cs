@@ -35,6 +35,12 @@ public class ToolLoader : MonoBehaviour
                     break;
             }
         }
+
+        if (ts_slot == ToolSlot.leftHand)
+            if (go_tool is ProjectileTool)
+                (go_tool as ProjectileTool).b_isLeftHandWeapon = true;
+
+
         go_tool.transform.position = _t_parent.position;
         go_tool.transform.rotation = _t_parent.rotation;
         go_tool.transform.parent = _t_parent;
