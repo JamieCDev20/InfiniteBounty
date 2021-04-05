@@ -230,6 +230,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
     {
+        #region Old
+
         //List<Augment> _aL_augmentsToShow = new List<Augment>();
         //// Currently only show all augments
         //switch (_adt_whichToShow)
@@ -274,6 +276,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         //rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         //s_slider.value = 1;
 
+        #endregion
+
         UpdateAugmentListDisplay(aL_augs, _adt_whichToShow, "");
 
     }
@@ -303,6 +307,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
+        Debug.Log($"CurrentAugmentIndex : {i_currentAugmentIndex}");
         ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
         switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
         {

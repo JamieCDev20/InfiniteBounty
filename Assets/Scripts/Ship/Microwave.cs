@@ -42,7 +42,6 @@ public class Microwave : SubjectBase, IInteractible
             interactor.transform.forward = t_playerPos.forward;
             // Don't let the menu be used twice
             b_inUse = true;
-            pim = interactor.GetComponent<PlayerInputManager>();
             //th_currentTh = interactor.GetComponent<ToolHandler>();
             PlayerMover pm = pim.GetComponent<PlayerMover>();
             // Stop the player and camera from moving 
@@ -99,6 +98,7 @@ public class Microwave : SubjectBase, IInteractible
         // Put an augment in the empty slot
         if (aug_slotA == null)
         {
+            Debug.Log(0);
             aug_slotA = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
             //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
@@ -108,6 +108,7 @@ public class Microwave : SubjectBase, IInteractible
         }
         else if (aug_slotB == null)
         {
+            Debug.Log(1);
             aug_slotB = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
             //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
@@ -118,17 +119,18 @@ public class Microwave : SubjectBase, IInteractible
         // Reveal fusion button, or reload augment list
         if (aug_slotA != null && aug_slotB != null)
         {
+            Debug.Log(2);
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameTypeExcluding, false, aug_slotA.Name, aug_slotB.Name);
             RevealFuseButton();
         }
         else
         {
-
+            Debug.Log(3);
             aL_allAugmentsOwned.Clear();
 
-            if (aug_slotA?.Stage == AugmentStage.full || aug_slotB.Stage == AugmentStage.full)
+            if (aug_slotA?.Stage == AugmentStage.full || aug_slotB?.Stage == AugmentStage.full)
                 aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameTypeExcluding, false, aug_slotA != null? aug_slotA.Name : aug_slotB != null? aug_slotB.Name : "");
-            else if (aug_slotA?.Stage == AugmentStage.fused || aug_slotB.Stage == AugmentStage.fused)
+            else if (aug_slotA?.Stage == AugmentStage.fused || aug_slotB?.Stage == AugmentStage.fused)
                 aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameName, false);
 
         }
@@ -181,6 +183,7 @@ public class Microwave : SubjectBase, IInteractible
         RemoveAugment(true);
         RemoveAugment(false);
         FuseSaver.x.LoadFusedAugments();
+        apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
         // TODO:
         // Create fused augments file for all fused augments to be saved at.
         // Make ClearSaveData clear fused augments list

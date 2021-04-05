@@ -36,7 +36,6 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         LoadFusedAugments();
     }
 
-
     public void LoadFusedAugments()
     {
         if(Resources.Load("FusedAugmentData") != null)
@@ -78,6 +77,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             File.Create(filePath);
         }
     }
+
     public void OnNotify(ObserverEvent oe_event)
     {
         switch (oe_event)
@@ -113,6 +113,13 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         string fusedData = JsonConvert.SerializeObject(_savedData);
         File.WriteAllText(filePath, fusedData);
     }
+
+    public void DestroySaveData()
+    {
+        File.WriteAllText(filePath, "");
+        //File.Delete(filePath);
+    }
+
     private void DebugTheArraysMaaang()
     {
         if (!Utils.ArrayIsNullOrZero(fusedAugs))
