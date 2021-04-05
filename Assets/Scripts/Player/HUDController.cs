@@ -18,8 +18,8 @@ public class HUDController : MonoBehaviour
     //[SerializeField] private RectTransform rt_rightHeatGuage;
 
     [Header("Health Stats")]
-    [SerializeField] private List<Sprite> sA_faceSprites = new List<Sprite>();
-    [SerializeField] private Image i_faceImage;
+    [SerializeField] private List<SpriteArray> saA_faceSprites = new List<SpriteArray>();
+    [Space, SerializeField] private Image i_faceImage;
     [Space, SerializeField] private Image i_faceBackgroundImage;
     [SerializeField] private Gradient g_healthBarGradient;
 
@@ -46,12 +46,19 @@ public class HUDController : MonoBehaviour
 
     [Header("Tools")]
     [SerializeField] private GameObject go_teleportSign;
+    private int i_headSprite;
 
     private void Awake()
     {
         x = this;
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void ChangeHeadSpriteIcon(int _i_headIndex)
+    {
+        i_headSprite = _i_headIndex;
+        SetHealthBarValue(1, 1);
     }
 
     private void Start()
@@ -79,7 +86,7 @@ public class HUDController : MonoBehaviour
 
         i_healthBar.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
         rt_healthBar.localScale = new Vector3((float)_i_currentHealth / _i_maxHealth, 1, 1);
-        i_faceImage.sprite = sA_faceSprites[Mathf.Clamp(Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count), 0, 4)];
+        i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[Mathf.Clamp(Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * saA_faceSprites.Count), 0, 4)];
     }
 
     public void SetNugValues(int[] _iA_nugCounts)
@@ -167,5 +174,12 @@ public class HUDController : MonoBehaviour
     }
 
     #endregion
+
+
+    [System.Serializable]
+    private struct SpriteArray
+    {
+        public Sprite[] sA_sprites;
+    }
 
 }
