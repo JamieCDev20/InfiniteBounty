@@ -44,14 +44,6 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
     public void SetNames(string _name)
     {
         Debug.Log("SetNames");
-        StartCoroutine(WhyDoIHaveToDoThis(_name));
-    }
-
-    IEnumerator WhyDoIHaveToDoThis(string _name)
-    {
-
-        yield return new WaitForSeconds(0.5f);
-
         t_targetPlayer = NetworkedPlayer.x.GetPlayer();
         if (t_targetPlayer == transform)
         {
@@ -81,7 +73,6 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
             offText.text = $"{playerName}   {playerName}";
 
         }
-
     }
 
     private void PositionWaypoint()
