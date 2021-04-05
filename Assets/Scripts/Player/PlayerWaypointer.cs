@@ -43,6 +43,7 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     public void SetNames(string _name)
     {
+        Debug.Log("SetNames");
         StartCoroutine(WhyDoIHaveToDoThis(_name));
     }
 
