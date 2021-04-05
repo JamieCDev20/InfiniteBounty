@@ -65,8 +65,8 @@ public class ProjectileTool : WeaponTool
 
     public void DoHeatSound()
     {
-        as_heatGuageSource.volume = ((float)(f_maxHeat / f_currentHeat)) * f_heatVolumeMult;
-        as_heatGuageSource.pitch = Mathf.Lerp(0, f_maxHeatPitch, (float)f_maxHeat / f_currentHeat);
+        as_heatGuageSource.volume = ((float)(f_currentHeat / f_maxHeat)) * f_heatVolumeMult;
+        as_heatGuageSource.pitch = Mathf.Lerp(0, f_maxHeatPitch, (float)f_currentHeat / f_maxHeat);
     }
 
     public override void NetUse(Vector3 _v_forwards)
