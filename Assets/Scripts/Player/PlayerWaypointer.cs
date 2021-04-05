@@ -43,7 +43,6 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     public void SetNames(string _name)
     {
-        Debug.Log("SetNames");
         if(go_onMarker != null)
         {
             Remove();
