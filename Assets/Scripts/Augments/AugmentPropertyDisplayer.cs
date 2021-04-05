@@ -307,13 +307,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
         {
             case AugmentType.standard:
-                ad_display.t_augmentFits.text = "Hammer";
+                SetFitIcon(0);
                 break;
             case AugmentType.projectile:
-                ad_display.t_augmentFits.text = "Blaster - Shredder - Cannon";
+                SetFitIcon(1);
                 break;
             case AugmentType.cone:
-                ad_display.t_augmentFits.text = "Nuggsucker";
+                SetFitIcon(2);
                 break;
         }
 
@@ -323,6 +323,15 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
         //        UpdatePropertyText(_i_augmentIndexClicked);
     }
+
+    public void SetFitIcon(int f)
+    {
+        for (int i = 0; i < ad_display.goA_fitIcons.Length; i++)
+        {
+            ad_display.goA_fitIcons[i].SetActive(i == f);
+        }
+    }
+
     public void UpdatePropertyText(Augment _aug)
     {
         AugmentProperties ap = _aug.GetAugmentProperties();

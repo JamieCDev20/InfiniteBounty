@@ -37,7 +37,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
     }
 
 
-    private void LoadFusedAugments()
+    public void LoadFusedAugments()
     {
         if(Resources.Load("FusedAugmentData") != null)
         {
@@ -83,9 +83,9 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (oe_event)
         {
             case FuseEvent fuseEvent:
-                Debug.Log(_savedData.Length);
+                //Debug.Log(_savedData.Length);
                 _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
-                Debug.Log(_savedData.Length);
+                //Debug.Log(_savedData.Length);
                 SaveFusedAugments();
                 break;
         }

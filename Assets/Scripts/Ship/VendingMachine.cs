@@ -163,13 +163,13 @@ public class VendingMachine : SubjectBase, IInteractible
         switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
         {
             case AugmentType.standard:
-                apd.AugDisplay.t_augmentFits.text = "Hammer";
+                apd.SetFitIcon(0);
                 break;
             case AugmentType.projectile:
-                apd.AugDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
+                apd.SetFitIcon(1);
                 break;
             case AugmentType.cone:
-                apd.AugDisplay.t_augmentFits.text = "Nuggsucker";
+                apd.SetFitIcon(2);
                 break;
         }
 
@@ -248,7 +248,8 @@ public struct AugmentDisplay
 {
     public Text t_levelNumber;
     public Text t_augmentName;
-    public Text t_augmentFits;
+    //public Text t_augmentFits;
+    public GameObject[] goA_fitIcons;
     public Text t_augmentEffects;
     public Text t_augmentCost;
 }

@@ -99,7 +99,6 @@ public class Microwave : SubjectBase, IInteractible
         // Put an augment in the empty slot
         if (aug_slotA == null)
         {
-            Debug.Log(1);
             aug_slotA = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
             //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
@@ -109,7 +108,6 @@ public class Microwave : SubjectBase, IInteractible
         }
         else if (aug_slotB == null)
         {
-            Debug.Log(2);
             aug_slotB = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
             //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
@@ -120,13 +118,11 @@ public class Microwave : SubjectBase, IInteractible
         // Reveal fusion button, or reload augment list
         if (aug_slotA != null && aug_slotB != null)
         {
-            Debug.Log(3);
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameTypeExcluding, false, aug_slotA.Name, aug_slotB.Name);
             RevealFuseButton();
         }
         else
         {
-            Debug.Log(4);
 
             aL_allAugmentsOwned.Clear();
 
@@ -182,6 +178,9 @@ public class Microwave : SubjectBase, IInteractible
         apd.UpdatePropertyText(fusedAug);
         FuseEvent fe = new FuseEvent(new AugmentSave(AugmentStage.fused, aug_slotA.at_type, new int[2] {AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name), AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }));
         Notify(fe);
+        RemoveAugment(true);
+        RemoveAugment(false);
+        FuseSaver.x.LoadFusedAugments();
         // TODO:
         // Create fused augments file for all fused augments to be saved at.
         // Make ClearSaveData clear fused augments list
