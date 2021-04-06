@@ -95,19 +95,19 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 #endif
         if (!view.IsMine || isDead)
             return;
-        //print(damage + " DMG taken");
 
-        if (acA_hurtClips.Length > 0 && damage != 0)
+        if (damage != 0)
             as_mainAudioSource.PlayOneShot(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)]);
+
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
         HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
 
         if (f_currentHealth <= 0)
-        {
             ClientDie();
-        }
+
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
+
     }
 
     private void CheckSound()
@@ -166,7 +166,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         {
             toggles[i].SetActive(true);
         }
-        
+
     }
 
     public void FullRespawn()
@@ -276,7 +276,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         ToggleAlive(false);
         b_downed = false;
         transform.parent = null;
-        for(int i = 0; i < toggles.Length; i++)
+        for (int i = 0; i < toggles.Length; i++)
         {
             toggles[i].SetActive(false);
         }

@@ -134,6 +134,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
 
         go_exploParticles?.SetActive(true);
         go_exploParticles.transform.parent = null;
+        go_exploParticles.transform.localScale = Vector3.one * 0.5f;
         //Invoke("SetExploPartsInactive", 2);
 
     }

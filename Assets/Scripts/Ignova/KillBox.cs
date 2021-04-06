@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class KillBox : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class KillBox : MonoBehaviour
     [Header("Bouncing")]
     [SerializeField] private Vector3 v_bounceDirection;
     [SerializeField] private bool b_shouldCauseKnockback;
-    private AudioSource as_source;
-    [SerializeField] private AudioClip ac_burnEffect;
     [SerializeField] private GameObject go_flamePrefab;
     private List<GameObject> goL_flames = new List<GameObject>();
     [SerializeField] private bool b_dealsFire = true;
@@ -26,6 +25,11 @@ public class KillBox : MonoBehaviour
     [Header("Getting Neutralized")]
     [SerializeField] private Color c_neutralColour;
     [SerializeField] private MeshRenderer mr_renderer;
+
+    [Header("Audio")]
+    [SerializeField] private AudioMixer am_nugMixer;
+    private AudioSource as_source;
+    [SerializeField] private AudioClip ac_burnEffect;
 
 
     private void Start()
@@ -87,8 +91,13 @@ public class KillBox : MonoBehaviour
             if (b_shouldCauseKnockback && collision.transform.tag == "Player")
                 collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 3 : 1), b_dealsFire);
 
-            if (as_source)
-                as_source.PlayOneShot(ac_burnEffect);
+            if (am_nugMixer)
+            {
+                float vol = 0;
+                am_nugMixer.GetFloat("Volume", out vol);
+                vol = (vol + 80) / 80;
+                AudioSource.PlayClipAtPoint(ac_burnEffect, collision.contacts[0].point, vol);
+            }
 
             if (goL_flames.Count > 0 && _h != null)
                 PlaceFlameBurst(collision.GetContact(0).point);

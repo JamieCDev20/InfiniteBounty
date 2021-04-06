@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class HUDController : MonoBehaviour
+public class HUDController : MonoBehaviourPunCallbacks
 {
     public static HUDController x;
 
@@ -112,6 +113,12 @@ public class HUDController : MonoBehaviour
         texts.thunderText.text = _iA_nugCounts[3].ToString();
         texts.boomText.text = _iA_nugCounts[4].ToString();
         texts.magmaText.text = _iA_nugCounts[5].ToString();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        StopShowing();
     }
 
     internal void StartShowing()

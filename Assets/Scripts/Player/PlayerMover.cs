@@ -28,7 +28,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_gravityScale = 10; // The force of gravity on the player
     [SerializeField] private float f_plummetPoint = 5; //the velocity at which below, gravity will increase
     [SerializeField] private float f_plummetMultiplier = 3; //the velocity at which below, gravity will increase
-    [SerializeField] private Vector3 v_dragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
+    [SerializeField] private Vector3 v_groundedDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
+    [SerializeField] private Vector3 v_airDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
 
     [Header("Getting Teleported")]
     [SerializeField] private GameObject go_characterMesh;
@@ -72,6 +73,7 @@ public class PlayerMover : MonoBehaviour
 
     //Killthings
     private float f_currentKillTimer;
+    private bool b_isDead;
 
     #endregion
 
@@ -203,7 +205,7 @@ public class PlayerMover : MonoBehaviour
     private void ApplyDrag()
     {
         if (b_applyDrag)
-            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_dragVector);
+            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - (b_grounded ? v_groundedDragVector : v_airDragVector));
     }
 
     /// <summary>
@@ -222,11 +224,15 @@ public class PlayerMover : MonoBehaviour
     {
         if ((Mathf.Abs(transform.position.y) > v_killLimits.y || Mathf.Abs(transform.position.x) > v_killLimits.x) && view.IsMine)
         {
-            f_currentKillTimer -= Time.deltaTime;
-            HUDController.x.ShowKillTimer(f_currentKillTimer);
-            if (f_currentKillTimer <= 0)
+            if (!b_isDead)
             {
-                GetComponent<PlayerHealth>().ClientFullDie();
+                f_currentKillTimer -= Time.deltaTime;
+                HUDController.x.ShowKillTimer(f_currentKillTimer);
+            }
+            if (f_currentKillTimer <= 0 && !b_isDead)
+            {
+                b_isDead = true;
+                StartCoroutine(KillPlayer());
                 HUDController.x.HideKillTimer();
                 f_currentKillTimer = 10;
             }
@@ -234,7 +240,17 @@ public class PlayerMover : MonoBehaviour
         else
         {
             f_currentKillTimer = 10;
+            b_isDead = false;
             HUDController.x.HideKillTimer();
+        }
+    }
+
+    private IEnumerator KillPlayer()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            yield return new WaitForSeconds(0.05f);
+            GetComponent<PlayerHealth>().TakeDamage(10, false);
         }
     }
 

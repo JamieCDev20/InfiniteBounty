@@ -147,7 +147,7 @@ public class CameraController : MonoBehaviour
     {
         t_follow = _t_newFollow;
         t_follow.GetComponentInChildren<Billboard>()?.gameObject.SetActive(false);
-        GetComponentInChildren<PauseMenuController>().SetSpectating();
+        FindObjectOfType<PauseMenuController>().SetSpectating();
         b_isSpectating = _b_isSpectating;
     }
 
