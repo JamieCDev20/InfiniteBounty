@@ -59,12 +59,15 @@ public class FuseSaver : MonoBehaviour, ObserverBase
                 {
                     case AugmentType.projectile:
                         _newProj.Add(AugmentManager.x.GetProjectileAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                        Debug.Log(_newProj[_newProj.Count-1].Name);
                         break;
                     case AugmentType.cone:
                         _newCone.Add(AugmentManager.x.GetConeAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                        Debug.Log(_newCone[_newCone.Count - 1].Name);
                         break;
                     case AugmentType.standard:
                         _newAugs.Add(AugmentManager.x.GetStandardAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                        Debug.Log(_newAugs[_newAugs.Count - 1].Name);
                         break;
                 }
             }

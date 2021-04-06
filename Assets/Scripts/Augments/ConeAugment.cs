@@ -29,6 +29,7 @@ public class ConeAugment : Augment
         ConeAugment c = new ConeAugment();
         Augment ac = Augment.Combine(a, b);
         List<string[]> audioClips = ac.GetAudioProperties();
+        c.Level = 1;
         c.s_name = ac.Name;
         c.Cost = ac.Cost;
         c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);

@@ -223,20 +223,16 @@ public class Augment
         string newName = "";
         if (a.Name.Contains(" "))
         {
-            string newNamea = a.s_name.Split(' ')[0];
             string newNameb = b.s_name.Split(' ')[0];
-            if (newNamea == newNameb)
-                newName += "Super ";
-            else
-                newName += newNamea + " " + newNameb + " ";
-            newName += a.s_name.Split(' ')[1];
-            c.s_name += newName;
+            string newNamea = newNameb + " " + a.Name;
+            c.s_name += newNamea;
         }
         else
         {
             newName = a.Name + " " + b.Name;
             c.s_name = newName;
         }
+        c.i_level = 1;
         // Audio data
         c.ac_useSound = CombineFusionArrays(a.ac_useSound, b.ac_useSound);
         c.ac_travelSound = CombineFusionArrays(a.ac_travelSound, b.ac_travelSound);

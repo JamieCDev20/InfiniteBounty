@@ -80,18 +80,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 }
             }
             FuseSaver fs = FindObjectOfType<FuseSaver>();
-            switch (augs[0].at_type)
-            {
-                case AugmentType.projectile:
-                    augs = Utils.CombineArrays(augs, fs.FusedProjectiles);
-                    break;
-                case AugmentType.cone:
-                    augs = Utils.CombineArrays(augs, fs.FusedCones);
-                    break;
-                case AugmentType.standard:
-                    augs = Utils.CombineArrays(augs, fs.FusedAugments);
-                    break;
-            }
+            augs = Utils.CombineArrays(augs, fs.FusedProjectiles);
+            augs = Utils.CombineArrays(augs, fs.FusedCones);
+            augs = Utils.CombineArrays(augs, fs.FusedAugments);
             _augmentsInList.AddRange(augs);
         }
         // Update display from save file
