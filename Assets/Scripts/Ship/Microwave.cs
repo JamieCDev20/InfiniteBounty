@@ -185,11 +185,7 @@ public class Microwave : SubjectBase, IInteractible
         FuseSaver.x.LoadFusedAugments();
         apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
         // TODO:
-        // Create fused augments file for all fused augments to be saved at.
-        // Make ClearSaveData clear fused augments list
         // Play animation
-        //RemoveAugmentEvent rae = new RemoveAugmentEvent(aug_slotB);
-        //Notify(new SaveEvent(rae));
     }
 
     private void RevealFuseButton()

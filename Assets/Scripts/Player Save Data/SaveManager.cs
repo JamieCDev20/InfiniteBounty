@@ -354,6 +354,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
                 break;
             case FuseEvent fuseEvent:
+
                 break;
         }
     }

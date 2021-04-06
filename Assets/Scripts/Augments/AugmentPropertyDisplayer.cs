@@ -80,9 +80,12 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 }
             }
             FuseSaver fs = FindObjectOfType<FuseSaver>();
-            augs = Utils.CombineArrays(augs, fs.FusedProjectiles);
-            augs = Utils.CombineArrays(augs, fs.FusedCones);
-            augs = Utils.CombineArrays(augs, fs.FusedAugments);
+            if(!Utils.ArrayIsNullOrZero(fs.FusedAugments))
+                augs = Utils.CombineArrays(augs, fs.FusedAugments);
+            if(!Utils.ArrayIsNullOrZero(fs.FusedProjectiles))
+                augs = Utils.CombineArrays(augs, fs.FusedProjectiles);
+            if(!Utils.ArrayIsNullOrZero(fs.FusedCones))
+                augs = Utils.CombineArrays(augs, fs.FusedCones);
             _augmentsInList.AddRange(augs);
         }
         // Update display from save file
