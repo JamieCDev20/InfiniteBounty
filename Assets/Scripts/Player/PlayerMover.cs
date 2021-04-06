@@ -75,6 +75,10 @@ public class PlayerMover : MonoBehaviour
     private float f_currentKillTimer;
     private bool b_isDead;
 
+    [SerializeField] private float f_maxJumpTime;
+    private float f_currentJumpTime;
+    private bool b_isJumping;
+
     #endregion
 
 
@@ -182,11 +186,26 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if (!b_jumpPress || b_down)
-            return;
-        if ((Time.realtimeSinceStartup - f_lastOnGround) < f_coyoteTime)
+        if (Input.GetButtonDown("Jump") && b_grounded)
+            if ((Time.realtimeSinceStartup - f_lastOnGround) < f_coyoteTime)
+            {
+                f_lastOnGround -= 10;
+                Vector3 t = rb.velocity;
+                t.y = f_jumpForce;
+                rb.velocity = t;
+
+                f_currentJumpTime = 0;
+                b_isJumping = true;
+            }
+
+        //Stop jumping if you release the button or run out of time;
+        if (Input.GetButtonUp("Jump") || f_currentJumpTime > f_maxJumpTime)
+            b_isJumping = false;
+
+
+        if (b_isJumping)
         {
-            f_lastOnGround -= 10;
+            f_currentJumpTime += Time.deltaTime;
             Vector3 t = rb.velocity;
             t.y = f_jumpForce;
             rb.velocity = t;
