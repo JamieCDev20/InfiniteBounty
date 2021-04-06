@@ -97,10 +97,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             return;
 
         if (damage != 0)
-        {
             as_mainAudioSource.PlayOneShot(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)]);
-            print(damage + " DMG taken, now on " + f_currentHealth + " HP.");
-        }
 
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
         HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);

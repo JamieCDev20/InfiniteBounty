@@ -72,6 +72,7 @@ public class PlayerMover : MonoBehaviour
 
     //Killthings
     private float f_currentKillTimer;
+    private bool b_isDead;
 
     #endregion
 
@@ -222,11 +223,15 @@ public class PlayerMover : MonoBehaviour
     {
         if ((Mathf.Abs(transform.position.y) > v_killLimits.y || Mathf.Abs(transform.position.x) > v_killLimits.x) && view.IsMine)
         {
-            f_currentKillTimer -= Time.deltaTime;
-            HUDController.x.ShowKillTimer(f_currentKillTimer);
-            if (f_currentKillTimer <= 0)
+            if (!b_isDead)
             {
-                GetComponent<PlayerHealth>().ClientFullDie();
+                f_currentKillTimer -= Time.deltaTime;
+                HUDController.x.ShowKillTimer(f_currentKillTimer);
+            }
+            if (f_currentKillTimer <= 0 && !b_isDead)
+            {
+                b_isDead = true;
+                StartCoroutine(KillPlayer());
                 HUDController.x.HideKillTimer();
                 f_currentKillTimer = 10;
             }
@@ -234,7 +239,17 @@ public class PlayerMover : MonoBehaviour
         else
         {
             f_currentKillTimer = 10;
+            b_isDead = false;
             HUDController.x.HideKillTimer();
+        }
+    }
+
+    private IEnumerator KillPlayer()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            yield return new WaitForSeconds(0.05f);
+            GetComponent<PlayerHealth>().TakeDamage(10, false);
         }
     }
 
