@@ -49,7 +49,7 @@ public class HUDController : MonoBehaviour
     private int i_headSprite;
 
     [Header("Crosshair")]
-    [SerializeField] private RectTransform rt_crossHairBits;
+    [SerializeField] private RectTransform[] rtA_crossHairBits;
 
 
     private void Awake()
@@ -151,7 +151,14 @@ public class HUDController : MonoBehaviour
 
     public void SetCrosshairSize(float _f_size)
     {
-        rt_crossHairBits.localScale = Vector3.one * _f_size;
+        //Left Square
+        rtA_crossHairBits[0].localPosition = (Vector3.left * _f_size) + Vector3.left * 10;
+        //Right Square
+        rtA_crossHairBits[1].localPosition = (Vector3.right * _f_size) + Vector3.right * 10;
+        //Top Square
+        rtA_crossHairBits[2].localPosition = (Vector3.up * _f_size) + Vector3.up * 10;
+        //Bottom Square
+        rtA_crossHairBits[3].localPosition = (Vector3.down * _f_size) + Vector3.down * 10;
     }
 
 
