@@ -17,7 +17,7 @@ public class AugmentFuser : MonoBehaviour
         }
         if(a != b && a.Stage != AugmentStage.fused && b.Stage != AugmentStage.fused)
         {
-            newAug = a + b;
+            newAug = Augment.Combine(a, b);
             newAug.Stage = AugmentStage.fused;
             return newAug;
         }

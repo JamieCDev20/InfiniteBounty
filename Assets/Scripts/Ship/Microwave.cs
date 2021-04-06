@@ -58,6 +58,7 @@ public class Microwave : SubjectBase, IInteractible
             _pa.StopWalking();
             // Move camera
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
+            microwaveCanvas.transform.localScale = Vector3.one * 0.739f;
             microwaveCanvas.enabled = true;
             // Display the UI
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
@@ -80,6 +81,7 @@ public class Microwave : SubjectBase, IInteractible
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
         // Player is able to move camera
+        microwaveCanvas.transform.localScale = Vector3.zero;
         microwaveCanvas.enabled = false;
         pim.GetCamera().enabled = true;
         // Player is able to animate again!
@@ -91,6 +93,8 @@ public class Microwave : SubjectBase, IInteractible
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         b_inUse = false;
+        RemoveAugment(true);
+        RemoveAugment(false);
     }
 
     public void SetAugment()
@@ -98,9 +102,9 @@ public class Microwave : SubjectBase, IInteractible
         // Put an augment in the empty slot
         if (aug_slotA == null)
         {
-            Debug.Log(0);
             aug_slotA = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
+            aug_slotA.Stage = aL_allAugmentsOwned[apd.CurrentAugIndex].Stage;
             //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
             //apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
             go_augButtonA.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
@@ -108,9 +112,9 @@ public class Microwave : SubjectBase, IInteractible
         }
         else if (aug_slotB == null)
         {
-            Debug.Log(1);
             aug_slotB = aL_allAugmentsOwned[apd.CurrentAugIndex];
             apd.AugType = aL_allAugmentsOwned[apd.CurrentAugIndex].at_type;
+            aug_slotB.Stage = aL_allAugmentsOwned[apd.CurrentAugIndex].Stage;
             //apd.AugmentButtons[apd.CurrentAugIndex].SetActive(false);
             //apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<Button>().interactable = false;
             go_augButtonB.GetComponentsInChildren<Text>()[0].text = aL_allAugmentsOwned[apd.CurrentAugIndex].Name;
@@ -119,19 +123,21 @@ public class Microwave : SubjectBase, IInteractible
         // Reveal fusion button, or reload augment list
         if (aug_slotA != null && aug_slotB != null)
         {
-            Debug.Log(2);
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameTypeExcluding, false, aug_slotA.Name, aug_slotB.Name);
             RevealFuseButton();
         }
         else
         {
-            Debug.Log(3);
+            Debug.Log(aug_slotA != null ? aug_slotA.Stage : aug_slotB.Stage);
             aL_allAugmentsOwned.Clear();
 
             if (aug_slotA?.Stage == AugmentStage.full || aug_slotB?.Stage == AugmentStage.full)
                 aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameTypeExcluding, false, aug_slotA != null? aug_slotA.Name : aug_slotB != null? aug_slotB.Name : "");
             else if (aug_slotA?.Stage == AugmentStage.fused || aug_slotB?.Stage == AugmentStage.fused)
+            {
+                apd.AugmentName = aug_slotA == null ? aug_slotB.Name : aug_slotA.Name;
                 aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameName, false);
+            }
 
         }
     }
@@ -178,11 +184,29 @@ public class Microwave : SubjectBase, IInteractible
         UnrevealFuseButton();
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         apd.UpdatePropertyText(fusedAug);
-        FuseEvent fe = new FuseEvent(new AugmentSave(AugmentStage.fused, aug_slotA.at_type, new int[2] {AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name), AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }));
+        FuseEvent fe = new FuseEvent(new AugmentSave(AugmentStage.fused, aug_slotA.at_type, aug_slotA.Stage == AugmentStage.full ? 1 : fusedAug.Level, aug_slotA.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug_slotA.Name) : new int[2] {AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name), AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }));
         Notify(fe);
+        if(aug_slotA.Stage == AugmentStage.fused)
+        {
+            switch (aug_slotA.at_type)
+            {
+                case AugmentType.projectile:
+                    FuseSaver.x.RemoveProjectileFromSave((ProjectileAugment)aug_slotA);
+                    FuseSaver.x.RemoveProjectileFromSave((ProjectileAugment)aug_slotB);
+
+                    break;
+                case AugmentType.cone:
+                    FuseSaver.x.RemoveConeFromSave((ConeAugment)aug_slotA);
+                    FuseSaver.x.RemoveConeFromSave((ConeAugment)aug_slotB);
+                    break;
+                case AugmentType.standard:
+                    FuseSaver.x.RemoveStandardFromSave(aug_slotA);
+                    FuseSaver.x.RemoveStandardFromSave(aug_slotB);
+                    break;
+            }
+        }
         RemoveAugment(true);
         RemoveAugment(false);
-        FuseSaver.x.LoadFusedAugments();
         apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
         // TODO:
         // Play animation

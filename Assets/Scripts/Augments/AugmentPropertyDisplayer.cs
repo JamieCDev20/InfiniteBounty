@@ -79,7 +79,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                         break;
                 }
             }
-            FuseSaver fs = FindObjectOfType<FuseSaver>();
+            FuseSaver fs = FuseSaver.x;
             if(!Utils.ArrayIsNullOrZero(fs.FusedAugments))
                 augs = Utils.CombineArrays(augs, fs.FusedAugments);
             if(!Utils.ArrayIsNullOrZero(fs.FusedProjectiles))
@@ -90,7 +90,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         }
         // Update display from save file
         aL_allAugmentsOwned.AddRange(_augmentsInList);
-        UpdateAugmentListDisplay(aL_allAugmentsOwned, adt);
+        UpdateAugmentListDisplay(aL_allAugmentsOwned, adt, toExclude);
         adt_currentDisplayType = adt;
         return aL_allAugmentsOwned;
     }
@@ -136,12 +136,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         
     }
 
-    private List<Augment> DisplayAugmentsOfTypeExcluding(List<Augment> aL_augs, string _toExclude)
+    private List<Augment> DisplayAugmentsOfTypeExcluding(List<Augment> aL_augs, params string[] _toExclude)
     {
         List<Augment> _augList = new List<Augment>();
+        List<string> _exclusionZone = new List<string>(_toExclude);
         foreach (Augment aug in aL_augs)
         {
-            if (aug.at_type == at_type && aug.Name != _toExclude)
+            if (aug.at_type == at_type && !_exclusionZone.Contains(aug.Name))
                 _augList.Add(aug);
         }
         return _augList;
@@ -151,7 +152,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     {
         List<Augment> _augList = new List<Augment>();
         foreach (Augment aug in aL_augs)
-            if (aug.at_type == at_type)
+            if (aug.at_type == at_type && aug.Stage != AugmentStage.fused)
                 _augList.Add(aug);
         return _augList;
     }
@@ -172,7 +173,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         return _augList;
     }
 
-    private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow, string _toExclude)
+    private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow, params string[] _toExclude)
     {
         List<Augment> _aL_augmentsToShow = new List<Augment>();
         // Currently only show all augments
@@ -301,7 +302,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
-        Debug.Log($"CurrentAugmentIndex : {i_currentAugmentIndex}");
         ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
         switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
         {

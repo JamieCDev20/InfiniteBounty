@@ -265,6 +265,9 @@ public class Augment
             c.b_impact = true;
         else
             c.b_impact = false;
+
+        AugmentManager.x.AddToDict(c.Name, new int[] { AugmentManager.x.GetAugmentIndex(a.at_type, a.Name), AugmentManager.x.GetAugmentIndex(b.at_type, b.Name) });
+
         return c;
     }
 

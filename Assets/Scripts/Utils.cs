@@ -118,29 +118,27 @@ public class Utils
     {
         if (ArrayIsNullOrZero<T>(_arrayToRemove))
             return null;
-        _arrayToRemove = Swap<T>(_arrayToRemove, _itemToRemove, _arrayToRemove[_arrayToRemove.Length]);
+        _arrayToRemove = Swap<T>(_arrayToRemove, _itemToRemove, _arrayToRemove[_arrayToRemove.Length -1]);
         return ReduceArraySize<T>(_arrayToRemove);
     }
+
+    //public static T[] OrderedRemove<T>(T[] _arrayToRemove, T _itemToRemove)
+    //{
+    //    for(int i = 0; i < _arrayToRemove.Length; i++)
+    //    {
+    //        if(_arrayToRemove[i].ToString() == _itemToRemove.ToString())
+    //        {
+    //            Debug.Log(_arrayToRemove[i].ToString() + " " + _itemToRemove.ToString());
+    //            return OrderedRemove(_arrayToRemove, i);
+    //        }
+    //    }
+    //    return _arrayToRemove;
+    //}
 
     public static T[] OrderedRemove<T>(T[] _arrayToRemove, int _itemToRemove)
     {
         if (ArrayIsNullOrZero<T>(_arrayToRemove))
             return null;
-        //T[] tmp = new T[_arrayToRemove.Length + 1];
-        //tmp = AddToArray<T>(_arrayToRemove, _arrayToRemove[_arrayToRemove.Length-1]);
-        //T dupeItem = tmp[tmp.Length-1];
-        //tmp = Swap<T>(tmp, _itemToRemove, tmp.Length-1);
-        //tmp = ReduceArraySize<T>(tmp);
-        //if(_itemToRemove < tmp.Length)
-        //{
-        //    for(int i = _itemToRemove; i < tmp.Length -1; i++)
-        //    {
-        //        tmp = Swap<T>(tmp, i, i + 1);
-        //    }
-        //}
-        //tmp = ReduceArraySize<T>(_arrayToRemove);
-        //_arrayToRemove = tmp;
-        //return _arrayToRemove;
 
         bool skipped = false;
         T[] newArray = new T[_arrayToRemove.Length - 1];

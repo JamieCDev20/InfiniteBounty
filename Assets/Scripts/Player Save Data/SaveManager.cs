@@ -347,16 +347,36 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, equippedAugs);
                 break;
             case UnequipAugmentEvent uae:
-                AugmentSave augSave = new AugmentSave(uae.augsToUnequip.augs[0].Stage, uae.augsToUnequip.augs[0].at_type, AugmentManager.x.GetAugmentIndicies(uae.augsToUnequip.augs[0].at_type, uae.augsToUnequip.augs));
+                AugmentSave augSave = new AugmentSave(uae.augsToUnequip.augs[0].Stage, uae.augsToUnequip.augs[0].at_type, uae.augsToUnequip.augs[0].Level, AugmentManager.x.GetAugmentIndicies(uae.augsToUnequip.augs[0].at_type, uae.augsToUnequip.augs));
                 saveData.purchasedAugments = Utils.AddToArray(saveData.purchasedAugments, augSave);
                 RemoveEquippedAugments(uae.augsToUnequip);
                 string unequippedAugs = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
                 break;
             case FuseEvent fuseEvent:
-
+                switch (fuseEvent.SavedAug.SavedAugment.augStage)
+                {
+                    case AugmentStage.full:
+                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] })));
+                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[1] })));
+                        break;
+                }
+                string fusedStr = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, fusedStr);
                 break;
         }
+    }
+
+    private int GetAugmentSaveIndex(AugmentSave _augSave)
+    {
+        for (int i = 0; i < saveData.purchasedAugments.Length; i++)
+        {
+            if (saveData.purchasedAugments[i] == _augSave)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private void EquipNewAugment((int _toolID, int _slotID, AugmentSave[] _aug) newEquip)

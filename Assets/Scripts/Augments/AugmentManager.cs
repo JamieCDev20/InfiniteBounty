@@ -12,6 +12,9 @@ public class AugmentManager : MonoBehaviour
     [SerializeField] ProjectileAugment[] A_projAugs;
     [SerializeField] ConeAugment[] A_coneAugs;
     [SerializeField] private List<GameObject> go_augments = new List<GameObject>();
+
+    public Dictionary<string, int[]> siAD_fusedToInds = new Dictionary<string, int[]>();
+
     private int unfusedStandard;
     private int unfusedProjectile;
     private int unfusedCone;
@@ -86,6 +89,17 @@ public class AugmentManager : MonoBehaviour
         HashSet<IPoolable> poolables = PoolManager.x.GetPooledObjects(augRef);
         foreach (IPoolable pooledAug in poolables)
             go_augments.Add(pooledAug.GetGameObject());
+    }
+
+    public void AddToDict(string _name, int[] _indices)
+    {
+        if (!siAD_fusedToInds.ContainsKey(_name))
+            siAD_fusedToInds.Add(_name, _indices);
+    }
+
+    public int[] GetIndicesByName(string _name)
+    {
+        return siAD_fusedToInds[_name];
     }
 
     public int GetNumberOfAugments()
@@ -176,20 +190,20 @@ public class AugmentManager : MonoBehaviour
     public AugmentGo[] GetRandomAugments(int _i_size, Transform[] _transforms)
     {
         AugmentGo[] augs = new AugmentGo[_i_size];
-        for(int i = 0; i < augs.Length; i++)
+        for (int i = 0; i < augs.Length; i++)
         {
             augs[i] = PoolManager.x.SpawnObject(augRef, _transforms[i].position).GetComponent<AugmentGo>();
             augs[i].GetComponent<Rigidbody>().isKinematic = true;
             int augIndex = UnityEngine.Random.Range(0, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
-            if(augIndex < A_augs.Length)
+            if (augIndex < A_augs.Length)
             {
                 augs[i].Aug = A_augs[augIndex];
             }
-            else if(augIndex < A_augs.Length + A_projAugs.Length)
+            else if (augIndex < A_augs.Length + A_projAugs.Length)
             {
                 augs[i].Aug = A_projAugs[augIndex - A_augs.Length];
             }
-            else if(augIndex < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
+            else if (augIndex < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
             {
                 augs[i].Aug = A_coneAugs[augIndex - (A_augs.Length + A_projAugs.Length)];
             }

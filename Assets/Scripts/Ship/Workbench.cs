@@ -91,6 +91,7 @@ public class Workbench : SubjectBase, IInteractible
             // Move camera
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             c_workbenchCanvas.enabled = true;
+            c_workbenchCanvas.transform.localScale = Vector3.one * 0.739f;
             // Find any saved augments and load them
             if (wt_toolsInHand.Count > 0)
             {
@@ -122,6 +123,7 @@ public class Workbench : SubjectBase, IInteractible
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
         // Player is able to move camera
+        c_workbenchCanvas.transform.localScale = Vector3.zero;
         c_workbenchCanvas.enabled = false;
         pim.GetCamera().enabled = true;
         // Player is able to animate again!
@@ -203,7 +205,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (pt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -219,7 +221,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -235,7 +237,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
                 }
                 else
                     Debug.LogError("Augments Full");

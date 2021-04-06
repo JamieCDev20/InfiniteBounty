@@ -15,17 +15,7 @@ public class AugmentLoader : MonoBehaviour
         }
         return null;
     }
-    
-    public static string LoadFusedAugmentJson()
-    {
-        if (Resources.Load("FusedAugmentData"))
-        {
-            return Resources.Load("FusedAugmentData").ToString();
-        }
-        Debug.Log("Didn't load fused");
-        return null;
-    }
-
+   
     public static T[] ReadAugmentData<T>(string augData) where T : Augment
     {
         string[] augments = augData.Split('\n');
