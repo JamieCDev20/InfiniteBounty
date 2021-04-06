@@ -37,7 +37,7 @@ public class KillBox : MonoBehaviour
         as_source = gameObject.GetComponent<AudioSource>();
         if (go_flamePrefab)
             for (int i = 0; i < 20; i++)
-                goL_flames.Add(Instantiate(go_flamePrefab, transform));
+                goL_flames.Add(Instantiate(go_flamePrefab));
     }
 
     private void Update()
