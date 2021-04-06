@@ -34,6 +34,9 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private GameObject go_characterMesh;
     [SerializeField] private ParticleSystem p_goopyParticle;
 
+    [Header("Kill Box Limits")]
+    [SerializeField] private Vector2 v_killLimits;
+
     #endregion
 
     #region Private
@@ -67,7 +70,11 @@ public class PlayerMover : MonoBehaviour
 
     private Vector3[] groundCheckMods = new Vector3[] { Vector3.zero, Vector3.forward * 0.5f, Vector3.right * 0.5f, Vector3.forward * -0.5f, Vector3.right * -0.5f };
 
+    //Killthings
+    private float f_currentKillTimer;
+
     #endregion
+
 
     //Methods
     #region Unity Standards
@@ -147,7 +154,7 @@ public class PlayerMover : MonoBehaviour
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
 
         }
-            HUDController.x.SetCrosshairSize(rb.velocity.magnitude * 0.5f);
+        HUDController.x.SetCrosshairSize(rb.velocity.magnitude * 0.5f);
     }
 
     private float GetWeaponWeighting()
@@ -213,9 +220,21 @@ public class PlayerMover : MonoBehaviour
 
     public void ResetIfOffMap()
     {
-        if (transform.position.y < -100 && view.IsMine)
+        if ((Mathf.Abs(transform.position.y) > v_killLimits.y || Mathf.Abs(transform.position.x) > v_killLimits.x) && view.IsMine)
         {
-            transform.position = v_startPos + (Vector3.up);// * 5);                      
+            f_currentKillTimer -= Time.deltaTime;
+            HUDController.x.ShowKillTimer(f_currentKillTimer);
+            if (f_currentKillTimer <= 0)
+            {
+                GetComponent<PlayerHealth>().TakeDamage(99999, false);
+                HUDController.x.HideKillTimer();
+                f_currentKillTimer = 10;
+            }
+        }
+        else
+        {
+            f_currentKillTimer = 10;
+            HUDController.x.HideKillTimer();
         }
     }
 

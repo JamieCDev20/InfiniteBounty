@@ -51,11 +51,14 @@ public class HUDController : MonoBehaviour
     [Header("Crosshair")]
     [SerializeField] private RectTransform[] rtA_crossHairBits;
 
+    [Header("Kill Timer")]
+    [SerializeField] private GameObject go_killDisplay;
+    [SerializeField] private Text t_killTimerText;
+
 
     private void Awake()
     {
         x = this;
-
         DontDestroyOnLoad(gameObject);
     }
 
@@ -200,6 +203,17 @@ public class HUDController : MonoBehaviour
     private struct SpriteArray
     {
         public Sprite[] sA_sprites;
+    }
+
+    internal void HideKillTimer()
+    {
+        go_killDisplay.SetActive(false);
+    }
+
+    internal void ShowKillTimer(float _f_time)
+    {
+        go_killDisplay.SetActive(true);
+        t_killTimerText.text = Mathf.RoundToInt(_f_time).ToString();
     }
 
 }
