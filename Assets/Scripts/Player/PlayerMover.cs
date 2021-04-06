@@ -145,7 +145,9 @@ public class PlayerMover : MonoBehaviour
             rb.velocity = t;
 
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
+
         }
+            HUDController.x.SetCrosshairSize(rb.velocity.magnitude * 0.5f);
     }
 
     private float GetWeaponWeighting()

@@ -118,8 +118,8 @@ public class ScoreboardManager : MonoBehaviour
         pim.b_shouldPassInputs = true;
         pm.enabled = true;
         pim.enabled = true;
-        FindObjectOfType<ToolTipper>().StopShowing();
-        FindObjectOfType<HUDController>().StopShowing();
+        FindObjectOfType<ToolTipper>().StartShowing();
+        FindObjectOfType<HUDController>().StartShowing();
 
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
