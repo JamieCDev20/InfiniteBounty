@@ -49,6 +49,7 @@ public class GenericHittable : MonoBehaviour, IHitable
         p_deathEffect.Play();
         mrA_visuals[i_currentLode].material.SetFloat("Visibility", 1);
         StartCoroutine(NewLode());
+
         TutorialManager.x.ThingDestroyed(b_isEnemy);
     }
 

@@ -172,11 +172,20 @@ public class ToolHandler : SubjectBase
                             case WeaponTool wt:
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+
+                                print(A_tools[0] + "/" + A_tools[1]);
+                                if (A_tools[0] != null && A_tools[1] != null)
+                                    TutorialManager.x.PickedUpBothTools();
+
                                 SendSave(-1, ts);
                                 return true;
                             case MobilityTool mt:
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+
+                                //TutorialManager Section
+                                TutorialManager.x.PickedUpBackPack();
+
                                 SendSave(-1, ToolSlot.moblility);
                                 return true;
                         }
@@ -192,6 +201,12 @@ public class ToolHandler : SubjectBase
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+
+                                //Tutorial Section
+                                print(A_tools[0] + "/" + A_tools[1]);
+                                if (A_tools[0] != null && A_tools[1] != null)
+                                    TutorialManager.x.PickedUpBothTools();
+
                                 SendSave(currentNugs, ts, tb.RackID);
                                 return true;
                             case MobilityTool mt:
@@ -200,7 +215,12 @@ public class ToolHandler : SubjectBase
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+
+                                //TutorialManager Section
+                                TutorialManager.x.PickedUpBackPack();
+
                                 SendSave(currentNugs, ToolSlot.moblility, tb.RackID);
+
                                 return true;
                         }
                     }

@@ -221,6 +221,7 @@ public class TutorialManager : MonoBehaviour
                         break;
 
                     case TutorialStepType.WaitForReflectron:
+                        b_reflectronUsed = false;
                         while (!b_reflectronUsed)
                             yield return new WaitForEndOfFrame();
                         break;
@@ -231,21 +232,17 @@ public class TutorialManager : MonoBehaviour
                         break;
 
                     case TutorialStepType.WaitForTools:
-                        /*
-                         while (!b_hasTools)
+                        while (!b_hasTools)
                             yield return new WaitForEndOfFrame();
-                        */
                         break;
 
                     case TutorialStepType.WaitForBackPack:
-                        /*
                         while (!b_hasBackPack)
                             yield return new WaitForEndOfFrame();
-                        */
                         break;
 
                     case TutorialStepType.WaitForProximity:
-                        while (Vector3.Distance(pim_player.transform.position, _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].go_distanceChecker.transform.position) > 3)
+                        while (Vector3.Distance(pim_player.transform.position, _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].go_distanceChecker.transform.position) > 10)
                             yield return new WaitForEndOfFrame();
                         break;
 
@@ -260,11 +257,13 @@ public class TutorialManager : MonoBehaviour
                         break;
 
                     case TutorialStepType.WaitForGameMode:
+                        b_hasChangedShift = false;
                         while (!b_hasChangedShift)
                             yield return new WaitForEndOfFrame();
                         break;
 
                     case TutorialStepType.WaitForRiskLevel:
+                        b_hasChangedRisk = false;
                         while (!b_hasChangedRisk)
                             yield return new WaitForEndOfFrame();
                         break;
