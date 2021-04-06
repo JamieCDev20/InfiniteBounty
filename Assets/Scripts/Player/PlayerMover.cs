@@ -226,7 +226,7 @@ public class PlayerMover : MonoBehaviour
             HUDController.x.ShowKillTimer(f_currentKillTimer);
             if (f_currentKillTimer <= 0)
             {
-                GetComponent<PlayerHealth>().TakeDamage(99999, false);
+                GetComponent<PlayerHealth>().ClientFullDie();
                 HUDController.x.HideKillTimer();
                 f_currentKillTimer = 10;
             }
