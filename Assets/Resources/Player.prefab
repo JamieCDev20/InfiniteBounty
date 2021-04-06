@@ -15618,13 +15618,14 @@ MonoBehaviour:
   f_shipSprintMult: 2
   f_planetSprintMult: 2
   f_downMult: 0.9
-  f_jumpForce: 30
+  f_jumpForce: 35
   f_jumpDelay: 0
   f_coyoteTime: 0.3
-  f_gravityScale: 20
+  f_gravityScale: 30
   f_plummetPoint: 20
   f_plummetMultiplier: 4.13
-  v_dragVector: {x: 0.1, y: 0, z: 0.1}
+  v_groundedDragVector: {x: 0.1, y: 0, z: 0.1}
+  v_airDragVector: {x: 0.05, y: 0, z: 0.05}
   go_characterMesh: {fileID: 435808253775190400}
   p_goopyParticle: {fileID: 2019540165415011881}
   v_killLimits: {x: 725, y: 1000}

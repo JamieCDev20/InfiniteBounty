@@ -28,7 +28,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_gravityScale = 10; // The force of gravity on the player
     [SerializeField] private float f_plummetPoint = 5; //the velocity at which below, gravity will increase
     [SerializeField] private float f_plummetMultiplier = 3; //the velocity at which below, gravity will increase
-    [SerializeField] private Vector3 v_dragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
+    [SerializeField] private Vector3 v_groundedDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
+    [SerializeField] private Vector3 v_airDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
 
     [Header("Getting Teleported")]
     [SerializeField] private GameObject go_characterMesh;
@@ -204,7 +205,7 @@ public class PlayerMover : MonoBehaviour
     private void ApplyDrag()
     {
         if (b_applyDrag)
-            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_dragVector);
+            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - (b_grounded ? v_groundedDragVector : v_airDragVector));
     }
 
     /// <summary>
