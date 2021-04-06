@@ -54,7 +54,7 @@ public class HUDController : MonoBehaviour
     [Header("Kill Timer")]
     [SerializeField] private GameObject go_killDisplay;
     [SerializeField] private Text t_killTimerText;
-
+    [SerializeField] private Image i_killWarningImage;
 
     private void Awake()
     {
@@ -214,6 +214,7 @@ public class HUDController : MonoBehaviour
     {
         go_killDisplay.SetActive(true);
         t_killTimerText.text = Mathf.RoundToInt(_f_time).ToString();
+        i_killWarningImage.color = new Color(1, 0, 0, Mathf.Abs(Mathf.Sin(_f_time + _f_time)) * 0.1f);
     }
 
 }
