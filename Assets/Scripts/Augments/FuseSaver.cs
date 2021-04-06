@@ -116,7 +116,9 @@ public class FuseSaver : MonoBehaviour, ObserverBase
 
     public void DestroySaveData()
     {
-        File.WriteAllText(filePath, "");
+        _savedData = null;
+        string emptyFuseData = JsonConvert.SerializeObject(_savedData);
+        File.WriteAllText(filePath, emptyFuseData);
         //File.Delete(filePath);
     }
 
