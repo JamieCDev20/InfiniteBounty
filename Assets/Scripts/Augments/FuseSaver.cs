@@ -88,7 +88,18 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             case FuseEvent fuseEvent:
                 //Debug.Log(_savedData.Length);
                 _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
-                //Debug.Log(_savedData.Length);
+                switch (fuseEvent.SavedAug.SavedAugment.augType)
+                {
+                    case AugmentType.projectile:
+                        Utils.AddToArray(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                        break;
+                    case AugmentType.cone:
+                        Utils.AddToArray(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                        break;
+                    case AugmentType.standard:
+                        Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                        break;
+                }
                 SaveFusedAugments();
                 break;
         }
@@ -119,7 +130,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
 
     public void DestroySaveData()
     {
-        _savedData = null;
+        _savedData = new AugmentSave[0];
         string emptyFuseData = JsonConvert.SerializeObject(_savedData);
         File.WriteAllText(filePath, emptyFuseData);
         //File.Delete(filePath);
