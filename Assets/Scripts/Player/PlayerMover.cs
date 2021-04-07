@@ -77,6 +77,7 @@ public class PlayerMover : MonoBehaviour
 
     [SerializeField] private float f_maxJumpTime;
     private float f_currentJumpTime;
+    private float f_currentJumpForce;
     private bool b_isJumping;
 
     #endregion
@@ -191,7 +192,8 @@ public class PlayerMover : MonoBehaviour
             {
                 f_lastOnGround -= 10;
                 Vector3 t = rb.velocity;
-                t.y = f_jumpForce;
+                f_currentJumpForce = f_jumpForce;
+                t.y = f_currentJumpForce;
                 rb.velocity = t;
 
                 f_currentJumpTime = 0;
@@ -206,11 +208,19 @@ public class PlayerMover : MonoBehaviour
         if (b_isJumping)
         {
             f_currentJumpTime += Time.deltaTime;
+            f_currentJumpForce -= (Time.deltaTime / f_maxJumpTime) * (f_jumpForce / 6);
+            //f_currentJumpForce -= (Time.deltaTime / f_maxJumpTime) * f_jumpForce;
             Vector3 t = rb.velocity;
-            t.y = f_jumpForce;
+            t.y = f_currentJumpForce;
+            //t.y = NonLinearJump(f_currentJumpForce / f_jumpForce);
             rb.velocity = t;
         }
     }
+
+    /*private float NonLinearJump(float x)
+    {
+        return -(Mathf.Pow(0.7f * x - 0.7f, 2)) + 0.5f;
+    }*/
 
     private IEnumerator DelayedJump()
     {
