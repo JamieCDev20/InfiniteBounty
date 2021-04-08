@@ -261,8 +261,6 @@ public class SaveManager : SubjectBase, ObserverBase
                             // TODO:
                             // Create a new ToolBase[3] and read any existing tools into it
                             // Then replace it with the new tool being sent.
-                            if (tool.toolID == -1 || tool.slotID == -1)
-                                continue;
                             // Store previous tools temporarily
                             (int, int)[] temp = new (int, int)[3];
                             if (!Utils.ArrayIsNullOrZero(saveData.tu_equipped))
