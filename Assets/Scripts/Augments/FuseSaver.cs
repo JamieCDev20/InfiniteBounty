@@ -93,25 +93,29 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             case FuseEvent fuseEvent:
                 //Debug.Log(_savedData.Length);
                 _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
-                Debug.Log("Augment Level: " + fuseEvent.SavedAug.SavedAugment.level);
-                switch (fuseEvent.SavedAug.SavedAugment.augStage)
+                switch (fuseEvent.SavedAug.SavedAugment.augType)
                 {
-                    case AugmentStage.full:
-                        switch (fuseEvent.SavedAug.SavedAugment.augType)
-                        {
-                            case AugmentType.projectile:
-                                fusedProj = Utils.AddToArray(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                                break;
-                            case AugmentType.cone:
-                                fusedCone = Utils.AddToArray(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                                break;
-                            case AugmentType.standard:
-                                fusedAugs = Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                                break;
-                        }
+                    case AugmentType.projectile:
+                        fusedProj = Utils.AddToArray(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                        break;
+                    case AugmentType.cone:
+                        fusedCone = Utils.AddToArray(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                        break;
+                    case AugmentType.standard:
+                        fusedAugs = Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
                         break;
                 }
                 SaveFusedAugments();
+                break;
+            case RemoveAugmentEvent rae:
+                switch (rae.augToRemove.SavedAugment.augStage)
+                {
+                    case AugmentStage.fused:
+                        // Remove using the save augment
+                        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(rae.augToRemove));
+                        File.WriteAllText(filePath, JsonConvert.SerializeObject(_savedData));
+                        break;
+                }
                 break;
         }
     }
@@ -119,18 +123,18 @@ public class FuseSaver : MonoBehaviour, ObserverBase
     public void RemoveStandardFromSave(Augment _save)
     {
         fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
-        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save.Stage, _save.at_type, _save.Level, AugmentManager.x.GetIndicesByName(_save.Name))));
+        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
     }
 
     public void RemoveProjectileFromSave(ProjectileAugment _save)
     {
         fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
-        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save.Stage, _save.at_type, _save.Level, AugmentManager.x.GetIndicesByName(_save.Name))));
+        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
     }
     public void RemoveConeFromSave(ConeAugment _save)
     {
         fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));
-        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save.Stage, _save.at_type, _save.Level, AugmentManager.x.GetIndicesByName(_save.Name))));
+        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
     }
     public int GetAugmentIndex(Augment[] toCheck, Augment aug)
     {

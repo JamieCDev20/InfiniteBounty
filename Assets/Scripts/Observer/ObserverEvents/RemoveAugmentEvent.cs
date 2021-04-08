@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class RemoveAugmentEvent : ObserverEvent
 {
-    public Augment augToRemove;
-    public int augIndex;
-    public RemoveAugmentEvent(Augment _aug, int _index)
+    public AugmentSave augToRemove;
+    public RemoveAugmentEvent(AugmentSave _save)
     {
-        augToRemove = _aug;
-        augIndex = _index;
+        augToRemove = _save;
     }
 }

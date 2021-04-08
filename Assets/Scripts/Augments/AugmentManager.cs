@@ -145,7 +145,7 @@ public class AugmentManager : MonoBehaviour
 
     public ProjectileAugment GetProjectileAugmentAt(AugmentStage _stage, int[] _index)
     {
-        return _stage == AugmentStage.full ? A_projAugs[_index[0]] : ProjectileAugment.Combine(A_projAugs[_index[0]], A_projAugs[_index[1]]);
+        return _index.Length < 2 ? A_projAugs[_index[0]] : ProjectileAugment.Combine(A_projAugs[_index[0]], A_projAugs[_index[1]]);
     }
 
     public ConeAugment GetConeAugmentAt(AugmentStage _stage, int[] _index)

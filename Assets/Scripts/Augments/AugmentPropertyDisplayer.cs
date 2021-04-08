@@ -47,6 +47,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     {
         List<Augment> _augmentsInList = new List<Augment>();
         List<string> exclusionList = new List<string>(toExclude);
+        adt_currentDisplayType = adt;
         // Clear the display
         if (!_b_shouldAddToExistingList)
         {
@@ -91,7 +92,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         // Update display from save file
         aL_allAugmentsOwned.AddRange(_augmentsInList);
         UpdateAugmentListDisplay(aL_allAugmentsOwned, adt, toExclude);
-        adt_currentDisplayType = adt;
         return aL_allAugmentsOwned;
     }
 
@@ -169,7 +169,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     private List<Augment> DisplayAttachedAugments()
     {
         List<Augment> _augList = new List<Augment>();
-
+        // We don't actually add any augments here???
         return _augList;
     }
 
@@ -193,7 +193,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 {
                     foreach (Augment auggy in wt_toolToCheck.Augs)
                         if (auggy != null)
+                        {
                             _aL_augmentsToShow.Add(auggy);
+                        }
                 }
                 break;
             case AugmentDisplayType.ShowSameTypeExcluding:
@@ -279,10 +281,22 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     private int FindAugmentToShowIndexFromOwned(string _name, int level)
     {
-        for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
+        switch (adt_currentDisplayType)
         {
-            if (aL_allAugmentsOwned[i].Name == _name && aL_allAugmentsOwned[i].Level == level)
-                return i;
+            case AugmentDisplayType.ShowEquipped:
+                for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
+                {
+                    if (_name == wt_toolToCheck.Augs[i].Name && level == wt_toolToCheck.Augs[i].Level)
+                        return i;
+                }
+                break;
+            default:
+                for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
+                {
+                    if (aL_allAugmentsOwned[i].Name == _name && aL_allAugmentsOwned[i].Level == level)
+                        return i;
+                }
+                break;
         }
         return 0;
     }
@@ -303,23 +317,24 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
         ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
-        switch (aL_allAugmentsOwned[i_currentAugmentIndex].at_type)
+        switch (adt_currentDisplayType)
         {
-            case AugmentType.standard:
-                SetFitIcon(0);
+            case AugmentDisplayType.ShowEquipped:
+                SetFitIcon((int)wt_toolToCheck.Augs[_i_augmentIndexClicked].at_type);
+                ad_display.t_augmentName.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Name;
+                ad_display.t_levelNumber.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Level.ToString();
+                RemoveAugmentProperties();
+                UpdatePropertyText(wt_toolToCheck.Augs[_i_augmentIndexClicked]);
                 break;
-            case AugmentType.projectile:
-                SetFitIcon(1);
-                break;
-            case AugmentType.cone:
-                SetFitIcon(2);
+            default:
+                SetFitIcon((int)aL_allAugmentsOwned[i_currentAugmentIndex].at_type);
+                ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
+                ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
+                RemoveAugmentProperties();
+                UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
                 break;
         }
 
-        ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
-        ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
-        RemoveAugmentProperties();
-        UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
         //        UpdatePropertyText(_i_augmentIndexClicked);
     }
 

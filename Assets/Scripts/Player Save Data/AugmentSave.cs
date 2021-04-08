@@ -36,6 +36,21 @@ public class AugmentSave
         SavedAugment.indicies = _inds;
     }
 
+    public AugmentSave(Augment _aug)
+    {
+        SavedAugment.augStage = _aug.Stage;
+        SavedAugment.augType = _aug.at_type;
+        SavedAugment.level = _aug.Level;
+        switch (_aug.Stage)
+        {
+            case AugmentStage.full:
+                SavedAugment.indicies = new int[] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) };
+                break;
+            case AugmentStage.fused:
+                SavedAugment.indicies = AugmentManager.x.GetIndicesByName(_aug.Name);
+                break;
+        }
+    }
     public static bool operator ==(AugmentSave _augOne, AugmentSave _augTwo)
     {
         return _augOne.SavedAugment.level == _augTwo.SavedAugment.level ? _augOne / _augTwo : false;
@@ -56,4 +71,5 @@ public class AugmentSave
         }
         return false;
     }
+
 }

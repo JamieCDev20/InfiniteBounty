@@ -53,6 +53,7 @@ public class Workbench : SubjectBase, IInteractible
                 tl.GetPrefabTool(wt_toolsInHand[1].ToolID).SetActive(true);
         }
         AddObserver(saveMan);
+        AddObserver(FindObjectOfType<FuseSaver>());
         apd.Init();
     }
 
@@ -193,19 +194,22 @@ public class Workbench : SubjectBase, IInteractible
 
     public void ApplyAugment()
     {
+        // Check if you have tools
         if (wt_toolsInHand.Count == 0)
             return;
-
+        // Get the tool from tool handler as its type
         if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ProjectileTool)
         {
-
+            // Check if the augment is compatable
             if (aL_allAugmentsOwned[apd.CurrentAugIndex].at_type == AugmentType.projectile)
             {
                 ProjectileTool pt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ProjectileTool>();
+                // Attempt to add stat changes
                 if (pt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
+                    // Save the augment
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug)});
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -221,7 +225,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug)});
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -237,7 +241,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, new int[1] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) }) });
+                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug) });
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -245,17 +249,24 @@ public class Workbench : SubjectBase, IInteractible
             else
                 Debug.LogError("Incompatable Augment Type");
         }
-        //aL_allAugmentsOwned[i_currentAugmentIndex];
+    }
+
+    public void RemoveAugment()
+    {
+        // Augment index out of range.
+        Debug.Log(wt_toolsInHand[i_currentWeaponIndex].Augs[i_currentAugmentIndex].Name);
+        Notify(new UnequipAugmentEvent(wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex, new AugmentSave(wt_toolsInHand[i_currentWeaponIndex].Augs[i_currentAugmentIndex])));
+
     }
 
     private void SendAttachSave(Augment _aug, AugmentSave[] _save)
     {
         // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
-        RemoveAugmentEvent rae = new RemoveAugmentEvent(_aug, apd.CurrentAugIndex);
+        RemoveAugmentEvent rae = new RemoveAugmentEvent(new AugmentSave(_aug));
         Notify(rae);
         EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, _save));
-        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
         Notify(eae);
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
     }
 
     public void AllTab()
@@ -266,6 +277,7 @@ public class Workbench : SubjectBase, IInteractible
         img_equip.color = unSel;
         img_sameType.color = unSel;
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+        Debug.Log(apd.CurrentDisplayType);
     }
     public void SameTab()
     {
@@ -274,8 +286,8 @@ public class Workbench : SubjectBase, IInteractible
         img_sameType.color = sel;
         img_all.color = unSel;
         img_equip.color = unSel;
-        //apd.AugType = the type you want to show?
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        Debug.Log(apd.CurrentDisplayType);
     }
     public void EquippedTab()
     {
@@ -286,7 +298,8 @@ public class Workbench : SubjectBase, IInteractible
         img_sameType.color = unSel;
         List<Augment> augList = new List<Augment>();
         apd.ToolToCheck = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
-        aL_allAugmentsOwned = apd.InitAugmentList(augList, AugmentDisplayType.ShowEquipped, false);
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowEquipped, false);
+        Debug.Log(apd.CurrentDisplayType);
     }
 
     #endregion
