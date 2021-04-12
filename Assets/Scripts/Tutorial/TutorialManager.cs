@@ -13,6 +13,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject go_confetti;
     private float f_inputTime;
     [SerializeField] private float f_inputTimeToLookFor = 1;
+
     private PlayerInputManager pim_player;
     private AudioSource as_source;
     [SerializeField] private float f_videoLength;
@@ -20,6 +21,7 @@ public class TutorialManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject go_tutorialCanvas;
     [SerializeField] private Text t_promptText;
+    [SerializeField] private GameObject go_textObject;
     [SerializeField] private GameObject go_videoObject;
 
     [Header("Pre-level")]
@@ -38,16 +40,13 @@ public class TutorialManager : MonoBehaviour
     {
         x = this;
 
-        if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
-            StartCoroutine(StartTutorial());
+        go_tutorialCanvas.SetActive(true);
+        StartCoroutine(DoTutorialSection(tcA_tutorial));
 
         as_source = GetComponent<AudioSource>();
     }
 
-    public void Init()
-    {
-
-    }
+    public void Init() { }
 
     private void Update()
     {
@@ -59,22 +58,12 @@ public class TutorialManager : MonoBehaviour
             }
     }
 
-    public IEnumerator StartTutorial()
+    internal void SetShouldTutorial(bool isOn)
     {
-        print("Starting Tutorial 'cause you had no data");
-        b_isPlayingVideo = true;
-        go_videoObject.SetActive(true);
-
-        for (int i = 0; i < f_videoLength; i++)
-            if (b_isPlayingVideo)
-                yield return new WaitForSeconds(1);
-
-        go_videoObject.SetActive(false);
-        b_isPlayingVideo = false;
-
-        go_tutorialCanvas.SetActive(true);
-        StartCoroutine(DoTutorialSection(tcA_tutorial));
+        b_shouldTutorialAlways = isOn;
     }
+
+    #region Interact Checks
 
     public void InteractedWithReflectron()
     {
@@ -114,6 +103,7 @@ public class TutorialManager : MonoBehaviour
         b_hasChangedRisk = true;
     }
 
+    #endregion
 
     private IEnumerator DoTutorialSection(TutorialChunk[] _tcA_chunksToWorkThrough)
     {
@@ -124,156 +114,174 @@ public class TutorialManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        for (int i = 0; i < _tcA_chunksToWorkThrough.Length; i++)
+        if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
         {
-            for (int x = 0; x < _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk.Length; x++)
+            b_isPlayingVideo = true;
+            go_videoObject.SetActive(true);
+
+            for (int i = 0; i < f_videoLength; i++)
+                if (b_isPlayingVideo)
+                    yield return new WaitForSeconds(1);
+
+            go_videoObject.SetActive(false);
+            b_isPlayingVideo = false;
+
+            for (int i = 0; i < _tcA_chunksToWorkThrough.Length; i++)
             {
-                f_inputTime = 0;
-                //print($"Doing {i}, which is a {_tsdA_stepToWorkThrough[i].tst_stepType}-type.");
-
-                switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].tst_stepType)
+                for (int x = 0; x < _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk.Length; x++)
                 {
-                    case TutorialStepType.PlayVoiceline:
-                        as_source.clip = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine;
-                        as_source.Play();
+                    f_inputTime = 0;
+                    //print($"Doing {i}, which is a {_tsdA_stepToWorkThrough[i].tst_stepType}-type.");
 
-                        yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine.length);
-                        break;
+                    switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].tst_stepType)
+                    {
+                        case TutorialStepType.PlayVoiceline:
+                            as_source.clip = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine;
+                            as_source.Play();
 
-                    case TutorialStepType.WaitForInput:
-                        if (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].b_hold)
-                            while (f_inputTime < f_inputTimeToLookFor)
-                            {
-                                switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].it_inputToWaitFor)
+                            yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].ac_voiceLine.length);
+                            break;
+
+                        case TutorialStepType.WaitForInput:
+                            if (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].b_hold)
+                                while (f_inputTime < f_inputTimeToLookFor)
                                 {
-                                    case InputType.WASD:
-                                        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
-                                            f_inputTime += Time.deltaTime;
-                                        break;
-                                    case InputType.Space:
-                                        if (Input.GetButton("Jump"))
-                                            f_inputTime += Time.deltaTime;
-                                        break;
-                                    case InputType.MouseButtons:
-                                        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
-                                            f_inputTime += Time.deltaTime;
-                                        break;
-                                    case InputType.Q:
-                                        if (Input.GetButton("Mobility"))
-                                            f_inputTime += Time.deltaTime;
-                                        break;
-                                    case InputType.Shift:
-                                        if (Input.GetButton("Sprint"))
-                                            f_inputTime += Time.deltaTime;
-                                        break;
-                                    case InputType.MouseMovement:
-                                        if (Mathf.Abs(Input.GetAxisRaw("Mouse X")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("Mouse Y")) > 0.3f)
-                                            f_inputTime += Time.deltaTime;
-                                        break;
+                                    switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].it_inputToWaitFor)
+                                    {
+                                        case InputType.WASD:
+                                            if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
+                                                f_inputTime += Time.deltaTime;
+                                            break;
+                                        case InputType.Space:
+                                            if (Input.GetButton("Jump"))
+                                                f_inputTime += Time.deltaTime;
+                                            break;
+                                        case InputType.MouseButtons:
+                                            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                                                f_inputTime += Time.deltaTime;
+                                            break;
+                                        case InputType.Q:
+                                            if (Input.GetButton("Mobility"))
+                                                f_inputTime += Time.deltaTime;
+                                            break;
+                                        case InputType.Shift:
+                                            if (Input.GetButton("Sprint"))
+                                                f_inputTime += Time.deltaTime;
+                                            break;
+                                        case InputType.MouseMovement:
+                                            if (Mathf.Abs(Input.GetAxisRaw("Mouse X")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("Mouse Y")) > 0.3f)
+                                                f_inputTime += Time.deltaTime;
+                                            break;
+                                    }
+                                    yield return new WaitForEndOfFrame();
                                 }
-                                yield return new WaitForEndOfFrame();
-                            }
-                        else
-                        {
-                            bool _b_shouldContinue = true;
-                            while (_b_shouldContinue)
+                            else
                             {
-                                switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].it_inputToWaitFor)
+                                bool _b_shouldContinue = true;
+                                while (_b_shouldContinue)
                                 {
-                                    case InputType.WASD:
-                                        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
-                                            _b_shouldContinue = false;
-                                        break;
-                                    case InputType.Space:
-                                        if (Input.GetButton("Jump"))
-                                            _b_shouldContinue = false;
-                                        break;
-                                    case InputType.MouseButtons:
-                                        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
-                                            _b_shouldContinue = false;
-                                        break;
-                                    case InputType.Q:
-                                        if (Input.GetButton("Mobility"))
-                                            _b_shouldContinue = false;
-                                        break;
-                                    case InputType.Shift:
-                                        if (Input.GetButton("Sprint"))
-                                            _b_shouldContinue = false;
-                                        break;
-                                    case InputType.MouseMovement:
-                                        if (Mathf.Abs(Input.GetAxisRaw("Mouse X")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("Mouse Y")) > 0.3f)
-                                            _b_shouldContinue = false;
-                                        break;
+                                    switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].it_inputToWaitFor)
+                                    {
+                                        case InputType.WASD:
+                                            if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
+                                                _b_shouldContinue = false;
+                                            break;
+                                        case InputType.Space:
+                                            if (Input.GetButton("Jump"))
+                                                _b_shouldContinue = false;
+                                            break;
+                                        case InputType.MouseButtons:
+                                            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                                                _b_shouldContinue = false;
+                                            break;
+                                        case InputType.Q:
+                                            if (Input.GetButton("Mobility"))
+                                                _b_shouldContinue = false;
+                                            break;
+                                        case InputType.Shift:
+                                            if (Input.GetButton("Sprint"))
+                                                _b_shouldContinue = false;
+                                            break;
+                                        case InputType.MouseMovement:
+                                            if (Mathf.Abs(Input.GetAxisRaw("Mouse X")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("Mouse Y")) > 0.3f)
+                                                _b_shouldContinue = false;
+                                            break;
+                                    }
+                                    yield return new WaitForEndOfFrame();
                                 }
-                                yield return new WaitForEndOfFrame();
                             }
-                        }
-                        break;
+                            break;
 
-                    case TutorialStepType.ConfettiShower:
-                        go_confetti.transform.position = pim_player.transform.position;
-                        go_confetti.SetActive(false);
-                        go_confetti.SetActive(true);
-                        break;
+                        case TutorialStepType.ConfettiShower:
+                            go_confetti.transform.position = pim_player.transform.position;
+                            go_confetti.SetActive(false);
+                            go_confetti.SetActive(true);
+                            break;
 
-                    case TutorialStepType.SetTextPrompt:
-                        t_promptText.text = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].s_textMessage;
-                        break;
+                        case TutorialStepType.SetTextPrompt:
+                            t_promptText.text = _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].s_textMessage;
 
-                    case TutorialStepType.WaitForReflectron:
-                        b_reflectronUsed = false;
-                        while (!b_reflectronUsed)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                            if (t_promptText.text == "")
+                                go_textObject.SetActive(false);
+                            else
+                                go_textObject.SetActive(true);
+                            break;
 
-                    case TutorialStepType.WaitForZippy:
-                        while (!b_zippyInvested)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForReflectron:
+                            b_reflectronUsed = false;
+                            while (!b_reflectronUsed)
+                                yield return new WaitForEndOfFrame();
+                            break;
 
-                    case TutorialStepType.WaitForTools:
-                        while (!b_hasTools)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForZippy:
+                            while (!b_zippyInvested)
+                                yield return new WaitForEndOfFrame();
+                            break;
 
-                    case TutorialStepType.WaitForBackPack:
-                        while (!b_hasBackPack)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForTools:
+                            while (!b_hasTools)
+                                yield return new WaitForEndOfFrame();
+                            break;
 
-                    case TutorialStepType.WaitForProximity:
-                        while (Vector3.Distance(pim_player.transform.position, _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].go_distanceChecker.transform.position) > 10)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForBackPack:
+                            while (!b_hasBackPack)
+                                yield return new WaitForEndOfFrame();
+                            break;
 
-                    case TutorialStepType.WaitForLodeDestroyed:
-                        while (!b_lodeDestroyed)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForProximity:
+                            while (Vector3.Distance(pim_player.transform.position, _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].go_distanceChecker.transform.position) > 10)
+                                yield return new WaitForEndOfFrame();
+                            break;
 
-                    case TutorialStepType.WaitForEnemyDestroyed:
-                        while (!b_enemyDestroyed)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForLodeDestroyed:
+                            while (!b_lodeDestroyed)
+                                yield return new WaitForEndOfFrame();
+                            break;
 
-                    case TutorialStepType.WaitForGameMode:
-                        b_hasChangedShift = false;
-                        while (!b_hasChangedShift)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForEnemyDestroyed:
+                            while (!b_enemyDestroyed)
+                                yield return new WaitForEndOfFrame();
+                            break;
 
-                    case TutorialStepType.WaitForRiskLevel:
-                        b_hasChangedRisk = false;
-                        while (!b_hasChangedRisk)
-                            yield return new WaitForEndOfFrame();
-                        break;
+                        case TutorialStepType.WaitForGameMode:
+                            b_hasChangedShift = false;
+                            while (!b_hasChangedShift)
+                                yield return new WaitForEndOfFrame();
+                            break;
+
+                        case TutorialStepType.WaitForRiskLevel:
+                            b_hasChangedRisk = false;
+                            while (!b_hasChangedRisk)
+                                yield return new WaitForEndOfFrame();
+                            break;
+                    }
+
+                    yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].f_timeToWaitBeforeNextStep);
                 }
-
-                yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].f_timeToWaitBeforeNextStep);
             }
-        }
 
-        //go_tutorialCanvas.SetActive(false);
+            //go_tutorialCanvas.SetActive(false);
+        }
     }
 
     [System.Serializable]
