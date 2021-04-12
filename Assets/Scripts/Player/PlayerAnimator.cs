@@ -162,9 +162,9 @@ public class PlayerAnimator : MonoBehaviourPun
     internal void GunRecoil(bool _b_isLeftArm, float _f_recoilSeverity, float _f_recoilDur)
     {
         if (_b_isLeftArm)
-            f_leftArmRecoil += _f_recoilSeverity * 10;
+            f_leftArmRecoil -= _f_recoilSeverity * 10;
         else
-            f_rightArmRecoil += _f_recoilSeverity * 10;
+            f_rightArmRecoil -= _f_recoilSeverity * 10;
 
         StartCoroutine(ChangeGunRecoil(_b_isLeftArm, _f_recoilSeverity, _f_recoilDur));
     }
@@ -175,9 +175,9 @@ public class PlayerAnimator : MonoBehaviourPun
         {
             yield return new WaitForSeconds(_f_recoilDur * 0.1f);
             if (_b_isLeftArm)
-                f_leftArmRecoil -= _f_recoilSeverity;
+                f_leftArmRecoil += _f_recoilSeverity;
             else
-                f_rightArmRecoil -= _f_recoilSeverity;
+                f_rightArmRecoil += _f_recoilSeverity;
         }
 
         if (_b_isLeftArm)

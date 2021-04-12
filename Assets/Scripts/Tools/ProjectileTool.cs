@@ -32,7 +32,7 @@ public class ProjectileTool : WeaponTool
 
     public override void SetActive(bool val)
     {
-        pa_anim = GetComponent<PlayerAnimator>();
+        pa_anim = GetComponentInParent<PlayerAnimator>();
         b_active = val;
         if (transform.root.GetComponent<PlayerInputManager>() != null)
         {
@@ -57,7 +57,9 @@ public class ProjectileTool : WeaponTool
             StartCoroutine(TimeBetweenUsage());
             PlayParticles(true);
             cc_cam?.Recoil(f_recoil);
+
             pa_anim.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);
+
             PlayAudio(ac_activationSound);
             f_currentHeat += f_heatPerShot;
         }
