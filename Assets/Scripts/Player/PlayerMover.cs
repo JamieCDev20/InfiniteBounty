@@ -157,9 +157,8 @@ public class PlayerMover : MonoBehaviour
             Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * f_currentMoveSpeed / Mathf.Clamp(GetWeaponWeighting(), 0.5f, 2) * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), 0.2f);
             t.y += rb.velocity.y;
             rb.velocity = t;
-            print(f_currentMoveSpeed / GetWeaponWeighting());
-            transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
 
+            transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
         HUDController.x.SetCrosshairSize(rb.velocity.magnitude * 0.5f);
     }
