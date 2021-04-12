@@ -39,6 +39,8 @@ public class ProjectileAugment : Augment
     {
         ProjectileAugment c = new ProjectileAugment();
         Augment ac = Augment.Combine(a, b);
+        if (a.as_stage == AugmentStage.full && a.s_name != b.s_name)
+            c.as_stage = AugmentStage.fused;
         c.Level = 1;
         List<string[]> audioClips = ac.GetAudioProperties();
         c.s_name = ac.Name;

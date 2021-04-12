@@ -28,6 +28,8 @@ public class ConeAugment : Augment
     {
         ConeAugment c = new ConeAugment();
         Augment ac = Augment.Combine(a, b);
+        if (a.as_stage == AugmentStage.full && a.s_name != b.s_name)
+            c.as_stage = AugmentStage.fused;
         List<string[]> audioClips = ac.GetAudioProperties();
         c.Level = 1;
         c.s_name = ac.Name;

@@ -209,7 +209,9 @@ public class Workbench : SubjectBase, IInteractible
                 {
                     // Save the augment
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave(_aug));
+                    AugmentSave _savedAug = new AugmentSave(_aug);
+                    Debug.Log(_savedAug.SavedAugment.indicies[0]);
+                    SendAttachSave(_aug, _savedAug);
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -225,7 +227,9 @@ public class Workbench : SubjectBase, IInteractible
                 if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave(_aug));
+                    AugmentSave _savedAug = new AugmentSave(_aug);
+                    Debug.Log(_savedAug.SavedAugment.indicies[0]);
+                    SendAttachSave(_aug, _savedAug);
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -241,7 +245,9 @@ public class Workbench : SubjectBase, IInteractible
                 if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave(_aug));
+                    AugmentSave _savedAug = new AugmentSave(_aug);
+                    Debug.Log(_savedAug.SavedAugment.indicies[0]);
+                    SendAttachSave(_aug, _savedAug);
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -263,6 +269,8 @@ public class Workbench : SubjectBase, IInteractible
     private void SendAttachSave(Augment _aug, AugmentSave _save)
     {
         // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
+        if(_save.SavedAugment.indicies.Length > 1)
+            Debug.Log(_save.SavedAugment.indicies[0] + " " + _save.SavedAugment.indicies[1]);
         RemoveAugmentEvent rae = new RemoveAugmentEvent(new AugmentSave(_aug));
         Notify(rae);
         EquipAugEvent eae = new EquipAugEvent((wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex, new AugmentSave[] { _save }));
