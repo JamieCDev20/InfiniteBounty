@@ -260,8 +260,9 @@ public class Workbench : SubjectBase, IInteractible
     public void RemoveAugment()
     {
         // Augment index out of range.
-        Notify(new UnequipAugmentEvent(wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex,
-            new AugmentSave(wt_toolsInHand[i_currentWeaponIndex].Augs[apd.CurrentAugIndex])));
+        WeaponTool toolToRemoveFrom = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
+        Notify(new UnequipAugmentEvent(toolToRemoveFrom.ToolID, i_currentWeaponIndex,
+            new AugmentSave(toolToRemoveFrom.Augs[apd.CurrentAugIndex])));
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
 
     }
