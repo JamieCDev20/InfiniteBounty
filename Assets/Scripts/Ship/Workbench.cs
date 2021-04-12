@@ -269,21 +269,22 @@ public class Workbench : SubjectBase, IInteractible
     private void SendAttachSave(Augment _aug, AugmentSave _save)
     {
         // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
-        if(_save.SavedAugment.indicies.Length > 1)
+        if (_save.SavedAugment.indicies.Length > 1)
             Debug.Log(_save.SavedAugment.indicies[0] + " " + _save.SavedAugment.indicies[1]);
         RemoveAugmentEvent rae = new RemoveAugmentEvent(new AugmentSave(_aug));
         Notify(rae);
-        EquipAugEvent eae = new EquipAugEvent((wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex, new AugmentSave[] { _save }));
+        EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetToolBase(i_currentWeaponIndex).ToolID, i_currentWeaponIndex, new AugmentSave[] { _save }));
+        WeaponTool weaponToEq = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         switch (_save.SavedAugment.augType)
         {
             case AugmentType.projectile:
-                wt_toolsInHand[i_currentWeaponIndex].Augs = Utils.AddToArray(wt_toolsInHand[i_currentWeaponIndex].Augs, AugmentManager.x.GetProjectileAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+                weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetProjectileAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
                 break;
             case AugmentType.cone:
-                wt_toolsInHand[i_currentWeaponIndex].Augs = Utils.AddToArray(wt_toolsInHand[i_currentWeaponIndex].Augs, AugmentManager.x.GetConeAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+                weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetConeAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
                 break;
             case AugmentType.standard:
-                wt_toolsInHand[i_currentWeaponIndex].Augs = Utils.AddToArray(wt_toolsInHand[i_currentWeaponIndex].Augs, AugmentManager.x.GetStandardAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+                weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetStandardAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
                 break;
         }
         Notify(eae);
