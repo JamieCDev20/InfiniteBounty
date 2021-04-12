@@ -144,7 +144,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         foreach (Augment aug in aL_augs)
         {
             if (aug.at_type == at_type && !_exclusionZone.Contains(aug.Name))
+            {
                 _augList.Add(aug);
+                _exclusionZone.Remove(aug.Name);
+            }
         }
         return _augList;
     }
