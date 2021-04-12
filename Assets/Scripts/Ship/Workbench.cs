@@ -209,7 +209,7 @@ public class Workbench : SubjectBase, IInteractible
                 {
                     // Save the augment
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug)});
+                    SendAttachSave(_aug, new AugmentSave(_aug));
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -225,7 +225,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug)});
+                    SendAttachSave(_aug, new AugmentSave(_aug));
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -241,7 +241,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    SendAttachSave(_aug, new AugmentSave[] { new AugmentSave(_aug) });
+                    SendAttachSave(_aug, new AugmentSave(_aug));
                 }
                 else
                     Debug.LogError("Augments Full");
@@ -254,17 +254,30 @@ public class Workbench : SubjectBase, IInteractible
     public void RemoveAugment()
     {
         // Augment index out of range.
-        Debug.Log(wt_toolsInHand[i_currentWeaponIndex].Augs[i_currentAugmentIndex].Name);
-        Notify(new UnequipAugmentEvent(wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex, new AugmentSave(wt_toolsInHand[i_currentWeaponIndex].Augs[i_currentAugmentIndex])));
+        Notify(new UnequipAugmentEvent(wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex,
+            new AugmentSave(wt_toolsInHand[i_currentWeaponIndex].Augs[i_currentAugmentIndex])));
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
 
     }
 
-    private void SendAttachSave(Augment _aug, AugmentSave[] _save)
+    private void SendAttachSave(Augment _aug, AugmentSave _save)
     {
         // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
         RemoveAugmentEvent rae = new RemoveAugmentEvent(new AugmentSave(_aug));
         Notify(rae);
-        EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetTool(i_currentWeaponIndex), i_currentWeaponIndex, _save));
+        EquipAugEvent eae = new EquipAugEvent((wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex, new AugmentSave[] { _save }));
+        switch (_save.SavedAugment.augType)
+        {
+            case AugmentType.projectile:
+                wt_toolsInHand[i_currentWeaponIndex].Augs = Utils.AddToArray(wt_toolsInHand[i_currentWeaponIndex].Augs, AugmentManager.x.GetProjectileAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+                break;
+            case AugmentType.cone:
+                wt_toolsInHand[i_currentWeaponIndex].Augs = Utils.AddToArray(wt_toolsInHand[i_currentWeaponIndex].Augs, AugmentManager.x.GetConeAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+                break;
+            case AugmentType.standard:
+                wt_toolsInHand[i_currentWeaponIndex].Augs = Utils.AddToArray(wt_toolsInHand[i_currentWeaponIndex].Augs, AugmentManager.x.GetStandardAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+                break;
+        }
         Notify(eae);
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
     }

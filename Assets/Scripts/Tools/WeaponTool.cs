@@ -46,7 +46,7 @@ public class WeaponTool : ToolBase
 
     #region Get/Sets
     public bool RackUpgrade { get { return b_rackUpgrade; } set { b_rackUpgrade = value; } }
-    public Augment[] Augs { get { return A_augs; } }
+    public Augment[] Augs { get { return A_augs; } set { A_augs = value; } }
     #endregion
 
     protected void OnEnable()

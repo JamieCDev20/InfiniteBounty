@@ -45,6 +45,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList, params string[] toExclude)
     {
+        // 
         List<Augment> _augmentsInList = new List<Augment>();
         List<string> exclusionList = new List<string>(toExclude);
         adt_currentDisplayType = adt;
@@ -209,12 +210,16 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             {
                 if (goL_augmentButtonPool.Count <= i)
                     goL_augmentButtonPool.Add(PoolManager.x.SpawnObject(go_augmentButton));
+                // position stuff
                 goL_augmentButtonPool[i].SetActive(true);
                 goL_augmentButtonPool[i].transform.parent = go_listMover.transform;
                 goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
+                // Set text
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
                 goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
+                // Scale
                 goL_augmentButtonPool[i].transform.localScale = Vector3.one;
+                // 
                 AugmentButton btn = goL_augmentButtonPool[i].GetComponent<AugmentButton>();
                 btn.i_buttonIndex = FindAugmentToShowIndexFromOwned(_aL_augmentsToShow[i].Name, _aL_augmentsToShow[i].Level);
                 btn.Parent = transform.root.gameObject;
@@ -279,21 +284,21 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     }
 
-    private int FindAugmentToShowIndexFromOwned(string _name, int level)
+    private int FindAugmentToShowIndexFromOwned(string _name, int _level)
     {
         switch (adt_currentDisplayType)
         {
             case AugmentDisplayType.ShowEquipped:
                 for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
                 {
-                    if (_name == wt_toolToCheck.Augs[i].Name && level == wt_toolToCheck.Augs[i].Level)
+                    if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
                         return i;
                 }
                 break;
             default:
                 for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
                 {
-                    if (aL_allAugmentsOwned[i].Name == _name && aL_allAugmentsOwned[i].Level == level)
+                    if (aL_allAugmentsOwned[i].Name == _name && aL_allAugmentsOwned[i].Level == _level)
                         return i;
                 }
                 break;
@@ -311,7 +316,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     public void ClickAugment(int _i_augmentIndexClicked)
     {
-
+        // Highlight button
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
