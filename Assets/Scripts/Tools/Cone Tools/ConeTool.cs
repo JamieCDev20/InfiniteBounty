@@ -34,7 +34,7 @@ public class ConeTool : WeaponTool
     {
         if (!base.AddStatChanges(aug))
             return false;
-        ConeAugment coneAug = (ConeAugment)FindObjectOfType<AugmentManager>().GetAugment(aug.Name).Aug;
+        ConeAugment coneAug = (ConeAugment)AugmentManager.x.GetConeAugmentAt(aug.Stage, aug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug.Name) : new int[] { AugmentManager.x.GetAugmentIndex(aug.at_type, aug.Name) });
         AugmentCone augData = coneAug.GetConeData();
         f_angle += augData.f_angle;
         f_radius += augData.f_radius;

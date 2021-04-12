@@ -127,7 +127,7 @@ public class ProjectileTool : WeaponTool
     {
         if (!base.AddStatChanges(aug))
             return false;
-        ProjectileAugment pa = (ProjectileAugment)FindObjectOfType<AugmentManager>().GetAugment(aug.Name).Aug;
+        ProjectileAugment pa = (ProjectileAugment)AugmentManager.x.GetProjectileAugmentAt(aug.Stage, aug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug.Name) : new int[] { AugmentManager.x.GetAugmentIndex(aug.at_type, aug.Name) });
         AugmentProjectile augData = pa.GetProjectileData();
         i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level) * 0.25f));
         ap_projAugment.f_gravity += augData.f_gravity;
