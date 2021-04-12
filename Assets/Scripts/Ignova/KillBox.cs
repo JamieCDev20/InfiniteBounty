@@ -42,10 +42,12 @@ public class KillBox : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (b_shouldSinBackToStart)
             transform.position += (v_unitsPerSecond * Mathf.Sin(Time.realtimeSinceStartup));
         else
             transform.position += v_unitsPerSecond * Time.deltaTime;
+        */
 
         f_time += Time.deltaTime;
         if (f_time >= f_timeBetweenDamages)

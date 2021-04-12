@@ -89,6 +89,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
+        print("OW");
 #if UNITY_EDITOR
         if (!Damageable)
             return;
