@@ -97,7 +97,7 @@ public class Workbench : SubjectBase, IInteractible
             if (wt_toolsInHand.Count > 0)
             {
                 apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
-                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
                 DisplayWeapon();
             }
             // Enable cursor
@@ -180,7 +180,7 @@ public class Workbench : SubjectBase, IInteractible
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(true);
 
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
-        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
     }
 
     private void HideWeapon()
