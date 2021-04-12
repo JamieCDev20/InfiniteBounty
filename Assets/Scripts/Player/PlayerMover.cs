@@ -154,7 +154,7 @@ public class PlayerMover : MonoBehaviour
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
             //rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
-            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * (f_currentMoveSpeed / GetWeaponWeighting()) * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), 0.2f);
+            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * Mathf.Clamp(f_currentMoveSpeed / GetWeaponWeighting(), 0.5f, 2) * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), 0.2f);
             t.y += rb.velocity.y;
             rb.velocity = t;
 
