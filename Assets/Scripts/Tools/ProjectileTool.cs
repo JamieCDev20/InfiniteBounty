@@ -28,9 +28,11 @@ public class ProjectileTool : WeaponTool
     private bool b_isOverheating;
     [SerializeField] private ParticleSystem ps_overHeatEffects;
     [SerializeField] private AudioClip ac_overHeatClip;
+    private PlayerAnimator pa_anim;
 
     public override void SetActive(bool val)
     {
+        pa_anim = GetComponent<PlayerAnimator>();
         b_active = val;
         if (transform.root.GetComponent<PlayerInputManager>() != null)
         {
@@ -55,6 +57,7 @@ public class ProjectileTool : WeaponTool
             StartCoroutine(TimeBetweenUsage());
             PlayParticles(true);
             cc_cam?.Recoil(f_recoil);
+            pa_anim.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);
             PlayAudio(ac_activationSound);
             f_currentHeat += f_heatPerShot;
         }
