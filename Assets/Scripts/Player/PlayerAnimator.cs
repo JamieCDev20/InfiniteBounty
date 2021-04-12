@@ -275,7 +275,6 @@ public class PlayerAnimator : MonoBehaviourPun
 
         Vector3 temp = _arm.localEulerAngles;
         temp.z += (ang * side) + f_armOffset + (_b_isLeftArm ? f_leftArmRecoil : f_rightArmRecoil);
-        print((_b_isLeftArm ? f_leftArmRecoil : f_rightArmRecoil));
         _arm.localEulerAngles = temp;
 
     }
