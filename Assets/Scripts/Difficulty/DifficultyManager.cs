@@ -21,12 +21,22 @@ public class DifficultyManager : SubjectBase
     {
     }
 
+#if UNITY_EDITOR
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+            i_maximumDifficulty++;
+    }
+
+#endif
+
     public void Init()
     {
         if (x) Destroy(gameObject);
         else x = this;
         DontDestroyOnLoad(gameObject);
-        i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty;
+        i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty + 1;
         i_amountOfAuthoredDifs = dsL_difficulties.Count;
         AddObserver(FindObjectOfType<SaveManager>());
 
