@@ -180,7 +180,7 @@ public class Workbench : SubjectBase, IInteractible
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(true);
 
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
-        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
     }
 
     private void HideWeapon()
@@ -261,7 +261,7 @@ public class Workbench : SubjectBase, IInteractible
     {
         // Augment index out of range.
         Notify(new UnequipAugmentEvent(wt_toolsInHand[i_currentWeaponIndex].ToolID, i_currentWeaponIndex,
-            new AugmentSave(wt_toolsInHand[i_currentWeaponIndex].Augs[i_currentAugmentIndex])));
+            new AugmentSave(wt_toolsInHand[i_currentWeaponIndex].Augs[apd.CurrentAugIndex])));
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
 
     }
