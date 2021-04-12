@@ -97,7 +97,7 @@ public class Workbench : SubjectBase, IInteractible
             if (wt_toolsInHand.Count > 0)
             {
                 apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
-                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
                 DisplayWeapon();
             }
             // Enable cursor
