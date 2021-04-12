@@ -221,7 +221,7 @@ public class Workbench : SubjectBase, IInteractible
         }
         else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ConeTool)
         {
-            if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.cone)
+            if (aL_allAugmentsOwned[apd.CurrentAugIndex].at_type == AugmentType.cone)
             {
                 ConeTool ct = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<ConeTool>();
                 if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
@@ -239,7 +239,7 @@ public class Workbench : SubjectBase, IInteractible
         }
         else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is WeaponTool)
         {
-            if (aL_allAugmentsOwned[i_currentAugmentIndex].at_type == AugmentType.standard)
+            if (aL_allAugmentsOwned[apd.CurrentAugIndex].at_type == AugmentType.standard)
             {
                 WeaponTool wt = th_currentTh.GetToolBase(i_currentWeaponIndex).GetComponent<WeaponTool>();
                 if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
