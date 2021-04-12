@@ -335,7 +335,7 @@ public class Workbench : SubjectBase, IInteractible
         i_currentWeaponIndex += lr;
         if (i_currentWeaponIndex >= wt_toolsInHand.Count)
             i_currentWeaponIndex = 0;
-        else if (i_currentWeaponIndex <= 0)
+        else if (i_currentWeaponIndex < 0)
             i_currentWeaponIndex = wt_toolsInHand.Count - 1;
 
         DisplayWeapon();
