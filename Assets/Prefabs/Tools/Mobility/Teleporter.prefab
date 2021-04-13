@@ -19551,6 +19551,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d63cb38f41ab422479fba2f868b20c51, type: 3}
   ac_hitSound: []
   ac_diegeticAudio: []
+  ac_heatSound: {fileID: 0}
   b_oneTimeAudio: 0
   t_raycastPoint: {fileID: 0}
   b_releaseActivated: 1
@@ -35066,6 +35067,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5112255551441474231}
     m_Modifications:
+    - target: {fileID: 22462938671057571, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: m_SortingFudge
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 129671865308363657, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: m_SortingFudge
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 297161662339282400, guid: 27f9e6cf83cb0514db0de684cb563f0c,
         type: 3}
       propertyPath: m_RenderMode
@@ -35151,6 +35162,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.06
       objectReference: {fileID: 0}
+    - target: {fileID: 1983087252634307373, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2192813494520901846, guid: 27f9e6cf83cb0514db0de684cb563f0c,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -35180,6 +35196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233494629137096233, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 4.4
       objectReference: {fileID: 0}
     - target: {fileID: 7133037164650500399, guid: 27f9e6cf83cb0514db0de684cb563f0c,
         type: 3}
