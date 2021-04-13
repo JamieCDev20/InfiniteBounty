@@ -68,7 +68,7 @@ public class LoadingScreenManager : MonoBehaviourPun
     [PunRPC]
     public void ShowLoadingScreen()
     {
-        FadeToBlack.x.ShowCover();
+        FadeToBlack.x.ShowCover(0);
     }
 
     internal IEnumerator BeginLoadingSceneAsync()
