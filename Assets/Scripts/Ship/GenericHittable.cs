@@ -23,8 +23,14 @@ public class GenericHittable : MonoBehaviour, IHitable
     [Space]
     [SerializeField] private ParticleSystem p_creationParticles;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip ac_damageSound;
+    [SerializeField] private AudioClip ac_loadingSound;
+    private AudioSource as_source;
+
     private void Start()
     {
+        as_source = GetComponent<AudioSource>();
         //tmp_damageText.text = "";        
         StartCoroutine(NewLode());
     }
@@ -35,6 +41,8 @@ public class GenericHittable : MonoBehaviour, IHitable
         {
             print($"OUCH , I'VE TAKEN {damage} DMG.");
 
+            if (ac_damageSound != null)
+                as_source.PlayOneShot(ac_damageSound);
             p_hitEffect.Play();
             i_currentHealth -= damage;
             t_healthBarObject.transform.localScale = new Vector3(1, 1, (float)i_currentHealth / i_maxHealth);
@@ -60,8 +68,9 @@ public class GenericHittable : MonoBehaviour, IHitable
         b_canBeHit = false;
         i_currentHealth = i_maxHealth;
         tmp_damageText.text = s_loadingMessage;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
 
+        as_source.PlayOneShot(ac_loadingSound);
         p_creationParticles.Play();
         yield return new WaitForSeconds(0.25f);
 
