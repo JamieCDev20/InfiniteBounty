@@ -7,6 +7,14 @@ public class StartScreen : MonoBehaviour
 {
     public void StartGame()
     {
+        StartCoroutine(IStartGame());
+    }
+
+    private IEnumerator IStartGame()
+    {
+        FadeToBlack.x.ShowCover(0);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("LobbyScene");
     }
+
 }
