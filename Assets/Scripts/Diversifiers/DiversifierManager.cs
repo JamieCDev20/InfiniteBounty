@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Diversifier
 {
@@ -25,12 +26,18 @@ public enum Diversifier
     MaxiFlying,
 }
 
+public enum BonusObjective
+{
+    None, BonusGoo, BonusHydro, BonusTasty, BonusThunder, BonusBoom, BonusMagma
+}
+
 public class DiversifierManager : MonoBehaviourPunCallbacks
 {
     public static DiversifierManager x;
     private PhotonView view;
     private Diversifier[] dA_activeDivers = new Diversifier[3];
     private LodeSpawnZone[] ziA_allZones;
+    private BonusObjective bo_currentBonusObjective;
 
     [Header("Geyser Things")]
     [SerializeField] private string s_geyserPath;
@@ -41,7 +48,11 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     {
         transform.parent = null;
 
-        if (x != null) Destroy(gameObject);
+        if (x != null)
+        {
+            x.bo_currentBonusObjective = BonusObjective.None;
+            Destroy(gameObject);
+        }
         else
         {
             x = this;
@@ -58,7 +69,22 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         dA_activeDivers[0] = _dA_diversGotten[0];
         dA_activeDivers[1] = _dA_diversGotten[1];
         dA_activeDivers[2] = _dA_diversGotten[2];
+
     }
+
+    internal BonusObjective ReturnBonusObjective()
+    {
+        return bo_currentBonusObjective;
+    }
+
+    [PunRPC]
+    public void SyncBonusObjective(int _i_objectiveIndex)
+    {
+        print((BonusObjective)_i_objectiveIndex + " is the new bonus");
+        bo_currentBonusObjective = (BonusObjective)_i_objectiveIndex;
+        HUDController.x.ChangeBonusObjective(bo_currentBonusObjective);
+    }
+
 
     public bool ReturnIfDiverIsActive(Diversifier _d_toCheck)
     {
@@ -71,6 +97,9 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     public void ApplyDiversifiers(LodeSpawnZone[] _ziA_spawnableZones)
     {
+        if (PhotonNetwork.IsMasterClient)
+            view.RPC(nameof(SyncBonusObjective), RpcTarget.All, Random.Range(1, 7));
+
         ziA_allZones = _ziA_spawnableZones;
 
         if (PhotonNetwork.IsMasterClient)

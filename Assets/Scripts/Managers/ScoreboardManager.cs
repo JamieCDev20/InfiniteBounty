@@ -18,6 +18,8 @@ public class ScoreboardManager : MonoBehaviour
     [SerializeField] private Transform t_camPos;
     private Transform t_camPositionToReturnTo;
     private bool b_isBeingUsed;
+    [SerializeField] private Text t_bonusObjectiveText;
+    [SerializeField] private Text t_diffScaleText;
 
     public void Start()
     {
@@ -38,6 +40,9 @@ public class ScoreboardManager : MonoBehaviour
         int totalEarned = 0;
         int playerTotal;
         int pc = PhotonNetwork.CurrentRoom.PlayerCount;
+        int _i_scaledMoney = 0;
+        int _i_bonusScaledMoney = 0;
+        float _f_currentMoneyMult = DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult;
 
         //string s = "";
         //for (int i = 0; i < values.Length; i++)
@@ -55,19 +60,47 @@ public class ScoreboardManager : MonoBehaviour
         {
             so_playerScoreObjects[i].nameText.text = PhotonNetwork.CurrentRoom.Players[i + 1].NickName;
 
+            //Goo
             so_playerScoreObjects[i].gooText.text = values[pc - 1 - i][0].ToString();
-            so_playerScoreObjects[i].hydroText.text = values[pc - 1 - i][1].ToString();
-            so_playerScoreObjects[i].tastyText.text = values[pc - 1 - i][2].ToString();
-            so_playerScoreObjects[i].thunderText.text = values[pc - 1 - i][3].ToString();
-            so_playerScoreObjects[i].boomText.text = values[pc - 1 - i][4].ToString();
-            so_playerScoreObjects[i].magmaText.text = values[pc - 1 - i][5].ToString();
-            playerTotal = UniversalNugManager.x.CalculateValues(values[pc - 1 - i]);
-            so_playerScoreObjects[i].bucksText.text = Mathf.RoundToInt(DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult * playerTotal).ToString();
-            totalEarned += playerTotal;
-        }
-        t_totalEarned.text = Mathf.RoundToInt(DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult * totalEarned).ToString();
-        NetworkedPlayer.x.CollectEndLevelNugs(Mathf.RoundToInt(DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult * (totalEarned / PhotonNetwork.CurrentRoom.PlayerCount)));
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusGoo && values[pc - 1 - i][0] >= 1)
+                _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
 
+            //Hydro
+            so_playerScoreObjects[i].hydroText.text = values[pc - 1 - i][1].ToString();
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusHydro && values[pc - 1 - i][1] >= 1)
+                _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
+
+            //Tasty
+            so_playerScoreObjects[i].tastyText.text = values[pc - 1 - i][2].ToString();
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusTasty && values[pc - 1 - i][2] >= 1)
+                _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
+
+            //Thunder
+            so_playerScoreObjects[i].thunderText.text = values[pc - 1 - i][3].ToString();
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusThunder && values[pc - 1 - i][3] >= 1)
+                _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
+
+            //Boom
+            so_playerScoreObjects[i].boomText.text = values[pc - 1 - i][4].ToString();
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusBoom && values[pc - 1 - i][4] >= 1)
+                _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
+
+            //Magma
+            so_playerScoreObjects[i].magmaText.text = values[pc - 1 - i][5].ToString();
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusMagma && values[pc - 1 - i][0] >= 1)
+                _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
+
+            playerTotal = UniversalNugManager.x.CalculateValues(values[pc - 1 - i]);
+
+            so_playerScoreObjects[i].bucksText.text = Mathf.RoundToInt(_f_currentMoneyMult * playerTotal).ToString();
+            totalEarned += Mathf.RoundToInt(playerTotal * _f_currentMoneyMult);
+        }
+
+        t_totalEarned.text = Mathf.RoundToInt(totalEarned + _i_bonusScaledMoney).ToString();
+        NetworkedPlayer.x.CollectEndLevelNugs(Mathf.RoundToInt((totalEarned / PhotonNetwork.CurrentRoom.PlayerCount) + _i_bonusScaledMoney));
+
+        t_bonusObjectiveText.text = "BONUS £" + _i_bonusScaledMoney;
+        t_diffScaleText.text = "Risk Bonus = " + _f_currentMoneyMult + "x";
     }
 
     #region Camera Locking

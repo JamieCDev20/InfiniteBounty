@@ -56,6 +56,9 @@ public class TutorialManager : MonoBehaviour
                 go_videoObject.SetActive(false);
                 b_isPlayingVideo = false;
             }
+
+        //if(Input.GetKeyDown(KeyCode.Escape))
+
     }
 
     internal void SetShouldTutorial(bool isOn)

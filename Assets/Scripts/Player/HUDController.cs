@@ -57,6 +57,10 @@ public class HUDController : MonoBehaviourPunCallbacks
     [SerializeField] private Text t_killTimerText;
     [SerializeField] private Image i_killWarningImage;
 
+    [Header("Bonus")]
+    [SerializeField] private Text t_bonusText;
+    [SerializeField] private GameObject go_bonusParent;
+
     private void Awake()
     {
         x = this;
@@ -85,6 +89,36 @@ public class HUDController : MonoBehaviourPunCallbacks
             }
         }
         t_myNameText.text = PhotonNetwork.NickName;
+
+
+    }
+
+    public void ChangeBonusObjective(BonusObjective _bo_newBonus)
+    {
+        switch (_bo_newBonus)
+        {
+            case BonusObjective.None:
+                go_bonusParent.SetActive(false);
+                break;
+            case BonusObjective.BonusGoo:
+                t_bonusText.text = "Collect 400 Goo Nuggs";
+                break;
+            case BonusObjective.BonusHydro:
+                t_bonusText.text = "Collect 400 Hydro Nuggs";
+                break;
+            case BonusObjective.BonusTasty:
+                t_bonusText.text = "Collect 400 Tasty Nuggs";
+                break;
+            case BonusObjective.BonusThunder:
+                t_bonusText.text = "Collect 400 Thunder Nuggs";
+                break;
+            case BonusObjective.BonusBoom:
+                t_bonusText.text = "Collect 400 Boom Nuggs";
+                break;
+            case BonusObjective.BonusMagma:
+                t_bonusText.text = "Collect 400 Magma Nuggs";
+                break;
+        }
     }
 
     public void SetHealthBarValue(float _i_currentHealth, int _i_maxHealth)

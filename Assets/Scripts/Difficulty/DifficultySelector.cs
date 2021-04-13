@@ -18,8 +18,11 @@ public class DifficultySelector : MonoBehaviour, IInteractible
     {
         as_source = GetComponent<AudioSource>();
 
-        ChangeDifficulty(1);
         ChangeDifficulty(-1);
+
+        for (int i = 0; i < DifficultyManager.x.MaximumDifficulty; i++)
+            ChangeDifficulty(1);
+
     }
 
     public void ChangeDifficulty(int _i_difficultyChange)
@@ -53,11 +56,11 @@ public class DifficultySelector : MonoBehaviour, IInteractible
             t_textParent.position += Vector3.up * _i_change * 0.05f;
         }
 
-        TutorialManager.x.UsedRiskSelector();
     }
 
     public void Interacted()
     {
+        TutorialManager.x.UsedRiskSelector();
         ChangeDifficulty(i_difficultyChangeOnClick);
         as_source.Play();
     }
