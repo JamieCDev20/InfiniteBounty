@@ -35,6 +35,8 @@ public class TutorialManager : MonoBehaviour
     private bool b_hasChangedRisk;
     private bool b_hasChangedShift;
     private bool b_isPlayingVideo;
+    private bool b_hasFinished;
+    [SerializeField] private GameObject go_tutorialWalls;
 
     private void Awake()
     {
@@ -285,6 +287,9 @@ public class TutorialManager : MonoBehaviour
 
             //go_tutorialCanvas.SetActive(false);
         }
+
+        foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
+            item.SetActive(false);
     }
 
     [System.Serializable]

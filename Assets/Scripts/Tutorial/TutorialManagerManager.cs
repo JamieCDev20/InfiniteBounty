@@ -17,7 +17,6 @@ public class TutorialManagerManager : MonoBehaviour
 
     public void ToggleTutorial()
     {
-        print(t_tutorialToggle.isOn);
         TutorialManager.x.SetShouldTutorial(t_tutorialToggle.isOn);
     }
 
