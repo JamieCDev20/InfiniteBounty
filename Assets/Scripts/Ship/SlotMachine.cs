@@ -33,7 +33,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [Header("UI References")]
     [SerializeField] private Text t_nameText;
     [SerializeField] private Text t_descriptionText;
-    [SerializeField] private Canvas c_infoCanvas;
+    [SerializeField] private GameObject go_infoCanvas;
 
     [Header("Info Buttons")]
     [SerializeField] private GameObject go_infoHighlight;
@@ -120,7 +120,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             _pa.StopWalking();
             nm_nugMan = pim.GetComponent<NugManager>();
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
-            c_infoCanvas.enabled = true;
+            go_infoCanvas.SetActive(true);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -142,7 +142,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
 
-        c_infoCanvas.enabled = false;
+        go_infoCanvas.SetActive(false);
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);
