@@ -99,7 +99,7 @@ public class PauseMenuController : SubjectBase
                 Cursor.lockState = CursorLockMode.Locked;
                 return;
             }
-        if (pim.GetIsPaused())
+        if (pim != null && pim.GetIsPaused())
         {
             if (!b_isPaused)
                 Pause();
