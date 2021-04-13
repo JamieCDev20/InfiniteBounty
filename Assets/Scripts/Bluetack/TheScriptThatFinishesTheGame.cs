@@ -18,6 +18,9 @@ public class TheScriptThatFinishesTheGame : MonoBehaviour
 
         for (int i = 0; i < _cA.Length; i++)
         {
+            if (_cA[i].gameObject.isStatic)
+                continue;
+
             if (_cA[i].CompareTag("Player"))
                 SceneManager.LoadScene(s_sceneToLoad);
             else
