@@ -17,7 +17,7 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private AugmentPropertyDisplayer apd;
     [SerializeField] private Transform t_playerPos;
     [SerializeField] private Transform t_camParent;
-    [SerializeField] private Canvas microwaveCanvas;
+    [SerializeField] private GameObject microwaveCanvas;
     [SerializeField] private Button fuseButton;
     [SerializeField] private AugmentFuser fuser;
     [SerializeField] private GameObject go_augButtonA;
@@ -59,7 +59,7 @@ public class Microwave : SubjectBase, IInteractible
             // Move camera
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             microwaveCanvas.transform.localScale = Vector3.one * 0.739f;
-            microwaveCanvas.enabled = true;
+            microwaveCanvas.SetActive(true);
             // Display the UI
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
             // Enable cursor
@@ -82,7 +82,7 @@ public class Microwave : SubjectBase, IInteractible
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
         // Player is able to move camera
         microwaveCanvas.transform.localScale = Vector3.zero;
-        microwaveCanvas.enabled = false;
+        microwaveCanvas.SetActive(false);
         pim.GetCamera().enabled = true;
         // Player is able to animate again!
         pm.GetComponent<PlayerAnimator>().enabled = true;
