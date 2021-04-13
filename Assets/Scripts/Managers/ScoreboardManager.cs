@@ -62,32 +62,32 @@ public class ScoreboardManager : MonoBehaviour
 
             //Goo
             so_playerScoreObjects[i].gooText.text = values[pc - 1 - i][0].ToString();
-            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusGoo && values[pc - 1 - i][0] >= 1)
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusGoo && values[pc - 1 - i][0] >= 400)
                 _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
 
             //Hydro
             so_playerScoreObjects[i].hydroText.text = values[pc - 1 - i][1].ToString();
-            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusHydro && values[pc - 1 - i][1] >= 1)
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusHydro && values[pc - 1 - i][1] >= 400)
                 _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
 
             //Tasty
             so_playerScoreObjects[i].tastyText.text = values[pc - 1 - i][2].ToString();
-            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusTasty && values[pc - 1 - i][2] >= 1)
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusTasty && values[pc - 1 - i][2] >= 400)
                 _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
 
             //Thunder
             so_playerScoreObjects[i].thunderText.text = values[pc - 1 - i][3].ToString();
-            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusThunder && values[pc - 1 - i][3] >= 1)
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusThunder && values[pc - 1 - i][3] >= 400)
                 _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
 
             //Boom
             so_playerScoreObjects[i].boomText.text = values[pc - 1 - i][4].ToString();
-            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusBoom && values[pc - 1 - i][4] >= 1)
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusBoom && values[pc - 1 - i][4] >= 400)
                 _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
 
             //Magma
             so_playerScoreObjects[i].magmaText.text = values[pc - 1 - i][5].ToString();
-            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusMagma && values[pc - 1 - i][0] >= 1)
+            if (DiversifierManager.x.ReturnBonusObjective() == BonusObjective.BonusMagma && values[pc - 1 - i][0] >= 400)
                 _i_bonusScaledMoney = Mathf.RoundToInt(1000 * _f_currentMoneyMult);
 
             playerTotal = UniversalNugManager.x.CalculateValues(values[pc - 1 - i]);
