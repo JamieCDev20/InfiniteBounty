@@ -349,6 +349,11 @@ public class PlayerAnimator : MonoBehaviourPun
         anim.SetBool("Revive", false);
     }
 
+    internal void WalkInDropPod()
+    {
+        anim.SetBool("InDropPod", true);
+    }
+
     #endregion
 
     #region Private Returns

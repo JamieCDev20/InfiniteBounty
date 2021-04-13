@@ -68,9 +68,7 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
                 if (go_audioSourceObject)
                     go_audioSourceObject.SetActive(true);
                 */
-                b_isBeingUsed = true;
-                if (b_cannonSeat)
-                    CannonSeatManager.x.StartedSitting();
+                b_isBeingUsed = true;                
             }
         }
     }
