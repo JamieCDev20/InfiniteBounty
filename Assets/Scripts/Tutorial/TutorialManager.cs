@@ -289,6 +289,8 @@ public class TutorialManager : MonoBehaviour
             }
 
             //go_tutorialCanvas.SetActive(false);
+            foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
+                item.SetActive(false);
         }
     }
 
