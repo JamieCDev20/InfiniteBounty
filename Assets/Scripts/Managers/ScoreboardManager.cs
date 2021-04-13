@@ -92,14 +92,18 @@ public class ScoreboardManager : MonoBehaviour
 
             playerTotal = UniversalNugManager.x.CalculateValues(values[pc - 1 - i]);
 
-            so_playerScoreObjects[i].bucksText.text = Mathf.RoundToInt(_f_currentMoneyMult * playerTotal).ToString();
+            so_playerScoreObjects[i].bucksText.text = Mathf.RoundToInt(playerTotal).ToString();
             totalEarned += Mathf.RoundToInt(playerTotal * _f_currentMoneyMult);
         }
 
         t_totalEarned.text = Mathf.RoundToInt(totalEarned + _i_bonusScaledMoney).ToString();
         NetworkedPlayer.x.CollectEndLevelNugs(Mathf.RoundToInt((totalEarned / PhotonNetwork.CurrentRoom.PlayerCount) + _i_bonusScaledMoney));
 
-        t_bonusObjectiveText.text = "BONUS £" + _i_bonusScaledMoney;
+        if (_i_bonusScaledMoney > 0)
+            t_bonusObjectiveText.text = "BONUS £1000";
+        else
+            t_bonusObjectiveText.text = "BONUS FAILED";
+
         t_diffScaleText.text = "Risk Bonus = " + _f_currentMoneyMult + "x";
     }
 
