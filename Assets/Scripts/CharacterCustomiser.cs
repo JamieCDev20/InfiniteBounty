@@ -13,6 +13,8 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private Camera c_mirrorCam;
     [SerializeField] private GameObject go_uiStuff;
     private bool b_isBeingUsed;
+    [SerializeField] private GameObject[] goA_playerSpots;
+    [SerializeField] private GameObject[] goA_camSpots;
 
     public void Interacted() { }
 
@@ -35,6 +37,10 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            interactor.position = goA_playerSpots[pim.GetID()].transform.position;
+            interactor.forward = goA_playerSpots[pim.GetID()].transform.forward;
+            c_mirrorCam.transform.position = goA_camSpots[pim.GetID()].transform.position;
 
             b_isBeingUsed = true;
 
