@@ -50,8 +50,6 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
                 pm.transform.position = t_sitPosition.position;
                 pm.transform.forward = t_sitPosition.forward;
                 sitter = interactor;
-                if (go_audioSourceObject)
-                    go_audioSourceObject.SetActive(true);
 
                 /*
                 pm.enabled = false;

@@ -42,8 +42,6 @@ public class TutorialManager : MonoBehaviour
     {
         x = this;
 
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
-            item.SetActive(false);
         go_tutorialCanvas.SetActive(true);
         StartCoroutine(DoTutorialSection(tcA_tutorial));
 
