@@ -154,7 +154,7 @@ public class Workbench : SubjectBase, IInteractible
 
         while (t < 1)
         {
-            _t.localPosition = Vector3.Lerp(start, Vector3.zero, t);
+            _t.localPosition = Vector3.Lerp(start, _b_comingIntoMachine ? Vector3.zero : Vector3.forward * -4, t);
             _t.rotation = Quaternion.Lerp(iRot, _t_transformToMoveTo.rotation, t);
             t += (Time.deltaTime * (1 / f_lerpTime));
             yield return new WaitForEndOfFrame();

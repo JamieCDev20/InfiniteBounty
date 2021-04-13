@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
     private bool b_isBeingUsed;
     [SerializeField] private GameObject[] goA_playerSpots;
     [SerializeField] private GameObject[] goA_camSpots;
+    private int f_lerpTime = 2;
+    private Transform t_camPositionToReturnTo;
 
     public void Interacted() { }
 
@@ -28,8 +31,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
             pim.b_shouldPassInputs = false;
 
             cc_cam = pim.GetCamera();
-            cc_cam.gameObject.SetActive(false);
-            c_mirrorCam.gameObject.SetActive(true);
+            //cc_cam.gameObject.SetActive(false);
             go_uiStuff.SetActive(true);
 
             ac_user.GetComponent<Rigidbody>().isKinematic = true;
@@ -40,9 +42,13 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 
             interactor.position = goA_playerSpots[pim.GetID()].transform.position;
             interactor.forward = goA_playerSpots[pim.GetID()].transform.forward;
-            c_mirrorCam.transform.position = goA_camSpots[pim.GetID()].transform.position;
+
+            //c_mirrorCam.gameObject.SetActive(true);
+            //c_mirrorCam.transform.position = goA_camSpots[pim.GetID()].transform.position;
 
             b_isBeingUsed = true;
+            Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
+            StartCoroutine(MoveCamera(goA_camSpots[pim.GetID()].transform, pim.GetCamera().transform, true));
 
         }
     }
@@ -68,8 +74,44 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
             null, null, null, null, null, -1)));
 
         TutorialManager.x.InteractedWithReflectron();
+
+        StartCoroutine(MoveCamera(pim.GetCamera().transform, pim.GetCamera().transform, false));
+
     }
 
+    public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
+    {
+        Transform _t = Camera.main.transform;
+        float t = 0;
+        if (_b_comingIntoMachine)
+            _t.parent = goA_camSpots[pim.GetID()].transform;
+        else
+            Camera.main.transform.parent = _t_cameraToMove;
+
+        Vector3 start = _t.localPosition;
+        Quaternion iRot = _t.rotation;
+
+        while (t < 1)
+        {
+            _t.localPosition = Vector3.Lerp(start, _b_comingIntoMachine ? Vector3.zero : Vector3.forward * -4, t);
+            _t.rotation = Quaternion.Lerp(iRot, _t_transformToMoveTo.rotation, t);
+            t += (Time.deltaTime * 2);
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (_b_comingIntoMachine)
+        {
+            _t.localPosition = Vector3.zero;
+            _t.localEulerAngles = Vector3.zero;
+        }
+        else
+        {
+            print("HEY");
+            Camera.main.GetComponent<CameraRespectWalls>().enabled = true;
+            Camera.main.transform.localEulerAngles = new Vector3(5, 0, 0);
+            Camera.main.transform.localPosition = new Vector3(0, 0, -4);
+        }
+    }
 
     public void NextHead()
     {
