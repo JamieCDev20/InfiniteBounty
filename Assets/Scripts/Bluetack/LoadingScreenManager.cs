@@ -18,7 +18,13 @@ public class LoadingScreenManager : MonoBehaviourPun
 
     public void Init()
     {
-        x = this;
+        if (x == null)
+        {
+            x = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(gameObject);
+
         photonView.ViewID = 9898989;
         PhotonNetwork.RegisterPhotonView(photonView);
 
