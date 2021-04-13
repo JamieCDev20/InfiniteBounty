@@ -14,7 +14,7 @@ public class Workbench : SubjectBase, IInteractible
     private SaveManager saveMan;
     [SerializeField] private ToolLoader tl;
     [SerializeField] private GameObject[] goA_tools;
-    [SerializeField] private Canvas c_workbenchCanvas;
+    [SerializeField] private GameObject go_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
     [Header("Camera & Movement")]
     [SerializeField] private Transform t_camParent;
@@ -91,8 +91,8 @@ public class Workbench : SubjectBase, IInteractible
             _pa.StopWalking();
             // Move camera
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
-            c_workbenchCanvas.enabled = true;
-            c_workbenchCanvas.transform.localScale = Vector3.one * 0.739f;
+            go_workbenchCanvas.SetActive(true);
+            go_workbenchCanvas.transform.localScale = Vector3.one * 0.739f;
             // Find any saved augments and load them
             if (wt_toolsInHand.Count > 0)
             {
@@ -124,8 +124,8 @@ public class Workbench : SubjectBase, IInteractible
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
         // Player is able to move camera
-        c_workbenchCanvas.transform.localScale = Vector3.zero;
-        c_workbenchCanvas.enabled = false;
+        go_workbenchCanvas.transform.localScale = Vector3.zero;
+        go_workbenchCanvas.SetActive(false);
         pim.GetCamera().enabled = true;
         // Player is able to animate again!
         pm.GetComponent<PlayerAnimator>().enabled = true;

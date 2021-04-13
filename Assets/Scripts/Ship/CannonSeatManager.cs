@@ -97,6 +97,7 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
             _pa.SetShootability(true);
             yield return new WaitForSeconds(1);
             Camera.main.GetComponent<CameraRespectWalls>().enabled = true;
+            Camera.main.transform.localEulerAngles = Vector3.right * 5;
         }
     }
 
