@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +32,8 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
     private string playerName = "Samuel L Jackson";
     private Text onText;
     private Text offText;
+
+    private GameObject worldspaceNameText;
 
     private bool run = true;
 
@@ -76,6 +79,7 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
             offText.text = $"{playerName}   {playerName}";
 
         }
+        worldspaceNameText = GetComponentInChildren<TextMeshPro>().gameObject;
     }
 
     private void PositionWaypoint()
@@ -85,8 +89,10 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
         {
             go_offMarker.SetActive(false);
             go_onMarker.SetActive(false);
+            worldspaceNameText.SetActive(true);
             return;
         }
+        worldspaceNameText.SetActive(false);
 
         Vector2 screenPos = cam.WorldToScreenPoint(transform.position + (f_yOnScreenOffset * Vector3.up));
         float w = Screen.width;

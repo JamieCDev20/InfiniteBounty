@@ -49,6 +49,7 @@ public class PlayerMover : MonoBehaviour
     internal bool b_jumpPress;
     private float f_lastOnGround;
     private float f_currentMoveSpeed;
+    private float moveLerpVal = 0;
     private float f_currentMultiplier;
     private bool b_jumpHold;
     private bool b_jumpUp;
@@ -150,11 +151,14 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyMovement()
     {
+        float x = v_movementVector.sqrMagnitude > 0.5f ? 1 : 0;
+        moveLerpVal = Mathf.Lerp(moveLerpVal, x, 0.1f);
+
         Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), v_groundNormal);
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
             //rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
-            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * f_currentMoveSpeed / Mathf.Clamp(GetWeaponWeighting(), 0.5f, 2) * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), 0.2f);
+            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * f_currentMoveSpeed / Mathf.Clamp(GetWeaponWeighting(), 0.5f, 2) * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), moveLerpVal);
             t.y += rb.velocity.y;
             rb.velocity = t;
 
@@ -399,7 +403,6 @@ public class PlayerMover : MonoBehaviour
         b_knockedback = false;
     }
 
-
     internal void GetTeleported()
     {
         view.RPC(nameof(TeleportRPC), RpcTarget.All);
@@ -418,7 +421,6 @@ public class PlayerMover : MonoBehaviour
         go_characterMesh.SetActive(true);
         enabled = true;
     }
-
 
     #endregion
 
@@ -453,6 +455,7 @@ public class PlayerMover : MonoBehaviour
         }
         return false;
     }
+
     #endregion
 
     #region Public Returns

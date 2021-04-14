@@ -237,6 +237,7 @@ public class PauseMenuController : SubjectBase
     {
         A_display[(int)DisplaySettings.quality] = _i_qualityIndex;
         QualitySettings.SetQualityLevel(_i_qualityIndex);
+        CharacterCustomiser.x.SetCameraBasedOnQualityLevel();
     }
 
     public void SetResolutions(int _i_resolutionIndex)

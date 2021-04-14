@@ -8,16 +8,24 @@ using UnityEngine;
 public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 {
 
+    public static CharacterCustomiser x;
+
     private AppearanceChanger ac_user;
     private CameraController cc_cam;
     private PlayerInputManager pim;
     [SerializeField] private Camera c_mirrorCam;
+    [SerializeField] private Camera c_trueMirrorCam;
     [SerializeField] private GameObject go_uiStuff;
     private bool b_isBeingUsed;
     [SerializeField] private GameObject[] goA_playerSpots;
     [SerializeField] private GameObject[] goA_camSpots;
     private int f_lerpTime = 2;
     private Transform t_camPositionToReturnTo;
+
+    private void Start()
+    {
+        x = this;
+    }
 
     public void Interacted() { }
 
@@ -45,11 +53,12 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 
             //c_mirrorCam.gameObject.SetActive(true);
             //c_mirrorCam.transform.position = goA_camSpots[pim.GetID()].transform.position;
-
             b_isBeingUsed = true;
             Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
             StartCoroutine(MoveCamera(goA_camSpots[pim.GetID()].transform, pim.GetCamera().transform, true));
 
+            c_mirrorCam.enabled = true;
+            c_trueMirrorCam.enabled = true;
         }
     }
 
@@ -76,6 +85,8 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
         TutorialManager.x.InteractedWithReflectron();
 
         StartCoroutine(MoveCamera(pim.GetCamera().transform, pim.GetCamera().transform, false));
+
+        SetCameraBasedOnQualityLevel();
 
     }
 
@@ -106,7 +117,6 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
         }
         else
         {
-            print("HEY");
             Camera.main.GetComponent<CameraRespectWalls>().enabled = true;
             Camera.main.transform.localEulerAngles = new Vector3(5, 0, 0);
             Camera.main.transform.localPosition = new Vector3(0, 0, -4);
@@ -144,6 +154,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
     {
         ac_user.NextFeet();
     }
+
     public void LastLegs()
     {
         ac_user.LastFeet();
@@ -153,6 +164,20 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
     {
         base.OnPlayerEnteredRoom(newPlayer);
         EndInteract();
+    }
+
+    public override void OnJoinedRoom()
+    {
+        SetCameraBasedOnQualityLevel();
+    }
+
+    public void SetCameraBasedOnQualityLevel()
+    {
+        if (QualitySettings.GetQualityLevel() == 0)
+        {
+            c_mirrorCam.enabled = false;
+            c_trueMirrorCam.enabled = false;
+        }
     }
 
 }
