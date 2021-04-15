@@ -16,6 +16,7 @@ public class GenericHittable : MonoBehaviour, IHitable
     [SerializeField] private ParticleSystem p_deathEffect;
     [Space]
     [SerializeField] private MeshRenderer[] mrA_visuals = new MeshRenderer[0];
+    [SerializeField] private SkinnedMeshRenderer[] mrA_enemyVisuals = new SkinnedMeshRenderer[0];
     private int i_currentLode;
     private bool b_canBeHit;
     [SerializeField] private string[] sA_lodeNames = new string[0];
@@ -55,7 +56,12 @@ public class GenericHittable : MonoBehaviour, IHitable
     public void Die()
     {
         p_deathEffect.Play();
-        mrA_visuals[i_currentLode].material.SetFloat("Visibility", 1);
+
+        if (b_isEnemy)
+            mrA_enemyVisuals[i_currentLode].material.SetFloat("Visibility", 1);
+        else
+            mrA_visuals[i_currentLode].material.SetFloat("Visibility", 1);
+
         StartCoroutine(NewLode());
 
         TutorialManager.x.ThingDestroyed(b_isEnemy);
@@ -63,7 +69,11 @@ public class GenericHittable : MonoBehaviour, IHitable
 
     private IEnumerator NewLode()
     {
-        i_currentLode = Random.Range(0, mrA_visuals.Length);
+        if (b_isEnemy)
+            i_currentLode = Random.Range(0, mrA_enemyVisuals.Length);
+        else
+            i_currentLode = Random.Range(0, mrA_visuals.Length);
+
         t_healthBarObject.transform.localScale = new Vector3(1, 1, 0);
         b_canBeHit = false;
         i_currentHealth = i_maxHealth;
@@ -77,12 +87,19 @@ public class GenericHittable : MonoBehaviour, IHitable
         for (int i = 0; i < 100; i++)
         {
             yield return new WaitForSeconds(0.01f);
-            mrA_visuals[i_currentLode].material.SetFloat("Visibility", 1 - (i * 0.02f));
+            if (b_isEnemy)
+                mrA_enemyVisuals[i_currentLode].material.SetFloat("Visibility", 1 - (i * 0.02f));
+            else
+                mrA_visuals[i_currentLode].material.SetFloat("Visibility", 1 - (i * 0.02f));
             t_healthBarObject.transform.localScale = new Vector3(1, 1, (float)i / 100);
         }
         tmp_damageText.text = sA_lodeNames[i_currentLode];
 
-        mrA_visuals[i_currentLode].material.SetFloat("Visibility", -1);
+        if (b_isEnemy)
+            mrA_enemyVisuals[i_currentLode].material.SetFloat("Visibility", -1);
+        else
+            mrA_visuals[i_currentLode].material.SetFloat("Visibility", -1);
+
         t_healthBarObject.transform.localScale = new Vector3(1, 1, 1);
 
         b_canBeHit = true;
