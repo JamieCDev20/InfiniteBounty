@@ -8,7 +8,6 @@ public class TurnOffChildedOutlines : MonoBehaviourPunCallbacks
 {
     public override void OnJoinedRoom()
     {
-        Debug.Log("got called");
         foreach (OutlineObject o in GetComponentsInChildren<OutlineObject>())
         {
             Destroy(o);
