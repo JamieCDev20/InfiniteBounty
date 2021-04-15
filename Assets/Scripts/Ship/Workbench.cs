@@ -97,7 +97,7 @@ public class Workbench : SubjectBase, IInteractible
             if (wt_toolsInHand.Count > 0)
             {
                 apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
-                aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+                SameTab();
                 DisplayWeapon();
             }
             // Enable cursor
@@ -300,7 +300,6 @@ public class Workbench : SubjectBase, IInteractible
         img_equip.color = unSel;
         img_sameType.color = unSel;
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
-        Debug.Log(apd.CurrentDisplayType);
     }
     public void SameTab()
     {
@@ -310,7 +309,6 @@ public class Workbench : SubjectBase, IInteractible
         img_all.color = unSel;
         img_equip.color = unSel;
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
-        Debug.Log(apd.CurrentDisplayType);
     }
     public void EquippedTab()
     {
@@ -322,7 +320,6 @@ public class Workbench : SubjectBase, IInteractible
         List<Augment> augList = new List<Augment>();
         apd.ToolToCheck = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowEquipped, false);
-        Debug.Log(apd.CurrentDisplayType);
     }
 
     #endregion
