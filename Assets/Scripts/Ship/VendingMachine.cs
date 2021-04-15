@@ -17,7 +17,7 @@ public class VendingMachine : SubjectBase, IInteractible
     [SerializeField] private float f_cameraMovementT = 0.3f;
     private int i_currentAugmentIndex;
     private AugmentGo[] aA_avaliableAugments = new AugmentGo[9];
-    [SerializeField] private GameObject go_vendingCanvas;
+    [SerializeField] private Canvas go_vendingCanvas;
     [SerializeField] private AugmentDisplay vmd_vendingMachineDisplay;
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
     [SerializeField] private Transform t_augmentHighlight;
@@ -77,7 +77,8 @@ public class VendingMachine : SubjectBase, IInteractible
             _pa.StopWalking();
 
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
-            go_vendingCanvas.SetActive(true);
+            go_vendingCanvas.transform.localScale = Vector2.one * 0.739f;
+            go_vendingCanvas.enabled = true; ;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -95,8 +96,8 @@ public class VendingMachine : SubjectBase, IInteractible
         pm.enabled = true;
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
-
-        go_vendingCanvas.SetActive(false);
+        go_vendingCanvas.transform.localScale = Vector2.zero;
+        go_vendingCanvas.enabled = false;
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);

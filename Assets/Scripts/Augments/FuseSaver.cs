@@ -122,19 +122,23 @@ public class FuseSaver : MonoBehaviour, ObserverBase
 
     public void RemoveStandardFromSave(Augment _save)
     {
-        fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
-        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+        //fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
+        //_savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+        AugmentManager.x.RemoveAugment(AugmentType.standard, _save.Name);
     }
 
     public void RemoveProjectileFromSave(ProjectileAugment _save)
     {
-        fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
-        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+        //    Debug.Log(fusedProj.Length + " " + GetAugmentIndex(fusedProj, _save));
+        //    fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
+        //    _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+        AugmentManager.x.RemoveAugment(AugmentType.projectile, _save.Name);
     }
     public void RemoveConeFromSave(ConeAugment _save)
     {
-        fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));
-        _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+        //fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));
+        //_savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+        AugmentManager.x.RemoveAugment(AugmentType.cone, _save.Name);
     }
     public int GetAugmentIndex(Augment[] toCheck, Augment aug)
     {
