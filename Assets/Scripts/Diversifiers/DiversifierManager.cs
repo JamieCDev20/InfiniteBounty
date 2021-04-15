@@ -80,7 +80,6 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncBonusObjective(int _i_objectiveIndex)
     {
-        print((BonusObjective)_i_objectiveIndex + " is the new bonus");
         bo_currentBonusObjective = (BonusObjective)_i_objectiveIndex;
         HUDController.x.ChangeBonusObjective(bo_currentBonusObjective);
     }
