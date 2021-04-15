@@ -365,14 +365,14 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 SetFitIcon((int)wt_toolToCheck.Augs[_i_augmentIndexClicked].at_type);
                 ad_display.t_augmentName.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Name;
                 ad_display.t_levelNumber.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Level.ToString();
-                RemoveAugmentProperties();
+                //RemoveAugmentProperties();
                 UpdatePropertyText(wt_toolToCheck.Augs[_i_augmentIndexClicked]);
                 break;
             default:
                 SetFitIcon((int)aL_allAugmentsOwned[i_currentAugmentIndex].at_type);
                 ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
                 ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
-                RemoveAugmentProperties();
+                //RemoveAugmentProperties();
                 UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
                 break;
         }
