@@ -29,6 +29,8 @@ public class ProjectileTool : WeaponTool
     [SerializeField] private ParticleSystem ps_overHeatEffects;
     [SerializeField] private AudioClip ac_overHeatClip;
     private PlayerAnimator pa_anim;
+    [SerializeField] private ParticleSystem ps_shotEffects;
+
 
     public override void SetActive(bool val)
     {
@@ -55,7 +57,9 @@ public class ProjectileTool : WeaponTool
             SpawnBullet(_v_forwards);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
-            PlayParticles(true);
+            //PlayParticles(true);
+            ps_shotEffects.Play();
+
             cc_cam?.Recoil(f_recoil);
 
             pa_anim.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);

@@ -5012,7 +5012,7 @@ GameObject:
   - component: {fileID: 3017976033702160008}
   - component: {fileID: 4502126834748894779}
   m_Layer: 13
-  m_Name: MuzzleFlash (1)
+  m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19862,12 +19862,12 @@ GameObject:
   - component: {fileID: 8931215507304429469}
   - component: {fileID: 3944158907531249623}
   m_Layer: 13
-  m_Name: MuzzleFlash
+  m_Name: Fire VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8222778673555611143
 Transform:
   m_ObjectHideFlags: 0
@@ -24833,6 +24833,7 @@ MonoBehaviour:
   f_heatVolumeMult: 0.75
   ps_overHeatEffects: {fileID: 4192681423745854577}
   ac_overHeatClip: {fileID: 8300000, guid: af8e2218ec68caf4b842177647df4c2f, type: 3}
+  ps_shotEffects: {fileID: 8931215507304429469}
 --- !u!65 &2102207162649518890
 BoxCollider:
   m_ObjectHideFlags: 0
