@@ -1,12 +1,12 @@
 ﻿using Knife.HDRPOutline.Core;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnOffChildedOutlines : MonoBehaviour
+public class TurnOffChildedOutlines : MonoBehaviourPunCallbacks
 {
-    
-    private void Start()
+    public override void OnJoinedRoom()
     {
         foreach (OutlineObject o in GetComponentsInChildren<OutlineObject>())
         {
