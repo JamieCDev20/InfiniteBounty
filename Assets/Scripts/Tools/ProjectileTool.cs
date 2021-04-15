@@ -79,6 +79,8 @@ public class ProjectileTool : WeaponTool
 
         if (f_currentHeat <= 0)
             EndOverHeat();
+        print(f_currentHeat + " is the current heat");
+
         DoHeatSound();
     }
 

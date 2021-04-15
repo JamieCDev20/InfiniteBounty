@@ -68,10 +68,12 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform));
         pim.GetCamera().CancelInputs();
+
         if (!pm.b_isSitting)
         {
             yield return new WaitForSeconds(0.5f);
             anim.SetTrigger("DoorOpen");
+            pim.GetCamera().CancelInputs();
 
             if (pm.transform.parent == null && pm.transform != transform.root)
             {
@@ -87,7 +89,7 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
                 _pa.WalkInDropPod();
 
                 //This should be how long the player's animation is
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(2);
             }
 
             anim.SetTrigger("DoorClose");
