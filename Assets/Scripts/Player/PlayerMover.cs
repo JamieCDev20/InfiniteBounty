@@ -22,6 +22,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
     [SerializeField] private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
     [SerializeField] private float f_coyoteTime = 0.2f;
+    [SerializeField] private float maximumWalkIncline = 50f;
 
     [Space]
     [Header("Physics")]
@@ -157,6 +158,16 @@ public class PlayerMover : MonoBehaviour
         moveLerpVal = Mathf.Lerp(moveLerpVal, x, 0.1f);
 
         Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), v_groundNormal);
+
+        float ang = Vector3.Angle(dir, t_camTransform.TransformDirection(v_movementVector));
+
+        Vector3 cross = Vector3.Cross(dir, t_camTransform.TransformDirection(v_movementVector));
+
+        ang = Mathf.Clamp(ang, -maximumWalkIncline, maximumWalkIncline);
+
+        //took this out because it fucked up the walking....
+        //dir = Quaternion.AngleAxis(ang, cross) * t_camTransform.TransformDirection(v_movementVector);
+
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
             //rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
