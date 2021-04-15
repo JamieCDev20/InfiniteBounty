@@ -502,8 +502,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     }
     private Text PlaceAugmentProperties(GameObject _go_template)
     {
-        GameObject btn = Instantiate(go_augmentButton);
+        GameObject btn = Instantiate(go_propertyButton);
         goL_augmentButtonPool.Add(btn);
+        btn.SetActive(true);
         RectTransform rt_button = btn.GetComponent<RectTransform>();
         btn.transform.parent = go_propertyParent.transform;
         btn.transform.localScale = Vector3.one;
@@ -517,8 +518,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + i_xDisplacement, 0 - (34 * (i_displayIter - i_columnMax)));
         }
         i_displayIter++;
-        Debug.Log(btn);
-        Debug.Log(btn.GetComponent<Text>());
+        //Debug.Log(btn);
+        //Debug.Log(btn.GetComponent<Text>());
         return btn?.GetComponent<Text>();
     }
     public void RemoveAugmentProperties()
