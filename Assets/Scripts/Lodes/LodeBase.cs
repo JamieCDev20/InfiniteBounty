@@ -89,6 +89,7 @@ public class LodeBase : Enemy, IHitable
     private void CheckHealth()
     {
         as_source.PlayOneShot(ac_takeDamageClip);
+        List<int> _iL_toRemove = new List<int>();
 
         for (int i = 0; i < iL_healthIntervals.Count; i++)
             if (i_currentHealth <= iL_healthIntervals[i])
@@ -102,15 +103,18 @@ public class LodeBase : Enemy, IHitable
                 if (as_source != null)
                     as_source.PlayOneShot(ac_takeDamageClip);
 
-                iL_healthIntervals.RemoveAt(i);
+                _iL_toRemove.Add(i);
             }
+
+        for (int i = 0; i < _iL_toRemove.Count; i++)
+            iL_healthIntervals.RemoveAt(_iL_toRemove[i]);
 
         for (int i = 0; i < iL_chunkableThreshold.Count; i++)
             if (i_currentHealth <= iL_chunkableThreshold[i])
             {
                 p_chunkEffect.Play();
                 goA_chunkables[i].SetActive(false);
-                
+
                 iL_chunkableThreshold.RemoveAt(i);
             }
 
