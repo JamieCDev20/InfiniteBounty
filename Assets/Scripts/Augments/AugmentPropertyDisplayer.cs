@@ -54,7 +54,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         {
             aL_augs.Clear();
             foreach (GameObject btn in goL_augmentButtonPool)
-                btn.GetComponent<IPoolable>().Die();
+                Destroy(btn);
+            goL_augmentButtonPool.Clear();
             aL_allAugmentsOwned.Clear();
         }
         // Find all purchased Augments
@@ -238,16 +239,24 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             for (int i = 0; i < _aL_augmentsToShow.Count; i++)
             {
                 if (goL_augmentButtonPool.Count <= i)
-                    goL_augmentButtonPool.Add(PoolManager.x.SpawnObject(go_augmentButton));
+                    goL_augmentButtonPool.Add(Instantiate(go_augmentButton));
+
+                GameObject b = goL_augmentButtonPool[i];
+
                 // position stuff
-                goL_augmentButtonPool[i].SetActive(true);
-                goL_augmentButtonPool[i].transform.parent = go_listMover.transform;
-                goL_augmentButtonPool[i].transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
+                b.name = b.name.Replace("(Clone)", "");
+                b.SetActive(true);
+                b.transform.parent = go_listMover.transform;
+                b.transform.localPosition = new Vector3(0, (-i * f_augmentButtonHeight) - 70, 0);
+                RectTransform r = b.GetComponent<RectTransform>();
+                b.GetComponent<RectTransform>().offsetMin = new Vector2(0, r.offsetMin.y);
+                b.GetComponent<RectTransform>().offsetMax = new Vector2(0, r.offsetMax.y);
+
                 // Set text
-                goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
-                goL_augmentButtonPool[i].GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
+                b.GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
+                b.GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
                 // Scale
-                goL_augmentButtonPool[i].transform.localScale = Vector3.one;
+                b.transform.localScale = Vector3.one;
                 // 
                 AugmentButton btn = goL_augmentButtonPool[i].GetComponent<AugmentButton>();
                 btn.i_buttonIndex = FindAugmentToShowIndexFromOwned(_aL_augmentsToShow[i].Name, _aL_augmentsToShow[i].Level);
@@ -490,7 +499,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     }
     private Text PlaceAugmentProperties(GameObject _go_template)
     {
-        GameObject btn = PoolManager.x.SpawnObject(go_propertyButton);
+        GameObject btn = Instantiate(go_augmentButton);
         RectTransform rt_button = btn.GetComponent<RectTransform>();
         btn.transform.parent = go_propertyParent.transform;
         btn.transform.localScale = Vector3.one;
@@ -509,7 +518,12 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     public void RemoveAugmentProperties()
     {
         i_displayIter = 0;
-        PoolManager.x.KillAllObjects(go_propertyButton);
+        for (int i = 0; i < goL_augmentButtonPool.Count; i++)
+        {
+            Destroy(goL_augmentButtonPool[i]);
+        }
+        goL_augmentButtonPool.Clear();
+        //PoolManager.x.KillAllObjects(go_propertyButton);
     }
 }
 

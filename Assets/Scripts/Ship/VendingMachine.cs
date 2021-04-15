@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class VendingMachine : SubjectBase, IInteractible
@@ -38,13 +39,18 @@ public class VendingMachine : SubjectBase, IInteractible
 
     public bool IsBeingUsed { get { return b_isBeingUsed; } }
 
+    private void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
+    }
+
     public void Init(AugmentManager _am)
     {
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
         augMan = _am;
-        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
 
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = 0;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;

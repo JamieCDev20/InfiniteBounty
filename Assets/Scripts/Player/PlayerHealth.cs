@@ -63,7 +63,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (b_downed)
         {
             f_downHealth -= Time.deltaTime;
-            rt_downedTimer.localScale = new Vector3((float)(f_downHealth / f_maxDownTime), 1, 1);
+            if (rt_downedTimer != null)
+                rt_downedTimer.localScale = new Vector3((float)(f_downHealth / f_maxDownTime), 1, 1);
             if (f_downHealth <= 0)
             {
                 ClientFullDie();

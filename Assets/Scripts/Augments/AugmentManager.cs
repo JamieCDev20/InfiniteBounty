@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class AugmentManager : MonoBehaviour
 {
@@ -35,6 +36,12 @@ public class AugmentManager : MonoBehaviour
 
     public void JoinedRoom()
     {
+        ResetInit();
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private void ResetInit()
+    {
         string augstr = AugmentLoader.LoadAugmentJson();
         A_augs = AugmentLoader.ReadAugmentData<Augment>(augstr);
         A_projAugs = AugmentLoader.ReadAugmentData<ProjectileAugment>(augstr);
@@ -53,6 +60,17 @@ public class AugmentManager : MonoBehaviour
         }
         GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
+        InitAugmentScripts();
+
+    }
+
+    private void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        ResetInit();
+    }
+
+    private void InitAugmentScripts()
+    {
         FindObjectOfType<FuseSaver>().Init();
         FindObjectOfType<VendingMachine>().Init(this);
         FindObjectOfType<Microwave>().Init();
