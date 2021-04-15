@@ -13,8 +13,7 @@ public class PvPManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         x = this;
-        i_playersStillAlive = PhotonNetwork.CurrentRoom.PlayerCount;
-        print(i_playersStillAlive + " is the number of textures");
+        i_playersStillAlive = PhotonNetwork.CurrentRoom.PlayerCount;        
     }
 
     public void PlayerDied()
