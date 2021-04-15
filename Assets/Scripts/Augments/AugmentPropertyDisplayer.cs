@@ -18,6 +18,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private float f_augmentButtonHeight = 85;
     [SerializeField] private AugmentDisplay ad_display;
     List<Augment> aL_allAugmentsOwned = new List<Augment>();
+    List<GameObject> goL_propertyList = new List<GameObject>();
     private int i_currentAugmentIndex = 0;
     private AugmentDisplayType adt_currentDisplayType;
     private WeaponTool wt_toolToCheck;
@@ -365,14 +366,14 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 SetFitIcon((int)wt_toolToCheck.Augs[_i_augmentIndexClicked].at_type);
                 ad_display.t_augmentName.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Name;
                 ad_display.t_levelNumber.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Level.ToString();
-                //RemoveAugmentProperties();
+                RemoveAugmentProperties();
                 UpdatePropertyText(wt_toolToCheck.Augs[_i_augmentIndexClicked]);
                 break;
             default:
                 SetFitIcon((int)aL_allAugmentsOwned[i_currentAugmentIndex].at_type);
                 ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
                 ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
-                //RemoveAugmentProperties();
+                RemoveAugmentProperties();
                 UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
                 break;
         }
@@ -503,7 +504,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     private Text PlaceAugmentProperties(GameObject _go_template)
     {
         GameObject btn = Instantiate(go_propertyButton);
-        goL_augmentButtonPool.Add(btn);
+        goL_propertyList.Add(btn);
         btn.SetActive(true);
         RectTransform rt_button = btn.GetComponent<RectTransform>();
         btn.transform.parent = go_propertyParent.transform;
@@ -525,11 +526,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     public void RemoveAugmentProperties()
     {
         i_displayIter = 0;
-        for (int i = 0; i < goL_augmentButtonPool.Count; i++)
+        for (int i = 0; i < goL_propertyList.Count; i++)
         {
-            Destroy(goL_augmentButtonPool[i]);
+            Destroy(goL_propertyList[i]);
         }
-        goL_augmentButtonPool.Clear();
+        goL_propertyList.Clear();
         //PoolManager.x.KillAllObjects(go_propertyButton);
     }
 }
