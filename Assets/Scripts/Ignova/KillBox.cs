@@ -144,13 +144,21 @@ public class KillBox : MonoBehaviour
     }
     private IEnumerator NeutralizeCoroutine()
     {
+        for (int i = 0; i < 50; i++)
+        {
+            yield return new WaitForSecondsRealtime(0.01f);
+            mr_renderer.material.SetFloat("TimeOffset", Mathf.Lerp(mr_renderer.material.GetFloat("TimeOffset"), 0, 0.2f));
+        }
+
         enabled = false;
+
         for (int i = 0; i < 100; i++)
         {
             yield return new WaitForSecondsRealtime(0.01f);
-            //mr_renderer.material.SetColor("MainColour", Vector4.Lerp(mr_renderer.material.GetColor("MainColour"), c_neutralColour, 0.2f));
-            //mr_renderer.material.SetFloat("Scroll", Mathf.Lerp(mr_renderer.material.GetFloat("Scroll"), 0, 0.2f));
-            //mr_renderer.material.SetFloat("WaveHeight", Mathf.Lerp(mr_renderer.material.GetFloat("WaveHeight"), 0, 0.2f));
+            mr_renderer.material.SetFloat("LavaActive", Mathf.Lerp(1, 0, 0.2f));
+            mr_renderer.material.SetFloat("LavaNeutral", Mathf.Lerp(0, 1, 0.2f));
         }
+        mr_renderer.material.SetFloat("LavaActive", 0);
+        mr_renderer.material.SetFloat("LavaNeutral", 1);
     }
 }

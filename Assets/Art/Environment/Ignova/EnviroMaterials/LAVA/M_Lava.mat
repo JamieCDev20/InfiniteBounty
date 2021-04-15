@@ -8,13 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Lava
-  m_Shader: {fileID: -6465566751694194690, guid: 67fa4214b3bc37447b77822073fde8ad,
+  m_Shader: {fileID: -6465566751694194690, guid: c736c83c1bb99494d9d3562260c8ffdf,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -25,6 +25,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_29C6038C:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_2CD1DD40:
+        m_Texture: {fileID: 2800000, guid: e4220658feddd3f44af3dd273529d30b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_FB98E422:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_144C55D1_Texture_1:
         m_Texture: {fileID: 2800000, guid: ed472f11349c7c84c8e1614c1497ac8f, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -38,11 +50,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_89A0B03D_Texture_1:
-        m_Texture: {fileID: 2800000, guid: f1488375ceae3ad4fa26e112e3714771, type: 3}
+        m_Texture: {fileID: 2800000, guid: e4220658feddd3f44af3dd273529d30b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9E64ABD8_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 6bd9a75c67a76c649b92ab5565a20c3c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - LavaActive: 1
+    - LavaNeutral: 0
+    - TimeOffset: 0.01
     - Vector1_3FC98090: 0.05
+    - Vector1_472BD8B9: 0
+    - Vector1_7F7EDFA7: 1
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
@@ -81,6 +102,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_32143C92: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_4B1C4FF3: {r: 5, g: 5, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
