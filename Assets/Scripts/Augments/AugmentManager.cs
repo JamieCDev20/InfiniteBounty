@@ -66,7 +66,8 @@ public class AugmentManager : MonoBehaviour
 
     private void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        ResetInit();
+        if (s.name.Contains("Lob"))
+            ResetInit();
     }
 
     private void InitAugmentScripts()
