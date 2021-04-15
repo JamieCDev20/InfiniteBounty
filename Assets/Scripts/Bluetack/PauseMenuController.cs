@@ -161,10 +161,10 @@ public class PauseMenuController : SubjectBase
     public void Quit()
     {
         Destroy(HUDController.x.gameObject);
-        print("Quitting by pasue menu");
         UniversalOverlord.x.ReturnToMainMenu();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Suicude()
