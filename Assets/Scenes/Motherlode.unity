@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.13883837, g: 0.22167353, b: 0.52113354, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4084,6 +4084,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 48769212854846265, guid: d8037cbc5e435594cb9000ac302eb08d,
+        type: 3}
+      propertyPath: mr_renderer
+      value: 
+      objectReference: {fileID: 698942899}
     - target: {fileID: 48769212854846270, guid: d8037cbc5e435594cb9000ac302eb08d,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -4124,6 +4129,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 48769213175652297, guid: d8037cbc5e435594cb9000ac302eb08d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 911aba8b098e8da4abefed5bbb9e72d0, type: 2}
     - target: {fileID: 48769213724933222, guid: d8037cbc5e435594cb9000ac302eb08d,
         type: 3}
       propertyPath: m_Name
@@ -4186,6 +4196,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8037cbc5e435594cb9000ac302eb08d, type: 3}
+--- !u!114 &698942898 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 48769212854846265, guid: d8037cbc5e435594cb9000ac302eb08d,
+    type: 3}
+  m_PrefabInstance: {fileID: 698942897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9920635d1f94ef6429b44ba4dbeae4da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!23 &698942899 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 48769213175652297, guid: d8037cbc5e435594cb9000ac302eb08d,
+    type: 3}
+  m_PrefabInstance: {fileID: 698942897}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &699929676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13548,7 +13576,7 @@ MonoBehaviour:
   - {fileID: 221232095}
   - {fileID: 190822201}
   - {fileID: 1131038382}
-  kb_lava: {fileID: 0}
+  kb_lava: {fileID: 698942898}
   go_tractorBeam: {fileID: 401090706}
 --- !u!4 &1418587717
 Transform:
