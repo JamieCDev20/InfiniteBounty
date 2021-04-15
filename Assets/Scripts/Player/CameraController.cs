@@ -108,8 +108,13 @@ public class CameraController : MonoBehaviour
 
     #region Public Voids
 
+    internal void CancelInputs()
+    {
+        v2_lookInputs = Vector2.zero;
+    }
+
     internal void Recoil(float _f_recoilSeverity)
-    {        
+    {
         /*
         transform.Rotate(-_f_recoilSeverity, UnityEngine.Random.Range(-_f_recoilSeverity * 0.7f, _f_recoilSeverity * 0.7f), 0);
         StartCoroutine(BackToNormal(_f_recoilSeverity));        

@@ -67,7 +67,7 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
         //interactor.GetComponent<PlayerInputManager>().LocalGetOnChair();
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform));
-
+        pim.GetCamera().CancelInputs();
         if (!pm.b_isSitting)
         {
             yield return new WaitForSeconds(0.5f);
