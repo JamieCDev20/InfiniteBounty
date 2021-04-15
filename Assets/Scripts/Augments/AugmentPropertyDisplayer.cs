@@ -82,12 +82,30 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 }
             }
             FuseSaver fs = FuseSaver.x;
-            if(!Utils.ArrayIsNullOrZero(fs.FusedAugments))
+            if (!Utils.ArrayIsNullOrZero(fs.FusedAugments) && !Utils.ArrayIsNullOrZero(augs))
+            {
                 augs = Utils.CombineArrays(augs, fs.FusedAugments);
-            if(!Utils.ArrayIsNullOrZero(fs.FusedProjectiles))
+            }
+            else if(!Utils.ArrayIsNullOrZero(fs.FusedAugments) && Utils.ArrayIsNullOrZero(augs))
+            {
+                augs = fs.FusedAugments;
+            }
+            if (!Utils.ArrayIsNullOrZero(fs.FusedProjectiles) && !Utils.ArrayIsNullOrZero(augs))
+            {
                 augs = Utils.CombineArrays(augs, fs.FusedProjectiles);
-            if(!Utils.ArrayIsNullOrZero(fs.FusedCones))
+            }
+            else if(!Utils.ArrayIsNullOrZero(fs.FusedProjectiles) && Utils.ArrayIsNullOrZero(augs))
+            {
+                augs = fs.FusedProjectiles;
+            }
+            if (!Utils.ArrayIsNullOrZero(fs.FusedCones) && !Utils.ArrayIsNullOrZero(augs))
+            {
                 augs = Utils.CombineArrays(augs, fs.FusedCones);
+            }
+            else if(!Utils.ArrayIsNullOrZero(fs.FusedCones) && Utils.ArrayIsNullOrZero(augs))
+            {
+                augs = fs.FusedCones;
+            }
             _augmentsInList.AddRange(augs);
         }
         // Update display from save file
@@ -152,12 +170,17 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         return _augList;
     }
 
-    private List<Augment> DisplayAugmentsOfType(List<Augment> aL_augs)
+    private List<Augment> DisplayAugmentsOfType(List<Augment> aL_augs, bool _excludeFused)
     {
         List<Augment> _augList = new List<Augment>();
         foreach (Augment aug in aL_augs)
-            if (aug.at_type == at_type && aug.Stage != AugmentStage.fused)
-                _augList.Add(aug);
+            if (aug.at_type == at_type)
+                if(_excludeFused && aug.Stage != AugmentStage.fused)
+                    _augList.Add(aug);
+                else if(!_excludeFused)
+                {
+                    _augList.Add(aug);
+                }
         return _augList;
     }
 
@@ -187,7 +210,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 _aL_augmentsToShow.AddRange(aL_augs);
                 break;
             case AugmentDisplayType.ShowSameType:
-                _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs));
+                _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs, false));
+                break;
+            case AugmentDisplayType.ShowSameTypeNotFused:
+                _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs, true));
                 break;
             case AugmentDisplayType.ShowSameName:
                 _aL_augmentsToShow.AddRange(DisplayAugmentsWithName(aL_augs));
@@ -490,5 +516,5 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
 public enum AugmentDisplayType
 {
-    ShowAll, ShowEquipped, ShowSameType, ShowSameName, ShowSameTypeExcluding
+    ShowAll, ShowEquipped, ShowSameType, ShowSameTypeNotFused, ShowSameName, ShowSameTypeExcluding
 }
