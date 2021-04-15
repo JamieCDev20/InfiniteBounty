@@ -215,4 +215,23 @@ public class AugmentManager : MonoBehaviour
     {
         return go_augments[UnityEngine.Random.Range(0, _i_maxSize <= go_augments.Count ? _i_maxSize + 1 : go_augments.Count + 1)].GetComponent<AugmentGo>();
     }
+
+    public void RemoveAugment(AugmentType type, string nam)
+    {
+        switch (type)
+        {
+            case AugmentType.standard:
+                A_augs = Utils.OrderedRemove(A_augs, GetAugmentIndex(type, nam));
+                break;
+            case AugmentType.projectile:
+                A_projAugs = Utils.OrderedRemove(A_projAugs, GetAugmentIndex(type, nam));
+                break;
+            case AugmentType.cone:
+                A_coneAugs = Utils.OrderedRemove(A_coneAugs, GetAugmentIndex(type, nam));
+                break;
+            default:
+                break;
+        }
+    }
+
 }

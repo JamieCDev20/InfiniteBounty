@@ -374,7 +374,7 @@ public class SaveManager : SubjectBase, ObserverBase
                         saveData.purchasedAugments = Utils.AddToArray(saveData.purchasedAugments, augSave);
                         break;
                     case AugmentStage.fused:
-                        Notify(new FuseEvent(augSave));
+                        Notify(new FuseEvent(augSave, AugmentStage.fused));
                         break;
                 }
                 RemoveEquippedAugments(uae.augsToUnequip);
@@ -382,7 +382,8 @@ public class SaveManager : SubjectBase, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
                 break;
             case FuseEvent fuseEvent:
-                switch (fuseEvent.SavedAug.SavedAugment.augStage)
+                Debug.Log(fuseEvent.SavedAug.SavedAugment.augStage);
+                switch (fuseEvent.PreviousStage)
                 {
                     case AugmentStage.full:
                         saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] })));
