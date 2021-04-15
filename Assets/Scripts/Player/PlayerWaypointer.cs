@@ -48,7 +48,13 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     public void SetNames(string _name)
     {
-        if(go_onMarker != null)
+        offFaces[0] = go_offMarker.transform.GetChild(1).gameObject;
+        offFaces[1] = go_offMarker.transform.GetChild(2).gameObject;
+        offFaces[2] = go_offMarker.transform.GetChild(3).gameObject;
+        offFaces[3] = go_offMarker.transform.GetChild(4).gameObject;
+        offFaces[4] = go_offMarker.transform.GetChild(5).gameObject;
+        offFaces[5] = go_offMarker.transform.GetChild(6).gameObject;
+        if (go_onMarker != null)
         {
             Remove();
         }
@@ -80,12 +86,6 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
             onText.text = playerName;
             offText.text = $"{playerName}   {playerName}";
 
-            offFaces[0] = go_offMarker.transform.GetChild(1).gameObject;
-            offFaces[1] = go_offMarker.transform.GetChild(2).gameObject;
-            offFaces[2] = go_offMarker.transform.GetChild(3).gameObject;
-            offFaces[3] = go_offMarker.transform.GetChild(4).gameObject;
-            offFaces[4] = go_offMarker.transform.GetChild(5).gameObject;
-            offFaces[5] = go_offMarker.transform.GetChild(6).gameObject;
 
         }
         worldspaceNameText = GetComponentInChildren<TextMeshPro>().gameObject;
