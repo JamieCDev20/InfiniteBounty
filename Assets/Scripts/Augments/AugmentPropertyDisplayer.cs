@@ -350,7 +350,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
-        ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
         switch (adt_currentDisplayType)
         {
             case AugmentDisplayType.ShowEquipped:
@@ -362,7 +361,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 break;
             default:
                 SetFitIcon((int)aL_allAugmentsOwned[i_currentAugmentIndex].at_type);
-                ad_display.t_augmentName.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Name;
+                ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
                 ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
                 RemoveAugmentProperties();
                 UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
