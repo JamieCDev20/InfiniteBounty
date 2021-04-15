@@ -392,6 +392,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     {
         AugmentProperties ap = _aug.GetAugmentProperties();
         AugmentExplosion ae = _aug.GetExplosionProperties();
+        //Debug.Log(ap);
+        //Debug.Log(ae);
         if (ap.f_weight != 0)
         {
             PlaceAugmentProperties(go_propertyButton).text = "Weight " + ap.f_weight.ToString();
@@ -479,6 +481,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         {
             ProjectileAugment projectileCast = (ProjectileAugment)_aug;
             AugmentProjectile augmentProperties = projectileCast.GetProjectileData();
+
             if (augmentProperties.i_shotsPerRound != 0)
                 PlaceAugmentProperties(go_propertyButton).text = "Shots per round " + augmentProperties.i_shotsPerRound;
             if (augmentProperties.f_bulletScale != 0)
@@ -500,12 +503,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     private Text PlaceAugmentProperties(GameObject _go_template)
     {
         GameObject btn = Instantiate(go_augmentButton);
+        goL_augmentButtonPool.Add(btn);
         RectTransform rt_button = btn.GetComponent<RectTransform>();
         btn.transform.parent = go_propertyParent.transform;
         btn.transform.localScale = Vector3.one;
+        rt_button.sizeDelta = Vector2.up * 35;
         if (i_displayIter <= i_columnMax)
         {
-
             rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2), 0 - (i_yDisplacement * i_displayIter));
         }
         else
@@ -513,6 +517,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             rt_button.anchoredPosition = new Vector2(rt_augmentButtonParent.rect.xMin + (rt_button.rect.width / 2) + i_xDisplacement, 0 - (34 * (i_displayIter - i_columnMax)));
         }
         i_displayIter++;
+        Debug.Log(btn);
+        Debug.Log(btn.GetComponent<Text>());
         return btn?.GetComponent<Text>();
     }
     public void RemoveAugmentProperties()
