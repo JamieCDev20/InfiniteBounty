@@ -34,6 +34,7 @@ public class PlayerMover : MonoBehaviour
     [Header("Getting Teleported")]
     [SerializeField] private GameObject go_characterMesh;
     [SerializeField] private ParticleSystem p_goopyParticle;
+    [SerializeField] private ParticleSystem p_teleportParticles;
 
     [Header("Kill Box Limits")]
     [SerializeField] private Vector2 v_killLimits;
@@ -94,6 +95,7 @@ public class PlayerMover : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         Init();
         SceneManager.sceneLoaded += SceneChange;
+        StartCoroutine(ArrivalTeleport());
     }
 
     private void Update()
@@ -309,11 +311,24 @@ public class PlayerMover : MonoBehaviour
         if (scene.name.Contains("Lobby"))
         {
             fap_audio.ChangeSurfaceEnum(Surface.ship);
+            enabled = false;
+            StartCoroutine(ArrivalTeleport());
         }
         else
         {
             fap_audio.ChangeSurfaceEnum(Surface.planet);
         }
+    }
+
+    private IEnumerator ArrivalTeleport()
+    {
+        yield return new WaitForEndOfFrame();
+        go_characterMesh.SetActive(false);
+        enabled = false;
+        p_teleportParticles.Play();
+        yield return new WaitForSeconds(0.4f);
+        go_characterMesh.SetActive(true);
+        enabled = true;
     }
 
     #endregion
