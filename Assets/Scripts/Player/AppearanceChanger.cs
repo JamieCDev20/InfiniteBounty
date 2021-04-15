@@ -92,6 +92,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         if (b_networked)
             photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
         HUDController.x.ChangeHeadSpriteIcon(i_currentHead);
+        
     }
     public void LastHead()
     {
@@ -114,6 +115,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_heads[i_currentHead].SetActive(false);
         i_currentHead = _i_headIndex;
         goA_heads[i_currentHead].SetActive(true);
+        gameObject.SendMessage("ChangeFace", _i_headIndex);
     }
 
     public int ReturnHeadIndex()
