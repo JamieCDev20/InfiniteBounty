@@ -79,6 +79,7 @@ public class ProjectileTool : WeaponTool
 
         if (f_currentHeat <= 0)
             EndOverHeat();
+
         DoHeatSound();
     }
 
