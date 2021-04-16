@@ -353,7 +353,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log("returning 0");
         return 0;
     }
 
