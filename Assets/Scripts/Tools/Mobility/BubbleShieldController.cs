@@ -10,6 +10,7 @@ public class BubbleShieldController : MonoBehaviour
     [SerializeField] private Collider c_colliderToDisable;
     private Rigidbody rb;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,6 +64,14 @@ public class BubbleShieldController : MonoBehaviour
         {
             transform.SetParent(collision.transform, true);
             rb.isKinematic = true;
+
+            Vector3 newScale = new Vector3();
+            newScale.x = 1 / transform.parent.localScale.x;
+            newScale.y = 1 / transform.parent.localScale.y;
+            newScale.z = 1 / transform.parent.localScale.z;
+
+            transform.localScale = newScale;
+            transform.localScale = newScale;
         }
     }
 }
