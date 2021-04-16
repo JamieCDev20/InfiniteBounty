@@ -279,12 +279,12 @@ public class PlayerMover : MonoBehaviour
                 b_isDead = true;
                 StartCoroutine(KillPlayer());
                 HUDController.x.HideKillTimer();
-                f_currentKillTimer = 10;
+                f_currentKillTimer = 5;
             }
         }
         else
         {
-            f_currentKillTimer = 10;
+            f_currentKillTimer = 5;
             b_isDead = false;
             HUDController.x.HideKillTimer();
         }
