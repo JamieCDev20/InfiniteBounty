@@ -52,7 +52,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
             i_currentBody = Random.Range(0, goA_bodies.Length);
             i_currentHead = Random.Range(0, goA_heads.Length);
             i_currentArm = Random.Range(0, golA_arms.Length);
-            i_currentFeet = Random.Range(0, goA_feet.Length);
+            i_currentFeet = i_currentArm;
         }
 
         goA_heads[i_currentHead].SetActive(true);
@@ -92,7 +92,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         if (b_networked)
             photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
         HUDController.x.ChangeHeadSpriteIcon(i_currentHead);
-        
+
     }
     public void LastHead()
     {
