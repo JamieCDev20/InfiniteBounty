@@ -59,18 +59,19 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
         }
         else
         {
-            offFaces[0] = go_offMarker.transform.GetChild(1).gameObject;
-            offFaces[1] = go_offMarker.transform.GetChild(2).gameObject;
-            offFaces[2] = go_offMarker.transform.GetChild(3).gameObject;
-            offFaces[3] = go_offMarker.transform.GetChild(4).gameObject;
-            offFaces[4] = go_offMarker.transform.GetChild(5).gameObject;
-            offFaces[5] = go_offMarker.transform.GetChild(6).gameObject;
             t_hudCanvas = HUDController.x.GetHudCanvasTransform();
 
             go_onMarker = Instantiate(go_onScreenMarker, t_hudCanvas);
             rt_on = go_onMarker.GetComponent<RectTransform>();
             go_offMarker = Instantiate(go_offScreenMarker, t_hudCanvas);
             rt_off = go_offMarker.GetComponent<RectTransform>();
+
+            offFaces[0] = go_offMarker.transform.GetChild(1).gameObject;
+            offFaces[1] = go_offMarker.transform.GetChild(2).gameObject;
+            offFaces[2] = go_offMarker.transform.GetChild(3).gameObject;
+            offFaces[3] = go_offMarker.transform.GetChild(4).gameObject;
+            offFaces[4] = go_offMarker.transform.GetChild(5).gameObject;
+            offFaces[5] = go_offMarker.transform.GetChild(6).gameObject;
 
             rt_on.anchorMin = Vector2.zero;
             rt_off.anchorMin = Vector2.zero;
