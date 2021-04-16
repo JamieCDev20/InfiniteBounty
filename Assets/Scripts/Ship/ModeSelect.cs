@@ -32,7 +32,8 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         if (i_currentIndex >= goA_highlightPositions.Length)
             i_currentIndex = 0;
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && i_currentIndex >= goA_highlightPositions.Length)
+        //print(PhotonNetwork.CurrentRoom.PlayerCount == 1 + "/ " + i_currentIndex);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && i_currentIndex == goA_highlightPositions.Length - 1)
             i_currentIndex = 0;
 
         goA_highlightPositions[i_currentIndex].SetActive(true);
