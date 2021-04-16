@@ -121,8 +121,11 @@ public class TutorialManager : MonoBehaviour
 
         if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
         {
-            foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
+            /*foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
+            {
+                print("Turning " + item.name + " off.");
                 item.SetActive(true);
+            }*/
 
             b_isPlayingVideo = true;
             go_videoObject.SetActive(true);
@@ -289,9 +292,9 @@ public class TutorialManager : MonoBehaviour
             }
 
             //go_tutorialCanvas.SetActive(false);
-            foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
-                item.SetActive(false);
         }
+        foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
+            item.SetActive(false);
     }
 
     [System.Serializable]
