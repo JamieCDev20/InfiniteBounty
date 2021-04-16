@@ -13,10 +13,18 @@ public class PiggyBank : SubjectBase, IInteractible
     [SerializeField] private TextMeshPro tmp_currentMoneyText;
     [SerializeField] private GameObject go_stand;
     private AudioSource as_source;
+    private Quaternion q_startRot;
+    private Vector3 v_startPos;
+    private float f_currentTimer;
+    private Rigidbody rb;
 
     public void Start()
     {
+        rb = GetComponent<Rigidbody>();
         as_source = GetComponent<AudioSource>();
+
+        v_startPos = transform.position;
+        q_startRot = transform.rotation;
 
         //if (DifficultyManager.x.MaximumDifficulty < 9)
         //    gameObject.SetActive(false);
@@ -27,6 +35,22 @@ public class PiggyBank : SubjectBase, IInteractible
             tmp_currentMoneyText.text = "£" + i_storedAmount;
         AddObserver(_sm);
         transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
+    }
+
+    private void Update()
+    {
+        if (rb.velocity == Vector3.zero)
+        {
+            f_currentTimer += Time.deltaTime;
+
+            if (f_currentTimer > 5)
+            {
+                transform.position = v_startPos;
+                transform.rotation = q_startRot;
+            }
+        }
+        else
+            f_currentTimer = 0;
     }
 
     public void Interacted() { }
