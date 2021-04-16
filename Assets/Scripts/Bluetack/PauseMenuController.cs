@@ -245,6 +245,11 @@ public class PauseMenuController : SubjectBase
         A_display[(int)DisplaySettings.resolution] = _i_resolutionIndex;
     }
 
+    public void SetFullscreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+    }
+
     #endregion
 
     #region Options
