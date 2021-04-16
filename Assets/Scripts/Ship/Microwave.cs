@@ -12,7 +12,7 @@ public class Microwave : SubjectBase, IInteractible
     private Augment aug_slotB;
     private Augment fusedAug;
     private PlayerInputManager pim;
-    private List<Augment> aL_allAugmentsOwned = new List<Augment>();
+    private List<Augment> aL_allAugmentsOwned = new List<Augment>(); // Is this actually all augments that you own
     [SerializeField] private float f_lerpTime;
     [SerializeField] private AugmentPropertyDisplayer apd;
     [SerializeField] private Transform t_playerPos;
