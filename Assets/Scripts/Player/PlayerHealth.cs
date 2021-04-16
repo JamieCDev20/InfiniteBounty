@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Knife.HDRPOutline.Core;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [Space, SerializeField] private RectTransform rt_downedTimer;
     private PlayerInputManager pim;
     private Animator anim;
+
+    // The outline is here, started it but stopped because I realised there are about 50 outlines on the player.... sigh. Some lines are commented out which are 
+    private OutlineObject outline;
+    [SerializeField] private Gradient healthGradient;
+
     [SerializeField] private GameObject go_reviveSymbol;
     [SerializeField] private ParticleSystem ps_burningBumParticles;
 
@@ -51,6 +57,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         pim = GetComponent<PlayerInputManager>();
         anim = GetComponentInChildren<Animator>();
         as_mainAudioSource = GetComponent<AudioSource>();
+
     }
 
 
@@ -76,6 +83,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             {
                 f_currentHealth = Mathf.Clamp(f_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
                 HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+                //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
+
             }
         }
         else
@@ -103,6 +112,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
         HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
 
         if (f_currentHealth <= 0)
             ClientDie();
@@ -151,6 +161,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         f_downHealth = f_downTime;
         f_maxDownTime = f_downTime;
         HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
+
         cc_cam?.StopSpectating();
     }
 
