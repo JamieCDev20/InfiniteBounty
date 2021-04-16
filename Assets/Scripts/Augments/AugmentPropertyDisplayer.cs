@@ -17,6 +17,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private Scrollbar s_slider; 
     [SerializeField] private float f_augmentButtonHeight = 85;
     [SerializeField] private AugmentDisplay ad_display;
+    [SerializeField] private Sprite[] fitIcons;
     List<Augment> aL_allAugmentsOwned = new List<Augment>(); // clarify
     List<GameObject> goL_propertyList = new List<GameObject>(); // clarify
     private int i_currentAugmentIndex = 0; 
@@ -31,17 +32,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
     public AugmentDisplay AugDisplay { get { return ad_display; } }
     public int CurrentAugIndex { get { return i_currentAugmentIndex; } }
+    public Sprite[] FitIcons { get { return fitIcons; } }
+
     private int i_displayIter = 0;
-
-
-
-    /*
-     * 
-     * SaveManager.SaveData.purchasedAugments is an AugmentSave[]
-     * 
-     */
-
-
 
     public void Init()
     {
@@ -54,7 +47,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         //    PoolManager.x.RemovePool(go_propertyButton);
     }
 
-    public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList, params string[] toExclude)
+    public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList, params (string nam, int lv)[] toExclude)
     {
         // Init some lists
         List<Augment> _augmentsInList = new List<Augment>();
@@ -159,31 +152,36 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         }
         // Update display from save file
         aL_allAugmentsOwned.AddRange(_augmentsInList);
-        UpdateAugmentListDisplay(aL_allAugmentsOwned, adt, toExclude);
+        aL_allAugmentsOwned = UpdateAugmentListDisplay(aL_allAugmentsOwned, adt, toExclude);
         return aL_allAugmentsOwned;
     }
 
     public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList)
     {
 
-        return InitAugmentList(aL_augs, adt, _b_shouldAddToExistingList, "");
+        return InitAugmentList(aL_augs, adt, _b_shouldAddToExistingList, ("", 0));
         
     }
 
     #region DisplayTypes
 
-    private List<Augment> DisplayAugmentsOfTypeExcluding(List<Augment> aL_augs, params string[] _toExclude)
+    private List<Augment> DisplayAugmentsOfTypeExcluding(List<Augment> aL_augs, bool excludeFused, params (string nam, int lv)[] _toExclude)
     {
         List<Augment> _augList = new List<Augment>();
-        List<string> _exclusionZone = new List<string>(_toExclude);
+        List<(string nam, int lv)> _exclusionZone = new List<(string nam, int lv)>(_toExclude);
+
         foreach (Augment aug in aL_augs)
-        {
-            if (aug.at_type == at_type && !_exclusionZone.Contains(aug.Name))
+            if (aug.at_type == at_type && !_exclusionZone.Contains((aug.Name, aug.Level)))
             {
-                _augList.Add(aug);
-                _exclusionZone.Remove(aug.Name);
+                if (excludeFused && aug.Stage != AugmentStage.fused)
+                    _augList.Add(aug);
+                else if (!excludeFused)
+                    _augList.Add(aug);
             }
-        }
+            else
+            {
+                _exclusionZone.Remove((aug.Name, aug.Level));
+            }
         return _augList;
     }
 
@@ -198,6 +196,19 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 {
                     _augList.Add(aug);
                 }
+        return _augList;
+    }
+
+    private List<Augment> DisplayAugmentsWithNameExclulding(List<Augment> aL_augs, params (string nam, int lv)[] _toExclude)
+    {
+        List<Augment> _augList = new List<Augment>();
+        List<(string nam, int lv)> _exclusionZone = new List<(string nam, int lv)>(_toExclude);
+
+        foreach (Augment aug in aL_augs)
+            if (aug.Name == s_augName && !_exclusionZone.Contains((aug.Name, aug.Level)))
+                _augList.Add(aug);
+            else
+                _exclusionZone.Remove((aug.Name, aug.Level));
         return _augList;
     }
 
@@ -219,7 +230,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     #endregion
 
-    private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow, params string[] _toExclude)
+    private List<Augment> UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow, params (string nam, int lv)[] _toExclude)
     {
         List<Augment> _aL_augmentsToShow = new List<Augment>();
 
@@ -229,15 +240,27 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             case AugmentDisplayType.ShowAll:
                 _aL_augmentsToShow.AddRange(aL_augs);
                 break;
+
             case AugmentDisplayType.ShowSameType:
                 _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs, false));
                 break;
+
             case AugmentDisplayType.ShowSameTypeNotFused:
                 _aL_augmentsToShow.AddRange(DisplayAugmentsOfType(aL_augs, true));
                 break;
+
+            case AugmentDisplayType.ShowSameTypeNotFusedExcluding:
+                _aL_augmentsToShow.AddRange(DisplayAugmentsOfTypeExcluding(aL_augs, true, _toExclude));
+                break;
+
             case AugmentDisplayType.ShowSameName:
                 _aL_augmentsToShow.AddRange(DisplayAugmentsWithName(aL_augs));
                 break;
+
+            case AugmentDisplayType.ShowSameNameExcluding:
+                _aL_augmentsToShow.AddRange(DisplayAugmentsWithNameExclulding(aL_augs, _toExclude));
+                break;
+
             case AugmentDisplayType.ShowEquipped:
                 if (wt_toolToCheck != null)
                 {
@@ -248,9 +271,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                         }
                 }
                 break;
+
             case AugmentDisplayType.ShowSameTypeExcluding:
-                _aL_augmentsToShow.AddRange(DisplayAugmentsOfTypeExcluding(aL_augs, _toExclude));
+                _aL_augmentsToShow.AddRange(DisplayAugmentsOfTypeExcluding(aL_augs, false, _toExclude));
                 break;
+
             case AugmentDisplayType.None:
                 _aL_augmentsToShow.Clear();
                 break;
@@ -276,26 +301,32 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 b.GetComponent<RectTransform>().offsetMin = new Vector2(0, r.offsetMin.y);
                 b.GetComponent<RectTransform>().offsetMax = new Vector2(0, r.offsetMax.y);
 
-                // Set text
+                // Set text and sprite
                 b.GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
+                b.GetComponentsInChildren<Text>()[0].color = _aL_augmentsToShow[i].Stage == AugmentStage.full ? Color.white : Color.yellow;
                 b.GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
+                b.GetComponentsInChildren<Image>()[1].sprite = fitIcons[(int)_aL_augmentsToShow[i].at_type];
                 // Scale
                 b.transform.localScale = Vector3.one;
                 // set the buttons parent and index
                 AugmentButton btn = goL_augmentButtonPool[i].GetComponent<AugmentButton>();
-                btn.i_buttonIndex = FindAugmentToShowIndexFromOwned(_aL_augmentsToShow[i].Name, _aL_augmentsToShow[i].Level); // << getting the value in the array of augments that the button is "holding"
+                btn.i_displayListIndex = i;// // << getting the value in the array of augments that the button is "holding"
+                btn.i_purchasedListIndex = FindAugmentToShowIndexFromOwned(_aL_augmentsToShow[i].Name, _aL_augmentsToShow[i].Level);
                 btn.Parent = transform.root.gameObject;
             }
         }
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
+
+        return _aL_augmentsToShow;
+
     }
 
-    private void UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
+    private List<Augment> UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
     {
 
-        UpdateAugmentListDisplay(aL_augs, _adt_whichToShow, "");
+        return UpdateAugmentListDisplay(aL_augs, _adt_whichToShow, ("", 0));
 
     }
 
@@ -307,17 +338,22 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
                 {
                     if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
+                    {
                         return i;
+                    }
                 }
                 break;
             default:
                 for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
                 {
                     if (aL_allAugmentsOwned[i].Name == _name && aL_allAugmentsOwned[i].Level == _level)
+                    {
                         return i;
+                    }
                 }
                 break;
         }
+        Debug.Log("returning 0");
         return 0;
     }
 
@@ -325,7 +361,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     {
         for (int i = 0; i < goL_augmentButtonPool.Count; i++)
         {
-            goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_buttonIndex = i;
+            goL_augmentButtonPool[i].GetComponent<AugmentButton>().i_displayListIndex = i;
         }
     }
 
@@ -334,7 +370,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         //this is called in both the microwave and the workbench.
 
         // Highlight button
-        goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = false;
+        for (int i = 0; i < goL_augmentButtonPool.Count; i++)
+        {
+            goL_augmentButtonPool[i].GetComponentInChildren<Outline>().enabled = false;
+        }
         i_currentAugmentIndex = _i_augmentIndexClicked;
         goL_augmentButtonPool[i_currentAugmentIndex].GetComponentInChildren<Outline>().enabled = true;
 
@@ -563,7 +602,9 @@ public enum AugmentDisplayType
     ShowEquipped, 
     ShowSameType, 
     ShowSameTypeNotFused, 
+    ShowSameTypeNotFusedExcluding, 
     ShowSameName, 
     ShowSameTypeExcluding,
+    ShowSameNameExcluding,
     None
 }

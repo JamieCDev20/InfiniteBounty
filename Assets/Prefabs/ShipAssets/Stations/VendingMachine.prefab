@@ -3548,6 +3548,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3644081291458672516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5766746387183538322}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.092542365, y: 0.13440287, z: 0.09329673}
+  m_Center: {x: -0.0000002386635, y: -0.0027391019, z: -3.2653702e-10}
 --- !u!1 &5827097242644530622
 GameObject:
   m_ObjectHideFlags: 0
@@ -3875,19 +3888,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3644081291458672516
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5766746387183538322}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.092542365, y: 0.13440287, z: 0.09329673}
-  m_Center: {x: -0.0000002386635, y: -0.0027391019, z: -3.2653702e-10}
 --- !u!1 &7326499903969962979
 GameObject:
   m_ObjectHideFlags: 0
@@ -4158,9 +4158,11 @@ MonoBehaviour:
   i_xDisplacement: 280
   i_yDisplacement: 40
   i_columnMax: 7
-  go_propertyButton: {fileID: 1111902059}
+  go_propertyText: {fileID: 7005985359593543819, guid: 00aad5ed14d3ee843875016f403b3327,
+    type: 3}
   go_propertyParent: {fileID: 613316194}
-  go_augmentButton: {fileID: 0}
+  go_clickableAugmentButton: {fileID: 6401219565984829633, guid: 145474bc246b66a4dac6bba0674816f0,
+    type: 3}
   go_listMover: {fileID: 0}
   goL_augmentButtonPool: []
   rt_augmentButtonParent: {fileID: 1656866749053278740}
