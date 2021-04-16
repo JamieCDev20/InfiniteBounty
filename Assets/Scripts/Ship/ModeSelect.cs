@@ -31,9 +31,15 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
 
         if (i_currentIndex >= goA_highlightPositions.Length)
             i_currentIndex = 0;
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && i_currentIndex >= goA_highlightPositions.Length)
+            i_currentIndex = 0;
+
         goA_highlightPositions[i_currentIndex].SetActive(true);
         lil_teleportButton?.SetLevelToLoad(sA_sceneNames[i_currentIndex]);
+
         photonView.RPC(nameof(SetCurrentMode), RpcTarget.Others, i_currentIndex);
+
         as_source.Play();
         TutorialManager.x.UsedShiftChanger();
     }
