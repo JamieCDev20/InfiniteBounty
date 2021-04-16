@@ -33,14 +33,13 @@ public class Workbench : SubjectBase, IInteractible
     private List<Augment> aL_allAugmentsOwned = new List<Augment>();
     private ToolHandler th_currentTh;
     private int displayIter = 0;
-    #region Interactions
+
     [Header("Tab info")]
     [SerializeField] private Image img_all;
     [SerializeField] private Image img_equip;
     [SerializeField] private Image img_sameType;
     [SerializeField] private Color col_selected;
     [SerializeField] private Color col_unselected;
-
     public void Init(SaveManager _sm)
     {
         saveMan = _sm;
@@ -57,14 +56,19 @@ public class Workbench : SubjectBase, IInteractible
         apd.Init();
     }
 
+    #region Interactions
+
     public void Interacted(Transform interactor)
     {
         if (!b_isBeingUsed)
         {
+            //forget what they had last time
             wt_toolsInHand.Clear();
+
             // Move player to cinimatic point
             interactor.position = t_playerPos.position;
             interactor.transform.forward = t_playerPos.forward;
+            
             // Don't let the menu be used twice
             b_isBeingUsed = true;
             pim = interactor.GetComponent<PlayerInputManager>();
@@ -85,40 +89,44 @@ public class Workbench : SubjectBase, IInteractible
             pim.GetCamera().enabled = false;
             Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
             pm.GetComponent<PlayerAnimator>().enabled = false;
-            // Stop player from shooting
+
+            // Stop player from animating
             PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
             _pa.SetShootability(false);
             _pa.StopWalking();
+
             // Move camera
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
             go_workbenchCanvas.enabled = true;
             go_workbenchCanvas.transform.localScale = Vector3.one * 0.739f;
-            // Find any saved augments and load them
+
             if (wt_toolsInHand.Count > 0)
             {
                 apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
                 SameTab();
                 DisplayWeapon();
             }
+            else
+                AllTab();
+
             // Enable cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-
-
         }
     }
-
     public void Interacted() { }
 
     public void EndInteract()
     {
-        // Make the player able to move
         HideWeapon();
+
+        // Make the player able to move
         PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
         pm.enabled = true;
+
         // Remove weapon refs
         wt_toolsInHand.Clear();
 
@@ -127,14 +135,17 @@ public class Workbench : SubjectBase, IInteractible
         go_workbenchCanvas.transform.localScale = Vector3.zero;
         go_workbenchCanvas.enabled = false;
         pim.GetCamera().enabled = true;
+
         // Player is able to animate again!
         pm.GetComponent<PlayerAnimator>().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);
         _pa.StartWalking();
+
         // Remove the cursor and allow the bench to be used again
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         b_isBeingUsed = false;
     }
 
@@ -180,7 +191,9 @@ public class Workbench : SubjectBase, IInteractible
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(true);
 
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
-        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        //aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+
+        //update the text to show the name of the tool
     }
 
     private void HideWeapon()
@@ -188,6 +201,7 @@ public class Workbench : SubjectBase, IInteractible
         if (wt_toolsInHand.Count <= 0)
             return;
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(false);
+        //hide the text too
     }
 
     #region Button Functions
@@ -308,7 +322,10 @@ public class Workbench : SubjectBase, IInteractible
         img_sameType.color = sel;
         img_all.color = unSel;
         img_equip.color = unSel;
-        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        if (wt_toolsInHand.Count > 0)
+            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        else
+            aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.None, false);
     }
     public void EquippedTab()
     {
