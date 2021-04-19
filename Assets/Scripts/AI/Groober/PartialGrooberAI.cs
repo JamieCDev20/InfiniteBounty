@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class GrooberAI : MonoBehaviour
+public partial class GrooberAI : AIBase
 {
+
+    #region 
+
     
+
+    #endregion
+
 }
