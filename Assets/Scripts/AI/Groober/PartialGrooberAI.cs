@@ -15,7 +15,7 @@ public partial class GrooberAI : AIBase
     private float f_currentTime;
     [SerializeField] private float f_attackRange;
 
-
+    private HandymanMover mover;
 
     #region Queries
 
@@ -59,11 +59,12 @@ public partial class GrooberAI : AIBase
 
     private void MoveTowardTarget()
     {
-
+        mover.Move((t_target.position - transform.position).normalized);
     }
 
     private void MoveAwayFromTarget()
     {
+        mover.Move((transform.position - t_target.position).normalized);
 
     }
 

@@ -7,6 +7,7 @@ public partial class GrooberAI : AIBase
     private void Start()
     {
         tree = new BehaviourTree(DefineTree());
+        mover = GetComponent<HandymanMover>();
     }
 
     private void Update()
