@@ -4931,6 +4931,66 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &3513215429240798315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4520764055447824419}
+  - component: {fileID: 4122153425128316418}
+  - component: {fileID: 4348615788208292261}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4520764055447824419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513215429240798315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.729, z: 0.709}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4414079512200226319}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4122153425128316418
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513215429240798315}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4348615788208292261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3513215429240798315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee912846d8dd3c48b6f8dbca70baeed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_hitForce: 5
+  f_damage: 10
+  parent: {fileID: 4414079512200226319}
 --- !u!1 &3893965790758993077
 GameObject:
   m_ObjectHideFlags: 0
@@ -4943,13 +5003,12 @@ GameObject:
   - component: {fileID: 3893965790758993078}
   - component: {fileID: 3893965790758993072}
   - component: {fileID: 4620532391834650684}
-  - component: {fileID: 4571950225747552104}
   - component: {fileID: -9169695868248746339}
   - component: {fileID: 8737862836785388371}
-  - component: {fileID: 6920061157318021248}
   - component: {fileID: 2641883888234219082}
   - component: {fileID: 8178341708489684120}
   - component: {fileID: 1573554341029317637}
+  - component: {fileID: 2234305751527112165}
   m_Layer: 19
   m_Name: Groober
   m_TagString: Untagged
@@ -4975,6 +5034,7 @@ Transform:
   - {fileID: 6887129048972437128}
   - {fileID: 3881132263229288243}
   - {fileID: 7109882681355471033}
+  - {fileID: 4520764055447824419}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5033,25 +5093,6 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4571950225747552104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893965790758993077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62bcf01ee9262314b87062a75ede0ebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  f_summoningSickness: 1
-  f_spottingDistance: 50
-  lm_spottingMask:
-    serializedVersion: 2
-    m_Bits: 524083
-  f_attackRange: 10
-  f_attackDuration: 3
 --- !u!114 &-9169695868248746339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5089,18 +5130,6 @@ MonoBehaviour:
   go_deathParticles: {fileID: 8974009248041971325}
   go_exploParticles: {fileID: 1385815640902541363}
   p_hitParticles: {fileID: 4835961536809494986}
---- !u!114 &6920061157318021248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893965790758993077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63e6d558df36d71438b980edc630ff93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2641883888234219082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5143,6 +5172,28 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &2234305751527112165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893965790758993077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e53a6154cdbee04495e3cd08f839aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_summoningSickness: 1
+  f_spottingDistance: 50
+  lm_spottingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  i_minimumGroupSizeToAAttack: 6
+  f_attackStartup: 0.2
+  go_attackHitBox: {fileID: 3513215429240798315}
+  f_timeBetweenAttacks: 2
+  f_attackRange: 1
 --- !u!1 &4704535906576412614
 GameObject:
   m_ObjectHideFlags: 0
