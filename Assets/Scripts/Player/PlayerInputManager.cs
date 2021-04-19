@@ -28,7 +28,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshPro nameText;
     [Space]
     [SerializeField] private bool offline = false;
-    
+
     #endregion
 
     #region Private
@@ -88,6 +88,22 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
             {
                 transform.position = Vector3.zero;
             }
+
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            try
+            {
+                foreach (GameObject e in TagManager.x.GetTagSet("Enemy"))
+                {
+                    e.SendMessage("Die"); //<<This is stupidly inneficient but so much easier... why is code like this?
+                }
+
+            }
+            catch
+            {
+                Debug.Log("Unable to do what you just wanted");
+            }
+        }
 
 #endif
         if (Input.GetKeyDown(KeyCode.PageUp))
@@ -212,7 +228,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
     public void SetMoving(bool _val)
     {
-        rb.velocity = _val? rb.velocity : Vector3.zero;
+        rb.velocity = _val ? rb.velocity : Vector3.zero;
         mover.enabled = _val;
         rb.isKinematic = !_val;
     }
@@ -317,7 +333,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
             _Name += " (Host)";
         }
         nameText.text = _Name;
-        GetComponent<PlayerWaypointer>().SetNames(_Name); 
+        GetComponent<PlayerWaypointer>().SetNames(_Name);
     }
 
     public void SetCanPickUpNugs(bool val)
