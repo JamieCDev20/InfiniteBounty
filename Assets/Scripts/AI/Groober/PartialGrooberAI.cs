@@ -71,11 +71,11 @@ public partial class GrooberAI : AIBase
 
     private void FindClosestPlayer()
     {
-        float _f_distance = 10000;
+        float _f_distance = 1000000000;
 
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("Player"))
+        foreach (GameObject item in TagManager.x.GetTagSet("Player"))
         {
-            float _f_distanceCheck = Vector3.Distance(item.transform.position, transform.position);
+            float _f_distanceCheck = Vector3.SqrMagnitude(item.transform.position - transform.position);
             if (_f_distanceCheck < _f_distance)
             {
                 t_target = item.transform;
