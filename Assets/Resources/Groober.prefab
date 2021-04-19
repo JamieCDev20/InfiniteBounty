@@ -4941,7 +4941,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4414079512200226319}
   - component: {fileID: 3893965790758993078}
-  - component: {fileID: 3893965790758993073}
   - component: {fileID: 3893965790758993072}
   - component: {fileID: 4620532391834650684}
   - component: {fileID: 4571950225747552104}
@@ -4950,6 +4949,7 @@ GameObject:
   - component: {fileID: 6920061157318021248}
   - component: {fileID: 2641883888234219082}
   - component: {fileID: 8178341708489684120}
+  - component: {fileID: 1573554341029317637}
   m_Layer: 19
   m_Name: Groober
   m_TagString: Untagged
@@ -4966,7 +4966,7 @@ Transform:
   m_GameObject: {fileID: 3893965790758993077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5431331058301209159}
   - {fileID: 7221377567149900808}
@@ -4993,20 +4993,6 @@ MonoBehaviour:
   objectTags:
   - Enemy
   - Throwable
---- !u!136 &3893965790758993073
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893965790758993077}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.55, z: 0}
 --- !u!54 &3893965790758993072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5143,6 +5129,20 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 5
+--- !u!136 &1573554341029317637
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893965790758993077}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &4704535906576412614
 GameObject:
   m_ObjectHideFlags: 0
@@ -16233,6 +16233,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 94b0853c3169cce4db96fb8a43da2d19,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 94b0853c3169cce4db96fb8a43da2d19,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 94b0853c3169cce4db96fb8a43da2d19,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4651002407786584038, guid: 94b0853c3169cce4db96fb8a43da2d19,
         type: 3}
