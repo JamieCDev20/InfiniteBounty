@@ -23,7 +23,12 @@ public class EnemySpawnZone : MonoBehaviour
     [SerializeField] private float f_spawnRadius;
     private DifficultySet ds_currentDifficulty;
 
-    private void Start()
+    [Header("Start Enemies")]
+    [SerializeField] private int i_enemiesToSpawnOnStart;
+    [SerializeField] private GameObject go_startEnemy;
+
+
+    private IEnumerator Start()
     {
         ds_currentDifficulty = DifficultyManager.x.ReturnCurrentDifficulty();
         for (int i = 0; i < transform.childCount; i++)
@@ -35,6 +40,11 @@ public class EnemySpawnZone : MonoBehaviour
             else if (transform.GetChild(i).name.Contains("Boss"))
                 t_bossSpawn = (transform.GetChild(i));
         }
+
+        yield return new WaitForEndOfFrame();
+
+        for (int i = 0; i < i_enemiesToSpawnOnStart; i++)
+            EnemySpawner.x.SpawnEnemy(go_startEnemy, tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position, false);
 
     }
 
