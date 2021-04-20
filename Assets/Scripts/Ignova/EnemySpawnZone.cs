@@ -43,8 +43,8 @@ public class EnemySpawnZone : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        for (int i = 0; i < i_enemiesToSpawnOnStart; i++)
-            EnemySpawner.x.SpawnEnemy(go_startEnemy, tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position, false);
+        //for (int i = 0; i < i_enemiesToSpawnOnStart; i++)
+          //  EnemySpawner.x.SpawnEnemy(go_startEnemy, tL_groundEnemySpawns[Random.Range(0, tL_groundEnemySpawns.Count)].position, false);
 
     }
 
