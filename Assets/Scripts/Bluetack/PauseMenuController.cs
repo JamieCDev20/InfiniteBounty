@@ -67,16 +67,13 @@ public class PauseMenuController : SubjectBase
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
         #endregion
-        if (SceneManager.GetActiveScene().name != "StartScene")
-        {
-            c_settingsMenu.enabled = false;
-            c_pauseCanvas.SetActive(false);
-            c_HUDCanvas.SetActive(true);
-            cc_cam = FindObjectOfType<CameraController>();
-            SetAmbienceVolume();
-            SetMusicVolume();
-            SetSFXVolume();
-        }
+        c_settingsMenu.enabled = false;
+        c_pauseCanvas.SetActive(false);
+        c_HUDCanvas.SetActive(true);
+        cc_cam = FindObjectOfType<CameraController>();
+        SetAmbienceVolume();
+        SetMusicVolume();
+        SetSFXVolume();
 
 
         SaveManager sm = FindObjectOfType<SaveManager>();
