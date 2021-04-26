@@ -20,6 +20,7 @@ public class Augment
     public int Cost { get { return i_cost; } set { i_cost = value; } }
     public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
     public string AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
+    public (string nam, int lev) Tup { get { return (s_name, i_level); } }
     #region Audio
 
     [Newtonsoft.Json.JsonProperty]

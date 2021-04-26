@@ -277,6 +277,7 @@ public class Workbench : SubjectBase, IInteractible
         WeaponTool toolToRemoveFrom = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         Notify(new UnequipAugmentEvent(toolToRemoveFrom.ToolID, i_currentWeaponIndex,
             new AugmentSave(toolToRemoveFrom.Augs[apd.CurrentAugIndex])));
+        toolToRemoveFrom.RemoveStatChanges(toolToRemoveFrom.Augs[apd.CurrentAugIndex]);
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
 
     }
@@ -290,18 +291,18 @@ public class Workbench : SubjectBase, IInteractible
         Notify(rae);
         EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetToolBase(i_currentWeaponIndex).ToolID, i_currentWeaponIndex, new AugmentSave[] { _save }));
         WeaponTool weaponToEq = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
-        switch (_save.SavedAugment.augType)
-        {
-            case AugmentType.projectile:
-                weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetProjectileAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
-                break;
-            case AugmentType.cone:
-                weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetConeAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
-                break;
-            case AugmentType.standard:
-                weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetStandardAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
-                break;
-        }
+        //switch (_save.SavedAugment.augType)
+        //{
+        //    case AugmentType.projectile:
+        //        weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetProjectileAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+        //        break;
+        //    case AugmentType.cone:
+        //        weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetConeAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+        //        break;
+        //    case AugmentType.standard:
+        //        weaponToEq.Augs = Utils.AddToArray(weaponToEq.Augs, AugmentManager.x.GetStandardAugmentAt(_save.SavedAugment.augStage, _save.SavedAugment.indicies));
+        //        break;
+        //}
         Notify(eae);
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
     }
@@ -337,6 +338,16 @@ public class Workbench : SubjectBase, IInteractible
         List<Augment> augList = new List<Augment>();
         apd.ToolToCheck = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowEquipped, false);
+        Debug.Log("after InitAugmentList Show Equipped: " + aL_allAugmentsOwned.Count);
+        string s = "";
+        for (int j = 0; j < apd.ToolToCheck.Augs.Length; j++)
+        {
+            s += $"{j}: ";
+            s += apd.ToolToCheck.Augs[j];
+            s += "\n";
+
+        }
+        Debug.Log(s);
     }
 
     #endregion

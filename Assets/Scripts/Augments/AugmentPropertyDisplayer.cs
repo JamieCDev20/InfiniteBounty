@@ -25,7 +25,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     private WeaponTool wt_toolToCheck;
     private string s_augName;
     private AugmentType at_type;
-    public WeaponTool ToolToCheck { set { wt_toolToCheck = value; } }
+    public WeaponTool ToolToCheck { get { return wt_toolToCheck; } set { wt_toolToCheck = value; } }
     public AugmentType AugType { set { at_type = value; } }
     public AugmentDisplayType CurrentDisplayType { get { return adt_currentDisplayType; } }
     public string AugmentName { set { s_augName = value; } }
@@ -264,6 +264,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             case AugmentDisplayType.ShowEquipped:
                 if (wt_toolToCheck != null)
                 {
+                    Debug.Log("toolToCheck augs length: " + wt_toolToCheck.Augs.Length);
                     foreach (Augment auggy in wt_toolToCheck.Augs)
                         if (auggy != null)
                         {
