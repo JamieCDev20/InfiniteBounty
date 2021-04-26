@@ -117,14 +117,12 @@ public class TutorialManager : MonoBehaviour
             if (GameObject.FindGameObjectsWithTag("Player").Length > 0)
                 pim_player = FindObjectOfType<PlayerInputManager>();
             yield return new WaitForEndOfFrame();
-
         }
 
         if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
         {
-
-            foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
-                item.SetActive(true);
+            go_tutorialWalls.transform.position = go_tutorialWalls.transform.localPosition;
+            go_tutorialWalls.SetActive(true);
 
             b_isPlayingVideo = true;
             go_videoObject.SetActive(true);
@@ -141,7 +139,6 @@ public class TutorialManager : MonoBehaviour
                 for (int x = 0; x < _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk.Length; x++)
                 {
                     f_inputTime = 0;
-                    //print($"Doing {i}, which is a {_tsdA_stepToWorkThrough[i].tst_stepType}-type.");
 
                     switch (_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].tst_stepType)
                     {
@@ -286,8 +283,7 @@ public class TutorialManager : MonoBehaviour
                             break;
 
                         case TutorialStepType.DisableShield:
-                            foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
-                                item.SetActive(false);
+                            go_tutorialWalls.SetActive(false);
                             break;
                     }
 
@@ -297,8 +293,7 @@ public class TutorialManager : MonoBehaviour
 
             //go_tutorialCanvas.SetActive(false);
         }
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
-            item.SetActive(false);
+        go_tutorialWalls.SetActive(false);
     }
 
     [System.Serializable]
