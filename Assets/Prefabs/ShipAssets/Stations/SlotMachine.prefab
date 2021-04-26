@@ -2353,7 +2353,7 @@ MonoBehaviour:
     s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
   t_nameText: {fileID: 4081765377577185892}
   t_descriptionText: {fileID: 8433907449231418951}
-  go_infoCanvas: {fileID: 0}
+  go_infoCanvas: {fileID: 7224481911664017144}
   go_infoHighlight: {fileID: 2740248559731284604}
   tA_buttonPositions:
   - {fileID: 3204412230625313023}
@@ -3036,7 +3036,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7779115869283276261
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3064,7 +3064,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7224481911664017144}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -3675,11 +3675,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3371861067325885827, guid: 026aab2a68cbe814990a4a7f82f8a47d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 09c3027c3dfde274ca57e6349b79c2f2,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 026aab2a68cbe814990a4a7f82f8a47d,
         type: 3}
       propertyPath: m_Name
       value: SlotMachine
       objectReference: {fileID: 0}
+    - target: {fileID: 8032750206264916975, guid: 026aab2a68cbe814990a4a7f82f8a47d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 09c3027c3dfde274ca57e6349b79c2f2,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 026aab2a68cbe814990a4a7f82f8a47d, type: 3}
 --- !u!1 &5265862888231050553 stripped

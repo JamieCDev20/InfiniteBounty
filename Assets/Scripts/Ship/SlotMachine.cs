@@ -120,11 +120,12 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             _pa.StopWalking();
             nm_nugMan = pim.GetComponent<NugManager>();
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
-            go_infoCanvas.SetActive(true);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             tmp_costText.text = "£" + i_currentCost;
+
+            go_infoCanvas.SetActive(true);
         }
     }
 
