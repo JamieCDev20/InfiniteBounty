@@ -10,7 +10,7 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
 
     [SerializeField] private bool b_isRightSide;
     [SerializeField] private Transform t_sitPosition;
-    [SerializeField] private GameObject go_audioSourceObject;
+    [SerializeField] private GameObject go_objectToEnableWhenUsed;
     [SerializeField] private bool b_cannonSeat;
     private bool b_isBeingUsed;
     private Transform sitter = null;
@@ -62,11 +62,12 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
 
                 pm.GetComponent<Rigidbody>().rotation = t_sitPosition.rotation;
                 pm.GetComponent<Rigidbody>().isKinematic = true;
-
-                if (go_audioSourceObject)
-                    go_audioSourceObject.SetActive(true);
                 */
-                b_isBeingUsed = true;                
+
+                if (go_objectToEnableWhenUsed)
+                    go_objectToEnableWhenUsed.SetActive(true);
+
+                b_isBeingUsed = true;
             }
         }
     }
@@ -78,10 +79,10 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
 
     internal void EndSit()
     {
-        if (go_audioSourceObject)
-            go_audioSourceObject.SetActive(false);
+        if (go_objectToEnableWhenUsed)
+            go_objectToEnableWhenUsed.SetActive(false);
         b_isBeingUsed = false;
-        if(sitter != null)
+        if (sitter != null)
             sitter.GetComponent<PlayerMover>().b_isSitting = false;
         sitter = null;
         if (b_cannonSeat)
