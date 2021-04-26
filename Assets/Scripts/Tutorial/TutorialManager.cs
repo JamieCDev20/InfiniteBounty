@@ -117,15 +117,14 @@ public class TutorialManager : MonoBehaviour
             if (GameObject.FindGameObjectsWithTag("Player").Length > 0)
                 pim_player = FindObjectOfType<PlayerInputManager>();
             yield return new WaitForEndOfFrame();
+
         }
 
         if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
         {
-            /*foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
-            {
-                print("Turning " + item.name + " off.");
+
+            foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
                 item.SetActive(true);
-            }*/
 
             b_isPlayingVideo = true;
             go_videoObject.SetActive(true);
@@ -285,6 +284,11 @@ public class TutorialManager : MonoBehaviour
                             while (!b_hasChangedRisk)
                                 yield return new WaitForEndOfFrame();
                             break;
+
+                        case TutorialStepType.DisableShield:
+                            foreach (GameObject item in GameObject.FindGameObjectsWithTag("TutorialOnly"))
+                                item.SetActive(false);
+                            break;
                     }
 
                     yield return new WaitForSeconds(_tcA_chunksToWorkThrough[i].tsdA_stepsInChunk[x].f_timeToWaitBeforeNextStep);
@@ -339,7 +343,8 @@ public class TutorialManager : MonoBehaviour
         WaitForLodeDestroyed,
         WaitForEnemyDestroyed,
         WaitForGameMode,
-        WaitForRiskLevel
+        WaitForRiskLevel,
+        DisableShield
     }
 
     private enum InputType

@@ -11053,9 +11053,17 @@ MonoBehaviour:
       go_distanceChecker: {fileID: 0}
   - s_name: Go to Level
     tsdA_stepsInChunk:
+    - s_name: DisableShield
+      tst_stepType: 13
+      f_timeToWaitBeforeNextStep: 1
+      ac_voiceLine: {fileID: 8300000, guid: 85e83445e99820645bae8938c13f2d4f, type: 3}
+      b_hold: 0
+      it_inputToWaitFor: 0
+      s_textMessage: 
+      go_distanceChecker: {fileID: 0}
     - s_name: VO
       tst_stepType: 0
-      f_timeToWaitBeforeNextStep: 1
+      f_timeToWaitBeforeNextStep: 0
       ac_voiceLine: {fileID: 8300000, guid: 85e83445e99820645bae8938c13f2d4f, type: 3}
       b_hold: 0
       it_inputToWaitFor: 0
