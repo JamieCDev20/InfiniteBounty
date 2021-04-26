@@ -9,8 +9,8 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviourPunCallbacks
 {
-    public static HUDController x;
 
+    public static HUDController x;
 
     [Header("Heat Gauges")]
     [SerializeField] private RectTransform rt_healthBar;
@@ -172,7 +172,10 @@ public class HUDController : MonoBehaviourPunCallbacks
     public void SceneLoad(Scene scene, LoadSceneMode mode)
     {
         if (this == null)
+        {
+            Debug.Log("this is probably why");
             return;
+        }
         bool inLevel = !scene.name.Contains("Lobby");
         HudInLevel(inLevel);
         foreach (int i in iiD_idMap.Keys)
