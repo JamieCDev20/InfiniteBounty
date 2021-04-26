@@ -39,7 +39,7 @@ public class PiggyBank : SubjectBase, IInteractible
 
     private void Update()
     {
-        if (rb.velocity == Vector3.zero)
+        if (rb.velocity == Vector3.zero || transform.position.y < -100)
         {
             f_currentTimer += Time.deltaTime;
 
