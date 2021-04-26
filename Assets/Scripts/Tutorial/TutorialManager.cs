@@ -118,6 +118,7 @@ public class TutorialManager : MonoBehaviour
                 pim_player = FindObjectOfType<PlayerInputManager>();
             yield return new WaitForEndOfFrame();
         }
+        go_tutorialWalls.SetActive(false);
 
         if (SaveManager.x.SaveData.Equals(null) || b_shouldTutorialAlways)
         {
@@ -293,7 +294,6 @@ public class TutorialManager : MonoBehaviour
 
             //go_tutorialCanvas.SetActive(false);
         }
-        go_tutorialWalls.SetActive(false);
     }
 
     [System.Serializable]
