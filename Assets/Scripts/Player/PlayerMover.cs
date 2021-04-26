@@ -159,8 +159,13 @@ public class PlayerMover : MonoBehaviour
 
         Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), v_groundNormal);
 
-        float ang = Vector3.Angle(dir, t_camTransform.TransformDirection(v_movementVector));
+        float mul = 1;
 
+        float ang = Vector3.Angle(dir, t_camTransform.TransformDirection(v_movementVector));
+        if (Vector3.Dot(dir, Vector3.up) > 0)
+        {
+            mul = 1 - Vector3.Angle(v_groundNormal, Vector3.up) / 90;
+        }
         Vector3 cross = Vector3.Cross(dir, t_camTransform.TransformDirection(v_movementVector));
 
         ang = Mathf.Clamp(ang, -maximumWalkIncline, maximumWalkIncline);
@@ -458,23 +463,28 @@ public class PlayerMover : MonoBehaviour
         RaycastHit hit;
         for (int i = 0; i < groundCheckMods.Length; i++)
         {
+
             Physics.Raycast(transform.position + (Vector3.up * 0.1f) + transform.TransformDirection(groundCheckMods[i]), Vector3.down, out hit, 0.5f);
 
             if (hit.collider != null)
             {
-                b_applyGravity = hit.distance > 0.15f;
-                v_groundNormal = hit.normal;
-                Debug.DrawRay(transform.position, hit.normal * 5, Color.red);
-                f_lastOnGround = Time.realtimeSinceStartup;
+                if (Vector3.Angle(hit.normal, Vector3.up) < 45)
+                {
 
-                ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
-                if (iS != null)
-                    s_currentSurface = iS.GetSurface();
+                    b_applyGravity = hit.distance > 0.15f;
+                    v_groundNormal = hit.normal;
+                    Debug.DrawRay(transform.position, hit.normal * 5, Color.red);
+                    f_lastOnGround = Time.realtimeSinceStartup;
 
-                if (!b_grounded)
-                    Landed();
+                    ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
+                    if (iS != null)
+                        s_currentSurface = iS.GetSurface();
 
-                return true;
+                    if (!b_grounded)
+                        Landed();
+                    return true;
+
+                }
 
             }
             v_groundNormal = Vector3.up;
