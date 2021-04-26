@@ -297,6 +297,7 @@ public class PlayerMover : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
             GetComponent<PlayerHealth>().TakeDamage(10, false);
         }
+        transform.position = v_startPos;
     }
 
     private void Quit()
