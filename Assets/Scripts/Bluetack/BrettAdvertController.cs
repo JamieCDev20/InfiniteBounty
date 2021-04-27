@@ -21,11 +21,15 @@ public class BrettAdvertController : MonoBehaviour
         {
             yield return new WaitForSeconds(5);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 55; i++)
             {
-                mr_mesh.material.SetVector("Offsets", mr_mesh.material.GetVector("Offsets") + up * 0.003333333f);
-
-                yield return new WaitForSeconds(0.01f);
+                mr_mesh.material.SetVector("Offsets", mr_mesh.material.GetVector("Offsets") + up * 0.00666666f);
+                yield return new WaitForSeconds(0.001f);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                yield return new WaitForSeconds(0.001f);
+                mr_mesh.material.SetVector("Offsets", mr_mesh.material.GetVector("Offsets") - up * 0.00666666f);
             }
         }
     }
