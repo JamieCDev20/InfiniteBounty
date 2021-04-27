@@ -110,10 +110,25 @@ public class FuseSaver : MonoBehaviour, ObserverBase
                     case AugmentStage.fused:
                         // Remove using the save augment
                         _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(rae.augToRemove));
-                        File.WriteAllText(filePath, JsonConvert.SerializeObject(_savedData));
+                        switch (rae.augToRemove.SavedAugment.augType)
+                        {
+                            case AugmentType.projectile:
+                                fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, rae.augToRemove.SavedAugment.indicies)));
+                                break;
+                            case AugmentType.cone:
+                                fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, rae.augToRemove.SavedAugment.indicies)));
+                                break;
+                            case AugmentType.standard:
+                                fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, rae.augToRemove.SavedAugment.indicies)));
+                                break;
+                        }
+
+                        string removedPurchaseData = JsonConvert.SerializeObject(_savedData);
+                        File.WriteAllText(filePath, removedPurchaseData);
                         break;
                 }
                 break;
+
         }
     }
 
@@ -179,6 +194,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         {
             if (_savedData[i] == _augSave)
             {
+                Debug.Log("Did it correctly");
                 return i;
             }
         }
