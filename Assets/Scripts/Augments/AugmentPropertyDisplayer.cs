@@ -313,6 +313,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 AugmentButton btn = goL_augmentButtonPool[i].GetComponent<AugmentButton>();
                 btn.i_displayListIndex = i;// // << getting the value in the array of augments that the button is "holding"
                 btn.i_purchasedListIndex = FindAugmentToShowIndexFromOwned(_aL_augmentsToShow[i].Name, _aL_augmentsToShow[i].Level);
+                btn.Tup = (_aL_augmentsToShow[i].Name, _aL_augmentsToShow[i].Level);
                 btn.Parent = transform.root.gameObject;
             }
         }

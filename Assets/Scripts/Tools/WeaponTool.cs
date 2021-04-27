@@ -147,7 +147,7 @@ public class WeaponTool : ToolBase
             int i = -1;
             for (int j = 0; j < Augs.Length; j++)
             {
-                if(Augs[j].Tup == thing)
+                if(Augs[j]?.Tup == thing)
                 {
                     i = j;
                     break;

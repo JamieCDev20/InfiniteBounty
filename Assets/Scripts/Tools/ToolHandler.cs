@@ -70,7 +70,7 @@ public class ToolHandler : SubjectBase
     {
         // Go through each augment, and check if it's the correct ID and Slot.
             WeaponTool wt = (WeaponTool)A_tools[currentSlot];
-        wt.InitAugmentArrayBlank();
+        wt.InitAugmentArrayBlank(); //<<this isnt called if you have no savedata thats why the first time you load it breaks
         try
         {
             Debug.Log("in the try");
