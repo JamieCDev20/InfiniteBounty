@@ -8,6 +8,7 @@ public class ToolLoader : MonoBehaviour
     [SerializeField] private List<ToolBase> tb_loadedTools;
     [SerializeField] private ToolSlot ts_slot;
     public ToolSlot Slot { get { return ts_slot; } }
+    public ToolBase[] Tools { get { return tb_loadedTools.ToArray(); } }
 
     public void LoadTools(Transform _t_parent)
     {
@@ -21,6 +22,7 @@ public class ToolLoader : MonoBehaviour
     public ToolBase LoadTool(int _i_index, Transform _t_parent)
     {
         ToolBase go_tool = Instantiate(tb_tools[_i_index]);
+
         if (go_tool.name.Contains("Ham"))
         {
             switch (ts_slot)
