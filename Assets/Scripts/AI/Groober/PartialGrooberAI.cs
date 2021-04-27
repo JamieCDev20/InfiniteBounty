@@ -17,6 +17,9 @@ public partial class GrooberAI : AIBase
 
     private HandymanMover mover;
 
+
+
+
     #region Queries
 
     private bool CanAttackQuery()
@@ -45,11 +48,15 @@ public partial class GrooberAI : AIBase
     }
 
     private IEnumerator IAttackAction()
-    {
+    {        
+        anim.SetBool("Windup", true);
         yield return new WaitForSeconds(f_attackStartup);
+        anim.SetBool("Windup", false);
+        anim.SetBool("attack", true);
         go_attackHitBox.SetActive(true);
         yield return new WaitForEndOfFrame();
         go_attackHitBox.SetActive(false);
+        anim.SetBool("attack", false);
         f_currentTime = f_timeBetweenAttacks;
     }
 

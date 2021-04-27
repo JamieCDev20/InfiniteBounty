@@ -4,8 +4,13 @@ using UnityEngine;
 
 public partial class GrooberAI : AIBase
 {
+    private Animator anim;
+    private Rigidbody rb;
+
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
         tree = new BehaviourTree(DefineTree());
         mover = GetComponent<HandymanMover>();
     }
@@ -13,6 +18,7 @@ public partial class GrooberAI : AIBase
     private void Update()
     {
         tree.DoTreeIteration();
+        anim.SetFloat("movblend", rb.velocity.magnitude);
     }
 
     private SelectorNode DefineTree()
@@ -52,7 +58,7 @@ public partial class GrooberAI : AIBase
         ActionNode attack = new ActionNode(AttackAction);
 
         SequencerNode attackSeq = new SequencerNode(canAttack, attack);
-        
+
         return attackSeq;
     }
 
