@@ -8,7 +8,7 @@ public class FadeToBlack : MonoBehaviour
 {
     public static FadeToBlack x;
     [SerializeField] private Image i_coverImage;
-
+    [SerializeField] private Text t_coverText;
 
     private void Start()
     {
@@ -43,6 +43,7 @@ public class FadeToBlack : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         i_coverImage.CrossFadeAlpha(_f_targetAlpha, 0.7f, true);
+        t_coverText.CrossFadeAlpha(_f_targetAlpha, 0.7f, true);
     }
 
 }
