@@ -23,7 +23,7 @@ public class Workbench : SubjectBase, IInteractible
     [SerializeField] private float f_cameraMovementT = 0.4f;
 
     [Header("Button Info")]
-    [SerializeField] private List<WeaponTool> wt_toolsInHand = new List<WeaponTool>();
+    [SerializeField] private WeaponTool[] wt_toolsInHand = new WeaponTool[2];
     private int i_currentAugmentIndex;
     private int i_currentWeaponIndex = 0;
 
@@ -44,13 +44,7 @@ public class Workbench : SubjectBase, IInteractible
     {
         saveMan = _sm;
         tl.LoadTools(transform);
-        if (wt_toolsInHand.Count > 0)
-        {
-            if (wt_toolsInHand[0] != null)
-                tl.GetPrefabTool(wt_toolsInHand[0].ToolID).SetActive(true);
-            else if (wt_toolsInHand[1] != null)
-                tl.GetPrefabTool(wt_toolsInHand[1].ToolID).SetActive(true);
-        }
+        
         AddObserver(saveMan);
         AddObserver(FindObjectOfType<FuseSaver>());
         apd.Init();
@@ -63,7 +57,7 @@ public class Workbench : SubjectBase, IInteractible
         if (!b_isBeingUsed)
         {
             //forget what they had last time
-            wt_toolsInHand.Clear();
+            wt_toolsInHand = new WeaponTool[2];
 
             // Move player to cinimatic point
             interactor.position = t_playerPos.position;
@@ -76,10 +70,17 @@ public class Workbench : SubjectBase, IInteractible
             PlayerMover pm = pim.GetComponent<PlayerMover>();
 
             // Check if there's tools in the players hands
+            bool hasATool = false;
             if (th_currentTh.GetTool((int)ToolSlot.leftHand) != -1)
-                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool((int)ToolSlot.leftHand)));
+            {
+                wt_toolsInHand[0] = (WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool((int)ToolSlot.leftHand));
+                hasATool = true;
+            }
             if (th_currentTh.GetTool((int)ToolSlot.rightHand) != -1)
-                wt_toolsInHand.Add((WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool((int)ToolSlot.rightHand)));
+            {
+                wt_toolsInHand[1] = (WeaponTool)tl?.GetPrefabTool(th_currentTh.GetTool((int)ToolSlot.rightHand));
+                hasATool = true;
+            }
 
             // Stop the player and camera from moving 
             pm.GetComponent<Rigidbody>().isKinematic = true;
@@ -100,8 +101,9 @@ public class Workbench : SubjectBase, IInteractible
             go_workbenchCanvas.enabled = true;
             go_workbenchCanvas.transform.localScale = Vector3.one * 0.739f;
 
-            if (wt_toolsInHand.Count > 0)
+            if (hasATool)
             {
+                i_currentWeaponIndex = wt_toolsInHand[0] == null ? 1 : 0;
                 apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
                 SameTab();
                 DisplayWeapon();
@@ -128,7 +130,7 @@ public class Workbench : SubjectBase, IInteractible
         pm.enabled = true;
 
         // Remove weapon refs
-        wt_toolsInHand.Clear();
+        wt_toolsInHand = new WeaponTool[2];
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
         // Player is able to move camera
@@ -186,8 +188,17 @@ public class Workbench : SubjectBase, IInteractible
 
     private void DisplayWeapon()
     {
-        if (wt_toolsInHand.Count <= 0)
+
+        // Check if you have tools
+        bool hasATool = false;
+        for (int i = 0; i < wt_toolsInHand.Length; i++)
+        {
+            if (wt_toolsInHand[i] != null)
+                hasATool = true;
+        }
+        if (!hasATool)
             return;
+
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(true);
 
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
@@ -198,7 +209,14 @@ public class Workbench : SubjectBase, IInteractible
 
     private void HideWeapon()
     {
-        if (wt_toolsInHand.Count <= 0)
+        // Check if you have tools
+        bool hasATool = false;
+        for (int i = 0; i < wt_toolsInHand.Length; i++)
+        {
+            if (wt_toolsInHand[i] != null)
+                hasATool = true;
+        }
+        if (!hasATool)
             return;
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(false);
         //hide the text too
@@ -209,8 +227,17 @@ public class Workbench : SubjectBase, IInteractible
     public void ApplyAugment()
     {
         // Check if you have tools
-        if (wt_toolsInHand.Count == 0)
+        bool hasATool = false;
+        for (int i = 0; i < wt_toolsInHand.Length; i++)
+        {
+            if (wt_toolsInHand[i] != null)
+                hasATool = true;
+
+        }
+
+        if (!hasATool)
             return;
+
         // Get the tool from tool handler as its type
         if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ProjectileTool)
         {
@@ -260,7 +287,6 @@ public class Workbench : SubjectBase, IInteractible
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
                     AugmentSave _savedAug = new AugmentSave(_aug);
-                    Debug.Log(_savedAug.SavedAugment.indicies[0]);
                     SendAttachSave(_aug, _savedAug);
                 }
                 else
@@ -322,7 +348,14 @@ public class Workbench : SubjectBase, IInteractible
         img_sameType.color = sel;
         img_all.color = unSel;
         img_equip.color = unSel;
-        if (wt_toolsInHand.Count > 0)
+        // Check if you have tools
+        bool hasATool = false;
+        for (int i = 0; i < wt_toolsInHand.Length; i++)
+        {
+            if (wt_toolsInHand[i] != null)
+                hasATool = true;
+        }
+        if (hasATool)
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
         else
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.None, false);
@@ -334,19 +367,10 @@ public class Workbench : SubjectBase, IInteractible
         img_equip.color = sel;
         img_all.color = unSel;
         img_sameType.color = unSel;
-        List<Augment> augList = new List<Augment>();
+
         apd.ToolToCheck = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowEquipped, false);
-        Debug.Log("after InitAugmentList Show Equipped: " + aL_allAugmentsOwned.Count);
-        string s = "";
-        for (int j = 0; j < apd.ToolToCheck.Augs.Length; j++)
-        {
-            s += $"{j}: ";
-            s += apd.ToolToCheck.Augs[j]?.Name;
-            s += "\n";
-
-        }
-        Debug.Log(s);
+        
     }
 
     #endregion
@@ -357,12 +381,26 @@ public class Workbench : SubjectBase, IInteractible
     {
 
         HideWeapon();
+        // Check if you have tools
+        bool hasATool = false;
+        for (int i = 0; i < wt_toolsInHand.Length; i++)
+        {
+            if (wt_toolsInHand[i] != null)
+                hasATool = true;
+
+        }
+
+        if (!hasATool)
+            return;
 
         i_currentWeaponIndex += lr;
-        if (i_currentWeaponIndex >= wt_toolsInHand.Count)
+
+        if (i_currentWeaponIndex >= wt_toolsInHand.Length)
             i_currentWeaponIndex = 0;
-        else if (i_currentWeaponIndex < 0)
-            i_currentWeaponIndex = wt_toolsInHand.Count - 1;
+        if (i_currentWeaponIndex < 0)
+            i_currentWeaponIndex = 1;
+        if (wt_toolsInHand[i_currentWeaponIndex] == null)
+            i_currentWeaponIndex = 1 - i_currentWeaponIndex;
 
         DisplayWeapon();
 
