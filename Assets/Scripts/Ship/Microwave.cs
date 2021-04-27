@@ -197,7 +197,7 @@ public class Microwave : SubjectBase, IInteractible
         UnrevealFuseButton();
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         apd.UpdatePropertyText(fusedAug);
-        FuseEvent fe = new FuseEvent(new AugmentSave(AugmentStage.fused, aug_slotA.at_type, aug_slotA.Stage == AugmentStage.full ? 1 : fusedAug.Level, aug_slotA.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug_slotA.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name), AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage);
+        FuseEvent fe = new FuseEvent(new AugmentSave(AugmentStage.fused, aug_slotA.at_type, fusedAug.Level, aug_slotA.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug_slotA.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name), AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage);
         Notify(fe);
         switch (aug_slotA.at_type)
         {

@@ -8,11 +8,12 @@ public class AugmentFuser : MonoBehaviour
     {
         // Create new Augment
         Augment newAug = new Augment();
-        if(a == b)
+        if(a.Name == b.Name)
         {
             // Increase level of fused augment
             newAug = a;
-            newAug.Level++;
+            newAug.Level = a.Level + b.Level;
+            Debug.Log("MY NEW LEVEL IS: " + newAug.Level);
             return newAug;
         }
         if(a != b && a.Stage != AugmentStage.fused && b.Stage != AugmentStage.fused)

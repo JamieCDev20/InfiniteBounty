@@ -134,23 +134,43 @@ public class FuseSaver : MonoBehaviour, ObserverBase
 
     public void RemoveStandardFromSave(Augment _save)
     {
-        //fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
-        //_savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
-        AugmentManager.x.RemoveAugment(AugmentType.standard, _save.Name);
+        switch (_save.Stage)
+        {
+            case AugmentStage.full:
+                AugmentManager.x.RemoveAugment(AugmentType.standard, _save.Name);
+                break;
+            case AugmentStage.fused:
+                fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
+                _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+                break;
+        }
     }
 
     public void RemoveProjectileFromSave(ProjectileAugment _save)
     {
-        //    Debug.Log(fusedProj.Length + " " + GetAugmentIndex(fusedProj, _save));
-        //    fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
-        //    _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
-        AugmentManager.x.RemoveAugment(AugmentType.projectile, _save.Name);
+        switch (_save.Stage)
+        {
+            case AugmentStage.full:
+                AugmentManager.x.RemoveAugment(AugmentType.projectile, _save.Name);
+                break;
+            case AugmentStage.fused:
+                fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
+                _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+                break;
+        }
     }
     public void RemoveConeFromSave(ConeAugment _save)
     {
-        //fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));
-        //_savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
-        AugmentManager.x.RemoveAugment(AugmentType.cone, _save.Name);
+        switch (_save.Stage)
+        {
+            case AugmentStage.full:
+                AugmentManager.x.RemoveAugment(AugmentType.cone, _save.Name);
+                break;
+            case AugmentStage.fused:
+                fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));
+                _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+                break;
+        }
     }
     public int GetAugmentIndex(Augment[] toCheck, Augment aug)
     {
