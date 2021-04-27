@@ -8,6 +8,7 @@ public class AugmentButton : MonoBehaviour, IPoolable
     public int i_purchasedListIndex;
     private GameObject go_parent;
     public GameObject Parent { set { go_parent = value; } }
+    public (string nam, int lev) Tup;
 
     public void Clicked(/*GameObject wb*/)
     {
