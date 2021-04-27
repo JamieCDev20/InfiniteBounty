@@ -10,7 +10,7 @@ public partial class GrooberAI : AIBase
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         tree = new BehaviourTree(DefineTree());
         mover = GetComponent<HandymanMover>();
     }
