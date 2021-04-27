@@ -88,7 +88,6 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (oe_event)
         {
             case FuseEvent fuseEvent:
-                //Debug.Log(_savedData.Length);
                 _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
                 switch (fuseEvent.SavedAug.SavedAugment.augType)
                 {
@@ -142,6 +141,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             case AugmentStage.fused:
                 fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
                 _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(_savedData));
                 break;
         }
     }
@@ -156,6 +156,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             case AugmentStage.fused:
                 fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
                 _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(_savedData));
                 break;
         }
     }
@@ -169,6 +170,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             case AugmentStage.fused:
                 fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));
                 _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(_savedData));
                 break;
         }
     }
@@ -186,7 +188,6 @@ public class FuseSaver : MonoBehaviour, ObserverBase
     {
         for (int i = 0; i < _savedData.Length; i++)
         {
-            Debug.Log(i);
             switch (aug.at_type)
             {
                 case AugmentType.standard:
@@ -214,7 +215,6 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         {
             if (_savedData[i] == _augSave)
             {
-                Debug.Log("Did it correctly");
                 return i;
             }
         }
