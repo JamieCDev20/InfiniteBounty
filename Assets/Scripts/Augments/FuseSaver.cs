@@ -40,7 +40,8 @@ public class FuseSaver : MonoBehaviour, ObserverBase
     {
         if (!File.Exists(filePath))
         {
-            File.Create(filePath);
+            FileStream file = File.Create(filePath);
+            file.Close();
             DestroySaveData();
         }
         if (File.ReadAllText(filePath) != null)
@@ -79,10 +80,6 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             fusedAugs = _newAugs.ToArray();
             fusedProj = _newProj.ToArray();
             fusedCone = _newCone.ToArray();
-        }
-        else
-        {
-            File.Create(filePath);
         }
     }
 
