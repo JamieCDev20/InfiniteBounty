@@ -16,8 +16,7 @@ public class ProjectileTool : WeaponTool
     public override AugmentType AugType { get { return augType; } }
     AugmentProjectile ap_projAugment;
 
-    [Header("Heat")]
-    [SerializeField] private float f_maxHeat;
+    [Header("Heat")]    
     [SerializeField] private float f_heatPerShot;
     [SerializeField] private AudioSource as_heatGuageSource;
     private float f_currentHeat;
@@ -74,7 +73,7 @@ public class ProjectileTool : WeaponTool
         if (f_currentHeat > 0 && (!(b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold) || b_isOverheating))
             f_currentHeat -= Time.deltaTime * f_heatsink;
 
-        if (f_currentHeat >= f_maxHeat)
+        if (f_currentHeat >= f_energyGauge)
             StartOverheating();
 
         if (f_currentHeat <= 0)
@@ -102,8 +101,8 @@ public class ProjectileTool : WeaponTool
 
     public void DoHeatSound()
     {
-        as_heatGuageSource.volume = ((float)(f_currentHeat / f_maxHeat)) * f_heatVolumeMult;
-        as_heatGuageSource.pitch = Mathf.Lerp(0, f_maxHeatPitch, (float)f_currentHeat / f_maxHeat);
+        as_heatGuageSource.volume = ((float)(f_currentHeat / f_energyGauge)) * f_heatVolumeMult;
+        as_heatGuageSource.pitch = Mathf.Lerp(0, f_maxHeatPitch, (float)f_currentHeat / f_energyGauge);
     }
 
     public override void NetUse(Vector3 _v_forwards)
