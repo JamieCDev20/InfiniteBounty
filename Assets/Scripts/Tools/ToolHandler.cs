@@ -59,18 +59,30 @@ public class ToolHandler : SubjectBase
         if (_sm?.SaveData.tu_equipped != null)
             foreach ((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
             {
-                CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
-                if (tup.toolID != -1 && tup.slotID != -1)
-                    LoadAugmentsOnTool(_sm, tup.slotID);
-                ac_changer.SetCurrentArmActive(tup.slotID, false);
+                if(tup.toolID != -1 && tup.slotID != -1)
+                {
+                    CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
+                    ac_changer.SetCurrentArmActive(tup.slotID, false);
+                }
             }
+        if(_sm?.SaveData.tu_equippedAugments != null)
+        {
+            foreach((int toolID, int slotID, AugmentSave[]) augs in _sm.SaveData.tu_equippedAugments)
+            {
+                if (augs.toolID != -1 && augs.slotID != -1)
+                {
+                    Debug.Log(augs.toolID);
+                    LoadAugmentsOnTool(_sm, augs.slotID);
+                }
+            }
+        }
     }
 
     private void LoadAugmentsOnTool(SaveManager _sm, int currentSlot)
     {
         // Go through each augment, and check if it's the correct ID and Slot.
-            WeaponTool wt = (WeaponTool)A_tools[currentSlot];
-        wt.InitAugmentArrayBlank(); //<<this isnt called if you have no savedata thats why the first time you load it breaks
+        WeaponTool wt = (WeaponTool)A_tools[currentSlot];
+        // wt.InitAugmentArrayBlank();<<this isnt called if you have no savedata thats why the first time you load it breaks
         try
         {
             Debug.Log("in the try");
@@ -303,6 +315,7 @@ public class ToolHandler : SubjectBase
                     tl.LoadTools(A_toolTransforms[(int)ToolSlot.moblility]);
                     break;
             }
+        
     }
 
     public void ReturnToRack(ToolSlot ts, ToolRack tr, bool _b_rackType)
