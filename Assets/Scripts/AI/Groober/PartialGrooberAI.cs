@@ -42,9 +42,7 @@ public partial class GrooberAI : AIBase
     }
 
     private bool AttackOffCooldownQuery()
-    {
-        f_currentTime -= Time.deltaTime;
-
+    {        
         if (f_currentTime <= 0)
             return true;
         return false;
