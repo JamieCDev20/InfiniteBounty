@@ -22,7 +22,7 @@ public class GrooberSquadManager : MonoBehaviour
         {
             avg = Vector3.zero;
             int i = 0;
-            foreach (GameObject g in TagManager.x.GetTagSet("Groober"))
+            foreach (GameObject g in TagManager.x?.GetTagSet("Groober"))
             {
                 avg += g.transform.position;
                 i++;
