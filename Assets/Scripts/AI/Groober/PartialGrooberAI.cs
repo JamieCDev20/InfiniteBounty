@@ -6,7 +6,8 @@ public partial class GrooberAI : AIBase
 {
     [Header("Grouping Behaviour")]
     [SerializeField] private int i_minimumGroupSizeToAAttack = 6;
-    private int i_currentGroupSize;
+    [SerializeField] private float f_hordeRadius;
+    [SerializeField] private LayerMask lm_enemyLayer;
 
     [Header("Attack")]
     [SerializeField] private float f_attackStartup;
@@ -15,7 +16,7 @@ public partial class GrooberAI : AIBase
     private float f_currentTime;
     [SerializeField] private float f_attackRange;
 
-    private HandymanMover mover;
+    private HopdogMover mover;
 
 
 
@@ -35,7 +36,7 @@ public partial class GrooberAI : AIBase
 
     private bool IsWithGroupQuery()
     {
-        return i_currentGroupSize >= i_minimumGroupSizeToAAttack;
+        return Physics.OverlapSphere(transform.position, f_hordeRadius, lm_enemyLayer, QueryTriggerInteraction.Ignore).Length >= i_minimumGroupSizeToAAttack;
     }
 
     #endregion
@@ -48,7 +49,7 @@ public partial class GrooberAI : AIBase
     }
 
     private IEnumerator IAttackAction()
-    {        
+    {
         anim.SetBool("Windup", true);
         yield return new WaitForSeconds(f_attackStartup);
         anim.SetBool("Windup", false);
@@ -72,7 +73,7 @@ public partial class GrooberAI : AIBase
     private void MoveAwayFromTarget()
     {
         mover.Move((transform.position - t_target.position).normalized);
-
+        print("MOVING AWAY FROM THE TRAGEt");
     }
 
     #endregion
@@ -80,12 +81,14 @@ public partial class GrooberAI : AIBase
     private void FindClosestPlayer()
     {
         float _f_distance = 1000000000;
+        print("Finding closest player");
 
         foreach (GameObject item in TagManager.x.GetTagSet("Player"))
         {
             float _f_distanceCheck = Vector3.SqrMagnitude(item.transform.position - transform.position);
             if (_f_distanceCheck < _f_distance)
             {
+                print("Found closest player");
                 t_target = item.transform;
                 _f_distance = _f_distanceCheck;
             }

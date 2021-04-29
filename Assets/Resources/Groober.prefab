@@ -5008,7 +5008,7 @@ GameObject:
   - component: {fileID: 8178341708489684120}
   - component: {fileID: 1573554341029317637}
   - component: {fileID: 2234305751527112165}
-  - component: {fileID: 3675125728616505973}
+  - component: {fileID: 5064011251284351107}
   m_Layer: 19
   m_Name: Groober
   m_TagString: Untagged
@@ -5067,7 +5067,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &4620532391834650684
 MonoBehaviour:
@@ -5172,12 +5172,16 @@ MonoBehaviour:
   lm_spottingMask:
     serializedVersion: 2
     m_Bits: 1281
-  i_minimumGroupSizeToAAttack: 6
+  i_minimumGroupSizeToAAttack: 1
+  f_hordeRadius: 20
+  lm_enemyLayer:
+    serializedVersion: 2
+    m_Bits: 524288
   f_attackStartup: 0.2
   go_attackHitBox: {fileID: 3513215429240798315}
   f_timeBetweenAttacks: 2
   f_attackRange: 1
---- !u!114 &3675125728616505973
+--- !u!114 &5064011251284351107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5186,16 +5190,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3893965790758993077}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf600db6d1e408742bf8c9d883715bb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 011bdef7a9b0a944590b09e886a675e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  f_moveSpeed: 1.5
+  f_moveSpeed: 10
   f_airControlMultiplier: 0.2
   v_drag: {x: 0.1, y: 0, z: 0.1}
-  t_groundCheckPoint: {fileID: 3881132263229288243}
-  lm_wallCheckMask:
-    serializedVersion: 2
-    m_Bits: 131329
+  t_groundCheckPoint: {fileID: 0}
+  f_launchForce: 15
 --- !u!1 &4704535906576412614
 GameObject:
   m_ObjectHideFlags: 0
