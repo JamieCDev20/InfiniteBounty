@@ -13,7 +13,7 @@ public partial class GrooberAI : AIBase
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         tree = new BehaviourTree(DefineTree());
-        mover = GetComponent<HopdogMover>();
+        mover = GetComponent<HandymanMover>();
         f_timeStarted = Time.realtimeSinceStartup;
     }
 
