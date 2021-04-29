@@ -17,6 +17,8 @@ public partial class HandymanAI : AIBase
     [SerializeField] private float f_minThrowDistance;
     [SerializeField] private GameObject go_centreofPickup;
 
+    private HandymanAnimator anim;
+
 
 
     #region Queries
@@ -109,7 +111,7 @@ public partial class HandymanAI : AIBase
     private void ThrowAction()
     {
         Rigidbody _rb = go_nearestThrowable.GetComponent<Rigidbody>();
-
+        anim.Throw();
         go_nearestThrowable.transform.parent = null;
         _rb.isKinematic = false;
         _rb.AddForce(GetThrowVector(t_target.transform.position), ForceMode.Impulse);
@@ -119,6 +121,9 @@ public partial class HandymanAI : AIBase
 
     private void PunchAction()
     {
+        toggleHurtboxes(true);
+        anim.Slap();
+
 
     }
 

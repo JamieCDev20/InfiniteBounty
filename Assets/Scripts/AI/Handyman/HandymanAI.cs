@@ -6,11 +6,22 @@ public partial class HandymanAI : AIBase
 {
 
     [SerializeField] private Vector2 throwForceRange = new Vector2(10, 500);
+    [SerializeField] private HandymanHurtbox[] hurtBoxes;
+
+    public delegate void HurtboxDel(bool active);
+
+    public HurtboxDel toggleHurtboxes;
+
 
     private void Start()
     {
         tree = new BehaviourTree(ParentSequence());
         mover = GetComponent<HandymanMover>();
+        anim = GetComponent<HandymanAnimator>();
+        for (int i = 0; i < hurtBoxes.Length; i++)
+        {
+            toggleHurtboxes += hurtBoxes[i].SetHurtboxActive;
+        }
     }
 
     private void Update()
@@ -66,7 +77,7 @@ public partial class HandymanAI : AIBase
     {
         QueryNode inRange = new QueryNode(IsInPunchRangeQuery);
         ActionNode punch = new ActionNode(PunchAction);
-
+        
         return new SequencerNode(inRange, punch);
     }
 
@@ -86,7 +97,7 @@ public partial class HandymanAI : AIBase
         //float dist = (transform.position - _pos).magnitude;
         //float distPecent = (dist / 2000);
         //float force = (distPecent * (throwForceRange.y - throwForceRange.x)) + throwForceRange.x;
-        float force = go_nearestThrowable.name.Contains("ode")? 300 : 80;
+        float force = go_nearestThrowable.name.Contains("ode")? 400 : 100;
         float angle = 30;
 
         //float height = force * Mathf.Rad2Deg * Mathf.Tan(Mathf.Deg2Rad * angle);

@@ -16,11 +16,8 @@ public class HandymanAItwo : AIBase
     private HandymanMover mover;
     private HandymanAnimator anim;
 
-    [SerializeField] private HandymanHurtbox[] hurtBoxes;
 
-    public delegate void HurtboxDel(bool active);
 
-    public HurtboxDel toggleHurtboxes;
 
     private bool b_hurtsActive = true;
 
@@ -30,10 +27,7 @@ public class HandymanAItwo : AIBase
         anim = GetComponent<HandymanAnimator>();
         tree = new BehaviourTree(ParentDefine());
 
-        for (int i = 0; i < hurtBoxes.Length; i++)
-        {
-            toggleHurtboxes += hurtBoxes[i].SetHurtboxActive;
-        }
+        
 
     }
 
@@ -116,10 +110,8 @@ public class HandymanAItwo : AIBase
 
     public void PunchAction()
     {
-        anim.Slap();
         f_timeStarted = Time.realtimeSinceStartup;
         b_hurtsActive = true;
-        toggleHurtboxes(true);
     }
 
     public void ThrowAction()
@@ -138,7 +130,6 @@ public class HandymanAItwo : AIBase
             if (base.IsOverSummoningSickness())
             {
                 b_hurtsActive = false;
-                toggleHurtboxes(false);
             }
         return base.IsOverSummoningSickness();
     }
