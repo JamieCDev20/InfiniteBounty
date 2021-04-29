@@ -16,6 +16,7 @@ public class Workbench : SubjectBase, IInteractible
     [SerializeField] private GameObject[] goA_tools;
     [SerializeField] private Canvas go_workbenchCanvas;
     [SerializeField] private Transform t_playerPos;
+    [SerializeField] private Text toolname;
     [Header("Camera & Movement")]
     [SerializeField] private Transform t_camParent;
     [SerializeField] private int i_timesToLerpCam = 50;
@@ -60,7 +61,7 @@ public class Workbench : SubjectBase, IInteractible
         {
             //forget what they had last time
             wt_toolsInHand = new WeaponTool[2];
-
+            HideWeapon();
             // Move player to cinimatic point
             interactor.position = t_playerPos.position;
             interactor.transform.forward = t_playerPos.forward;
@@ -202,8 +203,9 @@ public class Workbench : SubjectBase, IInteractible
             return;
 
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(true);
-
+        toolname.text = $"{goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].name} ({(i_currentWeaponIndex == 0 ? "L" : "R")})";
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
+
         //aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
 
         //update the text to show the name of the tool
@@ -221,6 +223,7 @@ public class Workbench : SubjectBase, IInteractible
         if (!hasATool)
             return;
         goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].SetActive(false);
+        toolname.text = "";
         //hide the text too
     }
 
