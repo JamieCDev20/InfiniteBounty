@@ -90,14 +90,18 @@ public partial class HandymanAI : AIBase
             mover.Move((t_target.position - transform.position).normalized);
     }
 
-   private void PickUpAction()
+    private void PickUpAction()
     {
 
     }
 
     private void ThrowAction()
     {
+        Rigidbody _rb = go_nearestThrowable.GetComponent<Rigidbody>();
 
+        go_nearestThrowable.transform.parent = null;
+        _rb.AddForce(GetThrowVector(t_target.transform.position));
+        go_nearestThrowable = null;
     }
 
     private void PunchAction()
