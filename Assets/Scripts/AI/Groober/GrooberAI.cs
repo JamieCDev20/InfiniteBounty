@@ -20,6 +20,7 @@ public partial class GrooberAI : AIBase
     private void Update()
     {
         tree.DoTreeIteration();
+        Debug.Log(b_inGroup);
         anim.SetFloat("movblend", rb.velocity.magnitude);
     }
 
