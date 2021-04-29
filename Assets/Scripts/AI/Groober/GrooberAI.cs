@@ -11,7 +11,7 @@ public partial class GrooberAI : AIBase
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        tree = new BehaviourTree(DefineTree());
+        tree = new BehaviourTree(new ActionNode(JustMove)/*DefineTree()*/);
         mover = GetComponent<HopdogMover>();
         f_timeStarted = Time.realtimeSinceStartup;
     }
@@ -21,7 +21,10 @@ public partial class GrooberAI : AIBase
         tree.DoTreeIteration();
         anim.SetFloat("movblend", rb.velocity.magnitude);
     }
-
+    private void JustMove()
+    {
+        mover.Move(transform.forward);
+    }
     private SelectorNode DefineTree()
     {
 
