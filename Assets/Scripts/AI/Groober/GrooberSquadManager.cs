@@ -31,7 +31,7 @@ public class GrooberSquadManager : MonoBehaviour
             avg /= i;
 
             avgPos = avg;
-
+            Debug.LogError("AVG POSITION IS: " + avgPos);
             yield return new WaitForSeconds(0.5f);
 
         }
