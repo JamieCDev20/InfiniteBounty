@@ -90,6 +90,11 @@ public partial class HandymanAI : AIBase
             mover.Move((t_target.position - transform.position).normalized);
     }
 
+   private void PickUpAction()
+    {
+
+    }
+
     private void ThrowAction()
     {
 
