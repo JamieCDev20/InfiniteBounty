@@ -33,9 +33,14 @@ public partial class HandymanAI : AIBase
         return b_hasThrowable;
     }
 
+    private bool ShouldBeThrowingQuery()
+    {
+        return b_shouldBeThrowing;
+    }
+
     #endregion
 
-    #region Actions
+    #region Check Actions
 
     private GameObject GetClosestTaggedObjectAction(string _s_tag)
     {
@@ -70,6 +75,15 @@ public partial class HandymanAI : AIBase
         b_shouldBeThrowing = Vector3.Distance(transform.position, t_target.position) >= f_minThrowDistance;
     }
 
+
+    #endregion
+
+    #region Actions
+
+    private void MoveAction()
+    {
+
+    }
 
     #endregion
 
