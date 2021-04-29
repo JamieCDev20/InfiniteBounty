@@ -44,9 +44,11 @@ public partial class GrooberAI : AIBase
 
         QueryNode withGroup = new QueryNode(IsWithGroupQuery);
 
+        QueryNode hasTarget = new QueryNode(StillHasTarget);
+
         ActionNode moveToPlayer = new ActionNode(MoveTowardTarget);
 
-        SequencerNode moveAtkSeq = new SequencerNode(withGroup, moveToPlayer, AttackSequence());
+        SequencerNode moveAtkSeq = new SequencerNode(withGroup, hasTarget, moveToPlayer, AttackSequence());
 
         return moveAtkSeq;
     }
