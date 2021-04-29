@@ -24,14 +24,10 @@ public partial class GrooberAI : AIBase
 
     #region Queries
 
-    private bool CanAttackQuery()
+    private bool IsWithinAttackRangeQuery()
     {
-        f_currentTime -= Time.deltaTime;
-
-        if (f_currentTime <= 0)
-            if (Vector3.Distance(t_target.position, transform.position) < f_attackRange)
-                return true;
-
+        if (Vector3.Distance(t_target.position, transform.position) < f_attackRange)
+            return true;
         return false;
     }
 
@@ -45,8 +41,10 @@ public partial class GrooberAI : AIBase
         return b_inGroup;
     }
 
-    private bool CasuallyApproachPlayer()
+    private bool AttackOffCooldownQuery()
     {
+        f_currentTime -= Time.deltaTime;
+
         if (f_currentTime <= 0)
             return true;
         return false;
@@ -87,9 +85,14 @@ public partial class GrooberAI : AIBase
         mover.Move((t_target.position - transform.position).normalized);
     }
 
-    private void MoveAwayFromTarget()
+    private void MoveTowardHorde()
     {
         mover.Move((GrooberSquadManager.AverageGrooberPosition() - transform.position).normalized);
+    }
+
+    private void MoveAwayFromTarget()
+    {
+        mover.Move((transform.position - t_target.position).normalized);
     }
 
     #endregion
