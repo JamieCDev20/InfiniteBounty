@@ -6,12 +6,13 @@ public partial class GrooberAI : AIBase
 {
     private Animator anim;
     private Rigidbody rb;
+    private bool b_inGroup;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        tree = new BehaviourTree(new ActionNode(JustMove)/*DefineTree()*/);
+        tree = new BehaviourTree(DefineTree());
         mover = GetComponent<HopdogMover>();
         f_timeStarted = Time.realtimeSinceStartup;
     }
@@ -21,10 +22,7 @@ public partial class GrooberAI : AIBase
         tree.DoTreeIteration();
         anim.SetFloat("movblend", rb.velocity.magnitude);
     }
-    private void JustMove()
-    {
-        mover.Move(transform.forward);
-    }
+
     private SelectorNode DefineTree()
     {
 
@@ -33,6 +31,16 @@ public partial class GrooberAI : AIBase
         SelectorNode parentSelector = new SelectorNode(summonSickness, BehaviourSelection());
 
         return parentSelector;
+
+    }
+
+    private SequencerNode BehaviourSequence()
+    {
+        ActionNode findPlayer = new ActionNode(FindClosestPlayer);
+
+        ActionNode checkIfInGroup = new ActionNode(check)
+
+        return new SequencerNode();
 
     }
 
