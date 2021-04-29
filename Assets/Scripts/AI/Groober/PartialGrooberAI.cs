@@ -10,16 +10,17 @@ public partial class GrooberAI : AIBase
     [SerializeField] private LayerMask lm_enemyLayer;
 
     [Header("Attack")]
-    [SerializeField] private float f_attackStartup;
-    [SerializeField] private HandymanHurtbox hhb_attackHitBox;
+    [SerializeField] private float f_attackStartup;    
     [SerializeField] private float f_timeBetweenAttacks;
     private float f_currentTime;
     [SerializeField] private float f_attackRange;
 
     private Moober mover;
+    [SerializeField] private int i_damage;
+    private int i_actualDamage;
 
 
-
+    
 
     #region Queries
 
@@ -59,11 +60,14 @@ public partial class GrooberAI : AIBase
 
         anim.SetBool("attack", true);
         yield return new WaitForSeconds(f_attackStartup);
-        hhb_attackHitBox.gameObject.SetActive(true);
-        hhb_attackHitBox.SetHurtboxActive(true);
-        yield return new WaitForEndOfFrame();
-        hhb_attackHitBox.gameObject.SetActive(false);
-        hhb_attackHitBox.SetHurtboxActive(false);
+
+        foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 0.5f))
+        {
+            IHitable hit = item.GetComponent<IHitable>();
+            if (hit != null)
+                hit.TakeDamage(i_actualDamage, true);
+        }
+
         anim.SetBool("attack", false);
     }
 

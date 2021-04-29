@@ -15,6 +15,8 @@ public partial class GrooberAI : AIBase
         tree = new BehaviourTree(DefineTree());
         mover = GetComponent<Moober>();
         f_timeStarted = Time.realtimeSinceStartup;
+
+        i_actualDamage = Mathf.RoundToInt(i_damage * DifficultyManager.x.ReturnCurrentDifficulty().f_damageMult);
     }
 
     private void Update()
