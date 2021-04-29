@@ -55,6 +55,8 @@ public partial class GrooberAI : AIBase
 
     private IEnumerator IAttackAction()
     {
+        f_currentTime = f_timeBetweenAttacks + f_attackStartup;
+
         anim.SetBool("attack", true);
         yield return new WaitForSeconds(f_attackStartup);
         hhb_attackHitBox.gameObject.SetActive(true);
@@ -63,7 +65,6 @@ public partial class GrooberAI : AIBase
         hhb_attackHitBox.gameObject.SetActive(false);
         hhb_attackHitBox.SetHurtboxActive(false);
         anim.SetBool("attack", false);
-        f_currentTime = f_timeBetweenAttacks;
     }
 
     #endregion
