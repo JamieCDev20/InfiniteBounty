@@ -34,9 +34,9 @@ public partial class GrooberAI : AIBase
         return false;
     }
 
-    private bool IsWithGroupQuery()
+    private void IsWithGroupQuery()
     {
-        return Physics.OverlapSphere(transform.position, f_hordeRadius, lm_enemyLayer, QueryTriggerInteraction.Ignore).Length >= i_minimumGroupSizeToAAttack;
+        b_inGroup = Physics.OverlapSphere(transform.position, f_hordeRadius, lm_enemyLayer, QueryTriggerInteraction.Ignore).Length >= i_minimumGroupSizeToAAttack;
     }
 
     #endregion
