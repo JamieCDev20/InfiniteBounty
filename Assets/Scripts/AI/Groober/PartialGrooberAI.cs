@@ -16,7 +16,7 @@ public partial class GrooberAI : AIBase
     private float f_currentTime;
     [SerializeField] private float f_attackRange;
 
-    private HopdogMover mover;
+    private HandymanMover mover;
 
 
 
@@ -73,6 +73,7 @@ public partial class GrooberAI : AIBase
     private void MoveTowardTarget()
     {
         mover.Move((t_target.position - transform.position).normalized);
+        print("MOVING TO THE TRAGEt");
     }
 
     private void MoveAwayFromTarget()
