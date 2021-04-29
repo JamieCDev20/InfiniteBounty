@@ -24,6 +24,7 @@ public partial class GrooberAI : AIBase
         tree.DoTreeIteration();
         Debug.Log(b_inGroup);
         anim.SetFloat("movblend", rb.velocity.magnitude);
+        f_currentTime -= Time.deltaTime;
     }
 
     private SequencerNode DefineTree()
@@ -42,11 +43,19 @@ public partial class GrooberAI : AIBase
 
         QueryNode inGroup = new QueryNode(IsWithGroupQuery);
 
+        QueryNode attackCooldown = new QueryNode(AttackOffCooldownQuery);
+
         ActionNode moveToPlayer = new ActionNode(MoveTowardTarget);
 
         SequencerNode inGroupSequence = new SequencerNode(inGroup, moveToPlayer, AttackSelector());
 
-        return new SelectorNode(inGroupSequence, new ActionNode(MoveAwayFromTarget));
+        return new SelectorNode(inGroupSequence, RetreatSelector());
+    }
+
+    private SelectorNode RetreatSelector()
+    {
+        SequencerNode attackedSeq = new SequencerNode(new QueryNode(AttackOnCooldownQuery), new ActionNode(MoveAwayFromTarget));
+        return new SelectorNode(attackedSeq, new ActionNode(MoveTowardHorde));
     }
 
     private SequencerNode BehaviourSequence()
@@ -74,11 +83,11 @@ public partial class GrooberAI : AIBase
     private SequencerNode AttackSequence()
     {
 
-        QueryNode canAttack = new QueryNode(CanAttackQuery);
+        QueryNode canAttack = new QueryNode(IsWithinAttackRangeQuery);
 
         ActionNode attack = new ActionNode(AttackAction);
 
-        SequencerNode attackSeq = new SequencerNode(canAttack, attack);
+        SequencerNode attackSeq = new SequencerNode(attack);
 
         return attackSeq;
     }
