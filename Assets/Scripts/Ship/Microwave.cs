@@ -216,7 +216,7 @@ public class Microwave : SubjectBase, IInteractible
         }
         RemoveAugment(true);
         RemoveAugment(false);
-        apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
         // TODO:
         // Play animation
     }

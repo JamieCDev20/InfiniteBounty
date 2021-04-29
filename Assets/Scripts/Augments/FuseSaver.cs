@@ -136,7 +136,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (_save.Stage)
         {
             case AugmentStage.full:
-                AugmentManager.x.RemoveAugment(AugmentType.standard, _save.Name);
+                //AugmentManager.x.RemoveAugment(AugmentType.standard, _save.Name);
                 break;
             case AugmentStage.fused:
                 fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
