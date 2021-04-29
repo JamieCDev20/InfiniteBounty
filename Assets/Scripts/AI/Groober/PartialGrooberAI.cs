@@ -42,7 +42,7 @@ public partial class GrooberAI : AIBase
     }
 
     private bool AttackOffCooldownQuery()
-    {        
+    {
         if (f_currentTime <= 0)
             return true;
         return false;
@@ -71,8 +71,11 @@ public partial class GrooberAI : AIBase
         anim.SetBool("attack", true);
         yield return new WaitForSeconds(f_attackStartup);
 
-        foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 1))
+        foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 1f))
         {
+            if (item.transform == transform)
+                continue;
+
             IHitable hit = item.GetComponent<IHitable>();
             if (hit != null)
                 hit.TakeDamage(i_actualDamage, true);
