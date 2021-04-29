@@ -4,6 +4,7 @@ using UnityEngine;
 
 public partial class HandymanAI : AIBase
 {
+    private HandymanMover mover;
 
     [Header("Punch Attack")]
     [SerializeField] private float f_punchRange;
@@ -14,6 +15,7 @@ public partial class HandymanAI : AIBase
     private GameObject go_nearestThrowable;
     private bool b_hasThrowable;
     [SerializeField] private float f_minThrowDistance;
+
 
 
     #region Queries
@@ -80,7 +82,20 @@ public partial class HandymanAI : AIBase
 
     #region Actions
 
-    private void MoveAction()
+    private void MoveTowardsAction()
+    {
+        if (b_shouldBeThrowing)
+            mover.Move((go_nearestThrowable.transform.position - transform.position).normalized);
+        else
+            mover.Move((t_target.position - transform.position).normalized);
+    }
+
+    private void ThrowAction()
+    {
+
+    }
+
+    private void PunchAction()
     {
 
     }
