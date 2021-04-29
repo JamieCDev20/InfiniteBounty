@@ -5020,6 +5020,7 @@ MonoBehaviour:
   objectTags:
   - Enemy
   - Throwable
+  - Groober
 --- !u!54 &3893965790758993072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5119,7 +5120,7 @@ MonoBehaviour:
   lm_spottingMask:
     serializedVersion: 2
     m_Bits: 1281
-  i_minimumGroupSizeToAAttack: 5
+  i_minimumGroupSizeToAAttack: 4
   f_hordeRadius: 20
   lm_enemyLayer:
     serializedVersion: 2
@@ -5127,7 +5128,7 @@ MonoBehaviour:
   f_attackStartup: 0.5
   go_attackHitBox: {fileID: 3513215429240798315}
   f_timeBetweenAttacks: 3
-  f_attackRange: 1
+  f_attackRange: 3
 --- !u!114 &8952778286637810682
 MonoBehaviour:
   m_ObjectHideFlags: 0
