@@ -18,11 +18,14 @@ public class GrooberSquadManager : MonoBehaviour
     IEnumerator CalculatePos()
     {
         Vector3 avg = Vector3.zero;
-        while(gameObject != null)
+        while (gameObject != null)
         {
             avg = Vector3.zero;
             int i = 0;
-            foreach (GameObject g in TagManager.x?.GetTagSet("Groober"))
+            HashSet<GameObject> set = TagManager.x?.GetTagSet("Groober");
+            if (set == null)
+                continue;
+            foreach (GameObject g in set)
             {
                 avg += g.transform.position;
                 i++;
