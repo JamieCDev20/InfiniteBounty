@@ -5266,7 +5266,10 @@ MonoBehaviour:
   f_airControlMultiplier: 0.2
   v_drag: {x: 0.1, y: 0, z: 0.1}
   t_groundCheckPoint: {fileID: 3775650714165913003}
-  f_jumpForce: 10
+  f_jumpForce: 3500
+  jumpMask:
+    serializedVersion: 2
+    m_Bits: 65537
   lm_wallCheckMask:
     serializedVersion: 2
     m_Bits: 1
@@ -5325,8 +5328,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   throwForceRange: {x: 10, y: 500}
-  f_punchRange: 3
-  f_pickupRange: 3
+  f_punchRange: 6
+  f_pickupRange: 6
   f_minThrowDistance: 15
   go_centreofPickup: {fileID: 5819825425884140194}
 --- !u!1 &5492614475200758135

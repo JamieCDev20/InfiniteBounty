@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Moober : MoverBase
 {
-    [SerializeField] private LayerMask jumpMask;
     public override void Move(Vector3 _dir)
     {
-
+        if (!b_canMove)
+            return;
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_drag);
         rb.AddForce(Vector3.ProjectOnPlane(_dir, Vector3.up).normalized * f_moveSpeed * (b_grounded ? 1 : f_airControlMultiplier), ForceMode.Impulse);
         if (rb.velocity.magnitude > 0.1f)

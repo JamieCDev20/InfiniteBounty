@@ -59,7 +59,7 @@ public partial class HandymanAI : AIBase
                 _f_distance = _f_distanceCheck;
             }
         }
-
+        Debug.Log(go_object);
         return go_object;
     }
 
@@ -96,8 +96,14 @@ public partial class HandymanAI : AIBase
         go_nearestThrowable.GetComponent<Rigidbody>().isKinematic = true;
         go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
 
+        //go_nearestThrowable.GetComponent<Collider>().enabled = false;
+        MoverBase m = go_nearestThrowable.GetComponent<MoverBase>();
+        if (m != null)
+            m.SendMessage("SetCanMove", false);
+
         go_nearestThrowable.transform.parent = go_centreofPickup.transform;
         go_nearestThrowable.transform.localPosition = Vector3.zero;
+        b_hasThrowable = true;
     }
 
     private void ThrowAction()
@@ -106,8 +112,9 @@ public partial class HandymanAI : AIBase
 
         go_nearestThrowable.transform.parent = null;
         _rb.isKinematic = false;
-        _rb.AddForce(GetThrowVector(t_target.transform.position));
+        _rb.AddForce(GetThrowVector(t_target.transform.position), ForceMode.Impulse);
         go_nearestThrowable = null;
+        b_hasThrowable = false;
     }
 
     private void PunchAction()
