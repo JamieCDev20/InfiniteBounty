@@ -158,9 +158,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList)
     {
-
         return InitAugmentList(aL_augs, adt, _b_shouldAddToExistingList, ("", 0));
-        
     }
 
     #region DisplayTypes
@@ -264,7 +262,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             case AugmentDisplayType.ShowEquipped:
                 if (wt_toolToCheck != null)
                 {
-                    Debug.Log("toolToCheck augs length: " + wt_toolToCheck.Augs.Length);
                     foreach (Augment auggy in wt_toolToCheck.Augs)
                         if (auggy != null)
                         {
@@ -303,7 +300,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 b.GetComponent<RectTransform>().offsetMax = new Vector2(0, r.offsetMax.y);
 
                 // Set text and sprite
-                b.GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i]?.Name;
+                b.GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i].Name;
                 b.GetComponentsInChildren<Text>()[0].color = _aL_augmentsToShow[i].Stage == AugmentStage.full ? Color.white : Color.yellow;
                 b.GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
                 b.GetComponentsInChildren<Image>()[1].sprite = fitIcons[(int)_aL_augmentsToShow[i].at_type];
@@ -320,7 +317,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
-
+        
         return _aL_augmentsToShow;
 
     }
