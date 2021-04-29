@@ -40,6 +40,8 @@ public class Workbench : SubjectBase, IInteractible
     [SerializeField] private Image img_sameType;
     [SerializeField] private Color col_selected;
     [SerializeField] private Color col_unselected;
+    [SerializeField] AudioSource as_source;
+    [SerializeField] AudioClip ac_attach;
     public void Init(SaveManager _sm)
     {
         saveMan = _sm;
@@ -295,6 +297,7 @@ public class Workbench : SubjectBase, IInteractible
             else
                 Debug.LogError("Incompatable Augment Type");
         }
+        as_source.PlayOneShot(ac_attach);
     }
 
     public void RemoveAugment()
