@@ -28,40 +28,34 @@ public partial class GrooberAI : AIBase
 
         QueryNode summonSickness = new QueryNode(IsOverSummoningSickness);
 
-        SelectorNode parentSelector = new SelectorNode(summonSickness, BehaviourSelection());
+        SelectorNode parentSelector = new SelectorNode(summonSickness, BehaviourSequence());
 
         return parentSelector;
 
+    }
+
+    private SelectorNode ActionSelector()
+    {
+
+        QueryNode inGroup = new QueryNode(IsWithGroupQuery);
+
+        ActionNode moveToPlayer = new ActionNode(MoveTowardTarget);
+
+        SequencerNode inGroupSequence = new SequencerNode(inGroup, moveToPlayer, AttackSequence());
+
+        return new SelectorNode(inGroupSequence, new ActionNode(MoveAwayFromTarget));
     }
 
     private SequencerNode BehaviourSequence()
     {
         ActionNode findPlayer = new ActionNode(FindClosestPlayer);
 
-        ActionNode checkIfInGroup = new ActionNode(check)
+        ActionNode checkIfInGroup = new ActionNode(IsWithGroupAction);
 
-        return new SequencerNode();
+        SelectorNode actionSelector = new SelectorNode(ActionSelector());
 
-    }
+        return new SequencerNode(findPlayer, checkIfInGroup, actionSelector);
 
-    private SelectorNode BehaviourSelection()
-    {
-        SelectorNode behaviourSelector = new SelectorNode(MoveAttackSequence(), RunSequence());
-        return behaviourSelector;
-    }
-
-    private SequencerNode MoveAttackSequence()
-    {
-
-        QueryNode withGroup = new QueryNode(IsWithGroupQuery);
-
-        QueryNode hasTarget = new QueryNode(StillHasTarget);
-
-        ActionNode moveToPlayer = new ActionNode(MoveTowardTarget);
-
-        SequencerNode moveAtkSeq = new SequencerNode(withGroup, hasTarget, moveToPlayer, AttackSequence());
-
-        return moveAtkSeq;
     }
 
     private SequencerNode AttackSequence()
@@ -74,17 +68,6 @@ public partial class GrooberAI : AIBase
         SequencerNode attackSeq = new SequencerNode(canAttack, attack);
 
         return attackSeq;
-    }
-
-    private SequencerNode RunSequence()
-    {
-
-        ActionNode findClosestPlayer = new ActionNode(FindClosestPlayer);
-        ActionNode runFromPlayer = new ActionNode(MoveAwayFromTarget);
-
-        SequencerNode runSeq = new SequencerNode(findClosestPlayer, runFromPlayer);
-
-        return runSeq;
     }
 
 }
