@@ -22,6 +22,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
     private int f_lerpTime = 2;
     private Transform t_camPositionToReturnTo;
 
+
     private void Start()
     {
         x = this;
@@ -36,6 +37,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
             ac_user = interactor.GetComponent<AppearanceChanger>();
             pim = interactor.GetComponent<PlayerInputManager>();
             pim.GetComponent<PlayerAnimator>().SetShootability(false);
+            pim.GetComponent<PlayerAnimator>().StopWalking();
             pim.b_shouldPassInputs = false;
 
             cc_cam = pim.GetCamera();
@@ -47,6 +49,8 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            ac_user.GetComponent<Rigidbody>().isKinematic = true;
 
             interactor.position = goA_playerSpots[pim.GetID()].transform.position;
             interactor.forward = goA_playerSpots[pim.GetID()].transform.forward;
@@ -69,11 +73,13 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
         pim.b_shouldPassInputs = true;
         ac_user.GetComponent<Rigidbody>().isKinematic = false;
         pim.GetComponent<PlayerAnimator>().SetShootability(true);
+        pim.GetComponent<PlayerAnimator>().StartWalking();
         go_uiStuff.SetActive(false);
         cc_cam.gameObject.SetActive(true);
         c_mirrorCam.gameObject.SetActive(false);
         b_isBeingUsed = false;
         GetComponent<ToolTip>().enabled = true;
+        ac_user.GetComponent<Rigidbody>().isKinematic = false;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
