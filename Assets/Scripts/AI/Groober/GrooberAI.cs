@@ -18,6 +18,7 @@ public partial class GrooberAI : AIBase
     private void Update()
     {
         tree.DoTreeIteration();
+        f_timeStarted = Time.realtimeSinceStartup;
         anim.SetFloat("movblend", rb.velocity.magnitude);
     }
 
