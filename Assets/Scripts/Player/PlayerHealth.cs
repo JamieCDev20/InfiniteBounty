@@ -1,5 +1,4 @@
-﻿using Knife.HDRPOutline.Core;
-using Photon.Pun;
+﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +34,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private Animator anim;
 
     // The outline is here, started it but stopped because I realised there are about 50 outlines on the player.... sigh. Some lines are commented out which are 
-    private OutlineObject outline;
     [SerializeField] private Gradient healthGradient;
 
     [SerializeField] private GameObject go_reviveSymbol;
@@ -83,7 +81,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
             {
                 f_currentHealth = Mathf.Clamp(f_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
                 HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
-                //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
 
             }
         }
