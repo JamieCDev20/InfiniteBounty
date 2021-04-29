@@ -8,12 +8,20 @@ public class GrooberHealth : MonoBehaviour, IHitable
     private int i_currentHealth;
     [SerializeField] private GameObject go_deathParticles;
     [SerializeField] private ParticleSystem ps_hitParticles;
+    private float f_deathTimer;
 
     public void Die()
     {
         gameObject.SetActive(false);
         go_deathParticles.transform.parent = null;
         go_deathParticles.SetActive(true);
+    }
+
+    private void Update()
+    {
+        f_deathTimer += Time.deltaTime;
+        if (f_deathTimer > 60)
+            Die();
     }
 
     public bool IsDead()
