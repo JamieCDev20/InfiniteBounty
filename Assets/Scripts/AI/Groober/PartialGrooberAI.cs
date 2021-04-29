@@ -11,7 +11,7 @@ public partial class GrooberAI : AIBase
 
     [Header("Attack")]
     [SerializeField] private float f_attackStartup;
-    [SerializeField] private GameObject go_attackHitBox;
+    [SerializeField] private HandymanHurtbox hhb_attackHitBox;
     [SerializeField] private float f_timeBetweenAttacks;
     private float f_currentTime;
     [SerializeField] private float f_attackRange;
@@ -55,13 +55,13 @@ public partial class GrooberAI : AIBase
 
     private IEnumerator IAttackAction()
     {
-        anim.SetBool("Windup", true);
-        yield return new WaitForSeconds(f_attackStartup);
-        anim.SetBool("Windup", false);
         anim.SetBool("attack", true);
-        go_attackHitBox.SetActive(true);
+        yield return new WaitForSeconds(f_attackStartup);
+        hhb_attackHitBox.gameObject.SetActive(true);
+        hhb_attackHitBox.SetHurtboxActive(true);
         yield return new WaitForEndOfFrame();
-        go_attackHitBox.SetActive(false);
+        hhb_attackHitBox.gameObject.SetActive(false);
+        hhb_attackHitBox.SetHurtboxActive(false);
         anim.SetBool("attack", false);
         f_currentTime = f_timeBetweenAttacks;
     }
@@ -73,14 +73,11 @@ public partial class GrooberAI : AIBase
     private void MoveTowardTarget()
     {
         mover.Move((t_target.position - transform.position).normalized);
-        print("MOVING TO THE TRAGEt");
     }
 
     private void MoveAwayFromTarget()
     {
-
-        mover.Move((transform.position - t_target.position).normalized);
-        print("MOVING AWAY FROM THE TRAGEt");
+        mover.Move((GrooberSquadManager.AverageGrooberPosition() - transform.position).normalized);
     }
 
     #endregion
@@ -88,14 +85,12 @@ public partial class GrooberAI : AIBase
     private void FindClosestPlayer()
     {
         float _f_distance = 1000000000;
-        print("Finding closest player");
 
         foreach (GameObject item in TagManager.x.GetTagSet("Player"))
         {
             float _f_distanceCheck = Vector3.SqrMagnitude(item.transform.position - transform.position);
             if (_f_distanceCheck < _f_distance)
             {
-                print("Found closest player");
                 t_target = item.transform;
                 _f_distance = _f_distanceCheck;
             }
