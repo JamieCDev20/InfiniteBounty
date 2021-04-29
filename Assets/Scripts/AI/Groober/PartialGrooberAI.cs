@@ -48,6 +48,13 @@ public partial class GrooberAI : AIBase
         return false;
     }
 
+    private bool AttackOnCooldownQuery()
+    {
+        if (f_currentTime <= 0)
+            return false;
+        return true;
+    }
+
     #endregion
 
     #region Actions
