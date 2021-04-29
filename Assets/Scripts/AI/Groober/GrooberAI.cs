@@ -24,12 +24,12 @@ public partial class GrooberAI : AIBase
         anim.SetFloat("movblend", rb.velocity.magnitude);
     }
 
-    private SelectorNode DefineTree()
+    private SequencerNode DefineTree()
     {
 
         QueryNode summonSickness = new QueryNode(IsOverSummoningSickness);
 
-        SelectorNode parentSelector = new SelectorNode(summonSickness, BehaviourSequence());
+        SequencerNode parentSelector = new SequencerNode(summonSickness, BehaviourSequence());
 
         return parentSelector;
 

@@ -28,7 +28,6 @@ public class MoverBase : MonoBehaviour
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_drag);
         if (Physics.Raycast(t_groundCheckPoint.position, Vector3.down, out hit, 0.25f) || !b_canMove)
         {
-            Debug.Log("Hit something as " + gameObject.name);
             v_groundNormal = hit.normal;
             b_grounded = true;
         }
