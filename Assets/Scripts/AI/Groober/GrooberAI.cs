@@ -42,7 +42,7 @@ public partial class GrooberAI : AIBase
 
         ActionNode moveToPlayer = new ActionNode(MoveTowardTarget);
 
-        SequencerNode inGroupSequence = new SequencerNode(inGroup, moveToPlayer/*, AttackSequence()*/);
+        SequencerNode inGroupSequence = new SequencerNode(inGroup, moveToPlayer, AttackSelector());
 
         return new SelectorNode(inGroupSequence, new ActionNode(MoveAwayFromTarget));
     }
@@ -56,6 +56,16 @@ public partial class GrooberAI : AIBase
         SelectorNode actionSelector = new SelectorNode(ActionSelector());
 
         return new SequencerNode(findPlayer, checkIfInGroup, actionSelector);
+
+    }
+
+    private SelectorNode AttackSelector()
+    {
+        return new SelectorNode(AttackSequence(), new ActionNode(DummyAction));
+    }
+
+    private void DummyAction()
+    {
 
     }
 
