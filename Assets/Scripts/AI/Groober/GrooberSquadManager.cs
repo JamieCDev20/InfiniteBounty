@@ -20,6 +20,7 @@ public class GrooberSquadManager : MonoBehaviour
         Vector3 avg = Vector3.zero;
         while (gameObject != null)
         {
+            yield return new WaitForSeconds(0.5f);
             avg = Vector3.zero;
             int i = 0;
             HashSet<GameObject> set = TagManager.x?.GetTagSet("Groober");
@@ -35,7 +36,6 @@ public class GrooberSquadManager : MonoBehaviour
 
             avgPos = avg;
             Debug.LogError("AVG POSITION IS: " + avgPos);
-            yield return new WaitForSeconds(0.5f);
 
         }
     }
