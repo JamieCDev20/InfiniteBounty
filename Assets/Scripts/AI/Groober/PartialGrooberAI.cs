@@ -10,7 +10,7 @@ public partial class GrooberAI : AIBase
     [SerializeField] private LayerMask lm_enemyLayer;
 
     [Header("Attack")]
-    [SerializeField] private float f_attackStartup;    
+    [SerializeField] private float f_attackStartup;
     [SerializeField] private float f_timeBetweenAttacks;
     private float f_currentTime;
     [SerializeField] private float f_attackRange;
@@ -20,7 +20,7 @@ public partial class GrooberAI : AIBase
     private int i_actualDamage;
 
 
-    
+
 
     #region Queries
 
@@ -45,6 +45,13 @@ public partial class GrooberAI : AIBase
         return b_inGroup;
     }
 
+    private bool CasuallyApproachPlayer()
+    {
+        if (f_currentTime <= 0)
+            return true;
+        return false;
+    }
+
     #endregion
 
     #region Actions
@@ -61,7 +68,7 @@ public partial class GrooberAI : AIBase
         anim.SetBool("attack", true);
         yield return new WaitForSeconds(f_attackStartup);
 
-        foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 0.5f))
+        foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 1))
         {
             IHitable hit = item.GetComponent<IHitable>();
             if (hit != null)
