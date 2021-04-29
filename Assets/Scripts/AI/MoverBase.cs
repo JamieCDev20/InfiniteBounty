@@ -9,6 +9,7 @@ public class MoverBase : MonoBehaviour
     [SerializeField] protected float f_airControlMultiplier = 0.2f;
     [SerializeField] protected Vector3 v_drag = new Vector3(0.1f, 0, 0.1f);
     [SerializeField] protected Transform t_groundCheckPoint;
+    [SerializeField] protected float f_jumpForce = 10;
 
     protected bool b_canMove = true;
     protected bool b_grounded = false;

@@ -13,6 +13,11 @@ public class Moober : MoverBase
         if (rb.velocity.magnitude > 0.1f)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up), 0.3f);
 
+        if (Physics.Raycast(transform.position + (Vector3.up * 0.5f), transform.forward, 0.5f))
+        {
+            rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
+        }
+
     }
 
 }
