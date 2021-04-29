@@ -13,12 +13,12 @@ public partial class GrooberAI : AIBase
         anim = GetComponentInChildren<Animator>();
         tree = new BehaviourTree(DefineTree());
         mover = GetComponent<HandymanMover>();
+        f_timeStarted = Time.realtimeSinceStartup;
     }
 
     private void Update()
     {
         tree.DoTreeIteration();
-        f_timeStarted = Time.realtimeSinceStartup;
         anim.SetFloat("movblend", rb.velocity.magnitude);
     }
 
