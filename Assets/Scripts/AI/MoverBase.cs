@@ -11,6 +11,8 @@ public class MoverBase : MonoBehaviour
     [SerializeField] protected Transform t_groundCheckPoint;
     [SerializeField] protected float f_jumpForce = 10;
 
+    protected float lastJumped = 0;
+
     protected bool b_canMove = true;
     protected bool b_grounded = false;
     protected RaycastHit hit;
