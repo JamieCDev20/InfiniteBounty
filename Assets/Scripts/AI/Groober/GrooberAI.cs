@@ -83,11 +83,13 @@ public partial class GrooberAI : AIBase
     private SequencerNode AttackSequence()
     {
 
+        QueryNode cooldown = new QueryNode(AttackOffCooldownQuery);
+
         QueryNode canAttack = new QueryNode(IsWithinAttackRangeQuery);
 
         ActionNode attack = new ActionNode(AttackAction);
 
-        SequencerNode attackSeq = new SequencerNode(attack);
+        SequencerNode attackSeq = new SequencerNode(cooldown, canAttack, attack);
 
         return attackSeq;
     }
