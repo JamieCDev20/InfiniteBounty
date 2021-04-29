@@ -78,6 +78,7 @@ public partial class GrooberAI : AIBase
 
     private void MoveAwayFromTarget()
     {
+
         mover.Move((transform.position - t_target.position).normalized);
         print("MOVING AWAY FROM THE TRAGEt");
     }
