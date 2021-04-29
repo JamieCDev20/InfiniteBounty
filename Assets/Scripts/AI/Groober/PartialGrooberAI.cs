@@ -16,7 +16,7 @@ public partial class GrooberAI : AIBase
     private float f_currentTime;
     [SerializeField] private float f_attackRange;
 
-    private HandymanMover mover;
+    private Moober mover;
 
 
 
