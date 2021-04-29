@@ -15,6 +15,7 @@ public partial class HandymanAI : AIBase
     private GameObject go_nearestThrowable;
     private bool b_hasThrowable;
     [SerializeField] private float f_minThrowDistance;
+    [SerializeField] private GameObject go_centreofPickup;
 
 
 
@@ -92,7 +93,11 @@ public partial class HandymanAI : AIBase
 
     private void PickUpAction()
     {
+        go_nearestThrowable.GetComponent<Rigidbody>().isKinematic = true;
+        go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
 
+        go_nearestThrowable.transform.parent = go_centreofPickup.transform;
+        go_nearestThrowable.transform.localPosition = Vector3.zero;
     }
 
     private void ThrowAction()
@@ -100,6 +105,7 @@ public partial class HandymanAI : AIBase
         Rigidbody _rb = go_nearestThrowable.GetComponent<Rigidbody>();
 
         go_nearestThrowable.transform.parent = null;
+        _rb.isKinematic = false;
         _rb.AddForce(GetThrowVector(t_target.transform.position));
         go_nearestThrowable = null;
     }
