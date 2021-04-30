@@ -36,6 +36,8 @@ public class GrooberHealth : MonoBehaviour, IHitable
         ps_hitParticles.Play();
         if (i_currentHealth <= 0)
             Die();
+
+        EnemySpawner.x?.EnemyDied(false);
     }
 
     public void TakeDamage(int damage, bool activatesThunder, float delay)

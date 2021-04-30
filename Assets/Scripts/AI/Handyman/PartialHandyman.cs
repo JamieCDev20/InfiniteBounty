@@ -14,8 +14,11 @@ public partial class HandymanAI : AIBase
     [SerializeField] private float f_pickupRange;
     private GameObject go_nearestThrowable;
     private bool b_hasThrowable;
+    private float f_throwCooldown;
+    [SerializeField] private float f_timeBetweenThrows = 2;
     [SerializeField] private float f_minThrowDistance;
     [SerializeField] private GameObject go_centreofPickup;
+    [SerializeField] private float f_throwWindup;
 
     private HandymanAnimator anim;
 
@@ -110,12 +113,32 @@ public partial class HandymanAI : AIBase
 
     private void ThrowAction()
     {
+        if (f_throwWindup <= 0)
+        {
+            mover.SetCanMove(false);
+            StartCoroutine(IThrow());
+        }
+        f_throwWindup -= Time.deltaTime;
+    }
+
+    private IEnumerator IThrow()
+    {
+
         Rigidbody _rb = go_nearestThrowable.GetComponent<Rigidbody>();
         anim.Throw();
+        f_throwCooldown = f_throwWindup;
+
+        yield return new WaitForSeconds(f_throwWindup);
         go_nearestThrowable.transform.parent = null;
         _rb.isKinematic = false;
+        _rb.constraints = RigidbodyConstraints.None;
         _rb.AddForce(GetThrowVector(t_target.transform.position), ForceMode.Impulse);
+        _rb.AddTorque(new Vector3(Random.value, Random.value, Random.value) * Random.Range(5, 10));
         go_nearestThrowable = null;
+
+
+        f_throwCooldown = f_throwWindup;
+        mover.SetCanMove(true);
         b_hasThrowable = false;
     }
 
