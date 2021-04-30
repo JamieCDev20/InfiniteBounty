@@ -33,7 +33,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
         int seed = Mathf.RoundToInt(UnityEngine.Random.value * 16581375);
 
-        dimensionText.text = $"DIMENSION : {Convert.ToString(seed, 16)}";
+        dimensionText.text = $"DIMENSION: {Convert.ToString(seed, 16)}";
 
         _go_playerToSetup.transform.forward = transform.forward;
 
