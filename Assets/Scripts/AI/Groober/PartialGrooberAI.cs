@@ -15,12 +15,12 @@ public partial class GrooberAI : AIBase
     private float f_currentTime;
     private bool b_attacking = false;
     [SerializeField] private float f_attackRange;
-    
+
     private Moober mover;
     [SerializeField] private int i_damage;
     private int i_actualDamage;
 
-
+    private float lastGroupCheck;
 
 
     #region Queries
@@ -34,7 +34,11 @@ public partial class GrooberAI : AIBase
 
     private void IsWithGroupAction()
     {
+        if (Time.realtimeSinceStartup - lastGroupCheck < 0.5f)
+            return;
+
         b_inGroup = Physics.OverlapSphere(transform.position, f_hordeRadius, lm_enemyLayer, QueryTriggerInteraction.Ignore).Length >= i_minimumGroupSizeToAAttack;
+        lastGroupCheck = Time.realtimeSinceStartup;
     }
 
     private bool IsWithGroupQuery()
@@ -71,7 +75,7 @@ public partial class GrooberAI : AIBase
         if (!b_attacking)
         {
             b_attacking = true;
-        
+
             anim.Headbutt();
             yield return new WaitForSeconds(f_attackStartup);
             f_currentTime = f_timeBetweenAttacks + f_attackStartup;
@@ -98,7 +102,7 @@ public partial class GrooberAI : AIBase
 
     private void MoveTowardTarget()
     {
-        mover.Move((AttackOnCooldownQuery()? (transform.position - t_target.position) : (t_target.position - transform.position)).normalized);
+        mover.Move((AttackOnCooldownQuery() ? (transform.position - t_target.position) : (t_target.position - transform.position)).normalized);
     }
 
     private void MoveTowardHorde()
