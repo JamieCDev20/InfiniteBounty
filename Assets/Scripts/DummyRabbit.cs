@@ -20,6 +20,14 @@ public class DummyRabbit : MonoBehaviour, IHitable
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Die();
+        }
+    }
+
     public bool IsDead()
     {
         throw new System.NotImplementedException();
