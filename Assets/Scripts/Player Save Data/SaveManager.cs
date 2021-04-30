@@ -382,12 +382,12 @@ public class SaveManager : SubjectBase, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
                 break;
             case FuseEvent fuseEvent:
-                Debug.Log(fuseEvent.SavedAug.SavedAugment.augStage);
                 switch (fuseEvent.PreviousStage)
                 {
                     case AugmentStage.full:
-                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] })));
-                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[1] })));
+                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.BLevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] })));
+                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.BLevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[1] })));
+                        saveData.purchasedAugments = Utils.AddToArray(saveData.purchasedAugments, fuseEvent.SavedAug);
                         break;
                 }
                 string fusedStr = JsonConvert.SerializeObject(saveData);
@@ -396,13 +396,21 @@ public class SaveManager : SubjectBase, ObserverBase
         }
     }
 
-    private int GetAugmentSaveIndex(AugmentSave _augSave)
+    private int GetAugmentSaveIndex(AugmentSave _augSave, params int[] levels)
     {
+        Debug.Log(string.Format("Aug Index: {0} | Aug Level: {1} | Indicies length: {2}", _augSave.SavedAugment.indicies[0], _augSave.SavedAugment.level, _augSave.SavedAugment.indicies.Length));
         for (int i = 0; i < saveData.purchasedAugments.Length; i++)
         {
-            if (saveData.purchasedAugments[i] == _augSave)
+            Debug.Log(string.Format("Aug In Save: {0} | Aug Level: {1} | Indicies length {2}", saveData.purchasedAugments[i].SavedAugment.indicies[0], saveData.purchasedAugments[i].SavedAugment.level, saveData.purchasedAugments[i].SavedAugment.indicies.Length));
+            if (_augSave.SavedAugment.indicies.Length == 1)
             {
-                return i;
+                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.level == (levels.Length > 0 ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
+                   return i;
+            }
+            else if(_augSave.SavedAugment.indicies.Length > 1)
+            {
+                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.level == (levels != null ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
+                    return i;
             }
         }
         return -1;

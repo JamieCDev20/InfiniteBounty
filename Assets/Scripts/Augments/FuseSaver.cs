@@ -89,6 +89,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         {
             case FuseEvent fuseEvent:
                 _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
+                if(fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.fused)
                 switch (fuseEvent.SavedAug.SavedAugment.augType)
                 {
                     case AugmentType.projectile:
