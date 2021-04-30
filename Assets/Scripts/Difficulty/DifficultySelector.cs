@@ -68,7 +68,7 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
     [PunRPC]
     private void SetDifficulty(int _I_newDiff)
     {
-        DifficultyManager.x.ChangeCurrentDifficulty(_I_newDiff);
+        DifficultyManager.x.SetCurrentDifficulty(_I_newDiff);
 
         if (DifficultyManager.x.ReturnCurrentDifficultyInt() <= DifficultyManager.x.MaximumDifficulty)
             tmp_difficultyAbove.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() + 1).s_name;
