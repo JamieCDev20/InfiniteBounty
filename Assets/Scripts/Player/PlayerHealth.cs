@@ -32,6 +32,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     [Space, SerializeField] private RectTransform rt_downedTimer;
     private PlayerInputManager pim;
     private Animator anim;
+    private bool IAMNOTIMPORTANT = false;
 
     // The outline is here, started it but stopped because I realised there are about 50 outlines on the player.... sigh. Some lines are commented out which are 
     [SerializeField] private Gradient healthGradient;
@@ -60,10 +61,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void Update()
     {
+        if (IAMNOTIMPORTANT)
+            return;
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Delete))
             TakeDamage(1, false);
 #endif
+        if (NetworkedPlayer.x.GetPlayer() != transform)
+            IAMNOTIMPORTANT = true;
+
         if (b_downed)
         {
             f_downHealth -= Time.deltaTime;
@@ -74,7 +80,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
                 ClientFullDie();
             }
         }
-        if (b_canRegen)
+        if (b_canRegen && f_currentHealth != i_maxHealth)
         {
             if (!b_downed)
             {
