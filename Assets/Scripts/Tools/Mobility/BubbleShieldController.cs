@@ -24,6 +24,7 @@ public class BubbleShieldController : MonoBehaviour
         f_currentTime = 0;
         StartCoroutine(ChangeDensity());
         StartCoroutine(TurnColliderOn());
+        transform.localScale = Vector3.one;
     }
 
     private IEnumerator TurnColliderOn()
@@ -70,7 +71,6 @@ public class BubbleShieldController : MonoBehaviour
             newScale.y = 1 / transform.parent.localScale.y;
             newScale.z = 1 / transform.parent.localScale.z;
 
-            transform.localScale = newScale;
             transform.localScale = newScale;
         }
     }
