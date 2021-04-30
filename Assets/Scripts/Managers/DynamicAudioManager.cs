@@ -56,13 +56,14 @@ public class DynamicAudioManager : MonoBehaviourPun
 
     public void StartCombat()
     {
-        photonView.RPC(nameof(RemoteCombat), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(RemoteCombat), RpcTarget.All);
     }
 
     [PunRPC]
     public void RemoteCombat()
     {
-        
+
         inCombat = true;
         lerpMain = false;
         CancelInvoke(nameof(SetLerpMain));
@@ -77,19 +78,22 @@ public class DynamicAudioManager : MonoBehaviourPun
 
     public void EndCombat()
     {
-        photonView.RPC(nameof(RemoteEndCombat), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(RemoteEndCombat), RpcTarget.All);
     }
 
     [PunRPC]
     public void RemoteEndCombat()
     {
+
         inCombat = false;
         Invoke(nameof(SetLerpMain), postCombatLoopDelay);
     }
 
     public void StartBoss()
     {
-        photonView.RPC(nameof(RemoteBossStart), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(RemoteBossStart), RpcTarget.All);
     }
 
     [PunRPC]
@@ -103,7 +107,9 @@ public class DynamicAudioManager : MonoBehaviourPun
 
     public void EndBoss()
     {
-        photonView.RPC(nameof(RemoteBossEnd), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+
+            photonView.RPC(nameof(RemoteBossEnd), RpcTarget.All);
     }
 
     [PunRPC]
@@ -130,7 +136,7 @@ public class DynamicAudioManager : MonoBehaviourPun
         bossMixer.GetFloat("Volume", out cBoss);
 
         combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -50, combatLerp));
-        mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, lerpMain? 0 : -50, mainLerp));
+        mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, lerpMain ? 0 : -50, mainLerp));
         bossMixer.SetFloat("Volume", Mathf.Lerp(cBoss, isBoss ? 0 : -50, bossLerp));
 
         if (!combatSource.isPlaying)
