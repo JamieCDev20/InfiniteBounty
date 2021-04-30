@@ -58,9 +58,9 @@ public class DifficultyManager : SubjectBase
         return dsL_difficulties[i_currentDifficulty];
     }
 
-    internal void ChangeCurrentDifficulty(int _i_diffChange)
+    internal void ChangeCurrentDifficulty(int _i_newDiff)
     {
-        i_currentDifficulty += _i_diffChange;
+        i_currentDifficulty += _i_newDiff;
 
         if (i_currentDifficulty < 0)
             i_currentDifficulty = 0;
@@ -76,23 +76,6 @@ public class DifficultyManager : SubjectBase
             dsL_difficulties[i_currentDifficulty].dA_thirdDiversifierSet);
     }
 
-    internal void SetCurrentDifficulty(int _i_newDiff)
-    {
-        i_currentDifficulty = _i_newDiff;
-
-        if (i_currentDifficulty < 0)
-            i_currentDifficulty = 0;
-        if (i_currentDifficulty > i_maximumDifficulty)
-            i_currentDifficulty = i_maximumDifficulty;
-
-        if (i_currentDifficulty >= dsL_difficulties.Count)
-            CreateImpossibleDifficulty();
-
-        FindObjectOfType<SlotMachine>().SetDiversifiersByDifficulty(
-            dsL_difficulties[i_currentDifficulty].dA_firstDiversifierSet,
-            dsL_difficulties[i_currentDifficulty].dA_secondDiversifierSet,
-            dsL_difficulties[i_currentDifficulty].dA_thirdDiversifierSet);
-    }
 
     internal int ReturnCurrentDifficultyInt()
     {
