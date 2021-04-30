@@ -6,6 +6,14 @@ public class DummyRabbit : MonoBehaviour, IHitable
 {
 
     [SerializeField] private GameObject deathParticles;
+    [SerializeField] private AudioClip explosionClip;
+
+    private AudioSource source;
+
+    private void Start()
+    {
+        source = GetComponent<AudioSource>();
+    }
 
     public void Die()
     {
@@ -16,7 +24,12 @@ public class DummyRabbit : MonoBehaviour, IHitable
             deathParticles.SetActive(true);
             deathParticles.transform.SetParent(null);
             Destroy(deathParticles, 5);
-
+            
+        }
+        if(source != null && explosionClip != null)
+        {
+            source.clip = explosionClip;
+            source.Play();
         }
         Destroy(gameObject);
     }
