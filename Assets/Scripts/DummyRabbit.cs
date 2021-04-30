@@ -9,7 +9,6 @@ public class DummyRabbit : MonoBehaviour, IHitable
 
     public void Die()
     {
-        Destroy(gameObject);
         if(deathParticles != null)
         {
             deathParticles.SetActive(false);
@@ -18,6 +17,7 @@ public class DummyRabbit : MonoBehaviour, IHitable
             Destroy(deathParticles, 5);
 
         }
+        Destroy(gameObject);
     }
 
     private void Update()
