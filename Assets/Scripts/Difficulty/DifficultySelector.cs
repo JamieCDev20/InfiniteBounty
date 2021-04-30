@@ -61,7 +61,24 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
             yield return new WaitForEndOfFrame();
             t_textParent.position += Vector3.up * _i_change * 0.05f;
         }
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(SetDifficulty), RpcTarget.All, DifficultyManager.x.ReturnCurrentDifficultyInt());
+    }
 
+    [PunRPC]
+    private void SetDifficulty(int _I_newDiff)
+    {
+        DifficultyManager.x.SetCurrentDifficulty(_I_newDiff);
+
+        if (DifficultyManager.x.ReturnCurrentDifficultyInt() <= DifficultyManager.x.MaximumDifficulty)
+            tmp_difficultyAbove.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() + 1).s_name;
+        else tmp_difficultyAbove.text = "???";
+
+        tmp_difficultyCurrent.text = DifficultyManager.x.ReturnCurrentDifficulty().s_name;
+
+        if (DifficultyManager.x.ReturnCurrentDifficultyInt() > 0)
+            tmp_difficultyBelow.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() - 1).s_name;
+        else tmp_difficultyBelow.text = "";
     }
 
     public void Interacted()
