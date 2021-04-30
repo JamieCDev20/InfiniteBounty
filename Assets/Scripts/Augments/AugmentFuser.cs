@@ -13,12 +13,11 @@ public class AugmentFuser : MonoBehaviour
             // Increase level of fused augment
             newAug = a;
             newAug.Level = a.Level + b.Level;
-            Debug.Log("MY NEW LEVEL IS: " + newAug.Level);
+            newAug.Stage = a.Stage;
             return newAug;
         }
         else if(a != b && a.Stage != AugmentStage.fused && b.Stage != AugmentStage.fused)
         {
-            Debug.Log("Combine is also running, for some reason");
             newAug = Augment.Combine(a, b);
             newAug.Stage = AugmentStage.fused;
             return newAug;

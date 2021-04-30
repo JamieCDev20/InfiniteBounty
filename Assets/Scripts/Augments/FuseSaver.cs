@@ -66,14 +66,17 @@ public class FuseSaver : MonoBehaviour, ObserverBase
                     case AugmentType.projectile:
                         _newProj.Add(AugmentManager.x.GetProjectileAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
                         _newProj[_newProj.Count - 1].Stage = AugmentStage.fused;
+                        _newProj[_newProj.Count - 1].Level = saved.SavedAugment.level;
                         break;
                     case AugmentType.cone:
                         _newCone.Add(AugmentManager.x.GetConeAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
                         _newCone[_newCone.Count - 1].Stage = AugmentStage.fused;
+                        _newCone[_newCone.Count - 1].Level = saved.SavedAugment.level;
                         break;
                     case AugmentType.standard:
                         _newAugs.Add(AugmentManager.x.GetStandardAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
                         _newAugs[_newAugs.Count - 1].Stage = AugmentStage.fused;
+                        _newAugs[_newAugs.Count - 1].Level = saved.SavedAugment.level;
                         break;
                 }
             }
@@ -88,21 +91,27 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (oe_event)
         {
             case FuseEvent fuseEvent:
-                _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
                 if(fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.fused)
-                switch (fuseEvent.SavedAug.SavedAugment.augType)
                 {
-                    case AugmentType.projectile:
-                        fusedProj = Utils.AddToArray(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                        break;
-                    case AugmentType.cone:
-                        fusedCone = Utils.AddToArray(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                        break;
-                    case AugmentType.standard:
-                        fusedAugs = Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                        break;
+                    _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
+                    switch (fuseEvent.SavedAug.SavedAugment.augType)
+                    {
+                        case AugmentType.projectile:
+                            fusedProj = Utils.AddToArray(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                            fusedProj[fusedProj.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
+                            break;
+                        case AugmentType.cone:
+                            fusedCone = Utils.AddToArray(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                            fusedCone[fusedCone.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
+                            break;
+                        case AugmentType.standard:
+                            Debug.Log("And yet somehow I get here?");
+                            fusedAugs = Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                            fusedAugs[fusedAugs.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
+                            break;
+                    }
+                    SaveFusedAugments();
                 }
-                SaveFusedAugments();
                 break;
             case RemoveAugmentEvent rae:
                 switch (rae.augToRemove.SavedAugment.augStage)
@@ -140,6 +149,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
                 //AugmentManager.x.RemoveAugment(AugmentType.standard, _save.Name);
                 break;
             case AugmentStage.fused:
+                // FOUND THE CULPRET. Now I just need to figure out how to change it.
                 fusedAugs = Utils.OrderedRemove(fusedAugs, GetAugmentIndex(fusedAugs, _save));
                 _savedData = Utils.OrderedRemove(_savedData, GetAugmentSaveIndex(new AugmentSave(_save)));
                 File.WriteAllText(filePath, JsonConvert.SerializeObject(_savedData));
