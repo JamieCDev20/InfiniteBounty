@@ -95,7 +95,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                 _b_spawnedWave = true;
                 if (iL_minibossZones.Contains(i))
                 {
-                    SpawnBoss();
+                    SpawnBoss(i);
                     iL_minibossZones.RemoveAt(i);
                 }
             }
