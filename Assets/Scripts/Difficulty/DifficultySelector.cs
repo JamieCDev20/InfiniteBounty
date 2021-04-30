@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DifficultySelector : MonoBehaviour, IInteractible
+public class DifficultySelector : MonoBehaviourPun, IInteractible
 {
 
     [SerializeField] private TextMeshPro tmp_difficultyAbove;
@@ -14,10 +15,14 @@ public class DifficultySelector : MonoBehaviour, IInteractible
     [SerializeField] private int i_difficultyChangeOnClick;
     private AudioSource as_source;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        photonView.ViewID = 654787 + i_difficultyChangeOnClick;
+        PhotonNetwork.RegisterPhotonView(photonView);
+
         as_source = GetComponent<AudioSource>();
 
+        yield return new WaitForEndOfFrame();
         ChangeDifficulty(-1);
 
         for (int i = 0; i < DifficultyManager.x.MaximumDifficulty; i++)
@@ -27,9 +32,10 @@ public class DifficultySelector : MonoBehaviour, IInteractible
 
     public void ChangeDifficulty(int _i_difficultyChange)
     {
-        StartCoroutine(ScrollDifficulty(_i_difficultyChange));
+        photonView.RPC(nameof(ScrollDifficulty), RpcTarget.All, _i_difficultyChange);
     }
 
+    [PunRPC]
     private IEnumerator ScrollDifficulty(int _i_change)
     {
         for (int i = 0; i < 5; i++)

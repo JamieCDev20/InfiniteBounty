@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class DifficultyManager : SubjectBase
 
     [SerializeField] private List<DifficultySet> dsL_difficulties = new List<DifficultySet>();
     private int i_currentDifficulty;
-    private int i_amountOfAuthoredDifs;
+    [SerializeField] private int i_amountOfAuthoredDifs;
     [Space, SerializeField] private int i_maximumDifficulty;
     //Returns maximum difficulty as an index
     internal int MaximumDifficulty { get { return i_maximumDifficulty - 1; } }
@@ -17,9 +18,6 @@ public class DifficultyManager : SubjectBase
     [Header("Impossibles")]
     [SerializeField] private DifficultySet ds_changeInStatsPerImpossible;
 
-    private void Awake()
-    {
-    }
 
 #if UNITY_EDITOR
 
@@ -36,11 +34,22 @@ public class DifficultyManager : SubjectBase
         if (x) Destroy(gameObject);
         else x = this;
         DontDestroyOnLoad(gameObject);
-        i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty + 1;
-        i_amountOfAuthoredDifs = dsL_difficulties.Count;
-        AddObserver(FindObjectOfType<SaveManager>());
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty + 1;
+            //i_amountOfAuthoredDifs = dsL_difficulties.Count;
+            AddObserver(FindObjectOfType<SaveManager>());
+            photonView.RPC(nameof(SetTempMaxDifficultyRPC), RpcTarget.OthersBuffered, i_maximumDifficulty);
+        }
     }
+
+    [PunRPC]
+    private void SetTempMaxDifficultyRPC(int _i_newMax)
+    {
+        i_maximumDifficulty = _i_newMax;
+    }
+
     internal DifficultySet ReturnCurrentDifficulty()
     {
         if (i_currentDifficulty >= dsL_difficulties.Count)
@@ -97,6 +106,8 @@ public class DifficultyManager : SubjectBase
 
         //Display Things
         impossibleX.s_name = "Impossible " + (_i_currentImpossible > 1 ? _i_currentImpossible.ToString() : "");
+
+        print(dsL_difficulties.Count + "/" + (i_amountOfAuthoredDifs - 1));
         impossibleX.f_moneyMult += (ds_changeInStatsPerImpossible.f_moneyMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_moneyMult;
 
         //Enemy Stats

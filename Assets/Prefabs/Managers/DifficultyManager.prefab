@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2092401378154112324}
   - component: {fileID: 2092401378154112325}
+  - component: {fileID: 4887987330620730208}
   m_Layer: 0
   m_Name: DifficultyManager
   m_TagString: Untagged
@@ -224,6 +225,7 @@ MonoBehaviour:
     b_pvp: 1
     f_bossHealthMult: 3
     vi_enemiesPerBossWave: {x: 8, y: 10}
+  i_amountOfAuthoredDifs: 9
   i_maximumDifficulty: 0
   ds_changeInStatsPerImpossible:
     s_name: 
@@ -246,3 +248,25 @@ MonoBehaviour:
     b_pvp: 1
     f_bossHealthMult: 0.25
     vi_enemiesPerBossWave: {x: 0, y: 1}
+--- !u!114 &4887987330620730208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092401378154112326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
