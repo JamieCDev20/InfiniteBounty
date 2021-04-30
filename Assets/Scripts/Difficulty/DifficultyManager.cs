@@ -124,8 +124,13 @@ public class DifficultyManager : SubjectBase
 
         dsL_difficulties.Add(impossibleX);
     }
-
     #endregion
+
+
+    internal void SetNewMaxDifficulty(int _i)
+    {
+        i_maximumDifficulty = _i;
+    }
 
 }
 

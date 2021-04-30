@@ -153,7 +153,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        if (!PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(RequestMaxDifficulty), RpcTarget.MasterClient);
+    }
 
+    [PunRPC]
+    private void RequestMaxDifficulty()
+    {
+        photonView.RPC(nameof(PassOutMaxDifficulty), RpcTarget.Others, DifficultyManager.x.ReturnCurrentDifficultyInt());
+    }
+
+    [PunRPC]
+    private void PassOutMaxDifficulty(int _i_newDiff)
+    {
+        DifficultyManager.x.SetNewMaxDifficulty(_i_newDiff);
     }
 
     #endregion
