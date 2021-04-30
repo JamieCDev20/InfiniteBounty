@@ -11,6 +11,7 @@ public class DummyRabbit : MonoBehaviour, IHitable
     {
         if(deathParticles != null)
         {
+            deathParticles = Instantiate(deathParticles, transform.position, Quaternion.identity);
             deathParticles.SetActive(false);
             deathParticles.SetActive(true);
             deathParticles.transform.SetParent(null);
