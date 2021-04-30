@@ -95,7 +95,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                 _b_spawnedWave = true;
                 if (iL_minibossZones.Contains(i))
                 {
-                    SpawnEnemy(go_miniboss, eszA_allEnemyZones[i].ReturnSpawnPoint(), false);
+                    SpawnBoss();
                     iL_minibossZones.RemoveAt(i);
                 }
             }
@@ -108,6 +108,12 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         if (_b_spawnedWave)
             yield return new WaitForSeconds(f_timeBetweenHordes * i_numberOfHordesPerWave);
         StartCoroutine(CheckZoneForPlayers());
+    }
+
+    private void SpawnBoss(int _i_area)
+    {
+        SpawnEnemy(go_miniboss, eszA_allEnemyZones[_i_area].ReturnSpawnPoint(), false);
+        DynamicAudioManager.x.StartBoss();
     }
 
     private void EndWave()
@@ -144,7 +150,9 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
         if (i_numberOfEnemies < 5)
-            if (_b_isBoss)
-                DynamicAudioManager.x.EndBoss();
+            DynamicAudioManager.x.EndCombat();
+
+        if (_b_isBoss)
+            DynamicAudioManager.x.EndBoss();
     }
 }
