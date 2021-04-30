@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Moober : MoverBase
 {
+
+    private bool b_jumping = false;
+    private GrooberAnimator anim;
+
+    private void Start()
+    {
+        anim = GetComponentInChildren<GrooberAnimator>();
+    }
+
     public override void Move(Vector3 _dir)
     {
         if (!b_canMove)
@@ -13,16 +22,24 @@ public class Moober : MoverBase
         if (rb.velocity.magnitude > 0.1f)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up), 0.2f);
 
-        if (Physics.Raycast(transform.position + (Vector3.up * 0.5f), transform.forward, 1.5f, jumpMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position + (Vector3.up * 0.5f), transform.forward, 1.5f, jumpMask, QueryTriggerInteraction.Ignore) && !b_jumping)
         {
-            if(Time.realtimeSinceStartup - lastJumped > 1.5f)
+            if (Time.realtimeSinceStartup - lastJumped > 1.5f)
             {
-                rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
-                lastJumped = Time.realtimeSinceStartup;
-
+                b_jumping = true;
+                anim.SetWindup(b_jumping);
+                Invoke(nameof(Jump), 0.3f);
             }
         }
 
+    }
+
+    private void Jump()
+    {
+        rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
+        lastJumped = Time.realtimeSinceStartup;
+        b_jumping = false;
+        anim.SetWindup(b_jumping);
     }
 
 }

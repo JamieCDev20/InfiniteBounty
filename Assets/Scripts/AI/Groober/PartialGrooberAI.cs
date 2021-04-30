@@ -13,8 +13,9 @@ public partial class GrooberAI : AIBase
     [SerializeField] private float f_attackStartup;
     [SerializeField] private float f_timeBetweenAttacks;
     private float f_currentTime;
+    private bool b_attacking = false;
     [SerializeField] private float f_attackRange;
-
+    
     private Moober mover;
     [SerializeField] private int i_damage;
     private int i_actualDamage;
@@ -66,22 +67,29 @@ public partial class GrooberAI : AIBase
 
     private IEnumerator IAttackAction()
     {
-        f_currentTime = f_timeBetweenAttacks + f_attackStartup;
 
-        anim.SetBool("attack", true);
-        yield return new WaitForSeconds(f_attackStartup);
-
-        foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 1f))
+        if (!b_attacking)
         {
-            if (item.transform == transform)
-                continue;
+            b_attacking = true;
+        
+            anim.Headbutt();
+            yield return new WaitForSeconds(f_attackStartup);
+            f_currentTime = f_timeBetweenAttacks + f_attackStartup;
 
-            IHitable hit = item.GetComponent<IHitable>();
-            if (hit != null)
-                hit.TakeDamage(i_actualDamage, true);
+            foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 1f))
+            {
+                if (item.transform == transform)
+                    continue;
+
+                IHitable hit = item.GetComponent<IHitable>();
+                if (hit != null)
+                    hit.TakeDamage(i_actualDamage, true);
+            }
+
+            anim.EndHeadbutt();
+            b_attacking = false;
         }
 
-        anim.SetBool("attack", false);
     }
 
     #endregion
@@ -90,7 +98,7 @@ public partial class GrooberAI : AIBase
 
     private void MoveTowardTarget()
     {
-        mover.Move((t_target.position - transform.position).normalized);
+        mover.Move((AttackOnCooldownQuery()? (transform.position - t_target.position) : (t_target.position - transform.position)).normalized);
     }
 
     private void MoveTowardHorde()

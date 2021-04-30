@@ -9937,7 +9937,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 524288
   f_attackStartup: 0.5
-  f_timeBetweenAttacks: 3
+  f_timeBetweenAttacks: 1
   f_attackRange: 3
   i_damage: 10
 --- !u!114 &8952778286637810682
@@ -9991,6 +9991,18 @@ MonoBehaviour:
   i_damage: 10
   f_knockbackForce: 10
   go_explodeParticles: {fileID: 3760054858983945882}
+--- !u!114 &4007029703876615196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629291341235966467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4865708a0ef8c634184e5adbc5084a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8623841064465739804
 GameObject:
   m_ObjectHideFlags: 0
@@ -15740,6 +15752,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94b0853c3169cce4db96fb8a43da2d19, type: 3}
+--- !u!1 &7629291341235966467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 94b0853c3169cce4db96fb8a43da2d19,
+    type: 3}
+  m_PrefabInstance: {fileID: 7287345213097930578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7109882681355471033 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 94b0853c3169cce4db96fb8a43da2d19,

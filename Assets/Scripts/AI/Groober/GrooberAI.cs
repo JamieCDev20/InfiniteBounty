@@ -4,14 +4,14 @@ using UnityEngine;
 
 public partial class GrooberAI : AIBase
 {
-    private Animator anim;
+    private GrooberAnimator anim;
     private Rigidbody rb;
     private bool b_inGroup;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<GrooberAnimator>();
         tree = new BehaviourTree(DefineTree());
         mover = GetComponent<Moober>();
         f_timeStarted = Time.realtimeSinceStartup;
@@ -22,7 +22,6 @@ public partial class GrooberAI : AIBase
     private void Update()
     {
         tree.DoTreeIteration();
-        anim.SetFloat("movblend", rb.velocity.magnitude);
         f_currentTime -= Time.deltaTime;
     }
 

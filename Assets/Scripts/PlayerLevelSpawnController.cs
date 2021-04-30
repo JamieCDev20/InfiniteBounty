@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System;
 
 public class PlayerLevelSpawnController : MonoBehaviour
 {
@@ -17,16 +18,22 @@ public class PlayerLevelSpawnController : MonoBehaviour
     [SerializeField] private GameObject go_cameraParent;
 
     [Header("UI References")]
+    [SerializeField] private Text dimensionText;
     [SerializeField] private Text t_bonusText;
     [SerializeField] private GameObject go_bonusPart;
 
     public void SetupPlayer(GameObject _go_playerToSetup)
     {
+
         _go_playerToSetup.GetComponentInChildren<Animator>().SetTrigger("LevelStart");
         pim = _go_playerToSetup.GetComponent<PlayerInputManager>();
         go_cameraParent.SetActive(true);
         pim.GetCamera().enabled = false;
         _go_playerToSetup.transform.position = transform.position;
+
+        int seed = Mathf.RoundToInt(UnityEngine.Random.value * 16581375);
+
+        dimensionText.text = $"DIMENSION : {Convert.ToString(seed, 16)}";
 
         _go_playerToSetup.transform.forward = transform.forward;
 
@@ -84,6 +91,5 @@ public class PlayerLevelSpawnController : MonoBehaviour
         pim.SetMoving(true);
         go_cameraParent.SetActive(false);
     }
-
 
 }

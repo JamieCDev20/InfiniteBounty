@@ -58,7 +58,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     }
 
-
     private void Update()
     {
 #if UNITY_EDITOR
@@ -96,7 +95,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
-        print("OW");
 #if UNITY_EDITOR
         if (!Damageable)
             return;
@@ -183,7 +181,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     public void FullRespawn()
     {
         cc_cam?.SetFollow(transform);
-        view.RPC("Respawn", RpcTarget.All);
+        view.RPC(nameof(Respawn), RpcTarget.All);
     }
 
     public void ToggleAlive(bool val)
@@ -197,7 +195,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void ClientDie()
     {
-        view.RPC("RemoteDie", RpcTarget.All);
+        view.RPC(nameof(RemoteDie), RpcTarget.All);
         pa_anim.PlayerDied();
     }
 
@@ -226,7 +224,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void ClientRevive()
     {
-        view.RPC("RemoteRevive", RpcTarget.All);
+        view.RPC(nameof(RemoteRevive), RpcTarget.All);
     }
 
     [PunRPC]
@@ -266,7 +264,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void ClientFullDie()
     {
-        view.RPC("RemoteFullDie", RpcTarget.All);
+        view.RPC(nameof(RemoteFullDie), RpcTarget.All);
         b_downed = false;
 
 
