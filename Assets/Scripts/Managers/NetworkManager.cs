@@ -38,7 +38,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-
         //singleton and persist
     }
 
@@ -64,6 +63,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         //connect to the network and store reference to the players networked
         Connect();
+        photonView.ViewID = 676869;
+        PhotonNetwork.RegisterPhotonView(photonView);
         netPlayer = FindObjectOfType<NetworkedPlayer>();
     }
 
@@ -110,7 +111,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void HostLevelLoad(string _name)
+    public void HostLevelLoad()
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
@@ -147,6 +148,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (cause == DisconnectCause.ClientTimeout)
             PhotonNetwork.ReconnectAndRejoin();
         base.OnDisconnected(cause);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+
     }
 
     #endregion
