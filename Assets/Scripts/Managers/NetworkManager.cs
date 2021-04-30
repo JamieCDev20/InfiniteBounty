@@ -179,4 +179,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    internal void SetDiffDisplay(int _i)
+    {
+        photonView.RPC(nameof(SyncDiffSelector), RpcTarget.Others, _i);
+    }
+
+    [PunRPC]
+    private void SyncDiffSelector(int _i)
+    {
+        foreach (DifficultySelector item in FindObjectsOfType<DifficultySelector>())
+            item.SetScreenView(_i);
+    }
+
 }

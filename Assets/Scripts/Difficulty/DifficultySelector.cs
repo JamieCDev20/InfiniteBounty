@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DifficultySelector : MonoBehaviour, IInteractible
+public class DifficultySelector : MonoBehaviourPun, IInteractible
 {
 
     [SerializeField] private TextMeshPro tmp_difficultyAbove;
@@ -55,7 +56,22 @@ public class DifficultySelector : MonoBehaviour, IInteractible
             yield return new WaitForEndOfFrame();
             t_textParent.position += Vector3.up * _i_change * 0.05f;
         }
+        NetworkManager.x.SetDiffDisplay(DifficultyManager.x.ReturnCurrentDifficultyInt());
+    }
 
+    internal void SetScreenView(int _i)
+    {
+        DifficultyManager.x.SetCurrentDifficulty(_i);
+
+        if (DifficultyManager.x.ReturnCurrentDifficultyInt() <= DifficultyManager.x.MaximumDifficulty)
+            tmp_difficultyAbove.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() + 1).s_name;
+        else tmp_difficultyAbove.text = "???";
+
+        tmp_difficultyCurrent.text = DifficultyManager.x.ReturnCurrentDifficulty().s_name;
+
+        if (DifficultyManager.x.ReturnCurrentDifficultyInt() > 0)
+            tmp_difficultyBelow.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() - 1).s_name;
+        else tmp_difficultyBelow.text = "";
     }
 
     public void Interacted()

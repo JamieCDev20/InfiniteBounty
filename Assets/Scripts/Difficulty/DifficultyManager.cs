@@ -73,6 +73,24 @@ public class DifficultyManager : SubjectBase
         return i_currentDifficulty;
     }
 
+    internal void SetCurrentDifficulty(int i)
+    {
+        i_currentDifficulty = i;
+
+        if (i_currentDifficulty < 0)
+            i_currentDifficulty = 0;
+        if (i_currentDifficulty > i_maximumDifficulty)
+            i_currentDifficulty = i_maximumDifficulty;
+
+        if (i_currentDifficulty >= dsL_difficulties.Count)
+            CreateImpossibleDifficulty();
+
+        FindObjectOfType<SlotMachine>().SetDiversifiersByDifficulty(
+            dsL_difficulties[i_currentDifficulty].dA_firstDiversifierSet,
+            dsL_difficulties[i_currentDifficulty].dA_secondDiversifierSet,
+            dsL_difficulties[i_currentDifficulty].dA_thirdDiversifierSet);
+    }
+
     internal DifficultySet ReturnDifficultyByIndex(int _i_setToGet)
     {
         if (_i_setToGet >= dsL_difficulties.Count)
