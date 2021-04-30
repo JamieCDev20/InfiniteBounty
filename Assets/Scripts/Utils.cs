@@ -155,4 +155,10 @@ public class Utils
         return newArray;
 
     }
+
+    public static Vector3 RandomUnitVector()
+    {
+        return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)).normalized;
+    }
+
 }
