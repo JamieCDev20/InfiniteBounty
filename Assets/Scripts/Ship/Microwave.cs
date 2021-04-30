@@ -198,22 +198,27 @@ public class Microwave : SubjectBase, IInteractible
         int aLevel = aug_slotA.Level;
         int bLevel = aug_slotB.Level;
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
+        fusedAug.Stage = aug_slotB.Stage;
         apd.UpdatePropertyText(fusedAug);
-        FuseEvent fe = new FuseEvent(new AugmentSave(fusedAug.Stage, fusedAug.at_type, fusedAug.Level, fusedAug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(fusedAug.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name), AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage, aLevel, bLevel);
+        Debug.Log(fusedAug.Stage);
+        FuseEvent fe = new FuseEvent(new AugmentSave(fusedAug.Stage, fusedAug.at_type, fusedAug.Level, fusedAug.Stage == AugmentStage.fused ?
+            AugmentManager.x.GetIndicesByName(fusedAug.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name),
+                AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage, aLevel, bLevel);
         Notify(fe);
+        aug_slotA.Level = aLevel;
         switch (aug_slotA.at_type)
         {
             case AugmentType.projectile:
-                FuseSaver.x.RemoveProjectileFromSave((ProjectileAugment)aug_slotA);
                 FuseSaver.x.RemoveProjectileFromSave((ProjectileAugment)aug_slotB);
+                FuseSaver.x.RemoveProjectileFromSave((ProjectileAugment)aug_slotA);
                 break;
             case AugmentType.cone:
-                FuseSaver.x.RemoveConeFromSave((ConeAugment)aug_slotA);
                 FuseSaver.x.RemoveConeFromSave((ConeAugment)aug_slotB);
+                FuseSaver.x.RemoveConeFromSave((ConeAugment)aug_slotA);
                 break;
             case AugmentType.standard:
-                FuseSaver.x.RemoveStandardFromSave(aug_slotA);
                 FuseSaver.x.RemoveStandardFromSave(aug_slotB);
+                FuseSaver.x.RemoveStandardFromSave(aug_slotA);
                 break;
         }
         RemoveAugment(true);

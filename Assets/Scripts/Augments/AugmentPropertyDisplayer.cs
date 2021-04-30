@@ -87,6 +87,8 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                         augs[i] = AugmentManager.x.GetStandardAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
                         break;
                 }
+                augs[i].at_type = saveMan.SaveData.purchasedAugments[i].SavedAugment.augType;
+                augs[i].Level = saveMan.SaveData.purchasedAugments[i].SavedAugment.level;
             }
 
 

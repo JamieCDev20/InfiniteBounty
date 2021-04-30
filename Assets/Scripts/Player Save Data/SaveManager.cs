@@ -387,7 +387,10 @@ public class SaveManager : SubjectBase, ObserverBase
                     case AugmentStage.full:
                         saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.BLevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] })));
                         saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.BLevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[1] })));
-                        saveData.purchasedAugments = Utils.AddToArray(saveData.purchasedAugments, fuseEvent.SavedAug);
+                        if (fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.full)
+                        {
+                            saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, new AugmentSave[] { fuseEvent.SavedAug });
+                        }
                         break;
                 }
                 string fusedStr = JsonConvert.SerializeObject(saveData);
