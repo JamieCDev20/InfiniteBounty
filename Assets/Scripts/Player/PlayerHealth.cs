@@ -99,14 +99,14 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (!Damageable)
             return;
 #endif
-        if (!view.IsMine || isDead)
+        if (!view.IsMine || isDead || NetworkedPlayer.x.GetPlayer() != transform)
             return;
 
         if (damage != 0)
             as_mainAudioSource.PlayOneShot(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)]);
 
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
-        HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        HUDController.x.SetHealthBarValue(f_currentHealth, i_maxHealth);
         //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
 
         if (f_currentHealth <= 0)
