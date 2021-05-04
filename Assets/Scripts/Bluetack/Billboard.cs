@@ -5,24 +5,24 @@ using UnityEngine;
 public class Billboard : MonoBehaviour
 {
     private Camera c_cam;
-
-    private void Start()
+    /*
+    private IEnumerator Start()
     {
-        c_cam = Camera.main;
 
-        /*
+        
         if (GetComponentInParent<PlayerInputManager>().GetID() == NetworkedPlayer.x.PlayerID)
         {
             print(GetComponentInParent<PlayerInputManager>().GetID() + "/" + NetworkedPlayer.x.PlayerID);
             gameObject.SetActive(false);
         }
-        */
+        yield return new WaitForEndOfFrame();
+        c_cam = Camera.main;
     }
-
+    */
     void Update()
     {
         if (c_cam == null)
-            c_cam = Camera.main;
+            c_cam = FindObjectOfType<CameraController>()?.ReturnCamera();
         transform.LookAt(c_cam?.transform);
     }
 }

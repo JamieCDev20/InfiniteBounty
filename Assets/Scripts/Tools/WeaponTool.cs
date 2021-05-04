@@ -9,7 +9,7 @@ public class WeaponTool : ToolBase
     [Header("Weapon Stats")]
     [SerializeField] protected int i_damage;
     [SerializeField] protected int i_lodeDamage;
-    [SerializeField] protected float f_weight;
+    [SerializeField] internal float f_weight;
     [SerializeField] protected float f_recoil;
     [SerializeField] protected float f_speed;
     [SerializeField] protected float f_heatsink;
@@ -34,25 +34,33 @@ public class WeaponTool : ToolBase
     [SerializeField] private string s_meleeAnim;
     [SerializeField] private Animator a_playerAnims;
     private const AugmentType augType = AugmentType.standard;
-    public AugmentType AugType { get { return augType; } }
+    public virtual AugmentType AugType { get { return augType; } }
     #endregion
 
     // Detonation is if it explodes immediately, on impact or on a timer
     #region Protected
     [SerializeField] protected Augment[] A_augs;
     [SerializeField] protected GameObject augGo;
+    protected GameObject[] physicals = new GameObject[8];
     #endregion
 
 
     #region Get/Sets
     public bool RackUpgrade { get { return b_rackUpgrade; } set { b_rackUpgrade = value; } }
-    public Augment[] Augs { get { return A_augs; } }
+    public Augment[] Augs { get { return A_augs; } set { A_augs = value; } }
     #endregion
 
     protected void OnEnable()
     {
+        //if (A_augs == null)
+    }
+
+    public void InitAugmentArrayBlank()
+    {
+
         A_augs = new Augment[A_augmentSlots.Length];
     }
+
     public override void Use()
     {
 
@@ -66,7 +74,7 @@ public class WeaponTool : ToolBase
 
     public void SetAnimBool(bool _b_)
     {
-        
+
         a_playerAnims?.SetBool(s_meleeAnim, _b_);
     }
 
@@ -84,6 +92,11 @@ public class WeaponTool : ToolBase
         else return false;
     }
 
+    protected float GetAugmentLevelModifier(int level)
+    {
+        return (1 / ((0.00053f * -level) + 0.0336f)) + 30.3f;
+    }
+
     public virtual bool AddStatChanges(Augment aug)
     {
         if (A_augs != null && A_augs.Length >= 0)
@@ -91,21 +104,34 @@ public class WeaponTool : ToolBase
             int i = GetInactiveAugmentIndex();
             if (i == -1)
                 return false;
+            Debug.Log("i : " + i);
+            string s = "";
+            for (int j = 0; j < Augs.Length; j++)
+            {
+                s += $"{j}: ";
+                s += Augs[j];
+                s += "\n";
+
+            }
+            Debug.Log(s);
+            float mod = GetAugmentLevelModifier(aug.Level);
+
             GameObject augmentGameObject = PoolManager.x.SpawnObject(augGo);
             augmentGameObject.transform.parent = A_augmentSlots[i].parent;
             augmentGameObject.transform.rotation = A_augmentSlots[i].transform.rotation;
             augmentGameObject.transform.position = A_augmentSlots[i].transform.position;
             augmentGameObject.GetComponent<Rigidbody>().isKinematic = true;
             augmentGameObject.GetComponent<Collider>().isTrigger = true;
+            physicals[i] = augmentGameObject;
             AugmentGo actualGo = augmentGameObject.GetComponent<AugmentGo>();
             actualGo.Aug = aug;
-            actualGo.Mat = Resources.Load<Material>(aug.AugmentMaterial);            
+            actualGo.Mat = Resources.Load<Material>(aug.AugmentMaterial);
 
             A_augs[i] = aug;
-            AddToAugmentProperties(aug.GetAugmentProperties());
+            AddToAugmentProperties(aug.GetAugmentProperties(), mod);
             AddToPhysicalProperties(aug.GetPhysicalProperties());
             AddToAudioProperties(aug.GetAudioProperties());
-            AddToExplosionProperties(aug.GetExplosionProperties());
+            AddToExplosionProperties(aug.GetExplosionProperties(), mod);
             return true;
         }
         return false;
@@ -114,6 +140,33 @@ public class WeaponTool : ToolBase
 
     public virtual void RemoveStatChanges(Augment aug)
     {
+        if(A_augs != null && A_augs.Length >= 0)
+        {
+            (string nam, int lev) thing = (aug.Name, aug.Level);
+
+            int i = -1;
+            for (int j = 0; j < Augs.Length; j++)
+            {
+                if(Augs[j]?.Tup == thing)
+                {
+                    i = j;
+                    break;
+                }
+            }
+
+            float mod = GetAugmentLevelModifier(aug.Level);
+
+            physicals[i].SendMessage("Die");
+            physicals[i] = null;
+
+            A_augs[i] = null;
+
+            RemoveToAugmentProperties(aug.GetAugmentProperties(), mod);
+            RemoveToPhysicalProperties(aug.GetPhysicalProperties());
+            RemoveToAudioProperties(aug.GetAudioProperties());
+            RemoveToExplosionProperties(aug.GetExplosionProperties(), mod);
+
+        }
 
     }
 
@@ -134,30 +187,54 @@ public class WeaponTool : ToolBase
         return -1;
     }
 
-    private void AddToAugmentProperties(AugmentProperties ap)
+    private void AddToAugmentProperties(AugmentProperties ap, float mod)
     {
-        i_damage        += ap.i_damage;
-        i_lodeDamage    += ap.i_lodeDamage;
-        f_weight        += ap.f_weight;
-        f_recoil        += ap.f_recoil;
-        f_speed         += ap.f_speed;
-        f_heatsink      += ap.f_heatsink;
-        f_knockback     += ap.f_knockback;
-        f_energyGauge   += ap.f_energyGauge;
+        i_damage += Mathf.RoundToInt(mod * ap.i_damage);
+        i_lodeDamage += Mathf.RoundToInt(mod * ap.i_lodeDamage);
+        f_weight += mod * ap.f_weight;
+        f_recoil += mod * ap.f_recoil;
+        f_speed += mod * ap.f_speed;
+        f_heatsink += mod * ap.f_heatsink;
+        f_knockback += mod * ap.f_knockback;
+        f_energyGauge += mod * ap.f_energyGauge;
+    }
+
+    private void RemoveToAugmentProperties(AugmentProperties ap, float mod)
+    {
+        i_damage -= Mathf.RoundToInt(mod * ap.i_damage);
+        i_lodeDamage -= Mathf.RoundToInt(mod * ap.i_lodeDamage);
+        f_weight -= mod * ap.f_weight;
+        f_recoil -= mod * ap.f_recoil;
+        f_speed -= mod * ap.f_speed;
+        f_heatsink -= mod * ap.f_heatsink;
+        f_knockback -= mod * ap.f_knockback;
+        f_energyGauge -= mod * ap.f_energyGauge;
     }
 
     private void AddToPhysicalProperties(AugmentPhysicals ap)
     {
-        if(tr_trail != null)
+        if (tr_trail != null)
         {
             tr_trail.startWidth = ap.f_trWidth;
             tr_trail.endWidth = ap.f_trWidth;
+            tr_trail.time = ap.f_trLifetime;
         }
         // Add the keys here
         //tr_trail.colorGradient.SetKeys(new GradientColorKey(ap.A_trKeys));
-        if(this is ProjectileTool)
+        if (this is ProjectileTool)
             Utils.AddToArray<GameObject>(go_hitBox, Resources.Load<GameObject>(ap.go_projectile));
 
+    }
+
+    private void RemoveToPhysicalProperties(AugmentPhysicals ap)
+    {
+        if (tr_trail != null)
+        {
+            //tr_trail.startWidth = ap.f_trWidth;
+            //tr_trail.endWidth = ap.f_trWidth;
+            //tr_trail.time = ap.f_trLifetime;
+            //dont know what these were originally
+        }
     }
 
     protected void AddToAudioProperties(List<string[]> _sL_audio)
@@ -165,7 +242,7 @@ public class WeaponTool : ToolBase
         string[] use = _sL_audio[0];
         string[] travel = _sL_audio[1];
         string[] hit = _sL_audio[2];
-        if(use != null)
+        if (use != null)
             LoadAndAddObjectArray(ac_activationSound, use);
         if (travel != null)
             LoadAndAddObjectArray(ac_diegeticAudio, travel);
@@ -173,7 +250,12 @@ public class WeaponTool : ToolBase
             LoadAndAddObjectArray<AudioClip>(ac_hitSound, hit);
     }
 
-    protected void AddToExplosionProperties(AugmentExplosion ae)
+    protected void RemoveToAudioProperties(List<string[]> _sL_audio)
+    {
+        //dont know how to undo these...
+    }
+
+    protected void AddToExplosionProperties(AugmentExplosion ae, float mod)
     {
         ae_explode.b_impact = ae_explode.b_impact == true || ae.b_impact == true ? true : false;
         ae_explode.f_detonationTime += ae.f_detonationTime;
@@ -181,8 +263,21 @@ public class WeaponTool : ToolBase
         ae_explode.f_radius += ae.f_radius;
         ae_explode.i_damage += ae.i_damage;
         ae_explode.i_lodeDamage += ae.i_lodeDamage;
-        if(go_explarticles != null && go_explarticles.Length > 0)
+        if (go_explarticles != null && go_explarticles.Length > 0)
             LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
+    }
+
+    protected void RemoveToExplosionProperties(AugmentExplosion ae, float mod)
+    {
+        //some of these i dont know how to undo
+        //ae_explode.b_impact = ae_explode.b_impact == true || ae.b_impact == true ? true : false;
+        ae_explode.f_detonationTime -= ae.f_detonationTime;
+        ae_explode.f_explockBack -= ae.f_explockBack;
+        ae_explode.f_radius -= ae.f_radius;
+        ae_explode.i_damage -= ae.i_damage;
+        ae_explode.i_lodeDamage -= ae.i_lodeDamage;
+        //if (go_explarticles != null && go_explarticles.Length > 0)
+            //LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
     }
 
     protected void LoadAndAddObjectArray<T>(T[] _tA_existingObjects, string[] _s_newObjectPaths) where T : Object

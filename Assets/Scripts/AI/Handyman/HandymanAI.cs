@@ -2,39 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandymanAI : AIBase
+public partial class HandymanAI : AIBase
 {
-    //float f_summoningSickness = 1;
-    //float f_spottingDistance = 50;
-    //LayerMask lm_spottingMask;
 
-    //float f_timeStarted;
-    //float f_targetFindLimiter = 0;
-    //BehaviourTree tree;
-    //Transform t_target;
-
-    private HandymanMover mover;
-    private HandymanAnimator anim;
-
+    [SerializeField] private Vector2 throwForceRange = new Vector2(10, 500);
     [SerializeField] private HandymanHurtbox[] hurtBoxes;
 
     public delegate void HurtboxDel(bool active);
 
     public HurtboxDel toggleHurtboxes;
 
-    private bool b_hurtsActive = true;
 
-    private void Awake()
+    private void Start()
     {
+        tree = new BehaviourTree(ParentSequence());
         mover = GetComponent<HandymanMover>();
         anim = GetComponent<HandymanAnimator>();
-        tree = new BehaviourTree(ParentDefine());
-
         for (int i = 0; i < hurtBoxes.Length; i++)
         {
             toggleHurtboxes += hurtBoxes[i].SetHurtboxActive;
         }
-
     }
 
     private void Update()
@@ -42,119 +29,86 @@ public class HandymanAI : AIBase
         tree.DoTreeIteration();
     }
 
-    #region Defines
-
-    private SequencerNode ParentDefine()
+    private SequencerNode ParentSequence()
     {
-        QueryNode summonSick = new QueryNode(IsOverSummoningSickness);
-
-        ActionNode moveAction = new ActionNode(MoveAction);
-
-        SelectorNode behavSel = new SelectorNode(new SequencerNode(TargetterDefine(), ActionSelectorDefine()), moveAction);
-
-        SequencerNode parent = new SequencerNode(summonSick, behavSel);
-
-        return parent;
+        return new SequencerNode(new QueryNode(IsOverSummoningSickness), SetupSequence());
     }
 
-    private SelectorNode TargetterDefine()
+    private SequencerNode SetupSequence()
     {
 
-        QueryNode hasTarg = new QueryNode(StillHasTarget);
-        ActionNode getTarg = new ActionNode(GetTargetAction);
+        ActionNode getPlayer = new ActionNode(GetClosestPlayerAction);
+        ActionNode getThrowable = new ActionNode(GetClosestThrowableObjectAction);
+        ActionNode throwOrPunch = new ActionNode(CheckShouldBeThrowing);
 
-        SequencerNode getTargSeq = new SequencerNode(getTarg, hasTarg);
-
-        SelectorNode targetSel = new SelectorNode(hasTarg, getTargSeq);
-
-        return targetSel;
+        return new SequencerNode(getPlayer, getThrowable, throwOrPunch, ActionSelector());
     }
 
-    private SelectorNode ActionSelectorDefine()
+    private SelectorNode ActionSelector()
     {
 
-        SelectorNode attackSel = new SelectorNode(PunchDefine(), ThrowDefine());
+        ActionNode moveAction = new ActionNode(MoveTowardsAction);
 
-        return attackSel;
+        return new SelectorNode(ThrowSequence(), PunchSequence(), moveAction);
     }
 
-    private SequencerNode PunchDefine()
+    private SequencerNode ThrowSequence()
     {
-        QueryNode inRange = new QueryNode(InPunchRangeOfPlayer);
+        QueryNode shouldThrow = new QueryNode(ShouldBeThrowingQuery);
+        SelectorNode hasThrowableSelector = HasThrowableSelector();
+        ActionNode doThrow = new ActionNode(ThrowAction);
 
+        return new SequencerNode(shouldThrow, hasThrowableSelector, doThrow);
+    }
+
+    private SelectorNode HasThrowableSelector()
+    {
+
+        QueryNode hasThrowable = new QueryNode(HasThrowableObjectQuery);
+        QueryNode inRange = new QueryNode(IsInPickUpRangeQuery);
+        ActionNode pickup = new ActionNode(PickUpAction);
+
+        SequencerNode getThrowableSeq = new SequencerNode(inRange, pickup, hasThrowable);
+
+        return new SelectorNode(hasThrowable, getThrowableSeq);
+    }
+
+    private SequencerNode PunchSequence()
+    {
+        QueryNode inRange = new QueryNode(IsInPunchRangeQuery);
         ActionNode punch = new ActionNode(PunchAction);
-
-        SequencerNode punchSeq = new SequencerNode(inRange, punch);
-
-        return punchSeq;
+        
+        return new SequencerNode(inRange, punch);
     }
 
-    private SequencerNode ThrowDefine()
+    private void BlankAction()
     {
-        QueryNode canSee = new QueryNode(CanSeeTarget);
-        QueryNode nearThrowable = new QueryNode(InThrowRangeOfThing);
-        ActionNode _throw = new ActionNode(ThrowAction);
-
-        SequencerNode throwSeq = new SequencerNode(canSee, nearThrowable, _throw);
-
-        return throwSeq;
+        Debug.Log("Using Blank Action");
     }
 
-    #endregion
-
-    #region Actions
-
-    public void MoveAction()
+    private bool BlankQuery()
     {
-        //Debug.Log("Doing move action");
-        foreach (GameObject p in TagManager.x.GetTagSet("Player"))
-        {
-            mover.Move(p.transform.position - transform.position);
-            return;
-        }
-    }
-
-    public void PunchAction()
-    {
-        anim.Slap();
-        f_timeStarted = Time.realtimeSinceStartup;
-        b_hurtsActive = true;
-        toggleHurtboxes(true);
-    }
-
-    public void ThrowAction()
-    {
-        Debug.Log("Doing Throw action");
-
-    }
-
-    #endregion
-
-    #region Queries
-
-    public override bool IsOverSummoningSickness()
-    {
-        if(b_hurtsActive)
-            if (base.IsOverSummoningSickness())
-            {
-                b_hurtsActive = false;
-                toggleHurtboxes(false);
-            }
-        return base.IsOverSummoningSickness();
-    }
-
-    public bool InPunchRangeOfPlayer()
-    {
-        if ((t_target.position - transform.position).sqrMagnitude < 200)
-            return true;
+        Debug.Log("Using Blank Query");
         return false;
     }
 
-    public bool InThrowRangeOfThing()
+    private Vector3 GetThrowVector(Vector3 _pos)
     {
-        return false;
-    }
+        //float dist = (transform.position - _pos).magnitude;
+        //float distPecent = (dist / 2000);
+        //float force = (distPecent * (throwForceRange.y - throwForceRange.x)) + throwForceRange.x;
+        float force = go_nearestThrowable.name.Contains("ode")? 400 : 100;
+        float angle = 30;
 
-    #endregion
+        //float height = force * Mathf.Rad2Deg * Mathf.Tan(Mathf.Deg2Rad * angle);
+
+        //force = Mathf.Sqrt((force * force) + (height * height));
+        Vector3 dir = (t_target.position - go_centreofPickup.transform.position).normalized;
+        Vector3 throwVec = dir;
+
+        throwVec = throwVec.normalized * force;
+
+        return throwVec;
+    }
 
 }

@@ -12,12 +12,23 @@ public class PiggyBank : SubjectBase, IInteractible
     private DifficultyManager dm_man;
     [SerializeField] private TextMeshPro tmp_currentMoneyText;
     [SerializeField] private GameObject go_stand;
+    private AudioSource as_source;
+    private Quaternion q_startRot;
+    private Vector3 v_startPos;
+    private float f_currentTimer;
+    private Rigidbody rb;
 
     public void Start()
     {
-        if (DifficultyManager.x.MaximumDifficulty < 9)
-            gameObject.SetActive(false);
-                
+        rb = GetComponent<Rigidbody>();
+        as_source = GetComponent<AudioSource>();
+
+        v_startPos = transform.position;
+        q_startRot = transform.rotation;
+
+        //if (DifficultyManager.x.MaximumDifficulty < 9)
+        //    gameObject.SetActive(false);
+
         SaveManager _sm = FindObjectOfType<SaveManager>();
         i_storedAmount = _sm.SaveData.i_zippyBank;
         if (i_storedAmount != 0)
@@ -26,12 +37,29 @@ public class PiggyBank : SubjectBase, IInteractible
         transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
     }
 
+    private void Update()
+    {
+        if (rb.velocity == Vector3.zero || transform.position.y < -100)
+        {
+            f_currentTimer += Time.deltaTime;
+
+            if (f_currentTimer > 5)
+            {
+                transform.position = v_startPos;
+                transform.rotation = q_startRot;
+            }
+        }
+        else
+            f_currentTimer = 0;
+    }
+
     public void Interacted() { }
 
     public void Interacted(Transform interactor)
     {
         if (interactor?.GetComponent<NugManager>().Nugs >= i_inputAmount)
         {
+            as_source.Play();
             NugManager nugMan = interactor.GetComponent<NugManager>();
             nugMan.GetComponent<NugManager>().CollectNugs(-i_inputAmount, false);
             i_storedAmount += i_inputAmount;
@@ -43,6 +71,8 @@ public class PiggyBank : SubjectBase, IInteractible
             if (i_storedAmount >= i_targetAmount)
                 EnablePortal();
         }
+
+        TutorialManager.x.InteractedWithZippyBack();
     }
 
     public void SetInputAmount(int _input)
@@ -54,6 +84,7 @@ public class PiggyBank : SubjectBase, IInteractible
     {
         go_portal.SetActive(true);
         go_portal.transform.parent = null;
+        go_portal.transform.localScale = Vector3.one;
 
     }
 }

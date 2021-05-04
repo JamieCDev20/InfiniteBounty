@@ -35,6 +35,7 @@ public class ToolHandler : SubjectBase
     private PhotonView view;
     private ToolSlot ts_removeToolSlot;
     private int i_removableRackSlot;
+    private Rigidbody rb;
     #endregion
 
     private void Start()
@@ -43,59 +44,129 @@ public class ToolHandler : SubjectBase
         np_network = GetComponent<NetworkedPlayer>();
         view = GetComponent<PhotonView>();
         InitialiseTools();
-        if(transform == NetworkedPlayer.x.GetPlayer())
+        if (transform == NetworkedPlayer.x.GetPlayer())
         {
             SaveManager _sm = FindObjectOfType<SaveManager>();
             AddObserver(_sm);
             LoadSavedTools(_sm);
         }
+        rb = GetComponent<Rigidbody>();
     }
 
     private void LoadSavedTools(SaveManager _sm)
     {
         ToolRack tr = FindObjectOfType<ToolRack>();
         if (_sm?.SaveData.tu_equipped != null)
-            foreach((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
+            foreach ((int toolID, int slotID) tup in _sm.SaveData.tu_equipped)
             {
-                CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
-                if(tup.toolID != -1 && tup.slotID != -1)
-                    LoadAugmentsOnTool(_sm, tup.slotID);
-                ac_changer.SetCurrentArmActive(tup.slotID, false);
+                if (tup.toolID != -1 && tup.slotID != -1)
+                {
+                    CallSwapTool((ToolSlot)tup.slotID, tup.toolID, tr, false);
+                    ac_changer.SetCurrentArmActive(tup.slotID, false);
+                }
             }
+        if (_sm?.SaveData.tu_equippedAugments != null)
+        {
+            foreach ((int toolID, int slotID, AugmentSave[] sav) augs in _sm.SaveData.tu_equippedAugments)
+            {
+                foreach (AugmentSave s in augs.sav)
+                {
+                    //Debug.Log($"toolid: {augs.toolID} | slotid: {augs.slotID} | name: {s.SavedAugment.indicies}");
+                    ToolBase t = A_toolLoaders[augs.slotID].Tools[augs.toolID];
+                    switch (s.SavedAugment.augType)
+                    {
+                        case AugmentType.standard:
+                            (t as WeaponTool).AddStatChanges(AugmentManager.x.GetStandardAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies));
+                            break;
+                        case AugmentType.projectile:
+                            (t as WeaponTool).AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies));
+                            break;
+                        case AugmentType.cone:
+                            (t as WeaponTool).AddStatChanges(AugmentManager.x.GetConeAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                //if (augs.toolID != -1 && augs.slotID != -1)
+                //{
+                //    Debug.Log(augs.toolID);
+                //    LoadAugmentsOnTool(_sm, augs.slotID);
+                //}
+            }
+        }
     }
 
     private void LoadAugmentsOnTool(SaveManager _sm, int currentSlot)
     {
-        if(_sm.SaveData.tu_equippedAugments != null)
+        // Go through each augment, and check if it's the correct ID and Slot.
+        WeaponTool wt = (WeaponTool)A_tools[currentSlot];
+        // wt.InitAugmentArrayBlank();<<this isnt called if you have no savedata thats why the first time you load it breaks
+        try
         {
-            for(int i = 0; i < _sm.SaveData.tu_equippedAugments.Length; i++)
-            {
-                if(_sm.SaveData.tu_equippedAugments[i].slotID == (int)ToolSlot.leftHand || _sm.SaveData.tu_equippedAugments[i].slotID == (int)ToolSlot.rightHand && _sm.SaveData.tu_equippedAugments[i].toolID != -1)
+            if (_sm.SaveData.tu_equippedAugments != null)
+                for (int i = 0; i < _sm.SaveData.tu_equippedAugments.Length; i++)
                 {
-                    if (A_tools[currentSlot].ToolID == _sm.SaveData.tu_equippedAugments[i].toolID && currentSlot == _sm.SaveData.tu_equippedAugments[i].slotID)
+                    //if (_sm.SaveData.tu_equippedAugments[i].toolID == A_tools[currentSlot].ToolID && _sm.SaveData.tu_equippedAugments[i].slotID == currentSlot)
+                    //{
+                    for (int j = 0; j < _sm.SaveData.tu_equippedAugments[i].equippedAugs.Length; j++)
                     {
-                        Augment[] augs = _sm.SaveData.tu_equippedAugments[i].equippedAugs;
-                        AugmentManager am = FindObjectOfType<AugmentManager>();
-                        WeaponTool wt = (WeaponTool)A_tools[currentSlot];
-                        foreach(Augment aug in augs)
+                        switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augStage)
                         {
-                            switch (aug.at_type)
-                            {
-                                case AugmentType.standard:
-                                    wt.AddStatChanges(am.GetStandardAugment(aug.Name));
-                                    break;
-                                case AugmentType.projectile:
-                                    wt.AddStatChanges(am.GetProjectileAugment(aug.Name));
-                                    break;
-                                case AugmentType.cone:
-                                    wt.AddStatChanges(am.GetConeAugment(aug.Name));
-                                    break;
-                            }
+                            case AugmentStage.full:
+
+                                switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
+                                {
+                                    case AugmentType.projectile:
+                                        wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        break;
+                                    case AugmentType.cone:
+                                        wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        break;
+                                    case AugmentType.standard:
+                                        wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        break;
+                                }
+                                break;
+                            case AugmentStage.fused:
+                                switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
+                                {
+                                    case AugmentType.projectile:
+                                        wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        break;
+                                    case AugmentType.cone:
+                                        wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        break;
+                                    case AugmentType.standard:
+                                        wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        break;
+                                }
+                                break;
                         }
                     }
+                    //}
                 }
-            }
         }
+        catch (System.InvalidCastException e) { Debug.Log("FUCKED IT"); return; }
+
+        Debug.Log("SHOW ME WHAT YOU GOT");
+        string s = "";
+        for (int j = 0; j < wt.Augs.Length; j++)
+        {
+            s += $"{j}: ";
+            s += wt.Augs[j];
+            s += "\n";
+
+        }
+        Debug.Log(s);
+    }
+
+    internal float ReturnWeaponWeight(int _i_toolIndex)
+    {
+        if (A_tools[_i_toolIndex] != null)
+            return (A_tools[_i_toolIndex] as WeaponTool).f_weight;
+        else
+            return 0;
     }
 
     /// <summary>
@@ -145,11 +216,20 @@ public class ToolHandler : SubjectBase
                             case WeaponTool wt:
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+
+                                print(A_tools[0] + "/" + A_tools[1]);
+                                if (A_tools[0] != null && A_tools[1] != null)
+                                    TutorialManager.x.PickedUpBothTools();
+
                                 SendSave(-1, ts);
                                 return true;
                             case MobilityTool mt:
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+
+                                //TutorialManager Section
+                                TutorialManager.x.PickedUpBackPack();
+
                                 SendSave(-1, ToolSlot.moblility);
                                 return true;
                         }
@@ -165,6 +245,12 @@ public class ToolHandler : SubjectBase
                                 CallSwapTool(ts, tb.ToolID, tr, true);
                                 currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+
+                                //Tutorial Section
+                                print(A_tools[0] + "/" + A_tools[1]);
+                                if (A_tools[0] != null && A_tools[1] != null)
+                                    TutorialManager.x.PickedUpBothTools();
+
                                 SendSave(currentNugs, ts, tb.RackID);
                                 return true;
                             case MobilityTool mt:
@@ -173,7 +259,12 @@ public class ToolHandler : SubjectBase
                                 CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                 currentNugs = GetComponent<NugManager>().Nugs;
                                 A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+
+                                //TutorialManager Section
+                                TutorialManager.x.PickedUpBackPack();
+
                                 SendSave(currentNugs, ToolSlot.moblility, tb.RackID);
+
                                 return true;
                         }
                     }
@@ -203,7 +294,7 @@ public class ToolHandler : SubjectBase
 
     private void SendSave(int _nuggets, ToolSlot _toolSlot)
     {
-        (int, int) tup = (A_tools[(int)_toolSlot].ToolID, (int)_toolSlot);
+        (int, int) tup = (A_tools[(int)_toolSlot] != null ? A_tools[(int)_toolSlot].ToolID : -1, (int)_toolSlot);
         Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, -1, null,
             new (int, int)[3] { tup, (-1, -1), (-1, -1) }, null, null, null, null, -1)));
     }
@@ -231,6 +322,7 @@ public class ToolHandler : SubjectBase
                     tl.LoadTools(A_toolTransforms[(int)ToolSlot.moblility]);
                     break;
             }
+
     }
 
     public void ReturnToRack(ToolSlot ts, ToolRack tr, bool _b_rackType)
@@ -273,7 +365,7 @@ public class ToolHandler : SubjectBase
     {
         SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
         PlaySwapNoise();
-        view.RPC("SwapTool", RpcTarget.Others, _ts_slot, _i_toolID);
+        view.RPC(nameof(SwapTool), RpcTarget.Others, _ts_slot, _i_toolID);
 
     }
 
@@ -334,9 +426,16 @@ public class ToolHandler : SubjectBase
 
     public int GetTool(int index)
     {
-        if(A_tools[index] != null)
+        if (A_tools[index] != null)
             return A_tools[index].ToolID;
         return -1;
+    }
+
+    public void ClearTools()
+    {
+        RemoveTool(ToolSlot.leftHand);
+        RemoveTool(ToolSlot.rightHand);
+        RemoveTool(ToolSlot.moblility);
     }
 
     public ToolBase GetToolBase(int index)
@@ -453,7 +552,10 @@ public class ToolHandler : SubjectBase
                         if (hit.distance > 7)
                             dir = hit.point - A_toolTransforms[(int)ts].position;
                     }
-                    view.RPC("UseTool", RpcTarget.Others, ts, dir);
+                    float spread = A_tools[(int)ts].GetSpread() * (rb.velocity.magnitude * 0.05f);
+                    dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.up) * dir;
+                    dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.right) * dir;
+                    view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
                     A_tools[(int)ts].Use(dir);
                 }
         }
@@ -475,7 +577,7 @@ public class ToolHandler : SubjectBase
             if (_b_released)
             {
                 A_tools[(int)ts].SetActive(true);
-                view.RPC("StopUsingTool", RpcTarget.All, ts);
+                view.RPC(nameof(StopUsingTool), RpcTarget.All, ts);
 
             }
             if (_b_released && A_tools[(int)ts].ReleaseActivated)

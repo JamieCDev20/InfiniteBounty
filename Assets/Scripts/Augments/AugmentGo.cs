@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class AugmentGo : MonoBehaviour
 {
     [SerializeField] Augment a_aug;

@@ -5,7 +5,7 @@ using System.IO;
 using System;
 using Newtonsoft.Json;
 
-public class SaveManager : MonoBehaviour, ObserverBase
+public class SaveManager : SubjectBase, ObserverBase
 {
 
     public static SaveManager x;
@@ -32,6 +32,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
 
         CreateSaveData();
         FindObjectOfType<Workbench>().Init(this);
+        AddObserver(FindObjectOfType<FuseSaver>());
         DontDestroyOnLoad(gameObject);
 
     }
@@ -91,7 +92,16 @@ public class SaveManager : MonoBehaviour, ObserverBase
     public void ClearSaveData()
     {
         if (File.Exists(Application.persistentDataPath + sv))
-            File.WriteAllText(Application.persistentDataPath + sv, string.Empty);
+        {
+            FindObjectOfType<ToolHandler>().ClearTools();
+            FindObjectOfType<NugManager>().RemoveAllNugs();
+            FindObjectOfType<AppearanceChanger>().SetArmActive(0, true);
+            FindObjectOfType<AppearanceChanger>().SetArmActive(1, true);
+            saveData = new PlayerSaveData();
+            File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
+            Debug.Log(File.ReadAllText(Application.persistentDataPath + sv));
+        }
+        
     }
 
     /// <summary>
@@ -132,11 +142,11 @@ public class SaveManager : MonoBehaviour, ObserverBase
             }
             if (totalNugsString[i].Contains("tu_equippedAugments"))
             {
-                psd.tu_equippedAugments = ReadArrayFromJson<(int, int, Augment[])>(_saveData, new string[] { "tu_equippedAugments" }, '}');
+                psd.tu_equippedAugments = ReadArrayFromJson<(int, int, AugmentSave[])>(_saveData, new string[] { "tu_equippedAugments" }, '}');
             }
             else if (totalNugsString[i].Contains("purchasedAugments"))
             {
-                psd.purchasedAugments = ReadArrayFromJson<Augment>(_saveData, new string[] { "purchasedAugments\":["}, '}');
+                psd.purchasedAugments = ReadArrayFromJson<AugmentSave>(_saveData, new string[] { "purchasedAugments\":["}, '}');
             }
             else if (totalNugsString[i].Contains("A_playerSliderOptions"))
             {
@@ -251,20 +261,34 @@ public class SaveManager : MonoBehaviour, ObserverBase
                             // TODO:
                             // Create a new ToolBase[3] and read any existing tools into it
                             // Then replace it with the new tool being sent.
-                            if (tool.toolID == -1 || tool.slotID == -1)
-                                continue;
+                            // Store previous tools temporarily
+                            (int, int)[] temp = new (int, int)[3];
+                            if (!Utils.ArrayIsNullOrZero(saveData.tu_equipped))
+                            {
+                                temp[(int)ToolSlot.leftHand] = saveData.tu_equipped[(int)ToolSlot.leftHand];
+                                if (saveData.tu_equipped.Length > 1)
+                                    temp[(int)ToolSlot.rightHand] = saveData.tu_equipped[(int)ToolSlot.rightHand];
+                                else
+                                    temp[(int)ToolSlot.rightHand] = (-1, -1);
+                                if (saveData.tu_equipped.Length > 2)
+                                    temp[(int)ToolSlot.moblility] = saveData.tu_equipped[(int)ToolSlot.moblility];
+                                else
+                                    temp[(int)ToolSlot.moblility] = (-1, -1);
+                            }
+
                             switch (tool.slotID)
                             {
                                 case (int)ToolSlot.leftHand:
-                                    saveData.tu_equipped[(int)ToolSlot.leftHand] = tool;
+                                    temp[(int)ToolSlot.leftHand] = tool;
                                     break;
                                 case (int)ToolSlot.rightHand:
-                                    saveData.tu_equipped[(int)ToolSlot.rightHand] = tool;
+                                    temp[(int)ToolSlot.rightHand] = tool;
                                     break;
                                 case (int)ToolSlot.moblility:
-                                    saveData.tu_equipped[(int)ToolSlot.moblility] = tool;
+                                    temp[(int)ToolSlot.moblility] = tool;
                                     break;
                             }
+                            saveData.tu_equipped = temp;
                         }
                     }
                 }
@@ -275,7 +299,7 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 }
                 else if(saveData.tu_equippedAugments != null && psd.SaveData.tu_equippedAugments != null)
                 {
-                    foreach((int, int, Augment[]) blaug in psd.SaveData.tu_equippedAugments)
+                    foreach((int, int, AugmentSave[]) blaug in psd.SaveData.tu_equippedAugments)
                         EquipNewAugment(blaug);
                 }
                 if (saveData.purchasedAugments == null && psd.SaveData.purchasedAugments != null)
@@ -305,12 +329,17 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, jsonData);
                 break;
             case RemoveAugmentEvent rae:
-                saveData.purchasedAugments = Utils.OrderedRemove<Augment>(saveData.purchasedAugments, rae.augIndex);
-                string removedPurchaseData = JsonConvert.SerializeObject(saveData);
-                File.WriteAllText(Application.persistentDataPath + sv, removedPurchaseData);
+                switch (rae.augToRemove.SavedAugment.augStage)
+                {
+                    case AugmentStage.full:
+                        saveData.purchasedAugments = Utils.OrderedRemove<AugmentSave>(saveData.purchasedAugments, GetAugmentSaveIndex(rae.augToRemove));
+                        string removedPurchaseData = JsonConvert.SerializeObject(saveData);
+                        File.WriteAllText(Application.persistentDataPath + sv, removedPurchaseData);
+                        break;
+                }
                 break;
             case AddAugmentEvent aae:
-                saveData.purchasedAugments = Utils.AddToArray<Augment>(saveData.purchasedAugments, aae.augToAdd);
+                saveData.purchasedAugments = Utils.AddToArray<AugmentSave>(saveData.purchasedAugments, aae.augToAdd);
                 string addedPurchaseData = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, addedPurchaseData);
                 break;
@@ -338,20 +367,64 @@ public class SaveManager : MonoBehaviour, ObserverBase
                 File.WriteAllText(Application.persistentDataPath + sv, equippedAugs);
                 break;
             case UnequipAugmentEvent uae:
-                saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, uae.augsToUnequip.augs);
+                AugmentSave augSave = uae.augsToUnequip.augs;
+                switch (augSave.SavedAugment.augStage)
+                {
+                    case AugmentStage.full:
+                        saveData.purchasedAugments = Utils.AddToArray(saveData.purchasedAugments, augSave);
+                        break;
+                    case AugmentStage.fused:
+                        Notify(new FuseEvent(augSave, AugmentStage.fused));
+                        break;
+                }
                 RemoveEquippedAugments(uae.augsToUnequip);
                 string unequippedAugs = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, unequippedAugs);
                 break;
+            case FuseEvent fuseEvent:
+                switch (fuseEvent.PreviousStage)
+                {
+                    case AugmentStage.full:
+                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.BLevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] })));
+                        saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, GetAugmentSaveIndex(new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.BLevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[1] })));
+                        if (fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.full)
+                        {
+                            saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, new AugmentSave[] { fuseEvent.SavedAug });
+                        }
+                        break;
+                }
+                string fusedStr = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, fusedStr);
+                break;
         }
     }
 
-    private void EquipNewAugment((int _toolID, int _slotID, Augment[] _aug) newEquip)
+    private int GetAugmentSaveIndex(AugmentSave _augSave, params int[] levels)
+    {
+        Debug.Log(string.Format("Aug Index: {0} | Aug Level: {1} | Indicies length: {2}", _augSave.SavedAugment.indicies[0], _augSave.SavedAugment.level, _augSave.SavedAugment.indicies.Length));
+        for (int i = 0; i < saveData.purchasedAugments.Length; i++)
+        {
+            Debug.Log(string.Format("Aug In Save: {0} | Aug Level: {1} | Indicies length {2}", saveData.purchasedAugments[i].SavedAugment.indicies[0], saveData.purchasedAugments[i].SavedAugment.level, saveData.purchasedAugments[i].SavedAugment.indicies.Length));
+            if (_augSave.SavedAugment.indicies.Length == 1)
+            {
+                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.level == (levels.Length > 0 ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
+                   return i;
+            }
+            else if(_augSave.SavedAugment.indicies.Length > 1)
+            {
+                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.level == (levels != null ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
+                    return i;
+            }
+        }
+        return -1;
+    }
+
+    private void EquipNewAugment((int _toolID, int _slotID, AugmentSave[] _aug) newEquip)
     {
         // If the array doesn't already exist, add the incoming equipped augs.
         if (Utils.ArrayIsNullOrZero(saveData.tu_equippedAugments))
         {
-            saveData.tu_equippedAugments = new (int, int, Augment[])[] { newEquip };
+            saveData.tu_equippedAugments = new (int, int, AugmentSave[])[] { newEquip };
         }
         else
         {
@@ -377,33 +450,27 @@ public class SaveManager : MonoBehaviour, ObserverBase
         }
     }
 
-    private void RemoveEquippedAugments((int _toolID, int _slotID, Augment[] _aug) augToDetach)
+    private void RemoveEquippedAugments((int _toolID, int _slotID, AugmentSave _aug) augToDetach)
     {
-        if (Utils.ArrayIsNullOrZero(saveData.tu_equippedAugments))
-        {
-            return;
-        }
-        for(int i = 0; i < augToDetach._aug.Length; i++)
-        {
-            RemoveAugment((augToDetach._toolID, augToDetach._slotID, augToDetach._aug[i]));
-        }
-    }
-
-    private void RemoveAugment((int _toolID, int _slotID, Augment _aug) augToDetach)
-    {
+        //RemoveAugment();
+        // Find weapon based on type and hand
         for(int i = 0; i < saveData.tu_equippedAugments.Length; i++)
         {
-            if(augToDetach._toolID == saveData.tu_equippedAugments[i].toolID && augToDetach._slotID == saveData.tu_equippedAugments[i].slotID)
+            if(saveData.tu_equippedAugments[i].toolID == augToDetach._toolID && saveData.tu_equippedAugments[i].slotID == augToDetach._slotID)
             {
                 for(int j = 0; j < saveData.tu_equippedAugments[i].equippedAugs.Length; j++)
                 {
-                    if (saveData.tu_equippedAugments[i].equippedAugs[j].Name == augToDetach._aug.Name)
+                    if(saveData.tu_equippedAugments[i].equippedAugs[j] == augToDetach._aug)
                     {
                         saveData.tu_equippedAugments[i].equippedAugs = Utils.OrderedRemove(saveData.tu_equippedAugments[i].equippedAugs, j);
                     }
+
                 }
             }
         }
+        // Find augmentsave from that weapon
+
+        //remove augment save
     }
 
     private bool CheckStringArray(string _data)

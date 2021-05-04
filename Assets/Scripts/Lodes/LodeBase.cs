@@ -19,10 +19,12 @@ public class LodeBase : Enemy, IHitable
     private int index;
     private bool burst = true;
     private List<NugGO> nuggets = new List<NugGO>();
-    [SerializeField] private ParticleSystem p_chunkEffect;
     private List<int> iL_chunkableThreshold = new List<int>();
     [SerializeField] private GameObject[] goA_chunkables = new GameObject[0];
     [SerializeField] private int i_damageBetweenBursts = 35;
+    [Space]
+    [SerializeField] private ParticleSystem p_hitEffect;
+    [SerializeField] private ParticleSystem p_chunkEffect;
 
     [Header("Audio")]
     [SerializeField] private AudioClip ac_takeDamageClip;
@@ -87,11 +89,12 @@ public class LodeBase : Enemy, IHitable
     private void CheckHealth()
     {
         as_source.PlayOneShot(ac_takeDamageClip);
+        List<int> _iL_toRemove = new List<int>();
 
         for (int i = 0; i < iL_healthIntervals.Count; i++)
             if (i_currentHealth <= iL_healthIntervals[i])
             {
-                p_chunkEffect.Play();
+                p_hitEffect.Play();
                 transform.localScale *= 0.97f;
 
                 if (PhotonNetwork.IsMasterClient)
@@ -100,13 +103,19 @@ public class LodeBase : Enemy, IHitable
                 if (as_source != null)
                     as_source.PlayOneShot(ac_takeDamageClip);
 
-                iL_healthIntervals.RemoveAt(i);
+                _iL_toRemove.Add(i);
             }
+
+        for (int i = 0; i < _iL_toRemove.Count; i++)
+            iL_healthIntervals.RemoveAt(_iL_toRemove[i]);
 
         for (int i = 0; i < iL_chunkableThreshold.Count; i++)
             if (i_currentHealth <= iL_chunkableThreshold[i])
             {
+                p_chunkEffect.Play();
                 goA_chunkables[i].SetActive(false);
+
+                iL_chunkableThreshold.RemoveAt(i);
             }
 
         if (i_currentHealth <= 0) Death();
@@ -138,6 +147,7 @@ public class LodeBase : Enemy, IHitable
         _go_nugget.transform.parent = null;
         _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2) + Vector3.up;
         //_go_nugget.transform.localScale = Vector3.one;
+        _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
         Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
         _rb.AddForce(new Vector3(-1 + Random.value * 2, Random.value * 2, -1 + Random.value * 2) * f_nuggetForce, ForceMode.Impulse);
         _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
@@ -149,7 +159,7 @@ public class LodeBase : Enemy, IHitable
     {
         SpawnNuggs(6750);
 
-        p_chunkEffect.Play();
+        p_hitEffect.Play();
 
         AudioSource.PlayClipAtPoint(ac_destroyedClip, transform.position);
         gameObject.SetActive(false);

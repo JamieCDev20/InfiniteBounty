@@ -61,6 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tp_otherPortal: {fileID: 8895917689139300698}
   f_hyuckForce: 50
+  travelTime: 0.3
 --- !u!1 &916109593420181474
 GameObject:
   m_ObjectHideFlags: 0
@@ -4894,6 +4895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  c_onColour: {r: 1, g: 0, b: 0, a: 1}
+  c_offColour: {r: 1, g: 0, b: 0, a: 0}
 --- !u!114 &6973839700375727814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19548,10 +19551,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d63cb38f41ab422479fba2f868b20c51, type: 3}
   ac_hitSound: []
   ac_diegeticAudio: []
+  ac_heatSound: {fileID: 0}
   b_oneTimeAudio: 0
   t_raycastPoint: {fileID: 0}
   b_releaseActivated: 1
   go_particles: []
+  f_spreadAngle: 0
   f_teleportDistance: 150
   f_teleportDelay: 0
   go_chargeEffects: {fileID: 6555137232502950924}
@@ -19581,7 +19586,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 6
   MaxDistance: 200
   Pan2D: 0
@@ -19741,6 +19746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tp_otherPortal: {fileID: 758003954079274540}
   f_hyuckForce: 50
+  travelTime: 0.3
 --- !u!1 &5455541937113050157
 GameObject:
   m_ObjectHideFlags: 0
@@ -35061,6 +35067,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5112255551441474231}
     m_Modifications:
+    - target: {fileID: 22462938671057571, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: m_SortingFudge
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 129671865308363657, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: m_SortingFudge
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 297161662339282400, guid: 27f9e6cf83cb0514db0de684cb563f0c,
         type: 3}
       propertyPath: m_RenderMode
@@ -35146,6 +35162,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.06
       objectReference: {fileID: 0}
+    - target: {fileID: 1983087252634307373, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2192813494520901846, guid: 27f9e6cf83cb0514db0de684cb563f0c,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -35175,6 +35196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233494629137096233, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 4.4
       objectReference: {fileID: 0}
     - target: {fileID: 7133037164650500399, guid: 27f9e6cf83cb0514db0de684cb563f0c,
         type: 3}

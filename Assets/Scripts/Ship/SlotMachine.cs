@@ -7,13 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Diversifier
-{
-    None, JackedRabbits, GigaGeysers, SolarStorm,
-
-}
-
-
 public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 {
     private Animator anim;
@@ -40,7 +33,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [Header("UI References")]
     [SerializeField] private Text t_nameText;
     [SerializeField] private Text t_descriptionText;
-    [SerializeField] private Canvas c_infoCanvas;
+    [SerializeField] private GameObject go_infoCanvas;
 
     [Header("Info Buttons")]
     [SerializeField] private GameObject go_infoHighlight;
@@ -127,11 +120,12 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             _pa.StopWalking();
             nm_nugMan = pim.GetComponent<NugManager>();
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
-            c_infoCanvas.enabled = true;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             tmp_costText.text = "£" + i_currentCost;
+
+            go_infoCanvas.SetActive(true);
         }
     }
 
@@ -149,7 +143,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
 
-        c_infoCanvas.enabled = false;
+        go_infoCanvas.SetActive(false);
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);
@@ -181,7 +175,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         while (t < 1)
         {
-            _t.localPosition = Vector3.Lerp(start, Vector3.zero, t);
+            _t.localPosition = Vector3.Lerp(start, _b_comingIntoMachine ? Vector3.zero : Vector3.forward * -4, t);
             _t.rotation = Quaternion.Lerp(iRot, _t_transformToMoveTo.rotation, t);
             t += (Time.deltaTime * (1 / f_lerpTime));
             yield return new WaitForEndOfFrame();

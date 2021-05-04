@@ -21,12 +21,22 @@ public class DifficultyManager : SubjectBase
     {
     }
 
+#if UNITY_EDITOR
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+            i_maximumDifficulty++;
+    }
+
+#endif
+
     public void Init()
     {
         if (x) Destroy(gameObject);
         else x = this;
         DontDestroyOnLoad(gameObject);
-        i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty;
+        i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty + 1;
         i_amountOfAuthoredDifs = dsL_difficulties.Count;
         AddObserver(FindObjectOfType<SaveManager>());
 
@@ -63,6 +73,24 @@ public class DifficultyManager : SubjectBase
         return i_currentDifficulty;
     }
 
+    internal void SetCurrentDifficulty(int i)
+    {
+        i_currentDifficulty = i;
+
+        if (i_currentDifficulty < 0)
+            i_currentDifficulty = 0;
+        /*if (i_currentDifficulty > i_maximumDifficulty)
+            i_currentDifficulty = i_maximumDifficulty;*/
+
+        if (i_currentDifficulty >= dsL_difficulties.Count)
+            CreateImpossibleDifficulty();
+
+        FindObjectOfType<SlotMachine>().SetDiversifiersByDifficulty(
+            dsL_difficulties[i_currentDifficulty].dA_firstDiversifierSet,
+            dsL_difficulties[i_currentDifficulty].dA_secondDiversifierSet,
+            dsL_difficulties[i_currentDifficulty].dA_thirdDiversifierSet);
+    }
+
     internal DifficultySet ReturnDifficultyByIndex(int _i_setToGet)
     {
         if (_i_setToGet >= dsL_difficulties.Count)
@@ -87,6 +115,7 @@ public class DifficultyManager : SubjectBase
 
         //Display Things
         impossibleX.s_name = "Impossible " + (_i_currentImpossible > 1 ? _i_currentImpossible.ToString() : "");
+        impossibleX.f_moneyMult += (ds_changeInStatsPerImpossible.f_moneyMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_moneyMult;
 
         //Enemy Stats
         impossibleX.f_maxHealthMult += (ds_changeInStatsPerImpossible.f_maxHealthMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_maxHealthMult;
@@ -107,18 +136,28 @@ public class DifficultyManager : SubjectBase
         impossibleX.dA_secondDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_secondDiversifierSet;
         impossibleX.dA_thirdDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_thirdDiversifierSet;
 
+        //Boss
+        impossibleX.f_bossHealthMult += (ds_changeInStatsPerImpossible.f_bossHealthMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_bossHealthMult;
+        impossibleX.vi_enemiesPerBossWave += (ds_changeInStatsPerImpossible.vi_enemiesPerBossWave * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].vi_enemiesPerBossWave;
+
         dsL_difficulties.Add(impossibleX);
     }
-
     #endregion
+
+
+    internal void SetNewMaxDifficulty(int _i)
+    {
+        i_maximumDifficulty = _i;
+    }
 
 }
 
 [System.Serializable]
 public struct DifficultySet
 {
-    [Header("Display Things")]
+    [Header("Display & Common")]
     public string s_name;
+    public float f_moneyMult;
 
     [Header("Enemy Stats")]
     public float f_maxHealthMult; //A creature's current health value is set their max multiplied by this on start
@@ -130,7 +169,7 @@ public struct DifficultySet
     public float f_spawnFrequencyMult; //The number of seconds between waves is multiplied by this amount
     public float f_spawnAmountMult; //The number of enemies per wave is multiplied by this amount
     [Tooltip("The actual cap on the number of enemies that can be alive at any given time")]
-    public float f_maxNumberOfEnemies; //Used in the if statement when check the number of living enemies
+    public float f_maxNumberOfEnemies; //Used in the if statement when checking the number of living enemies
     public float f_enemyVariantChance;
     public float f_goldEnemyChance;
     public int i_numberOfMiniBosses;
@@ -142,5 +181,9 @@ public struct DifficultySet
 
     [Header("PvP")]
     public bool b_pvp;
+
+    [Header("Boss")]
+    public float f_bossHealthMult;
+    public Vector2Int vi_enemiesPerBossWave;
 
 }

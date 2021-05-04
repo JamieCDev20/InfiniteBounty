@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,13 +13,33 @@ public class ProjectileTool : WeaponTool
     private Ray r_flightPath;
     private CameraController cc_cam;
     private const AugmentType augType = AugmentType.projectile;
+    public override AugmentType AugType { get { return augType; } }
     AugmentProjectile ap_projAugment;
+
+    [Header("Heat")]    
+    [SerializeField] private float f_heatPerShot;
+    [SerializeField] private AudioSource as_heatGuageSource;
+    private float f_currentHeat;
+    [SerializeField] private float f_maxHeatPitch;
+    private PlayerInputManager pim;
+    internal bool b_isLeftHandWeapon;
+    [SerializeField] private float f_heatVolumeMult;
+    private bool b_isOverheating;
+    [SerializeField] private ParticleSystem ps_overHeatEffects;
+    [SerializeField] private AudioClip ac_overHeatClip;
+    private PlayerAnimator pa_anim;
+    [SerializeField] private ParticleSystem ps_shotEffects;
+
 
     public override void SetActive(bool val)
     {
+        pa_anim = GetComponentInParent<PlayerAnimator>();
         b_active = val;
-        if(transform.root.GetComponent<PlayerInputManager>() != null)
-            cc_cam = transform.root.GetComponent<PlayerInputManager>().GetCamera();
+        if (transform.root.GetComponent<PlayerInputManager>() != null)
+        {
+            pim = transform.root.GetComponent<PlayerInputManager>();
+            cc_cam = pim.GetCamera();
+        }
         c_playerCollider = transform.root.GetComponent<Collider>();
     }
 
@@ -26,16 +47,62 @@ public class ProjectileTool : WeaponTool
     {
         if (!b_active)
             return;
+
         if (b_usable)
         {
+            if (b_isOverheating)
+                return;
             base.Use(_v_forwards);
             SpawnBullet(_v_forwards);
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
-            PlayParticles(true);
+            //PlayParticles(true);
+            ps_shotEffects.Play();
+
             cc_cam?.Recoil(f_recoil);
+
+            pa_anim.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);
+
             PlayAudio(ac_activationSound);
+            f_currentHeat += f_heatPerShot;
         }
+    }
+
+    private void Update()
+    {
+        if (f_currentHeat > 0 && (!(b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold) || b_isOverheating))
+            f_currentHeat -= Time.deltaTime * f_heatsink;
+
+        if (f_currentHeat >= f_energyGauge)
+            StartOverheating();
+
+        if (f_currentHeat <= 0)
+            EndOverHeat();
+
+        DoHeatSound();
+    }
+
+    private void StartOverheating()
+    {
+        if (!b_isOverheating)
+        {
+            PlayAudio(ac_overHeatClip);
+            ps_overHeatEffects?.Play();
+            b_isOverheating = true;
+        }
+    }
+
+    private void EndOverHeat()
+    {
+        ps_overHeatEffects?.Stop();
+        b_isOverheating = false;
+    }
+
+
+    public void DoHeatSound()
+    {
+        as_heatGuageSource.volume = ((float)(f_currentHeat / f_energyGauge)) * f_heatVolumeMult;
+        as_heatGuageSource.pitch = Mathf.Lerp(0, f_maxHeatPitch, (float)f_currentHeat / f_energyGauge);
     }
 
     public override void NetUse(Vector3 _v_forwards)
@@ -54,9 +121,9 @@ public class ProjectileTool : WeaponTool
     {
         if (go_particles.Length != 0)
         {
-            foreach(GameObject partics in go_particles)
+            foreach (GameObject partics in go_particles)
             {
-                if(partics != null)
+                if (partics != null)
                 {
                     partics.SetActive(false);
                     partics.SetActive(true);
@@ -67,14 +134,14 @@ public class ProjectileTool : WeaponTool
 
     public override bool AddStatChanges(Augment aug)
     {
-        if(!base.AddStatChanges(aug))
+        if (!base.AddStatChanges(aug))
             return false;
-        ProjectileAugment pa = (ProjectileAugment)FindObjectOfType<AugmentManager>().GetAugment(aug.Name).Aug;
+        ProjectileAugment pa = (ProjectileAugment)AugmentManager.x.GetProjectileAugmentAt(aug.Stage, aug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug.Name) : new int[] { AugmentManager.x.GetAugmentIndex(aug.at_type, aug.Name) });
         AugmentProjectile augData = pa.GetProjectileData();
-        i_shotsPerRound += augData.i_shotsPerRound;
+        i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level) * 0.25f));
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
-        ap_projAugment.f_bulletScale += augData.f_bulletScale;
+        ap_projAugment.f_bulletScale += Mathf.RoundToInt(augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level) * 0.25f));
         return true;
     }
 

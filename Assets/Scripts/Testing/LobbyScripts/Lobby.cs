@@ -34,7 +34,7 @@ public class Lobby : MonoBehaviourPunCallbacks
                 PhotonNetwork.CurrentRoom.IsVisible = true;
             }
         if (sb_bar != null)
-            sb_bar.value = 1;
+            sb_bar.value = 1f;
         //PhotonNetwork.ConnectUsingSettings();
         if (HostButton != null)
             HostButton.interactable = false;
@@ -50,6 +50,12 @@ public class Lobby : MonoBehaviourPunCallbacks
             GameObject _go = Instantiate(go_roomListing, t_roomListParent);
             _go.SetActive(false);
             goL_listings.Add(_go.GetComponent<Listing>());
+        }
+        if(PhotonNetwork.CurrentRoom == null)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
         }
 
     }

@@ -7,14 +7,25 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
 {
 
     [SerializeField] private int i_maxHealth = 300;
-    
+
     private int i_curHealth;
 
     private void OnEnable()
     {
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
-        i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);        
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
         transform.localScale = Vector3.one * _ds.f_scaleMult;
+
+        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniMiniboss))
+        {
+            transform.localScale *= 0.75f;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 0.75f);
+        }
+        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.Maxiboss))
+        {
+            transform.localScale *= 1.5f;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 1.5f);
+        }
 
         i_curHealth = i_maxHealth;
         Invoke(nameof(TimedDeath), Random.Range(90, 130));
@@ -51,7 +62,7 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             MasterTakeDamage(damage, activatesThunder);
             return;
@@ -66,7 +77,7 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
             Die();
 
     }
-    
+
     [PunRPC]
     public void RemoteTakeDamage(int _dmg, bool _thun)
     {

@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class AugmentButton : MonoBehaviour, IPoolable
 {
-    public int i_buttonIndex;
+    public int i_displayListIndex;
+    public int i_purchasedListIndex;
     private GameObject go_parent;
     public GameObject Parent { set { go_parent = value; } }
+    public (string nam, int lev) Tup;
 
     public void Clicked(/*GameObject wb*/)
     {
         Workbench wb = go_parent.GetComponentInChildren<Workbench>();
         Microwave mw = go_parent.GetComponentInChildren<Microwave>();
         if(wb != null)
-            wb.AugPropertyDisplay.ClickAugment(i_buttonIndex);
+            wb.AugPropertyDisplay.ClickAugment(i_displayListIndex);
         else if(mw != null)
         {
-            mw.AugPropertyDisplay.ClickAugment(i_buttonIndex);
+            mw.AugPropertyDisplay.ClickAugment(i_displayListIndex);
             mw.SetAugment();
         }
     }

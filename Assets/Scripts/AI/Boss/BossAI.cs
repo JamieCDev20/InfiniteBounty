@@ -6,7 +6,7 @@ using UnityEngine;
 public class BossAI : AIBase
 {
     private Animator anim;
-    private bool b_canAttack;
+    private bool b_canAttack = true;
     internal List<Transform> tL_potentialTargets = new List<Transform>();
     private int i_currentTarget;
     [SerializeField] private float f_timeBetweenAttacks;
@@ -15,7 +15,7 @@ public class BossAI : AIBase
     [SerializeField] private float f_meleeRange;
 
     [Header("Mortar Attack")]
-    [SerializeField] private string s_mortarShotPath;
+    [SerializeField] private GameObject go_mortarBall;
     [SerializeField] private Vector2 v_numberOfMortarShots;
     [SerializeField] private ParticleSystem p_mortarParticle;
 
@@ -23,10 +23,18 @@ public class BossAI : AIBase
     [SerializeField] private string s_homingMissilePath;
     [SerializeField] private Vector2 v_homingOrbAmount;
     [SerializeField] private float f_homingForwardMovement;
+    [SerializeField] private Transform t_firePoint;
 
     [Header("Movement Stats")]
     [SerializeField] private GameObject go_movementTelegraph;
     private GameObject go_looker;
+    [SerializeField] private float f_timeBetweenMoves;
+    private bool b_canMove = true;
+
+    [Header("Enemies")]
+    [SerializeField] private float f_timeBetweenEnemies = 20;
+    [SerializeField] private string s_enemyPath;
+    private Vector2Int vi_enemiesPerWave;
 
     private void Start()
     {
@@ -37,11 +45,23 @@ public class BossAI : AIBase
 
         tree = new BehaviourTree(_s);
         Invoke(nameof(StartAttacking), 10);
+
+        DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
+        vi_enemiesPerWave = _ds.vi_enemiesPerBossWave;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject go = PhotonNetwork.Instantiate(s_enemyPath, PickArenaPosition().normalized * 300 + Vector3.up * 200, Quaternion.identity);
+            PhotonNetwork.Destroy(go);
+        }
     }
     private void StartAttacking()
     {
         if (PhotonNetwork.IsMasterClient)
+        {
             b_canAttack = true;
+            StartCoroutine(SummonEnemies());
+        }
     }
     private void StopAttackingForPeriod()
     {
@@ -49,10 +69,21 @@ public class BossAI : AIBase
         Invoke(nameof(StartAttacking), f_timeBetweenAttacks);
     }
 
-    private void Update()
+    private void StartMoving()
     {
         if (PhotonNetwork.IsMasterClient)
-            tree.DoTreeIteration();
+            b_canMove = true;
+    }
+    private void StopMovingForPeriod()
+    {
+        b_canMove = false;
+        Invoke(nameof(StartMoving), f_timeBetweenMoves);
+
+    }
+
+    private void Update()
+    {
+        //if (PhotonNetwork.IsMasterClient)
 
         if (tL_potentialTargets.Count > 0)
         {
@@ -60,6 +91,12 @@ public class BossAI : AIBase
             go_looker.transform.LookAt(new Vector3(tL_potentialTargets[i_currentTarget].transform.position.x, transform.position.y, tL_potentialTargets[i_currentTarget].transform.position.z));
             transform.forward = Vector3.Lerp(transform.forward, go_looker.transform.forward, Time.deltaTime);
         }
+    }
+
+    public void ChooseAction()
+    {
+        tree.DoTreeIteration();
+
     }
 
     #region Defines
@@ -84,7 +121,7 @@ public class BossAI : AIBase
 
     private SelectorNode AttackDefine()
     {
-        ActionNode _a_move = new ActionNode(PlayMoveAnim);
+        SequencerNode _a_move = new SequencerNode(new QueryNode(CheckCanMove), new ActionNode(PlayMoveAnim));
         return new SelectorNode(MeleeDefine(), RangedDefine(), _a_move);
     }
 
@@ -95,6 +132,11 @@ public class BossAI : AIBase
     private bool CheckCanAttack()
     {
         return b_canAttack;
+    }
+
+    private bool CheckCanMove()
+    {
+        return b_canMove;
     }
 
     #endregion
@@ -119,7 +161,8 @@ public class BossAI : AIBase
 
     private bool RandomValue()
     {
-        return Random.value < 0.8f;
+        float a = Random.value;
+        return a < 0.5f;
     }
 
     private void PlayHomingAnim()
@@ -137,9 +180,9 @@ public class BossAI : AIBase
         List<GameObject> _goL_orbs = new List<GameObject>();
         for (int i = 0; i < _i_amount; i++)
         {
-            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, transform.position + transform.forward, Quaternion.identity);
+            GameObject _go = PhotonNetwork.Instantiate(s_homingMissilePath, t_firePoint.position + transform.forward, Quaternion.identity);
             _go.GetComponent<BossProjectile>().Setup(tL_potentialTargets[i_currentTarget]);
-            _go.transform.position = transform.position + transform.forward + transform.up * 20;
+            //_go.transform.position = t_firePoint.position + transform.forward ;
             _go.transform.forward = transform.forward;
             _goL_orbs.Add(_go);
             yield return new WaitForSeconds(1);
@@ -174,24 +217,21 @@ public class BossAI : AIBase
 
     private IEnumerator MortarAttackActual(int _i_seed)
     {
-        if (PhotonNetwork.IsMasterClient)
+        p_mortarParticle.Play();
+
+        Random.InitState(_i_seed);
+
+        yield return new WaitForSeconds(2);
+
+        for (int i = 0; i < v_numberOfMortarShots.x; i++)
         {
-            Random.InitState(_i_seed);
-
-            p_mortarParticle.Play();
-            yield return new WaitForSeconds(2);
-
-            for (int i = 0; i < v_numberOfMortarShots.x; i++)
-            {
-                yield return new WaitForSeconds(0.2f);
-                Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
-                PhotonNetwork.Instantiate(s_mortarShotPath, _v_posToDropOn, Quaternion.identity);
-            }
+            yield return new WaitForSeconds(0.2f);
+            Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
+            Instantiate(go_mortarBall, _v_posToDropOn, Quaternion.identity);
         }
-        else
-            yield return new WaitForSeconds(2 + (v_numberOfMortarShots.x * 0.2f));
         anim.SetBool("Meteor", false);
     }
+
     private Vector3 PickArenaPosition()
     {
         Vector3 _v = new Vector3(Random.Range(-75, 75), 0, Random.Range(-75, 75));
@@ -208,6 +248,7 @@ public class BossAI : AIBase
 
     private void PlayMoveAnim()
     {
+        StopMovingForPeriod();
         anim.SetBool("Emerging", false);
         anim.SetBool("Submerging", true);
     }
@@ -268,6 +309,20 @@ public class BossAI : AIBase
                 tL_potentialTargets.RemoveAt(i_currentTarget);
                 photonView.RPC(nameof(ChangeTarget), RpcTarget.All, Random.Range(0, tL_potentialTargets.Count));
             }
+    }
+
+    private IEnumerator SummonEnemies()
+    {
+        for (int i = 0; i < Random.Range(vi_enemiesPerWave.x, vi_enemiesPerWave.y); i++)
+        {
+            print(TagManager.x.name);
+            if (TagManager.x.GetTagSet("Enemy").Count < 21)
+                PhotonNetwork.Instantiate(s_enemyPath, PickArenaPosition().normalized * 300 + Vector3.up * 200, Quaternion.identity);
+        }
+
+        yield return new WaitForSeconds(f_timeBetweenEnemies);
+
+        StartCoroutine(SummonEnemies());
     }
 
 }

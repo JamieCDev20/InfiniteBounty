@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,21 +7,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class HUDController : MonoBehaviour
+public class HUDController : MonoBehaviourPunCallbacks
 {
+
     public static HUDController x;
 
-
-    [Header("Heat Guages")]
+    [Header("Heat Gauges")]
     [SerializeField] private RectTransform rt_healthBar;
     [SerializeField] private Image i_healthBar;
     [SerializeField] private GameObject go_healthbarParent;
     //[SerializeField] private RectTransform rt_rightHeatGuage;
 
     [Header("Health Stats")]
-    [SerializeField] private List<Sprite> sA_faceSprites = new List<Sprite>();
-    [SerializeField] private Image i_faceImage;
-    [Space, SerializeField] private Image i_faceBackgroundImage;
+    [SerializeField] private List<SpriteArray> saA_faceSprites = new List<SpriteArray>();
+    [Space, SerializeField] private Image i_faceImage;
+
     [SerializeField] private Gradient g_healthBarGradient;
 
     [Header("Nug Counter")]
@@ -46,11 +47,30 @@ public class HUDController : MonoBehaviour
 
     [Header("Tools")]
     [SerializeField] private GameObject go_teleportSign;
+    private int i_headSprite;
+
+    [Header("Crosshair")]
+    [SerializeField] private RectTransform[] rtA_crossHairBits;
+
+    [Header("Kill Timer")]
+    [SerializeField] private GameObject go_killDisplay;
+    [SerializeField] private Text t_killTimerText;
+    [SerializeField] private Image i_killWarningImage;
+
+    [Header("Bonus")]
+    [SerializeField] private Text t_bonusText;
+    [SerializeField] private GameObject go_bonusParent;
 
     private void Awake()
     {
         x = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
+    public void ChangeHeadSpriteIcon(int _i_headIndex)
+    {
+        i_headSprite = _i_headIndex;
+        SetHealthBarValue(1, 1);
     }
 
     private void Start()
@@ -69,16 +89,53 @@ public class HUDController : MonoBehaviour
             }
         }
         t_myNameText.text = PhotonNetwork.NickName;
+
+
+    }
+
+    public void ChangeBonusObjective(BonusObjective _bo_newBonus)
+    {
+        switch (_bo_newBonus)
+        {
+            case BonusObjective.None:
+                go_bonusParent.SetActive(false);
+                break;
+            case BonusObjective.BonusGoo:
+                t_bonusText.text = "Collect 400 Goo Nuggs";
+                break;
+            case BonusObjective.BonusHydro:
+                t_bonusText.text = "Collect 400 Hydro Nuggs";
+                break;
+            case BonusObjective.BonusTasty:
+                t_bonusText.text = "Collect 400 Tasty Nuggs";
+                break;
+            case BonusObjective.BonusThunder:
+                t_bonusText.text = "Collect 400 Thunder Nuggs";
+                break;
+            case BonusObjective.BonusBoom:
+                t_bonusText.text = "Collect 400 Boom Nuggs";
+                break;
+            case BonusObjective.BonusMagma:
+                t_bonusText.text = "Collect 400 Magma Nuggs";
+                break;
+        }
     }
 
     public void SetHealthBarValue(float _i_currentHealth, int _i_maxHealth)
     {
         //print((float)_i_currentHealth / _i_maxHealth + "/" + Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count));
         //i_faceBackgroundImage.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
-
         i_healthBar.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
         rt_healthBar.localScale = new Vector3((float)_i_currentHealth / _i_maxHealth, 1, 1);
-        i_faceImage.sprite = sA_faceSprites[Mathf.Clamp(Mathf.RoundToInt(((float)_i_currentHealth / _i_maxHealth) * sA_faceSprites.Count), 0, 4)];
+
+
+        i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[2];
+
+        if (_i_currentHealth < _i_maxHealth * 0.5f)
+            i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[1];
+
+        if (_i_currentHealth <= 0)
+            i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[0];
     }
 
     public void SetNugValues(int[] _iA_nugCounts)
@@ -89,6 +146,12 @@ public class HUDController : MonoBehaviour
         texts.thunderText.text = _iA_nugCounts[3].ToString();
         texts.boomText.text = _iA_nugCounts[4].ToString();
         texts.magmaText.text = _iA_nugCounts[5].ToString();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        StopShowing();
     }
 
     internal void StartShowing()
@@ -108,8 +171,16 @@ public class HUDController : MonoBehaviour
     public void SceneLoad(Scene scene, LoadSceneMode mode)
     {
         if (this == null)
+        {
+            Debug.Log("this is probably why");
             return;
-        HudInLevel(!scene.name.Contains("Lobby"));
+        }
+        bool inLevel = !scene.name.Contains("Lobby");
+        HudInLevel(inLevel);
+        foreach (int i in iiD_idMap.Keys)
+        {
+            RemovePlayersBar(i);
+        }
     }
 
     private void HudInLevel(bool inLevel)
@@ -117,9 +188,6 @@ public class HUDController : MonoBehaviour
         go_healthbarParent.gameObject.SetActive(inLevel);
         go_nugHudParent.SetActive(inLevel);
         go_bbObject.SetActive(!inLevel);
-
-
-
     }
 
     public Transform GetHudCanvasTransform()
@@ -127,24 +195,36 @@ public class HUDController : MonoBehaviour
         return hudCanvas;
     }
 
+    public void SetCrosshairSize(float _f_size)
+    {
+        //Left Square
+        rtA_crossHairBits[0].localPosition = (Vector3.left * _f_size) + Vector3.left * 10;
+        //Right Square
+        rtA_crossHairBits[1].localPosition = (Vector3.right * _f_size) + Vector3.right * 10;
+        //Top Square
+        rtA_crossHairBits[2].localPosition = (Vector3.up * _f_size) + Vector3.up * 10;
+        //Bottom Square
+        rtA_crossHairBits[3].localPosition = (Vector3.down * _f_size) + Vector3.down * 10;
+    }
 
 
     #region Other Player's Bars
 
-    public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth)
+    public void UpdateRemoteHealth(string _s_name, int id, float _i_currentHealth, bool down)
     {
-        for (int i = 0; i < goA_healthBarParents.Length; i++)
-            goA_healthBarParents[i].SetActive(false);
-
         if (iiD_idMap.Count <= 0)
             return;
 
         goA_healthBarParents[iiD_idMap[id]].SetActive(true);
-
+        goA_healthBarParents[iiD_idMap[id]].transform.GetChild(0).gameObject.SetActive(down);
         rtA_healthBars[iiD_idMap[id]].localScale = new Vector3((float)_i_currentHealth / 100, 1, 1);
         tA_playerNamesTexts[iiD_idMap[id]].text = _s_name;
     }
 
+    public void RemovePlayersBar(int id)
+    {
+        goA_healthBarParents[iiD_idMap[id]].SetActive(false);
+    }
 
     #endregion
 
@@ -160,5 +240,24 @@ public class HUDController : MonoBehaviour
     }
 
     #endregion
+
+
+    [System.Serializable]
+    private struct SpriteArray
+    {
+        public Sprite[] sA_sprites;
+    }
+
+    internal void HideKillTimer()
+    {
+        go_killDisplay.SetActive(false);
+    }
+
+    internal void ShowKillTimer(float _f_time)
+    {
+        go_killDisplay.SetActive(true);
+        t_killTimerText.text = Mathf.RoundToInt(_f_time).ToString();
+        i_killWarningImage.color = new Color(1, 0, 0, Mathf.Abs(Mathf.Sin(_f_time + _f_time)) * 0.1f);
+    }
 
 }

@@ -2300,19 +2300,60 @@ MonoBehaviour:
   - s_name: None
     s_desc: This does nothing
     s_image: {fileID: 0}
-  - s_name: Jacked Rabbits
-    s_desc: Bunnies are huge, muscled and violent. You will die.
+  - s_name: Jumbo Lodes
+    s_desc: Lodes are large and positively brimming with Nuggs.
     s_image: {fileID: 21300000, guid: e733a81882d95fb49b285dc425d577cc, type: 3}
-  - s_name: Giga Geysers
-    s_desc: Explosive geysers, everywhere. You will explode.
+  - s_name: Lot o' Lodes
+    s_desc: The landscape is scattered with Lodes, hundreds of them!
     s_image: {fileID: 21300000, guid: 7a620a2ab07ac1c4ca66c0f3220096a5, type: 3}
-  - s_name: Solar Storm
-    s_desc: The sun is a deadly laser. It's shooting fire at you! Duck between cover
-      to avoid getting roasted.
+  - s_name: Geysers Galore
+    s_desc: This planet is covered in geyser spouting boiling air and steam. Luckily,
+      you can just bounce off to get to high-ground.
+    s_image: {fileID: -8274740147547718786, guid: f7525988e418f214f9314135fd72eabb,
+      type: 3}
+  - s_name: Mini-miniboss
+    s_desc: 'The alpha Groobers on this this planet are somewhat.. smaller than normal. '
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Minibunnies
+    s_desc: 'Those pesky Magma Bunnies are much smaller on this planet. '
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Goofy Groobers
+    s_desc: This planet's Groobers are small, weak and easy to kill. They should
+      provide little resistance.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Mini Flying
+    s_desc: Micro-moths.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Baby Lodes
+    s_desc: 'This planet isn''t very rich is resources, making its Lodes smaller.
+      Luckily, this makes them quicker to destroy. '
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Less Lodes
+    s_desc: Lodes in this DMSN are scarce.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Lethal Lodes
+    s_desc: Lava in this DMSN is superhot, and will burn you even harder & launch
+      you even further.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Zero-G Nuggs
+    s_desc: This DMSN's Nuggs are rather... floaty.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Maxiboss
+    s_desc: The alpha Groober is bigger, badder and more hurty than ever before.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Mega Bunnies
+    s_desc: These nasty Magma Bunnies pack more of a punch than the Jublublian Empire's
+      Space-Torpedoes.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Nasty Groobers
+    s_desc: Evil Groobers.
+    s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
+  - s_name: Maxi Flying
+    s_desc: Maximum Mothitude.
     s_image: {fileID: 21300000, guid: fa6a135f263322049a93065ed0f899df, type: 3}
   t_nameText: {fileID: 4081765377577185892}
   t_descriptionText: {fileID: 8433907449231418951}
-  c_infoCanvas: {fileID: 1704902365604756376}
+  go_infoCanvas: {fileID: 7224481911664017144}
   go_infoHighlight: {fileID: 2740248559731284604}
   tA_buttonPositions:
   - {fileID: 3204412230625313023}
@@ -2995,7 +3036,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7779115869283276261
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3023,7 +3064,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7224481911664017144}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -3634,11 +3675,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3371861067325885827, guid: 026aab2a68cbe814990a4a7f82f8a47d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 09c3027c3dfde274ca57e6349b79c2f2,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 026aab2a68cbe814990a4a7f82f8a47d,
         type: 3}
       propertyPath: m_Name
       value: SlotMachine
       objectReference: {fileID: 0}
+    - target: {fileID: 8032750206264916975, guid: 026aab2a68cbe814990a4a7f82f8a47d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 09c3027c3dfde274ca57e6349b79c2f2,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 026aab2a68cbe814990a4a7f82f8a47d, type: 3}
 --- !u!1 &5265862888231050553 stripped

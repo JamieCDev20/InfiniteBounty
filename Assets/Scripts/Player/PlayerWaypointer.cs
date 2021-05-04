@@ -1,20 +1,24 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerWaypointer : MonoBehaviour
+public class PlayerWaypointer : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] private GameObject go_onScreenMarker;
     [SerializeField] private GameObject go_offScreenMarker;
     [SerializeField] private float f_xRadius;
-    [SerializeField] private float f_yRadius;
     [SerializeField] private float f_yOnScreenOffset;
-    [SerializeField] private float f_maxDistance;
+    [SerializeField] private float f_displayRange = 10;
 
     private int i_scrWidth;
     private int i_scrHeight;
+    private float curRadius;
+
+    private GameObject[] offFaces = new GameObject[6];
 
     private Camera cam;
     private RectTransform canRect;
@@ -27,53 +31,104 @@ public class PlayerWaypointer : MonoBehaviour
 
     private GameObject go_offMarker;
     private RectTransform rt_off;
+    private string playerName = "Samuel L Jackson";
+    private Text onText;
+    private Text offText;
 
-    void Start()
+    private GameObject worldspaceNameText;
+
+    private bool run = true;
+
+    private void Update()
     {
-        t_targetPlayer = NetworkedPlayer.x.GetPlayer();
-        t_hudCanvas = HUDController.x.GetHudCanvasTransform();
-
-        go_onMarker = Instantiate(go_onScreenMarker, t_hudCanvas);
-        rt_on = go_onMarker.GetComponent<RectTransform>();
-        go_offMarker = Instantiate(go_offScreenMarker, t_hudCanvas);
-        rt_off = go_offMarker.GetComponent<RectTransform>();
-
-        rt_on.anchorMin = Vector2.zero;
-        rt_off.anchorMin = Vector2.zero;
-
-        cam = NetworkedPlayer.x.GetCamera();
-
-        canRect = t_hudCanvas.GetComponent<RectTransform>();
-
+        if (!run)
+            return;
+        PositionWaypoint();
     }
 
-    void Update()
+    public void SetNames(string _name)
     {
-        PositionWaypoint();
+        if (go_onMarker != null)
+        {
+            Remove();
+        }
+        t_targetPlayer = NetworkedPlayer.x.GetPlayer();
+        if (t_targetPlayer == transform)
+        {
+            run = false;
+        }
+        else
+        {
+            t_hudCanvas = HUDController.x.GetHudCanvasTransform();
+
+            go_onMarker = Instantiate(go_onScreenMarker, t_hudCanvas);
+            rt_on = go_onMarker.GetComponent<RectTransform>();
+            go_offMarker = Instantiate(go_offScreenMarker, t_hudCanvas);
+            rt_off = go_offMarker.GetComponent<RectTransform>();
+
+            offFaces[0] = go_offMarker.transform.GetChild(1).gameObject;
+            offFaces[1] = go_offMarker.transform.GetChild(2).gameObject;
+            offFaces[2] = go_offMarker.transform.GetChild(3).gameObject;
+            offFaces[3] = go_offMarker.transform.GetChild(4).gameObject;
+            offFaces[4] = go_offMarker.transform.GetChild(5).gameObject;
+            offFaces[5] = go_offMarker.transform.GetChild(6).gameObject;
+
+            rt_on.anchorMin = Vector2.zero;
+            rt_off.anchorMin = Vector2.zero;
+
+            cam = NetworkedPlayer.x.GetCamera();
+
+            canRect = t_hudCanvas.GetComponent<RectTransform>();
+            curRadius = f_xRadius;
+            onText = go_onMarker.transform.GetChild(0).GetComponent<Text>();
+            offText = go_offMarker.transform.GetChild(0).GetComponent<Text>();
+
+            playerName = _name;
+            onText.text = playerName;
+            offText.text = $"{playerName}   {playerName}";
+
+
+        }
+        worldspaceNameText = GetComponentInChildren<TextMeshPro>().gameObject;
     }
 
     private void PositionWaypoint()
     {
+
+        if ((transform.position - t_targetPlayer.position).magnitude < f_displayRange)
+        {
+            go_offMarker.SetActive(false);
+            go_onMarker.SetActive(false);
+            worldspaceNameText.SetActive(true);
+            return;
+        }
+        worldspaceNameText.SetActive(false);
+
         Vector2 screenPos = cam.WorldToScreenPoint(transform.position + (f_yOnScreenOffset * Vector3.up));
         float w = Screen.width;
         float h = Screen.height;
-        //screenPos.x /= t_hudCanvas.GetComponent<RectTransform>().rect.width;
-        //screenPos.y /= t_hudCanvas.GetComponent<RectTransform>().rect.height;
+
         screenPos.x /= w;
         screenPos.y /= h;
 
-        rt_on.anchoredPosition = new Vector2(canRect.rect.width * screenPos.x, canRect.rect.height * screenPos.y);
-        rt_off.anchoredPosition = new Vector2((screenPos.x > 0.5 ? canRect.rect.width - f_xRadius : f_xRadius), canRect.rect.height * screenPos.y);
+        float dot = Vector3.Dot(cam.transform.forward, transform.position - cam.transform.position);
 
-        if(Vector3.Dot(cam.transform.forward, transform.position - cam.transform.position) < 0)
+        if (dot < 0)
         {
-            if(screenPos.x < 0.5f)
-                rt_off.anchoredPosition = new Vector2(canRect.rect.width - f_xRadius, canRect.rect.height * screenPos.y);
+            rt_on.gameObject.SetActive(false);
+            rt_off.gameObject.SetActive(true);
+
+            if (screenPos.x < 0.5f)
+            {
+                screenPos.x = 1;
+            }
             else
-                rt_off.anchoredPosition = new Vector2(f_xRadius, canRect.rect.height * screenPos.y);
-            screenPos.x = -1;
+            {
+                screenPos.x = 0;
+            }
         }
-        if(screenPos.x < 0.01f || screenPos.x > 0.99f)
+
+        if (screenPos.x < 0.01f || screenPos.x > 0.99f)
         {
             rt_on.gameObject.SetActive(false);
             rt_off.gameObject.SetActive(true);
@@ -85,6 +140,55 @@ public class PlayerWaypointer : MonoBehaviour
 
         }
 
+        screenPos.x = Mathf.Clamp(screenPos.x, 0, 1);
+        screenPos.y = Mathf.Clamp(screenPos.y, 0, 1);
+
+        rt_on.anchoredPosition = new Vector2(canRect.rect.width * screenPos.x, canRect.rect.height * screenPos.y);
+        rt_off.anchoredPosition = new Vector2(canRect.rect.width * screenPos.x, canRect.rect.height * screenPos.y);
+
+
+
+    }
+
+    public void ChangeFace(int f)
+    {
+        for (int i = 0; i < offFaces.Length; i++)
+        {
+            offFaces[i].SetActive(i == f);
+        }
+    }
+
+    public void Remove()
+    {
+        if (run)
+        {
+            Destroy(go_offMarker);
+            Destroy(go_onMarker);
+        }
+
+    }
+
+    public void ForRemove()
+    {
+        foreach (PlayerWaypointer pw in FindObjectsOfType<PlayerWaypointer>())
+        {
+            pw.Remove();
+        }
+    }
+
+    private void OnDisable()
+    {
+        Remove();
+    }
+
+    private void OnDestroy()
+    {
+        Remove();
+    }
+
+    public override void OnLeftRoom()
+    {
+        ForRemove();
     }
 
 }

@@ -20,6 +20,8 @@ public class CameraController : MonoBehaviour
     [Header("Firing Cam Positions")]
     [SerializeField] private float f_rightWardOffset;
     [SerializeField] private float f_leftWardOffset;
+
+
     [SerializeField] private Vector3 v_firingBothOffset;
     [SerializeField] private float f_cameraLerpFiring;
     [SerializeField] private GameObject go_logo;
@@ -36,6 +38,7 @@ public class CameraController : MonoBehaviour
     private float f_firingTime;
     private float f_yLook;
     private bool b_isSpectating;
+    private Camera c_cam;
 
     #endregion
 
@@ -46,6 +49,7 @@ public class CameraController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += SceneLoad;
+        c_cam = GetComponentInChildren<Camera>();
         if (!networkedCamera)
         {
             pim_inputs = transform.root.GetComponentInChildren<PlayerInputManager>();
@@ -69,6 +73,8 @@ public class CameraController : MonoBehaviour
 
     private void SceneLoad(Scene s, LoadSceneMode m)
     {
+        if (this == null)
+            return;
         transform.eulerAngles = Vector3.zero;
         f_yLook = 0;
     }
@@ -102,11 +108,16 @@ public class CameraController : MonoBehaviour
 
     #region Public Voids
 
+    internal void CancelInputs()
+    {
+        v2_lookInputs = Vector2.zero;
+    }
+
     internal void Recoil(float _f_recoilSeverity)
     {
         /*
         transform.Rotate(-_f_recoilSeverity, UnityEngine.Random.Range(-_f_recoilSeverity * 0.7f, _f_recoilSeverity * 0.7f), 0);
-        StartCoroutine(BackToNormal(_f_recoilSeverity));
+        StartCoroutine(BackToNormal(_f_recoilSeverity));        
         */
     }
 
@@ -141,7 +152,7 @@ public class CameraController : MonoBehaviour
     {
         t_follow = _t_newFollow;
         t_follow.GetComponentInChildren<Billboard>()?.gameObject.SetActive(false);
-        GetComponentInChildren<PauseMenuController>().SetSpectating();
+        FindObjectOfType<PauseMenuController>().SetSpectating();
         b_isSpectating = _b_isSpectating;
     }
 
@@ -183,6 +194,11 @@ public class CameraController : MonoBehaviour
     public Text GetNugCountText()
     {
         return nugCountText;
+    }
+
+    internal Camera ReturnCamera()
+    {
+        return c_cam;
     }
 
     #endregion

@@ -11,7 +11,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     [Header("Head Things")]
     [SerializeField] private GameObject[] goA_heads = new GameObject[0];
     private int i_currentHead;
-    
+
     [Header("Body Things")]
     [SerializeField] private GameObject[] goA_bodies = new GameObject[0];
     private int i_currentBody;
@@ -40,7 +40,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         SaveManager _sm = FindObjectOfType<SaveManager>();
 
-        if(_sm.SaveData.A_appearance != null && _sm.SaveData.A_appearance.Length == 4)
+        if (_sm.SaveData.A_appearance != null && _sm.SaveData.A_appearance.Length == 4)
         {
             i_currentBody = _sm.SaveData.A_appearance[0] != -1 ? _sm.SaveData.A_appearance[0] : Random.Range(0, goA_bodies.Length);
             i_currentHead = _sm.SaveData.A_appearance[1] != -1 ? _sm.SaveData.A_appearance[1] : Random.Range(0, goA_heads.Length); ;
@@ -52,7 +52,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
             i_currentBody = Random.Range(0, goA_bodies.Length);
             i_currentHead = Random.Range(0, goA_heads.Length);
             i_currentArm = Random.Range(0, golA_arms.Length);
-            i_currentFeet = Random.Range(0, goA_feet.Length);
+            i_currentFeet = i_currentArm;
         }
 
         goA_heads[i_currentHead].SetActive(true);
@@ -65,6 +65,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateBodyInOthers", RpcTarget.Others, i_currentBody);
         photonView.RPC("UpdateArmsInOthers", RpcTarget.Others, i_currentArm);
         photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
+
+        HUDController.x.ChangeHeadSpriteIcon(i_currentHead);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -89,6 +91,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         if (b_networked)
             photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        HUDController.x.ChangeHeadSpriteIcon(i_currentHead);
+
     }
     public void LastHead()
     {
@@ -102,6 +106,7 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         if (b_networked)
             photonView.RPC("UpdateHeadInOthers", RpcTarget.Others, i_currentHead);
+        HUDController.x.ChangeHeadSpriteIcon(i_currentHead);
     }
 
     [PunRPC]
@@ -110,6 +115,12 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         goA_heads[i_currentHead].SetActive(false);
         i_currentHead = _i_headIndex;
         goA_heads[i_currentHead].SetActive(true);
+        gameObject.SendMessage("ChangeFace", _i_headIndex);
+    }
+
+    public int ReturnHeadIndex()
+    {
+        return i_currentHead;
     }
 
     #endregion

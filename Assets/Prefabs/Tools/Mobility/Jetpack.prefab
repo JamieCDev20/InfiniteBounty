@@ -9848,6 +9848,20 @@ Transform:
   m_Father: {fileID: 486313756789176946}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &856296299155761709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3889477861623739891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  c_onColour: {r: 1, g: 0, b: 0, a: 1}
+  c_offColour: {r: 1, g: 0, b: 0, a: 0}
 --- !u!114 &4168585833896266237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9866,18 +9880,6 @@ MonoBehaviour:
   fresnelScale: 2
   fresnelPower: 2
   alphaThreshold: 0.5
---- !u!114 &856296299155761709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3889477861623739891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4162959591431787301
 GameObject:
   m_ObjectHideFlags: 0
@@ -14800,6 +14802,7 @@ GameObject:
   - component: {fileID: 4641057921954568121}
   - component: {fileID: 86674658541095457}
   - component: {fileID: 826584790609600565}
+  - component: {fileID: 5868318678327186874}
   m_Layer: 0
   m_Name: FuelTube
   m_TagString: Untagged
@@ -14870,6 +14873,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5868318678327186874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097640174174261730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 29bdebf04b0d26d408cb1d3380d43eba, type: 2}
+  color: {r: 1, g: 0, b: 0, a: 0}
+  mask: {fileID: 0}
+  fresnelScale: 2
+  fresnelPower: 2
+  alphaThreshold: 0.5
 --- !u!1 &6530649209675361703
 GameObject:
   m_ObjectHideFlags: 0
@@ -24630,12 +24651,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0353f8d43a0dea7499c23edf5e8d5dc2, type: 3}
   ac_hitSound: []
   ac_diegeticAudio: []
+  ac_heatSound: {fileID: 0}
   b_oneTimeAudio: 0
   t_raycastPoint: {fileID: 0}
   b_releaseActivated: 0
   go_particles:
   - {fileID: 8514490679490469806}
-  f_force: 5
+  f_spreadAngle: 0
+  f_force: 8
   ac_jetPackForce:
     serializedVersion: 2
     m_Curve:
@@ -24706,7 +24729,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 6
   MaxDistance: 200
   Pan2D: 0

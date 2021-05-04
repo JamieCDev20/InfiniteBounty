@@ -13,6 +13,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_spawnPoint;
     [SerializeField]
     private PlayerInfo playerInfo;
+    [SerializeField] private GameObject HUD;
     private Transform t_thisPlayer;
     private PlayerInputManager playerIM;
     private NugManager nMan;
@@ -20,7 +21,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     private PhotonView view;
     private GameObject playerCamera;
     private PlayerHealth ph_health;
-
+    private GameObject hud;
+    //[SerializeField] private GameObject test;
     public int PlayerID { get { return playerInfo.playerID; } set { playerInfo.playerID = value; } }
 
     private List<string> dataToSend = new List<string>();
@@ -108,14 +110,29 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         ph_health = playerIM.GetComponent<PlayerHealth>();
         GameObject cam = Instantiate(playerInfo.go_camPrefab);
         playerIM.SetCamera(cam.GetComponent<CameraController>());
-        playerCamera = cam.transform.GetChild(0).gameObject;
+        playerCamera = cam.transform.GetComponentInChildren<Camera>().gameObject;
         nMan = t_thisPlayer.GetComponent<NugManager>();
 
+        hud = Instantiate(HUD, Vector3.zero, Quaternion.identity);
+        FindObjectOfType<PauseMenuController>().SetPIM(playerIM);
+        //Instantiate(test, Vector3.one, Quaternion.identity);
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        playerIM.SyncNameOverNetwork();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         playerIM.SyncNameOverNetwork();
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        //Destroy(hud);
     }
 
     public void SyncInfo()

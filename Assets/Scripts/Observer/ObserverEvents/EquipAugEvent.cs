@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class EquipAugEvent : ObserverEvent
 {
-    public (int toolID, int slotID, Augment[] aug) iia_equippedAugment;
-    public EquipAugEvent((int, int, Augment[]) _newAugment)
+    public (int toolID, int slotID, AugmentSave[] aug) iia_equippedAugment;
+    public EquipAugEvent((int, int, AugmentSave[]) _newAugment)
     {
         iia_equippedAugment = _newAugment;
     }
-    public EquipAugEvent(int ID, int slot, Augment[] _aug)
+    public EquipAugEvent(int ID, int slot, AugmentSave[] _aug)
     {
         iia_equippedAugment = (ID, slot, _aug);
     }

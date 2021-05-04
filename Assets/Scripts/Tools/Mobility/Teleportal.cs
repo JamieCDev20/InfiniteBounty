@@ -45,7 +45,7 @@ public class Teleportal : MonoBehaviour
         }
 
         _go_object.transform.position = tp_otherPortal.transform.position;
-        _rb.velocity = vel;// (transform.forward * f_hyuckForce, ForceMode.Impulse);
+        _rb.velocity = vel;
         yield return new WaitForEndOfFrame();
 
         rbL_recentlyTeleported.Add(_rb);
@@ -77,7 +77,7 @@ public class Teleportal : MonoBehaviour
 
     private IEnumerator ClosePortal(float _f_lifeSpan)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         b_isOpen = true;
 
         yield return new WaitForSeconds(_f_lifeSpan);

@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &467658999
 Transform:
@@ -40,7 +40,8 @@ AudioSource:
   m_GameObject: {fileID: 467658997}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 152d7ddb756c12845abcb3052f02db79,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: e02e86783d6ac2e48a579691d1682af8, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.3
@@ -144,7 +145,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7633098024418690495
 Transform:
@@ -188,7 +189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   b_isRightSide: 1
   t_sitPosition: {fileID: 2507402181204791461}
-  go_audioSourceObject: {fileID: 467658997}
+  go_objectToEnableWhenUsed: {fileID: 0}
+  b_cannonSeat: 0
 --- !u!114 &8403867439541081401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +220,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3402059978502796995
 Transform:
@@ -228,7 +230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7181598932474614058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0.0000000767177, y: -0.201, z: 0.9250001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3550598701446848842}
@@ -251,7 +253,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3550598701446848842
 Transform:
@@ -295,7 +297,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   b_isRightSide: 0
   t_sitPosition: {fileID: 3402059978502796995}
-  go_audioSourceObject: {fileID: 467658997}
+  go_objectToEnableWhenUsed: {fileID: 0}
+  b_cannonSeat: 0
 --- !u!114 &5875850197199538308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +328,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2507402181204791461
 Transform:
@@ -335,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8564792957048341846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: -0, y: -0.295, z: 0.925}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7633098024418690495}
@@ -355,7 +358,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3893880183972987377
 Transform:
@@ -385,7 +388,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: bb97c6e248a60446686d4e4665c00e2e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb97c6e248a60446686d4e4665c00e2e,
         type: 3}
@@ -395,7 +398,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: bb97c6e248a60446686d4e4665c00e2e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb97c6e248a60446686d4e4665c00e2e,
         type: 3}
@@ -451,6 +454,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sofas
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb97c6e248a60446686d4e4665c00e2e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb97c6e248a60446686d4e4665c00e2e, type: 3}

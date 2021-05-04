@@ -8,6 +8,7 @@ public class ToolLoader : MonoBehaviour
     [SerializeField] private List<ToolBase> tb_loadedTools;
     [SerializeField] private ToolSlot ts_slot;
     public ToolSlot Slot { get { return ts_slot; } }
+    public ToolBase[] Tools { get { return tb_loadedTools.ToArray(); } }
 
     public void LoadTools(Transform _t_parent)
     {
@@ -21,6 +22,7 @@ public class ToolLoader : MonoBehaviour
     public ToolBase LoadTool(int _i_index, Transform _t_parent)
     {
         ToolBase go_tool = Instantiate(tb_tools[_i_index]);
+
         if (go_tool.name.Contains("Ham"))
         {
             switch (ts_slot)
@@ -35,6 +37,15 @@ public class ToolLoader : MonoBehaviour
                     break;
             }
         }
+
+        if (go_tool is WeaponTool)
+            (go_tool as WeaponTool).InitAugmentArrayBlank();
+
+        if (ts_slot == ToolSlot.leftHand)
+            if (go_tool is ProjectileTool)
+                (go_tool as ProjectileTool).b_isLeftHandWeapon = true;
+
+
         go_tool.transform.position = _t_parent.position;
         go_tool.transform.rotation = _t_parent.rotation;
         go_tool.transform.parent = _t_parent;
@@ -64,6 +75,16 @@ public class ToolLoader : MonoBehaviour
             if (_go_toolRef == go_tool)
                 return go_tool;
         return null;
+    }
+
+    public int GetIndex(ToolBase _tb_toolRef)
+    {
+        for (int i = 0; i < tb_tools.Length; i++)
+        {
+            if (_tb_toolRef == tb_tools[i])
+                return i;
+        }
+        return -1;
     }
 
 }

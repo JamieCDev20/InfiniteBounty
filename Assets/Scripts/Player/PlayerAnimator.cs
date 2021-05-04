@@ -25,6 +25,7 @@ public class PlayerAnimator : MonoBehaviourPun
     [SerializeField] private float f_maxBodyAngle = 80;
     [SerializeField] private float f_maxArmAngle = 80;
     [SerializeField] private float f_armOffset = -20;
+    [SerializeField] private float f_animatorDivisor = 7;
     [Space]
     [Header("Tester")]
     [SerializeField] private bool doDemoIK = true;
@@ -50,6 +51,8 @@ public class PlayerAnimator : MonoBehaviourPun
     private Vector3 v_vel;
     private bool b_rShootLeft;
     private bool b_rShootRight;
+    private float f_rightArmRecoil;
+    private float f_leftArmRecoil;
 
     #endregion
 
@@ -123,8 +126,8 @@ public class PlayerAnimator : MonoBehaviourPun
             if (anim.GetBool("ShootingLeft") || anim.GetBool("ShootingRight"))
             {
                 ApplyBodyRotation();
-                ArmUpDownRespect(armL, anim.GetBool("ShootingLeft"));
-                ArmUpDownRespect(armR, anim.GetBool("ShootingRight"));
+                ArmUpDownRespect(armL, anim.GetBool("ShootingLeft"), true);
+                ArmUpDownRespect(armR, anim.GetBool("ShootingRight"), false);
             }
         }
     }
@@ -156,6 +159,33 @@ public class PlayerAnimator : MonoBehaviourPun
         v_vel = _vel;
     }
 
+    internal void GunRecoil(bool _b_isLeftArm, float _f_recoilSeverity, float _f_recoilDur)
+    {
+        if (_b_isLeftArm)
+            f_leftArmRecoil -= _f_recoilSeverity * 10;
+        else
+            f_rightArmRecoil -= _f_recoilSeverity * 10;
+
+        StartCoroutine(ChangeGunRecoil(_b_isLeftArm, _f_recoilSeverity, _f_recoilDur));
+    }
+
+    private IEnumerator ChangeGunRecoil(bool _b_isLeftArm, float _f_recoilSeverity, float _f_recoilDur)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            yield return new WaitForSeconds(_f_recoilDur * 0.1f);
+            if (_b_isLeftArm)
+                f_leftArmRecoil += _f_recoilSeverity;
+            else
+                f_rightArmRecoil += _f_recoilSeverity;
+        }
+
+        if (_b_isLeftArm)
+            f_leftArmRecoil = 0;
+        else
+            f_rightArmRecoil = 0;
+    }
+
     #endregion
 
     #region Private Voids
@@ -175,8 +205,8 @@ public class PlayerAnimator : MonoBehaviourPun
             if (photonView.IsMine)
                 v_vel = rb.velocity;
 
-            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(v_vel).x / 7, 0.3f));
-            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(v_vel).z / 7, 0.3f));
+            anim.SetFloat("X", Mathf.Lerp(anim.GetFloat("X"), transform.InverseTransformDirection(v_vel).x / f_animatorDivisor, 0.3f));
+            anim.SetFloat("Y", Mathf.Lerp(anim.GetFloat("Y"), transform.InverseTransformDirection(v_vel).z / f_animatorDivisor, 0.3f));
 
 
             if (rb.velocity.sqrMagnitude > 0.1f)
@@ -235,7 +265,7 @@ public class PlayerAnimator : MonoBehaviourPun
 
     }
 
-    private void ArmUpDownRespect(Transform _arm, bool _active)
+    private void ArmUpDownRespect(Transform _arm, bool _active, bool _b_isLeftArm)
     {
         if (!_active)
             return;
@@ -244,7 +274,7 @@ public class PlayerAnimator : MonoBehaviourPun
         float side = Mathf.Sign(Vector3.Dot(camTransform.transform.forward, -hips.up));
 
         Vector3 temp = _arm.localEulerAngles;
-        temp.z += (ang * side) + f_armOffset;
+        temp.z += (ang * side) + f_armOffset + (_b_isLeftArm ? f_leftArmRecoil : f_rightArmRecoil);
         _arm.localEulerAngles = temp;
 
     }
@@ -317,6 +347,11 @@ public class PlayerAnimator : MonoBehaviourPun
     {
         yield return new WaitForSeconds(0.1f);
         anim.SetBool("Revive", false);
+    }
+
+    internal void WalkInDropPod()
+    {
+        anim.SetBool("InDropPod", true);
     }
 
     #endregion

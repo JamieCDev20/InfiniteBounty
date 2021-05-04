@@ -34,6 +34,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
         SceneManager.sceneLoaded += OnSceneLoad;
 
+        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.ZeroGNuggs))
+            rb.useGravity = false;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -56,6 +58,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         b_canBeHit = false;
         b_collected = false;
+        gameObject.layer = 8;
         Invoke(nameof(RemoveSpawnImmunity), f_spawnImmunityDuration);
         Invoke(nameof(Die), 60);
     }
@@ -69,6 +72,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     private void RemoveSpawnImmunity()
     {
         b_canBeHit = true;
+        gameObject.layer = 9;
     }
 
     public void Die()
@@ -79,12 +83,14 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         CancelInvoke();
         StopAllCoroutines();
         GameObject particlesToPlay = PoolManager.x.SpawnObject((b_collected ? go_pickupParticles : go_destroyParticles), transform.position, Quaternion.identity);
+        /*
         float vol = 0;
         if (am_nugMixer)
             am_nugMixer.GetFloat("Volume", out vol);
         vol = (vol + 80) / 80;
         if (ac_pickupSound)
             AudioSource.PlayClipAtPoint(ac_pickupSound, transform.position, vol);
+        */
         if (rb != null)
             rb.velocity = Vector3.zero;
         eO_elem?.ResetElements();

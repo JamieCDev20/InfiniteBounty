@@ -10,6 +10,7 @@ public class BubbleShieldController : MonoBehaviour
     [SerializeField] private Collider c_colliderToDisable;
     private Rigidbody rb;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,6 +24,7 @@ public class BubbleShieldController : MonoBehaviour
         f_currentTime = 0;
         StartCoroutine(ChangeDensity());
         StartCoroutine(TurnColliderOn());
+        transform.localScale = Vector3.one;
     }
 
     private IEnumerator TurnColliderOn()
@@ -52,14 +54,24 @@ public class BubbleShieldController : MonoBehaviour
             m_shieldRenderer.material.SetFloat("_CellDensity", Mathf.Clamp(f_currentTime, 0, 60));
             m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.2f;
         }
+
+        yield return new WaitForSeconds(3);
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
-    {        
+    {
         if (transform.parent == null)
         {
             transform.SetParent(collision.transform, true);
             rb.isKinematic = true;
+
+            Vector3 newScale = new Vector3();
+            newScale.x = 1 / transform.parent.localScale.x;
+            newScale.y = 1 / transform.parent.localScale.y;
+            newScale.z = 1 / transform.parent.localScale.z;
+
+            transform.localScale = newScale;
         }
     }
 }

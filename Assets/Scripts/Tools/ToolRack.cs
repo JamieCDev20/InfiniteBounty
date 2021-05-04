@@ -10,12 +10,13 @@ public class ToolRack : Shop
     [SerializeField] private List<EmptyToolSlot> L_weaponToolPos;
     [SerializeField] private List<EmptyToolSlot> L_mobToolPos;
     [SerializeField] private Material m_silhouette;
-    [SerializeField] private Material m_purchased;
     [SerializeField] private TMP_Text txt_exampleText;
     [SerializeField] private Vector3 t_textOffset;
     [SerializeField] private float f_maxShake;
     [SerializeField] private float f_minShake;
     [SerializeField] private float f_shakeTime;
+    private List<Material[]> L_weaponMaterial = new List<Material[]>();
+    private List<Material[]> L_utilityMaterial = new List<Material[]>();
     private List<int> L_weaponRackIDs = new List<int>();
     private List<int> L_mobilityRackIDs = new List<int>();
     private bool b_currentlyShaking = false;
@@ -50,8 +51,13 @@ public class ToolRack : Shop
             ToolBase tb = _tl_loader.LoadTool(i, parent.transform.root);
             tb.transform.position = parent.transform.position;
             tb.transform.rotation = parent.transform.rotation;
+            // Store a reference to the material
+            if (isWeapon)
+                L_weaponMaterial.Add(tb.GetComponentInChildren<MeshRenderer>().sharedMaterials);
+            else
+                L_utilityMaterial.Add(tb.GetComponentInChildren<MeshRenderer>().sharedMaterials);
             // Unpurchased weapons set their material to a silhouette
-            ApplyMaterials(tb);
+            ApplyMaterials(tb, i);
             if (!tb.Purchased)
             {
                 TMP_Text moneyText = Instantiate<TMP_Text>(txt_exampleText);
@@ -79,21 +85,24 @@ public class ToolRack : Shop
                     ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1].transform.root);
                     dupe.transform.position = _t_toolTransform[i * 2 + 1].transform.position;
                     dupe.transform.rotation = _t_toolTransform[i * 2 + 1].transform.rotation;
+                    L_weaponMaterial.Add(dupe.GetComponentInChildren<MeshRenderer>().sharedMaterials);
                     toolRackID++;
                     dupe.RackID = toolRackID;
                     dupe.Purchased = true;
-                    ApplyMaterials(dupe);
+                    ApplyMaterials(dupe, toolRackID);
                     dupe.gameObject.SetActive(true);
                     L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
                     L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
                     L_weaponToolPos[i * 2 + 1].gameObject.SetActive(false);
                     L_weaponRackIDs.Add(toolRackID);
+                    dupe.enabled = false;
                 }
             }
             else
             {
                 L_mobilityRackIDs.Add(toolRackID);
             }
+            tb.enabled = false;
             toolRackID++;
         }
     }
@@ -119,12 +128,12 @@ public class ToolRack : Shop
         if (_b_rackType)
         {
             tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
-            ApplyMaterials(tl_weaponTools.GetToolAt(_i_ID));
+            ApplyMaterials(tl_weaponTools.GetToolAt(_i_ID), _i_ID);
         }
         else
         {
             tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(true);
-            ApplyMaterials(tl_mobTools.GetToolAt(_i_ID));
+            ApplyMaterials(tl_mobTools.GetToolAt(_i_ID), _i_ID);
         }
 
     }
@@ -163,7 +172,7 @@ public class ToolRack : Shop
         }
     }
 
-    private void ApplyMaterials(ToolBase _tb_toolToMat)
+    private void ApplyMaterials(ToolBase _tb_toolToMat, int index)
     {
         if (!_tb_toolToMat.Purchased)
         {
@@ -173,9 +182,15 @@ public class ToolRack : Shop
         }
         else
         {
-            foreach (MeshRenderer mr in _tb_toolToMat.GetComponentsInChildren<MeshRenderer>())
-                if (!mr.gameObject.GetComponent<TMP_Text>())
-                    mr.sharedMaterial = m_purchased;
+            switch (_tb_toolToMat)
+            {
+                case WeaponTool wt:
+                    wt.GetComponentInChildren<MeshRenderer>().sharedMaterials = L_weaponMaterial[index];
+                    break;
+                case MobilityTool mt:
+                    mt.GetComponentInChildren<MeshRenderer>().sharedMaterials = L_utilityMaterial[index];
+                    break;
+            }
         }
     }
 

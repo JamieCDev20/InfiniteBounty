@@ -13,6 +13,7 @@ public class AsteroidShooter : MonoBehaviour
     [Space]
     [SerializeField] private Vector3 v_rotSpeedMax;
     [SerializeField] private Vector3 v_rotSpeedMin;
+    [SerializeField] private GameObject go_corpse;
 
     IEnumerator Start()
     {
@@ -22,17 +23,22 @@ public class AsteroidShooter : MonoBehaviour
             goL_asteroidPool[i].SetActive(false);
         }
 
+        goL_asteroidPool.Add(go_corpse);
+        go_corpse.SetActive(false);
+
         for (int i = 0; i < 100; i++)
         {
             StartCoroutine(ShootAsteroid());
             yield return new WaitForSeconds(Random.Range(3, 10));
         }
+
     }
 
     private IEnumerator ShootAsteroid()
     {
-        GameObject _go = goL_asteroidPool[0];
-        goL_asteroidPool.RemoveAt(0);
+        int _i = Random.Range(0, goL_asteroidPool.Count);
+        GameObject _go = goL_asteroidPool[_i];
+        goL_asteroidPool.RemoveAt(_i);
         _go.SetActive(true);
         _go.transform.position = transform.position + new Vector3(Random.Range(-100f, 100f), Random.Range(-100f, 100f), Random.Range(-100f, 100f));
 

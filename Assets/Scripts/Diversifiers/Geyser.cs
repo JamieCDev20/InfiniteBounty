@@ -9,7 +9,7 @@ public class Geyser : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Rigidbody _rb = other.GetComponent<Rigidbody>();
-        if (_rb)
+        if (_rb && !other.name.Contains("andyman"))
             _rb.velocity = transform.up * f_firePower;
     }
 }

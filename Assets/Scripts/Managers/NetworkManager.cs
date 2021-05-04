@@ -38,7 +38,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-
         //singleton and persist
     }
 
@@ -64,6 +63,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         //connect to the network and store reference to the players networked
         Connect();
+        photonView.ViewID = 676869;
+        PhotonNetwork.RegisterPhotonView(photonView);
         netPlayer = FindObjectOfType<NetworkedPlayer>();
     }
 
@@ -110,7 +111,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void HostLevelLoad(string _name)
+    public void HostLevelLoad()
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
@@ -149,6 +150,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         base.OnDisconnected(cause);
     }
 
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        if (!PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(RequestMaxDifficulty), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void RequestMaxDifficulty()
+    {
+        photonView.RPC(nameof(PassOutMaxDifficulty), RpcTarget.Others, DifficultyManager.x.ReturnCurrentDifficultyInt());
+    }
+
+    [PunRPC]
+    private void PassOutMaxDifficulty(int _i_newDiff)
+    {
+        DifficultyManager.x.SetNewMaxDifficulty(_i_newDiff);
+    }
+
     #endregion
 
     #region Private Returns
@@ -158,5 +178,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Public Returns
 
     #endregion
+
+    internal void SetDiffDisplay(int _i)
+    {
+        photonView.RPC(nameof(SyncDiffSelector), RpcTarget.Others, _i);
+    }
+
+    [PunRPC]
+    private void SyncDiffSelector(int _i)
+    {
+        foreach (DifficultySelector item in FindObjectsOfType<DifficultySelector>())
+            item.SetScreenView(_i);
+    }
 
 }

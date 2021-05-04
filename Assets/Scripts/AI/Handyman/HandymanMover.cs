@@ -13,6 +13,20 @@ public class HandymanMover : MoverBase
 
         string check = "";
 
+        Color c = Color.red;
+
+        if (Physics.Raycast(transform.position + (Vector3.up * 1.5f), transform.forward, 6f, jumpMask, QueryTriggerInteraction.Ignore))
+        {
+            c = Color.green;
+            if (Time.realtimeSinceStartup - lastJumped > 1.5f)
+            {
+                rb.AddForce(Vector3.up * f_jumpForce, ForceMode.Impulse);
+                lastJumped = Time.realtimeSinceStartup;
+
+            }
+        }
+        Debug.DrawRay(transform.position + (Vector3.up * 1.5f), transform.forward * 4f, c);
+
         if (!Physics.Raycast(transform.position + Vector3.up, _dir, 5, lm_wallCheckMask))
         {
             base.Move(_dir);
@@ -38,6 +52,7 @@ public class HandymanMover : MoverBase
         }
 
         base.Move(_dir);
+
     }
 
 }

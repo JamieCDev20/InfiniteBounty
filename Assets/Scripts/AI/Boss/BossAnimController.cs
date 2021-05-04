@@ -28,4 +28,8 @@ public class BossAnimController : MonoBehaviour
         boss.MoveAttack();
     }
 
+    public void DoTreeIteration()
+    {
+        boss.ChooseAction();
+    }
 }

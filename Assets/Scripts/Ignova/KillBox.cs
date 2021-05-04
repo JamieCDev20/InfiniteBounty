@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class KillBox : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class KillBox : MonoBehaviour
     [Header("Bouncing")]
     [SerializeField] private Vector3 v_bounceDirection;
     [SerializeField] private bool b_shouldCauseKnockback;
-    private AudioSource as_source;
-    [SerializeField] private AudioClip ac_burnEffect;
     [SerializeField] private GameObject go_flamePrefab;
     private List<GameObject> goL_flames = new List<GameObject>();
     [SerializeField] private bool b_dealsFire = true;
@@ -26,6 +25,11 @@ public class KillBox : MonoBehaviour
     [Header("Getting Neutralized")]
     [SerializeField] private Color c_neutralColour;
     [SerializeField] private MeshRenderer mr_renderer;
+
+    [Header("Audio")]
+    [SerializeField] private AudioMixer am_nugMixer;
+    private AudioSource as_source;
+    [SerializeField] private AudioClip ac_burnEffect;
 
 
     private void Start()
@@ -38,18 +42,20 @@ public class KillBox : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (b_shouldSinBackToStart)
             transform.position += (v_unitsPerSecond * Mathf.Sin(Time.realtimeSinceStartup));
         else
             transform.position += v_unitsPerSecond * Time.deltaTime;
+        */
 
         f_time += Time.deltaTime;
         if (f_time >= f_timeBetweenDamages)
             DealDamage();
 
     }
-    /*
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (enabled)
@@ -82,13 +88,18 @@ public class KillBox : MonoBehaviour
             IHitable _h = collision.collider.GetComponent<IHitable>();
 
             if (!collision.transform.CompareTag("Lilypad"))
-                _h?.TakeDamage(i_damageToDeal, false);
+                _h?.TakeDamage(i_damageToDeal * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 2 : 1), false);
 
             if (b_shouldCauseKnockback && collision.transform.tag == "Player")
-                collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
+                collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 3 : 1), b_dealsFire);
 
-            if (as_source)
-                as_source.PlayOneShot(ac_burnEffect);
+            if (am_nugMixer)
+            {
+                float vol = 0;
+                am_nugMixer.GetFloat("Volume", out vol);
+                vol = (vol + 80) / 80;
+                AudioSource.PlayClipAtPoint(ac_burnEffect, collision.contacts[0].point, vol);
+            }
 
             if (goL_flames.Count > 0 && _h != null)
                 PlaceFlameBurst(collision.GetContact(0).point);
@@ -133,13 +144,21 @@ public class KillBox : MonoBehaviour
     }
     private IEnumerator NeutralizeCoroutine()
     {
+        for (int i = 0; i < 50; i++)
+        {
+            yield return new WaitForSecondsRealtime(0.01f);
+            mr_renderer.material.SetFloat("TimeOffset", Mathf.Lerp(mr_renderer.material.GetFloat("TimeOffset"), 0, 0.2f));
+        }
+
         enabled = false;
+
         for (int i = 0; i < 100; i++)
         {
             yield return new WaitForSecondsRealtime(0.01f);
-            //mr_renderer.material.SetColor("MainColour", Vector4.Lerp(mr_renderer.material.GetColor("MainColour"), c_neutralColour, 0.2f));
-            //mr_renderer.material.SetFloat("Scroll", Mathf.Lerp(mr_renderer.material.GetFloat("Scroll"), 0, 0.2f));
-            //mr_renderer.material.SetFloat("WaveHeight", Mathf.Lerp(mr_renderer.material.GetFloat("WaveHeight"), 0, 0.2f));
+            mr_renderer.material.SetFloat("LavaActive", Mathf.Lerp(1, 0, 0.2f));
+            mr_renderer.material.SetFloat("LavaNeutral", Mathf.Lerp(0, 1, 0.2f));
         }
+        mr_renderer.material.SetFloat("LavaActive", 0);
+        mr_renderer.material.SetFloat("LavaNeutral", 1);
     }
 }

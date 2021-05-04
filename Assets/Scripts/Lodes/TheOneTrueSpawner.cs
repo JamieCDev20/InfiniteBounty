@@ -17,7 +17,7 @@ public class TheOneTrueSpawner : MonoBehaviourPun
     [PunRPC]
     private void SyncSeed(int seed)
     {
-        Debug.Log("seeding");
+        //Debug.Log("seeding");
         Random.InitState(seed);
         DoASpawn();
 
@@ -31,7 +31,7 @@ public class TheOneTrueSpawner : MonoBehaviourPun
             //Debug.LogError("done with: " + lszA_zones[i].gameObject.name + " #" + i);
         }
         //yield return new WaitForEndOfFrame();
-        Debug.Log("done");
+        //Debug.Log("done");
     }
 
 }

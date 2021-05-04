@@ -28,10 +28,13 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     [SerializeField] protected AudioClip[] ac_activationSound;
     [SerializeField] protected AudioClip[] ac_hitSound;
     [SerializeField] protected AudioClip[] ac_diegeticAudio;
+    [SerializeField] protected AudioClip ac_heatSound;
     [SerializeField] private bool b_oneTimeAudio;
     [SerializeField] Transform t_raycastPoint;
     [SerializeField] protected bool b_releaseActivated;
     [SerializeField] protected GameObject[] go_particles;
+    [SerializeField] protected float f_spreadAngle;
+
 
     #endregion
 
@@ -43,6 +46,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
     public int Cost { get { return i_cost; } }
 
     #endregion
+
 
     public virtual void Use()
     {
@@ -101,7 +105,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         {
             AudioSource ass = GetComponent<AudioSource>();
             //ass.clip = _ac_aud;
-            ass.pitch = Random.Range(0.95f, 1.05f);
+            //ass.pitch = Random.Range(0.95f, 1.05f);
             ass.PlayOneShot(_ac_aud);
         }
     }
@@ -141,9 +145,15 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     public virtual void PlayParticles(bool val)
     {
-        if(go_particles.Length != 0)
-            foreach(GameObject partic in go_particles)
-                if(partic != null)
+        if (go_particles.Length != 0)
+            foreach (GameObject partic in go_particles)
+                if (partic != null)
                     partic?.SetActive(val);
     }
+
+    public float GetSpread()
+    {
+        return f_spreadAngle;
+    }
+
 }

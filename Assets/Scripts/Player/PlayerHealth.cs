@@ -28,11 +28,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
     private bool b_downed = false;
     private int playerID;
     private PhotonView view;
-    internal HUDController hudControl;
     private PlayerAnimator pa_anim;
     [Space, SerializeField] private RectTransform rt_downedTimer;
     private PlayerInputManager pim;
     private Animator anim;
+    private bool IAMNOTIMPORTANT = false;
+
+    // The outline is here, started it but stopped because I realised there are about 50 outlines on the player.... sigh. Some lines are commented out which are 
+    [SerializeField] private Gradient healthGradient;
+
     [SerializeField] private GameObject go_reviveSymbol;
     [SerializeField] private ParticleSystem ps_burningBumParticles;
 
@@ -52,30 +56,37 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         pim = GetComponent<PlayerInputManager>();
         anim = GetComponentInChildren<Animator>();
         as_mainAudioSource = GetComponent<AudioSource>();
-    }
 
+    }
 
     private void Update()
     {
+        if (IAMNOTIMPORTANT)
+            return;
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Delete))
             TakeDamage(1, false);
 #endif
+        if (NetworkedPlayer.x.GetPlayer() != transform)
+            IAMNOTIMPORTANT = true;
+
         if (b_downed)
         {
             f_downHealth -= Time.deltaTime;
-            rt_downedTimer.localScale = new Vector3((float)(f_downHealth / f_maxDownTime), 1, 1);
+            if (rt_downedTimer != null)
+                rt_downedTimer.localScale = new Vector3((float)(f_downHealth / f_maxDownTime), 1, 1);
             if (f_downHealth <= 0)
             {
                 ClientFullDie();
             }
         }
-        if (b_canRegen)
+        if (b_canRegen && f_currentHealth != i_maxHealth)
         {
             if (!b_downed)
             {
                 f_currentHealth = Mathf.Clamp(f_currentHealth + (f_healthPerSecond * Time.deltaTime), 0, i_maxHealth);
-                hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+                HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+
             }
         }
         else
@@ -94,21 +105,22 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (!Damageable)
             return;
 #endif
-        if (!view.IsMine || isDead)
+        if (!view.IsMine || isDead || NetworkedPlayer.x.GetPlayer() != transform)
             return;
-        //print(damage + " DMG taken");
 
-        if (acA_hurtClips.Length > 0 && damage != 0)
+        if (damage != 0)
             as_mainAudioSource.PlayOneShot(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)]);
+
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
-        hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        HUDController.x.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
 
         if (f_currentHealth <= 0)
-        {
             ClientDie();
-        }
+
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
+
     }
 
     private void CheckSound()
@@ -149,7 +161,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         f_currentHealth = i_maxHealth;
         f_downHealth = f_downTime;
         f_maxDownTime = f_downTime;
-        hudControl?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        HUDController.x?.SetHealthBarValue(f_currentHealth, i_maxHealth);
+        //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
+
         cc_cam?.StopSpectating();
     }
 
@@ -167,13 +181,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         {
             toggles[i].SetActive(true);
         }
-        
+
     }
 
     public void FullRespawn()
     {
         cc_cam?.SetFollow(transform);
-        view.RPC("Respawn", RpcTarget.All);
+        view.RPC(nameof(Respawn), RpcTarget.All);
     }
 
     public void ToggleAlive(bool val)
@@ -187,7 +201,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void ClientDie()
     {
-        view.RPC("RemoteDie", RpcTarget.All);
+        view.RPC(nameof(RemoteDie), RpcTarget.All);
         pa_anim.PlayerDied();
     }
 
@@ -216,7 +230,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     private void ClientRevive()
     {
-        view.RPC("RemoteRevive", RpcTarget.All);
+        view.RPC(nameof(RemoteRevive), RpcTarget.All);
     }
 
     [PunRPC]
@@ -256,7 +270,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void ClientFullDie()
     {
-        view.RPC("RemoteFullDie", RpcTarget.All);
+        view.RPC(nameof(RemoteFullDie), RpcTarget.All);
         b_downed = false;
 
 
@@ -277,7 +291,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         ToggleAlive(false);
         b_downed = false;
         transform.parent = null;
-        for(int i = 0; i < toggles.Length; i++)
+        for (int i = 0; i < toggles.Length; i++)
         {
             toggles[i].SetActive(false);
         }

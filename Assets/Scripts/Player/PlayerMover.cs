@@ -22,17 +22,23 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_jumpForce = 10; // How high the player jumps
     [SerializeField] private float f_jumpDelay = 0.15f; //How long after the initial input the jump occurs;
     [SerializeField] private float f_coyoteTime = 0.2f;
+    [SerializeField] private float maximumWalkIncline = 50f;
 
     [Space]
     [Header("Physics")]
     [SerializeField] private float f_gravityScale = 10; // The force of gravity on the player
     [SerializeField] private float f_plummetPoint = 5; //the velocity at which below, gravity will increase
     [SerializeField] private float f_plummetMultiplier = 3; //the velocity at which below, gravity will increase
-    [SerializeField] private Vector3 v_dragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
+    [SerializeField] private Vector3 v_groundedDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
+    [SerializeField] private Vector3 v_airDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
 
     [Header("Getting Teleported")]
     [SerializeField] private GameObject go_characterMesh;
     [SerializeField] private ParticleSystem p_goopyParticle;
+    [SerializeField] private ParticleSystem p_teleportParticles;
+
+    [Header("Kill Box Limits")]
+    [SerializeField] private Vector2 v_killLimits;
 
     #endregion
 
@@ -45,6 +51,7 @@ public class PlayerMover : MonoBehaviour
     internal bool b_jumpPress;
     private float f_lastOnGround;
     private float f_currentMoveSpeed;
+    private float moveLerpVal = 0;
     private float f_currentMultiplier;
     private bool b_jumpHold;
     private bool b_jumpUp;
@@ -59,20 +66,37 @@ public class PlayerMover : MonoBehaviour
     private Transform t_camTransform;
     private PhotonView view;
     private FootstepAudioPlayer fap_audio;
+    private ToolHandler th_handler;
+    private PlayerInputManager pim_inputs;
     internal bool b_isSitting;
     private bool b_knockedback;
     private Animator anim;
 
+    private Vector3[] groundCheckMods = new Vector3[] { Vector3.zero, Vector3.forward * 0.5f, Vector3.right * 0.5f, Vector3.forward * -0.5f, Vector3.right * -0.5f };
+
+    //Killthings
+    private float f_currentKillTimer;
+    private bool b_isDead;
+
+    [SerializeField] private float f_maxJumpTime;
+    private float f_currentJumpTime;
+    private float f_currentJumpForce;
+    private bool b_isJumping;
+
     #endregion
+
 
     //Methods
     #region Unity Standards
 
     private void Start()
     {
+        th_handler = GetComponent<ToolHandler>();
+        pim_inputs = GetComponent<PlayerInputManager>();
         anim = GetComponentInChildren<Animator>();
         Init();
         SceneManager.sceneLoaded += SceneChange;
+        StartCoroutine(ArrivalTeleport());
     }
 
     private void Update()
@@ -130,12 +154,53 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyMovement()
     {
-        Vector3 dir = Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), Vector3.up), v_groundNormal);
+        float x = v_movementVector.sqrMagnitude > 0.5f ? 1 : 0;
+        moveLerpVal = Mathf.Lerp(moveLerpVal, x, 0.1f);
+
+        Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), v_groundNormal);
+
+        float mul = 1;
+
+        float ang = Vector3.Angle(dir, t_camTransform.TransformDirection(v_movementVector));
+        if (Vector3.Dot(dir, Vector3.up) > 0)
+        {
+            mul = 1 - Vector3.Angle(v_groundNormal, Vector3.up) / 90;
+        }
+        Vector3 cross = Vector3.Cross(dir, t_camTransform.TransformDirection(v_movementVector));
+
+        ang = Mathf.Clamp(ang, -maximumWalkIncline, maximumWalkIncline);
+
+        //took this out because it fucked up the walking....
+        //dir = Quaternion.AngleAxis(ang, cross) * t_camTransform.TransformDirection(v_movementVector);
+
         if (v_movementVector.sqrMagnitude > 0.25f)
         {
-            rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
+            //rb.AddForce(dir.normalized * f_currentMoveSpeed * Time.deltaTime * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), ForceMode.Impulse);
+            Vector3 t = Vector3.Lerp(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), dir.normalized * f_currentMoveSpeed / Mathf.Clamp(GetWeaponWeighting(), 0.5f, 2) * (b_down ? f_downMult : (b_sprintHold ? f_currentMultiplier : 1)), moveLerpVal);
+            t.y += rb.velocity.y;
+            rb.velocity = t;
+
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
+        HUDController.x.SetCrosshairSize(rb.velocity.magnitude);
+    }
+
+    private float GetWeaponWeighting()
+    {
+        float _f_totalWeight = 2;
+
+        if (pim_inputs.GetToolBools().b_RToolHold || pim_inputs.GetToolBools().b_LToolHold)
+        {
+            _f_totalWeight += th_handler.ReturnWeaponWeight(0) * 0.5f;
+            _f_totalWeight += th_handler.ReturnWeaponWeight(1) * 0.5f;
+        }
+        else
+        {
+            _f_totalWeight += th_handler.ReturnWeaponWeight(0) * 0.125f;
+            _f_totalWeight += th_handler.ReturnWeaponWeight(1) * 0.125f;
+        }
+
+        return (_f_totalWeight * 0.5f);
     }
 
     /// <summary>
@@ -143,16 +208,40 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if (!b_jumpPress || b_down)
-            return;
-        if ((Time.realtimeSinceStartup - f_lastOnGround) < f_coyoteTime)
+        if (Input.GetButtonDown("Jump") && b_grounded)
+            if ((Time.realtimeSinceStartup - f_lastOnGround) < f_coyoteTime)
+            {
+                f_lastOnGround -= 10;
+                Vector3 t = rb.velocity;
+                f_currentJumpForce = f_jumpForce;
+                t.y = f_currentJumpForce;
+                rb.velocity = t;
+
+                f_currentJumpTime = 0;
+                b_isJumping = true;
+            }
+
+        //Stop jumping if you release the button or run out of time;
+        if (Input.GetButtonUp("Jump") || f_currentJumpTime > f_maxJumpTime)
+            b_isJumping = false;
+
+
+        if (b_isJumping)
         {
-            f_lastOnGround -= 10;
+            f_currentJumpTime += Time.deltaTime;
+            f_currentJumpForce -= (Time.deltaTime / f_maxJumpTime) * (f_jumpForce / 6);
+            //f_currentJumpForce -= (Time.deltaTime / f_maxJumpTime) * f_jumpForce;
             Vector3 t = rb.velocity;
-            t.y = f_jumpForce;
+            t.y = f_currentJumpForce;
+            //t.y = NonLinearJump(f_currentJumpForce / f_jumpForce);
             rb.velocity = t;
         }
     }
+
+    /*private float NonLinearJump(float x)
+    {
+        return -(Mathf.Pow(0.7f * x - 0.7f, 2)) + 0.5f;
+    }*/
 
     private IEnumerator DelayedJump()
     {
@@ -166,7 +255,7 @@ public class PlayerMover : MonoBehaviour
     private void ApplyDrag()
     {
         if (b_applyDrag)
-            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_dragVector);
+            rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - (b_grounded ? v_groundedDragVector : v_airDragVector));
     }
 
     /// <summary>
@@ -174,6 +263,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyGravity()
     {
+
         if (b_applyGravity)
             rb.velocity -= Vector3.up * f_gravityScale * (rb.velocity.y < f_plummetPoint ? f_plummetMultiplier : 1) * Time.deltaTime;
         else
@@ -182,15 +272,37 @@ public class PlayerMover : MonoBehaviour
 
     public void ResetIfOffMap()
     {
-        if (transform.position.y < -100 && view.IsMine)
+        if ((Mathf.Abs(transform.position.y) > v_killLimits.y || Mathf.Abs(transform.position.x) > v_killLimits.x) && view.IsMine)
         {
-            transform.position = v_startPos + (Vector3.up);// * 5);                      
+            if (!b_isDead)
+            {
+                f_currentKillTimer -= Time.deltaTime;
+                HUDController.x.ShowKillTimer(f_currentKillTimer);
+            }
+            if (f_currentKillTimer <= 0 && !b_isDead)
+            {
+                b_isDead = true;
+                StartCoroutine(KillPlayer());
+                HUDController.x.HideKillTimer();
+                f_currentKillTimer = 5;
+            }
+        }
+        else
+        {
+            f_currentKillTimer = 5;
+            b_isDead = false;
+            HUDController.x.HideKillTimer();
         }
     }
 
-    internal void SetHUDController(HUDController _HUDController)
+    private IEnumerator KillPlayer()
     {
-        GetComponent<PlayerHealth>().hudControl = _HUDController;
+        for (int i = 0; i < 20; i++)
+        {
+            yield return new WaitForSeconds(0.05f);
+            GetComponent<PlayerHealth>().TakeDamage(10, false);
+        }
+        transform.position = v_startPos;
     }
 
     private void Quit()
@@ -216,11 +328,24 @@ public class PlayerMover : MonoBehaviour
         if (scene.name.Contains("Lobby"))
         {
             fap_audio.ChangeSurfaceEnum(Surface.ship);
+            enabled = false;
+            StartCoroutine(ArrivalTeleport());
         }
         else
         {
             fap_audio.ChangeSurfaceEnum(Surface.planet);
         }
+    }
+
+    private IEnumerator ArrivalTeleport()
+    {
+        yield return new WaitForEndOfFrame();
+        go_characterMesh.SetActive(false);
+        enabled = false;
+        p_teleportParticles.Play();
+        yield return new WaitForSeconds(0.4f);
+        go_characterMesh.SetActive(true);
+        enabled = true;
     }
 
     #endregion
@@ -310,7 +435,6 @@ public class PlayerMover : MonoBehaviour
         b_knockedback = false;
     }
 
-
     internal void GetTeleported()
     {
         view.RPC(nameof(TeleportRPC), RpcTarget.All);
@@ -330,7 +454,6 @@ public class PlayerMover : MonoBehaviour
         enabled = true;
     }
 
-
     #endregion
 
     #region Private Returns
@@ -338,27 +461,38 @@ public class PlayerMover : MonoBehaviour
     private bool CheckGrounded()
     {
         RaycastHit hit;
-        Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hit, 0.5f);
-        if (hit.collider != null)
+        for (int i = 0; i < groundCheckMods.Length; i++)
         {
-            b_applyGravity = hit.distance > 0.15f;
-            v_groundNormal = hit.normal;
-            f_lastOnGround = Time.realtimeSinceStartup;
 
-            ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
-            if (iS != null)
-                s_currentSurface = iS.GetSurface();
+            Physics.Raycast(transform.position + (Vector3.up * 0.1f) + transform.TransformDirection(groundCheckMods[i]), Vector3.down, out hit, 0.5f);
 
-            if (!b_grounded)
-                Landed();
+            if (hit.collider != null)
+            {
+                if (Vector3.Angle(hit.normal, Vector3.up) < 45)
+                {
 
-            return true;
+                    b_applyGravity = hit.distance > 0.15f;
+                    v_groundNormal = hit.normal;
+                    Debug.DrawRay(transform.position, hit.normal * 5, Color.red);
+                    f_lastOnGround = Time.realtimeSinceStartup;
 
+                    ISurfacable iS = hit.collider.GetComponent<ISurfacable>();
+                    if (iS != null)
+                        s_currentSurface = iS.GetSurface();
+
+                    if (!b_grounded)
+                        Landed();
+                    return true;
+
+                }
+
+            }
+            v_groundNormal = Vector3.up;
+            b_applyGravity = true;
         }
-        v_groundNormal = Vector3.up;
-        b_applyGravity = true;
         return false;
     }
+
     #endregion
 
     #region Public Returns

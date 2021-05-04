@@ -44,33 +44,44 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
+            PlaceStartingEnemiesInZones();
             yield return new WaitForSeconds(f_startDelay);
             StartCoroutine(CheckZoneForPlayers());
-            PlaceStartingEnemiesInZones();
         }
     }
 
-    /*
+
+#if UNITY_EDITOR
     private void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-            SpawnEnemy(go_miniboss, 0, false);
-#endif
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+            ForceWaveToSpawn();
+
     }
-    */
+#endif
+
 
     private void PlaceStartingEnemiesInZones()
     {
-        for (int i = 0; i < iA_numberOfEachStartingEnemyType.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
-            int _i_zone = Random.Range(0, eszA_allEnemyZones.Length);
-
-            for (int x = 0; x < iA_numberOfEachStartingEnemyType[i]; x++)
-            {
-                SpawnEnemy(goA_startEnemies[i], eszA_allEnemyZones[i].transform.position, false);
-            }
+            for (int x = 0; x < iA_numberOfEachStartingEnemyType[0] * 0.2f; x++)
+                SpawnEnemy(goA_startEnemies[0], eszA_allEnemyZones[i].ReturnSpawnPoint(), false);
         }
+    }
+
+    private void ForceWaveToSpawn()
+    {
+        for (int i = 0; i < eszA_allEnemyZones.Length; i++)
+            if (eszA_allEnemyZones[i].CheckForPlayersAndSpawnWave())
+            {
+                if (iL_minibossZones.Contains(i))
+                {
+                    SpawnEnemy(go_miniboss, eszA_allEnemyZones[i].ReturnSpawnPoint(), false);
+                    iL_minibossZones.RemoveAt(i);
+                }
+            }
+
     }
 
     private IEnumerator CheckZoneForPlayers()
@@ -84,8 +95,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
                 _b_spawnedWave = true;
                 if (iL_minibossZones.Contains(i))
                 {
-                    print("Boss has spawned in area: " + i);
-                    SpawnEnemy(go_miniboss, eszA_allEnemyZones[i].ReturnSpawnPoint(), false);
+                    SpawnBoss(i);
                     iL_minibossZones.RemoveAt(i);
                 }
             }
@@ -98,6 +108,12 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         if (_b_spawnedWave)
             yield return new WaitForSeconds(f_timeBetweenHordes * i_numberOfHordesPerWave);
         StartCoroutine(CheckZoneForPlayers());
+    }
+
+    private void SpawnBoss(int _i_area)
+    {
+        SpawnEnemy(go_miniboss, eszA_allEnemyZones[_i_area].ReturnSpawnPoint(), false);
+        DynamicAudioManager.x.StartBoss();
     }
 
     private void EndWave()
@@ -134,7 +150,9 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
         if (i_numberOfEnemies < 5)
-            if (_b_isBoss)
-                DynamicAudioManager.x.EndBoss();
+            DynamicAudioManager.x.EndCombat();
+
+        if (_b_isBoss)
+            DynamicAudioManager.x.EndBoss();
     }
 }

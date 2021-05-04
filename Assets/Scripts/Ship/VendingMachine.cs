@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class VendingMachine : SubjectBase, IInteractible
@@ -17,7 +18,7 @@ public class VendingMachine : SubjectBase, IInteractible
     [SerializeField] private float f_cameraMovementT = 0.3f;
     private int i_currentAugmentIndex;
     private AugmentGo[] aA_avaliableAugments = new AugmentGo[9];
-    [SerializeField] private Canvas c_vendingCanvas;
+    [SerializeField] private Canvas go_vendingCanvas;
     [SerializeField] private AugmentDisplay vmd_vendingMachineDisplay;
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
     [SerializeField] private Transform t_augmentHighlight;
@@ -38,13 +39,18 @@ public class VendingMachine : SubjectBase, IInteractible
 
     public bool IsBeingUsed { get { return b_isBeingUsed; } }
 
+    private void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
+    }
+
     public void Init(AugmentManager _am)
     {
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
         augMan = _am;
-        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
 
+        GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = 0;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
@@ -77,7 +83,8 @@ public class VendingMachine : SubjectBase, IInteractible
             _pa.StopWalking();
 
             StartCoroutine(MoveCamera(t_camParent, pim.GetCamera().transform, true));
-            c_vendingCanvas.enabled = true;
+            go_vendingCanvas.transform.localScale = Vector2.one * 0.739f;
+            go_vendingCanvas.enabled = true; ;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -95,8 +102,8 @@ public class VendingMachine : SubjectBase, IInteractible
         pm.enabled = true;
 
         StartCoroutine(MoveCamera(t_camPositionToReturnTo, pim.GetCamera().transform, false));
-
-        c_vendingCanvas.enabled = false;
+        go_vendingCanvas.transform.localScale = Vector2.zero;
+        go_vendingCanvas.enabled = false;
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
         _pa.SetShootability(true);
@@ -123,7 +130,7 @@ public class VendingMachine : SubjectBase, IInteractible
 
         while (t < 1)
         {
-            _t.localPosition = Vector3.Lerp(start, Vector3.zero, t);
+            _t.localPosition = Vector3.Lerp(start, _b_comingIntoMachine ? Vector3.zero : Vector3.forward * -4, t);
             _t.rotation = Quaternion.Lerp(iRot, _t_transformToMoveTo.rotation, t);
             t += (Time.deltaTime * (1 / f_lerpTime));
             yield return new WaitForEndOfFrame();
@@ -163,13 +170,13 @@ public class VendingMachine : SubjectBase, IInteractible
         switch (aA_avaliableAugments[i_currentAugmentIndex].Aug.at_type)
         {
             case AugmentType.standard:
-                apd.AugDisplay.t_augmentFits.text = "Hammer";
+                apd.SetFitIcon(0);
                 break;
             case AugmentType.projectile:
-                apd.AugDisplay.t_augmentFits.text = "Blaster - Shredder - Cannon";
+                apd.SetFitIcon(1);
                 break;
             case AugmentType.cone:
-                apd.AugDisplay.t_augmentFits.text = "Nuggsucker";
+                apd.SetFitIcon(2);
                 break;
         }
 
@@ -188,12 +195,13 @@ public class VendingMachine : SubjectBase, IInteractible
                     as_source.pitch = 1;
                     as_source.PlayOneShot(ac_whirringClip);
                     StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
-                    StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
+                    //StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
                     Augment[] grabbedAugment = new Augment[1];
                     grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
-                    pim.GetComponent<NugManager>().OnNotify(new CurrencyEvent(pim.GetID(), aA_avaliableAugments[i_currentAugmentIndex].Aug.Cost, false, null));
-                    // Player Save data needs: 0, Cost of Augment, Augment Reference
-                    SaveEvent se = new SaveEvent(new PlayerSaveData(-1, -1, -1, null, null, null, null, grabbedAugment, null, 0)); ;
+                    pim.GetComponent<NugManager>().CollectNugs(-grabbedAugment[0].Cost, false);
+                    SaveEvent se = new SaveEvent(new PlayerSaveData(pim.GetComponent<NugManager>().Nugs, -1, -1, null, null, null, null,
+                        new AugmentSave[] { new AugmentSave(grabbedAugment[0].Stage, grabbedAugment[0].at_type, 1, new int[1] { AugmentManager.x.GetAugmentIndex(grabbedAugment[0].at_type, grabbedAugment[0].Name) }) },
+                        null, 0)); ;
                     Notify(se);
                     aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
                     rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
@@ -247,7 +255,8 @@ public struct AugmentDisplay
 {
     public Text t_levelNumber;
     public Text t_augmentName;
-    public Text t_augmentFits;
+    //public Text t_augmentFits;
+    public GameObject[] goA_fitIcons;
     public Text t_augmentEffects;
     public Text t_augmentCost;
 }

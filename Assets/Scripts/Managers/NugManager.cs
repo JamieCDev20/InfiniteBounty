@@ -18,7 +18,6 @@ public class NugManager : SubjectBase, ObserverBase
     // Start is called before the first frame update
     void Start()
     {
-        hud = gameObject.GetComponent<PlayerHealth>().hudControl;
         //SceneManager.sceneLoaded += OnSceneLoad;
 
         foreach (NugGO np in Resources.FindObjectsOfTypeAll<NugGO>())
@@ -38,7 +37,7 @@ public class NugManager : SubjectBase, ObserverBase
         }
 
 #if UNITY_EDITOR
-        //CollectNugs(5000, false);
+        CollectNugs(15000, false);
         //Debug.LogError("GAINED 1000 BBs. REMOVE THIS BEFORE BUILDING");
 #endif
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -54,6 +53,13 @@ public class NugManager : SubjectBase, ObserverBase
     {
         i_playerID = _id;
         //Debug.LogError($"MY ID IS {_id} AND I AM {PhotonNetwork.CurrentRoom.Players[_id+1]}");
+    }
+
+    public void RemoveAllNugs()
+    {
+        i_inLevelNugs = 0;
+        i_totalNugs = 0;
+        HUDController.x.SetBBTotal();
     }
 
     public void EndedLevel()

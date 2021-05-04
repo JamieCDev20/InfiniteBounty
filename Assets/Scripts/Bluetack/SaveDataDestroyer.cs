@@ -7,5 +7,6 @@ public class SaveDataDestroyer : MonoBehaviour
     public void DestroySaveData()
     {
         FindObjectOfType<SaveManager>()?.ClearSaveData();
+        FuseSaver.x.DestroySaveData();
     }
 }

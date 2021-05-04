@@ -96,7 +96,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     /// </summary>
     private void Init()
     {
-        Debug.Log("Init");
+        //Debug.Log("Init");
         canLoadScene = true;
         GraphicsSettings.useScriptableRenderPipelineBatching = true;
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -111,7 +111,10 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             //spawn all managers
             for (int i = 0; i < goA_toSpawnOnStart.Length; i++)
             {
-                Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity).SendMessage("Init");
+                GameObject g = Instantiate(goA_toSpawnOnStart[i], new Vector3(0, -20, 0), Quaternion.identity);
+
+                g.SendMessage("Init");
+
             }
         }
 
@@ -145,7 +148,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = false;
         else
             if (PhotonNetwork.CurrentRoom != null)
-                PhotonNetwork.CurrentRoom.IsOpen = true;
+            PhotonNetwork.CurrentRoom.IsOpen = true;
 
         //PoolManager.x.ResetPool("BoomNug");
         //PoolManager.x.ResetPool("GooNug");

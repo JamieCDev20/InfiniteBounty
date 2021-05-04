@@ -18,7 +18,13 @@ public class LoadingScreenManager : MonoBehaviourPun
 
     public void Init()
     {
-        x = this;
+        if (x == null)
+        {
+            x = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(gameObject);
+
         photonView.ViewID = 9898989;
         PhotonNetwork.RegisterPhotonView(photonView);
 
@@ -52,11 +58,23 @@ public class LoadingScreenManager : MonoBehaviourPun
     [PunRPC]
     public void CallLoadLevel(string _s_levelName)
     {
+        StartCoroutine(ICallLoadLevel(_s_levelName));
+    }
+    private IEnumerator ICallLoadLevel(string _s_levelName)
+    {
         //print("I've been told to call the funuctyion");
         //SetSceneToLoad(_s_levelName);
         //StartCoroutine(BeginLoadingSceneAsync());
-        
-            PhotonNetwork.LoadLevel(_s_levelName);
+
+        photonView.RPC(nameof(ShowLoadingScreen), RpcTarget.AllViaServer);
+        yield return new WaitForSeconds(1);
+        PhotonNetwork.LoadLevel(_s_levelName);
+    }
+
+    [PunRPC]
+    public void ShowLoadingScreen()
+    {
+        FadeToBlack.x.ShowCover(0);
     }
 
     internal IEnumerator BeginLoadingSceneAsync()

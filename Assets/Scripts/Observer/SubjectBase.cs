@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SubjectBase : MonoBehaviourPunCallbacks
 {
-    private List<ObserverBase> L_observers = new List<ObserverBase>();
+    protected List<ObserverBase> L_observers = new List<ObserverBase>();
     
     protected void Notify(ObserverEvent oe_event)
     {

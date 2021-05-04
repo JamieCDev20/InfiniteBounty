@@ -20,6 +20,7 @@ public class Augment
     public int Cost { get { return i_cost; } set { i_cost = value; } }
     public AugmentStage Stage { get { return as_stage; } set { as_stage = value; } }
     public string AugmentMaterial { get { return mat_augColor; } set { mat_augColor = value; } }
+    public (string nam, int lev) Tup { get { return (s_name, i_level); } }
     #region Audio
 
     [Newtonsoft.Json.JsonProperty]
@@ -223,24 +224,20 @@ public class Augment
         string newName = "";
         if (a.Name.Contains(" "))
         {
-            string newNamea = a.s_name.Split(' ')[0];
             string newNameb = b.s_name.Split(' ')[0];
-            if (newNamea == newNameb)
-                newName += "Super ";
-            else
-                newName += newNamea + " " + newNameb + " ";
-            newName += a.s_name.Split(' ')[1];
-            c.s_name += newName;
+            string newNamea = newNameb + " " + a.Name;
+            c.s_name += newNamea;
         }
         else
         {
             newName = a.Name + " " + b.Name;
             c.s_name = newName;
         }
+        c.i_level = 1;
         // Audio data
-        c.ac_useSound = Utils.CombineArrays(a.ac_useSound, b.ac_useSound);
-        c.ac_travelSound = Utils.CombineArrays(a.ac_travelSound, b.ac_travelSound);
-        c.ac_hitSound = Utils.CombineArrays(a.ac_hitSound, b.ac_hitSound);
+        c.ac_useSound = CombineFusionArrays(a.ac_useSound, b.ac_useSound);
+        c.ac_travelSound = CombineFusionArrays(a.ac_travelSound, b.ac_travelSound);
+        c.ac_hitSound = CombineFusionArrays(a.ac_hitSound, b.ac_hitSound);
         // Info data
         c.i_damage = a.i_damage + b.i_damage;
         c.i_lodeDamage = a.i_lodeDamage + b.i_lodeDamage;
@@ -252,7 +249,7 @@ public class Augment
         // Physical data
         c.f_trWidth = a.f_trWidth + b.f_trWidth;
         c.f_trLifetime = a.f_trLifetime + b.f_trLifetime;
-        c.A_trKeys = Utils.CombineArrays(a.A_trKeys, b.A_trKeys);
+        c.A_trKeys = CombineFusionArrays(a.A_trKeys, b.A_trKeys);
         ///TODO:
         ///figure out how to deal with projectiles
         c.go_weaponProjectile = a.go_weaponProjectile;
@@ -262,14 +259,33 @@ public class Augment
         c.f_explockBack = a.f_explockBack + b.f_explockBack;
         c.f_detonationTime = a.f_detonationTime + b.f_detonationTime;
         c.f_expRad = a.f_expRad + b.f_expRad;
-        c.go_explarticles = Utils.CombineArrays(a.go_explarticles, b.go_explarticles);
+        c.go_explarticles = CombineFusionArrays(a.go_explarticles, b.go_explarticles);
         c.i_cost = a.Cost + b.Cost;
+        if (a.as_stage == AugmentStage.full && a.s_name != b.s_name)
+            c.as_stage = AugmentStage.fused;
         // If any of them are set to impact, set to be impact
         if (a.b_impact)
             c.b_impact = true;
         else
             c.b_impact = false;
+
+        AugmentManager.x.AddToDict(c.Name, new int[] { AugmentManager.x.GetAugmentIndex(a.at_type, a.Name), AugmentManager.x.GetAugmentIndex(b.at_type, b.Name) });
+
         return c;
+    }
+
+    private static T[] CombineFusionArrays<T>(T[] _a, T[] _b)
+    {
+        bool aNull = Utils.ArrayIsNullOrZero(_a);
+        bool bNull = Utils.ArrayIsNullOrZero(_b);
+        if (!aNull && !bNull)
+            return Utils.CombineArrays(_a, _b);
+        else if (!aNull)
+            return _a;
+        else if (!bNull)
+            return _b;
+        else
+            return null;
     }
 
     /// <summary>

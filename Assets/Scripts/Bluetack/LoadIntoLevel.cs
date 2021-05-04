@@ -19,11 +19,17 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
     #region Private
 
     private int i_playersCount = 0;
+    private AudioSource as_source;
 
     #endregion
 
     //Methods
     #region Unity Standards
+
+    private void Start()
+    {
+        as_source = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -79,7 +85,7 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
         }
         i_playersCount = 0;
         if (levelname.Contains("Lobby"))
-            ReturnToShip();        
+            ReturnToShip();
         LoadingScreenManager.x.CallLoadLevel(levelname);
     }
 
@@ -104,14 +110,13 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
 
     #region Public Voids
 
-    public void Interacted()
-    {
-    }
+    public void Interacted() { }
 
     public void Interacted(Transform interactor)
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
+        as_source.Play();
         if (interactor.GetComponent<PlayerInputManager>().GetID() == 0)
             CheckPlayers();
     }

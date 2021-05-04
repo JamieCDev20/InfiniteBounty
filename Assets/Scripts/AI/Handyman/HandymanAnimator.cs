@@ -25,10 +25,23 @@ public class HandymanAnimator : MonoBehaviour
         StartCoroutine(SlapOff());
     }
 
+    public void Throw()
+    {
+        anim.SetBool("Throw", true);
+        StartCoroutine(ThrowOff());
+    }
+
     IEnumerator SlapOff()
     {
         yield return new WaitForSeconds(0.1f);
         anim.SetBool("Attacking", false);
+    }
+
+    IEnumerator ThrowOff()
+    {
+        yield return new WaitForSeconds(0.1f);
+        anim.SetBool("Throw", false);
+
     }
 
 }
