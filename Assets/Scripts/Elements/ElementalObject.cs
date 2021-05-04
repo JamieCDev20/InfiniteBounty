@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class ElementalObject : MonoBehaviour, IElementable
 {
-
     [SerializeField] private List<Element> eL_activeElements = new List<Element>(); //The elements on this object
     [SerializeField] private List<Element> eL_elementImmunities = new List<Element>(); //The elemental immunities of this object
     [SerializeField] private GameObject go_lrObject; //the line renderer for shocking
@@ -41,7 +40,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         em = ElementManager.x;
         pO = GetComponent<PoolableObject>();
         InitElements = eL_activeElements;
-        ourHitable = GetComponent<IHitable>();
+        ourHitable = GetComponentInParent<IHitable>();
         if (mesh == null)
             mesh = GetComponentInChildren<MeshFilter>().mesh;
 
@@ -351,7 +350,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void HydroLava()
     {
         //do platform things
-        Instantiate(ElementManager.x.lavaPlatform, transform.position, Quaternion.identity);
+        Destroy(Instantiate(ElementManager.x.lavaPlatform, transform.position, Quaternion.identity), 10);
+        ourHitable.Die();
     }
 
     private void TastyFire()

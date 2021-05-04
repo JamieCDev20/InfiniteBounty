@@ -84,7 +84,6 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
     public void Die()
     {
-
         if (!b_canBeHit)
             return;
         CancelInvoke();
