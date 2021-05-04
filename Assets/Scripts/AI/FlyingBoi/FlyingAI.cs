@@ -16,6 +16,8 @@ public partial class FlyingAI : AIBase
 
         tree = new BehaviourTree(ParentDefine());
 
+        b_isRightWinged = Random.Range(0, 10) < 6 ? true : false;
+
     }
 
     private void FixedUpdate()
@@ -28,7 +30,7 @@ public partial class FlyingAI : AIBase
     private SelectorNode ParentDefine()
     {
 
-        ActionNode moveToPlayer = new ActionNode(BlankAction);
+        ActionNode moveToPlayer = new ActionNode(MoveTowardtarget);
 
         SequencerNode orbitAttackSeq = new SequencerNode(OrbitAttack());
 
@@ -39,9 +41,9 @@ public partial class FlyingAI : AIBase
     private SequencerNode OrbitAttack()
     {
 
-        QueryNode inRange = new QueryNode(BlankQuery);
-        ActionNode orbit = new ActionNode(BlankAction);
-        ActionNode shoot = new ActionNode(BlankAction);
+        QueryNode inRange = new QueryNode(IsInOrbitRangeQuery);
+        ActionNode orbit = new ActionNode(OrbitTarget);
+        ActionNode shoot = new ActionNode(Shoot);
 
         return new SequencerNode(inRange, orbit, shoot);
     }
