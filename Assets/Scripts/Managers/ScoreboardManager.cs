@@ -117,7 +117,7 @@ public class ScoreboardManager : MonoBehaviour
         }
 
         Random rand = new Random();
-        Random.InitState(values[0][0]);
+        Random.InitState(values[0][0] + _names.GetHashCode());
 
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount + 2; i++)
         {
