@@ -133,6 +133,7 @@ public partial class HandymanAI : AIBase
         f_throwCooldown = f_throwWindup;
 
         yield return new WaitForSeconds(f_throwWindup);
+        go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
         go_nearestThrowable.transform.parent = null;
         _rb.isKinematic = false;
         _rb.constraints = RigidbodyConstraints.None;
@@ -143,7 +144,6 @@ public partial class HandymanAI : AIBase
         f_throwCooldown = f_throwWindup;
         b_hasThrowable = false;
         yield return new WaitForSeconds(0.1f);
-        go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
         mover.SetCanMove(true);
         _c.enabled = true;
         
