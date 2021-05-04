@@ -12,8 +12,9 @@ public partial class HandymanAI : AIBase
 
     [Header("Throwing Stats")]
     [SerializeField] private float f_pickupRange;
+    private GameObject go_currentThrowable;
     private GameObject go_nearestThrowable;
-    private float f_throwTimer;
+    private float f_throwTimer = 0;
     private bool b_hasThrowable;
     [SerializeField] private float f_throwCooldown;
     [SerializeField] private float f_timeBetweenThrows = 2;
@@ -58,6 +59,8 @@ public partial class HandymanAI : AIBase
 
         foreach (GameObject item in TagManager.x.GetTagSet(_s_tag))
         {
+            if (Mathf.Abs(item.transform.position.y - transform.position.y) > 10)
+                continue;
             float _f_distanceCheck = Vector3.SqrMagnitude(item.transform.position - transform.position);
             if (_f_distanceCheck < _f_distance)
             {
@@ -65,7 +68,6 @@ public partial class HandymanAI : AIBase
                 _f_distance = _f_distanceCheck;
             }
         }
-        Debug.Log(go_object);
         return go_object;
     }
 
@@ -112,6 +114,8 @@ public partial class HandymanAI : AIBase
 
         go_nearestThrowable.transform.parent = go_centreofPickup.transform;
         go_nearestThrowable.transform.localPosition = Vector3.zero;
+        go_currentThrowable = go_nearestThrowable;
+        go_currentThrowable.GetComponent<Collider>().enabled = false;
         b_hasThrowable = true;
     }
 
@@ -134,21 +138,23 @@ public partial class HandymanAI : AIBase
         f_throwTimer = f_throwCooldown;
 
         yield return new WaitForSeconds(f_throwWindup);
-        go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
-        go_nearestThrowable.transform.parent = null;
+        go_currentThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
+        go_currentThrowable.transform.parent = null;
         _rb.isKinematic = false;
         _rb.constraints = RigidbodyConstraints.None;
-        _rb.AddForce(GetThrowVector(t_target.transform.position), ForceMode.Impulse);
+        _rb.AddForce(GetThrowVector(t_target.transform.position + Vector3.up * 5), ForceMode.Impulse);
         _rb.AddTorque(new Vector3(Random.value, Random.value, Random.value) * Random.Range(5, 10));
 
         f_throwTimer = f_throwCooldown;
-        b_hasThrowable = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         mover.SetCanMove(true);
         _c.enabled = true;
 
         yield return new WaitForSeconds(1);
         go_nearestThrowable = null;
+        go_currentThrowable = null;
+        b_hasThrowable = false;
+        b_hasThrowable = false;
     }
 
     private void PunchAction()
