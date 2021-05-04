@@ -56,7 +56,8 @@ public class VendingMachine : SubjectBase, IInteractible
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
         AddObserver(FindObjectOfType<SaveManager>());
         apd.Init();
-        apd.UpdatePropertyText(aA_avaliableAugments[i_currentAugmentIndex].Aug);
+        if(aA_avaliableAugments.Length > 0)
+            apd.UpdatePropertyText(aA_avaliableAugments[i_currentAugmentIndex].Aug);
         ClickedAugment(0);
     }
 

@@ -265,6 +265,7 @@ public class Augment
         c.f_expRad = a.f_expRad + b.f_expRad;
         c.go_explarticles = CombineFusionArrays(a.go_explarticles, b.go_explarticles);
         c.i_cost = a.Cost + b.Cost;
+        c.mat_augColor = a.mat_augColor;
         if (a.as_stage == AugmentStage.full && a.s_name != b.s_name)
             c.as_stage = AugmentStage.fused;
         // If any of them are set to impact, set to be impact
