@@ -121,6 +121,21 @@ public class AugmentManager : MonoBehaviour
         return siAD_fusedToInds[_name];
     }
 
+    public int GetNumberOfStandardAugments()
+    {
+        return A_augs.Length;
+    }
+
+    public int GetNumberOfProjectileAugments()
+    {
+        return A_projAugs.Length;
+    }
+
+    public int GetNumberOfConeAugments()
+    {
+        return A_coneAugs.Length;
+    }
+
     public int GetNumberOfAugments()
     {
         return A_augs.Length + A_projAugs.Length + A_coneAugs.Length;
@@ -243,6 +258,7 @@ public class AugmentManager : MonoBehaviour
                 A_augs = Utils.OrderedRemove(A_augs, GetAugmentIndex(type, nam));
                 break;
             case AugmentType.projectile:
+                //Debug.Log("Augm ind: " + GetAugmentIndex(type, nam));
                 A_projAugs = Utils.OrderedRemove(A_projAugs, GetAugmentIndex(type, nam));
                 break;
             case AugmentType.cone:

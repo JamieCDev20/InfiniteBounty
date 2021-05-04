@@ -69,6 +69,10 @@ public class Utils
     /// <returns>a new array with both values</returns>
     public static T[] CombineArrays<T>(T[] a, T[] b)
     {
+        if (ArrayIsNullOrZero(a))
+            return b;
+        if (ArrayIsNullOrZero(b))
+            return a;
         T[] output = new T[a.Length + b.Length];
         for (int i = 0; i < a.Length; i++)
         {
@@ -139,6 +143,9 @@ public class Utils
     {
         if (ArrayIsNullOrZero<T>(_arrayToRemove))
             return null;
+
+        if (_arrayToRemove.Length == 1)
+            return new T[0];
 
         bool skipped = false;
         T[] newArray = new T[_arrayToRemove.Length - 1];

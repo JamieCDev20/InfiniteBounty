@@ -165,7 +165,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (_save.Stage)
         {
             case AugmentStage.full:
-                AugmentManager.x.RemoveAugment(AugmentType.projectile, _save.Name);
+                //AugmentManager.x.RemoveAugment(AugmentType.projectile, _save.Name);
                 break;
             case AugmentStage.fused:
                 fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
@@ -179,7 +179,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (_save.Stage)
         {
             case AugmentStage.full:
-                AugmentManager.x.RemoveAugment(AugmentType.cone, _save.Name);
+                //AugmentManager.x.RemoveAugment(AugmentType.cone, _save.Name);
                 break;
             case AugmentStage.fused:
                 fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));
