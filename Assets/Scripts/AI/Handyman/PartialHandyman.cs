@@ -146,7 +146,7 @@ public partial class HandymanAI : AIBase
         go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
         mover.SetCanMove(true);
         _c.enabled = true;
-
+        
         yield return new WaitForSeconds(1);
         go_nearestThrowable = null;
     }
