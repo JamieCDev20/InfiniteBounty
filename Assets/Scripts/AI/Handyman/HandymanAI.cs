@@ -81,17 +81,6 @@ public partial class HandymanAI : AIBase
         return new SequencerNode(inRange, punch);
     }
 
-    private void BlankAction()
-    {
-        Debug.Log("Using Blank Action");
-    }
-
-    private bool BlankQuery()
-    {
-        Debug.Log("Using Blank Query");
-        return false;
-    }
-
     private Vector3 GetThrowVector(Vector3 _pos)
     {
         //float dist = (transform.position - _pos).magnitude;
