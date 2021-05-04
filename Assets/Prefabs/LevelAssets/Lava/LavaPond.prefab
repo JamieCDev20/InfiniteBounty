@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 48769212854846265}
   - component: {fileID: 48769212854846264}
   - component: {fileID: 48769212854846271}
+  - component: {fileID: 1830033251588670887}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -221,6 +222,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1830033251588670887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48769212854846269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eL_activeElements: 0600000005000000
+  eL_elementImmunities: 
+  go_lrObject: {fileID: 5860972205640831532, guid: 59547ea43e8d76f4988c38b81ea0d7f0,
+    type: 3}
+  mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &48769213175652303
 GameObject:
   m_ObjectHideFlags: 0
