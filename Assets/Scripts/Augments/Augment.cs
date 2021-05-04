@@ -239,9 +239,12 @@ public class Augment
         c.ac_travelSound = CombineFusionArrays(a.ac_travelSound, b.ac_travelSound);
         c.ac_hitSound = CombineFusionArrays(a.ac_hitSound, b.ac_hitSound);
         // Info data
-        c.i_damage = a.i_damage + b.i_damage;
-        c.i_lodeDamage = a.i_lodeDamage + b.i_lodeDamage;
-        c.f_weight = a.f_weight + b.f_weight;
+        int newDmg = a.i_damage + b.i_damage;
+        c.i_damage = newDmg > 0 ? newDmg : 1;
+        int newLdDmg = a.i_lodeDamage + b.i_lodeDamage;
+        c.i_lodeDamage = newLdDmg > 0 ? newLdDmg : 1;
+        float newWeight = a.f_weight + b.f_weight;
+        c.f_weight = newWeight > 0 ? newWeight : 1;
         c.f_recoil = a.f_recoil + b.f_recoil;
         c.f_energyGauge = a.f_energyGauge + b.f_energyGauge;
         c.f_knockback = a.f_knockback + b.f_knockback;
