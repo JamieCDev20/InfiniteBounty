@@ -14,7 +14,7 @@ public partial class FlyingAI : AIBase
     {
         mover = GetComponent<FlyingMover>();
 
-        tree = new BehaviourTree(ParentDefine());
+        tree = new BehaviourTree(PreParent());
 
         b_isRightWinged = Random.Range(0, 10) < 6 ? true : false;
 
@@ -26,6 +26,12 @@ public partial class FlyingAI : AIBase
     }
 
     #region Defines
+
+    private SequencerNode PreParent()
+    {
+        ActionNode getTarg = new ActionNode(GetClosestPlayerAction);
+        return new SequencerNode(getTarg, ParentDefine());
+    }
 
     private SelectorNode ParentDefine()
     {
