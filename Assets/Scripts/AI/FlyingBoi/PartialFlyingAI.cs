@@ -39,6 +39,30 @@ public partial class FlyingAI : AIBase
 
     #region Actions
 
+    private GameObject GetClosestTaggedObjectAction(string _s_tag, bool _b_ignoreHieght)
+    {
+        float _f_distance = 1000000000;
+        GameObject go_object = null;
+
+        foreach (GameObject item in TagManager.x.GetTagSet(_s_tag))
+        {
+            if (Mathf.Abs(item.transform.position.y - transform.position.y) > 10 && !_b_ignoreHieght)
+                continue;
+            float _f_distanceCheck = Vector3.SqrMagnitude(item.transform.position - transform.position);
+            if (_f_distanceCheck < _f_distance)
+            {
+                go_object = item;
+                _f_distance = _f_distanceCheck;
+            }
+        }
+        return go_object;
+    }
+
+    private void GetClosestPlayerAction()
+    {
+        t_target = GetClosestTaggedObjectAction("Player", true).transform;
+    }
+
     private void MoveTowardtarget()
     {
         if (t_target != null)
