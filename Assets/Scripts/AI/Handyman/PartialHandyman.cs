@@ -80,9 +80,11 @@ public partial class HandymanAI : AIBase
 
     private void CheckShouldBeThrowing()
     {
-        b_shouldBeThrowing = Vector3.Distance(transform.position, t_target.position) >= f_minThrowDistance;
+        float throwableDistance = Vector3.SqrMagnitude(transform.position - go_nearestThrowable.transform.position);
+        float targetDistance = Vector3.SqrMagnitude(transform.position - t_target.position);
+        bool playerFurther = throwableDistance < targetDistance;
+        b_shouldBeThrowing = playerFurther && throwableDistance < f_minThrowDistance;
     }
-
 
     #endregion
 
