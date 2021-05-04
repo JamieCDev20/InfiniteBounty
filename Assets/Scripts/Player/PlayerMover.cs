@@ -464,7 +464,7 @@ public class PlayerMover : MonoBehaviour
         for (int i = 0; i < groundCheckMods.Length; i++)
         {
 
-            Physics.Raycast(transform.position + (Vector3.up * 0.1f) + transform.TransformDirection(groundCheckMods[i]), Vector3.down, out hit, 0.5f);
+            Physics.Raycast(transform.position + (Vector3.up * 0.1f) + transform.TransformDirection(groundCheckMods[i]), Vector3.down, out hit, 0.5f, -1, QueryTriggerInteraction.Ignore);
 
             if (hit.collider != null)
             {
