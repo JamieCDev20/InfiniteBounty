@@ -9,12 +9,16 @@ public partial class FlyingAI : AIBase
     [SerializeField] private float f_orbitRange;
     private float f_shootTimer;
     [SerializeField] private float f_shootCooldown;
+    [SerializeField] private float f_shootForce;
+    [SerializeField] private float f_orbitSpeed;
+    private bool b_isRightWinged;
+
 
     #region Queries
 
     private bool IsInOrbitRangeQuery()
     {
-        if (Vector3.SqrMagnitude(t_target.position - transform.position) < (f_orbitRange * f_orbitRange))
+        if (Vector3.SqrMagnitude(Vector3.Scale(t_target.position - transform.position, Vector3.one - Vector3.up)) < (f_orbitRange * f_orbitRange))
             return true;
         return false;
     }
@@ -57,7 +61,10 @@ public partial class FlyingAI : AIBase
 
     private void OrbitTarget()
     {
+        Vector3 _v_lookAt = new Vector3(t_target.position.x, transform.position.y, t_target.position.y);
+        transform.LookAt(_v_lookAt);
 
+        mover.Move(((b_isRightWinged ? transform.right : -transform.right) * f_orbitSpeed));
     }
 
     private void Shoot()
@@ -65,7 +72,7 @@ public partial class FlyingAI : AIBase
         if (!PhotonNetwork.IsMasterClient)
             return;
         Vector3 _dir = t_target.position - transform.position;
-        photonView.RPC(nameof(RemoteThrow), RpcTarget.AllViaServer, _dir);
+        photonView.RPC(nameof(RemoteShoot), RpcTarget.AllViaServer, _dir);
         f_shootTimer = f_shootCooldown;
     }
 
@@ -73,7 +80,7 @@ public partial class FlyingAI : AIBase
     public void RemoteShoot(Vector3 dir)
     {
         GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
-        ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_throwForce, ForceMode.Impulse);
+        ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
     }
 
 
