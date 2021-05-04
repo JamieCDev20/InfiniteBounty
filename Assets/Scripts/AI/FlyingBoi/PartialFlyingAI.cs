@@ -12,7 +12,7 @@ public partial class FlyingAI : AIBase
     [SerializeField] private float f_shootForce;
     [SerializeField] private float f_orbitSpeed;
     private bool b_isRightWinged;
-
+    private bool b_isShooting;
 
     #region Queries
 
@@ -105,21 +105,27 @@ public partial class FlyingAI : AIBase
     [PunRPC]
     public void RemoteShoot(Vector3 dir)
     {
-
+        StartCoroutine(ShootingRoutine(dir));
     }
 
     IEnumerator ShootingRoutine(Vector3 dir)
     {
-        GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
+        if (!b_isShooting)
+        {
+            b_isShooting = true;
+            GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
 
-        Collider c = ob.GetComponent<Collider>();
-        c.enabled = false;
-        ob.transform.rotation = Quaternion.LookRotation(dir);
-        ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
+            Collider c = ob.GetComponent<Collider>();
+            c.enabled = false;
+            ob.transform.rotation = Quaternion.LookRotation(dir);
+            ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(0.2f);
-        
-        c.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+
+            c.enabled = true;
+            yield return new WaitForSeconds(f_shootCooldown);
+            b_isShooting = false;
+        }
     }
 
     #endregion
