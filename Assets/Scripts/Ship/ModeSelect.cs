@@ -19,8 +19,8 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         as_source = GetComponent<AudioSource>();
 
         PhotonNetwork.RegisterPhotonView(photonView);
-        if (PhotonNetwork.IsMasterClient)
-            Interacted();
+        //if (PhotonNetwork.IsMasterClient)
+            //Interacted();
     }
 
     public void Interacted()
