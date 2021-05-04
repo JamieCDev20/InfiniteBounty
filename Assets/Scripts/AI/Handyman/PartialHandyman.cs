@@ -83,7 +83,7 @@ public partial class HandymanAI : AIBase
         float throwableDistance = Vector3.SqrMagnitude(transform.position - go_nearestThrowable.transform.position);
         float targetDistance = Vector3.SqrMagnitude(transform.position - t_target.position);
         bool playerFurther = throwableDistance < targetDistance;
-        b_shouldBeThrowing = playerFurther && throwableDistance < f_minThrowDistance;
+        b_shouldBeThrowing = playerFurther && throwableDistance < (f_minThrowDistance * f_minThrowDistance);
     }
 
 
