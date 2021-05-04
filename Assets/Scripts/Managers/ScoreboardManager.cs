@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,18 +24,29 @@ public class ScoreboardManager : MonoBehaviour
     [SerializeField] private int i_bonusMoney = 1000;
     [SerializeField] private int i_nuggCountToCompleteBonus = 400;
 
+    [Header("Expenses")]
+    [SerializeField] private Text[] tA_expenseNameText = new Text[0];
+    [SerializeField] private Text[] tA_expenseCostText = new Text[0];
+    [SerializeField] private string[] sA_possibleExpenses = new string[0];
+
+
     public void Start()
     {
+        for (int i = 0; i < tA_expenseNameText.Length; i++)
+        {
+            tA_expenseNameText[i].text = "";
+            tA_expenseCostText[i].text = "";
+        }
+
         if (PhotonNetwork.InRoom)
             UniversalNugManager.x?.DoScoring();
-
-        ////yield return new WaitForEndOfFrame();
 
         if (FindObjectOfType<ScoreboardCamController>())
         {
             LockCam();
             GetComponent<TurnOnObjectWhenAroundPlayers>().EnableScreen();
         }
+
     }
 
     public void SetValues(int[][] values, string[] _names)
@@ -98,6 +108,23 @@ public class ScoreboardManager : MonoBehaviour
 
             so_playerScoreObjects[i].bucksText.text = Mathf.RoundToInt(playerTotal).ToString();
             totalEarned += Mathf.RoundToInt(playerTotal * _f_currentMoneyMult);
+        }
+
+        for (int i = 0; i < tA_expenseNameText.Length; i++)
+        {
+            tA_expenseNameText[i].text = "";
+            tA_expenseCostText[i].text = "";
+        }
+
+        Random rand = new Random();
+        Random.InitState(values[0][0]);
+
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount + 2; i++)
+        {
+            tA_expenseNameText[i].text = sA_possibleExpenses[Random.Range(0, sA_possibleExpenses.Length)];
+            int _i = Random.Range(0, 100);
+            tA_expenseCostText[i].text = "-£" + _i;
+            _i_bonusScaledMoney -= _i;
         }
 
         t_totalEarned.text = Mathf.RoundToInt(totalEarned + _i_bonusScaledMoney).ToString();
