@@ -174,6 +174,7 @@ public class AugmentWindow : EditorWindow
                     break;
                 case AugmentType.projectile:
                     ProjectileAugment pOutput = new ProjectileAugment();
+                    pOutput.Cost = i_cost;
                     InitStandardAugment(pOutput);
                     try
                     {
@@ -183,6 +184,7 @@ public class AugmentWindow : EditorWindow
                     break;
                 case AugmentType.cone:
                     ConeAugment cOutput = new ConeAugment();
+                    cOutput.Cost = i_cost;
                     InitStandardAugment(cOutput);
                     try
                     {
