@@ -244,8 +244,9 @@ public class Augment
         int newLdDmg = a.i_lodeDamage + b.i_lodeDamage;
         c.i_lodeDamage = newLdDmg > 0 ? newLdDmg : 1;
         float newWeight = a.f_weight + b.f_weight;
-        c.f_weight = newWeight > 0 ? newWeight : 1;
-        c.f_recoil = a.f_recoil + b.f_recoil;
+        c.f_weight = newWeight > 0 ? newWeight : 0;
+        float newRecoil = a.f_recoil + b.f_recoil;
+        c.f_recoil = newRecoil > 0 ? newRecoil : 0;
         c.f_energyGauge = a.f_energyGauge + b.f_energyGauge;
         c.f_knockback = a.f_knockback + b.f_knockback;
         c.f_heatsink = a.f_heatsink + b.f_heatsink;

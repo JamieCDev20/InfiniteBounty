@@ -198,7 +198,6 @@ public class Microwave : SubjectBase, IInteractible
         int aLevel = aug_slotA.Level;
         int bLevel = aug_slotB.Level;
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
-        fusedAug.Stage = aug_slotB.Stage;
         apd.UpdatePropertyText(fusedAug);
         Debug.Log(fusedAug.Stage);
         FuseEvent fe = new FuseEvent(new AugmentSave(fusedAug.Stage, fusedAug.at_type, fusedAug.Level, fusedAug.Stage == AugmentStage.fused ?

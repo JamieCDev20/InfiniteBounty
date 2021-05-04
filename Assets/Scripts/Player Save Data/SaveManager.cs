@@ -401,10 +401,8 @@ public class SaveManager : SubjectBase, ObserverBase
 
     private int GetAugmentSaveIndex(AugmentSave _augSave, params int[] levels)
     {
-        Debug.Log(string.Format("Aug Index: {0} | Aug Level: {1} | Indicies length: {2}", _augSave.SavedAugment.indicies[0], _augSave.SavedAugment.level, _augSave.SavedAugment.indicies.Length));
         for (int i = 0; i < saveData.purchasedAugments.Length; i++)
         {
-            Debug.Log(string.Format("Aug In Save: {0} | Aug Level: {1} | Indicies length {2}", saveData.purchasedAugments[i].SavedAugment.indicies[0], saveData.purchasedAugments[i].SavedAugment.level, saveData.purchasedAugments[i].SavedAugment.indicies.Length));
             if (_augSave.SavedAugment.indicies.Length == 1)
             {
                 if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.level == (levels.Length > 0 ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
