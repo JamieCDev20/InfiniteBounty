@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingAI : AIBase
+public partial class FlyingAI : AIBase
 {
 
     //float f_summoningSickness = 1;
