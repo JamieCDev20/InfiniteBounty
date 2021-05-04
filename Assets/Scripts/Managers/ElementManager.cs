@@ -32,6 +32,7 @@ public class ElementManager : MonoBehaviour
     public float fireInterval;
     [Header("Lava")]
     public int lavaDamage;
+    public GameObject lavaPlatform;
 
     private void Awake()
     {

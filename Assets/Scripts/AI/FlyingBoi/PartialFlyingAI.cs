@@ -105,10 +105,22 @@ public partial class FlyingAI : AIBase
     [PunRPC]
     public void RemoteShoot(Vector3 dir)
     {
-        GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
-        ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
+
     }
 
+    IEnumerator ShootingRoutine(Vector3 dir)
+    {
+        GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
+
+        Collider c = ob.GetComponent<Collider>();
+        c.enabled = false;
+        ob.transform.rotation = Quaternion.LookRotation(dir);
+        ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(0.2f);
+        
+        c.enabled = true;
+    }
 
     #endregion
 

@@ -346,6 +346,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void HydroLava()
     {
         //do platform things
+        Instantiate(ElementManager.x.lavaPlatform, transform.position, Quaternion.identity);
     }
 
     private void TastyFire()
