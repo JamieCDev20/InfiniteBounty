@@ -9,6 +9,7 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
     [SerializeField] private int i_maxHealth = 300;
 
     private int i_curHealth;
+    [SerializeField] private GameObject go_deathParticles;
 
     private void OnEnable()
     {
@@ -50,6 +51,8 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
         GetComponent<Collider>().isTrigger = true;
         yield return new WaitForSeconds(2.8f);
         GetComponentInChildren<Animator>().SetBool("WakeUp", true);
+        go_deathParticles.transform.parent = null;
+        go_deathParticles.SetActive(true);
         PhotonNetwork.Destroy(gameObject);
         if (photonView.IsMine)
             EnemySpawner.x?.EnemyDied(true);
