@@ -11,8 +11,8 @@ public class Bouncy : MonoBehaviour
     {
         if (collision.collider.attachedRigidbody != null)
             if (collision.collider.CompareTag("Player"))
-                collision.collider.attachedRigidbody.AddForce(transform.up * f_playerBounceForce);
+                collision.collider.attachedRigidbody.AddForce(transform.up * f_playerBounceForce, ForceMode.Impulse);
             else
-                collision.collider.attachedRigidbody.AddForce(transform.up * f_otherBounceForce);
+                collision.collider.attachedRigidbody.AddForce(transform.up * f_otherBounceForce, ForceMode.Impulse);
     }
 }
