@@ -4,10 +4,11 @@ using UnityEngine;
 public class TrailerPlayerController : MonoBehaviour
 {
     [SerializeField] private Animator anim;
+    [SerializeField] private float TransitionSpeed = 0.2f;
     Vector3 movement;
     private void Update()
     {
-        movement = Vector3.Lerp(movement, new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Input.GetButton("Sprint") ? 2 : 1), 0.3f);
+        movement = Vector3.Lerp(movement, new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Input.GetButton("Sprint") ? 2 : 1), TransitionSpeed);
         anim.SetFloat("X", movement.x);
         anim.SetFloat("Y", movement.z);
         anim.SetBool("ShootingRight", Input.GetMouseButton(1));
