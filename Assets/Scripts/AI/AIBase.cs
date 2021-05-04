@@ -98,4 +98,14 @@ public class AIBase : MonoBehaviourPun
 
     #endregion
 
+    protected void BlankAction()
+    {
+        Debug.Log("Using Blank Action");
+    }
+
+    protected bool BlankQuery()
+    {
+        Debug.Log("Using Blank Query");
+        return false;
+    }
 }
