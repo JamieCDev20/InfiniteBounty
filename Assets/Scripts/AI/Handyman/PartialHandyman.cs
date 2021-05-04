@@ -101,8 +101,8 @@ public partial class HandymanAI : AIBase
 
     private void PickUpAction()
     {
+        toggleHurtboxes(false);
         go_nearestThrowable.GetComponent<Rigidbody>().isKinematic = true;
-        go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
 
         //go_nearestThrowable.GetComponent<Collider>().enabled = false;
         MoverBase m = go_nearestThrowable.GetComponent<MoverBase>();
@@ -126,8 +126,9 @@ public partial class HandymanAI : AIBase
 
     private IEnumerator IThrow()
     {
-
         Rigidbody _rb = go_nearestThrowable.GetComponent<Rigidbody>();
+        Collider _c = go_nearestThrowable.GetComponent<Collider>();
+        _c.enabled = false;
         anim.Throw();
         f_throwCooldown = f_throwWindup;
 
@@ -137,17 +138,22 @@ public partial class HandymanAI : AIBase
         _rb.constraints = RigidbodyConstraints.None;
         _rb.AddForce(GetThrowVector(t_target.transform.position), ForceMode.Impulse);
         _rb.AddTorque(new Vector3(Random.value, Random.value, Random.value) * Random.Range(5, 10));
-        go_nearestThrowable = null;
 
 
         f_throwCooldown = f_throwWindup;
-        mover.SetCanMove(true);
         b_hasThrowable = false;
+        yield return new WaitForSeconds(0.1f);
+        go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
+        mover.SetCanMove(true);
+        _c.enabled = true;
+
+        yield return new WaitForSeconds(1);
+        go_nearestThrowable = null;
     }
 
     private void PunchAction()
     {
-        toggleHurtboxes(true);
+        //toggleHurtboxes(true);
         anim.Slap();
 
 
