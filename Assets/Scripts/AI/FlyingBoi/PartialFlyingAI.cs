@@ -21,6 +21,7 @@ public partial class FlyingAI : AIBase
 
     private bool CanshootQuery()
     {
+        f_shootTimer -= Time.deltaTime;
         if (f_shootTimer <= 0)
             return true;
         return false;
@@ -54,8 +55,8 @@ public partial class FlyingAI : AIBase
         }
     }
 
-    private void OrbitTarget() 
-    { 
+    private void OrbitTarget()
+    {
 
     }
 
