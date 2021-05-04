@@ -97,12 +97,12 @@ public partial class HandymanAI : AIBase
         //float dist = (transform.position - _pos).magnitude;
         //float distPecent = (dist / 2000);
         //float force = (distPecent * (throwForceRange.y - throwForceRange.x)) + throwForceRange.x;
-        float force = go_nearestThrowable.name.Contains("ode")? 400 : 100;
+        float force = go_currentThrowable.name.Contains("ode")? 400 : 100;
 
         //float height = force * Mathf.Rad2Deg * Mathf.Tan(Mathf.Deg2Rad * angle);
 
         //force = Mathf.Sqrt((force * force) + (height * height));
-        Vector3 dir = (t_target.position - go_centreofPickup.transform.position).normalized;
+        Vector3 dir = (_pos - go_centreofPickup.transform.position).normalized;
         Vector3 throwVec = dir;
 
         throwVec = throwVec.normalized * force;

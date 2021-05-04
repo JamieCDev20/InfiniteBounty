@@ -142,7 +142,7 @@ public partial class HandymanAI : AIBase
         go_currentThrowable.transform.parent = null;
         _rb.isKinematic = false;
         _rb.constraints = RigidbodyConstraints.None;
-        _rb.AddForce(GetThrowVector(t_target.transform.position + Vector3.up * 5), ForceMode.Impulse);
+        _rb.AddForce(GetThrowVector(t_target.transform.position + (Vector3.up * 5)), ForceMode.Impulse);
         _rb.AddTorque(new Vector3(Random.value, Random.value, Random.value) * Random.Range(5, 10));
 
         f_throwTimer = f_throwCooldown;
