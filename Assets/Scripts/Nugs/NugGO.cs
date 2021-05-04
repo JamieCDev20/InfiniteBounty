@@ -30,7 +30,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        eO_elem = GetComponent<ElementalObject>();
+        eO_elem = GetComponentInChildren<ElementalObject>();
 
         SceneManager.sceneLoaded += OnSceneLoad;
 
@@ -52,6 +52,13 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             if (myLode == null)
                 Die();
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        IElementable ie = collision.gameObject.GetComponent<IElementable>();
+        if (ie != null)
+            eO_elem.RecieveElements(ie.GetActiveElements());
     }
 
     public override void OnEnable()
@@ -142,6 +149,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             {
                 cols[i].GetComponent<IElementable>()?.RecieveElements(eO_elem.GetActiveElements());
             }
+            if (!eO_elem.GetShouldDie())
+                return;
         }
         myLode?.NugGotHit(i_lodeID, damage, activatesThunder);
     }

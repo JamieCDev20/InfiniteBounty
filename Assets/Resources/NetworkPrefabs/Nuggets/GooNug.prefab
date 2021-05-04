@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6741355650731856494}
   - component: {fileID: -7589078583647061740}
   - component: {fileID: 222959893367524967}
-  - component: {fileID: 2468895554851565948}
   m_Layer: 9
   m_Name: GooNug
   m_TagString: Untagged
@@ -103,23 +102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTags:
   - Nugg
---- !u!114 &2468895554851565948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eL_activeElements: 00000000
-  eL_elementImmunities: 
-  go_lrObject: {fileID: 5860972205640831532, guid: 59547ea43e8d76f4988c38b81ea0d7f0,
-    type: 3}
-  mesh: {fileID: 7191878297624369205, guid: a3dafadb19e06ca43bbece653a8257a8, type: 3}
 --- !u!1 &7355227557820035907
 GameObject:
   m_ObjectHideFlags: 0
@@ -5033,6 +5015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7279909200177874800}
   - component: {fileID: 1396934264451236921}
+  - component: {fileID: 5196527535769263594}
   m_Layer: 14
   m_Name: PhysicalCollider
   m_TagString: Untagged
@@ -5067,3 +5050,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5196527535769263594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8423664998796791898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eL_activeElements: 00000000
+  eL_elementImmunities: 
+  go_lrObject: {fileID: 5860972205640831532, guid: 59547ea43e8d76f4988c38b81ea0d7f0,
+    type: 3}
+  mesh: {fileID: 7191878297624369205, guid: a3dafadb19e06ca43bbece653a8257a8, type: 3}

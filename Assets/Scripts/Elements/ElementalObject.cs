@@ -297,6 +297,11 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     }
 
+    public bool GetShouldDie()
+    {
+        return b_shouldDie;
+    }
+
     #region ElementInteractions
 
     private void GooHydro()
@@ -459,7 +464,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
-        FireActivate();
+        //FireActivate();
     }
 
     #endregion
