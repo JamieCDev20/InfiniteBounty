@@ -8,6 +8,8 @@ public partial class GrooberAI : AIBase
     private Rigidbody rb;
     private bool b_inGroup;
 
+    private int i_runType;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,6 +19,7 @@ public partial class GrooberAI : AIBase
         f_timeStarted = Time.realtimeSinceStartup;
 
         i_actualDamage = Mathf.RoundToInt(i_damage * DifficultyManager.x.ReturnCurrentDifficulty().f_damageMult);
+        i_runType = Random.Range(-1, 2);
     }
 
     private void Update()
