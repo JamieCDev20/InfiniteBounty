@@ -27,9 +27,6 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     private Diversifier[] dA_activeDiversifiers = new Diversifier[3];
     private NugManager nm_nugMan;
 
-    [Header("Diversifier Sprites")]
-    [SerializeField] private DiversifierInfo[] diA_diversifiers = new DiversifierInfo[0];
-
     [Header("UI References")]
     [SerializeField] private Text t_nameText;
     [SerializeField] private Text t_descriptionText;
@@ -82,19 +79,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         dA_activeDiversifiers[_wd_wheel.i_wheelIndex] = _wd_wheel.dA_wheelDiversifiers[_i_diversifierToRoll];
 
         int _i;
-        _wd_wheel.srL_wheelSprites[0].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_diversifierToRoll]].s_image;
+        _wd_wheel.srL_wheelSprites[0].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_diversifierToRoll]].s_image;
 
         //Sprite below
         _i = _i_diversifierToRoll - 1;
         if (_i < 0)
             _i = _wd_wheel.dA_wheelDiversifiers.Length - 1;
-        _wd_wheel.srL_wheelSprites[1].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
+        _wd_wheel.srL_wheelSprites[1].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
 
         //Sprite Above
         _i = _i_diversifierToRoll + 1;
         if (_i >= _wd_wheel.dA_wheelDiversifiers.Length)
             _i = 0;
-        _wd_wheel.srL_wheelSprites[2].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
+        _wd_wheel.srL_wheelSprites[2].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
     }
 
     #region Interactions
@@ -211,19 +208,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             int _i_;
 
             //Centre Sprite
-            _wd_wheel.srL_wheelSprites[0].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_currentIndex]].s_image;
+            _wd_wheel.srL_wheelSprites[0].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_currentIndex]].s_image;
 
             //Sprite below
             _i_ = _i_currentIndex - 1;
             if (_i_ < 0)
                 _i_ = _wd_wheel.dA_wheelDiversifiers.Length - 1;
-            _wd_wheel.srL_wheelSprites[1].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image;
+            _wd_wheel.srL_wheelSprites[1].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image;
 
             //Sprite Above
             _i_ = _i_currentIndex + 1;
             if (_i_ >= _wd_wheel.dA_wheelDiversifiers.Length)
                 _i_ = 0;
-            _wd_wheel.srL_wheelSprites[2].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image;
+            _wd_wheel.srL_wheelSprites[2].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image;
 
             _i_currentIndex++;
             if (_i_currentIndex >= _wd_wheel.dA_wheelDiversifiers.Length)
@@ -246,19 +243,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         }
 
         int _i = _i_currentIndex;
-        _wd_wheel.srL_wheelSprites[0].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_diversifierToRoll]].s_image;
+        _wd_wheel.srL_wheelSprites[0].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_diversifierToRoll]].s_image;
 
         //Sprite below
         _i = _i_diversifierToRoll - 1;
         if (_i < 0)
             _i = _wd_wheel.dA_wheelDiversifiers.Length - 1;
-        _wd_wheel.srL_wheelSprites[1].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
+        _wd_wheel.srL_wheelSprites[1].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
 
         //Sprite Above
         _i = _i_diversifierToRoll + 1;
         if (_i >= _wd_wheel.dA_wheelDiversifiers.Length)
             _i = 0;
-        _wd_wheel.srL_wheelSprites[2].sprite = diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
+        _wd_wheel.srL_wheelSprites[2].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
 
         b_isSpinning = false;
         DisplayDiversifierInfo(i_currentButtonHighlighted);
@@ -319,8 +316,8 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     {
         if (b_isSpinning) return;
         i_currentButtonHighlighted = _i_index;
-        t_descriptionText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
-        t_nameText.text = diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
+        t_descriptionText.text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
+        t_nameText.text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
         go_infoHighlight.transform.position = tA_buttonPositions[_i_index].position;
     }
 
@@ -345,11 +342,13 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         public int i_wheelIndex;
         [HideInInspector] public Diversifier[] dA_wheelDiversifiers;
     }
-    [System.Serializable]
-    private struct DiversifierInfo
-    {
-        public string s_name;
-        [TextArea] public string s_desc;
-        public Sprite s_image;
-    }
+}
+
+[System.Serializable]
+public struct DiversifierInfo
+{
+    public string s_name;
+    [TextArea] public string s_desc;
+    public string s_shortHandDesc;
+    public Sprite s_image;
 }

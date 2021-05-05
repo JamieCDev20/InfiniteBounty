@@ -22,6 +22,12 @@ public class PlayerLevelSpawnController : MonoBehaviour
     [SerializeField] private Text t_bonusText;
     [SerializeField] private GameObject go_bonusPart;
 
+    [Header("Risk Section")]
+    [SerializeField] private Text t_riskLevelText;
+    [SerializeField] private Text t_riskEffectsText;
+    [SerializeField] private Text t_diversifierTexts;
+
+
     public void SetupPlayer(GameObject _go_playerToSetup)
     {
 
@@ -36,6 +42,9 @@ public class PlayerLevelSpawnController : MonoBehaviour
         dimensionText.text = $"DIMENSION: {Convert.ToString(seed, 16)}";
 
         _go_playerToSetup.transform.forward = transform.forward;
+
+        SetupRiskDisplay();
+        SetupDiverDisplay();
 
         switch (DiversifierManager.x.ReturnBonusObjective())
         {
@@ -65,8 +74,26 @@ public class PlayerLevelSpawnController : MonoBehaviour
         StartCoroutine(LateSets());
     }
 
+    private void SetupRiskDisplay()
+    {
+        t_riskLevelText.text = "Risk Level: " + DifficultyManager.x.ReturnCurrentDifficulty().s_name;
+        t_riskEffectsText.text =
+            "Enemy Toughness: " + DifficultyManager.x.ReturnCurrentDifficulty().f_scaleMult + "x \n" +
+            "Enemy Power: " + DifficultyManager.x.ReturnCurrentDifficulty().f_damageMult + "x \n" +
+            "Bounty Bucks Multiplier: " + DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult + "x";
+    }
+
+    private void SetupDiverDisplay()
+    {
+        t_diversifierTexts.text =
+            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(0).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(0).s_shortHandDesc + "\n" +
+            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(1).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(1).s_shortHandDesc + "\n" +
+            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(2).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(2).s_shortHandDesc;
+    }
+
     IEnumerator LateSets()
     {
+        HUDController.x.StopShowing();
         yield return new WaitForEndOfFrame();
 
 
@@ -90,6 +117,8 @@ public class PlayerLevelSpawnController : MonoBehaviour
         pim.GetCamera().enabled = true;
         pim.SetMoving(true);
         go_cameraParent.SetActive(false);
+
+        HUDController.x.StartShowing();
     }
 
 }

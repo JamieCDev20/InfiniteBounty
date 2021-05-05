@@ -39,6 +39,9 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     private LodeSpawnZone[] ziA_allZones;
     private BonusObjective bo_currentBonusObjective;
 
+    [Header("Diver Display Info")]
+    [SerializeField] internal DiversifierInfo[] diA_diversifiers = new DiversifierInfo[0];
+
     [Header("Geyser Things")]
     [SerializeField] private string s_geyserPath;
     [SerializeField] private Vector2 v_numberOfGeysers;
@@ -115,6 +118,11 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
                 }
             }
+    }
+
+    internal DiversifierInfo ReturnActiveDiversifierDisplayInfo(int _i_activeDiverIndex)
+    {
+        return diA_diversifiers[(int)dA_activeDivers[_i_activeDiverIndex]];
     }
 
     #region Diver Functions
