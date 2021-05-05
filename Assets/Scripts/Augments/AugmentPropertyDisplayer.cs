@@ -619,7 +619,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     public List<Augment> DisplayCurrentType()
     {
-        Debug.Log(adt_currentDisplayType);
         return InitAugmentList(aL_allAugmentsOwned, adt_currentDisplayType, false);
     }
 
