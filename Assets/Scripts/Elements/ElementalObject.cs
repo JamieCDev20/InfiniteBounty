@@ -43,6 +43,14 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (mesh == null)
             mesh = GetComponentInChildren<MeshFilter>().mesh;
 
+        InitInteractions();
+
+        InitialiseActivations();
+
+    }
+
+    private void InitInteractions()
+    {
         interactions = new ElementInteraction[,] {
             //Goo               Hydro               Tasty               Thunder             Boom                Fire                Lava
             {NullInteraction,   GooHydro,           NullInteraction,    GooThunder,         NullInteraction,    GooFire,            NullInteraction},   //Goo
@@ -55,14 +63,13 @@ public class ElementalObject : MonoBehaviour, IElementable
         };
 
         activations = new ElementActivation[7] { GooActivate, HydroActivate, TastyActivate, ThunderActivate, BoomActivate, FireActivate, LavaActivate };
-
-        InitialiseActivations();
-
     }
 
     public void Init(Element[] _startingElements)
     {
-        activations = new ElementActivation[7] { GooActivate, HydroActivate, TastyActivate, ThunderActivate, BoomActivate, FireActivate, LavaActivate };
+
+        InitInteractions();
+
         for (int i = 0; i < _startingElements.Length; i++)
         {
             Init(_startingElements[i]);
