@@ -22,6 +22,12 @@ public class GrooberHealth : MonoBehaviour, IHitable
         f_deathTimer += Time.deltaTime;
         if (f_deathTimer > 60)
             Die();
+#if UNITY_EDITOR
+
+        if (Input.GetKeyDown(KeyCode.Delete))
+            TakeDamage(1000, false);
+
+#endif
     }
 
     public bool IsDead()
@@ -44,6 +50,7 @@ public class GrooberHealth : MonoBehaviour, IHitable
     {
         TakeDamage(damage, activatesThunder);
     }
+
 
     private void Start()
     {
