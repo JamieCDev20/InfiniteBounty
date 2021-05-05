@@ -96,7 +96,7 @@ public partial class FlyingAI : AIBase
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        Vector3 _dir = t_target.position - transform.position;
+        Vector3 _dir = (t_target.position + Vector3.up) - transform.position;
         photonView.RPC(nameof(RemoteShoot), RpcTarget.AllViaServer, _dir);
         f_shootTimer = f_shootCooldown;
     }

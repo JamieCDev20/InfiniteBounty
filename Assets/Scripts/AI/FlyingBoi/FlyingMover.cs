@@ -11,8 +11,8 @@ public class FlyingMover : MoverBase
     public override void Move(Vector3 _dir)
     {
         rb.AddForce(_dir.normalized * f_flyForce);
-        if (rb.velocity.sqrMagnitude > 0.5f)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up)), 0.3f);
+        //if (rb.velocity.sqrMagnitude > 0.5f)
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up)), 0.3f);
     }
 
     private void OnEnable()
