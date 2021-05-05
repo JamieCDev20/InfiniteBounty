@@ -42,8 +42,10 @@ public class ElementalObject : MonoBehaviour, IElementable
         ElementManagerx = ElementManager.x;
         pO = GetComponent<PoolableObject>();
         InitElements = eL_activeElements;
-        if(hittableObject != null)
+
+        if (hittableObject != null)
             ourHitable = hittableObject.GetComponent<IHitable>();
+
         if (mesh == null)
             mesh = GetComponentInChildren<MeshFilter>()?.mesh;
 
@@ -58,10 +60,10 @@ public class ElementalObject : MonoBehaviour, IElementable
         float t = Time.realtimeSinceStartup;
         if (t - lastCollided < 0.1f)
             return;
-        IElementable ie = col.gameObject.GetComponent<IElementable>();
+        IElementable ie = col.gameObject.GetComponentInChildren<IElementable>();
         if (ie != null)
         {
-            RecieveElements(ie.GetActiveElements());
+            ie.RecieveElements(GetActiveElements());
             ActivateElement(false);
         }
         lastCollided = t;
@@ -97,7 +99,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     }
     private void Init(Element _startingElement)
     {
-        eL_activeElements.Add(_startingElement);
+        if (!eL_activeElements.Contains(_startingElement))
+            eL_activeElements.Add(_startingElement);
     }
 
     private void OnDisable()
@@ -212,15 +215,11 @@ public class ElementalObject : MonoBehaviour, IElementable
         {
             case Element.goo:
                 if (bA_statuses[(int)_el])
-                        return;
+                    return;
                 SetStatusEffect(_el, true, ElementManager.x.gooDuration);
                 AddRemoveElement(_el, true, ElementManager.x.gooDuration);
                 break;
             case Element.hydro:
-                if (bA_statuses[(int)_el])
-                        return;
-                SetStatusEffect(_el, true, ElementManager.x.hydroDuration);
-                AddRemoveElement(_el, true, ElementManager.x.hydroDuration);
                 break;
             case Element.tasty:
                 break;
@@ -230,7 +229,7 @@ public class ElementalObject : MonoBehaviour, IElementable
                 break;
             case Element.fire:
                 if (bA_statuses[(int)_el])
-                        return;
+                    return;
                 AddRemoveElement(_el, true, ElementManager.x.fireDuration);
                 SetStatusEffect(_el, true, ElementManager.x.fireDuration);
                 break;
@@ -310,6 +309,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     IEnumerator FireDamage(float _duration, int _damage)
     {
+        Debug.Log("I SHOULD BE BURNING");
         ourHitable?.TakeDamage(_damage, true);
         float t = 0;
         while (t < _duration)
@@ -408,13 +408,15 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void HydroFire()
     {
         SetStatusEffect(Element.fire, false);
+        SetStatusEffect(Element.hydro, false);
     }
 
     private void HydroLava()
     {
         //do platform things
-        Destroy(Instantiate(ElementManager.x.lavaPlatform, transform.position, Quaternion.identity), 10);
-        ourHitable.Die();
+        Destroy(Instantiate(ElementManager.x.lavaPlatform, transform.position, Quaternion.identity), 5);
+        AddRemoveElement(Element.hydro, false);
+        ourHitable?.TakeDamage(1, true);
     }
 
     private void TastyFire()
@@ -514,9 +516,13 @@ public class ElementalObject : MonoBehaviour, IElementable
 
         SetStatusEffect(Element.fire, true);
         AddRemoveElement(Element.fire, true);
-        if (gameObject.activeSelf)
+        Debug.Log("Doing fire damage to " + gameObject.name);
+
+
+        if (gameObject.activeInHierarchy)
         {
-            StopCoroutine("FireDamage");
+            Debug.Log("Active");
+            StopCoroutine(nameof(FireDamage));
             StartCoroutine(FireDamage(ElementManagerx.fireDuration * (bA_statuses[(int)Element.goo] ? ElementManagerx.gooDurationMultiplier : 1), ElementManagerx.fireDamage * (bA_statuses[(int)Element.goo] ? ElementManagerx.gooDamageMultiplier : 1)));
 
         }

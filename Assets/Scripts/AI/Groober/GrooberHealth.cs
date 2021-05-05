@@ -14,7 +14,6 @@ public class GrooberHealth : MonoBehaviour, IHitable
     private void Awake()
     {
         mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-        print(mA_myRenderers.Length);
     }
 
     public void Die()
