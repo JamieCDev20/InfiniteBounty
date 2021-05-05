@@ -13,6 +13,7 @@ public partial class FlyingAI : AIBase
     [SerializeField] private float f_orbitSpeed;
     private bool b_isRightWinged;
     private bool b_isShooting;
+    [SerializeField] private Animator anim;
 
     #region Queries
 
@@ -112,8 +113,8 @@ public partial class FlyingAI : AIBase
         if (!b_isShooting)
         {
             b_isShooting = true;
-            GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position, Quaternion.LookRotation(dir));
-
+            GameObject ob = PoolManager.x?.SpawnObject(go_throwProjectile, transform.position - (Vector3.up * 2), Quaternion.LookRotation(dir));
+            anim.SetBool("Attacking", true);
             Collider c = ob.GetComponent<Collider>();
             c.enabled = false;
             ob.transform.rotation = Quaternion.LookRotation(dir);
@@ -122,6 +123,7 @@ public partial class FlyingAI : AIBase
             rb.constraints = RigidbodyConstraints.FreezeRotation;
 
             yield return new WaitForSeconds(0.2f);
+            anim.SetBool("Attacking", false);
 
             c.enabled = true;
             yield return new WaitForSeconds(f_shootCooldown);
