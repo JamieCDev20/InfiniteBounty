@@ -9,7 +9,7 @@ public class HammerHitbox : MonoBehaviour
     private int i_damage;
     private int i_lodeDamage;
     [SerializeField] private ParticleSystem p_hitParticles;
-    private Element[] eo_element;
+    [SerializeField] private ElementalObject elements;
     private Vector3 v_forward;
 
     private void Start()
@@ -18,12 +18,14 @@ public class HammerHitbox : MonoBehaviour
         c_hitbox.enabled = false;
     }
 
-    internal void Setup(int _i_damage, float _f_knockback, int _i_lode, Vector3 _v_forward)
+    internal void Setup(int _i_damage, float _f_knockback, int _i_lode, Vector3 _v_forward, Element[] _elems)
     {
         i_damage = _i_damage;
         f_knockBack = _f_knockback;
         i_lodeDamage = _i_lode;
         v_forward = _v_forward;
+        if(!Utils.ArrayIsNullOrZero(_elems))
+            elements.Init(_elems);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,6 +52,9 @@ public class HammerHitbox : MonoBehaviour
             other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
             p_hitParticles.Play();
         }
+        IElementable ie = other.gameObject.GetComponent<IElementable>();
+        if (ie != null)
+            elements.RecieveElements(ie.GetActiveElements());
     }
 
     internal void SetHitBoxActive(bool _b_active)

@@ -29,7 +29,6 @@ public class ProjectileTool : WeaponTool
     [SerializeField] private AudioClip ac_overHeatClip;
     private PlayerAnimator pa_anim;
     [SerializeField] private ParticleSystem ps_shotEffects;
-    Element[] eo_element;
 
     public override void SetActive(bool val)
     {
