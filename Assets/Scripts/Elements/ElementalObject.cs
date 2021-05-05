@@ -62,6 +62,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void Init(Element[] _startingElements)
     {
+        activations = new ElementActivation[7] { GooActivate, HydroActivate, TastyActivate, ThunderActivate, BoomActivate, FireActivate, LavaActivate };
         for (int i = 0; i < _startingElements.Length; i++)
         {
             Init(_startingElements[i]);
@@ -97,7 +98,6 @@ public class ElementalObject : MonoBehaviour, IElementable
         activated += ActivatedThisFrame;
         for (int i = 0; i < eL_activeElements.Count; i++)
         {
-            Debug.Log($"activated: {activated} | activeElements: {eL_activeElements} | eL_activeElements Length: {eL_activeElements.Count} | i: {i}");
             activated += activations[(int)eL_activeElements[i]];
         }
     }
