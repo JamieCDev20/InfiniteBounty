@@ -12,6 +12,7 @@ public class Moober : MoverBase
     private void Start()
     {
         anim = GetComponentInChildren<GrooberAnimator>();
+        stillTime = Time.realtimeSinceStartup;
     }
 
     public override void Move(Vector3 _dir)
@@ -34,7 +35,7 @@ public class Moober : MoverBase
         }
         if(rb.velocity.sqrMagnitude < 0.1f)
         {
-            if(Time.realtimeSinceStartup - stillTime > 1)
+            if(Time.realtimeSinceStartup - stillTime > 2)
             {
                 Jump();
                 stillTime = Time.realtimeSinceStartup;
