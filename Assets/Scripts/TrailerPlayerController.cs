@@ -8,7 +8,7 @@ public class TrailerPlayerController : MonoBehaviour
     Vector3 movement;
     private void Update()
     {
-        movement = Vector3.Lerp(movement, new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Input.GetButton("Sprint") ? 2 : 1), TransitionSpeed);
+        movement = Vector3.Lerp(movement, new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Input.GetButton("Sprint") ? 2 : 1) * (Input.GetKey(KeyCode.LeftControl) ? 2 : 1), TransitionSpeed);
         anim.SetFloat("X", movement.x);
         anim.SetFloat("Y", movement.z);
         anim.SetBool("ShootingRight", Input.GetMouseButton(1));
