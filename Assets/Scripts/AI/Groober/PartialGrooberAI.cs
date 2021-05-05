@@ -16,6 +16,7 @@ public partial class GrooberAI : AIBase
     private float f_currentTime;
     private bool b_attacking = false;
     [SerializeField] private float f_attackRange;
+    [SerializeField] private ParticleSystem ps_hitEffect;
 
     private Moober mover;
     [SerializeField] private int i_damage;
@@ -95,7 +96,10 @@ public partial class GrooberAI : AIBase
 
                 IHitable hit = item.GetComponent<IHitable>();
                 if (hit != null)
+                {
                     hit.TakeDamage(i_actualDamage, true);
+                    ps_hitEffect.Play();
+                }
             }
 
             anim.EndHeadbutt();
