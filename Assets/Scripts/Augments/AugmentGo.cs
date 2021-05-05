@@ -15,7 +15,6 @@ public class AugmentGo : MonoBehaviour
 
     public void ApplyMaterial(string _matName)
     {
-        Debug.Log(gameObject.name + "| AugmentColours/" + _matName);
         if(_matName != string.Empty && _matName != " ")
         {
             Material _mat = Resources.Load<Material>("AugmentColours/" + _matName);
