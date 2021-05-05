@@ -121,10 +121,6 @@ public class Bullet : MonoBehaviour, IPoolable
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
 
-        IElementable ie = collision.gameObject.GetComponent<IElementable>();
-        if (ie != null)
-            elements.RecieveElements(ie.GetActiveElements());
-
         Die();
     }
 

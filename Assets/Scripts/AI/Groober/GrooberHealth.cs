@@ -58,7 +58,8 @@ public class GrooberHealth : MonoBehaviour, IHitable
 
         for (int i = 0; i < mA_myRenderers.Length; i++)
             mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
-        StartCoroutine(DamageFlash());
+        if(gameObject.activeInHierarchy)
+            StartCoroutine(DamageFlash());
     }
 
     private IEnumerator DamageFlash()

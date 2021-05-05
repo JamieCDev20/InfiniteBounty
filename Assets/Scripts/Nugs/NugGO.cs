@@ -54,13 +54,6 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        IElementable ie = collision.gameObject.GetComponent<IElementable>();
-        if (ie != null)
-            eO_elem.RecieveElements(ie.GetActiveElements());
-    }
-
     public override void OnEnable()
     {
         b_canBeHit = false;
