@@ -51,7 +51,10 @@ public class GrooberHealth : MonoBehaviour, IHitable
         ps_hitParticles.Play();
 
         if (i_currentHealth <= 0)
+        {
             Die();
+            return;
+        }
 
         for (int i = 0; i < mA_myRenderers.Length; i++)
             mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
