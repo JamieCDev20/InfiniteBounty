@@ -10,9 +10,12 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
     [SerializeField] private GameObject go_deathEffect;
     private int i_curHealth;
     [SerializeField] private ParticleSystem p_damageParticles;
+    private SkinnedMeshRenderer[] mA_myRenderers = new SkinnedMeshRenderer[0];
 
     private void OnEnable()
     {
+        mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
         
@@ -68,6 +71,17 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
             return;
         }
         photonView.RPC(nameof(RemoteTakeDamage), RpcTarget.Others, damage, activatesThunder);
+
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
+        StartCoroutine(DamageFlash());
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        yield return new WaitForSeconds(0.05f);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 0);
     }
 
     private void MasterTakeDamage(int damage, bool activatesThunder)

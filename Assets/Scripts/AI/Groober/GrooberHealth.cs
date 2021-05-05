@@ -9,12 +9,20 @@ public class GrooberHealth : MonoBehaviour, IHitable
     [SerializeField] private GameObject go_deathParticles;
     [SerializeField] private ParticleSystem ps_hitParticles;
     private float f_deathTimer;
+    private SkinnedMeshRenderer[] mA_myRenderers = new SkinnedMeshRenderer[0];
+
+    private void Awake()
+    {
+        mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        print(mA_myRenderers.Length);
+    }
 
     public void Die()
     {
         gameObject.SetActive(false);
         go_deathParticles.transform.parent = null;
         go_deathParticles.SetActive(true);
+        EnemySpawner.x?.EnemyDied(false);
     }
 
     private void Update()
@@ -39,11 +47,22 @@ public class GrooberHealth : MonoBehaviour, IHitable
     {
         i_currentHealth -= damage;
 
+
         ps_hitParticles.Play();
+
         if (i_currentHealth <= 0)
             Die();
 
-        EnemySpawner.x?.EnemyDied(false);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
+        StartCoroutine(DamageFlash());
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        yield return new WaitForSeconds(0.05f);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 0);
     }
 
     public void TakeDamage(int damage, bool activatesThunder, float delay)
