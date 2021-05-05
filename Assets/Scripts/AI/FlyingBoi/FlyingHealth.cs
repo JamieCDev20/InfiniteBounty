@@ -18,7 +18,7 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
 
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
-        
+
         transform.localScale = (Vector3.one * 2) * _ds.f_scaleMult;
         if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniFlying))
         {
@@ -72,24 +72,27 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
         }
         photonView.RPC(nameof(RemoteTakeDamage), RpcTarget.Others, damage, activatesThunder);
 
-        for (int i = 0; i < mA_myRenderers.Length; i++)
-            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
-        StartCoroutine(DamageFlash());
     }
 
-    private IEnumerator DamageFlash()
-    {
-        yield return new WaitForSeconds(0.05f);
-        for (int i = 0; i < mA_myRenderers.Length; i++)
-            mA_myRenderers[i].material.SetFloat("DamageFlash", 0);
-    }
 
     private void MasterTakeDamage(int damage, bool activatesThunder)
     {
         i_curHealth -= damage;
         if (i_curHealth <= 0)
+        {
             Die();
+            return;
+        }
 
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
+        StartCoroutine(DamageFlash());
+    }
+    private IEnumerator DamageFlash()
+    {
+        yield return new WaitForSeconds(0.05f);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 0);
     }
 
     [PunRPC]
