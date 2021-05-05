@@ -8,6 +8,7 @@ public partial class GrooberAI : AIBase
     [SerializeField] private int i_minimumGroupSizeToAAttack = 6;
     [SerializeField] private float f_hordeRadius;
     [SerializeField] private LayerMask lm_enemyLayer;
+    [SerializeField] private float f_flankDistance = 3;
 
     [Header("Attack")]
     [SerializeField] private float f_attackStartup;
@@ -28,6 +29,13 @@ public partial class GrooberAI : AIBase
     private bool IsWithinAttackRangeQuery()
     {
         if (Vector3.Distance(t_target.position, transform.position) < f_attackRange)
+            return true;
+        return false;
+    }
+
+    private bool IsWithinFlankRangeQuery()
+    {
+        if (Vector3.Distance(t_target.position, transform.position) <= f_flankDistance)
             return true;
         return false;
     }
@@ -102,7 +110,11 @@ public partial class GrooberAI : AIBase
 
     private void MoveTowardTarget()
     {
-        mover.Move((AttackOnCooldownQuery() ? (transform.position - t_target.position) : (t_target.position - transform.position)).normalized);
+        Vector3 _v_offset = t_target.transform.right * i_runType * f_flankDistance;
+        if (i_runType == 0 || IsWithinFlankRangeQuery())
+            mover.Move((AttackOnCooldownQuery() ? (transform.position - t_target.position) : (t_target.position - transform.position)).normalized);
+        else
+            mover.Move((AttackOnCooldownQuery() ? (transform.position - (t_target.position + _v_offset)) : ((t_target.position + _v_offset) - transform.position)).normalized);
     }
 
     private void MoveTowardHorde()
