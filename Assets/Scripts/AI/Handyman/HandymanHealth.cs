@@ -10,9 +10,12 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
 
     private int i_curHealth;
     [SerializeField] private GameObject go_deathParticles;
+    private SkinnedMeshRenderer[] mA_myRenderers = new SkinnedMeshRenderer[0];
 
     private void OnEnable()
     {
+        mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
         transform.localScale = Vector3.one * _ds.f_scaleMult;
@@ -79,7 +82,18 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
         if (i_curHealth <= 0)
             Die();
 
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
+        StartCoroutine(DamageFlash());
     }
+    private IEnumerator DamageFlash()
+    {
+        yield return new WaitForSeconds(0.05f);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 0);
+    }
+
+
 
     [PunRPC]
     public void RemoteTakeDamage(int _dmg, bool _thun)
