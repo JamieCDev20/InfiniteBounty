@@ -27,11 +27,17 @@ public class AugmentLoader : MonoBehaviour
             if (augments[i] != string.Empty && !augments[i].Contains("null"))
             {
                 if (GetAugmentType(augments[i]) == AugmentType.standard && typeof(T).Equals(typeof(Augment)))
-                    augs.Add(JsonUtility.FromJson<T>(augments[i]));
+                {
+                    augs.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<T>(augments[i]));
+                }
                 else if (GetAugmentType(augments[i]) == AugmentType.projectile && typeof(T).Equals(typeof(ProjectileAugment)))
-                    augs.Add(JsonUtility.FromJson<T>(augments[i]));
+                {
+                    augs.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<T>(augments[i]));
+                }
                 else if (GetAugmentType(augments[i]) == AugmentType.cone && typeof(T).Equals(typeof(ConeAugment)))
-                    augs.Add(JsonUtility.FromJson<T>(augments[i]));
+                {
+                    augs.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<T>(augments[i]));
+                }
             }
         }
         List<T> theme = new List<T>();
@@ -71,6 +77,31 @@ public class AugmentLoader : MonoBehaviour
             }
         }
         return fusedAugs.ToArray();
+    }
+
+    /// <summary>
+    /// TODO IMPLEMENT THIS PROPERLY
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="_augString"></param>
+    /// <param name="_augArray"></param>
+    /// <param name="arrayInd"></param>
+    /// <returns></returns>
+    private static Element GetJsonElement<T>(string[] _augString, T[] _augArray, int arrayInd)
+    {
+        /// TODO FIX THIS SHIT OH MY FUCKING GOD
+        string[] elem = _augString[arrayInd].Split(new string[] { "eo_element" }, System.StringSplitOptions.None);
+        string actualElements = elem[1].Split('[', ']')[1];
+        if (!string.IsNullOrEmpty(actualElements) && actualElements != " ")
+        {
+            return (Element)int.Parse(actualElements);
+        }
+
+
+
+        // This will return goo. Change this
+        return 0;
+        //Debug.Log("Elements: " + augs[i].AugElement.Length);
     }
 
     private static AugmentType GetAugmentType(string _atString)

@@ -319,7 +319,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
-        
+        adt_currentDisplayType = _adt_whichToShow;
         return _aL_augmentsToShow;
 
     }
@@ -465,6 +465,39 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             PlaceAugmentProperties(go_propertyText).text = "Recoil " + ap.f_recoil.ToString();
 
         }
+
+        if(!Utils.ArrayIsNullOrZero(_aug.AugElement))
+            if (_aug.AugElement.Length > 0)
+                foreach (Element elim in _aug.AugElement)
+                {
+                    Debug.Log(elim);
+                    switch (elim)
+                    {
+                        case Element.goo:
+                            PlaceAugmentProperties(go_propertyText).text = "Goo";
+                            break;
+                        case Element.hydro:
+                            PlaceAugmentProperties(go_propertyText).text = "Hydro";
+                            break;
+                        case Element.tasty:
+                            PlaceAugmentProperties(go_propertyText).text = "Tasty";
+                            break;
+                        case Element.thunder:
+                            PlaceAugmentProperties(go_propertyText).text = "Thunder";
+                            break;
+                        case Element.boom:
+                            PlaceAugmentProperties(go_propertyText).text = "Boom";
+                            break;
+                        case Element.fire:
+                            PlaceAugmentProperties(go_propertyText).text = "Fire";
+                            break;
+                        case Element.lava:
+                            PlaceAugmentProperties(go_propertyText).text = "Lava";
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
         // explosion effects
 

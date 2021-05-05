@@ -104,16 +104,7 @@ public class WeaponTool : ToolBase
             int i = GetInactiveAugmentIndex();
             if (i == -1)
                 return false;
-            Debug.Log("i : " + i);
-            string s = "";
-            for (int j = 0; j < Augs.Length; j++)
-            {
-                s += $"{j}: ";
-                s += Augs[j];
-                s += "\n";
 
-            }
-            Debug.Log(s);
             float mod = GetAugmentLevelModifier(aug.Level);
 
             GameObject augmentGameObject = PoolManager.x.SpawnObject(augGo);
