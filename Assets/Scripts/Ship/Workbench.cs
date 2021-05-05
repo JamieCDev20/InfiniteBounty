@@ -256,7 +256,6 @@ public class Workbench : SubjectBase, IInteractible
                     // Save the augment
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
                     AugmentSave _savedAug = new AugmentSave(_aug);
-                    Debug.Log(_savedAug.SavedAugment.indicies[0]);
                     SendAttachSave(_aug, _savedAug);
                 }
                 else

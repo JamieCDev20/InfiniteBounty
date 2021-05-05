@@ -9,6 +9,7 @@ public class HammerHitbox : MonoBehaviour
     private int i_damage;
     private int i_lodeDamage;
     [SerializeField] private ParticleSystem p_hitParticles;
+    private Element[] eo_element;
     private Vector3 v_forward;
 
     private void Start()

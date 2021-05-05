@@ -37,8 +37,9 @@ public class Bullet : MonoBehaviour, IPoolable
     [Space, SerializeField] private float f_minimumSpeedForSound;
     private AudioSource as_source;
     [SerializeField] private float f_knockBack = 5;
+    [SerializeField] ElementalObject elements;
 
-    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae)
+    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae, Element[] _elem)
     {
         as_source = GetComponent<AudioSource>();
         c_myCollider.isTrigger = true;
@@ -55,6 +56,9 @@ public class Bullet : MonoBehaviour, IPoolable
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
         // If there's an explosion to be had, create a hiteffect here
         ae_explosion = _ae;
+        Debug.Log(elements);
+        if(!Utils.ArrayIsNullOrZero(_elem))
+            elements.Init(_elem);
         transform.rotation = Quaternion.identity;
         StartCoroutine(DeathTimer(f_lifeTime));
         //Invoke("BecomeCollidable", Time.deltaTime);
@@ -117,6 +121,10 @@ public class Bullet : MonoBehaviour, IPoolable
 
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
+
+        IElementable ie = collision.gameObject.GetComponent<IElementable>();
+        if (ie != null)
+            elements.RecieveElements(ie.GetActiveElements());
 
         Die();
     }

@@ -470,7 +470,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             if (_aug.AugElement.Length > 0)
                 foreach (Element elim in _aug.AugElement)
                 {
-                    Debug.Log(elim);
                     switch (elim)
                     {
                         case Element.goo:
