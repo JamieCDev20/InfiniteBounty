@@ -115,6 +115,8 @@ public class WeaponTool : ToolBase
             augmentGameObject.transform.position = A_augmentSlots[i].transform.position;
             augmentGameObject.GetComponent<Rigidbody>().isKinematic = true;
             augmentGameObject.GetComponent<Collider>().isTrigger = true;
+            augmentGameObject.GetComponent<AugmentGo>().ApplyMaterial(aug.AugmentMaterial);
+
             physicals[i] = augmentGameObject;
             AugmentGo actualGo = augmentGameObject.GetComponent<AugmentGo>();
             actualGo.Aug = aug;
