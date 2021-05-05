@@ -27,6 +27,10 @@ public class PlayerLevelSpawnController : MonoBehaviour
     [SerializeField] private Text t_riskEffectsText;
     [SerializeField] private Text t_diversifierTexts;
 
+    [Header("Cross Faders")]
+    [SerializeField] private Image[] iA_imagesToFadeIn = new Image[0];
+    [SerializeField] private Text[] iA_textToFadeIn = new Text[0];
+
 
     public void SetupPlayer(GameObject _go_playerToSetup)
     {
@@ -45,6 +49,12 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
         SetupRiskDisplay();
         SetupDiverDisplay();
+
+        for (int i = 0; i < iA_imagesToFadeIn.Length; i++)
+            iA_imagesToFadeIn[i].CrossFadeAlpha(0, 0, true);
+
+        for (int i = 0; i < iA_textToFadeIn.Length; i++)
+            iA_textToFadeIn[i].CrossFadeAlpha(0, 0, true);
 
         switch (DiversifierManager.x.ReturnBonusObjective())
         {
@@ -72,6 +82,13 @@ public class PlayerLevelSpawnController : MonoBehaviour
         }
 
         StartCoroutine(LateSets());
+
+        for (int i = 0; i < iA_imagesToFadeIn.Length; i++)
+            iA_imagesToFadeIn[i].CrossFadeAlpha(1, 1, true);
+
+        for (int i = 0; i < iA_textToFadeIn.Length; i++)
+            iA_textToFadeIn[i].CrossFadeAlpha(1, 1, true);
+
     }
 
     private void SetupRiskDisplay()
@@ -104,6 +121,14 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
         Invoke("PlayerImpact", f_timeToWaitBeforeActivating);
         Invoke("PlayParticle", f_timeToPlayParticle);
+
+        yield return new WaitForSeconds(f_timeToWaitBeforeActivating - 1);
+
+        for (int i = 0; i < iA_imagesToFadeIn.Length; i++)
+            iA_imagesToFadeIn[i].CrossFadeAlpha(0, 1, true);
+
+        for (int i = 0; i < iA_textToFadeIn.Length; i++)
+            iA_textToFadeIn[i].CrossFadeAlpha(0, 1, true);
     }
 
     private void PlayParticle()
