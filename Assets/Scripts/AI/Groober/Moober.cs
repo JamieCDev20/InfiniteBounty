@@ -7,6 +7,7 @@ public class Moober : MoverBase
 
     private bool b_jumping = false;
     private GrooberAnimator anim;
+    private float stillTime;
 
     private void Start()
     {
@@ -29,6 +30,14 @@ public class Moober : MoverBase
                 b_jumping = true;
                 anim.SetWindup(b_jumping);
                 Invoke(nameof(Jump), 0.3f);
+            }
+        }
+        if(rb.velocity.sqrMagnitude < 0.1f)
+        {
+            if(Time.realtimeSinceStartup - stillTime > 1)
+            {
+                Jump();
+                stillTime = Time.realtimeSinceStartup;
             }
         }
 
