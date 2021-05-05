@@ -41,7 +41,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         InitElements = eL_activeElements;
         ourHitable = GetComponentInParent<IHitable>();
         if (mesh == null)
-            mesh = GetComponentInChildren<MeshFilter>().mesh;
+            mesh = GetComponentInChildren<MeshFilter>()?.mesh;
 
         InitInteractions();
 
