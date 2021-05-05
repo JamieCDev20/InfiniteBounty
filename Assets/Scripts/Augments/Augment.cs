@@ -86,7 +86,7 @@ public class Augment
     #endregion
 
     #region Elemental 
-
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected Element[] eo_element;
     public Element[] AugElement { get { return eo_element; } set { eo_element = value; } }
 
@@ -273,6 +273,7 @@ public class Augment
             c.b_impact = true;
         else
             c.b_impact = false;
+        c.eo_element = Utils.CombineArrays(a.eo_element, b.eo_element);
 
         AugmentManager.x.AddToDict(c.Name, new int[] { AugmentManager.x.GetAugmentIndex(a.at_type, a.Name), AugmentManager.x.GetAugmentIndex(b.at_type, b.Name) });
 
