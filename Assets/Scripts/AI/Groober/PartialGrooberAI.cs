@@ -110,8 +110,8 @@ public partial class GrooberAI : AIBase
 
     private void MoveTowardTarget()
     {
-        Vector3 _v_offset = t_target.transform.right * i_runType * f_flankDistance;
-        if (i_runType == 0 || IsWithinFlankRangeQuery())
+        Vector3 _v_offset = t_target.transform.right * f_runType * f_flankDistance;
+        if (f_runType == 0 || IsWithinFlankRangeQuery())
             mover.Move((AttackOnCooldownQuery() ? (transform.position - t_target.position) : (t_target.position - transform.position)).normalized);
         else
             mover.Move((AttackOnCooldownQuery() ? (transform.position - (t_target.position + _v_offset)) : ((t_target.position + _v_offset) - transform.position)).normalized);
