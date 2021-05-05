@@ -82,11 +82,13 @@ public partial class FlyingAI : AIBase
 
             mover.Move(((pos + (Vector3.up * 10)) - transform.position));
         }
+        mover.LookAtVelocity(true);
     }
 
     private void OrbitTarget()
     {
-        Vector3 _v_lookAt = new Vector3(t_target.position.x, transform.position.y, t_target.position.y);
+        mover.LookAtVelocity(false);
+        Vector3 _v_lookAt = new Vector3(t_target.position.x, transform.position.y, t_target.position.z);
         transform.LookAt(_v_lookAt);
 
         mover.Move(((b_isRightWinged ? transform.right : -transform.right) * f_orbitSpeed));
@@ -97,7 +99,7 @@ public partial class FlyingAI : AIBase
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        Vector3 _dir = (t_target.position + Vector3.up) - transform.position;
+        Vector3 _dir = (t_target.position + (Vector3.up * 2)) - transform.position;
         photonView.RPC(nameof(RemoteShoot), RpcTarget.AllViaServer, _dir);
         f_shootTimer = f_shootCooldown;
     }
@@ -119,7 +121,8 @@ public partial class FlyingAI : AIBase
             c.enabled = false;
             ob.transform.rotation = Quaternion.LookRotation(dir);
             Rigidbody rb = ob.GetComponent<Rigidbody>();
-            rb.AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
+            rb.velocity = Vector3.zero;
+            rb.AddForce(ob.transform.forward * f_shootForce, ForceMode.Impulse);
             rb.constraints = RigidbodyConstraints.FreezeRotation;
 
             yield return new WaitForSeconds(0.2f);
