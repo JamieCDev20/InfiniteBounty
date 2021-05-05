@@ -13,8 +13,8 @@ public enum Diversifier
     GeysersGalore, //Triggered in DiversiferManager
     MiniMiniboss, //Triggered in HandymanHealth
     MiniBunny, //Triggered in HopDogHealth
-    GoofyGroobers,
-    MiniFlying,
+    GoofyGroobers, //Triggered in GooberHealth
+    MiniFlying, //Triggered in FlyingHealth
 
     BabyLodes, //Triggered in LodeSpawnZone, reduces size by 25%
     LessLodes, //Triggered in LodeSpawnZone
@@ -22,8 +22,8 @@ public enum Diversifier
     ZeroGNuggs, //Triggered in NugGo in start
     Maxiboss, //Triggered in HandymanHealth
     MegaBunnies, //Triggered in HopDogHealth
-    NastyGroobers,
-    MaxiFlying,
+    NastyGroobers, //Triggered in GrooberHealth
+    MaxiFlying, //Triggered in FlyingHealth
 }
 
 public enum BonusObjective
