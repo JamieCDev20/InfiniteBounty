@@ -206,7 +206,7 @@ public class Workbench : SubjectBase, IInteractible
         toolname.text = $"{goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].name} ({(i_currentWeaponIndex == 0 ? "L" : "R")})";
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
 
-        //aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        //aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
 
         //update the text to show the name of the tool
     }
@@ -335,6 +335,7 @@ public class Workbench : SubjectBase, IInteractible
         //WeaponTool weaponToEq = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         
         Notify(eae);
+        
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
     }
 
