@@ -15,9 +15,8 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
     {
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
-        transform.localScale = Vector3.one * _ds.f_scaleMult;
-
-        transform.localScale = Vector3.one * _ds.f_scaleMult;
+        
+        transform.localScale = (Vector3.one * 2) * _ds.f_scaleMult;
         if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniFlying))
         {
             transform.localScale *= 0.75f;
