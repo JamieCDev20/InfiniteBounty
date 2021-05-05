@@ -56,7 +56,6 @@ public class Bullet : MonoBehaviour, IPoolable
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
         // If there's an explosion to be had, create a hiteffect here
         ae_explosion = _ae;
-        Debug.Log(elements);
         if(!Utils.ArrayIsNullOrZero(_elem))
             elements.Init(_elem);
         transform.rotation = Quaternion.identity;
