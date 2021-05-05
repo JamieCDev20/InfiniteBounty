@@ -117,7 +117,9 @@ public partial class FlyingAI : AIBase
             Collider c = ob.GetComponent<Collider>();
             c.enabled = false;
             ob.transform.rotation = Quaternion.LookRotation(dir);
-            ob.GetComponent<Rigidbody>().AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
+            Rigidbody rb = ob.GetComponent<Rigidbody>();
+            rb.AddForce(ob.transform.forward.normalized * f_shootForce, ForceMode.Impulse);
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
 
             yield return new WaitForSeconds(0.2f);
 
