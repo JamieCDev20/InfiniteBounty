@@ -7,7 +7,6 @@ public class ElementalObject : MonoBehaviour, IElementable
 {
     [SerializeField] private List<Element> eL_activeElements = new List<Element>(); //The elements on this object
     [SerializeField] private List<Element> eL_elementImmunities = new List<Element>(); //The elemental immunities of this object
-    [SerializeField] private GameObject go_lrObject; //the line renderer for shocking
     [SerializeField] private Mesh mesh;
 
     //Goo  Hydro   Tasty Thunder Boom    Fire    Lava
@@ -98,6 +97,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         activated += ActivatedThisFrame;
         for (int i = 0; i < eL_activeElements.Count; i++)
         {
+            Debug.Log($"activated: {activated} | activeElements: {eL_activeElements} | eL_activeElements Length: {eL_activeElements.Count} | i: {i}");
             activated += activations[(int)eL_activeElements[i]];
         }
     }
@@ -221,7 +221,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void SetLineRendererPos(Vector3[] positions)
     {
-        GameObject LR = PoolManager.x.SpawnObject(go_lrObject, transform.position);
+        GameObject LR = PoolManager.x.SpawnObject(ElementManager.x.go_lrObject, transform.position);
         lrend = LR.GetComponent<LineRenderer>();
         if (!lrend)
             return;

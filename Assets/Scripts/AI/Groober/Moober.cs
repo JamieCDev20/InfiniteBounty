@@ -33,14 +33,15 @@ public class Moober : MoverBase
                 Invoke(nameof(Jump), 0.3f);
             }
         }
-        if(rb.velocity.sqrMagnitude < 0.1f)
+        if (rb.velocity.sqrMagnitude < 0.2f)
         {
-            if(Time.realtimeSinceStartup - stillTime > 2)
+            if (Time.realtimeSinceStartup - stillTime > 2)
             {
                 Jump();
-                stillTime = Time.realtimeSinceStartup;
             }
         }
+        else
+            stillTime = Time.realtimeSinceStartup;
 
     }
 
