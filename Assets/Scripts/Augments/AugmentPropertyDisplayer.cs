@@ -27,7 +27,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     private AugmentType at_type;
     public WeaponTool ToolToCheck { get { return wt_toolToCheck; } set { wt_toolToCheck = value; } }
     public AugmentType AugType { set { at_type = value; } }
-    public AugmentDisplayType CurrentDisplayType { get { return adt_currentDisplayType; } }
+    public AugmentDisplayType CurrentDisplayType { get { return adt_currentDisplayType; } set { adt_currentDisplayType = value; } }
     public string AugmentName { set { s_augName = value; } }
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
     public AugmentDisplay AugDisplay { get { return ad_display; } }
@@ -615,6 +615,12 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         i_displayIter++;
 
         return propertyText.GetComponent<Text>();
+    }
+
+    public List<Augment> DisplayCurrentType()
+    {
+        Debug.Log(adt_currentDisplayType);
+        return InitAugmentList(aL_allAugmentsOwned, adt_currentDisplayType, false);
     }
 
     /// <summary>

@@ -12,4 +12,19 @@ public class AugmentGo : MonoBehaviour
     AudioClip[] ac_hitSound;
     public Augment Aug { get { return a_aug; } set { a_aug = value; } }
     public Material Mat { set { mat_ref = value; } }
+
+    public void ApplyMaterial(string _matName)
+    {
+        Debug.Log(gameObject.name + "| AugmentColours/" + _matName);
+        if(_matName != string.Empty && _matName != " ")
+        {
+            Material _mat = Resources.Load<Material>("AugmentColours/" + _matName);
+            if(_mat != null)
+            {
+                mat_ref = _mat;
+                GetComponent<MeshRenderer>().material = mat_ref;
+            }
+        }
+
+    }
 }
