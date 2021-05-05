@@ -319,7 +319,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
-        adt_currentDisplayType = _adt_whichToShow;
+        
         return _aL_augmentsToShow;
 
     }
@@ -336,13 +336,14 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         switch (adt_currentDisplayType)
         {
             case AugmentDisplayType.ShowEquipped:
-                for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
-                {
-                    if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
+                if(!Utils.ArrayIsNullOrZero(wt_toolToCheck.Augs))
+                    for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
                     {
-                        return i;
+                        if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
+                        {
+                            return i;
+                        }
                     }
-                }
                 break;
             default:
                 for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
@@ -470,25 +471,34 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             if (_aug.AugElement.Length > 0)
                 foreach (Element elim in _aug.AugElement)
                 {
+                    Text elemText;
                     switch (elim)
                     {
                         case Element.goo:
-                            PlaceAugmentProperties(go_propertyText).text = "Goo";
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Goo";
+                            //elemText.color = Color.magenta;
                             break;
                         case Element.hydro:
-                            PlaceAugmentProperties(go_propertyText).text = "Hydro";
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Hydro";
+                            //elemText.color = Color.blue;
                             break;
                         case Element.tasty:
                             PlaceAugmentProperties(go_propertyText).text = "Tasty";
                             break;
                         case Element.thunder:
-                            PlaceAugmentProperties(go_propertyText).text = "Thunder";
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Thunder";
+                            //elemText.color = Color.green;
                             break;
                         case Element.boom:
                             PlaceAugmentProperties(go_propertyText).text = "Boom";
                             break;
                         case Element.fire:
-                            PlaceAugmentProperties(go_propertyText).text = "Fire";
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Fire";
+                            //elemText.color = Color.red;
                             break;
                         case Element.lava:
                             PlaceAugmentProperties(go_propertyText).text = "Lava";
