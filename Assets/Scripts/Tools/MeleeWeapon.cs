@@ -25,7 +25,7 @@ public class MeleeWeapon : WeaponTool
     {
         if (!b_isActive && f_currentTime < 0)
         {
-            hitbox.Setup(i_damage, f_knockback, i_lodeDamage, _v_forward);
+            hitbox.Setup(i_damage, f_knockback, i_lodeDamage, _v_forward, eo_element);
             StartCoroutine(HitBoxControl());            
             //base.Use();
         }

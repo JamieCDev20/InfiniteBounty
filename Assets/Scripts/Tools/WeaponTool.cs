@@ -42,6 +42,8 @@ public class WeaponTool : ToolBase
     [SerializeField] protected Augment[] A_augs;
     [SerializeField] protected GameObject augGo;
     protected GameObject[] physicals = new GameObject[8];
+    protected Element[] eo_element;
+    
     #endregion
 
 
