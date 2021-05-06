@@ -70,10 +70,11 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         wdA_wheels[0].dA_wheelDiversifiers = _dA_first;
         wdA_wheels[1].dA_wheelDiversifiers = _dA_first;
         wdA_wheels[2].dA_wheelDiversifiers = _dA_first;
-
+        /*
         SetWheels(wdA_wheels[0], (int)dA_activeDiversifiers[0]);
-        SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[1]);
-        SetWheels(wdA_wheels[2], (int)dA_activeDiversifiers[2]);
+        SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[0]);
+        SetWheels(wdA_wheels[2], (int)dA_activeDiversifiers[0]);
+        */
     }
 
     private void SetWheels(WheelData _wd_wheel, int _i_diversifierToRoll)
