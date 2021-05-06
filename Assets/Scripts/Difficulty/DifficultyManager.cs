@@ -61,10 +61,7 @@ public class DifficultyManager : SubjectBase
         if (i_currentDifficulty >= dsL_difficulties.Count)
             CreateImpossibleDifficulty();
 
-        FindObjectOfType<SlotMachine>().SetDiversifiersByDifficulty(
-            dsL_difficulties[i_currentDifficulty].dA_firstDiversifierSet,
-            dsL_difficulties[i_currentDifficulty].dA_secondDiversifierSet,
-            dsL_difficulties[i_currentDifficulty].dA_thirdDiversifierSet);
+        FindObjectOfType<SlotMachine>().SetDiversifiersByDifficulty(dsL_difficulties[i_currentDifficulty].dA_diversifierSet);
     }
 
 
@@ -85,10 +82,7 @@ public class DifficultyManager : SubjectBase
         if (i_currentDifficulty >= dsL_difficulties.Count)
             CreateImpossibleDifficulty();
 
-        FindObjectOfType<SlotMachine>().SetDiversifiersByDifficulty(
-            dsL_difficulties[i_currentDifficulty].dA_firstDiversifierSet,
-            dsL_difficulties[i_currentDifficulty].dA_secondDiversifierSet,
-            dsL_difficulties[i_currentDifficulty].dA_thirdDiversifierSet);
+        FindObjectOfType<SlotMachine>().SetDiversifiersByDifficulty(dsL_difficulties[i_currentDifficulty].dA_diversifierSet);
     }
 
     internal DifficultySet ReturnDifficultyByIndex(int _i_setToGet)
@@ -132,9 +126,7 @@ public class DifficultyManager : SubjectBase
         impossibleX.i_numberOfMiniBosses += (ds_changeInStatsPerImpossible.i_numberOfMiniBosses * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].i_numberOfMiniBosses;
 
         //Diversifiers
-        impossibleX.dA_firstDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_firstDiversifierSet;
-        impossibleX.dA_secondDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_secondDiversifierSet;
-        impossibleX.dA_thirdDiversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_thirdDiversifierSet;
+        impossibleX.dA_diversifierSet = dsL_difficulties[i_amountOfAuthoredDifs - 1].dA_diversifierSet;
 
         //Boss
         impossibleX.f_bossHealthMult += (ds_changeInStatsPerImpossible.f_bossHealthMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_bossHealthMult;
@@ -175,9 +167,7 @@ public struct DifficultySet
     public int i_numberOfMiniBosses;
 
     [Header("Diversifiers")]
-    public Diversifier[] dA_firstDiversifierSet;
-    public Diversifier[] dA_secondDiversifierSet;
-    public Diversifier[] dA_thirdDiversifierSet;
+    public Diversifier[] dA_diversifierSet;
 
     [Header("PvP")]
     public bool b_pvp;

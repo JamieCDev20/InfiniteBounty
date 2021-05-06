@@ -62,17 +62,14 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
     private void GetDiversifiersFromDifficulty()
     {
-        SetDiversifiersByDifficulty(
-            DifficultyManager.x.ReturnCurrentDifficulty().dA_firstDiversifierSet,
-            DifficultyManager.x.ReturnCurrentDifficulty().dA_secondDiversifierSet,
-            DifficultyManager.x.ReturnCurrentDifficulty().dA_thirdDiversifierSet);
+        SetDiversifiersByDifficulty(DifficultyManager.x.ReturnCurrentDifficulty().dA_diversifierSet);
     }
 
-    internal void SetDiversifiersByDifficulty(Diversifier[] _dA_first, Diversifier[] _dA_second, Diversifier[] _dA_third)
+    internal void SetDiversifiersByDifficulty(Diversifier[] _dA_first)
     {
         wdA_wheels[0].dA_wheelDiversifiers = _dA_first;
-        wdA_wheels[1].dA_wheelDiversifiers = _dA_second;
-        wdA_wheels[2].dA_wheelDiversifiers = _dA_third;
+        wdA_wheels[1].dA_wheelDiversifiers = _dA_first;
+        wdA_wheels[2].dA_wheelDiversifiers = _dA_first;
 
         SetWheels(wdA_wheels[0], (int)dA_activeDiversifiers[0]);
         SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[1]);
