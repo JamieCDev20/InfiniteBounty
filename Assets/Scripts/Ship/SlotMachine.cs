@@ -210,18 +210,30 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
             //Centre Sprite
             _wd_wheel.srL_wheelSprites[0].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_currentIndex]].s_image;
+            DisplayDiversifierInfo(0,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_name,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_desc,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image);
 
             //Sprite below
             _i_ = _i_currentIndex - 1;
             if (_i_ < 0)
                 _i_ = _wd_wheel.dA_wheelDiversifiers.Length - 1;
             _wd_wheel.srL_wheelSprites[1].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image;
+            DisplayDiversifierInfo(1,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_name,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_desc,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image);
 
             //Sprite Above
             _i_ = _i_currentIndex + 1;
             if (_i_ >= _wd_wheel.dA_wheelDiversifiers.Length)
                 _i_ = 0;
             _wd_wheel.srL_wheelSprites[2].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image;
+            DisplayDiversifierInfo(2,
+                DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_name,
+                DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_desc,
+                DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_]].s_image);
 
             _i_currentIndex++;
             if (_i_currentIndex >= _wd_wheel.dA_wheelDiversifiers.Length)
