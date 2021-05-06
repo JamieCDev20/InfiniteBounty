@@ -33,8 +33,8 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
         if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniBunny))
         {
             transform.localScale *= 0.75f;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 0.75f);
-            i_actualDamage = Mathf.RoundToInt(i_actualDamage * 0.75f);
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 0.5f);
+            i_actualDamage = Mathf.RoundToInt(i_actualDamage * 0.5f);
         }
         else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MegaBunnies))
         {
