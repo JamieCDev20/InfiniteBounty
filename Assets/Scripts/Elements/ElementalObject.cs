@@ -72,7 +72,6 @@ public class ElementalObject : MonoBehaviour, IElementable
         IElementable ie = col.gameObject.GetComponentInChildren<IElementable>();
         if (ie != null)
         {
-            Debug.Log("Collided");
             if (!usedIDs.Contains(ie.ID()))
             {
                 AddToUsed(ie.ID());
@@ -89,7 +88,6 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void OnEnable()
     {
         running = true;
-        ResetElements();
         StartCoroutine(EOFCleanup());
     }
 

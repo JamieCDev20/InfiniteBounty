@@ -18,7 +18,7 @@ public class PoolableObject : MonoBehaviour, IPoolable
 
     private void OnEnable()
     {
-        if(f_lifetime > 0)
+        if (f_lifetime > 0)
         {
             Invoke(nameof(Die), f_lifetime);
         }
@@ -26,7 +26,14 @@ public class PoolableObject : MonoBehaviour, IPoolable
 
     public GameObject GetGameObject()
     {
-        return gameObject;
+        try
+        {
+            return gameObject;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     public bool IsNetworkedObject()

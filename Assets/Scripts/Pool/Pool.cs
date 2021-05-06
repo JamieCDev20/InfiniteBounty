@@ -90,6 +90,13 @@ public class Pool
         // Check each object to see if it's currently active
         foreach (IPoolable poo in p_objects)
         {
+            if (poo == null)
+                return null;
+            else
+            {
+                if (poo.GetGameObject() == null)
+                    return null;
+            }
             if (!poo.GetGameObject().activeInHierarchy)
             {
                 // Pop that bidness from the pool
