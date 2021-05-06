@@ -41,6 +41,7 @@ public class WeaponTool : ToolBase
     #region Protected
     [SerializeField] protected Augment[] A_augs;
     [SerializeField] protected GameObject augGo;
+    protected Color[] c_trail = new Color[0];
     protected GameObject[] physicals = new GameObject[8];
     protected Element[] eo_element;
     
@@ -215,7 +216,7 @@ public class WeaponTool : ToolBase
             tr_trail.time = ap.f_trLifetime;
         }
         // Add the keys here
-        //tr_trail.colorGradient.SetKeys(new GradientColorKey(ap.A_trKeys));
+        c_trail = Utils.CombineArrays(c_trail, ap.A_trKeys);
         if (this is ProjectileTool)
             Utils.AddToArray<GameObject>(go_hitBox, Resources.Load<GameObject>(ap.go_projectile));
 
