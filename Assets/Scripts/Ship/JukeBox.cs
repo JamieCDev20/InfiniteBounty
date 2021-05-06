@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class JukeBox : MonoBehaviour, IHitable
 {
-
+    private Animator anim;
     private AudioSource as_source;
     [SerializeField] private string[] sA_trackNames = new string[0];
     [SerializeField] private AudioClip[] acA_songs = new AudioClip[0];
@@ -20,6 +20,7 @@ public class JukeBox : MonoBehaviour, IHitable
 
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         as_source = GetComponent<AudioSource>();
         b_isPoweredOn = true;
         as_source.clip = acA_songs[i_currentSong];
@@ -58,12 +59,14 @@ public class JukeBox : MonoBehaviour, IHitable
             b_isPoweredOn = false;
             as_source.Pause();
             psA_songParticles[i_currentSong].Stop();
+            anim.SetBool("PlayMusic", false);
         }
         else
         {
             b_isPoweredOn = true;
             as_source.Play();
             psA_songParticles[i_currentSong].Play();
+            anim.SetBool("PlayMusic", true);
         }
     }
 
