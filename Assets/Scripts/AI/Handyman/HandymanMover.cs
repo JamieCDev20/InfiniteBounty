@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class HandymanMover : MoverBase
 {
-
     [SerializeField] private LayerMask lm_wallCheckMask;
+
 
     public override void Move(Vector3 _dir)
     {

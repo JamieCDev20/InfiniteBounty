@@ -155,7 +155,7 @@ public struct DifficultySet
     public float f_maxHealthMult; //A creature's current health value is set their max multiplied by this on start
     public float f_damageMult; //A creature's damage is multiplied by this
     public float f_scaleMult; //A creature's localScale is multiplied by this on start
-    public float f_movementSpeedMult;
+    public float f_movementSpeedMult; //A creature's movement is multiplied this when they move
     public float f_decisionSpeedMult;
     public float f_accuracyMult;
     public float f_spawnFrequencyMult; //The number of seconds between waves is multiplied by this amount
@@ -164,13 +164,13 @@ public struct DifficultySet
     public float f_maxNumberOfEnemies; //Used in the if statement when checking the number of living enemies
     public float f_enemyVariantChance;
     public float f_goldEnemyChance;
-    public int i_numberOfMiniBosses;
+    public int i_numberOfMiniBosses; //The number of indices added to the miniboss spawn list 
 
     [Header("Diversifiers")]
-    public Diversifier[] dA_diversifierSet;
+    public Diversifier[] dA_diversifierSet; //The diversifiers avaliable on each wheel
 
     [Header("Boss")]
-    public float f_bossHealthMult;
-    public Vector2Int vi_enemiesPerBossWave;
+    public float f_bossHealthMult; //The boss's health is multiplied by this on start
+    public Vector2Int vi_enemiesPerBossWave; //The number of flappers the boss spawns periodically
 
 }

@@ -8,6 +8,7 @@ public class FlyingMover : MoverBase
     [SerializeField] private float f_flyForce;
     private float stillTime;
     private bool b_lookAlongVelocity;
+    private float f_currentDiffMult;
 
     public override void Move(Vector3 _dir)
     {
@@ -18,6 +19,7 @@ public class FlyingMover : MoverBase
 
     private void OnEnable()
     {
+        f_currentDiffMult = DifficultyManager.x.ReturnCurrentDifficulty().f_movementSpeedMult;
         stillTime = Time.realtimeSinceStartup;
     }
 
@@ -43,7 +45,7 @@ public class FlyingMover : MoverBase
         if (hit.collider != null)
             down = 1 - (hit.distance / dDis);
 
-        rb.AddForce((Vector3.up * 9) + (((transform.up * forw) + (transform.up * down)) * f_flyForce));
+        rb.AddForce((Vector3.up * 9) + (((transform.up * forw) + (transform.up * down)) * f_flyForce  * f_currentDiffMult));
 
         if (rb.velocity.sqrMagnitude > 1)
             stillTime = Time.realtimeSinceStartup;
