@@ -35,9 +35,24 @@ public class ElementManager : MonoBehaviour
     public int lavaDamage;
     public GameObject lavaPlatform;
 
+    private List<ElementalObject> activs = new List<ElementalObject>();
+    public float[] durations = new float[7];
+
+    private int cID = 0;
+
+    private bool playing = true;
+
     private void Awake()
     {
         x = this;
+
+        durations = new float[7] { gooDuration, hydroDuration, 0, noShockBackDuration, boomFuse, fireDuration, Mathf.Infinity};
+    }
+
+    public int GetID()
+    {
+        cID += 1;
+        return cID;
     }
 
 }

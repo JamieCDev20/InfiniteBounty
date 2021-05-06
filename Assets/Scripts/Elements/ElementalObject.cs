@@ -31,17 +31,26 @@ public class ElementalObject : MonoBehaviour, IElementable
     private PoolableObject pO; //To store the line renderer object
     private bool b_activatedThisFrame = false; //only activate once per frame <<Not sure if i actually need this anymore.. but better safe than sorry
     private bool flag; // ^^
-    private ElementManager ElementManagerx;
     [SerializeField] private GameObject hittableObject;
     private IHitable ourHitable;
     private bool b_shouldDie = true;
     private float lastCollided;
 
+    private bool running = true;
+
+    private int id;
+    private List<int> usedIDs = new List<int>();
+
+    private float[] starteds = new float[7];
+    private float[] lastTook = new float[7];
+
     private void Start()
     {
-        ElementManagerx = ElementManager.x;
         pO = GetComponent<PoolableObject>();
         InitElements = eL_activeElements;
+
+        if (ElementManager.x)
+            id = ElementManager.x.GetID();
 
         if (hittableObject != null)
             ourHitable = hittableObject.GetComponent<IHitable>();
@@ -63,10 +72,48 @@ public class ElementalObject : MonoBehaviour, IElementable
         IElementable ie = col.gameObject.GetComponentInChildren<IElementable>();
         if (ie != null)
         {
-            ie.RecieveElements(GetActiveElements());
-            ActivateElement(false);
+            Debug.Log("Collided");
+            if (!usedIDs.Contains(ie.ID()))
+            {
+                AddToUsed(ie.ID());
+                ie.AddToUsed(id);
+
+                ie.RecieveElements(GetActiveElements());
+                RecieveElements(ie.GetActiveElements());
+                ActivateElement(false);
+            }
         }
         lastCollided = t;
+    }
+
+    private void OnEnable()
+    {
+        running = true;
+        ResetElements();
+        StartCoroutine(EOFCleanup());
+    }
+
+    private void OnDisable()
+    {
+        flag = false;
+        b_activatedThisFrame = false;
+        b_doThunder = true;
+        b_doBoom = true;
+        running = false;
+        StopAllCoroutines();
+        //more only once per frame stuff
+    }
+
+    public void AddToUsed(int _id)
+    {
+        usedIDs.Add(_id);
+    }
+
+    public int ID()
+    {
+        if (id == 0)
+            id = ElementManager.x.GetID();
+        return id;
     }
 
     private void InitInteractions()
@@ -103,22 +150,69 @@ public class ElementalObject : MonoBehaviour, IElementable
             eL_activeElements.Add(_startingElement);
     }
 
-    private void OnDisable()
+    private IEnumerator EOFCleanup()
     {
-        flag = false;
-        b_activatedThisFrame = false;
-        b_doThunder = true;
-        b_doBoom = true;
-        StopAllCoroutines();
-        //more only once per frame stuff
+        while (running)
+        {
+            yield return new WaitForEndOfFrame();
+
+            CheckStatuses();
+            CalculateDamages();
+            SetStatusVisuals();
+
+            usedIDs.Clear();
+            yield return new WaitForSeconds(0.1f);
+        }
+
     }
 
-    private IEnumerator EOFCheckDie()
+    private void CheckStatuses()
     {
-        yield return new WaitForEndOfFrame();
-        if (b_shouldDie)
-            ourHitable?.Die();
-        b_shouldDie = true;
+        float t = Time.realtimeSinceStartup;
+        for (int i = 0; i < starteds.Length; i++)
+        {
+            bA_statuses[i] = t - starteds[i] < ElementManager.x?.durations[i];
+        }
+    }
+
+    private void CalculateDamages()
+    {
+        float t = Time.realtimeSinceStartup;
+        if (bA_statuses[(int)Element.fire])
+        {
+            if (t - lastTook[5] > ElementManager.x.fireInterval)
+            {
+                TakeFireDamage();
+                lastTook[5] = t;
+            }
+        }
+    }
+
+    private void SetStatusVisuals()
+    {
+        for (int i = 0; i < bA_statuses.Length; i++)
+        {
+            if (bA_statuses[i])
+            {
+                if (goA_effects[i] == null)
+                {
+                    goA_effects[i] = PoolManager.x.SpawnObject(ElementManager.x.effects[i], transform);
+                    goA_effects[i].transform.localPosition = Vector3.zero;
+                    ParticleSystem ps = goA_effects[i].GetComponent<ParticleSystem>();
+                    ParticleSystem.ShapeModule sh = ps.shape;
+                    sh.mesh = mesh;
+                }
+            }
+            else
+            {
+                if (goA_effects[i] != null)
+                {
+                    goA_effects[i].GetComponent<IPoolable>()?.Die();
+                    goA_effects[i] = null;
+                }
+
+            }
+        }
     }
 
     private void InitialiseActivations() //add the intial activation stuff we should have
@@ -171,22 +265,21 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void SetStatusEffect(Element _status, bool _val)
     {
-        if (bA_statuses[(int)_status] == _val)
-            return;
-        if (ElementManagerx == null)
-            ElementManagerx = ElementManager.x;
+
         bA_statuses[(int)_status] = _val;
         if (_val)
+            starteds[(int)_status] = Time.realtimeSinceStartup;
+        return;
+
+        if (_val)
         {
-            goA_effects[(int)_status] = PoolManager.x.SpawnObject(ElementManagerx.effects[(int)_status], transform);
+            goA_effects[(int)_status] = PoolManager.x.SpawnObject(ElementManager.x.effects[(int)_status], transform);
             goA_effects[(int)_status].transform.localPosition = Vector3.zero;
             ParticleSystem ps = goA_effects[(int)_status].GetComponent<ParticleSystem>();
             ParticleSystem.ShapeModule sh = ps.shape;
-            //ParticleSystem.MainModule mm = ps.main;
-            //mm.scalingMode = ParticleSystemScalingMode.Shape;
-            //sh.shapeType = ParticleSystemShapeType.Mesh;
+
             sh.mesh = mesh;
-            //sh.scale = Vector3.one;
+
         }
         else
         {
@@ -266,18 +359,20 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     IEnumerator AddRemoveAtEOF(Element _elem, bool add)
     {
-        yield return new WaitForEndOfFrame();
+        yield return null;
         if (add)
         {
-            eL_activeElements.Add(_elem);
+            if (!eL_activeElements.Contains(_elem))
+                eL_activeElements.Add(_elem);
+            activated -= activations[(int)_elem];
             activated += activations[(int)_elem];
         }
         else
         {
-            eL_activeElements.Remove(_elem);
+            if (eL_activeElements.Contains(_elem))
+                eL_activeElements.Remove(_elem);
             activated -= activations[(int)_elem];
         }
-
     }
 
     private void SetLineRendererPos(Vector3[] positions)
@@ -296,7 +391,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             p += 2;
         }
         if (!gameObject)
-            StartCoroutine(ResetLineRenderer(lrend, ElementManagerx.shockDelay * 0.5f));
+            StartCoroutine(ResetLineRenderer(lrend, ElementManager.x.shockDelay * 0.5f));
 
     }
 
@@ -307,23 +402,9 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     }
 
-    IEnumerator FireDamage(float _duration, int _damage)
+    private void TakeFireDamage()
     {
-        Debug.Log("I SHOULD BE BURNING");
-        ourHitable?.TakeDamage(_damage, true);
-        float t = 0;
-        while (t < _duration)
-        {
-            t += ElementManagerx.fireInterval;
-            yield return new WaitForSeconds(ElementManagerx.fireInterval);
-            ourHitable?.TakeDamage(_damage, true);
-
-        }
-        SetStatusEffect(Element.fire, false);
-        AddRemoveElement(Element.fire, false);
-        SetStatusEffect(Element.goo, false);
-        AddRemoveElement(Element.goo, false);
-
+        ourHitable?.TakeDamage(ElementManager.x.fireDamage, true);
     }
 
     IEnumerator Explode(float _delay)
@@ -332,7 +413,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
         IHitable iH;
         IElementable iE;
-        Collider[] hits = Physics.OverlapSphere(transform.position, ElementManagerx.boomRadius);
+        Collider[] hits = Physics.OverlapSphere(transform.position, ElementManager.x.boomRadius);
         for (int i = 0; i < hits.Length; i++)
         {
             iH = hits[i].GetComponent<IHitable>();
@@ -341,7 +422,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             {
                 iE?.RecieveElements(Element.boom);
                 iE?.AddRemoveElement(Element.boom, true);
-                iH.TakeDamage(ElementManagerx.boomDamage, true);
+                iH.TakeDamage(ElementManager.x.boomDamage, true);
             }
         }
         ourHitable.Die();
@@ -350,7 +431,6 @@ public class ElementalObject : MonoBehaviour, IElementable
     public void ResetElements()
     {
         eL_activeElements = new List<Element>();
-
         b_doThunder = true;
         b_doBoom = true;
         b_activatedThisFrame = false;
@@ -380,16 +460,16 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void GooFire()
     {
-        SetStatusEffect(Element.goo, true, ElementManagerx.gooDuration);
-        SetStatusEffect(Element.fire, true, ElementManagerx.fireDuration);
+        SetStatusEffect(Element.goo, true, ElementManager.x.gooDuration);
+        SetStatusEffect(Element.fire, true, ElementManager.x.fireDuration);
         FireActivate();
     }
 
     private void HydroBoom()
     {
         SetStatusEffect(Element.boom, false);
-        if (ElementManagerx != null)
-            SetStatusEffect(Element.hydro, true, ElementManagerx.hydroDuration);
+        if (ElementManager.x != null)
+            SetStatusEffect(Element.hydro, true, ElementManager.x.hydroDuration);
     }
 
     private void HydroTasty()
@@ -437,7 +517,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
-        SetStatusEffect(Element.goo, true, ElementManagerx.gooDuration);
+        SetStatusEffect(Element.goo, true, ElementManager.x.gooDuration);
         AddRemoveElement(Element.goo, true);
     }
 
@@ -447,7 +527,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             return;
 
         AddRemoveElement(Element.hydro, true);
-        SetStatusEffect(Element.hydro, true, ElementManagerx.hydroDuration);
+        SetStatusEffect(Element.hydro, true, ElementManager.x.hydroDuration);
 
     }
 
@@ -467,10 +547,10 @@ public class ElementalObject : MonoBehaviour, IElementable
             return;
         }
 
-        SetStatusEffect(Element.thunder, true, ElementManagerx.noShockBackDuration); //No tag backs
+        SetStatusEffect(Element.thunder, true, ElementManager.x.noShockBackDuration); //No tag backs
 
         //Waddid i hit
-        Collider[] hits = Physics.OverlapSphere(transform.position, ElementManagerx.shockRange);
+        Collider[] hits = Physics.OverlapSphere(transform.position, ElementManager.x.shockRange);
         List<Vector3> verts = new List<Vector3>();
         IElementable ie;
         IHitable ih;
@@ -483,13 +563,13 @@ public class ElementalObject : MonoBehaviour, IElementable
             ih = hits[i].GetComponent<IHitable>();
             if (ih != null)
             {
-                ie?.SetStatusEffect(Element.thunder, true, ElementManagerx.noShockBackDuration);
+                ie?.SetStatusEffect(Element.thunder, true, ElementManager.x.noShockBackDuration);
                 verts.Add(hits[i].transform.position); //remember the position for line renderer stuff
                 ie?.RecieveElements(Element.thunder); //tell the target we're shocking it
-                ih.TakeDamage(ElementManagerx.shockDamage, true, ElementManagerx.shockDelay); //if it can be damaged then dewit
+                ih.TakeDamage(ElementManager.x.shockDamage, true, ElementManager.x.shockDelay); //if it can be damaged then dewit
                 count += 1; //<<to limit the number of objects we can shock
             }
-            if (count >= ElementManagerx.maximumShockTargets) //Stop if we're at max
+            if (count >= ElementManager.x.maximumShockTargets) //Stop if we're at max
                 break;
         }
         SetLineRendererPos(verts.ToArray()); //Show the shock lines
@@ -504,8 +584,8 @@ public class ElementalObject : MonoBehaviour, IElementable
         b_doBoom = false;
         if (gameObject.activeSelf)
         {
-            SetStatusEffect(Element.boom, true, ElementManagerx.boomFuse);
-            StartCoroutine(Explode(ElementManagerx.boomFuse));
+            SetStatusEffect(Element.boom, true, ElementManager.x.boomFuse);
+            StartCoroutine(Explode(ElementManager.x.boomFuse));
         }
     }
 
@@ -516,16 +596,8 @@ public class ElementalObject : MonoBehaviour, IElementable
 
         SetStatusEffect(Element.fire, true);
         AddRemoveElement(Element.fire, true);
-        Debug.Log("Doing fire damage to " + gameObject.name);
+        //Debug.Log("Doing fire damage to " + gameObject.name, gameObject);
 
-
-        if (gameObject.activeInHierarchy)
-        {
-            Debug.Log("Active");
-            StopCoroutine(nameof(FireDamage));
-            StartCoroutine(FireDamage(ElementManagerx.fireDuration * (bA_statuses[(int)Element.goo] ? ElementManagerx.gooDurationMultiplier : 1), ElementManagerx.fireDamage * (bA_statuses[(int)Element.goo] ? ElementManagerx.gooDamageMultiplier : 1)));
-
-        }
 
     }
 
@@ -572,4 +644,6 @@ public interface IElementable
     List<Element> GetActiveElements();
     bool[] GetStatuses();
     void ResetElements();
+    void AddToUsed(int _id);
+    int ID();
 }
