@@ -150,7 +150,7 @@ public struct DifficultySet
     [Header("Display & Common")]
     public string s_name;
     public float f_moneyMult;
-
+     
     [Header("Enemy Stats")]
     public float f_maxHealthMult; //A creature's current health value is set their max multiplied by this on start
     public float f_damageMult; //A creature's damage is multiplied by this

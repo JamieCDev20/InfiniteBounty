@@ -26,7 +26,7 @@ public class MoverBase : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         f_currentDiffMult = DifficultyManager.x.ReturnCurrentDifficulty().f_movementSpeedMult;
     }

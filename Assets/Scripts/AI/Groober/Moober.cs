@@ -20,7 +20,7 @@ public class Moober : MoverBase
         if (!b_canMove)
             return;
         rb.velocity = Vector3.Scale(rb.velocity, Vector3.one - v_drag);
-        rb.AddForce(Vector3.ProjectOnPlane(_dir, Vector3.up).normalized * f_moveSpeed * (b_grounded ? 1 : f_airControlMultiplier), ForceMode.Impulse);
+        rb.AddForce(Vector3.ProjectOnPlane(_dir, Vector3.up).normalized * f_moveSpeed * f_currentDiffMult * (b_grounded ? 1 : f_airControlMultiplier), ForceMode.Impulse);
         if (rb.velocity.magnitude > 0.1f)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up), 0.2f);
 

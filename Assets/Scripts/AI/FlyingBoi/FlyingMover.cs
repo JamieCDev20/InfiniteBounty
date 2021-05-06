@@ -8,7 +8,7 @@ public class FlyingMover : MoverBase
     [SerializeField] private float f_flyForce;
     private float stillTime;
     private bool b_lookAlongVelocity;
-    private float f_currentDiffMult;
+    
 
     public override void Move(Vector3 _dir)
     {
@@ -17,9 +17,9 @@ public class FlyingMover : MoverBase
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up)), 0.3f);
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        f_currentDiffMult = DifficultyManager.x.ReturnCurrentDifficulty().f_movementSpeedMult;
+        base.OnEnable();
         stillTime = Time.realtimeSinceStartup;
     }
 

@@ -59,7 +59,8 @@ public class LodeSpawnZone : MonoBehaviour
                         if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.JumboLodes))
                             _go_lode.transform.localScale *= 1.5f;
                         else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.BabyLodes))
-                            _go_lode.transform.localScale *= 0.75f;
+                            _go_lode.transform.localScale *= 0.5f;
+                        _go_lode.name += "*";
                     }
                     else
                     {
