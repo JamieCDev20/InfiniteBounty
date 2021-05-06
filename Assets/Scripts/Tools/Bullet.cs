@@ -105,7 +105,7 @@ public class Bullet : MonoBehaviour, IPoolable
                 lb.TakeDamage(i_lodeDamage, false);
                 break;
             case Enemy e:
-                e.TakeDamage(i_damage, false);
+                e.TakeDamage(i_damage, true);
                 break;
             case null:
                 break;

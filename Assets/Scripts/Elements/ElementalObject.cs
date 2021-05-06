@@ -43,11 +43,11 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private float[] starteds = new float[7];
     private float[] lastTook = new float[7];
+    private bool doneInit = false;
 
     private void Start()
     {
         pO = GetComponent<PoolableObject>();
-        InitElements = eL_activeElements;
 
         if (ElementManager.x)
             id = ElementManager.x.GetID();
@@ -58,8 +58,10 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (mesh == null)
             mesh = GetComponentInChildren<MeshFilter>()?.mesh;
 
+        if (doneInit)
+            return;
+        InitElements = eL_activeElements;
         InitInteractions();
-
         InitialiseActivations();
 
     }
@@ -77,8 +79,8 @@ public class ElementalObject : MonoBehaviour, IElementable
                 AddToUsed(ie.ID());
                 ie.AddToUsed(id);
 
-                ie.RecieveElements(GetActiveElements());
-                RecieveElements(ie.GetActiveElements());
+                ie.ReceiveElements(GetActiveElements());
+                ReceiveElements(ie.GetActiveElements());
                 ActivateElement(false);
             }
         }
@@ -98,6 +100,11 @@ public class ElementalObject : MonoBehaviour, IElementable
         b_doThunder = true;
         b_doBoom = true;
         running = false;
+        doneInit = false;
+
+        //bA_statuses = new bool[7];
+        //eL_activeElements = new List<Element>();
+
         StopAllCoroutines();
         //more only once per frame stuff
     }
@@ -132,9 +139,9 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void Init(Element[] _startingElements)
     {
-
+        doneInit = true;
         InitInteractions();
-
+        eL_activeElements = new List<Element>();
         for (int i = 0; i < _startingElements.Length; i++)
         {
             Init(_startingElements[i]);
@@ -167,7 +174,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void CheckStatuses()
     {
         float t = Time.realtimeSinceStartup;
-        for (int i = 0; i < starteds.Length; i++)
+        for (int i = 0; i < starteds.Length - 1; i++)
         {
             bA_statuses[i] = t - starteds[i] < ElementManager.x?.durations[i];
         }
@@ -231,7 +238,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             flag = true;
     }
 
-    public void RecieveElements(List<Element> _recieved)
+    public void ReceiveElements(List<Element> _recieved)
     {
         //get affected by elements and carry out interactions
         int size = eL_activeElements.Count;
@@ -239,11 +246,14 @@ public class ElementalObject : MonoBehaviour, IElementable
         {
             if (eL_elementImmunities.Contains(_recieved[i]))
                 continue;
+
+            //Debug.Log($"I <b><color=red> {hittableObject?.name} </color></b> of ID: <b><color=red> {id} </color></b> have received: <b><color=red> {_recieved[i]} </color></b> ");
+            
             ApplyStatus(_recieved[i]);
-            RecieveElements(_recieved[0]);
+            ReceiveElements(_recieved[0]);
         }
     }
-    public void RecieveElements(Element _recieved)
+    public void ReceiveElements(Element _recieved)
     {
         //get affected by elements and carry out interactions
         int size = eL_activeElements.Count;
@@ -311,6 +321,8 @@ public class ElementalObject : MonoBehaviour, IElementable
                 AddRemoveElement(_el, true, ElementManager.x.gooDuration);
                 break;
             case Element.hydro:
+                SetStatusEffect(_el, true, ElementManager.x.hydroDuration);
+                AddRemoveElement(_el, true, ElementManager.x.hydroDuration);
                 break;
             case Element.tasty:
                 break;
@@ -418,7 +430,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             iE = hits[i].GetComponent<IElementable>();
             if (iH != null)
             {
-                iE?.RecieveElements(Element.boom);
+                iE?.ReceiveElements(Element.boom);
                 iE?.AddRemoveElement(Element.boom, true);
                 iH.TakeDamage(ElementManager.x.boomDamage, true);
             }
@@ -481,6 +493,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             return;
         b_doThunder = false;
         AddRemoveElement(Element.thunder, true);
+        ThunderActivate();
     }
 
     private void HydroFire()
@@ -563,7 +576,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             {
                 ie?.SetStatusEffect(Element.thunder, true, ElementManager.x.noShockBackDuration);
                 verts.Add(hits[i].transform.position); //remember the position for line renderer stuff
-                ie?.RecieveElements(Element.thunder); //tell the target we're shocking it
+                ie?.ReceiveElements(Element.thunder); //tell the target we're shocking it
                 ih.TakeDamage(ElementManager.x.shockDamage, true, ElementManager.x.shockDelay); //if it can be damaged then dewit
                 count += 1; //<<to limit the number of objects we can shock
             }
@@ -633,8 +646,8 @@ public enum Element
 
 public interface IElementable
 {
-    void RecieveElements(List<Element> _recieved);
-    void RecieveElements(Element _recieved);
+    void ReceiveElements(List<Element> _recieved);
+    void ReceiveElements(Element _recieved);
     void SetStatusEffect(Element _status, bool _val);
     void SetStatusEffect(Element _status, bool _val, float _time);
     void ActivateElement(bool activaesThunder);

@@ -44,9 +44,15 @@ public class ElementManager : MonoBehaviour
 
     private void Awake()
     {
-        x = this;
+        if (x != null)
+        {
+            if (x != this)
+                Destroy(gameObject);
+        }
+        else
+            x = this;
 
-        durations = new float[7] { gooDuration, hydroDuration, 0, noShockBackDuration, boomFuse, fireDuration, Mathf.Infinity};
+        durations = new float[7] { gooDuration, hydroDuration, 0, noShockBackDuration, boomFuse, fireDuration, Mathf.Infinity };
     }
 
     public int GetID()
