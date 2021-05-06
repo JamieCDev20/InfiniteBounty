@@ -345,7 +345,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void ActivateElement(bool activatesThunder)
     {
-        b_doThunder = activatesThunder;
+        b_doThunder = activatesThunder ;
         activated?.Invoke();
     }
     public void AddRemoveElement(Element _elem, bool add)
