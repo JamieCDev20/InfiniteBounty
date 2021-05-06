@@ -169,9 +169,6 @@ public struct DifficultySet
     [Header("Diversifiers")]
     public Diversifier[] dA_diversifierSet;
 
-    [Header("PvP")]
-    public bool b_pvp;
-
     [Header("Boss")]
     public float f_bossHealthMult;
     public Vector2Int vi_enemiesPerBossWave;
