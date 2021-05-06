@@ -27,7 +27,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     private AugmentType at_type;
     public WeaponTool ToolToCheck { get { return wt_toolToCheck; } set { wt_toolToCheck = value; } }
     public AugmentType AugType { set { at_type = value; } }
-    public AugmentDisplayType CurrentDisplayType { get { return adt_currentDisplayType; } }
+    public AugmentDisplayType CurrentDisplayType { get { return adt_currentDisplayType; } set { adt_currentDisplayType = value; } }
     public string AugmentName { set { s_augName = value; } }
     public List<GameObject> AugmentButtons { get { return goL_augmentButtonPool; } }
     public AugmentDisplay AugDisplay { get { return ad_display; } }
@@ -336,13 +336,14 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         switch (adt_currentDisplayType)
         {
             case AugmentDisplayType.ShowEquipped:
-                for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
-                {
-                    if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
+                if(!Utils.ArrayIsNullOrZero(wt_toolToCheck.Augs))
+                    for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
                     {
-                        return i;
+                        if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
+                        {
+                            return i;
+                        }
                     }
-                }
                 break;
             default:
                 for (int i = 0; i < aL_allAugmentsOwned.Count; i++)
@@ -466,6 +467,47 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         }
 
+        if(!Utils.ArrayIsNullOrZero(_aug.AugElement))
+            if (_aug.AugElement.Length > 0)
+                foreach (Element elim in _aug.AugElement)
+                {
+                    Text elemText;
+                    switch (elim)
+                    {
+                        case Element.goo:
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Goo";
+                            //elemText.color = Color.magenta;
+                            break;
+                        case Element.hydro:
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Hydro";
+                            //elemText.color = Color.blue;
+                            break;
+                        case Element.tasty:
+                            PlaceAugmentProperties(go_propertyText).text = "Tasty";
+                            break;
+                        case Element.thunder:
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Thunder";
+                            //elemText.color = Color.green;
+                            break;
+                        case Element.boom:
+                            PlaceAugmentProperties(go_propertyText).text = "Boom";
+                            break;
+                        case Element.fire:
+                            elemText = PlaceAugmentProperties(go_propertyText);
+                            elemText.text = "Fire";
+                            //elemText.color = Color.red;
+                            break;
+                        case Element.lava:
+                            PlaceAugmentProperties(go_propertyText).text = "Lava";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
         // explosion effects
 
         if (ae.i_damage != 0)
@@ -573,6 +615,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         i_displayIter++;
 
         return propertyText.GetComponent<Text>();
+    }
+
+    public List<Augment> DisplayCurrentType()
+    {
+        return InitAugmentList(aL_allAugmentsOwned, adt_currentDisplayType, false);
     }
 
     /// <summary>

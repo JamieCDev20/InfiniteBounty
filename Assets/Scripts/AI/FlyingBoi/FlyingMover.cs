@@ -6,18 +6,24 @@ public class FlyingMover : MoverBase
 {
 
     [SerializeField] private float f_flyForce;
-    float stillTime;
+    private float stillTime;
+    private bool b_lookAlongVelocity;
 
     public override void Move(Vector3 _dir)
     {
         rb.AddForce(_dir.normalized * f_flyForce);
-        if (rb.velocity.sqrMagnitude > 0.5f)
+        if(b_lookAlongVelocity && rb.velocity.sqrMagnitude > 0.5f)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up)), 0.3f);
     }
 
     private void OnEnable()
     {
         stillTime = Time.realtimeSinceStartup;
+    }
+
+    public void LookAtVelocity(bool v)
+    {
+        b_lookAlongVelocity = v;
     }
 
     private void FixedUpdate()

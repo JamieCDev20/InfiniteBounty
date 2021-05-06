@@ -48,6 +48,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     [Header("Toggles")]
     [SerializeField] private GameObject[] toggles;
+    private SkinnedMeshRenderer[] mA_mySkinRenderers = new SkinnedMeshRenderer[0];
+    private MeshRenderer[] mA_myRenderers = new MeshRenderer[0];
+
 
     private void Start()
     {
@@ -57,6 +60,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         anim = GetComponentInChildren<Animator>();
         as_mainAudioSource = GetComponent<AudioSource>();
 
+        mA_mySkinRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        mA_myRenderers = GetComponentsInChildren<MeshRenderer>(true);
+        print(mA_myRenderers.Length);
     }
 
     private void Update()
@@ -121,6 +127,20 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
 
+        for (int i = 0; i < mA_mySkinRenderers.Length; i++)
+            mA_mySkinRenderers[i].material.SetFloat("DamageFlash", 1);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
+
+        StartCoroutine(DamageFlash());
+    }
+    private IEnumerator DamageFlash()
+    {
+        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < mA_mySkinRenderers.Length; i++)
+            mA_mySkinRenderers[i].material.SetFloat("DamageFlash", 0);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 0);
     }
 
     private void CheckSound()

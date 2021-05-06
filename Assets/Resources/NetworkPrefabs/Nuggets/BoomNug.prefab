@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6741355650731856494}
   - component: {fileID: -727818558461798133}
   - component: {fileID: 861829473884755539}
-  - component: {fileID: -1404028689133701346}
   m_Layer: 9
   m_Name: BoomNug
   m_TagString: Untagged
@@ -102,23 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTags:
   - Nugg
---- !u!114 &-1404028689133701346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eL_activeElements: 04000000
-  eL_elementImmunities: 
-  go_lrObject: {fileID: 5860972205640831532, guid: 59547ea43e8d76f4988c38b81ea0d7f0,
-    type: 3}
-  mesh: {fileID: 0}
 --- !u!1 &9037602097160978877
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6177808207602670223}
   - component: {fileID: 4994192272181332116}
+  - component: {fileID: 2045322163143600667}
   m_Layer: 14
   m_Name: PhysicalCollider
   m_TagString: Untagged
@@ -163,6 +146,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2045322163143600667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9037602097160978877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eL_activeElements: 04000000
+  eL_elementImmunities: 
+  mesh: {fileID: -6642232518959099049, guid: a3dafadb19e06ca43bbece653a8257a8, type: 3}
+  hittableObject: {fileID: 2720207710688081759}
 --- !u!1 &9097682952597663304
 GameObject:
   m_ObjectHideFlags: 0

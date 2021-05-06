@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6741355650731856494}
   - component: {fileID: 452049150387631478}
   - component: {fileID: -2929627952763993648}
-  - component: {fileID: -5576088061439939024}
   m_Layer: 9
   m_Name: HydroNug
   m_TagString: Untagged
@@ -102,23 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTags:
   - Nugg
---- !u!114 &-5576088061439939024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eL_activeElements: 01000000
-  eL_elementImmunities: 
-  go_lrObject: {fileID: 5860972205640831532, guid: 59547ea43e8d76f4988c38b81ea0d7f0,
-    type: 3}
-  mesh: {fileID: 0}
 --- !u!1 &3349565585672938226
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1522760695478212203}
   - component: {fileID: 5448194356931546022}
+  - component: {fileID: 3594581569781947436}
   m_Layer: 14
   m_Name: PhysicalCollider
   m_TagString: Untagged
@@ -244,3 +227,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &3594581569781947436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5789384532975219775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eL_activeElements: 01000000
+  eL_elementImmunities: 
+  mesh: {fileID: 9219086399156098728, guid: a3dafadb19e06ca43bbece653a8257a8, type: 3}
+  hittableObject: {fileID: 2720207710688081759}

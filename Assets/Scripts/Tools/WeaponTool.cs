@@ -42,6 +42,8 @@ public class WeaponTool : ToolBase
     [SerializeField] protected Augment[] A_augs;
     [SerializeField] protected GameObject augGo;
     protected GameObject[] physicals = new GameObject[8];
+    protected Element[] eo_element;
+    
     #endregion
 
 
@@ -104,16 +106,7 @@ public class WeaponTool : ToolBase
             int i = GetInactiveAugmentIndex();
             if (i == -1)
                 return false;
-            Debug.Log("i : " + i);
-            string s = "";
-            for (int j = 0; j < Augs.Length; j++)
-            {
-                s += $"{j}: ";
-                s += Augs[j];
-                s += "\n";
 
-            }
-            Debug.Log(s);
             float mod = GetAugmentLevelModifier(aug.Level);
 
             GameObject augmentGameObject = PoolManager.x.SpawnObject(augGo);
@@ -122,6 +115,8 @@ public class WeaponTool : ToolBase
             augmentGameObject.transform.position = A_augmentSlots[i].transform.position;
             augmentGameObject.GetComponent<Rigidbody>().isKinematic = true;
             augmentGameObject.GetComponent<Collider>().isTrigger = true;
+            augmentGameObject.GetComponent<AugmentGo>().ApplyMaterial(aug.AugmentMaterial);
+
             physicals[i] = augmentGameObject;
             AugmentGo actualGo = augmentGameObject.GetComponent<AugmentGo>();
             actualGo.Aug = aug;

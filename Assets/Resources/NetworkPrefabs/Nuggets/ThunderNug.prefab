@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4487246350775103929}
   - component: {fileID: 7518363556945430285}
+  - component: {fileID: 5974082319671087992}
   m_Layer: 14
   m_Name: PhysicalCollider
   m_TagString: Untagged
@@ -44,6 +45,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1.2, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5974082319671087992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288187812627735984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eL_activeElements: 03000000
+  eL_elementImmunities: 
+  mesh: {fileID: -9197234336261972045, guid: a3dafadb19e06ca43bbece653a8257a8, type: 3}
+  hittableObject: {fileID: 2720207710688081759}
 --- !u!1 &2720207710688081759
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +74,6 @@ GameObject:
   - component: {fileID: 6741355650731856494}
   - component: {fileID: 5953175006165985244}
   - component: {fileID: -1201165320458629289}
-  - component: {fileID: 5221996789582478309}
   m_Layer: 9
   m_Name: ThunderNug
   m_TagString: Untagged
@@ -146,23 +162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectTags:
   - Nugg
---- !u!114 &5221996789582478309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2720207710688081759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eL_activeElements: 03000000
-  eL_elementImmunities: 
-  go_lrObject: {fileID: 5860972205640831532, guid: 59547ea43e8d76f4988c38b81ea0d7f0,
-    type: 3}
-  mesh: {fileID: 0}
 --- !u!1 &4877678254968863531
 GameObject:
   m_ObjectHideFlags: 0

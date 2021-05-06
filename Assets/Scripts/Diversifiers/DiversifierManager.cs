@@ -13,8 +13,8 @@ public enum Diversifier
     GeysersGalore, //Triggered in DiversiferManager
     MiniMiniboss, //Triggered in HandymanHealth
     MiniBunny, //Triggered in HopDogHealth
-    GoofyGroobers,
-    MiniFlying,
+    GoofyGroobers, //Triggered in GooberHealth
+    MiniFlying, //Triggered in FlyingHealth
 
     BabyLodes, //Triggered in LodeSpawnZone, reduces size by 25%
     LessLodes, //Triggered in LodeSpawnZone
@@ -22,8 +22,8 @@ public enum Diversifier
     ZeroGNuggs, //Triggered in NugGo in start
     Maxiboss, //Triggered in HandymanHealth
     MegaBunnies, //Triggered in HopDogHealth
-    NastyGroobers,
-    MaxiFlying,
+    NastyGroobers, //Triggered in GrooberHealth
+    MaxiFlying, //Triggered in FlyingHealth
 }
 
 public enum BonusObjective
@@ -38,6 +38,9 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     private Diversifier[] dA_activeDivers = new Diversifier[3];
     private LodeSpawnZone[] ziA_allZones;
     private BonusObjective bo_currentBonusObjective;
+
+    [Header("Diver Display Info")]
+    [SerializeField] internal DiversifierInfo[] diA_diversifiers = new DiversifierInfo[0];
 
     [Header("Geyser Things")]
     [SerializeField] private string s_geyserPath;
@@ -115,6 +118,11 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
                 }
             }
+    }
+
+    internal DiversifierInfo ReturnActiveDiversifierDisplayInfo(int _i_activeDiverIndex)
+    {
+        return diA_diversifiers[(int)dA_activeDivers[_i_activeDiverIndex]];
     }
 
     #region Diver Functions

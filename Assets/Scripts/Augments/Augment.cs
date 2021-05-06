@@ -86,7 +86,7 @@ public class Augment
     #endregion
 
     #region Elemental 
-
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected Element[] eo_element;
     public Element[] AugElement { get { return eo_element; } set { eo_element = value; } }
 
@@ -239,10 +239,14 @@ public class Augment
         c.ac_travelSound = CombineFusionArrays(a.ac_travelSound, b.ac_travelSound);
         c.ac_hitSound = CombineFusionArrays(a.ac_hitSound, b.ac_hitSound);
         // Info data
-        c.i_damage = a.i_damage + b.i_damage;
-        c.i_lodeDamage = a.i_lodeDamage + b.i_lodeDamage;
-        c.f_weight = a.f_weight + b.f_weight;
-        c.f_recoil = a.f_recoil + b.f_recoil;
+        int newDmg = a.i_damage + b.i_damage;
+        c.i_damage = newDmg > 0 ? newDmg : 1;
+        int newLdDmg = a.i_lodeDamage + b.i_lodeDamage;
+        c.i_lodeDamage = newLdDmg > 0 ? newLdDmg : 1;
+        float newWeight = a.f_weight + b.f_weight;
+        c.f_weight = newWeight > 0 ? newWeight : 0;
+        float newRecoil = a.f_recoil + b.f_recoil;
+        c.f_recoil = newRecoil > 0 ? newRecoil : 0;
         c.f_energyGauge = a.f_energyGauge + b.f_energyGauge;
         c.f_knockback = a.f_knockback + b.f_knockback;
         c.f_heatsink = a.f_heatsink + b.f_heatsink;
@@ -261,6 +265,7 @@ public class Augment
         c.f_expRad = a.f_expRad + b.f_expRad;
         c.go_explarticles = CombineFusionArrays(a.go_explarticles, b.go_explarticles);
         c.i_cost = a.Cost + b.Cost;
+        c.mat_augColor = a.mat_augColor;
         if (a.as_stage == AugmentStage.full && a.s_name != b.s_name)
             c.as_stage = AugmentStage.fused;
         // If any of them are set to impact, set to be impact
@@ -268,6 +273,7 @@ public class Augment
             c.b_impact = true;
         else
             c.b_impact = false;
+        c.eo_element = Utils.CombineArrays(a.eo_element, b.eo_element);
 
         AugmentManager.x.AddToDict(c.Name, new int[] { AugmentManager.x.GetAugmentIndex(a.at_type, a.Name), AugmentManager.x.GetAugmentIndex(b.at_type, b.Name) });
 

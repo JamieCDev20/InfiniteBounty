@@ -206,7 +206,7 @@ public class Workbench : SubjectBase, IInteractible
         toolname.text = $"{goA_tools[tl.GetIndex(wt_toolsInHand[i_currentWeaponIndex])].name} ({(i_currentWeaponIndex == 0 ? "L" : "R")})";
         apd.AugType = wt_toolsInHand[i_currentWeaponIndex].AugType;
 
-        //aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        //aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
 
         //update the text to show the name of the tool
     }
@@ -256,7 +256,6 @@ public class Workbench : SubjectBase, IInteractible
                     // Save the augment
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
                     AugmentSave _savedAug = new AugmentSave(_aug);
-                    Debug.Log(_savedAug.SavedAugment.indicies[0]);
                     SendAttachSave(_aug, _savedAug);
                 }
                 else
@@ -335,6 +334,7 @@ public class Workbench : SubjectBase, IInteractible
         //WeaponTool weaponToEq = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
         
         Notify(eae);
+        
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
     }
 
@@ -345,6 +345,7 @@ public class Workbench : SubjectBase, IInteractible
         img_all.color = sel;
         img_equip.color = unSel;
         img_sameType.color = unSel;
+        apd.CurrentDisplayType = AugmentDisplayType.ShowAll;
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
     }
     public void SameTab()
@@ -362,9 +363,15 @@ public class Workbench : SubjectBase, IInteractible
                 hasATool = true;
         }
         if (hasATool)
+        {
+            apd.CurrentDisplayType = AugmentDisplayType.ShowSameType;
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowSameType, false);
+        }
         else
+        {
+            apd.CurrentDisplayType = AugmentDisplayType.None;
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.None, false);
+        }
     }
     public void EquippedTab()
     {
@@ -375,6 +382,7 @@ public class Workbench : SubjectBase, IInteractible
         img_sameType.color = unSel;
 
         apd.ToolToCheck = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
+        apd.CurrentDisplayType = AugmentDisplayType.ShowEquipped;
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowEquipped, false);
         
     }
@@ -408,8 +416,12 @@ public class Workbench : SubjectBase, IInteractible
         if (wt_toolsInHand[i_currentWeaponIndex] == null)
             i_currentWeaponIndex = 1 - i_currentWeaponIndex;
 
+
         DisplayWeapon();
 
+        apd.ToolToCheck = wt_toolsInHand[i_currentWeaponIndex];
+
+        aL_allAugmentsOwned = apd.DisplayCurrentType();
     }
 
     #endregion

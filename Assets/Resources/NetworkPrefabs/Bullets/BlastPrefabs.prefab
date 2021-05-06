@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 1058634247351117144}
   - component: {fileID: 4762224859139194053}
   - component: {fileID: 1313280798176843094}
+  - component: {fileID: 6536427899528836069}
   m_Layer: 11
   m_Name: BlastPrefabs
   m_TagString: Untagged
@@ -311,6 +312,9 @@ MonoBehaviour:
   go_flameTrails: {fileID: 8021444322048750040}
   go_electricTrails: {fileID: 6904237961815776542}
   pm_mat: {fileID: 0}
+  f_minimumSpeedForSound: 0
+  f_knockBack: 5
+  elements: {fileID: 6536427899528836069}
 --- !u!135 &4762224859139194053
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -421,6 +425,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6536427899528836069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6714505186059660760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eL_activeElements: 
+  eL_elementImmunities: 
+  mesh: {fileID: 0}
 --- !u!1 &6904237961815776542
 GameObject:
   m_ObjectHideFlags: 0

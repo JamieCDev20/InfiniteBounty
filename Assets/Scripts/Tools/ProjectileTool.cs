@@ -30,7 +30,6 @@ public class ProjectileTool : WeaponTool
     private PlayerAnimator pa_anim;
     [SerializeField] private ParticleSystem ps_shotEffects;
 
-
     public override void SetActive(bool val)
     {
         pa_anim = GetComponentInParent<PlayerAnimator>();
@@ -113,7 +112,7 @@ public class ProjectileTool : WeaponTool
     public void SpawnBullet(Vector3 _v_direction)
     {
         Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox[0], t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
-        newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider, ap_projAugment, ae_explode);
+        newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider, ap_projAugment, ae_explode, eo_element);
         newBullet.MoveBullet(_v_direction, f_shotSpeed);
     }
 
@@ -142,6 +141,7 @@ public class ProjectileTool : WeaponTool
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
         ap_projAugment.f_bulletScale += Mathf.RoundToInt(augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level) * 0.25f));
+        eo_element = aug.AugElement;
         return true;
     }
 

@@ -10,12 +10,27 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
     [SerializeField] private GameObject go_deathEffect;
     private int i_curHealth;
     [SerializeField] private ParticleSystem p_damageParticles;
+    private SkinnedMeshRenderer[] mA_myRenderers = new SkinnedMeshRenderer[0];
 
     private void OnEnable()
     {
+        mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
         DifficultySet _ds = DifficultyManager.x.ReturnCurrentDifficulty();
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
-        transform.localScale = Vector3.one * _ds.f_scaleMult;
+
+        transform.localScale = (Vector3.one * 2) * _ds.f_scaleMult;
+        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniFlying))
+        {
+            transform.localScale *= 0.75f;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 0.75f);
+        }
+        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MaxiFlying))
+        {
+            transform.localScale *= 1.5f;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 1.5f);
+        }
+
 
         i_curHealth = i_maxHealth;
         Invoke(nameof(TimedDeath), Random.Range(90, 130));
@@ -56,14 +71,28 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
             return;
         }
         photonView.RPC(nameof(RemoteTakeDamage), RpcTarget.Others, damage, activatesThunder);
+
     }
+
 
     private void MasterTakeDamage(int damage, bool activatesThunder)
     {
         i_curHealth -= damage;
         if (i_curHealth <= 0)
+        {
             Die();
+            return;
+        }
 
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
+        StartCoroutine(DamageFlash());
+    }
+    private IEnumerator DamageFlash()
+    {
+        yield return new WaitForSeconds(0.05f);
+        for (int i = 0; i < mA_myRenderers.Length; i++)
+            mA_myRenderers[i].material.SetFloat("DamageFlash", 0);
     }
 
     [PunRPC]

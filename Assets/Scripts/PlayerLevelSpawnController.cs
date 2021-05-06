@@ -22,6 +22,16 @@ public class PlayerLevelSpawnController : MonoBehaviour
     [SerializeField] private Text t_bonusText;
     [SerializeField] private GameObject go_bonusPart;
 
+    [Header("Risk Section")]
+    [SerializeField] private Text t_riskLevelText;
+    [SerializeField] private Text t_riskEffectsText;
+    [SerializeField] private Text t_diversifierTexts;
+
+    [Header("Cross Faders")]
+    [SerializeField] private Image[] iA_imagesToFadeIn = new Image[0];
+    [SerializeField] private Text[] iA_textToFadeIn = new Text[0];
+
+
     public void SetupPlayer(GameObject _go_playerToSetup)
     {
 
@@ -36,6 +46,15 @@ public class PlayerLevelSpawnController : MonoBehaviour
         dimensionText.text = $"DIMENSION: {Convert.ToString(seed, 16)}";
 
         _go_playerToSetup.transform.forward = transform.forward;
+
+        SetupRiskDisplay();
+        SetupDiverDisplay();
+
+        for (int i = 0; i < iA_imagesToFadeIn.Length; i++)
+            iA_imagesToFadeIn[i].CrossFadeAlpha(0, 0, true);
+
+        for (int i = 0; i < iA_textToFadeIn.Length; i++)
+            iA_textToFadeIn[i].CrossFadeAlpha(0, 0, true);
 
         switch (DiversifierManager.x.ReturnBonusObjective())
         {
@@ -63,10 +82,35 @@ public class PlayerLevelSpawnController : MonoBehaviour
         }
 
         StartCoroutine(LateSets());
+
+        for (int i = 0; i < iA_imagesToFadeIn.Length; i++)
+            iA_imagesToFadeIn[i].CrossFadeAlpha(1, 1, true);
+
+        for (int i = 0; i < iA_textToFadeIn.Length; i++)
+            iA_textToFadeIn[i].CrossFadeAlpha(1, 1, true);
+
+    }
+
+    private void SetupRiskDisplay()
+    {
+        t_riskLevelText.text = "Risk Level: " + DifficultyManager.x.ReturnCurrentDifficulty().s_name;
+        t_riskEffectsText.text =
+            "Enemy Toughness: " + DifficultyManager.x.ReturnCurrentDifficulty().f_scaleMult + "x \n" +
+            "Enemy Power: " + DifficultyManager.x.ReturnCurrentDifficulty().f_damageMult + "x \n" +
+            "Bounty Bucks Multiplier: " + DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult + "x";
+    }
+
+    private void SetupDiverDisplay()
+    {
+        t_diversifierTexts.text =
+            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(0).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(0).s_shortHandDesc + "\n" +
+            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(1).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(1).s_shortHandDesc + "\n" +
+            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(2).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(2).s_shortHandDesc;
     }
 
     IEnumerator LateSets()
     {
+        HUDController.x.StopShowing();
         yield return new WaitForEndOfFrame();
 
 
@@ -77,6 +121,14 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
         Invoke("PlayerImpact", f_timeToWaitBeforeActivating);
         Invoke("PlayParticle", f_timeToPlayParticle);
+
+        yield return new WaitForSeconds(f_timeToWaitBeforeActivating - 1);
+
+        for (int i = 0; i < iA_imagesToFadeIn.Length; i++)
+            iA_imagesToFadeIn[i].CrossFadeAlpha(0, 1, true);
+
+        for (int i = 0; i < iA_textToFadeIn.Length; i++)
+            iA_textToFadeIn[i].CrossFadeAlpha(0, 1, true);
     }
 
     private void PlayParticle()
@@ -90,6 +142,8 @@ public class PlayerLevelSpawnController : MonoBehaviour
         pim.GetCamera().enabled = true;
         pim.SetMoving(true);
         go_cameraParent.SetActive(false);
+
+        HUDController.x.StartShowing();
     }
 
 }

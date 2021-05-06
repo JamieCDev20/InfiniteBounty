@@ -32,8 +32,10 @@ public class ConeAugment : Augment
             c.as_stage = AugmentStage.fused;
         List<string[]> audioClips = ac.GetAudioProperties();
         c.Level = 1;
+        c.eo_element = ac.AugElement;
         c.s_name = ac.Name;
         c.Cost = ac.Cost;
+        c.mat_augColor = ac.AugmentMaterial;
         c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);
         c.InitPhysical(ac.GetPhysicalProperties());
         c.at_type = AugmentType.cone;

@@ -42,7 +42,7 @@ public class BubbleShieldController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             f_currentTime += 1;
             m_shieldRenderer.material.SetFloat("_CellDensity", Mathf.Clamp(f_currentTime, 0, 60));
-            m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.2f;
+            m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.3f;
         }
 
         yield return new WaitForSeconds(13);
@@ -52,7 +52,7 @@ public class BubbleShieldController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             f_currentTime -= 1;
             m_shieldRenderer.material.SetFloat("_CellDensity", Mathf.Clamp(f_currentTime, 0, 60));
-            m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.2f;
+            m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.3f;
         }
 
         yield return new WaitForSeconds(3);

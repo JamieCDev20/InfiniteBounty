@@ -59,30 +59,33 @@ public class FuseSaver : MonoBehaviour, ObserverBase
             List<Augment> _newAugs = new List<Augment>();
             List<ProjectileAugment> _newProj = new List<ProjectileAugment>();
             List<ConeAugment> _newCone = new List<ConeAugment>();
-            foreach (AugmentSave saved in _savedData)
+            if (!Utils.ArrayIsNullOrZero(_savedData))
             {
-                switch (saved.SavedAugment.augType)
+                foreach (AugmentSave saved in _savedData)
                 {
-                    case AugmentType.projectile:
-                        _newProj.Add(AugmentManager.x.GetProjectileAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
-                        _newProj[_newProj.Count - 1].Stage = AugmentStage.fused;
-                        _newProj[_newProj.Count - 1].Level = saved.SavedAugment.level;
-                        break;
-                    case AugmentType.cone:
-                        _newCone.Add(AugmentManager.x.GetConeAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
-                        _newCone[_newCone.Count - 1].Stage = AugmentStage.fused;
-                        _newCone[_newCone.Count - 1].Level = saved.SavedAugment.level;
-                        break;
-                    case AugmentType.standard:
-                        _newAugs.Add(AugmentManager.x.GetStandardAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
-                        _newAugs[_newAugs.Count - 1].Stage = AugmentStage.fused;
-                        _newAugs[_newAugs.Count - 1].Level = saved.SavedAugment.level;
-                        break;
+                    switch (saved.SavedAugment.augType)
+                    {
+                        case AugmentType.projectile:
+                            _newProj.Add(AugmentManager.x.GetProjectileAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                            _newProj[_newProj.Count - 1].Stage = AugmentStage.fused;
+                            _newProj[_newProj.Count - 1].Level = saved.SavedAugment.level;
+                            break;
+                        case AugmentType.cone:
+                            _newCone.Add(AugmentManager.x.GetConeAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                            _newCone[_newCone.Count - 1].Stage = AugmentStage.fused;
+                            _newCone[_newCone.Count - 1].Level = saved.SavedAugment.level;
+                            break;
+                        case AugmentType.standard:
+                            _newAugs.Add(AugmentManager.x.GetStandardAugmentAt(saved.SavedAugment.augStage, saved.SavedAugment.indicies));
+                            _newAugs[_newAugs.Count - 1].Stage = AugmentStage.fused;
+                            _newAugs[_newAugs.Count - 1].Level = saved.SavedAugment.level;
+                            break;
+                    }
                 }
+                fusedAugs = _newAugs.ToArray();
+                fusedProj = _newProj.ToArray();
+                fusedCone = _newCone.ToArray();
             }
-            fusedAugs = _newAugs.ToArray();
-            fusedProj = _newProj.ToArray();
-            fusedCone = _newCone.ToArray();
         }
     }
 
@@ -162,7 +165,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (_save.Stage)
         {
             case AugmentStage.full:
-                AugmentManager.x.RemoveAugment(AugmentType.projectile, _save.Name);
+                //AugmentManager.x.RemoveAugment(AugmentType.projectile, _save.Name);
                 break;
             case AugmentStage.fused:
                 fusedProj = Utils.OrderedRemove(fusedProj, GetAugmentIndex(fusedProj, _save));
@@ -176,7 +179,7 @@ public class FuseSaver : MonoBehaviour, ObserverBase
         switch (_save.Stage)
         {
             case AugmentStage.full:
-                AugmentManager.x.RemoveAugment(AugmentType.cone, _save.Name);
+                //AugmentManager.x.RemoveAugment(AugmentType.cone, _save.Name);
                 break;
             case AugmentStage.fused:
                 fusedCone = Utils.OrderedRemove(fusedCone, GetAugmentIndex(fusedCone, _save));

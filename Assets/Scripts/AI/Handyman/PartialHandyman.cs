@@ -12,9 +12,11 @@ public partial class HandymanAI : AIBase
 
     [Header("Throwing Stats")]
     [SerializeField] private float f_pickupRange;
+    private GameObject go_currentThrowable;
     private GameObject go_nearestThrowable;
+    private float f_throwTimer = 0;
     private bool b_hasThrowable;
-    private float f_throwCooldown;
+    [SerializeField] private float f_throwCooldown;
     [SerializeField] private float f_timeBetweenThrows = 2;
     [SerializeField] private float f_minThrowDistance;
     [SerializeField] private GameObject go_centreofPickup;
@@ -50,13 +52,15 @@ public partial class HandymanAI : AIBase
 
     #region Check Actions
 
-    private GameObject GetClosestTaggedObjectAction(string _s_tag)
+    private GameObject GetClosestTaggedObjectAction(string _s_tag, bool _b_ignoreHieght)
     {
         float _f_distance = 1000000000;
         GameObject go_object = null;
 
         foreach (GameObject item in TagManager.x.GetTagSet(_s_tag))
         {
+            if (Mathf.Abs(item.transform.position.y - transform.position.y) > 10 && !_b_ignoreHieght)
+                continue;
             float _f_distanceCheck = Vector3.SqrMagnitude(item.transform.position - transform.position);
             if (_f_distanceCheck < _f_distance)
             {
@@ -64,23 +68,25 @@ public partial class HandymanAI : AIBase
                 _f_distance = _f_distanceCheck;
             }
         }
-        Debug.Log(go_object);
         return go_object;
     }
 
     private void GetClosestPlayerAction()
     {
-        t_target = GetClosestTaggedObjectAction("Player").transform;
+        t_target = GetClosestTaggedObjectAction("Player", true).transform;
     }
 
     private void GetClosestThrowableObjectAction()
     {
-        go_nearestThrowable = GetClosestTaggedObjectAction("Throwable");
+        go_nearestThrowable = GetClosestTaggedObjectAction("Throwable", false);
     }
 
     private void CheckShouldBeThrowing()
     {
-        b_shouldBeThrowing = Vector3.Distance(transform.position, t_target.position) >= f_minThrowDistance;
+        float throwableDistance = Vector3.SqrMagnitude(transform.position - go_nearestThrowable.transform.position);
+        float targetDistance = Vector3.SqrMagnitude(transform.position - t_target.position);
+        bool playerFurther = throwableDistance < targetDistance;
+        b_shouldBeThrowing = playerFurther && throwableDistance < (f_minThrowDistance * f_minThrowDistance);
     }
 
 
@@ -98,8 +104,8 @@ public partial class HandymanAI : AIBase
 
     private void PickUpAction()
     {
+        toggleHurtboxes(false);
         go_nearestThrowable.GetComponent<Rigidbody>().isKinematic = true;
-        go_nearestThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
 
         //go_nearestThrowable.GetComponent<Collider>().enabled = false;
         MoverBase m = go_nearestThrowable.GetComponent<MoverBase>();
@@ -108,43 +114,52 @@ public partial class HandymanAI : AIBase
 
         go_nearestThrowable.transform.parent = go_centreofPickup.transform;
         go_nearestThrowable.transform.localPosition = Vector3.zero;
+        go_currentThrowable = go_nearestThrowable;
+        go_currentThrowable.GetComponent<Collider>().enabled = false;
         b_hasThrowable = true;
     }
 
     private void ThrowAction()
     {
-        if (f_throwWindup <= 0)
+        if (f_throwTimer <= 0)
         {
             mover.SetCanMove(false);
             StartCoroutine(IThrow());
         }
-        f_throwWindup -= Time.deltaTime;
+        f_throwTimer -= Time.deltaTime;
     }
 
     private IEnumerator IThrow()
     {
-
         Rigidbody _rb = go_nearestThrowable.GetComponent<Rigidbody>();
+        Collider _c = go_nearestThrowable.GetComponent<Collider>();
+        _c.enabled = false;
         anim.Throw();
-        f_throwCooldown = f_throwWindup;
+        f_throwTimer = f_throwCooldown;
 
         yield return new WaitForSeconds(f_throwWindup);
-        go_nearestThrowable.transform.parent = null;
+        go_currentThrowable.GetComponent<Throwable>().EnterAboutToBeThrownState();
+        go_currentThrowable.transform.parent = null;
         _rb.isKinematic = false;
         _rb.constraints = RigidbodyConstraints.None;
-        _rb.AddForce(GetThrowVector(t_target.transform.position), ForceMode.Impulse);
+        _rb.AddForce(GetThrowVector(t_target.transform.position + (Vector3.up * 5)), ForceMode.Impulse);
         _rb.AddTorque(new Vector3(Random.value, Random.value, Random.value) * Random.Range(5, 10));
-        go_nearestThrowable = null;
 
-
-        f_throwCooldown = f_throwWindup;
+        f_throwTimer = f_throwCooldown;
+        yield return new WaitForSeconds(0.2f);
         mover.SetCanMove(true);
+        _c.enabled = true;
+
+        yield return new WaitForSeconds(1);
+        go_nearestThrowable = null;
+        go_currentThrowable = null;
+        b_hasThrowable = false;
         b_hasThrowable = false;
     }
 
     private void PunchAction()
     {
-        toggleHurtboxes(true);
+        //toggleHurtboxes(true);
         anim.Slap();
 
 

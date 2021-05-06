@@ -7,6 +7,7 @@ public class ElementManager : MonoBehaviour
 
     public static ElementManager x;
 
+    public GameObject go_lrObject;
     public GameObject[] effects;
     [Header("Goo")]
     public float gooDuration;
@@ -32,6 +33,7 @@ public class ElementManager : MonoBehaviour
     public float fireInterval;
     [Header("Lava")]
     public int lavaDamage;
+    public GameObject lavaPlatform;
 
     private void Awake()
     {

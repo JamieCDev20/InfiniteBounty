@@ -42,9 +42,11 @@ public class ProjectileAugment : Augment
         if (a.as_stage == AugmentStage.full && a.s_name != b.s_name)
             c.as_stage = AugmentStage.fused;
         c.Level = 1;
+        c.eo_element = ac.AugElement;
         List<string[]> audioClips = ac.GetAudioProperties();
         c.s_name = ac.Name;
         c.i_cost = ac.Cost;
+        c.mat_augColor = ac.AugmentMaterial;
         c.at_type = AugmentType.projectile;
         c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);
         c.InitPhysical(ac.GetPhysicalProperties());
