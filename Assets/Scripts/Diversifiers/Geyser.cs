@@ -5,6 +5,7 @@ using UnityEngine;
 public class Geyser : MonoBehaviour
 {
     [SerializeField] private float f_firePower;
+    [SerializeField] private float f_firePowerPlayer;
     private AudioSource as_source;
     [SerializeField] private AudioClip ac_jumpClip;
 
@@ -17,7 +18,10 @@ public class Geyser : MonoBehaviour
     {
         Rigidbody _rb = other.GetComponent<Rigidbody>();
         as_source.PlayOneShot(ac_jumpClip);
-        if (_rb && !other.name.Contains("andyman"))
+
+        if (other.CompareTag("Player"))
+            _rb.velocity = transform.up * f_firePowerPlayer;
+        else if (_rb && !other.name.Contains("andyman"))
             _rb.velocity = transform.up * f_firePower;
     }
 }
