@@ -165,7 +165,9 @@ public class HUDController : MonoBehaviourPunCallbacks
 
     public void SetBBTotal()
     {
-        texts.bucksText.text = NetworkedPlayer.x?.GetLocalNugManager().Nugs.ToString();
+        if (texts != null)
+            if (texts.bucksText != null)
+                texts.bucksText.text = NetworkedPlayer.x?.GetLocalNugManager().Nugs.ToString();
     }
 
     public void SceneLoad(Scene scene, LoadSceneMode mode)
