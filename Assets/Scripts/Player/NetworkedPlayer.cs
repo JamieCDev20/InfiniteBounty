@@ -50,6 +50,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (t_thisPlayer != null)
         {
+            handler.RemoveAllAugmentsOnWeapon();
             playerIM.RemoveAllPoolables();
             Destroy(t_thisPlayer.gameObject);
         }

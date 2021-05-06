@@ -58,10 +58,10 @@ public class AugmentManager : MonoBehaviour
             if (fuseSave.FusedCones != null)
                 A_coneAugs = Utils.CombineArrays(A_coneAugs, fuseSave.FusedCones);
         }
-        GetAllAugmentGameObjects();
+        if(Utils.ArrayIsNullOrZero(go_augments.ToArray()))
+            GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
         InitAugmentScripts();
-
     }
 
     private void OnSceneLoad(Scene s, LoadSceneMode m)
