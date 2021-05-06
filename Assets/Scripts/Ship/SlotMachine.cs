@@ -30,7 +30,8 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [Header("UI References")]
     [SerializeField] private Text[] tA_nameTexts = new Text[0];
     [SerializeField] private Text[] tA_descriptionTexts = new Text[0];
-    [SerializeField] private Image[] iA_diverSprites = new Image[0];
+    [SerializeField] private Image[] iA_diverSquareSprites = new Image[0];
+    [SerializeField] private Image[] iA_diverPlusMinusSprites = new Image[0];
     [SerializeField] private GameObject go_infoCanvas;
     [SerializeField] private Sprite s_spinningSprite;
 
@@ -334,7 +335,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         tA_descriptionTexts[_i_index].text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
         tA_nameTexts[_i_index].text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
-        iA_diverSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
+
+        if (!DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].b_hasSilhouetteBreak)
+        {
+            iA_diverSquareSprites[_i_index].enabled = true;
+            iA_diverSquareSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
+            iA_diverPlusMinusSprites[_i_index].enabled = false;
+        }
+        else
+        {
+            iA_diverPlusMinusSprites[_i_index].enabled = true;
+            iA_diverPlusMinusSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
+            iA_diverSquareSprites[_i_index].enabled = false;
+        }
 
         //go_infoHighlight.transform.position = tA_buttonPositions[_i_index].position;
     }
@@ -343,7 +356,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     {
         tA_nameTexts[_i_index].text = _s_title;
         tA_descriptionTexts[_i_index].text = _s_desc;
-        iA_diverSprites[_i_index].sprite = _s_image;
+
+        if (!DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].b_hasSilhouetteBreak)
+        {
+            iA_diverSquareSprites[_i_index].enabled = true;
+            iA_diverSquareSprites[_i_index].sprite = _s_image;
+            iA_diverPlusMinusSprites[_i_index].enabled = false;
+        }
+        else
+        {
+            iA_diverPlusMinusSprites[_i_index].enabled = true;
+            iA_diverPlusMinusSprites[_i_index].sprite = _s_image;
+            iA_diverSquareSprites[_i_index].enabled = false;
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -369,5 +394,7 @@ public struct DiversifierInfo
     public string s_name;
     [TextArea] public string s_desc;
     public string s_shortHandDesc;
+    [Space]
     public Sprite s_image;
+    public bool b_hasSilhouetteBreak;
 }
