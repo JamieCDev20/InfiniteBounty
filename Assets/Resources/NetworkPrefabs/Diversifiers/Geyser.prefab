@@ -4871,12 +4871,13 @@ AudioSource:
   m_GameObject: {fileID: 6328797814534416602}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a8176709bbf996c48a0235a5e2f0fd06,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 090a0609a67b3414aac681e74346cfb8, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4918,7 +4919,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4993,6 +4994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   f_firePower: 150
+  ac_jumpClip: {fileID: 8300000, guid: 71073f6d81b8d944d951df4280aff96c, type: 3}
 --- !u!65 &3066837032252228598
 BoxCollider:
   m_ObjectHideFlags: 0
