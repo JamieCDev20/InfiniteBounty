@@ -46,6 +46,12 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     [SerializeField] private string s_geyserPath;
     [SerializeField] private Vector2 v_numberOfGeysers;
 
+    [Header("Maxi/Mini Enemies")]
+    public float EnemyGrow = 1.5f;
+    public float EnemyShrink = 0.5f;
+
+    
+
 
     public void Init()
     {

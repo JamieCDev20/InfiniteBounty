@@ -82,13 +82,13 @@ public class GrooberHealth : MonoBehaviour, IHitable
         transform.localScale = (Vector3.one * 2) * _ds.f_scaleMult;
         if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.GoofyGroobers))
         {
-            transform.localScale *= 0.5f;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 0.5f);
+            transform.localScale *= DiversifierManager.x.EnemyShrink;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyShrink);
         }
         else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.NastyGroobers))
         {
-            transform.localScale *= 1.5f;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 1.5f);
+            transform.localScale *= DiversifierManager.x.EnemyGrow;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyGrow);
         }
     }
 }

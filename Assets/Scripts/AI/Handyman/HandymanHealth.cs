@@ -22,13 +22,13 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
 
         if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniMiniboss))
         {
-            transform.localScale *= 0.5f;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 0.5f);
+            transform.localScale *= DiversifierManager.x.EnemyShrink;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyShrink);
         }
         else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.Maxiboss))
         {
-            transform.localScale *= 1.5f;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * 1.5f);
+            transform.localScale *= DiversifierManager.x.EnemyGrow;
+            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyGrow);
         }
 
         i_curHealth = i_maxHealth;
