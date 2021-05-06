@@ -52,7 +52,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         tmp_costText.text = "";
 
         GetDiversifiersFromDifficulty();
-
+        
         SetWheels(wdA_wheels[0], UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length));
         SetWheels(wdA_wheels[1], UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length));
         SetWheels(wdA_wheels[2], UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length));
@@ -73,6 +73,10 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         wdA_wheels[0].dA_wheelDiversifiers = _dA_first;
         wdA_wheels[1].dA_wheelDiversifiers = _dA_second;
         wdA_wheels[2].dA_wheelDiversifiers = _dA_third;
+
+        SetWheels(wdA_wheels[0], (int)dA_activeDiversifiers[0]);
+        SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[1]);
+        SetWheels(wdA_wheels[2], (int)dA_activeDiversifiers[2]);
     }
 
     private void SetWheels(WheelData _wd_wheel, int _i_diversifierToRoll)
