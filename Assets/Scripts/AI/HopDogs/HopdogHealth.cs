@@ -40,7 +40,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
         {
             transform.localScale *= DiversifierManager.x.EnemyGrow;
             i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyGrow);
-            i_actualDamage = Mathf.RoundToInt(i_actualDamage * 1DiversifierManager.x.EnemyGrow.5f);
+            i_actualDamage = Mathf.RoundToInt(i_actualDamage * DiversifierManager.x.EnemyGrow);
         }
 
 
