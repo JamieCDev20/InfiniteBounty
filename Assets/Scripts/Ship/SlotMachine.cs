@@ -46,7 +46,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private TextMeshPro tmp_costText;
     private bool b_isSpinning;
 
-    private void Start()
+    private IEnumerator Start()
     {
         view = GetComponent<PhotonView>();
         anim = GetComponentInChildren<Animator>();
@@ -59,6 +59,12 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         SetWheels(wdA_wheels[2], UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length));
 
         DiversifierManager.x.ReceiveDiversifiers(dA_activeDiversifiers);
+
+        yield return new WaitForSeconds(3);
+
+        PullLeverFree();
+
+        yield return new WaitForSeconds(3);
 
         if (PhotonNetwork.IsMasterClient)
             view.RPC(nameof(SyncWheelsRPC), RpcTarget.Others, (int)dA_activeDiversifiers[0], (int)dA_activeDiversifiers[1], (int)dA_activeDiversifiers[2]);
