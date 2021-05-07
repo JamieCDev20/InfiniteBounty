@@ -208,7 +208,6 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         //LayerMask mask = LayerMask.GetMask("Player");
         if (Physics.Raycast(camControl.transform.GetChild(0).position, camControl.transform.GetChild(0).forward, out hitInfo, 10, -1, QueryTriggerInteraction.Ignore))
         {
-            Debug.Log(hitInfo.collider.name, hitInfo.collider.gameObject);
             IInteractible inter = hitInfo.collider.GetComponent<IInteractible>();
             inter?.Interacted();
             inter?.Interacted(transform);
