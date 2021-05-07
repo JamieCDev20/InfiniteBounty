@@ -107,6 +107,8 @@ public partial class FlyingAI : AIBase
     [PunRPC]
     public IEnumerator RemoteShoot(Vector3 dir)
     {
+        if (gameObject == null)
+            StopCoroutine(nameof(RemoteShoot));
         if (!b_isShooting)
         {
             b_isShooting = true;

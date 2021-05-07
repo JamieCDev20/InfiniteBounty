@@ -191,8 +191,8 @@ public class PlayerMover : MonoBehaviour
 
         if (pim_inputs.GetToolBools().b_RToolHold || pim_inputs.GetToolBools().b_LToolHold)
         {
-            _f_totalWeight += th_handler.ReturnWeaponWeight(0) * 0.5f;
-            _f_totalWeight += th_handler.ReturnWeaponWeight(1) * 0.5f;
+            _f_totalWeight += th_handler.ReturnWeaponWeight(0) * 0.25f;
+            _f_totalWeight += th_handler.ReturnWeaponWeight(1) * 0.25f;
         }
         else
         {

@@ -54,7 +54,9 @@ public class HammerHitbox : MonoBehaviour
         }
         IElementable ie = other.gameObject.GetComponent<IElementable>();
         if (ie != null)
-            ie.RecieveElements(elements.GetActiveElements());
+        {
+            ie.ReceiveElements(elements.GetActiveElements());
+        }
     }
 
     internal void SetHitBoxActive(bool _b_active)

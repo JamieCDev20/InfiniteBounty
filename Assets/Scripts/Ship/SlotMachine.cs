@@ -28,9 +28,12 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     private NugManager nm_nugMan;
 
     [Header("UI References")]
-    [SerializeField] private Text t_nameText;
-    [SerializeField] private Text t_descriptionText;
+    [SerializeField] private Text[] tA_nameTexts = new Text[0];
+    [SerializeField] private Text[] tA_descriptionTexts = new Text[0];
+    [SerializeField] private Image[] iA_diverSquareSprites = new Image[0];
+    [SerializeField] private Image[] iA_diverPlusMinusSprites = new Image[0];
     [SerializeField] private GameObject go_infoCanvas;
+    [SerializeField] private Sprite s_spinningSprite;
 
     [Header("Info Buttons")]
     [SerializeField] private GameObject go_infoHighlight;
@@ -42,7 +45,6 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private float f_costMultPerSpin;
     [SerializeField] private TextMeshPro tmp_costText;
     private bool b_isSpinning;
-
 
     private void Start()
     {
@@ -61,17 +63,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
     private void GetDiversifiersFromDifficulty()
     {
-        SetDiversifiersByDifficulty(
-            DifficultyManager.x.ReturnCurrentDifficulty().dA_firstDiversifierSet,
-            DifficultyManager.x.ReturnCurrentDifficulty().dA_secondDiversifierSet,
-            DifficultyManager.x.ReturnCurrentDifficulty().dA_thirdDiversifierSet);
+        SetDiversifiersByDifficulty(DifficultyManager.x.ReturnCurrentDifficulty().dA_diversifierSet);
     }
 
-    internal void SetDiversifiersByDifficulty(Diversifier[] _dA_first, Diversifier[] _dA_second, Diversifier[] _dA_third)
+    internal void SetDiversifiersByDifficulty(Diversifier[] _dA_first)
     {
         wdA_wheels[0].dA_wheelDiversifiers = _dA_first;
-        wdA_wheels[1].dA_wheelDiversifiers = _dA_second;
-        wdA_wheels[2].dA_wheelDiversifiers = _dA_third;
+        wdA_wheels[1].dA_wheelDiversifiers = _dA_first;
+        wdA_wheels[2].dA_wheelDiversifiers = _dA_first;
+        /*
+        SetWheels(wdA_wheels[0], (int)dA_activeDiversifiers[0]);
+        SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[0]);
+        SetWheels(wdA_wheels[2], (int)dA_activeDiversifiers[0]);
+        */
     }
 
     private void SetWheels(WheelData _wd_wheel, int _i_diversifierToRoll)
@@ -209,6 +213,10 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
             //Centre Sprite
             _wd_wheel.srL_wheelSprites[0].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_currentIndex]].s_image;
+            DisplayDiversifierInfo(_wd_wheel.i_wheelIndex,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_currentIndex]].s_name,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_currentIndex]].s_desc,
+    DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_currentIndex]].s_image);
 
             //Sprite below
             _i_ = _i_currentIndex - 1;
@@ -258,7 +266,9 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         _wd_wheel.srL_wheelSprites[2].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i]].s_image;
 
         b_isSpinning = false;
-        DisplayDiversifierInfo(i_currentButtonHighlighted);
+        DisplayDiversifierInfo(0);
+        DisplayDiversifierInfo(1);
+        DisplayDiversifierInfo(2);
 
         if (view.IsMine)
             anim.SetBool("PullLever", false);
@@ -288,7 +298,10 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
                 UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
                 UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length));
 
-            DisplayDiversifierInfo("SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!");
+            DisplayDiversifierInfo(0, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
+            DisplayDiversifierInfo(1, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
+            DisplayDiversifierInfo(2, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
+
         }
         else
             anim.SetTrigger("FailedToBuy");
@@ -301,7 +314,9 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
             UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length));
 
-        DisplayDiversifierInfo("SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!");
+        DisplayDiversifierInfo(0, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
+        DisplayDiversifierInfo(1, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
+        DisplayDiversifierInfo(2, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
     }
 
 
@@ -315,16 +330,45 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     internal void DisplayDiversifierInfo(int _i_index)
     {
         if (b_isSpinning) return;
+
         i_currentButtonHighlighted = _i_index;
-        t_descriptionText.text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
-        t_nameText.text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
-        go_infoHighlight.transform.position = tA_buttonPositions[_i_index].position;
+
+        tA_descriptionTexts[_i_index].text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
+        tA_nameTexts[_i_index].text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
+
+        if (!DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].b_hasSilhouetteBreak)
+        {
+            iA_diverSquareSprites[_i_index].enabled = true;
+            iA_diverSquareSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
+            iA_diverPlusMinusSprites[_i_index].enabled = false;
+        }
+        else
+        {
+            iA_diverPlusMinusSprites[_i_index].enabled = true;
+            iA_diverPlusMinusSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
+            iA_diverSquareSprites[_i_index].enabled = false;
+        }
+
+        //go_infoHighlight.transform.position = tA_buttonPositions[_i_index].position;
     }
 
-    internal void DisplayDiversifierInfo(string _s_name, string _s_desc)
+    internal void DisplayDiversifierInfo(int _i_index, string _s_title, string _s_desc, Sprite _s_image)
     {
-        t_nameText.text = _s_name;
-        t_descriptionText.text = _s_desc;
+        tA_nameTexts[_i_index].text = _s_title;
+        tA_descriptionTexts[_i_index].text = _s_desc;
+
+        if (!DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].b_hasSilhouetteBreak)
+        {
+            iA_diverSquareSprites[_i_index].enabled = true;
+            iA_diverSquareSprites[_i_index].sprite = _s_image;
+            iA_diverPlusMinusSprites[_i_index].enabled = false;
+        }
+        else
+        {
+            iA_diverPlusMinusSprites[_i_index].enabled = true;
+            iA_diverPlusMinusSprites[_i_index].sprite = _s_image;
+            iA_diverSquareSprites[_i_index].enabled = false;
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -350,5 +394,7 @@ public struct DiversifierInfo
     public string s_name;
     [TextArea] public string s_desc;
     public string s_shortHandDesc;
+    [Space]
     public Sprite s_image;
+    public bool b_hasSilhouetteBreak;
 }

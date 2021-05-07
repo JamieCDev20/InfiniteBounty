@@ -161,6 +161,14 @@ public class ToolHandler : SubjectBase
         Debug.Log(s);
     }
 
+    public void RemoveAllAugmentsOnWeapon()
+    {
+        foreach (AugmentGo ago in Resources.FindObjectsOfTypeAll<AugmentGo>())
+        {
+            ago.GetComponent<PoolableObject>().Die();
+        }
+    }
+
     internal float ReturnWeaponWeight(int _i_toolIndex)
     {
         if (A_tools[_i_toolIndex] != null)

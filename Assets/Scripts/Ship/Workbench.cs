@@ -419,7 +419,7 @@ public class Workbench : SubjectBase, IInteractible
 
         DisplayWeapon();
 
-        apd.ToolToCheck = wt_toolsInHand[i_currentWeaponIndex];
+        apd.ToolToCheck = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
 
         aL_allAugmentsOwned = apd.DisplayCurrentType();
     }

@@ -19,10 +19,16 @@ public class MoverBase : MonoBehaviour
     protected RaycastHit hit;
     protected Vector3 v_groundNormal;
     protected Rigidbody rb;
+    protected float f_currentDiffMult;
 
     protected void Awake()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    protected virtual void OnEnable()
+    {
+        f_currentDiffMult = DifficultyManager.x.ReturnCurrentDifficulty().f_movementSpeedMult;
     }
 
     public virtual void Move(Vector3 _dir)
@@ -37,7 +43,7 @@ public class MoverBase : MonoBehaviour
             v_groundNormal = hit.normal;
             b_grounded = true;
         }
-        rb.AddForce(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized * f_moveSpeed * (b_grounded ? 1 : f_airControlMultiplier), ForceMode.Impulse);
+        rb.AddForce(Vector3.ProjectOnPlane(_dir, v_groundNormal).normalized * f_moveSpeed * f_currentDiffMult * (b_grounded ? 1 : f_airControlMultiplier), ForceMode.Impulse);
         if (rb.velocity.magnitude > 0.1f)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.Scale(rb.velocity, Vector3.one - Vector3.up), Vector3.up), 0.3f);
 

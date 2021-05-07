@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private float f_knockBack = 5;
     [SerializeField] ElementalObject elements;
 
-    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae, Element[] _elem)
+    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae, Element[] _elem, Color[] _trKeys)
     {
         as_source = GetComponent<AudioSource>();
         c_myCollider.isTrigger = true;
@@ -54,6 +54,23 @@ public class Bullet : MonoBehaviour, IPoolable
             transform.localScale = Vector3.one;
         if (_ap.pm_phys != null)
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
+
+        if (!Utils.ArrayIsNullOrZero(_trKeys))
+        {
+            GradientColorKey[] gck = new GradientColorKey[_trKeys.Length];
+            GradientAlphaKey[] gak = new GradientAlphaKey[_trKeys.Length];
+            for (int i = 0; i < _trKeys.Length; i++)
+            {
+                gck[i].color = _trKeys[i];
+                gak[i].alpha = _trKeys[i].a < 0.25f ? 0.25f : _trKeys[i].a;
+            }
+            Gradient grad = new Gradient();
+            grad.colorKeys = gck;
+            grad.alphaKeys = gak;
+            tr_bulletTrail.colorGradient = grad;
+            //tr_bulletTrail.colorGradient.
+        }
+
         // If there's an explosion to be had, create a hiteffect here
         ae_explosion = _ae;
         if(!Utils.ArrayIsNullOrZero(_elem))
@@ -88,7 +105,7 @@ public class Bullet : MonoBehaviour, IPoolable
                 lb.TakeDamage(i_lodeDamage, false);
                 break;
             case Enemy e:
-                e.TakeDamage(i_damage, false);
+                e.TakeDamage(i_damage, true);
                 break;
             case null:
                 break;

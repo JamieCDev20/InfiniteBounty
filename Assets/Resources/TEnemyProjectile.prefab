@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7581770250588183018}
   - component: {fileID: 5484859708579074270}
   - component: {fileID: 1717222220854094880}
+  - component: {fileID: 1917464373031777794}
   m_Layer: 20
   m_Name: TEnemyProjectile
   m_TagString: Untagged
@@ -145,6 +146,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &1917464373031777794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598810658110751317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6070aec7849f45ba725fcee4b7341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eL_activeElements: 05000000
+  eL_elementImmunities: 01000000020000000300000006000000
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  hittableObject: {fileID: 0}
 --- !u!1 &2566814129297000750
 GameObject:
   m_ObjectHideFlags: 0
