@@ -61,10 +61,9 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         DiversifierManager.x.ReceiveDiversifiers(dA_activeDiversifiers);
     }
 
-    public override void OnJoinedRoom()
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        base.OnJoinedRoom();
-
+        base.OnPlayerEnteredRoom(newPlayer);
         PullLeverFree();
     }
 
