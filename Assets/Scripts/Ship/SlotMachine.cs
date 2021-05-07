@@ -64,7 +64,8 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        PullLeverFree();
+        view.RPC(nameof(SyncWheelsRPC), RpcTarget.Others, (int)dA_activeDiversifiers[0], (int)dA_activeDiversifiers[1], (int)dA_activeDiversifiers[2]);
+
         if (b_isBeingUsed)
             EndInteract();
     }
@@ -84,6 +85,14 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[0]);
         SetWheels(wdA_wheels[2], (int)dA_activeDiversifiers[0]);
         */
+    }
+
+    [PunRPC]
+    private void SyncWheelsRPC(int _1, int _2, int _3)
+    {
+        SetWheels(wdA_wheels[0], _1);
+        SetWheels(wdA_wheels[1], _2);
+        SetWheels(wdA_wheels[2], _3);
     }
 
     private void SetWheels(WheelData _wd_wheel, int _i_diversifierToRoll)
@@ -378,7 +387,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             iA_diverSquareSprites[_i_index].enabled = false;
         }
     }
-    
+
     [System.Serializable]
     private struct WheelData
     {
