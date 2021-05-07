@@ -45,7 +45,8 @@ public class SaveManager : SubjectBase, ObserverBase
         if (File.Exists(Application.persistentDataPath + sv))
         {
             File.Delete(Application.persistentDataPath + sv);
-            File.Create(Application.persistentDataPath + sv);
+            FileStream file = File.Create(Application.persistentDataPath + sv);
+            file.Close();
             string saveString = File.ReadAllText(Application.persistentDataPath + sv);
             if (saveString != string.Empty)
             {
