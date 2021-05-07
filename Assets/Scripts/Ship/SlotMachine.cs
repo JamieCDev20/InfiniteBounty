@@ -61,6 +61,13 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         DiversifierManager.x.ReceiveDiversifiers(dA_activeDiversifiers);
     }
 
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+
+        PullLeverFree();
+    }
+
     private void GetDiversifiersFromDifficulty()
     {
         SetDiversifiersByDifficulty(DifficultyManager.x.ReturnCurrentDifficulty().dA_diversifierSet);
