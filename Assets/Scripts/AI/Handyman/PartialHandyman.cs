@@ -167,9 +167,9 @@ public partial class HandymanAI : AIBase
 
     IEnumerator PunchRoutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.4f);
         toggleHurtboxes(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         toggleHurtboxes(false);
     }
 
