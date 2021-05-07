@@ -65,6 +65,8 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     {
         base.OnPlayerEnteredRoom(newPlayer);
         PullLeverFree();
+        if (b_isBeingUsed)
+            EndInteract();
     }
 
     private void GetDiversifiersFromDifficulty()
@@ -376,14 +378,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             iA_diverSquareSprites[_i_index].enabled = false;
         }
     }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
-        if (b_isBeingUsed)
-            EndInteract();
-    }
-
+    
     [System.Serializable]
     private struct WheelData
     {
