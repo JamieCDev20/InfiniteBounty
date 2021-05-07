@@ -96,16 +96,16 @@ public class PlayerAnimator : MonoBehaviourPun
         {
             if (Input.anyKeyDown)
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright"))
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft"))
                 {
                     if (anim.GetBool("Poop"))
-                    {
                         EndSitAnim("Poop");
-                    }
+
                     if (anim.GetBool("SofaRight"))
-                    {
                         EndSitAnim("SofaRight");
-                    }
+
+                    if (anim.GetBool("SofaLeft"))
+                        EndSitAnim("SofaLeft");
                 }
             }
         }
