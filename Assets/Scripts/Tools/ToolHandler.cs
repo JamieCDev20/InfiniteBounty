@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public enum ToolSlot
 {
@@ -624,4 +625,18 @@ public class ToolHandler : SubjectBase
     {
         ph_health = health;
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Invoke(nameof(FUCKINGREAPPLYTOOLS), 1);
+    }
+
+    private void FUCKINGREAPPLYTOOLS()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            CallSwapTool((ToolSlot)i, A_tools[i].ToolID, FindObjectOfType<ToolRack>(), false);
+        }
+    }
+
 }

@@ -61,6 +61,16 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         DiversifierManager.x.ReceiveDiversifiers(dA_activeDiversifiers);
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        if (PhotonNetwork.IsMasterClient)
+            view.RPC(nameof(SyncWheelsRPC), RpcTarget.Others, (int)dA_activeDiversifiers[0], (int)dA_activeDiversifiers[1], (int)dA_activeDiversifiers[2]);
+
+        if (b_isBeingUsed)
+            EndInteract();
+    }
+
     private void GetDiversifiersFromDifficulty()
     {
         SetDiversifiersByDifficulty(DifficultyManager.x.ReturnCurrentDifficulty().dA_diversifierSet);
@@ -76,6 +86,15 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[0]);
         SetWheels(wdA_wheels[2], (int)dA_activeDiversifiers[0]);
         */
+    }
+
+    [PunRPC]
+    private IEnumerator SyncWheelsRPC(int _1, int _2, int _3)
+    {
+        yield return new WaitForEndOfFrame();
+        SetWheels(wdA_wheels[0], _1);
+        SetWheels(wdA_wheels[1], _2);
+        SetWheels(wdA_wheels[2], _3);
     }
 
     private void SetWheels(WheelData _wd_wheel, int _i_diversifierToRoll)
@@ -369,13 +388,6 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             iA_diverPlusMinusSprites[_i_index].sprite = _s_image;
             iA_diverSquareSprites[_i_index].enabled = false;
         }
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
-        if (b_isBeingUsed)
-            EndInteract();
     }
 
     [System.Serializable]

@@ -105,9 +105,9 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
             }
         }
 
-#endif
         if (Input.GetKeyDown(KeyCode.PageUp))
             rb.AddForce(Vector3.up * 50, ForceMode.Impulse);
+#endif
 
         if (!view.IsMine && b_networked)
             return;
@@ -205,8 +205,8 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
     private void Interact()
     {
         RaycastHit hitInfo;
-        LayerMask mask = ~LayerMask.GetMask("Player");
-        if (Physics.Raycast(camControl.transform.GetChild(0).position, camControl.transform.GetChild(0).forward, out hitInfo, 10, mask, QueryTriggerInteraction.Ignore))
+        //LayerMask mask = LayerMask.GetMask("Player");
+        if (Physics.Raycast(camControl.transform.GetChild(0).position, camControl.transform.GetChild(0).forward, out hitInfo, 10, -1, QueryTriggerInteraction.Ignore))
         {
             IInteractible inter = hitInfo.collider.GetComponent<IInteractible>();
             inter?.Interacted();

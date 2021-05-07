@@ -15,7 +15,7 @@ public class Teleportal : MonoBehaviour
         if (b_isOpen)
         {
             Rigidbody _rb = other.GetComponent<Rigidbody>();
-            if (_rb != null)
+            if (_rb != null && !other.name.Contains("Augment"))
                 if (!rbL_recentlyTeleported.Contains(_rb))
                 {
                     StartCoroutine(TeleportObject(other.gameObject, _rb));
@@ -28,7 +28,7 @@ public class Teleportal : MonoBehaviour
     {
         if (_go_object.CompareTag("Player"))
             _go_object.GetComponent<PlayerMover>().GetTeleported();
-        else
+        else 
             _go_object.SetActive(false);
 
         Vector3 vel = _rb.velocity;

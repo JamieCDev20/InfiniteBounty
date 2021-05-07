@@ -161,8 +161,16 @@ public partial class HandymanAI : AIBase
     {
         //toggleHurtboxes(true);
         anim.Slap();
+        StartCoroutine(PunchRoutine());
 
+    }
 
+    IEnumerator PunchRoutine()
+    {
+        yield return new WaitForSeconds(0.4f);
+        toggleHurtboxes(true);
+        yield return new WaitForSeconds(0.3f);
+        toggleHurtboxes(false);
     }
 
     #endregion

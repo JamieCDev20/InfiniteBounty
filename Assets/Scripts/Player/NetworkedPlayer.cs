@@ -179,7 +179,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
     public Camera GetCamera()
     {
-        return playerCamera.GetComponent<Camera>();
+        return playerCamera?.GetComponent<Camera>();
     }
 
 }

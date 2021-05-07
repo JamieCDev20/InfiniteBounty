@@ -12,6 +12,8 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
     [SerializeField] private Transform t_lockPosition;
     private float f_lerpTime = 2;
     [SerializeField] private Transform t_camParent;
+    private bool b_hasLocalInteracted;
+
 
     private void Awake()
     {
@@ -55,6 +57,10 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
 
     public void Interacted(Transform interactor)
     {
+        if (b_hasLocalInteracted)
+            return;
+
+        b_hasLocalInteracted = true;
         StartCoroutine(DoTheWalkIntoThePod(interactor));
     }
 

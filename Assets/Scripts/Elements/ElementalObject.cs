@@ -117,7 +117,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     public int ID()
     {
         if (id == 0)
-            id = ElementManager.x.GetID();
+            if (ElementManager.x != null)
+                id = ElementManager.x.GetID();
         return id;
     }
 
@@ -248,7 +249,7 @@ public class ElementalObject : MonoBehaviour, IElementable
                 continue;
 
             //Debug.Log($"I <b><color=red> {hittableObject?.name} </color></b> of ID: <b><color=red> {id} </color></b> have received: <b><color=red> {_recieved[i]} </color></b> ");
-            
+
             ApplyStatus(_recieved[i]);
             ReceiveElements(_recieved[0]);
         }
@@ -345,7 +346,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     public void ActivateElement(bool activatesThunder)
     {
-        b_doThunder = activatesThunder ;
+        b_doThunder = activatesThunder;
         activated?.Invoke();
     }
     public void AddRemoveElement(Element _elem, bool add)
