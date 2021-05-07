@@ -59,6 +59,10 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         SetWheels(wdA_wheels[2], UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length));
 
         DiversifierManager.x.ReceiveDiversifiers(dA_activeDiversifiers);
+
+        if (PhotonNetwork.IsMasterClient)
+            view.RPC(nameof(SyncWheelsRPC), RpcTarget.Others, (int)dA_activeDiversifiers[0], (int)dA_activeDiversifiers[1], (int)dA_activeDiversifiers[2]);
+
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
