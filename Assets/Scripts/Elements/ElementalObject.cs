@@ -313,7 +313,6 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void ApplyStatus(Element _el)
     {
-        return;
         switch (_el)
         {
             case Element.goo:
