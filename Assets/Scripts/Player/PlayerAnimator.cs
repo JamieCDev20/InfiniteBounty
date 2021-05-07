@@ -284,9 +284,9 @@ public class PlayerAnimator : MonoBehaviourPun
         s_currentSofa = _s_newSofa;
         photonView.RPC("RemoteSit", RpcTarget.Others, _s_newSofa.GetChairTrasnsform().forward);
         if (b_isRightSide)
-            anim.SetBool("Poop", true);
+            anim.SetBool("SofaRight", true);
         else
-            anim.SetBool("Poop", true);
+            anim.SetBool("SofaLeft", true);
     }
 
     [PunRPC]
