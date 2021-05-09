@@ -105,7 +105,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
     {
         if (!b_isHost)
         {
-            photonView.RPC("RemoteTakeDamage", RpcTarget.Others, damage, activatesThunder);
+            photonView.RPC(nameof(RemoteTakeDamage), RpcTarget.Others, damage, activatesThunder);
         }
         i_currentHealth -= damage;
 
@@ -113,7 +113,7 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
 
         if (i_currentHealth <= 0)
         {
-            photonView.RPC("Die", RpcTarget.AllViaServer);
+            photonView.RPC(nameof(Die), RpcTarget.AllViaServer);
         }
     }
 
