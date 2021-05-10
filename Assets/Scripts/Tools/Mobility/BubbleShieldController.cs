@@ -10,10 +10,17 @@ public class BubbleShieldController : MonoBehaviour
     [SerializeField] private Collider c_colliderToDisable;
     private Rigidbody rb;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip ac_startUpClip;
+    private AudioSource as_source;
+    [SerializeField] private AudioClip ac_closeClip;
+    [SerializeField] private AudioClip ac_sustainClip;
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        as_source = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -36,7 +43,8 @@ public class BubbleShieldController : MonoBehaviour
 
     private IEnumerator ChangeDensity()
     {
-
+        as_source.clip = ac_startUpClip;
+        as_source.Play();
         for (int i = 0; i < 60; i++)
         {
             yield return new WaitForSeconds(0.01f);
@@ -45,7 +53,12 @@ public class BubbleShieldController : MonoBehaviour
             m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.3f;
         }
 
+        as_source.clip = ac_sustainClip;
+        as_source.Play();
         yield return new WaitForSeconds(13);
+
+        as_source.clip = ac_closeClip;
+        as_source.Play();
 
         for (int i = 0; i < 60; i++)
         {
