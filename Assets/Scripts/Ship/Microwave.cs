@@ -53,8 +53,8 @@ public class Microwave : SubjectBase, IInteractible
             pim.GetCamera().enabled = false;
             Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
             // Stop player from shooting
-            pm.GetComponent<PlayerAnimator>().enabled = false;
             PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
+            _pa.enabled = false;
             _pa.SetShootability(false);
             _pa.StopWalking();
 

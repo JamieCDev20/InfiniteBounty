@@ -67,11 +67,11 @@ public class VendingMachine : SubjectBase, IInteractible
     {
         if (!b_isBeingUsed)
         {
+            pim = interactor.GetComponent<PlayerInputManager>();
             interactor.position = t_playerPos.position;
             interactor.transform.forward = t_playerPos.forward;
 
             b_isBeingUsed = true;
-            pim = interactor.GetComponent<PlayerInputManager>();
             PlayerMover pm = pim.GetComponent<PlayerMover>();
             pm.GetComponent<Rigidbody>().isKinematic = true;
             pim.b_shouldPassInputs = false;
@@ -79,7 +79,9 @@ public class VendingMachine : SubjectBase, IInteractible
             t_camPositionToReturnTo = pim.GetCamera().transform;
             pim.GetCamera().enabled = false;
             Camera.main.GetComponent<CameraRespectWalls>().enabled = false;
+
             PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
+            _pa.enabled = false;
             _pa.SetShootability(false);
             _pa.StopWalking();
 
@@ -107,6 +109,7 @@ public class VendingMachine : SubjectBase, IInteractible
         go_vendingCanvas.enabled = false;
         pim.GetCamera().enabled = true;
         PlayerAnimator _pa = pm.GetComponent<PlayerAnimator>();
+        _pa.enabled = true;
         _pa.SetShootability(true);
         _pa.StartWalking();
 
