@@ -19,9 +19,9 @@ public class Teleporter : MobilityTool
     private AudioSource as_source;
 
     [Header("Portals")]
-    [SerializeField] private GameObject go_startPortal;
-    [SerializeField] private GameObject go_endPortal;
+    [SerializeField] private Teleportal go_portalPrefab;
     [SerializeField] private float f_portalLifeSpawn;
+
 
     private void Start()
     {
@@ -41,6 +41,7 @@ public class Teleporter : MobilityTool
             if (f_coolDown < 0) ComeOffCooldown();
         }
         if (b_isActive)
+            if(photonView.IsMine)
             foreach (GameObject player in TagManager.x.GetTagSet("Player"))
                 if (Vector3.Angle(player.transform.position - transform.position, t_cam.transform.forward) < 5)
                 {
@@ -112,19 +113,18 @@ public class Teleporter : MobilityTool
     [PunRPC]
     public void OpenPortalAtPoint(Vector3 _v_pos, Vector3 _v_lookDirection)
     {
-        go_startPortal.transform.position = transform.position + _v_lookDirection * 5 + Vector3.up;
-        go_startPortal.transform.parent = null;
-        go_startPortal.transform.forward = _v_lookDirection;
-        DontDestroyOnLoad(go_startPortal);
-        go_startPortal.SetActive(true);
-        go_startPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn);
+        Teleportal _tp_startPortal = Instantiate(go_portalPrefab);
+        Teleportal _tp_endPortal = Instantiate(go_portalPrefab);
 
-        go_endPortal.transform.position = _v_pos - _v_lookDirection * 3 + Vector3.up;
-        go_endPortal.transform.parent = null;
-        go_endPortal.transform.forward = -_v_lookDirection;
-        DontDestroyOnLoad(go_endPortal);
-        go_endPortal.SetActive(true);
-        go_endPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn);
+        _tp_startPortal.transform.position = transform.position + _v_lookDirection * 5 + Vector3.up;
+        _tp_startPortal.transform.parent = null;
+        _tp_startPortal.transform.forward = _v_lookDirection;
+        _tp_startPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn, _tp_endPortal);
+
+        _tp_endPortal.transform.position = _v_pos - _v_lookDirection * 3 + Vector3.up;
+        _tp_endPortal.transform.parent = null;
+        _tp_endPortal.transform.forward = -_v_lookDirection;
+        _tp_endPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn, _tp_startPortal);
 
     }
 
