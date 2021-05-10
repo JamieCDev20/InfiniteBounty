@@ -635,7 +635,12 @@ public class ToolHandler : SubjectBase
     {
         for (int i = 0; i < 3; i++)
         {
-            CallSwapTool((ToolSlot)i, A_tools[i].ToolID, FindObjectOfType<ToolRack>(), false);
+            if (A_tools[i] != null)
+            {
+                CallSwapTool((ToolSlot)i, A_tools[i].ToolID, FindObjectOfType<ToolRack>(), false);
+                if (A_tools[i] is ProjectileTool)
+                    (A_tools[i] as ProjectileTool).SetActiveState(true);
+            }
         }
     }
 
