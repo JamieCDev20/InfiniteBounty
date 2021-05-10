@@ -154,7 +154,7 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < offFaces.Length; i++)
         {
-            offFaces[i].SetActive(i == f);
+            offFaces[i]?.SetActive(i == f);
         }
     }
 
