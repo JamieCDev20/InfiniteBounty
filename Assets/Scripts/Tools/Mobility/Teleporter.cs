@@ -41,6 +41,7 @@ public class Teleporter : MobilityTool
             if (f_coolDown < 0) ComeOffCooldown();
         }
         if (b_isActive)
+            if(photonView.IsMine)
             foreach (GameObject player in TagManager.x.GetTagSet("Player"))
                 if (Vector3.Angle(player.transform.position - transform.position, t_cam.transform.forward) < 5)
                 {
