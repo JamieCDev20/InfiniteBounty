@@ -59,6 +59,11 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     }
 
+    public virtual void SetUseable(bool val)
+    {
+        b_usable = val;
+    }
+
     public virtual void NetUse(Vector3 _v_forwards)
     {
 
