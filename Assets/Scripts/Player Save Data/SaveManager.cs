@@ -50,7 +50,28 @@ public class SaveManager : SubjectBase, ObserverBase
                 // The save data must have all the required data to be read
                 if (CheckIfSaveDataClean(saveString))
                 {
-                    saveData = JsonConvert.DeserializeObject<PlayerSaveData>(saveString);
+                    try
+                    {
+                        // Get data
+                        saveData = JsonConvert.DeserializeObject<PlayerSaveData>(saveString);
+                    }
+                    catch(Exception e)
+                    {
+                        if(e is JsonException || e is ArgumentException)
+                        {
+                            // An argument is erroring
+                            saveData = UpdateSaveData(saveString);
+                            File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveString));
+                        }
+                        else
+                        {
+                            // It's corrupted
+                            File.Delete(Application.persistentDataPath + sv);
+                            FileStream file = File.Create(Application.persistentDataPath + sv);
+                            file.Close();
+                            Debug.Log(e);
+                        }
+                    }
                 }
                 else
                 {
@@ -177,7 +198,10 @@ public class SaveManager : SubjectBase, ObserverBase
                         break;
                     }
                     if(string.IsNullOrEmpty(newFloat) || newFloat != "\0")
+                    {
+                        if (newFloat == "null") break;
                         floatVals.Add(float.Parse(newFloat));
+                    }
                 }
                 psd.A_playerSliderOptions = floatVals.ToArray();
             }
@@ -208,7 +232,7 @@ public class SaveManager : SubjectBase, ObserverBase
 
     private T[] ReadArrayFromJson<T>(string _saveData, string[] _saveSeperators, char _lineSeperator)
     {
-        string newData = _saveData.Split(_saveSeperators, System.StringSplitOptions.None)[1];
+        string newData = _saveData.Split(_saveSeperators, System.StringSplitOptions.None)[0];
         int sepCount = 0;
         List<T> output = new List<T>();
         if(newData[0] != ']')
