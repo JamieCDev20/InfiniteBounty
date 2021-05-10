@@ -123,7 +123,7 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
         ass.Stop();
     }
 
-    public virtual void SetActive(bool val)
+    public virtual void SetActiveState(bool val)
     {
 
     }

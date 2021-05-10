@@ -349,7 +349,7 @@ public class ToolHandler : SubjectBase
     /// <param name="_ts_tool">Slot to use</param>
     public void UseTool(ToolSlot _ts_tool, Vector3 dir)
     {
-        A_tools[(int)_ts_tool]?.SetActive(true);
+        A_tools[(int)_ts_tool]?.SetActiveState(true);
         A_tools[(int)_ts_tool]?.Use(dir);
     }
 
@@ -469,7 +469,7 @@ public class ToolHandler : SubjectBase
         {
             ReturnToRack(_ts_, tr, _b_rackType);
             A_tools[(int)_ts_].gameObject.SetActive(false);
-            A_tools[(int)_ts_].SetActive(false);
+            A_tools[(int)_ts_].SetActiveState(false);
             A_tools[(int)_ts_] = null;
         }
     }
@@ -585,7 +585,7 @@ public class ToolHandler : SubjectBase
         {
             if (_b_released)
             {
-                A_tools[(int)ts].SetActive(true);
+                A_tools[(int)ts].SetActiveState(true);
                 view.RPC(nameof(StopUsingTool), RpcTarget.All, ts);
 
             }

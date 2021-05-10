@@ -30,7 +30,7 @@ public class ProjectileTool : WeaponTool
     private PlayerAnimator pa_anim;
     [SerializeField] private ParticleSystem ps_shotEffects;
 
-    public override void SetActive(bool val)
+    public override void SetActiveState(bool val)
     {
         pa_anim = GetComponentInParent<PlayerAnimator>();
         b_active = val;

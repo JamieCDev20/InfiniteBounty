@@ -41,9 +41,12 @@ public class ToolLoader : MonoBehaviour
         if (go_tool is WeaponTool)
             (go_tool as WeaponTool).InitAugmentArrayBlank();
 
-        if (ts_slot == ToolSlot.leftHand)
-            if (go_tool is ProjectileTool)
+        if (go_tool is ProjectileTool)
+        {
+            if (ts_slot == ToolSlot.leftHand)
                 (go_tool as ProjectileTool).b_isLeftHandWeapon = true;
+            go_tool.SetActiveState(true);
+        }
 
 
         go_tool.transform.position = _t_parent.position;
