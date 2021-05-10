@@ -25,11 +25,6 @@ public class HUDController : MonoBehaviourPunCallbacks
     [SerializeField] private Gradient g_healthBarGradient;
 
     [Header("Nug Counter")]
-    /*[SerializeField] private GameObject go_moneyUpParticle;
-    private List<GameObject> goL_moneyUpParts = new List<GameObject>();
-    [SerializeField] private GameObject go_moneyDownParticle;
-    private List<GameObject> goL_moneyDownParts = new List<GameObject>();
-    [SerializeField] private Text t_nugCountText;*/
     [SerializeField] private GameObject go_nugHudParent;
     [SerializeField] private GameObject go_bbObject;
     [SerializeField] private ScoreObjects texts;
@@ -151,6 +146,11 @@ public class HUDController : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
+        StopShowing();
+    }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        base.OnMasterClientSwitched(newMasterClient);
         StopShowing();
     }
 
