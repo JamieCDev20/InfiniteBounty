@@ -5,10 +5,10 @@ using UnityEngine;
 public class Teleportal : MonoBehaviour
 {
     private bool b_isOpen;
-    [SerializeField] private Teleportal tp_otherPortal;
-    private List<Rigidbody> rbL_recentlyTeleported = new List<Rigidbody>();
-    [SerializeField] private float f_hyuckForce;
+    private Teleportal tp_otherPortal;
+    private List<Rigidbody> rbL_recentlyTeleported = new List<Rigidbody>();    
     [SerializeField] private float travelTime = 0.3f;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,7 +28,7 @@ public class Teleportal : MonoBehaviour
     {
         if (_go_object.CompareTag("Player"))
             _go_object.GetComponent<PlayerMover>().GetTeleported();
-        else 
+        else
             _go_object.SetActive(false);
 
         Vector3 vel = _rb.velocity;
@@ -69,10 +69,12 @@ public class Teleportal : MonoBehaviour
         StartCoroutine(RemoveFromPool(_rb, true));
     }
 
-    internal void Setup(float _f_lifeSpan)
+    internal void Setup(float _f_lifeSpan, Teleportal _tp_endPortal)
     {
         StartCoroutine(ClosePortal(_f_lifeSpan));
         GetComponentInChildren<ParticleSystem>().Play();
+
+        tp_otherPortal = _tp_endPortal;
     }
 
     private IEnumerator ClosePortal(float _f_lifeSpan)
