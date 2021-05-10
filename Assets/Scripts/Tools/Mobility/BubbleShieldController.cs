@@ -6,6 +6,7 @@ public class BubbleShieldController : MonoBehaviour
 {
 
     [SerializeField] private MeshRenderer m_shieldRenderer;
+    [SerializeField] private Transform scaleOffsetter;
     private float f_currentTime;
     [SerializeField] private Collider c_colliderToDisable;
     private Rigidbody rb;
@@ -76,15 +77,19 @@ public class BubbleShieldController : MonoBehaviour
     {
         if (transform.parent == null)
         {
+            Debug.Log(collision.transform.localScale, collision.transform.gameObject);
             transform.SetParent(collision.transform, true);
+            transform.rotation = Quaternion.identity;
             rb.isKinematic = true;
 
             Vector3 newScale = new Vector3();
-            newScale.x = 1 / transform.parent.localScale.x;
-            newScale.y = 1 / transform.parent.localScale.y;
-            newScale.z = 1 / transform.parent.localScale.z;
+            newScale.x = 1f / (float)collision.transform.lossyScale.x;
+            newScale.y = 1f / (float)collision.transform.lossyScale.y;
+            newScale.z = 1f / (float)collision.transform.lossyScale.z;
 
-            transform.localScale = newScale;
+            transform.localScale = Vector3.one;
+            scaleOffsetter.localScale = newScale;
+
         }
     }
 }
