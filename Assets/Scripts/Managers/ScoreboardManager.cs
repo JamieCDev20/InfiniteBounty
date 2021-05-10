@@ -149,6 +149,8 @@ public class ScoreboardManager : MonoBehaviour
 
     private void LockCam()
     {
+        if (!PhotonNetwork.IsConnectedAndReady)
+            return;
         Transform interactor = GameObject.FindGameObjectsWithTag("Player")[0].transform;
 
         pim = interactor.GetComponent<PlayerInputManager>();

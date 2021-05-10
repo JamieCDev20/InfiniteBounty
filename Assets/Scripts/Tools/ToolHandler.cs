@@ -164,7 +164,7 @@ public class ToolHandler : SubjectBase
 
     public void RemoveAllAugmentsOnWeapon()
     {
-        foreach (AugmentGo ago in Resources.FindObjectsOfTypeAll<AugmentGo>())
+        foreach (AugmentGo ago in FindObjectsOfType<AugmentGo>(true))
         {
             ago.GetComponent<PoolableObject>().Die();
         }

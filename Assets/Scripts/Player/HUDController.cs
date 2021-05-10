@@ -177,7 +177,7 @@ public class HUDController : MonoBehaviourPunCallbacks
             Debug.Log("this is probably why");
             return;
         }
-        bool inLevel = !scene.name.Contains("Lobby");
+        bool inLevel = !scene.name.Contains("obby");
         HudInLevel(inLevel);
         foreach (int i in iiD_idMap.Keys)
         {

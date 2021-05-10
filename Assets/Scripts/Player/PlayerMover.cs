@@ -322,6 +322,9 @@ public class PlayerMover : MonoBehaviour
 
     private void SceneChange(Scene scene, LoadSceneMode mode)
     {
+        if (!this)
+            return;
+
         b_isSitting = false;
         //Invoke(nameof(ResetResetPoint), 0.5f);
 

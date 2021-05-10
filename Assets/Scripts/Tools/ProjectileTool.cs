@@ -69,6 +69,11 @@ public class ProjectileTool : WeaponTool
 
     private void Update()
     {
+        if (pim == null)
+        {
+            pim = transform.root.GetComponent<PlayerInputManager>();
+            return;
+        }
         if (f_currentHeat > 0 && (!(b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold) || b_isOverheating))
             f_currentHeat -= Time.deltaTime * f_heatsink;
 

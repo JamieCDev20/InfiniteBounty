@@ -99,10 +99,10 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
         {
             go_offMarker.SetActive(false);
             go_onMarker.SetActive(false);
-            worldspaceNameText.SetActive(true);
+            worldspaceNameText?.SetActive(true);
             return;
         }
-        worldspaceNameText.SetActive(false);
+        worldspaceNameText?.SetActive(false);
 
         Vector2 screenPos = cam.WorldToScreenPoint(transform.position + (f_yOnScreenOffset * Vector3.up));
         float w = Screen.width;
