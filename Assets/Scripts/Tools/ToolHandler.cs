@@ -639,7 +639,10 @@ public class ToolHandler : SubjectBase
             {
                 CallSwapTool((ToolSlot)i, A_tools[i].ToolID, FindObjectOfType<ToolRack>(), false);
                 if (A_tools[i] is ProjectileTool)
+                {
                     (A_tools[i] as ProjectileTool).SetActiveState(true);
+                    A_tools[i].SetUseable(true);
+                }
             }
         }
     }

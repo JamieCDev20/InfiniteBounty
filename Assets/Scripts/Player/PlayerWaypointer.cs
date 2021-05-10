@@ -89,7 +89,7 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
 
         }
-        worldspaceNameText = GetComponentInChildren<TextMeshPro>().gameObject;
+        worldspaceNameText = GetComponentInChildren<TextMeshPro>()?.gameObject;
     }
 
     private void PositionWaypoint()

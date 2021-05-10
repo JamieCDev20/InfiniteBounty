@@ -62,7 +62,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
         mA_mySkinRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
         mA_myRenderers = GetComponentsInChildren<MeshRenderer>(true);
-        print(mA_myRenderers.Length);
+        //print(mA_myRenderers.Length);
     }
 
     private void Update()

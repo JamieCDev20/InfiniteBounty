@@ -60,7 +60,7 @@ public class ProjectileTool : WeaponTool
 
             cc_cam?.Recoil(f_recoil);
 
-            pa_anim.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);
+            pa_anim?.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);
 
             PlayAudio(ac_activationSound);
             f_currentHeat += f_heatPerShot;
