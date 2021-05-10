@@ -49,7 +49,7 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void Init() { }
-
+    /*
     private void Update()
     {
         if (b_isPlayingVideo)
@@ -61,7 +61,7 @@ public class TutorialManager : MonoBehaviour
 
         //if(Input.GetKeyDown(KeyCode.Escape))
 
-    }
+    }*/
 
     internal void SetShouldTutorial(bool isOn)
     {
@@ -125,7 +125,7 @@ public class TutorialManager : MonoBehaviour
             go_tutorialWalls.transform.position = go_tutorialWalls.transform.localPosition;
             go_tutorialWalls.SetActive(true);
 
-            b_isPlayingVideo = true;
+            /*b_isPlayingVideo = true;
             go_videoObject.SetActive(true);
 
             for (int i = 0; i < f_videoLength; i++)
@@ -134,7 +134,7 @@ public class TutorialManager : MonoBehaviour
 
             go_videoObject.SetActive(false);
             b_isPlayingVideo = false;
-
+            */
             for (int i = 0; i < _tcA_chunksToWorkThrough.Length; i++)
             {
                 for (int x = 0; x < _tcA_chunksToWorkThrough[i].tsdA_stepsInChunk.Length; x++)
