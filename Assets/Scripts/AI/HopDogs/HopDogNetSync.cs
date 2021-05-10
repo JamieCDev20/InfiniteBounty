@@ -47,10 +47,10 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rot, 0.3f);
     }
 
-    /*
+    
     private void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        GetComponent<IHitable>().Die();
+        //GetComponent<IHitable>().Die();
     }
-    */
+    
 }
