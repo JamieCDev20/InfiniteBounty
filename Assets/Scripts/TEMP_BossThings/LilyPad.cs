@@ -35,7 +35,7 @@ public class LilyPad : MonoBehaviour, IHitable
         {
             if (view != null)
             {
-                view.ViewID = 4000 + _i_id;
+                view.ViewID = 5000 + _i_id;
                 PhotonNetwork.RegisterPhotonView(view);
             }
         }
