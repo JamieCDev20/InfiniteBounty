@@ -15065,6 +15065,7 @@ MonoBehaviour:
   eL_activeElements: 
   eL_elementImmunities: 
   mesh: {fileID: 0}
+  hittableObject: {fileID: 0}
 --- !u!1 &6620813094879799554
 GameObject:
   m_ObjectHideFlags: 0
@@ -20017,6 +20018,7 @@ GameObject:
   - component: {fileID: 7607039210534153191}
   - component: {fileID: 85291586903334841}
   - component: {fileID: 3405705995836247709}
+  - component: {fileID: 7770469345114130148}
   m_Layer: 13
   m_Name: Hammer
   m_TagString: Untagged
@@ -20053,8 +20055,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.6, z: 0.5}
-  m_Center: {x: 0, y: -0.1, z: 0.25}
+  m_Size: {x: 0.6, y: 0.666113, z: 0.81239974}
+  m_Center: {x: 0, y: 0.047157913, z: 0.058300197}
 --- !u!82 &85291586903334841
 AudioSource:
   m_ObjectHideFlags: 0
@@ -20214,3 +20216,18 @@ MonoBehaviour:
   augGo: {fileID: 7970241254651023256, guid: 91d968a9612d5854fa5765e3bcb0f238, type: 3}
   f_hitBoxActivationDelay: 0.2
   f_hitBoxDur: 0.3
+--- !u!114 &7770469345114130148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8176889226227109766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Take Hammer
+  i_buttonSpriteIndex: 1
+  b_hostOnly: 0

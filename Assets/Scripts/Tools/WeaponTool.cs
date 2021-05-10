@@ -53,10 +53,6 @@ public class WeaponTool : ToolBase
     public Augment[] Augs { get { return A_augs; } set { A_augs = value; } }
     #endregion
 
-    protected void OnEnable()
-    {
-        //if (A_augs == null)
-    }
 
     public void InitAugmentArrayBlank()
     {

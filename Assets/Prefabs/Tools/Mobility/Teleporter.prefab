@@ -4883,38 +4883,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &4207478252572505066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 965251852802370788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  c_onColour: {r: 1, g: 0, b: 0, a: 1}
-  c_offColour: {r: 1, g: 0, b: 0, a: 0}
---- !u!114 &6973839700375727814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 965251852802370788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 29bdebf04b0d26d408cb1d3380d43eba, type: 2}
-  color: {r: 1, g: 0, b: 0, a: 1}
-  mask: {fileID: 0}
-  fresnelScale: 2
-  fresnelPower: 2
-  alphaThreshold: 0.5
 --- !u!1 &1058048339834229945
 GameObject:
   m_ObjectHideFlags: 0
@@ -19490,6 +19458,7 @@ GameObject:
   - component: {fileID: 8679942428932430809}
   - component: {fileID: 6728180199137262046}
   - component: {fileID: 473711147935343271}
+  - component: {fileID: 4674193551985939489}
   m_Layer: 13
   m_Name: Teleporter
   m_TagString: Untagged
@@ -19525,8 +19494,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.5, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.63, y: 0.6539899, z: 0.26106519}
+  m_Center: {x: 0, y: 0.076994956, z: 0.06703204}
 --- !u!114 &8679942428932430809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19685,6 +19654,21 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &4674193551985939489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399896737828543379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Take Teleportal
+  i_buttonSpriteIndex: 0
+  b_hostOnly: 0
 --- !u!1 &4720359426738704547
 GameObject:
   m_ObjectHideFlags: 0
@@ -34522,12 +34506,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 118266373160800693}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &965251852802370788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: abdfedfa19e8a1442b05a90af41880b6,
-    type: 3}
-  m_PrefabInstance: {fileID: 118266373160800693}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &440966018508643976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35224,15 +35202,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f9e6cf83cb0514db0de684cb563f0c, type: 3}
---- !u!1 &6555137232502950924 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 676226852418258147, guid: 27f9e6cf83cb0514db0de684cb563f0c,
-    type: 3}
-  m_PrefabInstance: {fileID: 6024398104709433583}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6447615117865922277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 783751549370770954, guid: 27f9e6cf83cb0514db0de684cb563f0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 6024398104709433583}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6555137232502950924 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 676226852418258147, guid: 27f9e6cf83cb0514db0de684cb563f0c,
     type: 3}
   m_PrefabInstance: {fileID: 6024398104709433583}
   m_PrefabAsset: {fileID: 0}

@@ -66,38 +66,6 @@ Transform:
   m_Father: {fileID: 3836865187807276946}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5160658658912405350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4266069008308320870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  c_onColour: {r: 1, g: 0, b: 0, a: 1}
-  c_offColour: {r: 1, g: 0, b: 0, a: 0}
---- !u!114 &5702572675147016946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4266069008308320870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 29bdebf04b0d26d408cb1d3380d43eba, type: 2}
-  color: {r: 1, g: 0, b: 0, a: 1}
-  mask: {fileID: 0}
-  fresnelScale: 2
-  fresnelPower: 2
-  alphaThreshold: 0.5
 --- !u!1 &7690064019938783782
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,38 +126,6 @@ Transform:
   m_Father: {fileID: 5177738940996787853}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -22.669, y: -15, z: 0}
---- !u!114 &4524860220079186812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7999783149286583342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  c_onColour: {r: 1, g: 0, b: 0, a: 1}
-  c_offColour: {r: 1, g: 0, b: 0, a: 0}
---- !u!114 &8694206746360989791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7999783149286583342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 29bdebf04b0d26d408cb1d3380d43eba, type: 2}
-  color: {r: 1, g: 0, b: 0, a: 1}
-  mask: {fileID: 0}
-  fresnelScale: 2
-  fresnelPower: 2
-  alphaThreshold: 0.5
 --- !u!1 &8286022020419858442
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +198,7 @@ GameObject:
   - component: {fileID: 8296623352761004413}
   - component: {fileID: 1035169180157540403}
   - component: {fileID: 2903791968455632032}
+  - component: {fileID: 6818552856044715691}
   m_Layer: 13
   m_Name: Lunchbox
   m_TagString: Untagged
@@ -436,6 +373,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6818552856044715691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943446615867786275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Take Lunchbox
+  i_buttonSpriteIndex: 1
+  b_hostOnly: 0
 --- !u!1001 &925357879164817954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -624,12 +576,6 @@ PrefabInstance:
 --- !u!4 &7416299349406558815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 50c2852d80956094f9a009efd74e27ef,
-    type: 3}
-  m_PrefabInstance: {fileID: 7016966155372580276}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7999783149286583342 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8185936731878841958, guid: 50c2852d80956094f9a009efd74e27ef,
     type: 3}
   m_PrefabInstance: {fileID: 7016966155372580276}
   m_PrefabAsset: {fileID: 0}

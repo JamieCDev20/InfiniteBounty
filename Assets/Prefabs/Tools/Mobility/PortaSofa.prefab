@@ -678,6 +678,7 @@ GameObject:
   - component: {fileID: 4615463561788124189}
   - component: {fileID: 7443090767364279401}
   - component: {fileID: -5591034289947350989}
+  - component: {fileID: 2060395213988090747}
   m_Layer: 13
   m_Name: PortaSofa
   m_TagString: Untagged
@@ -741,6 +742,7 @@ MonoBehaviour:
   - {fileID: 0}
   ac_diegeticAudio:
   - {fileID: 0}
+  ac_heatSound: {fileID: 0}
   b_oneTimeAudio: 0
   t_raycastPoint: {fileID: 0}
   b_releaseActivated: 0
@@ -761,7 +763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   b_isRightSide: 1
   t_sitPosition: {fileID: 3247299101047569344}
-  go_audioSourceObject: {fileID: 0}
+  go_objectToEnableWhenUsed: {fileID: 0}
   b_cannonSeat: 0
 --- !u!82 &-5591034289947350989
 AudioSource:
@@ -860,6 +862,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2060395213988090747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943446615867786275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Take Portasofa
+  i_buttonSpriteIndex: 1
+  b_hostOnly: 0
 --- !u!1001 &7532559225941882310
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14887,6 +14887,7 @@ GameObject:
   - component: {fileID: -3503754623988813978}
   - component: {fileID: -7211808666766989984}
   - component: {fileID: 3268401363846499826}
+  - component: {fileID: 4734868726479406390}
   m_Layer: 13
   m_Name: Cannon
   m_TagString: Untagged
@@ -14922,8 +14923,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.4, z: 0.76}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.4, y: 0.44065964, z: 0.8321291}
+  m_Center: {x: 0, y: 0.07935226, z: -0.036064565}
 --- !u!114 &7744473008332969848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15156,8 +15157,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 6
+  MaxDistance: 200
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -15192,7 +15193,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -15232,6 +15233,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4734868726479406390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547322647095116221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Take Cannon
+  i_buttonSpriteIndex: 1
+  b_hostOnly: 0
 --- !u!1 &8220174204682026623
 GameObject:
   m_ObjectHideFlags: 0

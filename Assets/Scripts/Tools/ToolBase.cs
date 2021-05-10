@@ -47,6 +47,12 @@ public abstract class ToolBase : MonoBehaviourPun, IPurchasable
 
     #endregion
 
+    protected void OnEnable()
+    {
+        if (transform.parent != null)
+            if (!transform.parent.name.Contains("Rack"))
+                Destroy(GetComponent<ToolTip>());
+    }
 
     public virtual void Use()
     {

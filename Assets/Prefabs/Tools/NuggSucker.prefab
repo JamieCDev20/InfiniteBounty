@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: -3503754623988813978}
   - component: {fileID: 5017027104225955398}
   - component: {fileID: 1589866486357523588}
+  - component: {fileID: 7798632197538684129}
   m_Layer: 13
   m_Name: NuggSucker
   m_TagString: Untagged
@@ -297,8 +298,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2, z: 0.76}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.39489895, y: 0.40238738, z: 0.99630326}
+  m_Center: {x: 0.025412373, y: 0.0030256808, z: 0.06177184}
 --- !u!23 &-3503754623988813978
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -504,6 +505,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7798632197538684129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547322647095116221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Take Nuggsucker
+  i_buttonSpriteIndex: 1
+  b_hostOnly: 0
 --- !u!1 &7998951778516659636
 GameObject:
   m_ObjectHideFlags: 0

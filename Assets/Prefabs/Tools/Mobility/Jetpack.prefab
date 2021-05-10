@@ -9848,38 +9848,6 @@ Transform:
   m_Father: {fileID: 486313756789176946}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &856296299155761709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3889477861623739891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177ca839c2d076948af0fb145056b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  c_onColour: {r: 1, g: 0, b: 0, a: 1}
-  c_offColour: {r: 1, g: 0, b: 0, a: 0}
---- !u!114 &4168585833896266237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3889477861623739891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 29bdebf04b0d26d408cb1d3380d43eba, type: 2}
-  color: {r: 1, g: 0, b: 0, a: 1}
-  mask: {fileID: 0}
-  fresnelScale: 2
-  fresnelPower: 2
-  alphaThreshold: 0.5
 --- !u!1 &4162959591431787301
 GameObject:
   m_ObjectHideFlags: 0
@@ -14802,7 +14770,6 @@ GameObject:
   - component: {fileID: 4641057921954568121}
   - component: {fileID: 86674658541095457}
   - component: {fileID: 826584790609600565}
-  - component: {fileID: 5868318678327186874}
   m_Layer: 0
   m_Name: FuelTube
   m_TagString: Untagged
@@ -14873,24 +14840,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5868318678327186874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5097640174174261730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 29bdebf04b0d26d408cb1d3380d43eba, type: 2}
-  color: {r: 1, g: 0, b: 0, a: 0}
-  mask: {fileID: 0}
-  fresnelScale: 2
-  fresnelPower: 2
-  alphaThreshold: 0.5
 --- !u!1 &6530649209675361703
 GameObject:
   m_ObjectHideFlags: 0
@@ -24590,6 +24539,7 @@ GameObject:
   - component: {fileID: 8296623352761004413}
   - component: {fileID: 6078800349902601242}
   - component: {fileID: 655314232945192354}
+  - component: {fileID: 3086488338234848386}
   m_Layer: 13
   m_Name: Jetpack
   m_TagString: Untagged
@@ -24806,6 +24756,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3086488338234848386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943446615867786275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Take Jetpack
+  i_buttonSpriteIndex: 1
+  b_hostOnly: 0
 --- !u!1001 &4123989183898912930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24875,12 +24840,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f67a8a5c1c243344fafd8a7f0e58ab0b, type: 3}
---- !u!1 &3889477861623739891 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f67a8a5c1c243344fafd8a7f0e58ab0b,
-    type: 3}
-  m_PrefabInstance: {fileID: 4123989183898912930}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4517641685343432521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f67a8a5c1c243344fafd8a7f0e58ab0b,
