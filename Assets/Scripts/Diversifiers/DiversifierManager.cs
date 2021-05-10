@@ -8,19 +8,19 @@ public enum Diversifier
 {
     None, //It implements itself
 
-    JumboLodes, //Triggered in LodeSpawnZone, increases size by 50%
-    LotsOLodes, //Triggered in LodeSpawnZone
+    JumboLodes, //Triggered in LodeSpawnZone
+    LotsOLodes, //Triggered in LodeSpawnZone, causes the maximum number of lodes to spawn
     GeysersGalore, //Triggered in DiversiferManager
     MiniMiniboss, //Triggered in HandymanHealth
     MiniBunny, //Triggered in HopDogHealth
     GoofyGroobers, //Triggered in GooberHealth
     MiniFlying, //Triggered in FlyingHealth
 
-    BabyLodes, //Triggered in LodeSpawnZone, reduces size by 25%
-    LessLodes, //Triggered in LodeSpawnZone
+    BabyLodes, //Triggered in LodeSpawnZone
+    LessLodes, //Triggered in LodeSpawnZone, causes the minimum number of lodes to spawn
     LethalLava, //Triggered in KillBox
     ZeroGNuggs, //Triggered in NugGo in start
-    Maxiboss, //Triggered in HandymanHealth
+    MaxiBoss, //Triggered in HandymanHealth
     MegaBunnies, //Triggered in HopDogHealth
     NastyGroobers, //Triggered in GrooberHealth
     MaxiFlying, //Triggered in FlyingHealth
@@ -50,7 +50,12 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     public float EnemyGrow = 1.5f;
     public float EnemyShrink = 0.5f;
 
-
+    [Header("Lode Divers")]
+    [SerializeField] private float f_jumboLodes = 1.5f;
+    [SerializeField] private float f_babyLodes = 0.5f;
+    [Space]
+    [SerializeField] private float f_lessLodes = 0.5f;
+    [SerializeField] private float f_lotsoLodes = 1.5f;
 
 
     public void Init()
@@ -115,9 +120,6 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
             {
                 switch (dA_activeDivers[i])
                 {
-                    default:
-                        break;
-
                     case Diversifier.GeysersGalore:
                         view.RPC(nameof(GeysersGaloreRPC), RpcTarget.All, Random.Range(0, 9999999));
                         break;
@@ -155,6 +157,8 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region Utils
+
     private Vector3 ReturnPositionWithinZone(LodeSpawnZone _zi_zone)
     {
         return new Vector3(Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative()), 500, Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative())) + _zi_zone.transform.position;
@@ -164,4 +168,117 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     {
         return Random.Range(-1f, 1f);
     }
+
+    #endregion
+
+    #region Enemy Scaler Returns
+
+    internal float ReturnGrooberScaler()
+    {
+        float _f_scaler = 1;
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            switch (dA_activeDivers[i])
+            {
+                case Diversifier.GoofyGroobers:
+                    _f_scaler *= EnemyShrink;
+                    break;
+                case Diversifier.NastyGroobers:
+                    _f_scaler *= EnemyGrow;
+                    break;
+            }
+
+        return _f_scaler;
+    }
+
+    internal float ReturnHandymanScaler()
+    {
+        float _f_scaler = 1;
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            switch (dA_activeDivers[i])
+            {
+                case Diversifier.MiniMiniboss:
+                    _f_scaler *= EnemyShrink;
+                    break;
+                case Diversifier.MaxiBoss:
+                    _f_scaler *= EnemyGrow;
+                    break;
+            }
+
+        return _f_scaler;
+    }
+
+    internal float ReturnFlyingScaler()
+    {
+        float _f_scaler = 1;
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            switch (dA_activeDivers[i])
+            {
+                case Diversifier.MiniFlying:
+                    _f_scaler *= EnemyShrink;
+                    break;
+                case Diversifier.MaxiFlying:
+                    _f_scaler *= EnemyGrow;
+                    break;
+            }
+
+        return _f_scaler;
+    }
+
+    internal float ReturnHopdogScaler()
+    {
+        float _f_scaler = 1;
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            switch (dA_activeDivers[i])
+            {
+                case Diversifier.MiniBunny:
+                    _f_scaler *= EnemyShrink;
+                    break;
+                case Diversifier.MegaBunnies:
+                    _f_scaler *= EnemyGrow;
+                    break;
+            }
+
+        return _f_scaler;
+    }
+
+    #endregion
+
+    #region Lode Things
+
+    internal float ReturnLodeScaler()
+    {
+        float _f_scaler = 1;
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            switch (dA_activeDivers[i])
+            {
+                case Diversifier.BabyLodes:
+                    _f_scaler *= f_babyLodes;
+                    break;
+                case Diversifier.JumboLodes:
+                    _f_scaler *= f_jumboLodes;
+                    break;
+            }
+
+        return _f_scaler;
+    }
+
+    internal float ReturnLodeAmountMult()
+    {
+        float _f_scaler = 1;
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            switch (dA_activeDivers[i])
+            {
+                case Diversifier.LessLodes:
+                    _f_scaler *= f_lessLodes;
+                    break;
+                case Diversifier.LotsOLodes:
+                    _f_scaler *= f_lotsoLodes;
+                    break;
+            }
+
+        return _f_scaler;
+    }
+
+    #endregion
+
 }

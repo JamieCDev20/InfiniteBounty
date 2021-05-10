@@ -30,19 +30,10 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
         i_actualDamage = Mathf.RoundToInt(i_explosionDamage * _ds.f_damageMult);
         i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
         transform.localScale = Vector3.one * _ds.f_scaleMult * 2;
-        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniBunny))
-        {
-            transform.localScale *= DiversifierManager.x.EnemyShrink;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyShrink);
-            i_actualDamage = Mathf.RoundToInt(i_actualDamage * DiversifierManager.x.EnemyShrink);
-        }
-        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MegaBunnies))
-        {
-            transform.localScale *= DiversifierManager.x.EnemyGrow;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyGrow);
-            i_actualDamage = Mathf.RoundToInt(i_actualDamage * DiversifierManager.x.EnemyGrow);
-        }
 
+        transform.localScale *= DiversifierManager.x.ReturnHopdogScaler();
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.ReturnHopdogScaler());
+        i_actualDamage = Mathf.RoundToInt(i_actualDamage * DiversifierManager.x.ReturnHopdogScaler());
 
 
         eo_elemO = GetComponent<ElementalObject>();

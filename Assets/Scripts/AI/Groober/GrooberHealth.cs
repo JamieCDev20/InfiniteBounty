@@ -57,7 +57,7 @@ public class GrooberHealth : MonoBehaviour, IHitable
 
         for (int i = 0; i < mA_myRenderers.Length; i++)
             mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
-        if(gameObject.activeInHierarchy)
+        if (gameObject.activeInHierarchy)
             StartCoroutine(DamageFlash());
     }
 
@@ -80,15 +80,8 @@ public class GrooberHealth : MonoBehaviour, IHitable
 
         i_currentHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
         transform.localScale = (Vector3.one * 2) * _ds.f_scaleMult;
-        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.GoofyGroobers))
-        {
-            transform.localScale *= DiversifierManager.x.EnemyShrink;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyShrink);
-        }
-        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.NastyGroobers))
-        {
-            transform.localScale *= DiversifierManager.x.EnemyGrow;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyGrow);
-        }
+
+        transform.localScale *= DiversifierManager.x.ReturnGrooberScaler();
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.ReturnGrooberScaler());
     }
 }

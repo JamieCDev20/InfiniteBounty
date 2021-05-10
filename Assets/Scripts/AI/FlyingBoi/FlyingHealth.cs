@@ -27,16 +27,10 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * _ds.f_maxHealthMult);
 
         transform.localScale = (Vector3.one * 2) * _ds.f_scaleMult;
-        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MiniFlying))
-        {
-            transform.localScale *= DiversifierManager.x.EnemyShrink;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyShrink);
-        }
-        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.MaxiFlying))
-        {
-            transform.localScale *= DiversifierManager.x.EnemyGrow;
-            i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.EnemyGrow);
-        }
+
+        transform.localScale *= DiversifierManager.x.ReturnFlyingScaler();
+        i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.ReturnHopdogScaler());
+
         i_curHealth = i_maxHealth;
     }
 

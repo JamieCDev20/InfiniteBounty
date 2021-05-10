@@ -56,10 +56,8 @@ public class LodeSpawnZone : MonoBehaviour
                         _go_lode.transform.Rotate(Vector3.up * UnityEngine.Random.Range(0, 360), Space.Self);
                         _go_lode.transform.localScale = Vector3.one * UnityEngine.Random.Range(v_lodeSize.x, v_lodeSize.y);
 
-                        if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.JumboLodes))
-                            _go_lode.transform.localScale *= 1.5f;
-                        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.BabyLodes))
-                            _go_lode.transform.localScale *= 0.5f;
+                        _go_lode.transform.localScale *= DiversifierManager.x.ReturnLodeScaler();
+
                         _go_lode.name += "*";
                     }
                     else
