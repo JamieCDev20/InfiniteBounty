@@ -40,7 +40,8 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         if (x != null)
         {
             b_die = true;
-            Destroy(gameObject);
+            if (x != this)
+                Destroy(gameObject);
         }
         else
             x = this;

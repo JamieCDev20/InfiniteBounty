@@ -12,13 +12,14 @@ public class FadeToBlack : MonoBehaviour
 
     private void Start()
     {
-        if (x == null)
+        DontDestroyOnLoad(gameObject);
+        if (x != null)
         {
-            x = this;
-            DontDestroyOnLoad(gameObject);
+            if (x != this)
+                Destroy(gameObject);
         }
         else
-            Destroy(gameObject);
+            x = this;
 
         SceneManager.sceneLoaded += DefaultHideCover;
         HideCover(1);
