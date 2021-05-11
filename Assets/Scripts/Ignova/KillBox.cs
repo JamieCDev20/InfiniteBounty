@@ -88,7 +88,7 @@ public class KillBox : MonoBehaviour
             IHitable _h = collision.collider.GetComponent<IHitable>();
 
             if (!collision.transform.CompareTag("Lilypad"))
-                _h?.TakeDamage(i_damageToDeal * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 2 : 1), false);
+                _h?.TakeDamage(Mathf.RoundToInt(i_damageToDeal * DiversifierManager.x.ReturnLavaScaler()), false);
 
             if (b_shouldCauseKnockback && collision.transform.tag == "Player")
                 collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 3 : 1), b_dealsFire);

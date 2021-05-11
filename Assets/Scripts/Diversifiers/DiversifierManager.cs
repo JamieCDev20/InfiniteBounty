@@ -281,4 +281,19 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    internal float ReturnLavaScaler()
+    {
+        float _f_scaler = 1;
+        for (int i = 0; i < dA_activeDivers.Length; i++)
+            switch (dA_activeDivers[i])
+            {
+                case Diversifier.LethalLava:
+                    _f_scaler += 1;
+                    break;
+            }
+
+        return _f_scaler;
+    }
+
+
 }
