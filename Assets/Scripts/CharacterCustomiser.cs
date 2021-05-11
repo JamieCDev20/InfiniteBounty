@@ -83,6 +83,8 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
         pim.GetComponent<PlayerAnimator>().SetShootability(true);
         pim.GetComponent<PlayerAnimator>().StartWalking();
         PlayerAnimator pa = pim.GetComponent<PlayerAnimator>();
+        pim.GetComponent<PlayerMover>().enabled = true;
+
         pa.enabled = true;
         go_uiStuff.SetActive(false);
         cc_cam.gameObject.SetActive(true);
