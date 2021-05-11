@@ -21,6 +21,10 @@ public class Teleporter : MobilityTool
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
+
+        if (GetComponentInParent<PlayerInputManager>() == null)
+            go_chargeEffects.SetActive(false);
+
         t_cam = Camera.main.transform;
     }
 
@@ -33,13 +37,13 @@ public class Teleporter : MobilityTool
             if (f_coolDown < 0) ComeOffCooldown();
         }
         if (b_isActive)
-            if(photonView.IsMine)
-            foreach (GameObject player in TagManager.x.GetTagSet("Player"))
-                if (Vector3.Angle(player.transform.position - transform.position, t_cam.transform.forward) < 5)
-                {
-                    HUDController.x.ShowTeleportSign();
-                    return;
-                }
+            if (photonView.IsMine)
+                foreach (GameObject player in TagManager.x.GetTagSet("Player"))
+                    if (Vector3.Angle(player.transform.position - transform.position, t_cam.transform.forward) < 5)
+                    {
+                        HUDController.x.ShowTeleportSign();
+                        return;
+                    }
     }
 
     public override void Use(Vector3 _v_lookDirection)
