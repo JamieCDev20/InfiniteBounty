@@ -262,7 +262,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         return _f_scaler;
     }
 
-    internal float ReturnLodeAmountMult()
+    internal float ReturnLodeAmountIncrease()
     {
         float _f_scaler = 1;
         for (int i = 0; i < dA_activeDivers.Length; i++)
