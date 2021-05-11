@@ -62,7 +62,7 @@ public class SaveManager : SubjectBase, ObserverBase
                             // An argument is erroring
                             saveData = UpdateSaveData(saveString);
                             Debug.Log(saveData);
-                            File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveString));
+                            File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
                         }
                         else
                         {
@@ -81,8 +81,6 @@ public class SaveManager : SubjectBase, ObserverBase
                 {
                     // Rip out any usable data
                     saveData = UpdateSaveData(saveString);
-                    if(saveData.tu_equipped!=null)
-                        Debug.Log(saveData.tu_equipped[0]);
                     File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
                 }
             }
@@ -172,63 +170,34 @@ public class SaveManager : SubjectBase, ObserverBase
                 } catch (FormatException fe) { dataLost += "Zippy Bank Money"; psd.i_zippyBank = 0; }
             }
             // Rip: Appearence
-            if (totalNugsString[i].Contains("tu_appearance"))
+            if (totalNugsString[i].Contains("A_appearance"))
             {
-                psd.A_appearance = ReadArrayFromJson<int>(_saveData, "A_appearance", '}');
+                psd.A_appearance = ReadArrayFromJson<int>(_saveData, "A_appearance", '}', dataLost);
             }
             // Rip: Equipped Tools
             if (totalNugsString[i] == "\"tu_equipped\"")
             {
-                psd.tu_equipped = ReadTupleArrayFromJson<(int, int)>(_saveData, "tu_equipped", '}');
+                psd.tu_equipped = ReadTupleArrayFromJson<(int, int)>(_saveData, "tu_equipped", '}', dataLost);
             }
             // Rip: Purchased Tools
             if (totalNugsString[i].Contains("tu_toolsPurchased"))
             {
-                psd.tu_toolsPurchased = ReadTupleArrayFromJson<(int, int)>(_saveData, "tu_toolsPurchased", '}');
+                psd.tu_toolsPurchased = ReadTupleArrayFromJson<(int, int)>(_saveData, "tu_toolsPurchased", '}', dataLost);
             }
             // Rip: Equipped Augments
             if (totalNugsString[i].Contains("tu_equippedAugments"))
             {
-                psd.tu_equippedAugments = ReadTupleArrayFromJson<(int, int, AugmentSave[])>(_saveData, "tu_equippedAugments", '}');
+                psd.tu_equippedAugments = ReadTupleArrayFromJson<(int, int, AugmentSave[])>(_saveData, "tu_equippedAugments", '}', dataLost);
             }
             // Rip: Purchased Augments
             if (totalNugsString[i].Contains("purchasedAugments"))
             {
-                psd.purchasedAugments = ReadArrayFromJson<AugmentSave>(_saveData, "purchasedAugments", '}');
+                psd.purchasedAugments = ReadArrayFromJson<AugmentSave>(_saveData, "purchasedAugments", '}', dataLost);
             }
             // Rip: Slider Options
             if (totalNugsString[i].Contains("A_playerSliderOptions"))
             {
-                int floatSep = 0;
-                for (int j = i; j < totalNugsString.Length; j++)
-                    if (totalNugsString[j].Contains("b_inverted"))
-                        floatSep = j;
-                List<float> floatVals = new List<float>();
-                for(int j = i+1; j < floatSep; j++)
-                {
-                    string newFloat = totalNugsString[j];
-                    if (newFloat.Contains("["))
-                    {
-                        newFloat = newFloat.Substring(1);
-                    }
-                    if (newFloat.Contains(","))
-                    {
-                        newFloat = newFloat.Replace(',', '\0');
-                    }
-                    if (newFloat.Contains("]"))
-                    {
-                        newFloat = newFloat.Replace(']', '\0');
-                        if(string.IsNullOrEmpty(newFloat) || newFloat != "\0")
-                            floatVals.Add(float.Parse(newFloat));
-                        break;
-                    }
-                    if(string.IsNullOrEmpty(newFloat) || newFloat != "\0")
-                    {
-                        if (newFloat == "null") break;
-                        floatVals.Add(float.Parse(newFloat));
-                    }
-                }
-                psd.A_playerSliderOptions = floatVals.ToArray();
+                psd.A_playerSliderOptions = ReadArrayFromJson<float>(_saveData, "A_playerSliderOptions", '}', dataLost);
             }
             // Rip: Inverted Options
             if (totalNugsString[i].Contains("b_inverted"))
@@ -245,7 +214,7 @@ public class SaveManager : SubjectBase, ObserverBase
             // Rip: Display Settings
             if (totalNugsString[i].Contains("A_displaySettings"))
             {
-                psd.A_displaySettings = ReadArrayFromJson<int>(_saveData, "A_displaySettings", ']');
+                psd.A_displaySettings = ReadArrayFromJson<int>(_saveData, "A_displaySettings", ']', dataLost);
             }
             // Rip: Difficulty Settings
             if (totalNugsString[i].Contains("i_difficulty"))
@@ -266,7 +235,7 @@ public class SaveManager : SubjectBase, ObserverBase
         return psd;
     }
 
-    private T[] ReadTupleArrayFromJson<T>(string _saveData, string _saveSeperator, char _lineSeperator)
+    private T[] ReadTupleArrayFromJson<T>(string _saveData, string _saveSeperator, char _lineSeperator, string debugText)
     {
         string[] newData = _saveData.Split(new string[] { ":[", "]," }, StringSplitOptions.None);
         string arrayData = "";
@@ -284,19 +253,30 @@ public class SaveManager : SubjectBase, ObserverBase
         {
             if (splitArray[i].StartsWith(","))
                 splitArray[i] = splitArray[i].Substring(1);
-            newT[i] = JsonConvert.DeserializeObject<T>(splitArray[i] + "}");
+            try
+            {
+                newT[i] = JsonConvert.DeserializeObject<T>(splitArray[i] + "}");
+            }
+            catch(Exception e)
+            {
+                if(e is JsonException || e is ArgumentException)
+                {
+                    newT[i] = default(T);
+                    debugText += _saveSeperator + " " + i;
+                }
+            }
         }
         return newT;
     }
 
-    private T[] ReadArrayFromJson<T>(string _saveData, string _saveSeperator, char _lineSeperator)
+    private T[] ReadArrayFromJson<T>(string _saveData, string _saveSeperator, char _lineSeperator, string debugText)
     {
         string[] newData = _saveData.Split(new string[] { ":[", "]"}, System.StringSplitOptions.None);
         string arrayData = "";
         for (int i = 0; i < newData.Length; i++)
             if (newData[i].Contains(_saveSeperator))
             {
-                if (newData[i].Contains("null"))
+                if (newData[i].Split(new string[] { _saveSeperator }, StringSplitOptions.None)[1].Contains("null"))
                     return null;
                 arrayData = newData[i + 1];
                 break;
@@ -305,10 +285,19 @@ public class SaveManager : SubjectBase, ObserverBase
         T[] newT = new T[splitArray.Length];
         for(int i = 0; i < splitArray.Length; i++)
         {
-            Debug.Log(splitArray[i]);
             if (splitArray[i].StartsWith(","))
                 splitArray[i] = splitArray[i].Substring(1);
-            newT[i] = JsonConvert.DeserializeObject<T>(splitArray[i]);
+            try
+            {
+                newT[i] = JsonConvert.DeserializeObject<T>(splitArray[i]);
+            }catch(Exception e)
+            {
+                if (e is JsonException || e is ArgumentException)
+                {
+                    newT[i] = default(T);
+                    debugText += _saveSeperator + " " + i;
+                }
+            }
         }
         return newT;
     }
