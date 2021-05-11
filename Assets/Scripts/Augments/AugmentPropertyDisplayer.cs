@@ -304,7 +304,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 // Set text and sprite
                 b.GetComponentsInChildren<Text>()[0].text = _aL_augmentsToShow[i].Name;
                 b.GetComponentsInChildren<Text>()[0].color = _aL_augmentsToShow[i].Stage == AugmentStage.full ? Color.white : Color.yellow;
-                b.GetComponentsInChildren<Text>()[1].text = "Lvl " + _aL_augmentsToShow[i]?.Level.ToString();
+                b.GetComponentsInChildren<Text>()[1].text = "Lv " + _aL_augmentsToShow[i]?.Level.ToString();
                 b.GetComponentsInChildren<Image>()[1].sprite = fitIcons[(int)_aL_augmentsToShow[i].at_type];
                 // Scale
                 b.transform.localScale = Vector3.one;
@@ -384,14 +384,14 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 RemoveAugmentProperties();
                 SetFitIcon((int)wt_toolToCheck.Augs[_i_augmentIndexClicked].at_type);
                 ad_display.t_augmentName.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Name;
-                ad_display.t_levelNumber.text = $"Lv {wt_toolToCheck.Augs[_i_augmentIndexClicked].Level}";
+                ad_display.t_levelNumber.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Level.ToString();
                 UpdatePropertyText(wt_toolToCheck.Augs[_i_augmentIndexClicked]);
                 break;
             default:
                 RemoveAugmentProperties();
                 SetFitIcon((int)aL_allAugmentsOwned[i_currentAugmentIndex].at_type);
                 ad_display.t_augmentName.text = aL_allAugmentsOwned[i_currentAugmentIndex].Name;
-                ad_display.t_levelNumber.text = $"Lv {aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level}";
+                ad_display.t_levelNumber.text = aL_allAugmentsOwned[_i_augmentIndexClicked]?.Level.ToString();
                 UpdatePropertyText(aL_allAugmentsOwned[_i_augmentIndexClicked]);
                 break;
         }
