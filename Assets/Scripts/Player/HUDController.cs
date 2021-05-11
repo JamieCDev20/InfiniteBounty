@@ -60,6 +60,14 @@ public class HUDController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject go_bonusParent;
     [SerializeField] private GameObject[] goA_nuggOutlines = new GameObject[0];
 
+    [Header("Vignette")]
+    [SerializeField] private Image i_vignette;
+    [SerializeField] private Color c_takenDamageColour;
+    [SerializeField] private Color c_healthGainColour;
+    private float i_lastHealth;
+    [SerializeField] private float f_flashLength;
+
+
     private void Awake()
     {
         x = this;
@@ -137,7 +145,6 @@ public class HUDController : MonoBehaviourPunCallbacks
         i_healthBar.color = g_healthBarGradient.Evaluate((float)_i_currentHealth / _i_maxHealth);
         rt_healthBar.localScale = new Vector3((float)_i_currentHealth / _i_maxHealth, 1, 1);
 
-
         i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[2];
 
         if (_i_currentHealth < _i_maxHealth * 0.5f)
@@ -145,6 +152,29 @@ public class HUDController : MonoBehaviourPunCallbacks
 
         if (_i_currentHealth <= 0)
             i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[0];
+
+        if (i_lastHealth > _i_currentHealth)
+            i_vignette.color = c_takenDamageColour;
+        else
+            i_vignette.color = c_healthGainColour;
+
+        StopCoroutine(VignetteFade());
+        StartCoroutine(VignetteFade());
+
+        i_lastHealth = _i_currentHealth;
+    }
+
+    private IEnumerator VignetteFade()
+    {
+        float _f_time = 0;
+
+        while (_f_time < f_flashLength)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            _f_time += Time.deltaTime;
+            i_vignette.color = new Color(i_vignette.color.r, i_vignette.color.g, i_vignette.color.b, Mathf.Lerp(1, 0, _f_time * (1/ f_flashLength)));
+        }
+        i_vignette.color = new Color(i_vignette.color.r, i_vignette.color.g, i_vignette.color.b, 0);
     }
 
     public void SetNugValues(int[] _iA_nugCounts)
