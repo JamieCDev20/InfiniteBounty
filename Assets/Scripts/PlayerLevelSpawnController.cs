@@ -25,7 +25,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
     [Header("Risk Section")]
     [SerializeField] private Text t_riskLevelText;
     [SerializeField] private Text t_riskEffectsText;
-    [SerializeField] private Text t_diversifierTexts;
+    [SerializeField] private Image[] iA_diversifierImages = new Image[0];
 
     [Header("Cross Faders")]
     [SerializeField] private Image[] iA_imagesToFadeIn = new Image[0];
@@ -102,10 +102,8 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
     private void SetupDiverDisplay()
     {
-        t_diversifierTexts.text =
-            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(0).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(0).s_shortHandDesc + "\n" +
-            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(1).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(1).s_shortHandDesc + "\n" +
-            DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(2).s_name + ": " + DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(2).s_shortHandDesc;
+        for (int i = 0; i < iA_diversifierImages.Length; i++)
+            iA_diversifierImages[i].sprite = DiversifierManager.x.ReturnActiveDiversifierDisplayInfo(i).s_image;
     }
 
     IEnumerator LateSets()
