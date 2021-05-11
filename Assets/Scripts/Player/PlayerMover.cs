@@ -154,21 +154,17 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void ApplyMovement()
     {
+        HUDController.x.SetCrosshairSize(rb.velocity.magnitude);
+
         float x = v_movementVector.sqrMagnitude > 0.5f ? 1 : 0;
         moveLerpVal = Mathf.Lerp(moveLerpVal, x, 0.1f);
 
         Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), v_groundNormal);
 
-        float mul = 1;
-
-        float ang = Vector3.Angle(dir, t_camTransform.TransformDirection(v_movementVector));
-        if (Vector3.Dot(dir, Vector3.up) > 0)
-        {
-            mul = 1 - Vector3.Angle(v_groundNormal, Vector3.up) / 90;
-        }
-        Vector3 cross = Vector3.Cross(dir, t_camTransform.TransformDirection(v_movementVector));
-
-        ang = Mathf.Clamp(ang, -maximumWalkIncline, maximumWalkIncline);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * 0.1f, dir, out hit, 0.6f, -1))
+            if (Vector3.Angle(hit.normal, Vector3.up) > 45)
+                return;
 
         //took this out because it fucked up the walking....
         //dir = Quaternion.AngleAxis(ang, cross) * t_camTransform.TransformDirection(v_movementVector);
@@ -182,7 +178,6 @@ public class PlayerMover : MonoBehaviour
 
             transform.forward = Vector3.Lerp(transform.forward, Vector3.Scale(t_camTransform.forward, Vector3.one - Vector3.up), 0.1f); //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.2f);
         }
-        HUDController.x.SetCrosshairSize(rb.velocity.magnitude);
     }
 
     private float GetWeaponWeighting()
