@@ -99,8 +99,13 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
             if (ph.GetIsDead())
                 cCount += 1;
         }
+
         if (cCount >= FindObjectsOfType<PlayerHealth>().Length)
         {
+            foreach (PlayerHealth h in FindObjectsOfType<PlayerHealth>())
+            {
+                h.FullRespawn();
+            }
             LoadLevel(levelToLoad);
         }
 
