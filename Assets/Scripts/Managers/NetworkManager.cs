@@ -129,6 +129,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 return;
         }
         b_canLoad = false;
+        foreach (PlayerHealth h in FindObjectsOfType<PlayerHealth>())
+        {
+            h.FullRespawn();
+        }
         LoadLevel("LobbyScene");
     }
 
