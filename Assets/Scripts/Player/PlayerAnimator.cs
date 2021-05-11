@@ -92,28 +92,19 @@ public class PlayerAnimator : MonoBehaviourPun
         CheckJumpAnims();
         SetShootingBools();
 
-        if (s_currentSofa != null)
+        if (s_currentSofa == null || Input.anyKeyDown)
         {
-            if (Input.anyKeyDown)
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft"))
-                {
-                    if (anim.GetBool("Poop"))
-                        EndSitAnim("Poop");
+            if (anim.GetBool("Poop"))
+                photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "Poop");
+                EndSitAnim("Poop");
 
-                    if (anim.GetBool("SofaRight"))
-                        EndSitAnim("SofaRight");
+            if (anim.GetBool("SofaRight"))
+                photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaRight");
 
-                    if (anim.GetBool("SofaLeft"))
-                        EndSitAnim("SofaLeft");
-                }
-            }
+            if (anim.GetBool("SofaLeft"))
+                photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaLeft");
         }
-        else
-        {
-            EndSitAnim("Poop");
-            EndSitAnim("SofaRight");
-        }
+
         v_posLastFrame = transform.position;
     }
 
@@ -132,6 +123,7 @@ public class PlayerAnimator : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
     private void EndSitAnim(string n)
     {
         anim.SetBool(n, false);
