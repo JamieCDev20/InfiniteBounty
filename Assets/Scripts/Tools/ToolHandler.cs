@@ -188,6 +188,7 @@ public class ToolHandler : SubjectBase
         // Hit something
         RaycastHit hit;
         Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
+        //Debug.DrawRay(t_camTransform.position, t_camTransform.forward * 50f, Color.yellow, 1f);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
             if (b_ableToBuy)
@@ -229,7 +230,6 @@ public class ToolHandler : SubjectBase
                                         CallSwapTool(ts, tb.ToolID, tr, true);
                                         A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
 
-                                        print(A_tools[0] + "/" + A_tools[1]);
                                         if (A_tools[0] != null && A_tools[1] != null)
                                             TutorialManager.x.PickedUpBothTools();
 
@@ -259,7 +259,6 @@ public class ToolHandler : SubjectBase
                                         A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
 
                                         //Tutorial Section
-                                        print(A_tools[0] + "/" + A_tools[1]);
                                         if (A_tools[0] != null && A_tools[1] != null)
                                             TutorialManager.x.PickedUpBothTools();
 
