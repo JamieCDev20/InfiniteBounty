@@ -137,7 +137,7 @@ public class DynamicAudioManager : MonoBehaviourPun
         float cBoss;
         bossMixer.GetFloat("Volume", out cBoss);
 
-        combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -50, combatLerp));
+        combatMixer.SetFloat("Volume", Mathf.Lerp(cCombat, inCombat ? 0 : -50, combatLerp * (inCombat? 1 : 0.05f)));
         mainMixer.SetFloat("Volume", Mathf.Lerp(cMain, lerpMain ? 0 : -50, mainLerp));
         bossMixer.SetFloat("Volume", Mathf.Lerp(cBoss, isBoss ? 0 : -50, bossLerp));
 
