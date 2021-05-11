@@ -254,12 +254,12 @@ public class HUDController : MonoBehaviourPunCallbacks
     #region Teleported
     internal void HideTeleportSign()
     {
-        go_teleportSign.SetActive(false);
+        go_teleportSign?.SetActive(false);
     }
 
     internal void ShowTeleportSign()
     {
-        go_teleportSign.SetActive(true);
+        go_teleportSign?.SetActive(true);
     }
 
     #endregion
