@@ -81,7 +81,8 @@ public class ElementalObject : MonoBehaviour, IElementable
 
                 ie.ReceiveElements(GetActiveElements());
                 ReceiveElements(ie.GetActiveElements());
-                ActivateElement(false);
+                ie.ActivateElement(true);
+                ActivateElement(true);
             }
         }
         lastCollided = t;
@@ -107,6 +108,12 @@ public class ElementalObject : MonoBehaviour, IElementable
 
         StopAllCoroutines();
         //more only once per frame stuff
+    }
+
+    private void UnsetActivated()
+    {
+        b_activatedThisFrame = false;
+        flag = false;
     }
 
     public void AddToUsed(int _id)
@@ -234,9 +241,13 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         //once per frame stufffff
         if (!b_activatedThisFrame && flag)
+        {
             b_activatedThisFrame = true;
+            Invoke(nameof(UnsetActivated), 0.1f);
+        }
         else
             flag = true;
+
     }
 
     public void ReceiveElements(List<Element> _recieved)
@@ -260,15 +271,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         int size = eL_activeElements.Count;
         for (int i = 0; i < size; i++)
         {
-            try
-            {
-                interactions[(int)_recieved, (int)eL_activeElements[i]]();
-
-            }
-            catch
-            {
-
-            }
+            interactions[(int)_recieved, (int)eL_activeElements[i]]();
         }
     }
 
@@ -403,7 +406,6 @@ public class ElementalObject : MonoBehaviour, IElementable
         }
         if (!gameObject)
             StartCoroutine(ResetLineRenderer(lrend, ElementManager.x.shockDelay * 0.5f));
-
     }
 
     IEnumerator ResetLineRenderer(LineRenderer lr, float _delay)
@@ -530,7 +532,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (b_activatedThisFrame)
             return;
         SetStatusEffect(Element.goo, true, ElementManager.x.gooDuration);
-        AddRemoveElement(Element.goo, true);
+        AddRemoveElement(Element.goo, true, ElementManager.x.gooDuration);
     }
 
     private void HydroActivate()
@@ -538,8 +540,8 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (b_activatedThisFrame)
             return;
 
-        AddRemoveElement(Element.hydro, true);
         SetStatusEffect(Element.hydro, true, ElementManager.x.hydroDuration);
+        AddRemoveElement(Element.hydro, true, ElementManager.x.hydroDuration);
 
     }
 
@@ -586,6 +588,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         }
         SetLineRendererPos(verts.ToArray()); //Show the shock lines
         AddRemoveElement(Element.thunder, false);
+        AddRemoveElement(Element.hydro, false);
     }
 
     private void BoomActivate()
@@ -606,8 +609,8 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (b_activatedThisFrame)
             return;
 
-        SetStatusEffect(Element.fire, true);
-        AddRemoveElement(Element.fire, true);
+        SetStatusEffect(Element.fire, true, ElementManager.x.fireDuration * (bA_statuses[(int)Element.goo] ? ElementManager.x.gooDurationMultiplier : 1));
+        AddRemoveElement(Element.fire, true, ElementManager.x.fireDuration * (bA_statuses[(int)Element.goo] ? ElementManager.x.gooDurationMultiplier : 1));
         //Debug.Log("Doing fire damage to " + gameObject.name, gameObject);
 
 

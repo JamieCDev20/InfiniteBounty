@@ -29,6 +29,7 @@ public class ProjectileTool : WeaponTool
     [SerializeField] private AudioClip ac_overHeatClip;
     private PlayerAnimator pa_anim;
     [SerializeField] private ParticleSystem ps_shotEffects;
+    private List<Element> elementList = new List<Element>();
 
     public override void SetActiveState(bool val)
     {
@@ -146,7 +147,8 @@ public class ProjectileTool : WeaponTool
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
         ap_projAugment.f_bulletScale += Mathf.RoundToInt(augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level) * 0.25f));
-        eo_element = aug.AugElement;
+        elementList.AddRange(aug.AugElement);
+        eo_element = elementList.ToArray();
         return true;
     }
 

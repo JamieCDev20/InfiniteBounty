@@ -25,6 +25,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     private ElementalObject eO_elem;
     private bool b_collected;
     private bool b_canBeHit = false;
+    private bool b_canDie = false;
     #endregion
 
     private void Start()
@@ -133,7 +134,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
 
         if (!b_canBeHit)
             return;
-        if (eO_elem)
+        if (eO_elem && !b_canDie)
         {
             eO_elem.ActivateElement(activatesThunder);
             Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
@@ -144,7 +145,18 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
             if (!eO_elem.GetShouldDie())
                 return;
         }
-        myLode?.NugGotHit(i_lodeID, damage, activatesThunder);
+
+        if (b_canDie)
+            myLode?.NugGotHit(i_lodeID, damage, activatesThunder);
+        else
+        {
+            b_canDie = true;
+            StartCoroutine(DelayedTakeDamage(damage, activatesThunder, 1f));
+        }
+    }
+
+    public void DelayedSendHit(int damage, bool activatesThunder)
+    {
     }
 
     public bool IsDead()
