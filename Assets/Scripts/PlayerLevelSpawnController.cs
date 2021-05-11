@@ -19,7 +19,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private Text dimensionText;
-    [SerializeField] private Text t_bonusText;
+    [SerializeField] private Image i_bonusText;
     [SerializeField] private GameObject go_bonusPart;
 
     [Header("Risk Section")]
@@ -31,6 +31,13 @@ public class PlayerLevelSpawnController : MonoBehaviour
     [SerializeField] private Image[] iA_imagesToFadeIn = new Image[0];
     [SerializeField] private Text[] iA_textToFadeIn = new Text[0];
 
+    [Header("Nugg Sprites")]
+    [SerializeField] private Sprite s_magamSprite;
+    [SerializeField] private Sprite s_boomSprite;
+    [SerializeField] private Sprite s_thunderSprite;
+    [SerializeField] private Sprite s_tastySprite;
+    [SerializeField] private Sprite s_hydroSprite;
+    [SerializeField] private Sprite s_gooSprite;
 
     public void SetupPlayer(GameObject _go_playerToSetup)
     {
@@ -62,22 +69,22 @@ public class PlayerLevelSpawnController : MonoBehaviour
                 go_bonusPart.SetActive(false);
                 break;
             case BonusObjective.BonusGoo:
-                t_bonusText.text = "Collect 400 Goo Nuggs";
+                i_bonusText.sprite = s_gooSprite;
                 break;
             case BonusObjective.BonusHydro:
-                t_bonusText.text = "Collect 400 Hydro Nuggs";
+                i_bonusText.sprite = s_hydroSprite;
                 break;
             case BonusObjective.BonusTasty:
-                t_bonusText.text = "Collect 400 Tasty Nuggs";
+                i_bonusText.sprite = s_tastySprite;
                 break;
             case BonusObjective.BonusThunder:
-                t_bonusText.text = "Collect 400 Thunder Nuggs";
+                i_bonusText.sprite = s_thunderSprite;
                 break;
             case BonusObjective.BonusBoom:
-                t_bonusText.text = "Collect 400 Boom Nuggs";
+                i_bonusText.sprite = s_boomSprite;
                 break;
             case BonusObjective.BonusMagma:
-                t_bonusText.text = "Collect 400 Magma Nuggs";
+                i_bonusText.sprite = s_magamSprite;
                 break;
         }
 
