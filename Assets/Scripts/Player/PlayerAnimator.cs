@@ -94,7 +94,7 @@ public class PlayerAnimator : MonoBehaviourPun
 
         if (s_currentSofa != null)
         {
-            if (Input.anyKeyDown)
+            if (Input.anyKeyDown && (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft")))
             {
                 if (anim.GetBool("Poop"))
                     photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "Poop");
