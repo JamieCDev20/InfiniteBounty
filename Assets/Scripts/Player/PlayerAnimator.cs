@@ -109,14 +109,14 @@ public class PlayerAnimator : MonoBehaviourPun
         }
         else
         {
-            if (anim.GetBool("Poop"))
-                photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "Poop");
+            //if (anim.GetBool("Poop"))
+            //    photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "Poop");
 
-            else if (anim.GetBool("SofaRight"))
-                photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaRight");
+            //else if (anim.GetBool("SofaRight"))
+            //    photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaRight");
 
-            else if (anim.GetBool("SofaLeft"))
-                photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaLeft");
+            //else if (anim.GetBool("SofaLeft"))
+            //    photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaLeft");
         }
 
         v_posLastFrame = transform.position;
