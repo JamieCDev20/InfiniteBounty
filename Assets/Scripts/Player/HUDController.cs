@@ -153,6 +153,8 @@ public class HUDController : MonoBehaviourPunCallbacks
         if (_i_currentHealth <= 0)
             i_faceImage.sprite = saA_faceSprites[i_headSprite].sA_sprites[0];
 
+        /*
+        //Vignette Bit
         if (i_lastHealth > _i_currentHealth)
             i_vignette.color = c_takenDamageColour;
         else
@@ -160,8 +162,10 @@ public class HUDController : MonoBehaviourPunCallbacks
 
         StopCoroutine(VignetteFade());
         StartCoroutine(VignetteFade());
-
+        */
         i_lastHealth = _i_currentHealth;
+
+        i_vignette.color = new Color(c_takenDamageColour.r, c_takenDamageColour.g, c_takenDamageColour.b, 1 - (float)_i_currentHealth / _i_maxHealth);
     }
 
     private IEnumerator VignetteFade()
@@ -172,7 +176,7 @@ public class HUDController : MonoBehaviourPunCallbacks
         {
             yield return new WaitForSeconds(Time.deltaTime);
             _f_time += Time.deltaTime;
-            i_vignette.color = new Color(i_vignette.color.r, i_vignette.color.g, i_vignette.color.b, Mathf.Lerp(1, 0, _f_time * (1/ f_flashLength)));
+            i_vignette.color = new Color(i_vignette.color.r, i_vignette.color.g, i_vignette.color.b, Mathf.Lerp(1, 0, _f_time * (1 / f_flashLength)));
         }
         i_vignette.color = new Color(i_vignette.color.r, i_vignette.color.g, i_vignette.color.b, 0);
     }
