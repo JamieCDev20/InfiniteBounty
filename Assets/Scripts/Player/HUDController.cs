@@ -28,7 +28,10 @@ public class HUDController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject go_nugHudParent;
     [SerializeField] private GameObject go_bbObject;
     [SerializeField] private ScoreObjects texts;
+    private int[] iA_nugcounts = new int[6];
+    [SerializeField] private ParticleSystem[] psA_nugGainParticles = new ParticleSystem[0];
 
+    [Space]
     [Header("Other UI")]
     [SerializeField] private Transform hudCanvas;
 
@@ -53,8 +56,9 @@ public class HUDController : MonoBehaviourPunCallbacks
     [SerializeField] private Image i_killWarningImage;
 
     [Header("Bonus")]
-    [SerializeField] private Text t_bonusText;
+    //[SerializeField] private Text t_bonusText;
     [SerializeField] private GameObject go_bonusParent;
+    [SerializeField] private GameObject[] goA_nuggOutlines = new GameObject[0];
 
     private void Awake()
     {
@@ -97,13 +101,15 @@ public class HUDController : MonoBehaviourPunCallbacks
 
     public void ChangeBonusObjective(BonusObjective _bo_newBonus)
     {
+        goA_nuggOutlines[(int)_bo_newBonus].SetActive(true);
+
+        /*
         switch (_bo_newBonus)
         {
             case BonusObjective.None:
                 go_bonusParent.SetActive(false);
                 break;
             case BonusObjective.BonusGoo:
-                t_bonusText.text = "Collect 400 Goo Nuggs";
                 break;
             case BonusObjective.BonusHydro:
                 t_bonusText.text = "Collect 400 Hydro Nuggs";
@@ -121,6 +127,7 @@ public class HUDController : MonoBehaviourPunCallbacks
                 t_bonusText.text = "Collect 400 Magma Nuggs";
                 break;
         }
+        */
     }
 
     public void SetHealthBarValue(float _i_currentHealth, int _i_maxHealth)
@@ -148,6 +155,15 @@ public class HUDController : MonoBehaviourPunCallbacks
         texts.thunderText.text = _iA_nugCounts[3].ToString();
         texts.boomText.text = _iA_nugCounts[4].ToString();
         texts.magmaText.text = _iA_nugCounts[5].ToString();
+
+        for (int i = 0; i < _iA_nugCounts.Length; i++)
+        {
+            /*
+             * if (iA_nugcounts[i] != _iA_nugCounts[i])
+                psA_nugGainParticles[i].Play();
+            */
+            iA_nugcounts[i] = _iA_nugCounts[i];
+        }
     }
 
     public override void OnDisconnected(DisconnectCause cause)
