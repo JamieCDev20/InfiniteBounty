@@ -72,7 +72,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
+    {     
         base.OnPlayerEnteredRoom(newPlayer);
         if (PhotonNetwork.IsMasterClient)
             view.RPC(nameof(SyncWheelsRPC), RpcTarget.Others, (int)dA_activeDiversifiers[0], (int)dA_activeDiversifiers[1], (int)dA_activeDiversifiers[2]);
@@ -101,7 +101,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [PunRPC]
     private IEnumerator SyncWheelsRPC(int _1, int _2, int _3)
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.5f);
         SetWheels(wdA_wheels[0], _1);
         SetWheels(wdA_wheels[1], _2);
         SetWheels(wdA_wheels[2], _3);
