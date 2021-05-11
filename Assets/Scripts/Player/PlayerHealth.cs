@@ -201,6 +201,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         {
             toggles[i].SetActive(true);
         }
+        transform.GetChild(0).gameObject.SetActive(true);
 
     }
 
