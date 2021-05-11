@@ -92,16 +92,30 @@ public class PlayerAnimator : MonoBehaviourPun
         CheckJumpAnims();
         SetShootingBools();
 
-        if (s_currentSofa == null || Input.anyKeyDown)
+        if (s_currentSofa != null)
+        {
+            if (Input.anyKeyDown)
+            {
+                if (anim.GetBool("Poop"))
+                    photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "Poop");
+
+                else if (anim.GetBool("SofaRight"))
+                    photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaRight");
+
+                else if (anim.GetBool("SofaLeft"))
+                    photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaLeft");
+
+            }
+        }
+        else
         {
             if (anim.GetBool("Poop"))
                 photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "Poop");
-                EndSitAnim("Poop");
 
-            if (anim.GetBool("SofaRight"))
+            else if (anim.GetBool("SofaRight"))
                 photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaRight");
 
-            if (anim.GetBool("SofaLeft"))
+            else if (anim.GetBool("SofaLeft"))
                 photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaLeft");
         }
 
