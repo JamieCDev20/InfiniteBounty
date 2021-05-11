@@ -21,11 +21,21 @@ public class Teleporter : MobilityTool
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
-
+        Debug.Log(GetComponentInParent<PlayerInputManager>());
         if (GetComponentInParent<PlayerInputManager>() == null)
+        {
             go_chargeEffects.SetActive(false);
+        }
 
         t_cam = Camera.main.transform;
+    }
+
+    private void OnDisable()
+    {
+        if (GetComponentInParent<PlayerInputManager>() == null)
+        {
+            go_chargeEffects.SetActive(false);
+        }
     }
 
     private void Update()
