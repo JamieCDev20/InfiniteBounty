@@ -160,7 +160,7 @@ public class CameraController : MonoBehaviour
     {
         if (b_isSpectating)
         {
-            GetComponentInChildren<PauseMenuController>().StopSpectating();
+            FindObjectOfType<PauseMenuController>().StopSpectating();
             b_isSpectating = false;
         }
     }
