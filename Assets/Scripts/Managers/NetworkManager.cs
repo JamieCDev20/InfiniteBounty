@@ -16,6 +16,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private byte maxPlayersPerRoom = 4;
     [SerializeField] private string roomName;
     [SerializeField] private GameObject UI;
+    [SerializeField] private Teleportal tp_portalPrefab;
+    [SerializeField] private float f_portalLifeSpan;
 
     #endregion
 
@@ -171,6 +173,29 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void PassOutMaxDifficulty(int _i_newDiff)
     {
         DifficultyManager.x.SetNewMaxDifficulty(_i_newDiff);
+    }
+
+    public void TeleportalSpawn(Vector3 origin, Vector3 target, Vector3 direction)
+    {
+        photonView.RPC(nameof(RPCSpawnPortal), RpcTarget.All, origin, target, direction);
+    }
+
+    [PunRPC]
+    private void RPCSpawnPortal(Vector3 _origin, Vector3 _targ, Vector3 _dir)
+    {
+
+        Teleportal _tp_startPortal = Instantiate(tp_portalPrefab);
+        Teleportal _tp_endPortal = Instantiate(tp_portalPrefab);
+
+        _tp_startPortal.transform.position = _origin + _dir * 5 + Vector3.up;
+        _tp_startPortal.transform.parent = null;
+        _tp_startPortal.transform.forward = _dir;
+        _tp_startPortal.Setup(f_portalLifeSpan, _tp_endPortal);
+
+        _tp_endPortal.transform.position = _targ - _dir * 3 + Vector3.up;
+        _tp_endPortal.transform.parent = null;
+        _tp_endPortal.transform.forward = -_dir;
+        _tp_endPortal.Setup(f_portalLifeSpan, _tp_startPortal);
     }
 
     #endregion

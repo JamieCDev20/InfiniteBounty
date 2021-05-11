@@ -18,17 +18,9 @@ public class Teleporter : MobilityTool
     [SerializeField] private Renderer lightRenderer;
     private AudioSource as_source;
 
-    [Header("Portals")]
-    [SerializeField] private Teleportal go_portalPrefab;
-    [SerializeField] private float f_portalLifeSpawn;
-
-
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
-        if (GetComponentInParent<PlayerInputManager>() != null)
-            photonView.ViewID += 26780 + GetComponentInParent<PlayerInputManager>().GetID() * 2 + 1;
-        PhotonNetwork.RegisterPhotonView(photonView);
         t_cam = Camera.main.transform;
     }
 
@@ -63,7 +55,7 @@ public class Teleporter : MobilityTool
         foreach (GameObject player in TagManager.x.GetTagSet("Player"))
             if (Vector3.Angle(player.transform.position - transform.position, _v_lookDirection) < 5)
             {
-                photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, player.transform.position, _v_lookDirection);
+                NetworkManager.x.TeleportalSpawn(transform.position, player.transform.position, _v_lookDirection);
                 PlayAudio(ac_activationSound);
                 BeginCooldown();
                 return;
@@ -78,7 +70,7 @@ public class Teleporter : MobilityTool
                 if (_hits[i].transform.CompareTag("Player"))
                 {
                     //Open near the player you targetted
-                    photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, _hits[i].point, _v_lookDirection);
+                    NetworkManager.x.TeleportalSpawn(transform.position, _hits[i].point, _v_lookDirection);
                     PlayAudio(ac_activationSound);
                     BeginCooldown();
                     return;
@@ -88,14 +80,14 @@ public class Teleporter : MobilityTool
                 //Open at the point you targetted
                 if (Vector3.Distance(transform.position, _hits[0].point) <= f_teleportDistance)
                 {
-                    photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, _hits[0].point, _v_lookDirection);
+                    NetworkManager.x.TeleportalSpawn(transform.position, _hits[0].point, _v_lookDirection);
                     PlayAudio(ac_activationSound);
                     BeginCooldown();
                 }
                 else
                 {
                     //Open in mid-air, at the maximum distance
-                    photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, transform.position + _v_lookDirection * f_teleportDistance, _v_lookDirection);
+                    NetworkManager.x.TeleportalSpawn(transform.position, transform.position + _v_lookDirection * f_teleportDistance, _v_lookDirection);
                     PlayAudio(ac_activationSound);
                     BeginCooldown();
                 }
@@ -103,31 +95,12 @@ public class Teleporter : MobilityTool
             else
             {
                 //Open in mid-air, at the maximum distance
-                photonView.RPC(nameof(OpenPortalAtPoint), RpcTarget.All, transform.position + _v_lookDirection * f_teleportDistance, _v_lookDirection);
+                NetworkManager.x.TeleportalSpawn(transform.position, transform.position + _v_lookDirection * f_teleportDistance, _v_lookDirection);
                 PlayAudio(ac_activationSound);
                 BeginCooldown();
             }
         }
     }
-
-    [PunRPC]
-    public void OpenPortalAtPoint(Vector3 _v_pos, Vector3 _v_lookDirection)
-    {
-        Teleportal _tp_startPortal = Instantiate(go_portalPrefab);
-        Teleportal _tp_endPortal = Instantiate(go_portalPrefab);
-
-        _tp_startPortal.transform.position = transform.position + _v_lookDirection * 5 + Vector3.up;
-        _tp_startPortal.transform.parent = null;
-        _tp_startPortal.transform.forward = _v_lookDirection;
-        _tp_startPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn, _tp_endPortal);
-
-        _tp_endPortal.transform.position = _v_pos - _v_lookDirection * 3 + Vector3.up;
-        _tp_endPortal.transform.parent = null;
-        _tp_endPortal.transform.forward = -_v_lookDirection;
-        _tp_endPortal.GetComponent<Teleportal>().Setup(f_portalLifeSpawn, _tp_startPortal);
-
-    }
-
 
     private void ComeOffCooldown()
     {

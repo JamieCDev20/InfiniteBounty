@@ -120,11 +120,6 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
 
     }
 
-    private void OnDestroy()
-    {
-        PhotonNetwork.Destroy(GetComponentInChildren<Teleporter>().gameObject);
-    }
-
     #endregion
 
     #region Private Voids

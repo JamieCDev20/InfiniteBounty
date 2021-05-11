@@ -47,7 +47,9 @@ MonoBehaviour:
   maxPlayersPerRoom: 4
   roomName: JamRoom
   UI: {fileID: 0}
-  PlayButton: {fileID: 0}
+  tp_portalPrefab: {fileID: 8200866958027608423, guid: 04c2e2433c06a8e43b72c6d615d773a8,
+    type: 3}
+  f_portalLifeSpan: 26
 --- !u!114 &8126483201910233699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,8 +68,7 @@ MonoBehaviour:
   observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 7520895206766188310}
+  ObservedComponents: []
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
