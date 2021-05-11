@@ -37,6 +37,7 @@ public class ToolHandler : SubjectBase
     private ToolSlot ts_removeToolSlot;
     private int i_removableRackSlot;
     private Rigidbody rb;
+    private bool b_ableToBuy = true;
     #endregion
 
     private void Start()
@@ -189,113 +190,116 @@ public class ToolHandler : SubjectBase
         Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
-            ToolBase tb = null;
-            AugmentGo ab = null;
-            // Did we hit a tool?
-            try { tb = hit.transform.GetComponent<ToolBase>(); }
-            catch (System.InvalidCastException e) { /*if we error remove this return*/return false; }
-            // Which shop is it?
-            Shop sr = hit.transform.root.GetComponent<Shop>();
-            // Put a tool back;
-            EmptyToolSlot ets = hit.transform.GetComponent<EmptyToolSlot>();
-            ts_removeToolSlot = ts;
-            if (ets != null)
+            if (b_ableToBuy)
             {
-                if (A_tools[(int)ts] == null)
-                    return true;
-                if (A_tools[(int)ts].RackID == ets.RackID)
+                ToolBase tb = null;
+                AugmentGo ab = null;
+                // Did we hit a tool?
+                try { tb = hit.transform.GetComponent<ToolBase>(); }
+                catch (System.InvalidCastException e) { /*if we error remove this return*/return false; }
+                // Which shop is it?
+                Shop sr = hit.transform.root.GetComponent<Shop>();
+                // Put a tool back;
+                EmptyToolSlot ets = hit.transform.GetComponent<EmptyToolSlot>();
+                ts_removeToolSlot = ts;
+                if (ets != null)
                 {
-                    CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
-                    ToolRack tr = (ToolRack)sr;
-                    tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
-                    ac_changer.SetArmActive((int)ts, true);
-                    SendSave(-1, ts);
-                    return true;
+                    if (A_tools[(int)ts] == null)
+                        return true;
+                    if (A_tools[(int)ts].RackID == ets.RackID)
+                    {
+                        CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                        ToolRack tr = (ToolRack)sr;
+                        tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                        ac_changer.SetArmActive((int)ts, true);
+                        SendSave(-1, ts);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-            // Purchase a tool
-            switch (sr)
-            {
-                case ToolRack tr:
-                    if ((bool)tb?.CheckPurchaseStatus())
+                    // Purchase a tool
+                    switch (sr)
                     {
-                        switch (tb)
-                        {
-                            case WeaponTool wt:
-                                CallSwapTool(ts, tb.ToolID, tr, true);
-                                A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
-
-                                print(A_tools[0] + "/" + A_tools[1]);
-                                if (A_tools[0] != null && A_tools[1] != null)
-                                    TutorialManager.x.PickedUpBothTools();
-
-                                SendSave(-1, ts);
-                                return true;
-                            case MobilityTool mt:
-                                CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                                A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
-
-                                //TutorialManager Section
-                                TutorialManager.x.PickedUpBackPack();
-
-                                SendSave(-1, ToolSlot.moblility);
-                                return true;
-                        }
-                    }
-                    if (GetComponent<NugManager>().Nugs >= tb.Cost)
-                    {
-                        int currentNugs = 0;
-                        switch (tb)
-                        {
-                            case WeaponTool wt:
-                                tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
-                                GetComponent<NugManager>().CollectNugs(-tb.Cost, false);
-                                CallSwapTool(ts, tb.ToolID, tr, true);
-                                currentNugs = GetComponent<NugManager>().Nugs;
-                                A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
-
-                                //Tutorial Section
-                                print(A_tools[0] + "/" + A_tools[1]);
-                                if (A_tools[0] != null && A_tools[1] != null)
-                                    TutorialManager.x.PickedUpBothTools();
-
-                                SendSave(currentNugs, ts, tb.RackID);
-                                return true;
-                            case MobilityTool mt:
-                                tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
-                                GetComponent<NugManager>().CollectNugs(-mt.Cost, false);
-                                CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                                currentNugs = GetComponent<NugManager>().Nugs;
-                                A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
-
-                                //TutorialManager Section
-                                TutorialManager.x.PickedUpBackPack();
-
-                                SendSave(currentNugs, ToolSlot.moblility, tb.RackID);
-
-                                return true;
-                        }
-                    }
-                    else
-                    {
-                        switch (sr)
-                        {
-                            case ToolRack toolRackRef:
+                        case ToolRack tr:
+                            if ((bool)tb?.CheckPurchaseStatus())
+                            {
                                 switch (tb)
                                 {
                                     case WeaponTool wt:
-                                        toolRackRef.UnableToBuy(wt.RackID, true);
-                                        break;
-                                    case MobilityTool mt:
-                                        toolRackRef.UnableToBuy(mt.RackID, false);
-                                        break;
-                                }
-                                break;
+                                        CallSwapTool(ts, tb.ToolID, tr, true);
+                                        A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
 
-                        }
-                    }
-                    return false;
+                                        print(A_tools[0] + "/" + A_tools[1]);
+                                        if (A_tools[0] != null && A_tools[1] != null)
+                                            TutorialManager.x.PickedUpBothTools();
+
+                                        SendSave(-1, ts);
+                                        return true;
+                                    case MobilityTool mt:
+                                        CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                                        A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+
+                                        //TutorialManager Section
+                                        TutorialManager.x.PickedUpBackPack();
+
+                                        SendSave(-1, ToolSlot.moblility);
+                                        return true;
+                                }
+                            }
+                            if (GetComponent<NugManager>().Nugs >= tb.Cost)
+                            {
+                                int currentNugs = 0;
+                                switch (tb)
+                                {
+                                    case WeaponTool wt:
+                                        tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
+                                        GetComponent<NugManager>().CollectNugs(-tb.Cost, false);
+                                        CallSwapTool(ts, tb.ToolID, tr, true);
+                                        currentNugs = GetComponent<NugManager>().Nugs;
+                                        A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+
+                                        //Tutorial Section
+                                        print(A_tools[0] + "/" + A_tools[1]);
+                                        if (A_tools[0] != null && A_tools[1] != null)
+                                            TutorialManager.x.PickedUpBothTools();
+
+                                        SendSave(currentNugs, ts, tb.RackID);
+                                        return true;
+                                    case MobilityTool mt:
+                                        tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
+                                        GetComponent<NugManager>().CollectNugs(-mt.Cost, false);
+                                        CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                                        currentNugs = GetComponent<NugManager>().Nugs;
+                                        A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+
+                                        //TutorialManager Section
+                                        TutorialManager.x.PickedUpBackPack();
+
+                                        SendSave(currentNugs, ToolSlot.moblility, tb.RackID);
+
+                                        return true;
+                                }
+                            }
+                            else
+                            {
+                                switch (sr)
+                                {
+                                    case ToolRack toolRackRef:
+                                        switch (tb)
+                                        {
+                                            case WeaponTool wt:
+                                                toolRackRef.UnableToBuy(wt.RackID, true);
+                                                break;
+                                            case MobilityTool mt:
+                                                toolRackRef.UnableToBuy(mt.RackID, false);
+                                                break;
+                                        }
+                                        break;
+
+                                }
+                            }
+                            return false;
+                }
             }
         }
         return false;
@@ -373,6 +377,8 @@ public class ToolHandler : SubjectBase
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)
     {
         SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
+        b_ableToBuy = false;
+        StartCoroutine(RackWait());
         PlaySwapNoise();
         view.RPC(nameof(SwapTool), RpcTarget.Others, _ts_slot, _i_toolID);
 
@@ -645,6 +651,12 @@ public class ToolHandler : SubjectBase
                 }
             }
         }
+    }
+
+    private IEnumerator RackWait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        b_ableToBuy = true;
     }
 
 }
