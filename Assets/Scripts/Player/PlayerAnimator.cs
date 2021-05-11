@@ -94,10 +94,13 @@ public class PlayerAnimator : MonoBehaviourPun
 
         if (s_currentSofa != null)
         {
-            if (Input.anyKeyDown && (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft")))
+            if (Input.anyKeyDown && (anim.GetCurrentAnimatorStateInfo(0).IsName("PoopCycle") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaright") || anim.GetCurrentAnimatorStateInfo(0).IsName("VibinOnSofaleft") || anim.GetCurrentAnimatorStateInfo(0).IsName("cptncycle")))
             {
                 if (anim.GetBool("Poop"))
                     photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "Poop");
+
+                else if (anim.GetBool("CptnChair"))
+                    photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "CptnChair");
 
                 else if (anim.GetBool("SofaRight"))
                     photonView.RPC(nameof(EndSitAnim), RpcTarget.All, "SofaRight");
@@ -285,26 +288,50 @@ public class PlayerAnimator : MonoBehaviourPun
 
     }
 
-    internal void DoSitDown(bool b_isRightSide, Sofa _s_newSofa)
+    internal void DoSitDown(SitType _st_type, Sofa _s_newSofa)
     {
         s_currentSofa = _s_newSofa;
-        photonView.RPC(nameof(RemoteSit), RpcTarget.Others, _s_newSofa.GetChairTrasnsform().forward, b_isRightSide);
-        if (b_isRightSide)
-            anim.SetBool("SofaRight", true);
-        else
-            anim.SetBool("SofaLeft", true);
+        photonView.RPC(nameof(RemoteSit), RpcTarget.Others, _s_newSofa.GetChairTrasnsform().forward, (int)_st_type);
+
+        switch (_st_type)
+        {
+            case SitType.LeftSide:
+                anim.SetBool("SofaLeft", true);
+                break;
+            case SitType.RightSide:
+                anim.SetBool("SofaRight", true);
+                break;
+            case SitType.Toilet:
+                anim.SetBool("Poop", true);
+                break;
+            case SitType.CaptainChair:
+                anim.SetBool("CptnChair", true);
+                break;
+
+        }
     }
 
     [PunRPC]
-    public void RemoteSit(Vector3 forward, bool b_isRight)
+    public void RemoteSit(Vector3 forward, int _i_sitType)
     {
         GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(forward, Vector3.up);
         GetComponent<Rigidbody>().isKinematic = true;
-        if (b_isRight)
-            anim.SetBool("SofaRight", true);
-        else
-            anim.SetBool("SofaLeft", true);
 
+        switch ((SitType)_i_sitType)
+        {
+            case SitType.LeftSide:
+                anim.SetBool("SofaLeft", true);
+                break;
+            case SitType.RightSide:
+                anim.SetBool("SofaRight", true);
+                break;
+            case SitType.Toilet:
+                anim.SetBool("Poop", true);
+                break;
+            case SitType.CaptainChair:
+                anim.SetBool("CptnChair", true);
+                break;
+        }
     }
 
     #endregion

@@ -5,10 +5,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SitType
+{
+    LeftSide, RightSide, Toilet, CaptainChair
+}
+
 public class Sofa : MonoBehaviourPunCallbacks, IInteractible
 {
 
-    [SerializeField] private bool b_isRightSide;
+    [SerializeField] private SitType st_sitType;
     [SerializeField] private Transform t_sitPosition;
     [SerializeField] private GameObject go_objectToEnableWhenUsed;
     [SerializeField] private bool b_cannonSeat;
@@ -44,7 +49,7 @@ public class Sofa : MonoBehaviourPunCallbacks, IInteractible
 
                 pm.enabled = false;
                 pm.GetComponent<Rigidbody>().isKinematic = true;
-                pm.GetComponent<PlayerAnimator>().DoSitDown(b_isRightSide, this);
+                pm.GetComponent<PlayerAnimator>().DoSitDown(st_sitType, this);
                 pm.b_isSitting = true;
 
                 pm.transform.position = t_sitPosition.position;
