@@ -32,6 +32,7 @@ public class BossArenaManager : MonoBehaviour
     {
         kb_lava.Neutralize();
         yield return new WaitForSeconds(1);
+        FindObjectOfType<BossAudioManager>().StopPlaying();
         for (int i = 0; i < lpA_lilypads.Length; i++)
         {
             yield return new WaitForSeconds(0.01f);
