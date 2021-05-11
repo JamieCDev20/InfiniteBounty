@@ -86,11 +86,11 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         SetDiversifiersByDifficulty(DifficultyManager.x.ReturnCurrentDifficulty().dA_diversifierSet);
     }
 
-    internal void SetDiversifiersByDifficulty(Diversifier[] _dA_first)
+    internal void SetDiversifiersByDifficulty(Diversifier[] _dA_divers)
     {
-        wdA_wheels[0].dA_wheelDiversifiers = _dA_first;
-        wdA_wheels[1].dA_wheelDiversifiers = _dA_first;
-        wdA_wheels[2].dA_wheelDiversifiers = _dA_first;
+        wdA_wheels[0].dA_wheelDiversifiers = _dA_divers;
+        wdA_wheels[1].dA_wheelDiversifiers = _dA_divers;
+        wdA_wheels[2].dA_wheelDiversifiers = _dA_divers;
         /*
         SetWheels(wdA_wheels[0], (int)dA_activeDiversifiers[0]);
         SetWheels(wdA_wheels[1], (int)dA_activeDiversifiers[0]);
@@ -163,7 +163,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     public void Interacted() { }
 
     public void EndInteract()
-    {        
+    {
         PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
@@ -298,8 +298,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         DisplayDiversifierInfo(2);
         LockInDivers();
 
-        if (view.IsMine)
-            anim.SetBool("PullLever", false);
+        anim.SetBool("PullLever", false);
         tmp_costText.text = "£" + i_currentCost;
     }
 
@@ -334,8 +333,12 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         else
             anim.SetTrigger("FailedToBuy");
     }
+
     internal void PullLeverFree()
     {
+        if (b_isSpinning)
+            return;
+
         anim.SetBool("PullLever", true);
         view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
             UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
@@ -346,8 +349,6 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         DisplayDiversifierInfo(1, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
         DisplayDiversifierInfo(2, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
     }
-
-
 
     [PunRPC]
     public void UpCostRPC()
