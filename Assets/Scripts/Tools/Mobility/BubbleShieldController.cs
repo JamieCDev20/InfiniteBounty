@@ -77,7 +77,7 @@ public class BubbleShieldController : MonoBehaviour
     {
         if (transform.parent == null)
         {
-            Debug.Log(collision.transform.localScale, collision.transform.gameObject);
+            //Debug.Log(collision.transform.localScale, collision.transform.gameObject);
             transform.SetParent(collision.transform, true);
             transform.rotation = Quaternion.identity;
             rb.isKinematic = true;
