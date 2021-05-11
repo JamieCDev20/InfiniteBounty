@@ -163,9 +163,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     public void Interacted() { }
 
     public void EndInteract()
-    {
-        LockInDivers();
-
+    {        
         PlayerMover pm = pim?.GetComponent<PlayerMover>();
         pm.GetComponent<Rigidbody>().isKinematic = false;
         pim.b_shouldPassInputs = true;
@@ -298,6 +296,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         DisplayDiversifierInfo(0);
         DisplayDiversifierInfo(1);
         DisplayDiversifierInfo(2);
+        LockInDivers();
 
         if (view.IsMine)
             anim.SetBool("PullLever", false);
