@@ -59,7 +59,6 @@ public class HUDController : MonoBehaviourPunCallbacks
     private void Awake()
     {
         x = this;
-        Debug.Log("HUD CONTROLLER AWAKE");
         DontDestroyOnLoad(gameObject);
     }
 
@@ -94,7 +93,6 @@ public class HUDController : MonoBehaviourPunCallbacks
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= SceneLoad;
-        Debug.Log("HUD CONTROLLER DESTROYED");
     }
 
     public void ChangeBonusObjective(BonusObjective _bo_newBonus)
