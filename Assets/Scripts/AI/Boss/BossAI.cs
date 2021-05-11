@@ -315,7 +315,6 @@ public class BossAI : AIBase
     {
         for (int i = 0; i < Random.Range(vi_enemiesPerWave.x, vi_enemiesPerWave.y); i++)
         {
-            print(TagManager.x.name);
             if (TagManager.x.GetTagSet("Enemy").Count < 21)
                 PhotonNetwork.Instantiate(s_enemyPath, PickArenaPosition().normalized * 300 + Vector3.up * 200, Quaternion.identity);
         }

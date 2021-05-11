@@ -10,6 +10,7 @@ public class BossArenaManager : MonoBehaviour
     [SerializeField] private LilyPad[] lpA_lilypads = new LilyPad[0];
     [Space, SerializeField] private KillBox kb_lava;
     [SerializeField] private GameObject go_tractorBeam;
+    [SerializeField] private ElementalObject lavaElement;
 
     void Awake()
     {
@@ -31,6 +32,13 @@ public class BossArenaManager : MonoBehaviour
     private IEnumerator BossDiedEvents()
     {
         kb_lava.Neutralize();
+        lavaElement.AddRemoveElement(Element.goo, false);
+        lavaElement.AddRemoveElement(Element.hydro, false);
+        lavaElement.AddRemoveElement(Element.tasty, false);
+        lavaElement.AddRemoveElement(Element.thunder, false);
+        lavaElement.AddRemoveElement(Element.boom, false);
+        lavaElement.AddRemoveElement(Element.fire, false);
+        lavaElement.AddRemoveElement(Element.lava, false);
         yield return new WaitForSeconds(1);
         FindObjectOfType<BossAudioManager>().StopPlaying();
         for (int i = 0; i < lpA_lilypads.Length; i++)

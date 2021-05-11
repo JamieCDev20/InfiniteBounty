@@ -21,7 +21,6 @@ public class Teleporter : MobilityTool
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
-        Debug.Log(GetComponentInParent<PlayerInputManager>());
         if (GetComponentInParent<PlayerInputManager>() == null)
         {
             go_chargeEffects.SetActive(false);
