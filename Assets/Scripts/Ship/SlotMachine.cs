@@ -67,15 +67,25 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         yield return new WaitForSeconds(3);
 
         if (PhotonNetwork.IsMasterClient)
-            view.RPC(nameof(SyncWheelsRPC), RpcTarget.Others, (int)dA_activeDiversifiers[0], (int)dA_activeDiversifiers[1], (int)dA_activeDiversifiers[2]);
+            anim.SetBool("PullLever", true);
+               view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+                   UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+                   UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+                   UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+                   DifficultyManager.x.ReturnCurrentDifficultyInt());
 
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
-    {     
+    {
         base.OnPlayerEnteredRoom(newPlayer);
         if (PhotonNetwork.IsMasterClient)
-            view.RPC(nameof(SyncWheelsRPC), RpcTarget.Others, (int)dA_activeDiversifiers[0], (int)dA_activeDiversifiers[1], (int)dA_activeDiversifiers[2]);
+            anim.SetBool("PullLever", true);
+                 view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+                     UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+                     UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+                     UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+                     DifficultyManager.x.ReturnCurrentDifficultyInt());
 
         if (b_isBeingUsed)
             EndInteract();
