@@ -56,12 +56,11 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         DynamicResolutionHandler.SetDynamicResScaler(SetDynamicResolutionScale, DynamicResScalePolicyType.ReturnsMinMaxLerpFactor);
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
-#if UNITY_EDITOR
         if (Time.deltaTime > 1)
             UnityEditor.EditorApplication.isPlaying = false;
-#endif
         if (Input.GetKey(KeyCode.LeftControl))
             if (Input.GetKeyDown(KeyCode.RightControl))
             {
@@ -73,6 +72,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
                 //SceneManager.LoadScene(0);
             }
     }
+#endif
 
     #endregion
 
