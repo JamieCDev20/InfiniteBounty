@@ -25,6 +25,11 @@ public class FadeToBlack : MonoBehaviour
         HideCover(1);
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= DefaultHideCover;
+    }
+
     private void DefaultHideCover(Scene s, LoadSceneMode m)
     {
         HideCover(1);
@@ -32,12 +37,14 @@ public class FadeToBlack : MonoBehaviour
 
     public void HideCover(float delay)
     {
-        StartCoroutine(IChangeCover(delay, 0));
+        if (this)
+            StartCoroutine(IChangeCover(delay, 0));
     }
 
     public void ShowCover(float delay)
     {
-        StartCoroutine(IChangeCover(delay, 1));
+        if (this)
+            StartCoroutine(IChangeCover(delay, 1));
     }
 
     public IEnumerator IChangeCover(float delay, float _f_targetAlpha)

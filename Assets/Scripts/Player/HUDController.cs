@@ -59,6 +59,7 @@ public class HUDController : MonoBehaviourPunCallbacks
     private void Awake()
     {
         x = this;
+        Debug.Log("HUD CONTROLLER AWAKE");
         DontDestroyOnLoad(gameObject);
     }
 
@@ -70,8 +71,10 @@ public class HUDController : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        x = this;
         SetHealthBarValue(1, 1);
         SetBBTotal();
+        SceneManager.sceneLoaded -= SceneLoad;
         SceneManager.sceneLoaded += SceneLoad;
 
         int _int = 0;
@@ -86,6 +89,12 @@ public class HUDController : MonoBehaviourPunCallbacks
         t_myNameText.text = PhotonNetwork.NickName;
 
 
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= SceneLoad;
+        Debug.Log("HUD CONTROLLER DESTROYED");
     }
 
     public void ChangeBonusObjective(BonusObjective _bo_newBonus)
@@ -172,11 +181,9 @@ public class HUDController : MonoBehaviourPunCallbacks
 
     public void SceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (this == null)
-        {
-            Debug.Log("this is probably why");
-            return;
-        }
+        if (x == null)
+            x = this;
+
         bool inLevel = !scene.name.Contains("obby");
         HudInLevel(inLevel);
         foreach (int i in iiD_idMap.Keys)
