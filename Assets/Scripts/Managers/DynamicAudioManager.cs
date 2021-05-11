@@ -33,6 +33,7 @@ public class DynamicAudioManager : MonoBehaviourPun
     [SerializeField] private float postCombatLoopDelay = 10;
 
     private bool inCombat;
+    private bool wasInCombat;
     private bool isBoss;
 
     private bool lerpMain = true;
@@ -47,7 +48,7 @@ public class DynamicAudioManager : MonoBehaviourPun
     private void Start()
     {
         mainSource.clip = mainIntro;
-        combatSource.clip = combatLoop;
+        combatSource.clip = combatIntro;
         bossSource.clip = bossIntro;
 
         mainMixer.SetFloat("Volume", 0);
@@ -67,12 +68,13 @@ public class DynamicAudioManager : MonoBehaviourPun
         inCombat = true;
         lerpMain = false;
         CancelInvoke(nameof(SetLerpMain));
-        if (inCombat)
-            return;
 
+        if (inCombat && wasInCombat)
+            return;
         combatSource.clip = combatIntro;
         combatSource.Play();
         combatMixer.SetFloat("Volume", 0);
+        wasInCombat = true;
 
     }
 
@@ -85,7 +87,7 @@ public class DynamicAudioManager : MonoBehaviourPun
     [PunRPC]
     public void RemoteEndCombat()
     {
-
+        wasInCombat = false;
         inCombat = false;
         Invoke(nameof(SetLerpMain), postCombatLoopDelay);
     }
