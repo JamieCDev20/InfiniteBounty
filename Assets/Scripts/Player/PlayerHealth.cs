@@ -185,6 +185,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         //outline.Color = healthGradient.Evaluate(f_currentHealth / (float)i_maxHealth);
 
         cc_cam?.StopSpectating();
+        FullRespawn();
     }
 
     [PunRPC]
@@ -206,8 +207,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
 
     public void FullRespawn()
     {
-        cc_cam?.SetFollow(transform);
         view.RPC(nameof(Respawn), RpcTarget.All);
+        cc_cam?.SetFollow(transform);
     }
 
     public void ToggleAlive(bool val)
