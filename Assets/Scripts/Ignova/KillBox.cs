@@ -46,8 +46,8 @@ public class KillBox : MonoBehaviour
         if (b_shouldSinBackToStart)
             transform.position += (v_unitsPerSecond * Mathf.Sin(Time.realtimeSinceStartup));
         else
-            transform.position += v_unitsPerSecond * Time.deltaTime;
         */
+        transform.position += v_unitsPerSecond * Time.deltaTime;
 
         f_time += Time.deltaTime;
         if (f_time >= f_timeBetweenDamages)
@@ -55,7 +55,7 @@ public class KillBox : MonoBehaviour
 
     }
 
-    /*
+
     private void OnTriggerEnter(Collider other)
     {
         if (enabled)
@@ -76,7 +76,6 @@ public class KillBox : MonoBehaviour
         if (hL_thingsWithinCloud.Contains(_h))
             hL_thingsWithinCloud.Remove(_h);
     }
-    */
 
     private void OnCollisionEnter(Collision collision)
     {
