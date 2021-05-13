@@ -37,7 +37,10 @@ public class GrooberHealth : MonoBehaviour, IHitable
         f_currentGrowlCharge += Time.deltaTime * Random.Range(0f, 2f);
 
         if (f_currentGrowlCharge >= f_growlTimer)
+        {
             as_source.PlayOneShot(ac_growlClip);
+            as_source.pitch = Random.Range(0.9f, 1.1f);
+        }
 
         if (f_deathTimer > 60)
             Die();
