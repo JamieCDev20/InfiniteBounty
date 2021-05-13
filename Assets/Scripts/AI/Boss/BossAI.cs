@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BossAI : AIBase
 {
+    private AudioSource as_source;
     private Animator anim;
     private bool b_canAttack = true;
     internal List<Transform> tL_potentialTargets = new List<Transform>();
@@ -18,12 +19,14 @@ public class BossAI : AIBase
     [SerializeField] private GameObject[] goA_mortarBalls = new GameObject[0];
     [SerializeField] private Vector2 v_numberOfMortarShots;
     [SerializeField] private ParticleSystem p_mortarParticle;
+    [SerializeField] private AudioClip ac_mortarClip;
 
     [Header("Homing Attack")]
     [SerializeField] private string s_homingMissilePath;
     [SerializeField] private Vector2 v_homingOrbAmount;
     [SerializeField] private float f_homingForwardMovement;
     [SerializeField] private Transform t_firePoint;
+    [SerializeField] private AudioClip ac_homingClip;
 
     [Header("Movement Stats")]
     [SerializeField] private GameObject go_movementTelegraph;
@@ -43,6 +46,7 @@ public class BossAI : AIBase
         anim = GetComponentInChildren<Animator>();
         QueryNode _q_canAttack = new QueryNode(CheckCanAttack);
         SequencerNode _s = new SequencerNode(_q_canAttack, AttackDefine());
+        as_source = GetComponent<AudioSource>();
 
         tree = new BehaviourTree(_s);
         Invoke(nameof(StartAttacking), 10);
@@ -223,6 +227,7 @@ public class BossAI : AIBase
         Random.InitState(_i_seed);
 
         yield return new WaitForSeconds(2);
+        as_source.PlayOneShot(ac_mortarClip);
 
         for (int i = 0; i < v_numberOfMortarShots.x; i++)
         {
