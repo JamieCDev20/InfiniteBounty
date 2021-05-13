@@ -15,7 +15,7 @@ public class BossAI : AIBase
     [SerializeField] private float f_meleeRange;
 
     [Header("Mortar Attack")]
-    [SerializeField] private GameObject go_mortarBall;
+    [SerializeField] private GameObject[] goA_mortarBalls = new GameObject[0];
     [SerializeField] private Vector2 v_numberOfMortarShots;
     [SerializeField] private ParticleSystem p_mortarParticle;
 
@@ -227,7 +227,7 @@ public class BossAI : AIBase
         {
             yield return new WaitForSeconds(0.2f);
             Vector3 _v_posToDropOn = PickArenaPosition() + Vector3.up * 200;
-            Instantiate(go_mortarBall, _v_posToDropOn, Quaternion.identity);
+            Instantiate(goA_mortarBalls[Random.Range(0, goA_mortarBalls.Length)], _v_posToDropOn, Quaternion.identity);
         }
         anim.SetBool("Meteor", false);
     }
