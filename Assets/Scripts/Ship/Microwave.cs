@@ -25,9 +25,11 @@ public class Microwave : SubjectBase, IInteractible
 
     [SerializeField] private AudioClip fuseSound;
     [SerializeField] private AudioSource fuseSource;
+    [SerializeField] private GameObject nuclearParts;
     [SerializeField] private ParticleSystem fuseParts;
     [SerializeField] private Button[] crossButtons;
     [SerializeField] private GameObject insideAugmentParent;
+    [SerializeField] private Animator anim;
 
     public AugmentPropertyDisplayer AugPropertyDisplay { get { return apd; } }
 
@@ -223,11 +225,15 @@ public class Microwave : SubjectBase, IInteractible
         {
             b.interactable = false;
         }
-
-        insideAugmentParent?.SetActive(false);
+        insideAugmentParent?.SetActive(true);
+        nuclearParts?.SetActive(true);
+        anim?.SetBool("IsCooking?", true);
 
         yield return new WaitForSeconds(3.1f);
 
+        insideAugmentParent?.SetActive(false);
+        nuclearParts?.SetActive(false);
+        anim?.SetBool("IsCooking?", false);
         fuseParts.Play();
 
         apd.UpdatePropertyText(fusedAug);
@@ -260,7 +266,6 @@ public class Microwave : SubjectBase, IInteractible
         {
             b.interactable = true;
         }
-        insideAugmentParent?.SetActive(true);
     }
 
     private void RevealFuseButton()
