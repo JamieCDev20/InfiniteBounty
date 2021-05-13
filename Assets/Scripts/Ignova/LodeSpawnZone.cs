@@ -29,8 +29,8 @@ public class LodeSpawnZone : MonoBehaviour
 
         if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LotsOLodes))
             _i_lodeCount = Mathf.RoundToInt(vi_numberOfLodes.y * DiversifierManager.x.ReturnLodeAmountIncrease());
-        else if (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LessLodes))
-            _i_lodeCount = Mathf.RoundToInt(vi_numberOfLodes.x * DiversifierManager.x.ReturnLodeAmountIncrease());
+
+        _i_lodeCount = Mathf.RoundToInt(_i_lodeCount * DiversifierManager.x.ReturnLodeAmountIncrease());
 
 
         int _i_timeAttempted = 0;
