@@ -11,6 +11,8 @@ public class HammerHitbox : MonoBehaviour
     [SerializeField] private ParticleSystem p_hitParticles;
     [SerializeField] private ElementalObject elements;
     private Vector3 v_forward;
+    [SerializeField] private AudioClip hammerClip;
+    [SerializeField] private AudioSource hammerSource;
 
     private void Start()
     {
@@ -30,6 +32,8 @@ public class HammerHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        hammerSource.clip = hammerClip;
+        hammerSource.Play();
 
         if (other.CompareTag("Enemy"))
         {

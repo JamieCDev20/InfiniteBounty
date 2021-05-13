@@ -22,6 +22,9 @@ public partial class HandymanAI : AIBase
     [SerializeField] private GameObject go_centreofPickup;
     [SerializeField] private float f_throwWindup;
 
+    [SerializeField] private AudioSource handymanSource;
+    [SerializeField] private AudioClip barkClip;
+
     private HandymanAnimator anim;
 
 
