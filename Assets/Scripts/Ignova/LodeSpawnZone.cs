@@ -8,6 +8,7 @@ public class LodeSpawnZone : MonoBehaviour
     [SerializeField] private Vector2Int vi_numberOfLodes;
     [SerializeField] private GameObject[] goA_lodesTypesToSpawn;
     [SerializeField] private Vector2 v_lodeSize = new Vector2(0.5f, 2);
+    [SerializeField] private float f_lodeScaler = 2;
 
     [Header("Raycast Things")]
     [SerializeField] private bool b_doRayCastSpawning;
@@ -56,7 +57,7 @@ public class LodeSpawnZone : MonoBehaviour
                         _go_lode.transform.position = hit.point;
                         _go_lode.transform.up = hit.normal;
                         _go_lode.transform.Rotate(Vector3.up * UnityEngine.Random.Range(0, 360), Space.Self);
-                        _go_lode.transform.localScale = Vector3.one * UnityEngine.Random.Range(v_lodeSize.x, v_lodeSize.y);
+                        _go_lode.transform.localScale = Vector3.one * UnityEngine.Random.Range(v_lodeSize.x, v_lodeSize.y) * f_lodeScaler;
 
                         _go_lode.transform.localScale *= DiversifierManager.x.ReturnLodeScaler();
 
