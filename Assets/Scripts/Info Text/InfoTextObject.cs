@@ -39,12 +39,15 @@ public class InfoTextObject : MonoBehaviour, IPoolable
             f_startAlpha = t_text.color.a;
             b_setTime = true;
         }
-        float dist = (Time.time - f_startTime) * _fadeTime;
-        float frag = dist / f_startAlpha;
-        Color temp = t_text.color;
-        temp.a = Mathf.Lerp(f_startAlpha, 0, frag);
-        t_text.color = temp;
-        yield return new WaitForSeconds(_fadeTime);
+        while(t_text.color.a != 0)
+        {
+            float dist = (Time.time - f_startTime) * _fadeTime;
+            float frag = dist / f_startAlpha;
+            Color temp = t_text.color;
+            temp.a = Mathf.Lerp(f_startAlpha, 0, frag);
+            t_text.color = temp;
+            yield return null;
+        }
         gameObject.SetActive(false);
     }
 }
