@@ -9,10 +9,17 @@ public class Bouncy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
+
         if (collision.collider.attachedRigidbody != null)
+        {
+            Vector3 vel = collision.collider.attachedRigidbody.velocity;
+            vel.y = 0;
             if (collision.collider.CompareTag("Player"))
-                collision.collider.attachedRigidbody.AddForce(transform.up * f_playerBounceForce * 25, ForceMode.Force);
+                collision.collider.attachedRigidbody.velocity = vel + (Vector3.up * f_playerBounceForce);
             else
-                collision.collider.attachedRigidbody.AddForce(transform.up * f_otherBounceForce * 25, ForceMode.Force);
+                collision.collider.attachedRigidbody.velocity = vel + (Vector3.up * f_otherBounceForce);
+
+        }
     }
 }

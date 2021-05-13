@@ -12,8 +12,9 @@ public class AugmentButton : MonoBehaviour, IPoolable
 
     public void Clicked(/*GameObject wb*/)
     {
-        Workbench wb = go_parent.GetComponentInChildren<Workbench>();
-        Microwave mw = go_parent.GetComponentInChildren<Microwave>();
+        //Debug.Log(go_parent);
+        Workbench wb = GetComponentInParent<Workbench>();
+        Microwave mw = GetComponentInParent<Microwave>();
         if(wb != null)
             wb.AugPropertyDisplay.ClickAugment(i_displayListIndex);
         else if(mw != null)

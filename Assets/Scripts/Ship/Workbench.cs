@@ -306,11 +306,11 @@ public class Workbench : SubjectBase, IInteractible
     {
         // Augment index out of range.
         WeaponTool toolToRemoveFrom = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
-        (string nam, int lev) thing = apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<AugmentButton>().Tup;
+        (string nam, int lev) match = apd.AugmentButtons[apd.CurrentAugIndex].GetComponent<AugmentButton>().Tup;
         int i = -1;
         for (int j = 0; j < toolToRemoveFrom.Augs.Length; j++)
         {
-            if (toolToRemoveFrom.Augs[j]?.Tup == thing)
+            if (toolToRemoveFrom.Augs[j]?.Tup == match)
             {
                 i = j;
                 break;

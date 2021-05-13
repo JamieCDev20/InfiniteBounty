@@ -14,13 +14,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     [SerializeField] private GameObject go_listMover; //this is the parent of the clickable buttons. not used in the vending machine
     [SerializeField] private List<GameObject> goL_augmentButtonPool = new List<GameObject>(); //what is this?
     [SerializeField] private RectTransform rt_augmentButtonParent; //what is this?
-    [SerializeField] private Scrollbar s_slider; 
+    [SerializeField] private Scrollbar s_slider;
     [SerializeField] private float f_augmentButtonHeight = 85;
     [SerializeField] private AugmentDisplay ad_display;
     [SerializeField] private Sprite[] fitIcons;
     List<Augment> aL_allAugmentsOwned = new List<Augment>(); // clarify
     List<GameObject> goL_propertyList = new List<GameObject>(); // clarify
-    private int i_currentAugmentIndex = 0; 
+    private int i_currentAugmentIndex = 0;
     private AugmentDisplayType adt_currentDisplayType;
     private WeaponTool wt_toolToCheck;
     private string s_augName;
@@ -148,7 +148,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
                 //the augments list then gets added to another list
                 _augmentsInList.AddRange(augs);
-                */ 
+                */
             #endregion
 
         }
@@ -226,7 +226,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         List<Augment> _augList = new List<Augment>();
         // We don't actually add any augments here???
         return _augList;
-    } 
+    }
 
     #endregion
 
@@ -319,7 +319,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
         s_slider.value = 1;
-        
+
         return _aL_augmentsToShow;
 
     }
@@ -336,13 +336,13 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         switch (adt_currentDisplayType)
         {
             case AugmentDisplayType.ShowEquipped:
-                if(!Utils.ArrayIsNullOrZero(wt_toolToCheck.Augs))
+                Debug.Log(wt_toolToCheck);
+                if (!Utils.ArrayIsNullOrZero(wt_toolToCheck.Augs))
                     for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
                     {
-                        if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
-                        {
-                            return i;
-                        }
+                        if (wt_toolToCheck.Augs[i] != null)
+                            if (wt_toolToCheck.Augs[i].Name == _name && wt_toolToCheck.Augs[i].Level == _level)
+                                return i;
                     }
                 break;
             default:
@@ -382,10 +382,18 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         {
             case AugmentDisplayType.ShowEquipped:
                 RemoveAugmentProperties();
+                try
+                {
                 SetFitIcon((int)wt_toolToCheck.Augs[_i_augmentIndexClicked].at_type);
                 ad_display.t_augmentName.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Name;
                 ad_display.t_levelNumber.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Level.ToString();
                 UpdatePropertyText(wt_toolToCheck.Augs[_i_augmentIndexClicked]);
+
+                }
+                catch
+                {
+
+                }
                 break;
             default:
                 RemoveAugmentProperties();
@@ -467,7 +475,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         }
 
-        if(!Utils.ArrayIsNullOrZero(_aug.AugElement))
+        if (!Utils.ArrayIsNullOrZero(_aug.AugElement))
             if (_aug.AugElement.Length > 0)
                 foreach (Element elim in _aug.AugElement)
                 {
@@ -587,7 +595,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     }
 
-    private Text PlaceAugmentProperties(GameObject _go_template) 
+    private Text PlaceAugmentProperties(GameObject _go_template)
     {
 
         //spawn a text to display the effects and augment will have
@@ -645,12 +653,12 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
 public enum AugmentDisplayType
 {
-    ShowAll, 
-    ShowEquipped, 
-    ShowSameType, 
-    ShowSameTypeNotFused, 
-    ShowSameTypeNotFusedExcluding, 
-    ShowSameName, 
+    ShowAll,
+    ShowEquipped,
+    ShowSameType,
+    ShowSameTypeNotFused,
+    ShowSameTypeNotFusedExcluding,
+    ShowSameName,
     ShowSameTypeExcluding,
     ShowSameNameExcluding,
     None
