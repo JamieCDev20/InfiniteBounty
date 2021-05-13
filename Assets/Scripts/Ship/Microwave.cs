@@ -22,6 +22,12 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private AugmentFuser fuser;
     [SerializeField] private GameObject go_augButtonA;
     [SerializeField] private GameObject go_augButtonB;
+
+    [SerializeField] private AudioClip fuseSound;
+    [SerializeField] private AudioSource fuseSource;
+    [SerializeField] private ParticleSystem fuseParts;
+    [SerializeField] private Button[] crossButtons;
+
     public AugmentPropertyDisplayer AugPropertyDisplay { get { return apd; } }
 
 
@@ -194,11 +200,33 @@ public class Microwave : SubjectBase, IInteractible
 
     public void Fuse()
     {
+        StartCoroutine(DoingADelayedFuse());
+        // TODO:
+        // Play animation
+    }
+
+    IEnumerator DoingADelayedFuse()
+    {
         UnrevealFuseButton();
+        //unreveal cross buttons
+
         int aLevel = aug_slotA.Level;
         int bLevel = aug_slotB.Level;
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         fusedAug.at_type = aug_slotA.at_type;
+
+        //start fusing audio
+        fuseSource.clip = fuseSound;
+        fuseSource.Play();
+        foreach (Button b in crossButtons)
+        {
+            b.interactable = false;
+        }
+
+        yield return new WaitForSeconds(3.1f);
+
+        fuseParts.Play();
+
         apd.UpdatePropertyText(fusedAug);
         FuseEvent fe = new FuseEvent(new AugmentSave(fusedAug.Stage, fusedAug.at_type, fusedAug.Level, fusedAug.Stage == AugmentStage.fused ?
             AugmentManager.x.GetIndicesByName(fusedAug.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name),
@@ -223,8 +251,12 @@ public class Microwave : SubjectBase, IInteractible
         RemoveAugment(true);
         RemoveAugment(false);
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
-        // TODO:
-        // Play animation
+
+        //rereveal cross buttons
+        foreach (Button b in crossButtons)
+        {
+            b.interactable = true;
+        }
     }
 
     private void RevealFuseButton()
