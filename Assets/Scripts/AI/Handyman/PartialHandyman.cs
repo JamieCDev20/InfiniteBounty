@@ -23,7 +23,7 @@ public partial class HandymanAI : AIBase
     [SerializeField] private float f_throwWindup;
 
     [SerializeField] private AudioSource handymanSource;
-    [SerializeField] private AudioClip barkClip;
+    [SerializeField] private AudioClip whipClip;
 
     private HandymanAnimator anim;
 
@@ -164,8 +164,15 @@ public partial class HandymanAI : AIBase
     {
         //toggleHurtboxes(true);
         anim.Slap();
+        PlayClip(whipClip);
         StartCoroutine(PunchRoutine());
 
+    }
+
+    private void PlayClip(AudioClip c)
+    {
+        handymanSource.clip = c;
+        handymanSource.Play();
     }
 
     IEnumerator PunchRoutine()
