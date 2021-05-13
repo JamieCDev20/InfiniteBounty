@@ -189,7 +189,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         base.OnMasterClientSwitched(newMasterClient);
-        FindObjectOfType<InfoText>()?.OnNotify(new InfoTextEvent(newMasterClient.NickName + " is now the client"));
+        InfoText.x?.OnNotify(new InfoTextEvent(newMasterClient.NickName + " is now the client"));
         //PhotonNetwork.Disconnect();
         Reset();
     }
@@ -200,7 +200,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         base.OnDisconnected(cause);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        FindObjectOfType<InfoText>()?.OnNotify(new InfoTextEvent("You were disconnected! " + cause.ToString()));
+        InfoText.x?.OnNotify(new InfoTextEvent("You were disconnected! " + cause.ToString()));
     }
 
     public void ReturnToMainMenu()
