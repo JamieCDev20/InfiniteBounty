@@ -10,6 +10,12 @@ public class InfoTextObject : MonoBehaviour, IPoolable
     private bool b_setTime = false;
     private float f_startTime;
     private float f_startAlpha;
+
+    private void Awake()
+    {
+        StopAllCoroutines();
+    }
+
     public void Die()
     {
         PoolManager.x.ReturnObjectToPool(gameObject);
