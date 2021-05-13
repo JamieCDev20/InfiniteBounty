@@ -1,0 +1,57 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InfoText : MonoBehaviour, ObserverBase
+{
+    GameObject[] A_allText;
+    [SerializeField] float f_textDistance;
+    [SerializeField] float f_textPadding;
+    [SerializeField] private GameObject listMover;
+    [SerializeField] private GameObject textObject;
+
+    public void Start()
+    {
+        FindObjectOfType<SaveManager>().AddObserver(this);
+    }
+
+    public void OnNotify(ObserverEvent oe_event)
+    {
+        switch (oe_event)
+        {
+            case InfoTextEvent ite:
+                if (ite.TextToDisplay != string.Empty)
+                    AddText(ite.TextToDisplay);
+                DumpText();
+                break;
+        }
+    }
+    public void AddText(string _textToAdd)
+    {
+        GameObject textRef = PoolManager.x.SpawnObject(textObject);
+        Text tr = textRef.GetComponent<Text>();
+        tr.text = _textToAdd;
+        tr.color = Color.white;
+        StartCoroutine(textRef.GetComponent<InfoTextObject>().FadeText(3f, 1.0f));
+        A_allText = Utils.AddToArray(A_allText, textRef);
+    }
+    public void DumpText()
+    {
+        int rev = 0;
+        if(A_allText.Length > 0)
+            for(int i = A_allText.Length-1; i >= 0; i--)
+            {
+                A_allText[i].transform.parent = listMover.transform;
+                A_allText[i].transform.localScale = Vector3.one;
+                A_allText[i].transform.localPosition = new Vector3(0, (-rev * textObject.GetComponent<RectTransform>().rect.height) - f_textPadding, 0);
+                rev++;
+            }
+    }
+
+    public void DisplayText()
+    {
+        A_allText[A_allText.Length - 1].transform.parent = listMover.transform;
+        A_allText[A_allText.Length - 1].transform.localPosition = Vector3.zero;
+    }
+}

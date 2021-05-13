@@ -101,13 +101,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 60087246701166552}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3791231846596663069}
-  m_Father: {fileID: 4951380808186570195}
-  m_RootOrder: 10
+  m_Father: {fileID: 1762769113790809280}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -17580,6 +17580,7 @@ RectTransform:
   - {fileID: 4951380808186570195}
   - {fileID: 3777228158054211206}
   - {fileID: 2656241693933980008}
+  - {fileID: 9161042084714904697}
   m_Father: {fileID: 6606287334078950919}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22659,6 +22660,7 @@ GameObject:
   - component: {fileID: 16831478655806625}
   - component: {fileID: 1485271200306012831}
   - component: {fileID: 7574155774767324243}
+  - component: {fileID: 3397669147385122228}
   m_Layer: 10
   m_Name: UI_Master
   m_TagString: Untagged
@@ -22851,6 +22853,23 @@ MonoBehaviour:
   acA_musicTestClips: []
   acA_ambienceTestClips: []
   acA_soundEffectsTestClips: []
+--- !u!114 &3397669147385122228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868981466198218163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28cf31b185bef0148bccd8ba337ab05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_textDistance: 0
+  f_textPadding: 0
+  listMover: {fileID: 60087246701166552}
+  textObject: {fileID: 8409173276118555811, guid: 67661ed30353ca7498e88602ab78755b,
+    type: 3}
 --- !u!1 &6906222151457762820
 GameObject:
   m_ObjectHideFlags: 0
@@ -32577,7 +32596,6 @@ RectTransform:
   - {fileID: 9127806435820749466}
   - {fileID: 6598190392636329163}
   - {fileID: 2912680507933427866}
-  - {fileID: 9161042084714904697}
   m_Father: {fileID: 1762769113790809280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32878,6 +32896,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DebugText
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409173276118555811, guid: 67661ed30353ca7498e88602ab78755b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67661ed30353ca7498e88602ab78755b, type: 3}
