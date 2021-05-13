@@ -8,7 +8,13 @@ public class Teleportal : MonoBehaviour
     private Teleportal tp_otherPortal;
     private List<Rigidbody> rbL_recentlyTeleported = new List<Rigidbody>();    
     [SerializeField] private float travelTime = 0.3f;
+    private AudioSource as_source;
 
+
+    private void Start()
+    {
+        as_source = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,6 +36,8 @@ public class Teleportal : MonoBehaviour
             _go_object.GetComponent<PlayerMover>().GetTeleported();
         else
             _go_object.SetActive(false);
+
+        as_source.Play();
 
         Vector3 vel = _rb.velocity;
 
