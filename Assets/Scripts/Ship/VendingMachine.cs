@@ -202,6 +202,7 @@ public class VendingMachine : SubjectBase, IInteractible
                     //StartCoroutine(SpitOutAugment(aA_avaliableAugments[i_currentAugmentIndex].Aug));
                     Augment[] grabbedAugment = new Augment[1];
                     grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
+                    InfoText.x?.OnNotify(new InfoTextEvent("You've purchased a " + grabbedAugment[0].Name));
                     pim.GetComponent<NugManager>().CollectNugs(-grabbedAugment[0].Cost, false);
                     SaveEvent se = new SaveEvent(new PlayerSaveData(pim.GetComponent<NugManager>().Nugs, -1, -1, null, null, null, null,
                         new AugmentSave[] { new AugmentSave(grabbedAugment[0].Stage, grabbedAugment[0].at_type, 1, new int[1] { AugmentManager.x.GetAugmentIndex(grabbedAugment[0].at_type, grabbedAugment[0].Name) }) },
