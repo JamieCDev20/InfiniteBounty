@@ -34,6 +34,8 @@ public class BossAI : AIBase
     [SerializeField] private float f_timeBetweenMoves;
     private bool b_canMove = true;
     [SerializeField] private AudioSource as_moveTelegraphSource;
+    [SerializeField] private AudioClip ac_emerge;
+    [SerializeField] private AudioClip ac_burrow;
 
     [Header("Enemies")]
     [SerializeField] private float f_timeBetweenEnemies = 20;
@@ -277,6 +279,7 @@ public class BossAI : AIBase
     {
         b_canAttack = false;
 
+        as_source.PlayOneShot(ac_burrow);
         yield return new WaitForSeconds(1);
         transform.position = new Vector3(_v_newPos.x, -100, _v_newPos.z);
         yield return new WaitForSeconds(2);
@@ -288,6 +291,7 @@ public class BossAI : AIBase
         transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
         anim.SetBool("Submerging", false);
         anim.SetBool("Emerging", true);
+        as_source.PlayOneShot(ac_emerge);
 
         yield return new WaitForSeconds(1);
 
