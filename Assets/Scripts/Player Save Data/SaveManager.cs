@@ -127,7 +127,7 @@ public class SaveManager : SubjectBase, ObserverBase
             FindObjectOfType<AppearanceChanger>().SetArmActive(1, true);
             saveData = new PlayerSaveData();
             File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
-            Notify(new InfoTextEvent("Save Data Cleared."));
+            InfoText.x.OnNotify(new InfoTextEvent("Save Data Cleared"));
         }
         
     }

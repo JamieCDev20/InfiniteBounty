@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InfoText : MonoBehaviour, ObserverBase
 {
+    public static InfoText x;
     GameObject[] A_allText;
     [SerializeField] float f_textDistance;
     [SerializeField] float f_textPadding;
@@ -14,6 +15,14 @@ public class InfoText : MonoBehaviour, ObserverBase
     public void Start()
     {
         FindObjectOfType<SaveManager>().AddObserver(this);
+        if(x != null)
+        {
+            if (x != this)
+                Destroy(this);
+        }
+        else
+            x = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void OnNotify(ObserverEvent oe_event)
