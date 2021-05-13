@@ -24,12 +24,13 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
 
     public void StartedSitting()
     {
-        photonView.RPC(nameof(RemoteSit), RpcTarget.All);
+        photonView.RPC(nameof(RemoteSit), RpcTarget.All, PhotonNetwork.NickName);
     }
 
     [PunRPC]
-    public void RemoteSit()
+    public void RemoteSit(string _nickName)
     {
+        InfoText.x?.OnNotify(new InfoTextEvent(_nickName + " is ready to start their shift!"));
         if (!PhotonNetwork.IsMasterClient)
             return;
 
