@@ -14,6 +14,7 @@ public class InfoTextObject : MonoBehaviour, IPoolable
     private void Awake()
     {
         StopAllCoroutines();
+        t_text.color = new Color(t_text.color.r, t_text.color.g, t_text.color.b, 1);
     }
 
     public void Die()

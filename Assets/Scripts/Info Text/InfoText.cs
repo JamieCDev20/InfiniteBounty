@@ -41,7 +41,7 @@ public class InfoText : MonoBehaviour, ObserverBase
         GameObject textRef = PoolManager.x.SpawnObject(textObject);
         Text tr = textRef.GetComponent<Text>();
         tr.text = _textToAdd;
-        tr.color = Color.white;
+        tr.color = new Color(tr.color.r, tr.color.g, tr.color.b, 1f);
         StartCoroutine(textRef.GetComponent<InfoTextObject>().FadeText(3f, 1.0f));
         A_allText = Utils.AddToArray(A_allText, textRef);
     }
