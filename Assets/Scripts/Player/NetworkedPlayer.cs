@@ -121,12 +121,14 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+        InfoText.x?.OnNotify(new InfoTextEvent(newPlayer.NickName + " has joined the room!"));
         playerIM.SyncNameOverNetwork();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         playerIM.SyncNameOverNetwork();
+        InfoText.x?.OnNotify(new InfoTextEvent(otherPlayer.NickName + " has left the room!"));
     }
 
     public override void OnLeftRoom()
