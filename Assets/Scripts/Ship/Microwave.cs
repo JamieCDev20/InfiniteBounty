@@ -27,6 +27,7 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private AudioSource fuseSource;
     [SerializeField] private ParticleSystem fuseParts;
     [SerializeField] private Button[] crossButtons;
+    [SerializeField] private GameObject insideAugmentParent;
 
     public AugmentPropertyDisplayer AugPropertyDisplay { get { return apd; } }
 
@@ -223,6 +224,8 @@ public class Microwave : SubjectBase, IInteractible
             b.interactable = false;
         }
 
+        insideAugmentParent?.SetActive(false);
+
         yield return new WaitForSeconds(3.1f);
 
         fuseParts.Play();
@@ -257,6 +260,7 @@ public class Microwave : SubjectBase, IInteractible
         {
             b.interactable = true;
         }
+        insideAugmentParent?.SetActive(true);
     }
 
     private void RevealFuseButton()
