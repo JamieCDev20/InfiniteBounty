@@ -17,14 +17,13 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
     public void Interacted(Transform interactor)
     {
         if (!b_active)
-        {
-            StartCoroutine(Countdown());
-            b_active = true;
-        }
+            photonView.RPC(nameof(Countdown), RpcTarget.All);
     }
 
+    [PunRPC]
     private IEnumerator Countdown()
     {
+        b_active = true;
         float _f_currentTime = 0;
 
         while (_f_currentTime < f_waitTime)
