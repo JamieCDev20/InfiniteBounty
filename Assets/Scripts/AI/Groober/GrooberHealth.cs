@@ -11,8 +11,15 @@ public class GrooberHealth : MonoBehaviour, IHitable
     private float f_deathTimer;
     private SkinnedMeshRenderer[] mA_myRenderers = new SkinnedMeshRenderer[0];
 
+    [Header("SFX")]
+    [SerializeField] private float f_growlTimer = 10;
+    private float f_currentGrowlCharge;
+    private AudioSource as_source;
+    [SerializeField] private AudioClip ac_growlClip;
+
     private void Awake()
     {
+        as_source = GetComponent<AudioSource>();
         mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
@@ -27,6 +34,11 @@ public class GrooberHealth : MonoBehaviour, IHitable
     private void Update()
     {
         f_deathTimer += Time.deltaTime;
+        f_currentGrowlCharge += Time.deltaTime * Random.Range(0f, 2f);
+
+        if (f_currentGrowlCharge >= f_growlTimer)
+            as_source.PlayOneShot(ac_growlClip);
+
         if (f_deathTimer > 60)
             Die();
 #if UNITY_EDITOR
