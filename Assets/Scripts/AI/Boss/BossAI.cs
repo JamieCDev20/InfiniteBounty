@@ -30,6 +30,7 @@ public class BossAI : AIBase
     private GameObject go_looker;
     [SerializeField] private float f_timeBetweenMoves;
     private bool b_canMove = true;
+    [SerializeField] private AudioSource as_moveTelegraphSource;
 
     [Header("Enemies")]
     [SerializeField] private float f_timeBetweenEnemies = 20;
@@ -276,6 +277,7 @@ public class BossAI : AIBase
         yield return new WaitForSeconds(2);
 
         go_movementTelegraph.transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
+        as_moveTelegraphSource.Play();
 
         yield return new WaitForSeconds(2);
         transform.position = new Vector3(_v_newPos.x, 0, _v_newPos.z);
