@@ -61,8 +61,7 @@ public class FlyingMover : MoverBase
     {
         if (!as_source.isPlaying)
         {
-            as_source.clip = acA_flapSounds[Random.Range(0, acA_flapSounds.Length)];
-            as_source.Play();
+            as_source.PlayOneShot(acA_flapSounds[Random.Range(0, acA_flapSounds.Length)]);            
         }
     }
 
