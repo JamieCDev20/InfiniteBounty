@@ -43,6 +43,8 @@ public class Workbench : SubjectBase, IInteractible
     [SerializeField] private Color col_unselected;
     [SerializeField] AudioSource as_source;
     [SerializeField] AudioClip ac_attach;
+    [SerializeField] AudioClip ac_notAttached;
+    [SerializeField] ParticleSystem ps_stars;
     public void Init(SaveManager _sm)
     {
         saveMan = _sm;
@@ -257,12 +259,13 @@ public class Workbench : SubjectBase, IInteractible
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
                     AugmentSave _savedAug = new AugmentSave(_aug);
                     SendAttachSave(_aug, _savedAug);
+                    AbleToAugment(_aug.Name + " attached");
                 }
                 else
-                    Debug.LogError("Augments Full");
+                    UnableToAugment("Augment Slots Full");
             }
             else
-                Debug.LogError("Incompatable Augment Type");
+                UnableToAugment("Incompatable Augment Type");
         }
         else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is ConeTool)
         {
@@ -275,12 +278,13 @@ public class Workbench : SubjectBase, IInteractible
                     AugmentSave _savedAug = new AugmentSave(_aug);
                     Debug.Log(_savedAug.SavedAugment.indicies[0]);
                     SendAttachSave(_aug, _savedAug);
+                    AbleToAugment(_aug.Name + " attached");
                 }
                 else
-                    Debug.LogError("Augments Full");
+                    UnableToAugment("Augment Slots Full");
             }
             else
-                Debug.LogError("Incompatable Augment Type");
+                UnableToAugment("Incompatable Augment Type");
         }
         else if (th_currentTh.GetToolBase(i_currentWeaponIndex) is WeaponTool)
         {
@@ -292,14 +296,30 @@ public class Workbench : SubjectBase, IInteractible
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
                     AugmentSave _savedAug = new AugmentSave(_aug);
                     SendAttachSave(_aug, _savedAug);
+                    AbleToAugment(_aug.Name + " attached");
                 }
                 else
-                    Debug.LogError("Augments Full");
+                    UnableToAugment("Augment Slots Full");
             }
             else
-                Debug.LogError("Incompatable Augment Type");
+                UnableToAugment("Incompatable Augment Type");
         }
+        
+    }
+
+    private void AbleToAugment(string _message)
+    {
+        InfoText.x.OnNotify(new InfoTextEvent(_message));
+        as_source.pitch = Random.Range(0.9f, 1.1f);
         as_source.PlayOneShot(ac_attach);
+        ps_stars.Play();
+    }
+
+    private void UnableToAugment(string _message)
+    {
+        InfoText.x.OnNotify(new InfoTextEvent(_message));
+        as_source.pitch = Random.Range(0.9f, 1.1f);
+        as_source.PlayOneShot(ac_notAttached);
     }
 
     public void RemoveAugment()

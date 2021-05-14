@@ -69,11 +69,14 @@ public class InfoText : MonoBehaviour, ObserverBase
         if(A_allText.Length > 0)
             for(int i = A_allText.Length-1; i >= 0; i--)
             {
-                A_allText[i].transform.parent = listMover.transform;
-                A_allText[i].transform.localScale = Vector3.one;
-                A_allText[i].transform.localPosition = new Vector3(0, (-rev * textObject.GetComponent<RectTransform>().rect.height) - f_textPadding, 0);
-                A_allText[i].SetActive(true);
-                rev++;
+                if(A_allText[i] != null)
+                {
+                    A_allText[i].transform.parent = listMover.transform;
+                    A_allText[i].transform.localScale = Vector3.one;
+                    A_allText[i].transform.localPosition = new Vector3(0, (-rev * textObject.GetComponent<RectTransform>().rect.height) - f_textPadding, 0);
+                    A_allText[i].SetActive(true);
+                    rev++;
+                }
             }
     }
 
@@ -81,5 +84,15 @@ public class InfoText : MonoBehaviour, ObserverBase
     {
         A_allText[A_allText.Length - 1].transform.parent = listMover.transform;
         A_allText[A_allText.Length - 1].transform.localPosition = Vector3.zero;
+    }
+
+    public void Reset()
+    {
+        foreach(GameObject go_text in A_allText)
+        {
+            InfoTextObject ito = go_text.GetComponent<InfoTextObject>();
+            ito.Die();
+        }
+        A_allText = new GameObject[0];
     }
 }

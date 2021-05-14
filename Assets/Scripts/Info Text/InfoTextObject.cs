@@ -41,6 +41,7 @@ public class InfoTextObject : MonoBehaviour, IPoolable
 
     public void Die()
     {
+        StopAllCoroutines();
         PoolManager.x.ReturnObjectToPool(gameObject);
     }
 
