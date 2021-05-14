@@ -52,8 +52,7 @@ public class BubbleShieldController : MonoBehaviour
             m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.3f;
         }
 
-        as_source.clip = ac_startUpClip;
-        as_source.Play();
+        as_source.PlayOneShot(ac_startUpClip);
 
         for (int i = 0; i < 50; i++)
         {
