@@ -28,7 +28,7 @@ public enum Diversifier
 
 public enum BonusObjective
 {
-    None, BonusGoo, BonusHydro, BonusTasty, BonusThunder, BonusBoom, BonusMagma
+    None, BonusGoo, BonusHydro, BonusTasty, BonusThunder, BonusMagma, BonusBoom
 }
 
 public class DiversifierManager : MonoBehaviourPunCallbacks
