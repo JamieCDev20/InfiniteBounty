@@ -9,6 +9,10 @@ public class GrooberAnimator : MonoBehaviour
     private Rigidbody rb;
     private bool b_isGrounded = true;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip leftFoot;
+    [SerializeField] private AudioClip rightFoot;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -39,6 +43,22 @@ public class GrooberAnimator : MonoBehaviour
     public void SetWindup(bool v)
     {
         anim.SetBool("Windup", v);
+    }
+
+    private void PlayClip(AudioClip c)
+    {
+        audioSource.clip = c;
+        audioSource.Play();
+    }
+
+    public void PlayFootstepL()
+    {
+        PlayClip(leftFoot);
+    }
+
+    public void PlayFootstepR()
+    {
+        PlayClip(rightFoot);
     }
 
 }
