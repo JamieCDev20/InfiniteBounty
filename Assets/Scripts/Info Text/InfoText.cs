@@ -56,7 +56,6 @@ public class InfoText : MonoBehaviour, ObserverBase
         if(textRef.activeSelf == false)
             textRef.SetActive(true);
         InfoTextObject tr = textRef.GetComponent<InfoTextObject>();
-        //tr.Reset();
         Text actText = tr.TextObject;
         actText.color = new Color(actText.color.r, actText.color.g, actText.color.b, 1f);
         tr.Info = _textToAdd;

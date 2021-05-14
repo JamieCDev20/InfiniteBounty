@@ -18,7 +18,6 @@ public class InfoTextObject : MonoBehaviour, IPoolable
     private void Awake()
     {
         StopAllCoroutines();
-        //StartCoroutine(FadeText(3f, 1.0f));
         t_text.color = new Color(t_text.color.r, t_text.color.g, t_text.color.b, 1);
     }
 
