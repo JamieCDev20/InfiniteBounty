@@ -5106,6 +5106,20 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &3616318226696748294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4920546889112021203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b86ebce79b882499ae106ab4b0cd9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 4946781125419528880}
+  footClip: {fileID: 8300000, guid: 00183f298a1814fcca732e25da0903d0, type: 3}
 --- !u!114 &6463967276278404295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5139,20 +5153,6 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
---- !u!114 &3616318226696748294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4920546889112021203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4b86ebce79b882499ae106ab4b0cd9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 4946781125419528880}
-  footClip: {fileID: 8300000, guid: 00183f298a1814fcca732e25da0903d0, type: 3}
 --- !u!1 &5132836936626586392
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,7 +5394,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 0.5
+  DopplerLevel: 0.05
   MinDistance: 6
   MaxDistance: 200
   Pan2D: 0
