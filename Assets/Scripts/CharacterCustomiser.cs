@@ -195,6 +195,11 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
             c_mirrorCam.enabled = false;
             c_trueMirrorCam.enabled = false;
         }
+        else
+        {
+            c_mirrorCam.enabled = true;
+            c_trueMirrorCam.enabled = true;
+        }
     }
 
 }
