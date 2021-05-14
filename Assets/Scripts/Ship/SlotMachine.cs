@@ -11,6 +11,9 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 {
     private Animator anim;
     private PhotonView view;
+    [SerializeField] private AudioSource as_audioSource;
+    [SerializeField] private AudioClip ac_moneySound;
+    [SerializeField] private AudioClip ac_reelSound;
 
     [Header("Interactable Things That Moves the Camera")]
     [SerializeField] private Transform t_playerPos;
@@ -76,6 +79,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
     }
 
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
@@ -89,6 +93,11 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         if (b_isBeingUsed)
             EndInteract();
+    }
+    private void PlayCoinsAudio()
+    {
+        as_audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        as_audioSource.PlayOneShot(ac_moneySound);
     }
 
     private void GetDiversifiersFromDifficulty()
@@ -327,6 +336,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         if (nm_nugMan.Nugs >= i_currentCost)
         {
+            PlayCoinsAudio();
             nm_nugMan.CollectNugs(-i_currentCost, false);
 
             view.RPC(nameof(UpCostRPC), RpcTarget.All);
