@@ -34,17 +34,34 @@ public class InfoText : MonoBehaviour, ObserverBase
                     AddText(ite.TextToDisplay);
                 DumpText();
                 break;
+            case DeleteInfoTextEvent dite:
+                A_allText = Utils.OrderedRemove(A_allText, FindTextIndex(dite.ToRemove));
+                break;
         }
     }
+
+    private int FindTextIndex(GameObject _textRef)
+    {
+        for (int i = 0; i < A_allText.Length; i++)
+        {
+            if (A_allText[i] == _textRef)
+                return i;
+        }
+        return 0;
+    }
+
     public void AddText(string _textToAdd)
     {
         GameObject textRef = PoolManager.x.SpawnObject(textObject);
-        Text tr = textRef.GetComponent<Text>();
-        tr.text = _textToAdd;
-        tr.color = new Color(tr.color.r, tr.color.g, tr.color.b, 1f);
-        StartCoroutine(textRef.GetComponent<InfoTextObject>().FadeText(3f, 1.0f));
+        if(textRef.activeSelf == false)
+            textRef.SetActive(true);
+        InfoTextObject tr = textRef.GetComponent<InfoTextObject>();
+        tr.Reset();
+        tr.Info = _textToAdd;
+        tr.StartFadeRoutine(3f, 1f);
         A_allText = Utils.AddToArray(A_allText, textRef);
     }
+
     public void DumpText()
     {
         int rev = 0;
@@ -54,8 +71,10 @@ public class InfoText : MonoBehaviour, ObserverBase
                 A_allText[i].transform.parent = listMover.transform;
                 A_allText[i].transform.localScale = Vector3.one;
                 A_allText[i].transform.localPosition = new Vector3(0, (-rev * textObject.GetComponent<RectTransform>().rect.height) - f_textPadding, 0);
+                A_allText[i].SetActive(true);
                 rev++;
             }
+        Debug.Log(A_allText.Length);
     }
 
     public void DisplayText()

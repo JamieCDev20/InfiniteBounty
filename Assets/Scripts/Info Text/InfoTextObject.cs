@@ -6,15 +6,36 @@ using UnityEngine.UI;
 public class InfoTextObject : MonoBehaviour, IPoolable
 {
     [SerializeField] string s_filePath;
-    [SerializeField] Text t_text;
+    [SerializeField] private Text t_text;
     private bool b_setTime = false;
+    private bool b_cRunning;
     private float f_startTime;
     private float f_startAlpha;
+
+    public string Info { set { t_text.text = value;} }
 
     private void Awake()
     {
         StopAllCoroutines();
+        //StartCoroutine(FadeText(3f, 1.0f));
         t_text.color = new Color(t_text.color.r, t_text.color.g, t_text.color.b, 1);
+    }
+
+    public void StartFadeRoutine(float _showTime, float _fadeTime)
+    {
+        StartCoroutine(FadeText(_showTime, _fadeTime));
+    }
+
+    public void Reset()
+    {
+        if (b_cRunning)
+        {
+            StopAllCoroutines();
+            transform.parent = null;
+            t_text.color = new Color(t_text.color.r, t_text.color.g, t_text.color.b, t_text.color.a);
+
+        }
+        //transform.localPosition = Vector3.zero;
     }
 
     public void Die()
@@ -39,6 +60,7 @@ public class InfoTextObject : MonoBehaviour, IPoolable
 
     public IEnumerator FadeText(float _showTime, float _fadeTime)
     {
+        b_cRunning = true;
         yield return new WaitForSeconds(_showTime);
         if (!b_setTime)
         {
@@ -56,5 +78,8 @@ public class InfoTextObject : MonoBehaviour, IPoolable
             yield return null;
         }
         gameObject.SetActive(false);
+        b_cRunning = false;
+        Reset();
+        InfoText.x.OnNotify(new DeleteInfoTextEvent(gameObject));
     }
 }
