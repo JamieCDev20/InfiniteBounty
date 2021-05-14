@@ -12,6 +12,7 @@ public class InfoTextObject : MonoBehaviour, IPoolable
     private float f_startTime;
     private float f_startAlpha;
 
+    public Text TextObject { get { return t_text; } }
     public string Info { set { t_text.text = value;} }
 
     private void Awake()
@@ -33,9 +34,10 @@ public class InfoTextObject : MonoBehaviour, IPoolable
             StopAllCoroutines();
             transform.parent = null;
             t_text.color = new Color(t_text.color.r, t_text.color.g, t_text.color.b, t_text.color.a);
-
         }
-        //transform.localPosition = Vector3.zero;
+        InfoText.x.OnNotify(new DeleteInfoTextEvent(gameObject));
+        transform.localPosition = Vector3.zero;
+        transform.position = Vector3.zero;
     }
 
     public void Die()
@@ -80,6 +82,5 @@ public class InfoTextObject : MonoBehaviour, IPoolable
         gameObject.SetActive(false);
         b_cRunning = false;
         Reset();
-        InfoText.x.OnNotify(new DeleteInfoTextEvent(gameObject));
     }
 }

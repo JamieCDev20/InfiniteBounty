@@ -56,7 +56,9 @@ public class InfoText : MonoBehaviour, ObserverBase
         if(textRef.activeSelf == false)
             textRef.SetActive(true);
         InfoTextObject tr = textRef.GetComponent<InfoTextObject>();
-        tr.Reset();
+        //tr.Reset();
+        Text actText = tr.TextObject;
+        actText.color = new Color(actText.color.r, actText.color.g, actText.color.b, 1f);
         tr.Info = _textToAdd;
         tr.StartFadeRoutine(3f, 1f);
         A_allText = Utils.AddToArray(A_allText, textRef);
@@ -74,7 +76,6 @@ public class InfoText : MonoBehaviour, ObserverBase
                 A_allText[i].SetActive(true);
                 rev++;
             }
-        Debug.Log(A_allText.Length);
     }
 
     public void DisplayText()
