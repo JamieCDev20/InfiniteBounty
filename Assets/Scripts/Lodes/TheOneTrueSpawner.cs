@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class TheOneTrueSpawner : MonoBehaviourPun
 {
-
-    [SerializeField] private LodeSpawnZone[] lszA_zones;
-
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
