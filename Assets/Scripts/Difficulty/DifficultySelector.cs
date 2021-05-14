@@ -28,6 +28,8 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
 
     public void ChangeDifficulty(int _i_difficultyChange)
     {
+        if (TutorialManager.x.ReturnIsDoingTutorial())
+            _i_difficultyChange = 0;
         StartCoroutine(ScrollDifficulty(_i_difficultyChange));
     }
 
