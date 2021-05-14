@@ -86,8 +86,10 @@ public class JukeBox : MonoBehaviour, IHitable
         p_deathEffect.Play();
         go_visuals.SetActive(false);
 
-        b_isPoweredOn = true;
-        TogglePower();
+        b_isPoweredOn = false;
+        as_source.Stop();
+        psA_songParticles[i_currentSong].Stop();
+        anim.SetBool("PlayMusic", false);
 
         as_source.PlayOneShot(ac_deathSound);
 
