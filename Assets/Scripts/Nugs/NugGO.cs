@@ -152,7 +152,8 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         else
         {
             b_canDie = true;
-            StartCoroutine(DelayedTakeDamage(damage, activatesThunder, 1f));
+            if(gameObject.activeInHierarchy)
+                StartCoroutine(DelayedTakeDamage(damage, activatesThunder, 1f));
         }
     }
 
