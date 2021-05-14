@@ -60,6 +60,9 @@ public class KillBox : MonoBehaviour
     {
         if (enabled)
         {
+            if (other.tag == "Nugget")
+                return;
+
             IHitable _h = other.GetComponent<IHitable>();
 
             if (_h != null)
