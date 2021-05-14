@@ -63,6 +63,11 @@ public class TutorialManager : MonoBehaviour
 
     }*/
 
+    internal bool ReturnIsDoingTutorial()
+    {
+        return b_shouldTutorialAlways;
+    }
+
     internal void SetShouldTutorial(bool isOn)
     {
         b_shouldTutorialAlways = isOn;
