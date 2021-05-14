@@ -54,9 +54,11 @@ public class BubbleShieldController : MonoBehaviour
             m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.3f;
         }
 
+        yield return new WaitForSeconds(ac_startUpClip.length - 0.6f);
+
         as_source.clip = ac_sustainClip;
         as_source.Play();
-        yield return new WaitForSeconds(13);
+        yield return new WaitForSeconds(13 - ac_startUpClip.length);
 
         as_source.clip = ac_closeClip;
         as_source.Play();
