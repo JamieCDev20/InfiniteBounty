@@ -149,6 +149,8 @@ public class ProjectileTool : WeaponTool
         ap_projAugment.f_bulletScale += Mathf.RoundToInt(augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level) * 0.25f));
         elementList.AddRange(aug.AugElement);
         eo_element = elementList.ToArray();
+
+        i_damage += aug.GetAugmentProperties().i_damage;
         return true;
     }
 
