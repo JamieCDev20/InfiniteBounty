@@ -31,6 +31,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float f_plummetMultiplier = 3; //the velocity at which below, gravity will increase
     [SerializeField] private Vector3 v_groundedDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
     [SerializeField] private Vector3 v_airDragVector = (Vector3.one - Vector3.up) * 0.1f; // The rate at which the player slows down in each axis direction
+    [SerializeField] private LayerMask WallDegreeMask;
 
     [Header("Getting Teleported")]
     [SerializeField] private GameObject go_characterMesh;
@@ -162,7 +163,7 @@ public class PlayerMover : MonoBehaviour
         Vector3 dir = Vector3.ProjectOnPlane(t_camTransform.TransformDirection(v_movementVector), v_groundNormal);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up * 0.2f, dir, out hit, 0.6f, -1))
+        if (Physics.Raycast(transform.position + Vector3.up * 0.2f, dir, out hit, 0.6f, WallDegreeMask))
             if (Vector3.Angle(hit.normal, Vector3.up) > 45)
                 return;
 
