@@ -65,7 +65,7 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
 
         if(TutorialManager.x.ReturnIsDoingTutorial() && _i != 0)
         {
-            DifficultyManager.x.SetCurrentDifficulty(0);
+            NetworkManager.x.SetDiffDisplay(0);
             return;
         }
 
