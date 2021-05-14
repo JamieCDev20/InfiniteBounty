@@ -16,6 +16,7 @@ public class JukeBox : MonoBehaviour, IHitable
     [SerializeField] private ParticleSystem p_deathEffect;
     [SerializeField] private GameObject go_visuals;
     [SerializeField] private AudioClip ac_deathSound;
+    private bool b_isDead;
 
 
     private void Start()
@@ -72,7 +73,11 @@ public class JukeBox : MonoBehaviour, IHitable
 
     public void TakeDamage(int damage, bool activatesThunder)
     {
-        StartCoroutine(Death());
+        if (!b_isDead)
+        {
+            StartCoroutine(Death());
+            b_isDead = true;
+        }
     }
 
     private IEnumerator Death()
@@ -80,14 +85,18 @@ public class JukeBox : MonoBehaviour, IHitable
         p_deathEffect.transform.parent = null;
         p_deathEffect.Play();
         go_visuals.SetActive(false);
+
         b_isPoweredOn = true;
         TogglePower();
 
         as_source.PlayOneShot(ac_deathSound);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(10);
 
-        gameObject.SetActive(false);
+        p_deathEffect.Play();
+        go_visuals.SetActive(true);
+
+        b_isDead = false;
     }
 
 
