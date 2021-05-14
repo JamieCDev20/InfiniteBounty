@@ -15,6 +15,10 @@ public class ToolRack : Shop
     [SerializeField] private float f_maxShake;
     [SerializeField] private float f_minShake;
     [SerializeField] private float f_shakeTime;
+    [SerializeField] private AudioClip ac_equip;
+    [SerializeField] private AudioClip ac_unequip;
+    [SerializeField] private AudioClip ac_youArePoor;
+    [SerializeField] private AudioSource as_source;
     private List<Material[]> L_weaponMaterial = new List<Material[]>();
     private List<Material[]> L_utilityMaterial = new List<Material[]>();
     private List<int> L_weaponRackIDs = new List<int>();
@@ -65,7 +69,7 @@ public class ToolRack : Shop
                 moneyText.gameObject.SetActive(true);
                 moneyText.gameObject.transform.parent = tb.transform;
                 moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x + t_textOffset.x, tb.transform.position.y + t_textOffset.y, tb.transform.position.z + t_textOffset.z);
-                moneyText.text = "£" + tb.Cost.ToString();
+                moneyText.text = tb.Cost.ToString();
                 //Debug.Log(moneyText.transform.parent.name);
             }
 
@@ -123,8 +127,13 @@ public class ToolRack : Shop
             return tl_mobTools.GetToolAt(_i_ID).RackID;
     }
 
-    public void ReturnToRack(int _i_ID, bool _b_rackType)
+    public void ReturnToRack(int _i_ID, bool _b_rackType, bool b_reEquip)
     {
+        if (!b_reEquip)
+        {
+            as_source.pitch = Random.Range(0.9f, 1.1f);
+            as_source.PlayOneShot(ac_unequip);
+        }
         if (_b_rackType)
         {
             tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
@@ -135,11 +144,12 @@ public class ToolRack : Shop
             tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(true);
             ApplyMaterials(tl_mobTools.GetToolAt(_i_ID), _i_ID);
         }
-
     }
 
     public int RemoveFromRack(int _i_ID, bool _b_rackType)
     {
+        as_source.pitch = Random.Range(0.9f, 1.1f);
+        as_source.PlayOneShot(ac_equip);
         if (_b_rackType)
         {
             ToolBase tb = tl_weaponTools.GetToolAt(_i_ID);
@@ -196,6 +206,8 @@ public class ToolRack : Shop
 
     private IEnumerator ShakeTool(ToolBase _tb_toolToShake, Vector3 _v_origin)
     {
+        as_source.pitch = Random.Range(0.9f, 1.1f);
+        as_source.PlayOneShot(ac_youArePoor);
         float timr = 0;
         float str = Random.Range(f_minShake, f_maxShake);
         while (timr < f_shakeTime)

@@ -211,7 +211,7 @@ public class ToolHandler : SubjectBase
                     {
                         CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                         ToolRack tr = (ToolRack)sr;
-                        tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                        tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false, false);
                         ac_changer.SetArmActive((int)ts, true);
                         SendSave(-1, ts);
                         return true;
@@ -341,7 +341,7 @@ public class ToolHandler : SubjectBase
     {
         if (A_tools[(int)ts] != null)
         {
-            tr.ReturnToRack(A_tools[(int)ts].RackID, _b_rackType);
+            tr.ReturnToRack(A_tools[(int)ts].RackID, _b_rackType, true);
         }
     }
 
