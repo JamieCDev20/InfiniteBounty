@@ -68,6 +68,7 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
     {
         CancelInvoke(nameof(RemoveSpawnImmunity));
         CancelInvoke(nameof(Die));
+        b_collected = false;
     }
 
     private void RemoveSpawnImmunity()
