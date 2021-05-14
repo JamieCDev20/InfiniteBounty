@@ -44,9 +44,7 @@ public class BubbleShieldController : MonoBehaviour
 
     private IEnumerator ChangeDensity()
     {
-        as_source.clip = ac_startUpClip;
-        as_source.Play();
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < 50; i++)
         {
             yield return new WaitForSeconds(0.01f);
             f_currentTime += 1;
@@ -54,7 +52,18 @@ public class BubbleShieldController : MonoBehaviour
             m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.3f;
         }
 
-        yield return new WaitForSeconds(ac_startUpClip.length - 0.6f);
+        as_source.clip = ac_startUpClip;
+        as_source.Play();
+
+        for (int i = 0; i < 50; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            f_currentTime += 1;
+            m_shieldRenderer.material.SetFloat("_CellDensity", Mathf.Clamp(f_currentTime, 0, 60));
+            m_shieldRenderer.transform.localScale = Vector3.one * f_currentTime * 0.3f;
+        }
+
+        //yield return new WaitForSeconds(0.4f);
 
         as_source.clip = ac_sustainClip;
         as_source.Play();
