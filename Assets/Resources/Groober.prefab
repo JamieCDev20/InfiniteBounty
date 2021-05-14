@@ -29512,15 +29512,15 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: a8176709bbf996c48a0235a5e2f0fd06,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: c9b17d46c17a849288d261f40fb3f529, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0.5
   MinDistance: 6
   MaxDistance: 200
   Pan2D: 0
@@ -49089,6 +49089,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4865708a0ef8c634184e5adbc5084a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 7387770820108340180}
+  leftFoot: {fileID: 8300000, guid: 969decd2213ea4b768f33b6ee5994a10, type: 3}
+  rightFoot: {fileID: 8300000, guid: c9b17d46c17a849288d261f40fb3f529, type: 3}
 --- !u!1 &7747233109172131036
 GameObject:
   m_ObjectHideFlags: 0

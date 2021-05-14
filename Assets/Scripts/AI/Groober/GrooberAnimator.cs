@@ -53,12 +53,12 @@ public class GrooberAnimator : MonoBehaviour
 
     public void PlayFootstepL()
     {
-        PlayClip(leftFoot);
+        audioSource.PlayOneShot(leftFoot);
     }
 
     public void PlayFootstepR()
     {
-        PlayClip(rightFoot);
+        audioSource.PlayOneShot(rightFoot);
     }
 
 }
