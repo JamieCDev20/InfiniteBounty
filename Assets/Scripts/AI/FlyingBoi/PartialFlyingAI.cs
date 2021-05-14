@@ -126,7 +126,7 @@ public partial class FlyingAI : AIBase
 
 
             yield return new WaitForSeconds(1);
-            anim.SetBool("Attacking", false);
+            anim?.SetBool("Attacking", false);
 
             c.enabled = true;
             yield return new WaitForSeconds(f_shootCooldown);
