@@ -22,7 +22,8 @@ public partial class FlyingAI : AIBase
 
     private void FixedUpdate()
     {
-        tree.DoTreeIteration();
+        if(PhotonNetwork.IsMasterClient)
+            tree.DoTreeIteration();
     }
 
     #region Defines
