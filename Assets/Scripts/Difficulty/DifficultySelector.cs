@@ -63,8 +63,9 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
     internal void SetScreenView(int _i)
     {
 
-        if(TutorialManager.x.ReturnIsDoingTutorial() && _i != 0)
+        if (TutorialManager.x.ReturnIsDoingTutorial() && _i != 0)
         {
+            DifficultyManager.x.SetCurrentDifficulty(0);
             NetworkManager.x.SetDiffDisplay(0);
             return;
         }
@@ -80,7 +81,7 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
         if (DifficultyManager.x.ReturnCurrentDifficultyInt() > 0)
             tmp_difficultyBelow.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() - 1).s_name;
         else tmp_difficultyBelow.text = "";
-        if(i_difficultyChangeOnClick > 0)
+        if (i_difficultyChangeOnClick > 0)
             InfoText.x?.OnNotify(new InfoTextEvent("Difficulty changed to " + DifficultyManager.x.ReturnCurrentDifficulty().s_name));
 
 
