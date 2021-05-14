@@ -36,8 +36,12 @@ public class DifficultyManager : SubjectBase
         if (x) Destroy(gameObject);
         else x = this;
         DontDestroyOnLoad(gameObject);
+
         i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty + 1;
-        i_amountOfAuthoredDifs = dsL_difficulties.Count;
+        if (i_maximumDifficulty == 1)
+            i_maximumDifficulty = 9;
+
+        //i_amountOfAuthoredDifs = dsL_difficulties.Count;
         AddObserver(FindObjectOfType<SaveManager>());
 
     }
@@ -150,7 +154,7 @@ public struct DifficultySet
     [Header("Display & Common")]
     public string s_name;
     public float f_moneyMult;
-     
+
     [Header("Enemy Stats")]
     public float f_maxHealthMult; //A creature's current health value is set their max multiplied by this on start
     public float f_damageMult; //A creature's damage is multiplied by this
