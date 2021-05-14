@@ -14,6 +14,7 @@ public class BehaviourTree
 
     public void DoTreeIteration()
     {
+        Debug.Log("THIS SHOULDN'T HAPPEN FOR NICK");
         n_startNode.Activate();
     }
 
