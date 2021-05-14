@@ -62,6 +62,10 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
 
     internal void SetScreenView(int _i)
     {
+
+        if(TutorialManager.x.ReturnIsDoingTutorial() && _i != 0)
+            DifficultyManager.x.SetCurrentDifficulty(0);
+
         DifficultyManager.x.SetCurrentDifficulty(_i);
 
         if (DifficultyManager.x.ReturnCurrentDifficultyInt() <= DifficultyManager.x.MaximumDifficulty)
