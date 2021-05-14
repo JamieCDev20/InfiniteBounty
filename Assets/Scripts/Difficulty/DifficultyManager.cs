@@ -21,7 +21,7 @@ public class DifficultyManager : SubjectBase
     {
     }
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 
     private void Update()
     {
@@ -29,7 +29,7 @@ public class DifficultyManager : SubjectBase
             i_maximumDifficulty++;
     }
 
-#endif
+//#endif
 
     public void Init()
     {

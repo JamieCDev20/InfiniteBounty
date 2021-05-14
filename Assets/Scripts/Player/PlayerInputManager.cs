@@ -105,9 +105,9 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
             }
         }
 
+#endif
         if (Input.GetKeyDown(KeyCode.PageUp))
             rb.AddForce(Vector3.up * 50, ForceMode.Impulse);
-#endif
 
         if (!view.IsMine && b_networked)
             return;
