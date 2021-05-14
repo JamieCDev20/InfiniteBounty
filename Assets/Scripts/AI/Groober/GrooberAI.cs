@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,8 @@ public partial class GrooberAI : AIBase
 
     private void Update()
     {
-        tree.DoTreeIteration();
+        if (PhotonNetwork.IsMasterClient)
+            tree.DoTreeIteration();
         f_currentTime -= Time.deltaTime;
     }
 
