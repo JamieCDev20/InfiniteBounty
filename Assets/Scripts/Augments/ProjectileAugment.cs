@@ -53,6 +53,8 @@ public class ProjectileAugment : Augment
         c.i_shotsPerRound = a.i_shotsPerRound + b.i_shotsPerRound;
         c.f_gravity = a.f_gravity + b.f_gravity;
         c.f_bulletScale = a.f_bulletScale + b.f_bulletScale;
+        c.i_damage = ac.GetAugmentProperties().i_damage;
+        c.i_lodeDamage = ac.GetAugmentProperties().i_lodeDamage;
         // Ask John and Nick what it do
         c.pm_physMat = a.pm_physMat;
         return c;

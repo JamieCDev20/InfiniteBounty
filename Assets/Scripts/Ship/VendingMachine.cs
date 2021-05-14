@@ -61,6 +61,14 @@ public class VendingMachine : SubjectBase, IInteractible
         ClickedAugment(0);
     }
 
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Semicolon))
+            GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
+    }
+#endif
+
     #region Interactions
 
     public void Interacted(Transform interactor)
