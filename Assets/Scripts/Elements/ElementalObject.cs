@@ -145,7 +145,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         activations = new ElementActivation[7] { GooActivate, HydroActivate, TastyActivate, ThunderActivate, BoomActivate, FireActivate, LavaActivate };
     }
 
-    public void Init(Element[] _startingElements)
+    public void Init(params Element[] _startingElements)
     {
         doneInit = true;
         InitInteractions();
@@ -602,6 +602,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             SetStatusEffect(Element.boom, true, ElementManager.x.boomFuse);
             StartCoroutine(Explode(ElementManager.x.boomFuse));
         }
+        AddRemoveElement(Element.boom, false);
     }
 
     private void FireActivate()

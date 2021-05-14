@@ -7,6 +7,7 @@ public class LodeBase : Enemy, IHitable
 {
     [Header("Lode Base")]
     [SerializeField] private GameObject go_nuggetPrefab;
+    [SerializeField] private Element element;
     //[SerializeField] private int i_nuggetToSpawn;
     [SerializeField] private int i_nuggetsPerBurst;
     [SerializeField] private float f_nuggetForce;
@@ -148,6 +149,8 @@ public class LodeBase : Enemy, IHitable
         _go_nugget.transform.position = transform.position + transform.localScale * (-1 + Random.value * 2) + Vector3.up;
                 
         Rigidbody _rb = _go_nugget.GetComponent<Rigidbody>();
+        ElementalObject eo = _go_nugget.GetComponentInChildren<ElementalObject>();
+        eo.Init(element);
         _rb.AddForce(new Vector3(Random.Range(-1f, 1f), Random.value * 2, Random.Range(-1f, 1f)) * f_nuggetForce, ForceMode.Impulse);
         _go_nugget.transform.rotation = new Quaternion(Random.value, Random.value, Random.value, Random.value);
 
