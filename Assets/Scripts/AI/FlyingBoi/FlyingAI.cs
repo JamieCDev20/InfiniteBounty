@@ -49,9 +49,10 @@ public partial class FlyingAI : AIBase
 
         QueryNode inRange = new QueryNode(IsInOrbitRangeQuery);
         ActionNode orbit = new ActionNode(OrbitTarget);
+        QueryNode canShoot = new QueryNode(CanshootQuery);
         ActionNode shoot = new ActionNode(Shoot);
 
-        return new SequencerNode(inRange, orbit, shoot);
+        return new SequencerNode(inRange, orbit, canShoot, shoot);
     }
 
     #endregion

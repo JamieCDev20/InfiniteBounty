@@ -7,6 +7,7 @@ public class TheOneTrueSpawner : MonoBehaviourPun
 {
     private void Start()
     {
+        return;
         if (PhotonNetwork.IsMasterClient)
             photonView.RPC(nameof(SyncSeed), RpcTarget.All, Random.Range(0, 999999));
     }
