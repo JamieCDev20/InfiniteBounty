@@ -19,8 +19,7 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private Text dimensionText;
-    [SerializeField] private Image i_bonusText;
-    [SerializeField] private GameObject go_bonusPart;
+    [SerializeField] private Image i_bonusImage;
 
     [Header("Risk Section")]
     [SerializeField] private Text t_riskLevelText;
@@ -65,26 +64,23 @@ public class PlayerLevelSpawnController : MonoBehaviour
 
         switch (DiversifierManager.x.ReturnBonusObjective())
         {
-            case BonusObjective.None:
-                go_bonusPart.SetActive(false);
-                break;
             case BonusObjective.BonusGoo:
-                i_bonusText.sprite = s_gooSprite;
+                i_bonusImage.sprite = s_gooSprite;
                 break;
             case BonusObjective.BonusHydro:
-                i_bonusText.sprite = s_hydroSprite;
+                i_bonusImage.sprite = s_hydroSprite;
                 break;
             case BonusObjective.BonusTasty:
-                i_bonusText.sprite = s_tastySprite;
+                i_bonusImage.sprite = s_tastySprite;
                 break;
             case BonusObjective.BonusThunder:
-                i_bonusText.sprite = s_thunderSprite;
+                i_bonusImage.sprite = s_thunderSprite;
                 break;
             case BonusObjective.BonusBoom:
-                i_bonusText.sprite = s_boomSprite;
+                i_bonusImage.sprite = s_boomSprite;
                 break;
             case BonusObjective.BonusMagma:
-                i_bonusText.sprite = s_magamSprite;
+                i_bonusImage.sprite = s_magamSprite;
                 break;
         }
 
