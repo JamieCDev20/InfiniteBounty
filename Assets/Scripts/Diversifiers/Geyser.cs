@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Geyser : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Geyser : MonoBehaviour
     private void Start()
     {
         as_source = GetComponent<AudioSource>();
+        GetComponent<PhotonView>().ViewID += 12984;
+        PhotonNetwork.RegisterPhotonView(GetComponent<PhotonView>());
     }
 
     private void OnTriggerEnter(Collider other)
