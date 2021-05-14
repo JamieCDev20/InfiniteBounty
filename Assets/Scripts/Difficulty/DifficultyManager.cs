@@ -39,7 +39,7 @@ public class DifficultyManager : SubjectBase
 
         i_maximumDifficulty = FindObjectOfType<SaveManager>().SaveData.i_difficulty + 1;
         if (i_maximumDifficulty == 1)
-            i_maximumDifficulty = 9;
+            i_maximumDifficulty = 5;
 
         //i_amountOfAuthoredDifs = dsL_difficulties.Count;
         AddObserver(FindObjectOfType<SaveManager>());
