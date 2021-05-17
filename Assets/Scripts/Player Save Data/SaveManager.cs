@@ -182,7 +182,7 @@ public class SaveManager : SubjectBase, ObserverBase
             // Rip: Purchased Tools
             if (totalNugsString[i].Contains("tu_toolsPurchased"))
             {
-                psd.tu_toolsPurchased = ReadTupleArrayFromJson<(int, int)>(_saveData, "tu_toolsPurchased", '}', dataLost);
+                psd.tu_toolsPurchased = ReadTupleArrayFromJson<(int, int, bool)>(_saveData, "tu_toolsPurchased", '}', dataLost);
             }
             // Rip: Equipped Augments
             if (totalNugsString[i].Contains("tu_equippedAugments"))

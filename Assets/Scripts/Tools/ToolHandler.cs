@@ -261,7 +261,7 @@ public class ToolHandler : SubjectBase
                                     if (A_tools[0] != null && A_tools[1] != null)
                                         TutorialManager.x.PickedUpBothTools();
 
-                                    SendSave(currentNugs, ts, tb.RackID);
+                                    SendSave(currentNugs, ts, tb.RackID, true);
                                     return true;
                                 case MobilityTool mt:
                                     tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
@@ -272,8 +272,7 @@ public class ToolHandler : SubjectBase
 
                                     //TutorialManager Section
                                     TutorialManager.x.PickedUpBackPack();
-
-                                    SendSave(currentNugs, ToolSlot.moblility, tb.RackID);
+                                    SendSave(currentNugs, ToolSlot.moblility, tb.RackID, false);
 
                                     return true;
                             }
@@ -309,13 +308,13 @@ public class ToolHandler : SubjectBase
         Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, -1, null,
             new (int, int)[3] { tup, (-1, -1), (-1, -1) }, null, null, null, null, -1)));
     }
-    private void SendSave(int _nuggets, ToolSlot _toolSlot, int _rackID)
+    private void SendSave(int _nuggets, ToolSlot _toolSlot, int _rackID, bool _isWeapon)
     {
         (int, int) tup = (A_tools[(int)_toolSlot].ToolID, (int)_toolSlot);
-        (int, int) purchasedTup = (A_tools[(int)_toolSlot].ToolID, A_tools[(int)_toolSlot].RackID);
+        (int, int, bool) purchasedTup = (A_tools[(int)_toolSlot].ToolID, A_tools[(int)_toolSlot].RackID, _isWeapon);
         Notify(new SaveEvent(new PlayerSaveData(_nuggets, -1, -1, null,
             new (int, int)[] { tup },
-            new (int, int)[] { purchasedTup }, null, null, null, -1)));
+            new (int, int, bool)[] { purchasedTup }, null, null, null, -1)));
     }
 
     private void InitialiseTools()
