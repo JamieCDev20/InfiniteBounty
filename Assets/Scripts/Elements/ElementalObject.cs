@@ -191,7 +191,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void CalculateDamages()
     {
         float t = Time.realtimeSinceStartup;
-        if (bA_statuses[(int)Element.fire])
+        if (bA_statuses[(int)Element.Fire])
         {
             if (t - lastTook[5] > ElementManager.x.fireInterval)
             {
@@ -318,29 +318,29 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         switch (_el)
         {
-            case Element.goo:
+            case Element.Goo:
                 if (bA_statuses[(int)_el])
                     return;
                 SetStatusEffect(_el, true, ElementManager.x.gooDuration);
                 AddRemoveElement(_el, true, ElementManager.x.gooDuration);
                 break;
-            case Element.hydro:
+            case Element.Hydro:
                 SetStatusEffect(_el, true, ElementManager.x.hydroDuration);
                 AddRemoveElement(_el, true, ElementManager.x.hydroDuration);
                 break;
-            case Element.tasty:
+            case Element.Tasty:
                 break;
-            case Element.thunder:
+            case Element.Thunder:
                 break;
-            case Element.boom:
+            case Element.Boom:
                 break;
-            case Element.fire:
+            case Element.Fire:
                 if (bA_statuses[(int)_el])
                     return;
                 AddRemoveElement(_el, true, ElementManager.x.fireDuration);
                 SetStatusEffect(_el, true, ElementManager.x.fireDuration);
                 break;
-            case Element.lava:
+            case Element.Lava:
                 break;
             default:
                 break;
@@ -433,8 +433,8 @@ public class ElementalObject : MonoBehaviour, IElementable
             iE = hits[i].GetComponent<IElementable>();
             if (iH != null)
             {
-                iE?.ReceiveElements(Element.boom);
-                iE?.AddRemoveElement(Element.boom, true);
+                iE?.ReceiveElements(Element.Boom);
+                iE?.AddRemoveElement(Element.Boom, true);
                 iH.TakeDamage(ElementManager.x.boomDamage, true);
             }
         }
@@ -461,28 +461,28 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     private void GooHydro()
     {
-        AddRemoveElement(Element.goo, false);
-        AddRemoveElement(Element.hydro, false);
+        AddRemoveElement(Element.Goo, false);
+        AddRemoveElement(Element.Hydro, false);
     }
 
     private void GooThunder()
     {
         b_doThunder = false;
-        SetStatusEffect(Element.thunder, false);
+        SetStatusEffect(Element.Thunder, false);
     }
 
     private void GooFire()
     {
-        SetStatusEffect(Element.goo, true, ElementManager.x.gooDuration);
-        SetStatusEffect(Element.fire, true, ElementManager.x.fireDuration);
+        SetStatusEffect(Element.Goo, true, ElementManager.x.gooDuration);
+        SetStatusEffect(Element.Fire, true, ElementManager.x.fireDuration);
         FireActivate();
     }
 
     private void HydroBoom()
     {
-        SetStatusEffect(Element.boom, false);
+        SetStatusEffect(Element.Boom, false);
         if (ElementManager.x != null)
-            SetStatusEffect(Element.hydro, true, ElementManager.x.hydroDuration);
+            SetStatusEffect(Element.Hydro, true, ElementManager.x.hydroDuration);
     }
 
     private void HydroTasty()
@@ -495,21 +495,21 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (!b_doThunder)
             return;
         b_doThunder = false;
-        AddRemoveElement(Element.thunder, true);
+        AddRemoveElement(Element.Thunder, true);
         ThunderActivate();
     }
 
     private void HydroFire()
     {
-        SetStatusEffect(Element.fire, false);
-        SetStatusEffect(Element.hydro, false);
+        SetStatusEffect(Element.Fire, false);
+        SetStatusEffect(Element.Hydro, false);
     }
 
     private void HydroLava()
     {
         //do platform things
         Destroy(Instantiate(ElementManager.x.lavaPlatform, transform.position, Quaternion.identity), 5);
-        AddRemoveElement(Element.hydro, false);
+        AddRemoveElement(Element.Hydro, false);
         ourHitable?.TakeDamage(1, true);
     }
 
@@ -531,8 +531,8 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         if (b_activatedThisFrame)
             return;
-        SetStatusEffect(Element.goo, true, ElementManager.x.gooDuration);
-        AddRemoveElement(Element.goo, true, ElementManager.x.gooDuration);
+        SetStatusEffect(Element.Goo, true, ElementManager.x.gooDuration);
+        AddRemoveElement(Element.Goo, true, ElementManager.x.gooDuration);
     }
 
     private void HydroActivate()
@@ -540,8 +540,8 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (b_activatedThisFrame)
             return;
 
-        SetStatusEffect(Element.hydro, true, ElementManager.x.hydroDuration);
-        AddRemoveElement(Element.hydro, true, ElementManager.x.hydroDuration);
+        SetStatusEffect(Element.Hydro, true, ElementManager.x.hydroDuration);
+        AddRemoveElement(Element.Hydro, true, ElementManager.x.hydroDuration);
 
     }
 
@@ -561,7 +561,7 @@ public class ElementalObject : MonoBehaviour, IElementable
             return;
         }
 
-        SetStatusEffect(Element.thunder, true, ElementManager.x.noShockBackDuration); //No tag backs
+        SetStatusEffect(Element.Thunder, true, ElementManager.x.noShockBackDuration); //No tag backs
 
         //Waddid i hit
         Collider[] hits = Physics.OverlapSphere(transform.position, ElementManager.x.shockRange);
@@ -577,9 +577,9 @@ public class ElementalObject : MonoBehaviour, IElementable
             ih = hits[i].GetComponent<IHitable>();
             if (ih != null)
             {
-                ie?.SetStatusEffect(Element.thunder, true, ElementManager.x.noShockBackDuration);
+                ie?.SetStatusEffect(Element.Thunder, true, ElementManager.x.noShockBackDuration);
                 verts.Add(hits[i].transform.position); //remember the position for line renderer stuff
-                ie?.ReceiveElements(Element.thunder); //tell the target we're shocking it
+                ie?.ReceiveElements(Element.Thunder); //tell the target we're shocking it
                 ih.TakeDamage(ElementManager.x.shockDamage, true, ElementManager.x.shockDelay); //if it can be damaged then dewit
                 count += 1; //<<to limit the number of objects we can shock
             }
@@ -587,8 +587,8 @@ public class ElementalObject : MonoBehaviour, IElementable
                 break;
         }
         SetLineRendererPos(verts.ToArray()); //Show the shock lines
-        AddRemoveElement(Element.thunder, false);
-        AddRemoveElement(Element.hydro, false);
+        AddRemoveElement(Element.Thunder, false);
+        AddRemoveElement(Element.Hydro, false);
     }
 
     private void BoomActivate()
@@ -599,10 +599,10 @@ public class ElementalObject : MonoBehaviour, IElementable
         b_doBoom = false;
         if (gameObject.activeSelf)
         {
-            SetStatusEffect(Element.boom, true, ElementManager.x.boomFuse);
+            SetStatusEffect(Element.Boom, true, ElementManager.x.boomFuse);
             StartCoroutine(Explode(ElementManager.x.boomFuse));
         }
-        AddRemoveElement(Element.boom, false);
+        AddRemoveElement(Element.Boom, false);
     }
 
     private void FireActivate()
@@ -610,8 +610,8 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (b_activatedThisFrame)
             return;
 
-        SetStatusEffect(Element.fire, true, ElementManager.x.fireDuration * (bA_statuses[(int)Element.goo] ? ElementManager.x.gooDurationMultiplier : 1));
-        AddRemoveElement(Element.fire, true, ElementManager.x.fireDuration * (bA_statuses[(int)Element.goo] ? ElementManager.x.gooDurationMultiplier : 1));
+        SetStatusEffect(Element.Fire, true, ElementManager.x.fireDuration * (bA_statuses[(int)Element.Goo] ? ElementManager.x.gooDurationMultiplier : 1));
+        AddRemoveElement(Element.Fire, true, ElementManager.x.fireDuration * (bA_statuses[(int)Element.Goo] ? ElementManager.x.gooDurationMultiplier : 1));
         //Debug.Log("Doing fire damage to " + gameObject.name, gameObject);
 
 
@@ -640,13 +640,13 @@ public class ElementalObject : MonoBehaviour, IElementable
 
 public enum Element
 {
-    goo = 0,
-    hydro = 1,
-    tasty = 2,
-    thunder = 3,
-    boom = 4,
-    fire = 5,
-    lava = 6
+    Goo = 0,
+    Hydro = 1,
+    Tasty = 2,
+    Thunder = 3,
+    Boom = 4,
+    Fire = 5,
+    Lava = 6
 }
 
 public interface IElementable

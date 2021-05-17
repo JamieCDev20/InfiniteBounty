@@ -32,13 +32,13 @@ public class BossArenaManager : MonoBehaviour
     private IEnumerator BossDiedEvents()
     {
         kb_lava.Neutralize();
-        lavaElement.AddRemoveElement(Element.goo, false);
-        lavaElement.AddRemoveElement(Element.hydro, false);
-        lavaElement.AddRemoveElement(Element.tasty, false);
-        lavaElement.AddRemoveElement(Element.thunder, false);
-        lavaElement.AddRemoveElement(Element.boom, false);
-        lavaElement.AddRemoveElement(Element.fire, false);
-        lavaElement.AddRemoveElement(Element.lava, false);
+        lavaElement.AddRemoveElement(Element.Goo, false);
+        lavaElement.AddRemoveElement(Element.Hydro, false);
+        lavaElement.AddRemoveElement(Element.Tasty, false);
+        lavaElement.AddRemoveElement(Element.Thunder, false);
+        lavaElement.AddRemoveElement(Element.Boom, false);
+        lavaElement.AddRemoveElement(Element.Fire, false);
+        lavaElement.AddRemoveElement(Element.Lava, false);
         yield return new WaitForSeconds(1);
         FindObjectOfType<BossAudioManager>().StopPlaying();
         for (int i = 0; i < lpA_lilypads.Length; i++)
