@@ -438,7 +438,7 @@ public class ElementalObject : MonoBehaviour, IElementable
                 iH.TakeDamage(ElementManager.x.boomDamage, true);
             }
         }
-        ourHitable.Die();
+        ourHitable?.Die();
     }
 
     public void ResetElements()
