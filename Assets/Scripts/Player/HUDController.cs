@@ -109,6 +109,9 @@ public class HUDController : MonoBehaviourPunCallbacks
 
     public void ChangeBonusObjective(BonusObjective _bo_newBonus)
     {
+        for (int i = 0; i < goA_nuggOutlines.Length; i++)        
+            goA_nuggOutlines[i].SetActive(false);        
+
         goA_nuggOutlines[(int)_bo_newBonus - 1].SetActive(true);
 
         /*
