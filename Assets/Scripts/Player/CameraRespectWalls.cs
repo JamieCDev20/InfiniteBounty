@@ -17,6 +17,7 @@ public class CameraRespectWalls : MonoBehaviour
     private float f_targetDistance;
     private Vector3 v_targetPos;
     private Transform t_root;
+    private Vector3 v_currentOffset;
 
     #endregion
 
@@ -34,9 +35,9 @@ public class CameraRespectWalls : MonoBehaviour
     {
         RaycastHit hit;
         if (Physics.Raycast(t_root.position, t_root.TransformPoint(v_targetPos) - t_root.position, out hit, f_targetDistance, lm_playerMask))
-            transform.localPosition = Vector3.Lerp(transform.localPosition, v_targetPos.normalized * (hit.distance - 0.35f), 0.9f);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, (v_targetPos.normalized * (hit.distance - 0.35f)) + v_currentOffset, 0.9f);
         else
-            transform.localPosition = v_targetPos;
+            transform.localPosition = v_targetPos + v_currentOffset;
     }
 
     #endregion
@@ -48,6 +49,22 @@ public class CameraRespectWalls : MonoBehaviour
 
     #region Public Voids
 
+    internal void CameraShake(float _f_severity, float _f_time, bool _b_onlyUp)
+    {
+        v_currentOffset += new Vector3(Random.Range(-_f_severity, _f_severity), Random.Range(_b_onlyUp ? 0 : -_f_severity, _f_severity), 0);        
+        StartCoroutine(ReturnToNeutral(_f_time));
+    }
+
+    private IEnumerator ReturnToNeutral(float _f_time)
+    {
+        float _f = 0;
+        while (_f < _f_time)
+        {
+            yield return new WaitForEndOfFrame();
+            _f += Time.deltaTime;
+            v_currentOffset = Vector3.Lerp(v_currentOffset, Vector3.zero, _f / _f_time);
+        }
+    }
 
     #endregion
 

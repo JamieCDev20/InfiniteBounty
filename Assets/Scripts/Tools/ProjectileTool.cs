@@ -15,8 +15,9 @@ public class ProjectileTool : WeaponTool
     private const AugmentType augType = AugmentType.projectile;
     public override AugmentType AugType { get { return augType; } }
     AugmentProjectile ap_projAugment;
+    [SerializeField] private float f_recoilTime;
 
-    [Header("Heat")]    
+    [Header("Heat")]
     [SerializeField] private float f_heatPerShot;
     [SerializeField] private AudioSource as_heatGuageSource;
     private float f_currentHeat;
@@ -59,7 +60,7 @@ public class ProjectileTool : WeaponTool
             //PlayParticles(true);
             ps_shotEffects.Play();
 
-            cc_cam?.Recoil(f_recoil);
+            cc_cam?.Recoil(f_recoil, f_recoilTime);
 
             pa_anim?.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);
 

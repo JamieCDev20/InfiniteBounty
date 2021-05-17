@@ -39,6 +39,7 @@ public class CameraController : MonoBehaviour
     private float f_yLook;
     private bool b_isSpectating;
     private Camera c_cam;
+    private CameraRespectWalls camSpecWall;
 
     #endregion
 
@@ -47,6 +48,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        camSpecWall = GetComponentInChildren<CameraRespectWalls>();
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += SceneLoad;
         c_cam = GetComponentInChildren<Camera>();
@@ -113,12 +115,9 @@ public class CameraController : MonoBehaviour
         v2_lookInputs = Vector2.zero;
     }
 
-    internal void Recoil(float _f_recoilSeverity)
+    internal void Recoil(float _f_recoilSeverity, float _f_recoilTime)
     {
-        /*
-        transform.Rotate(-_f_recoilSeverity, UnityEngine.Random.Range(-_f_recoilSeverity * 0.7f, _f_recoilSeverity * 0.7f), 0);
-        StartCoroutine(BackToNormal(_f_recoilSeverity));        
-        */
+        camSpecWall.CameraShake(_f_recoilSeverity, _f_recoilTime, true);
     }
 
     private IEnumerator BackToNormal(float _f_recoilSeverity)
