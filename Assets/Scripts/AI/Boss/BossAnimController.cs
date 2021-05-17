@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public class BossAnimController : MonoBehaviour
 
     public void DoTreeIteration()
     {
-        boss.ChooseAction();
+        if (PhotonNetwork.IsMasterClient)
+            boss.ChooseAction();
     }
 }
