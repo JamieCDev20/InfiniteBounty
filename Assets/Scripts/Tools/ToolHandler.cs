@@ -681,6 +681,8 @@ public class ToolHandler : SubjectBase
     {
         for (int i = 0; i < 2; i++)
         {
+            if (A_tools[i] == null)
+                continue;
             foreach (Augment a in (A_tools[i] as WeaponTool).GetAugments())
             {
                 int[] inds = a.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(a.Name) : new int[] { AugmentManager.x.GetAugmentIndex(a.at_type, a.Name) };
