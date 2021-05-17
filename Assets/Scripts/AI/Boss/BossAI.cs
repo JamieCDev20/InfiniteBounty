@@ -264,7 +264,8 @@ public class BossAI : AIBase
 
     internal void MoveAttack()
     {
-        photonView.RPC(nameof(MoveAttackRPC), RpcTarget.All, PickTargetPosition());
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(MoveAttackRPC), RpcTarget.All, PickTargetPosition());
     }
 
     [PunRPC]
