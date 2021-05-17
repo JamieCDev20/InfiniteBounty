@@ -117,11 +117,15 @@ public class ProjectileTool : WeaponTool
 
     public void SpawnBullet(Vector3 _v_direction)
     {
+        float spread = f_spreadAngle * (pim.ReturnVelocity(f_spreadAngle) * 0.05f);
         for (int i = 0; i < i_shotsPerRound; i++)
         {
+            _v_direction = Quaternion.AngleAxis(Random.Range(-spread, spread), pim.transform.up) * _v_direction;
+            _v_direction = Quaternion.AngleAxis(Random.Range(-spread, spread), pim.transform.right) * _v_direction;
+
             Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox[0], t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
             newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider, ap_projAugment, ae_explode, eo_element, c_trail);
-            newBullet.MoveBullet(_v_direction + transform.TransformDirection(new Vector3(Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f), 0) * pim.ReturnVelocity(1) * f_spreadAngle), f_shotSpeed);
+            newBullet.MoveBullet(_v_direction, f_shotSpeed);
         }
     }
 
