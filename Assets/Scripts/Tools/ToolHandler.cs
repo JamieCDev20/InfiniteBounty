@@ -446,24 +446,24 @@ public class ToolHandler : SubjectBase
     }
 
     [PunRPC]
-    public void ApplyAugment((int[] inds, int level, int type) aug, int slot)
+    public void ApplyAugment(int[] inds, int level, int type, int slot)
     {
-        AugmentStage st = aug.inds.Length > 1 ? AugmentStage.fused : AugmentStage.full;
-        switch (aug.type)
+        AugmentStage st = inds.Length > 1 ? AugmentStage.fused : AugmentStage.full;
+        switch (type)
         {
             case 1:
-                ProjectileAugment p = AugmentManager.x.GetProjectileAugmentAt(st, aug.inds);
-                p.Level = aug.level;
+                ProjectileAugment p = AugmentManager.x.GetProjectileAugmentAt(st, inds);
+                p.Level = level;
                 (A_tools[slot] as WeaponTool).AddStatChanges(p);
                 break;
             case 2:
-                ConeAugment c = AugmentManager.x.GetConeAugmentAt(st, aug.inds);
-                c.Level = aug.level;
+                ConeAugment c = AugmentManager.x.GetConeAugmentAt(st, inds);
+                c.Level = level;
                 (A_tools[slot] as WeaponTool).AddStatChanges(c);
                 break;
             default:
-                Augment a = AugmentManager.x.GetStandardAugmentAt(st, aug.inds);
-                a.Level = aug.level;
+                Augment a = AugmentManager.x.GetStandardAugmentAt(st, inds);
+                a.Level = level;
                 (A_tools[slot] as WeaponTool).AddStatChanges(a);
                 break;
         }
@@ -686,7 +686,7 @@ public class ToolHandler : SubjectBase
             foreach (Augment a in (A_tools[i] as WeaponTool).GetAugments())
             {
                 int[] inds = a.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(a.Name) : new int[] { AugmentManager.x.GetAugmentIndex(a.at_type, a.Name) };
-                view.RPC(nameof(ApplyAugment), RpcTarget.Others, (inds, a.Level, a.at_type), i);
+                view.RPC(nameof(ApplyAugment), RpcTarget.Others, inds, a.Level, a.at_type, i);
             }
 
         }
