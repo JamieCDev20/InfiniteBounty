@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4023321911577268514}
   - component: {fileID: 5730413616094122521}
   - component: {fileID: 7560428842966963567}
+  - component: {fileID: 2316557669944290215}
   m_Layer: 0
   m_Name: Toilet
   m_TagString: Untagged
@@ -64,8 +65,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   st_sitType: 2
   t_sitPosition: {fileID: 186273358962441245}
-  go_objectToEnableWhenUsed: {fileID: 0}
+  go_objectToEnableWhenUsed: {fileID: 3747753513394567629}
   b_cannonSeat: 0
+--- !u!114 &2316557669944290215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413385776135094872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9230e0db29cfd4c8a34af3c896a6cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_toolTip: Sit
+  i_buttonSpriteIndex: 0
+  b_hostOnly: 0
 --- !u!1 &2435534964355130704
 GameObject:
   m_ObjectHideFlags: 0
