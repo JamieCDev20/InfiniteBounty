@@ -50,6 +50,8 @@ public class ProjectileAugment : Augment
         c.at_type = AugmentType.projectile;
         c.InitAudio(audioClips[0], audioClips[1], audioClips[2]);
         c.InitPhysical(ac.GetPhysicalProperties());
+        c.f_heatsink = ac.GetAugmentProperties().f_heatsink;
+        c.f_energyGauge = ac.GetAugmentProperties().f_energyGauge;
         c.i_shotsPerRound = a.i_shotsPerRound + b.i_shotsPerRound;
         c.f_gravity = a.f_gravity + b.f_gravity;
         c.f_bulletScale = a.f_bulletScale + b.f_bulletScale;
