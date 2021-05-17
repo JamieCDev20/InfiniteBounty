@@ -126,7 +126,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     }
     public void Reset()
     {
-        InfoText.x.Reset();
+        //InfoText.x.Reset();
         PoolManager.x.Reset();
         NetworkedPlayer.x.Reset();
         UniversalNugManager.x.Reset();
