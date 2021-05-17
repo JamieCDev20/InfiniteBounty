@@ -35,17 +35,21 @@ public class InfoText : MonoBehaviour, ObserverBase
                 DumpText();
                 break;
             case DeleteInfoTextEvent dite:
-                A_allText = Utils.OrderedRemove(A_allText, FindTextIndex(dite.ToRemove));
+                if(dite.ToRemove != null)
+                    A_allText = Utils.OrderedRemove(A_allText, FindTextIndex(dite.ToRemove));
                 break;
         }
     }
 
     private int FindTextIndex(GameObject _textRef)
     {
-        for (int i = 0; i < A_allText.Length; i++)
+        if (!Utils.ArrayIsNullOrZero(A_allText))
         {
-            if (A_allText[i] == _textRef)
-                return i;
+            for (int i = 0; i < A_allText.Length; i++)
+            {
+                if (A_allText[i] == _textRef)
+                    return i;
+            }
         }
         return 0;
     }
@@ -69,7 +73,7 @@ public class InfoText : MonoBehaviour, ObserverBase
         if(A_allText.Length > 0)
             for(int i = A_allText.Length-1; i >= 0; i--)
             {
-                if(A_allText[i] != null)
+                if(A_allText[i] != null && listMover != null)
                 {
                     A_allText[i].transform.parent = listMover.transform;
                     A_allText[i].transform.localScale = Vector3.one;
@@ -88,11 +92,12 @@ public class InfoText : MonoBehaviour, ObserverBase
 
     public void Reset()
     {
-        foreach(GameObject go_text in A_allText)
-        {
-            InfoTextObject ito = go_text.GetComponent<InfoTextObject>();
-            ito.Die();
-        }
+        if(!Utils.ArrayIsNullOrZero(A_allText))
+            foreach(GameObject go_text in A_allText)
+            {
+                InfoTextObject ito = go_text.GetComponent<InfoTextObject>();
+                ito.Die();
+            }
         A_allText = new GameObject[0];
     }
 }
