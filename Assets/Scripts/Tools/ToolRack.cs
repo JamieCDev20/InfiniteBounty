@@ -65,12 +65,10 @@ public class ToolRack : Shop
             if (!tb.Purchased)
             {
                 TMP_Text moneyText = Instantiate<TMP_Text>(txt_exampleText);
-                //moneyText.gameObject.AddComponent<Billboard>();
                 moneyText.gameObject.SetActive(true);
                 moneyText.gameObject.transform.parent = tb.transform;
                 moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x + t_textOffset.x, tb.transform.position.y + t_textOffset.y, tb.transform.position.z + t_textOffset.z);
                 moneyText.text = tb.Cost.ToString();
-                //Debug.Log(moneyText.transform.parent.name);
             }
 
             tb.RackID = toolRackID;

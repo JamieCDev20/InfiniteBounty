@@ -31,6 +31,8 @@ public class VendingMachine : SubjectBase, IInteractible
     [SerializeField] private AudioClip[] acA_beeps = new AudioClip[0];
     private bool b_isBeingUsed;
     [SerializeField] private AudioClip ac_coinsSound;
+    [SerializeField] private AudioClip ac_buySound;
+    [SerializeField] private AudioClip ac_youArePoor;
 
     [Header("Spittin' out Augments")]
     [SerializeField] private GameObject go_augmentPrefab;
@@ -204,6 +206,8 @@ public class VendingMachine : SubjectBase, IInteractible
             {
                 if (rbA_augmentRigidbodies[i_currentAugmentIndex])
                 {
+                    as_source.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                    as_source.PlayOneShot(ac_buySound);
                     as_source.pitch = 1;
                     as_source.PlayOneShot(ac_whirringClip);
                     StartCoroutine(MoveAugmentForward(rbA_augmentRigidbodies[i_currentAugmentIndex]));
@@ -223,7 +227,8 @@ public class VendingMachine : SubjectBase, IInteractible
             }
             else
             {
-                // Play unable to buy sound
+                as_source.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                as_source.PlayOneShot(ac_youArePoor);
             }
         }
     }
