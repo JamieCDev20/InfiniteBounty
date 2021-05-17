@@ -427,30 +427,30 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         //regular effects
         if (ap.f_weight != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Weight " + (ap.f_weight * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Weight " + (ap.f_weight * mod).ToString("F1");
 
         }
         if (ap.i_damage != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Enemy Damage " + (ap.i_damage * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Enemy Damage " + (ap.i_damage * mod).ToString("F1");
 
         }
         if (ap.i_lodeDamage != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Lode Damage " + (ap.i_lodeDamage * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Lode Damage " + (ap.i_lodeDamage * mod).ToString("F1");
         }
         if (ap.f_speed != 0)
         {
             switch (_aug.at_type)
             {
                 case AugmentType.standard:
-                    PlaceAugmentProperties(go_propertyText).text = "Attack Speed " + (ap.f_speed * mod).ToString("F0");
+                    PlaceAugmentProperties(go_propertyText).text = "Attack Speed " + (ap.f_speed * mod).ToString("F1");
                     break;
                 case AugmentType.projectile:
-                    PlaceAugmentProperties(go_propertyText).text = "Fire Rate " + (ap.f_speed * mod).ToString("F0");
+                    PlaceAugmentProperties(go_propertyText).text = "Fire Rate " + (ap.f_speed * mod).ToString("F1");
                     break;
                 case AugmentType.cone:
-                    PlaceAugmentProperties(go_propertyText).text = "Suck Speed " + (ap.f_speed * mod).ToString("F0");
+                    PlaceAugmentProperties(go_propertyText).text = "Suck Speed " + (ap.f_speed * mod).ToString("F1");
                     break;
 
             }
@@ -458,22 +458,22 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         }
         if (ap.f_knockback != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Knockback " + (ap.f_knockback * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Knockback " + (ap.f_knockback * mod).ToString("F1");
 
         }
         if (ap.f_energyGauge != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Energy Capacity " + (ap.f_energyGauge * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Energy Capacity " + (ap.f_energyGauge * mod).ToString("F1");
 
         }
         if (ap.f_heatsink != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Heatsink " + (ap.f_heatsink * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Heatsink " + (ap.f_heatsink * mod).ToString("F1");
 
         }
         if (ap.f_recoil != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Recoil " + (ap.f_recoil * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Recoil " + (ap.f_recoil * mod).ToString("F1");
 
         }
 
@@ -524,22 +524,22 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         if (ae.i_damage != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Explosion Enemy Damage " + (ae.i_damage * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Explosion Enemy Damage " + (ae.i_damage * mod).ToString("F1");
 
         }
         if (ae.i_lodeDamage != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Explosion Lode Damage " + (ae.i_lodeDamage * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Explosion Lode Damage " + (ae.i_lodeDamage * mod).ToString("F1");
 
         }
         if (ae.f_explockBack != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Explosion Knockback " + (ae.f_explockBack * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Explosion Knockback " + (ae.f_explockBack * mod).ToString("F1");
 
         }
         if (ae.f_radius != 0)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Explosion Radius " + (ae.f_radius * mod).ToString("F0");
+            PlaceAugmentProperties(go_propertyText).text = "Explosion Radius " + (ae.f_radius * mod).ToString("F1");
 
         }
         if (ae.b_impact)
@@ -551,7 +551,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         {
             if (ae.f_detonationTime != 0)
             {
-                PlaceAugmentProperties(go_propertyText).text = "Explosion Detonation Time " + ae.f_detonationTime.ToString("F0");
+                PlaceAugmentProperties(go_propertyText).text = "Explosion Detonation Time " + ae.f_detonationTime.ToString("F1");
             }
         }
 
@@ -572,11 +572,11 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             AugmentProjectile augmentProperties = projectileCast.GetProjectileData();
 
             if (augmentProperties.i_shotsPerRound != 0)
-                PlaceAugmentProperties(go_propertyText).text = "Shots per round " + (augmentProperties.i_shotsPerRound * mod).ToString("F0");
+                PlaceAugmentProperties(go_propertyText).text = "Shots per round " + (augmentProperties.i_shotsPerRound * mod).ToString("F1");
             if (augmentProperties.f_bulletScale != 0)
-                PlaceAugmentProperties(go_propertyText).text = "Bullet Size " + (augmentProperties.f_bulletScale * mod).ToString("F0");
+                PlaceAugmentProperties(go_propertyText).text = "Bullet Size " + (augmentProperties.f_bulletScale * mod).ToString("F1");
             if (augmentProperties.f_gravity != 0)
-                PlaceAugmentProperties(go_propertyText).text = "Bullet Weight " + (augmentProperties.f_gravity * mod).ToString("F0");
+                PlaceAugmentProperties(go_propertyText).text = "Bullet Weight " + (augmentProperties.f_gravity * mod).ToString("F1");
         }
         if (_aug is ConeAugment)
         {
@@ -592,9 +592,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
             AugmentCone coneProperties = coneCast.GetConeData();
             if (coneProperties.f_angle != 0)
-                PlaceAugmentProperties(go_propertyText).text = "Cone Width " + (coneProperties.f_angle * mod).ToString("F0");
+                PlaceAugmentProperties(go_propertyText).text = "Cone Width " + (coneProperties.f_angle * mod).ToString("F1");
             if (coneProperties.f_radius != 0)
-                PlaceAugmentProperties(go_propertyText).text = "Cone Length " + (coneProperties.f_radius * mod).ToString("F0");
+                PlaceAugmentProperties(go_propertyText).text = "Cone Length " + (coneProperties.f_radius * mod).ToString("F1");
         }
 
     }
