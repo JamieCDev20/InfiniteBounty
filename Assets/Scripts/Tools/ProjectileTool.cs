@@ -30,6 +30,8 @@ public class ProjectileTool : WeaponTool
     private PlayerAnimator pa_anim;
     [SerializeField] private ParticleSystem ps_shotEffects;
     private List<Element> elementList = new List<Element>();
+    [SerializeField] private MeshRenderer mr_renderer;
+
 
     public override void SetActiveState(bool val)
     {
@@ -108,6 +110,8 @@ public class ProjectileTool : WeaponTool
     {
         as_heatGuageSource.volume = ((float)(f_currentHeat / f_energyGauge)) * f_heatVolumeMult;
         as_heatGuageSource.pitch = Mathf.Lerp(0, f_maxHeatPitch, (float)f_currentHeat / f_energyGauge);
+
+        mr_renderer.material.SetFloat("DamageFlash", (float)f_currentHeat / f_energyGauge);
     }
 
     public override void NetUse(Vector3 _v_forwards)
@@ -124,7 +128,7 @@ public class ProjectileTool : WeaponTool
             _v_direction = Quaternion.AngleAxis(Random.Range(-spread, spread), pim.transform.right) * _v_direction;
 
             Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox[0], t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
-            newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider, ap_projAugment, ae_explode, eo_element, c_trail);
+            newBullet.Setup(Mathf.RoundToInt(i_damage / i_shotsPerRound), Mathf.RoundToInt(i_lodeDamage / i_shotsPerRound), c_playerCollider, ap_projAugment, ae_explode, eo_element, c_trail);
             newBullet.MoveBullet(_v_direction, f_shotSpeed);
         }
     }
