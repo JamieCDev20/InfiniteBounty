@@ -24,8 +24,15 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
     [SerializeField] private float f_skyratSpawnDistance;
     private GameObject go_looker;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip ac_buttonPressed;
+    [SerializeField] private AudioClip ac_shipArriving;
+    private AudioSource as_source;
+
+
     private void Start()
     {
+        as_source = GetComponent<AudioSource>();
         go_looker = new GameObject("EndLevelLooker");
         go_looker.transform.position = transform.position;
     }
@@ -45,10 +52,12 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
     [PunRPC]
     private IEnumerator Countdown(int _i_seed)
     {
+        as_source.PlayOneShot(ac_buttonPressed);
         b_active = true;
         float _f_currentTime = 0;
         float _f_enemyWaveTime = 0;
         Random.InitState(_i_seed);
+        bool _b_shouldShip = true;
 
         while (_f_currentTime < f_waitTime)
         {
@@ -64,8 +73,12 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
             t_progressBar.localPosition = new Vector3(0, (float)(-1 + (_f_currentTime / f_waitTime)), 0);
             t_progressBar.transform.localScale = new Vector3(1, (float)(_f_currentTime / f_waitTime), 1);
 
-            if (_f_currentTime >= f_waitTime - f_animationLength)
+            if (_f_currentTime >= f_waitTime - f_animationLength && _b_shouldShip)
+            {
                 a_shipAnimator.SetBool("Entry", true);
+                as_source.PlayOneShot(ac_shipArriving);
+                _b_shouldShip = false;
+            }
 
             yield return new WaitForEndOfFrame();
         }
