@@ -188,7 +188,6 @@ public class ToolHandler : SubjectBase
         // Hit something
         RaycastHit hit;
         Ray ray = new Ray(t_camTransform.position, t_camTransform.forward);
-        //Debug.DrawRay(t_camTransform.position, t_camTransform.forward * 50f, Color.yellow, 1f);
         if (Physics.Raycast(ray, out hit, 10f, lm_shoppingMask))
         {
             if (b_ableToBuy)

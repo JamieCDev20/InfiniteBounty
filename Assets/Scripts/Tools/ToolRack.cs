@@ -134,12 +134,24 @@ public class ToolRack : Shop
         }
         if (_b_rackType)
         {
-            tl_weaponTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+            ToolBase tb = tl_weaponTools.GetToolAt(_i_ID);
+            tb.gameObject.SetActive(true);
+            foreach (EmptyToolSlot ts in L_weaponToolPos)
+                if (ts.RackID == _i_ID && ts.ToolID == tb.ToolID)
+                {
+                    ts.gameObject.SetActive(false);
+                }
             ApplyMaterials(tl_weaponTools.GetToolAt(_i_ID), _i_ID);
         }
         else
         {
-            tl_mobTools.GetToolAt(_i_ID).gameObject.SetActive(true);
+            ToolBase tb = tl_mobTools.GetToolAt(_i_ID);
+            tb.gameObject.SetActive(true);
+            foreach (EmptyToolSlot ts in L_mobToolPos)
+                if (ts.RackID == _i_ID && ts.ToolID == tb.ToolID)
+                {
+                    ts.gameObject.SetActive(false);
+                }
             ApplyMaterials(tl_mobTools.GetToolAt(_i_ID), _i_ID);
         }
     }
@@ -156,7 +168,6 @@ public class ToolRack : Shop
                 if (ts.RackID == _i_ID && ts.ToolID == tb.ToolID)
                 {
                     ts.gameObject.SetActive(true);
-                    //Debug.Log(string.Format("ID: {0} | Object: {1}", _i_ID, ts.gameObject.name));
                 }
             return tb.RackID;
         }
@@ -164,7 +175,11 @@ public class ToolRack : Shop
         {
             ToolBase tb = tl_mobTools.GetToolAt(_i_ID);
             tb.gameObject.SetActive(false);
-            L_mobToolPos[_i_ID].gameObject.SetActive(true);
+            foreach (EmptyToolSlot ts in L_mobToolPos)
+                if (ts.RackID == _i_ID && ts.ToolID == tb.ToolID)
+                {
+                    ts.gameObject.SetActive(true);
+                }
             return tb.RackID;
         }
     }
