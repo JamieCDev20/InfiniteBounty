@@ -42,6 +42,7 @@ public class BossAI : AIBase
     [SerializeField] private string s_enemyPath;
     private Vector2Int vi_enemiesPerWave;
 
+
     private void Start()
     {
         go_looker = new GameObject("Boss Looker");
