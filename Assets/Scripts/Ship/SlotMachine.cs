@@ -71,11 +71,11 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         if (PhotonNetwork.IsMasterClient)
             anim.SetBool("PullLever", true);
-               view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
-                   UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
-                   UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
-                   UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                   DifficultyManager.x.ReturnCurrentDifficultyInt());
+        view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+            UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+            DifficultyManager.x.ReturnCurrentDifficultyInt());
 
     }
 
@@ -85,11 +85,11 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         base.OnPlayerEnteredRoom(newPlayer);
         if (PhotonNetwork.IsMasterClient)
             anim.SetBool("PullLever", true);
-                 view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
-                     UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
-                     UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
-                     UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                     DifficultyManager.x.ReturnCurrentDifficultyInt());
+        view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+            UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+            DifficultyManager.x.ReturnCurrentDifficultyInt());
 
         if (b_isBeingUsed)
             EndInteract();
@@ -388,18 +388,19 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         tA_descriptionTexts[_i_index].text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_desc;
         tA_nameTexts[_i_index].text = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_name;
 
-        if (!DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].b_hasSilhouetteBreak)
-        {
-            iA_diverSquareSprites[_i_index].enabled = true;
-            iA_diverSquareSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
-            iA_diverPlusMinusSprites[_i_index].enabled = false;
-        }
-        else
-        {
-            iA_diverPlusMinusSprites[_i_index].enabled = true;
-            iA_diverPlusMinusSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
-            iA_diverSquareSprites[_i_index].enabled = false;
-        }
+        iA_diverSquareSprites[_i_index].enabled = true;
+        iA_diverSquareSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
+
+        //if (!DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].b_hasSilhouetteBreak)
+        //{
+        //    iA_diverPlusMinusSprites[_i_index].enabled = false;
+        //}
+        //else
+        //{
+        //    iA_diverPlusMinusSprites[_i_index].enabled = true;
+        //    iA_diverPlusMinusSprites[_i_index].sprite = DiversifierManager.x.diA_diversifiers[(int)dA_activeDiversifiers[_i_index]].s_image;
+        //    iA_diverSquareSprites[_i_index].enabled = false;
+        //}
 
         //go_infoHighlight.transform.position = tA_buttonPositions[_i_index].position;
     }
