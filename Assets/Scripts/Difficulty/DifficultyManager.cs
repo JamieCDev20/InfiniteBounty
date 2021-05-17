@@ -9,7 +9,7 @@ public class DifficultyManager : SubjectBase
 
     [SerializeField] private List<DifficultySet> dsL_difficulties = new List<DifficultySet>();
     private int i_currentDifficulty;
-    private int i_amountOfAuthoredDifs;
+    [SerializeField]private int i_amountOfAuthoredDifs;
     [Space, SerializeField] private int i_maximumDifficulty;
     //Returns maximum difficulty as an index
     internal int MaximumDifficulty { get { return i_maximumDifficulty - 1; } }
