@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -149,6 +150,11 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
         ph_health.SetAnimator(animator);
 
         toolHandler.SetPlayerHealth(ph_health);
+    }
+
+    internal float ReturnVelocity(float _f_mod)
+    {
+        return rb.velocity.magnitude + _f_mod;
     }
 
     private void GetInputs()

@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -118,9 +117,12 @@ public class ProjectileTool : WeaponTool
 
     public void SpawnBullet(Vector3 _v_direction)
     {
-        Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox[0], t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
-        newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider, ap_projAugment, ae_explode, eo_element, c_trail);
-        newBullet.MoveBullet(_v_direction, f_shotSpeed);
+        for (int i = 0; i < i_shotsPerRound; i++)
+        {
+            Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox[0], t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
+            newBullet.Setup(i_damage, i_lodeDamage, c_playerCollider, ap_projAugment, ae_explode, eo_element, c_trail);
+            newBullet.MoveBullet(_v_direction + (new Vector3(Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f), 0) * pim.ReturnVelocity(1) * f_spreadAngle), f_shotSpeed);
+        }
     }
 
     public override void PlayParticles(bool val)
