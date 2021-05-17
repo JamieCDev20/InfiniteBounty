@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrooberHealth : MonoBehaviour, IHitable
+public class GrooberHealth : MonoBehaviourPun, IHitable
 {
+    private PhotonView view;
     [SerializeField] private int i_maxHealth;
     private int i_currentHealth;
     [SerializeField] private GameObject go_deathParticles;
@@ -17,8 +19,10 @@ public class GrooberHealth : MonoBehaviour, IHitable
     private AudioSource as_source;
     [SerializeField] private AudioClip ac_growlClip;
 
+
     private void Awake()
     {
+        view = GetComponent<PhotonView>();
         as_source = GetComponent<AudioSource>();
         mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
@@ -66,7 +70,7 @@ public class GrooberHealth : MonoBehaviour, IHitable
 
         if (i_currentHealth <= 0)
         {
-            Die();
+            view.RPC(nameof(Die), RpcTarget.All);
             return;
         }
 
