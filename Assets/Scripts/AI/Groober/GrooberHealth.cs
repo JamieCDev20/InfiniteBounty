@@ -27,6 +27,7 @@ public class GrooberHealth : MonoBehaviourPun, IHitable
         mA_myRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
+    [PunRPC]
     public void Die()
     {
         gameObject.SetActive(false);
