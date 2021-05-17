@@ -154,6 +154,9 @@ public class Workbench : SubjectBase, IInteractible
         Cursor.visible = false;
 
         b_isBeingUsed = false;
+
+        th_currentTh.SyncAllAugments();
+
     }
 
     #endregion

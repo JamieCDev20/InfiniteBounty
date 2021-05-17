@@ -280,4 +280,15 @@ public class WeaponTool : ToolBase
         _tA_existingObjects = Utils.CombineArrays(_tA_existingObjects, tempObjects);
     }
 
+    public Augment[] GetAugments()
+    {
+        List<Augment> augs = new List<Augment>();
+        for (int i = 0; i < A_augs.Length; i++)
+        {
+            if (A_augs[i] != null)
+                augs.Add(A_augs[i]);
+        }
+        return augs.ToArray();
+    }
+
 }

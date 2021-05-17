@@ -20,6 +20,7 @@ public class AugmentFuser : MonoBehaviour
         {
             newAug = Augment.Combine(a, b);
             newAug.Stage = AugmentStage.fused;
+            newAug.Level = a.Level + b.Level;
             return newAug;
         }
         return null;

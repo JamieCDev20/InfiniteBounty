@@ -57,9 +57,9 @@ public class Bullet : MonoBehaviour, IPoolable
 
         if (!Utils.ArrayIsNullOrZero(_trKeys))
         {
-            GradientColorKey[] gck = new GradientColorKey[_trKeys.Length];
-            GradientAlphaKey[] gak = new GradientAlphaKey[_trKeys.Length];
-            for (int i = 0; i < _trKeys.Length; i++)
+            GradientColorKey[] gck = new GradientColorKey[_trKeys.Length > 8 ? 8 : _trKeys.Length];
+            GradientAlphaKey[] gak = new GradientAlphaKey[_trKeys.Length > 8? 8 : _trKeys.Length];
+            for (int i = 0; i < gak.Length; i++)
             {
                 gck[i].color = _trKeys[i];
                 gak[i].alpha = _trKeys[i].a < 0.25f ? 0.25f : _trKeys[i].a;

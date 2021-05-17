@@ -328,7 +328,14 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
     public void SyncNameOverNetwork()
     {
         view.RPC(nameof(SetName), RpcTarget.Others, playerID, PhotonNetwork.NickName);
+        toolHandler.SyncAllAugments();
+        //SYNC AUGMENTS HERE TOO
+    }
 
+    [PunRPC]
+    public void SyncAugment((int[] inds, int level, int type) aug, int slot)
+    {
+        //toolHandler.ApplyAugment(aug, slot);
     }
 
     [PunRPC]

@@ -217,86 +217,86 @@ public class ToolHandler : SubjectBase
                     }
                     return false;
                 }
-                    // Purchase a tool
-                    switch (sr)
-                    {
-                        case ToolRack tr:
-                            if ((bool)tb?.CheckPurchaseStatus())
+                // Purchase a tool
+                switch (sr)
+                {
+                    case ToolRack tr:
+                        if ((bool)tb?.CheckPurchaseStatus())
+                        {
+                            switch (tb)
                             {
-                                switch (tb)
-                                {
-                                    case WeaponTool wt:
-                                        CallSwapTool(ts, tb.ToolID, tr, true);
-                                        A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+                                case WeaponTool wt:
+                                    CallSwapTool(ts, tb.ToolID, tr, true);
+                                    A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
 
-                                        if (A_tools[0] != null && A_tools[1] != null)
-                                            TutorialManager.x.PickedUpBothTools();
+                                    if (A_tools[0] != null && A_tools[1] != null)
+                                        TutorialManager.x.PickedUpBothTools();
 
-                                        SendSave(-1, ts);
-                                        return true;
-                                    case MobilityTool mt:
-                                        CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                                        A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                    SendSave(-1, ts);
+                                    return true;
+                                case MobilityTool mt:
+                                    CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                                    A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
 
-                                        //TutorialManager Section
-                                        TutorialManager.x.PickedUpBackPack();
+                                    //TutorialManager Section
+                                    TutorialManager.x.PickedUpBackPack();
 
-                                        SendSave(-1, ToolSlot.moblility);
-                                        return true;
-                                }
+                                    SendSave(-1, ToolSlot.moblility);
+                                    return true;
                             }
-                            if (GetComponent<NugManager>().Nugs >= tb.Cost)
+                        }
+                        if (GetComponent<NugManager>().Nugs >= tb.Cost)
+                        {
+                            int currentNugs = 0;
+                            switch (tb)
                             {
-                                int currentNugs = 0;
-                                switch (tb)
-                                {
-                                    case WeaponTool wt:
-                                        tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
-                                        GetComponent<NugManager>().CollectNugs(-tb.Cost, false);
-                                        CallSwapTool(ts, tb.ToolID, tr, true);
-                                        currentNugs = GetComponent<NugManager>().Nugs;
-                                        A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+                                case WeaponTool wt:
+                                    tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ts);
+                                    GetComponent<NugManager>().CollectNugs(-tb.Cost, false);
+                                    CallSwapTool(ts, tb.ToolID, tr, true);
+                                    currentNugs = GetComponent<NugManager>().Nugs;
+                                    A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
 
-                                        //Tutorial Section
-                                        if (A_tools[0] != null && A_tools[1] != null)
-                                            TutorialManager.x.PickedUpBothTools();
+                                    //Tutorial Section
+                                    if (A_tools[0] != null && A_tools[1] != null)
+                                        TutorialManager.x.PickedUpBothTools();
 
-                                        SendSave(currentNugs, ts, tb.RackID);
-                                        return true;
-                                    case MobilityTool mt:
-                                        tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
-                                        GetComponent<NugManager>().CollectNugs(-mt.Cost, false);
-                                        CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                                        currentNugs = GetComponent<NugManager>().Nugs;
-                                        A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                    SendSave(currentNugs, ts, tb.RackID);
+                                    return true;
+                                case MobilityTool mt:
+                                    tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
+                                    GetComponent<NugManager>().CollectNugs(-mt.Cost, false);
+                                    CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
+                                    currentNugs = GetComponent<NugManager>().Nugs;
+                                    A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
 
-                                        //TutorialManager Section
-                                        TutorialManager.x.PickedUpBackPack();
+                                    //TutorialManager Section
+                                    TutorialManager.x.PickedUpBackPack();
 
-                                        SendSave(currentNugs, ToolSlot.moblility, tb.RackID);
+                                    SendSave(currentNugs, ToolSlot.moblility, tb.RackID);
 
-                                        return true;
-                                }
+                                    return true;
                             }
-                            else
+                        }
+                        else
+                        {
+                            switch (sr)
                             {
-                                switch (sr)
-                                {
-                                    case ToolRack toolRackRef:
-                                        switch (tb)
-                                        {
-                                            case WeaponTool wt:
-                                                toolRackRef.UnableToBuy(wt.RackID, true);
-                                                break;
-                                            case MobilityTool mt:
-                                                toolRackRef.UnableToBuy(mt.RackID, false);
-                                                break;
-                                        }
-                                        break;
+                                case ToolRack toolRackRef:
+                                    switch (tb)
+                                    {
+                                        case WeaponTool wt:
+                                            toolRackRef.UnableToBuy(wt.RackID, true);
+                                            break;
+                                        case MobilityTool mt:
+                                            toolRackRef.UnableToBuy(mt.RackID, false);
+                                            break;
+                                    }
+                                    break;
 
-                                }
                             }
-                            return false;
+                        }
+                        return false;
                 }
             }
         }
@@ -379,7 +379,8 @@ public class ToolHandler : SubjectBase
         StartCoroutine(RackWait());
         PlaySwapNoise();
         view.RPC(nameof(SwapTool), RpcTarget.Others, _ts_slot, _i_toolID);
-
+        //SYNC AUGMENTS HERE
+        SyncAllAugments();
     }
 
     private void PlaySwapNoise()
@@ -442,6 +443,30 @@ public class ToolHandler : SubjectBase
         if (A_tools[index] != null)
             return A_tools[index].ToolID;
         return -1;
+    }
+
+    [PunRPC]
+    public void ApplyAugment((int[] inds, int level, int type) aug, int slot)
+    {
+        AugmentStage st = aug.inds.Length > 1 ? AugmentStage.fused : AugmentStage.full;
+        switch (aug.type)
+        {
+            case 1:
+                ProjectileAugment p = AugmentManager.x.GetProjectileAugmentAt(st, aug.inds);
+                p.Level = aug.level;
+                (A_tools[slot] as WeaponTool).AddStatChanges(p);
+                break;
+            case 2:
+                ConeAugment c = AugmentManager.x.GetConeAugmentAt(st, aug.inds);
+                c.Level = aug.level;
+                (A_tools[slot] as WeaponTool).AddStatChanges(c);
+                break;
+            default:
+                Augment a = AugmentManager.x.GetStandardAugmentAt(st, aug.inds);
+                a.Level = aug.level;
+                (A_tools[slot] as WeaponTool).AddStatChanges(a);
+                break;
+        }
     }
 
     public void ClearTools()
@@ -648,6 +673,20 @@ public class ToolHandler : SubjectBase
                     A_tools[i].SetUseable(true);
                 }
             }
+        }
+        SyncAllAugments();
+    }
+
+    public void SyncAllAugments()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            foreach (Augment a in (A_tools[i] as WeaponTool).GetAugments())
+            {
+                int[] inds = a.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(a.Name) : new int[] { AugmentManager.x.GetAugmentIndex(a.at_type, a.Name) };
+                view.RPC(nameof(ApplyAugment), RpcTarget.Others, (inds, a.Level, a.at_type), i);
+            }
+
         }
     }
 
