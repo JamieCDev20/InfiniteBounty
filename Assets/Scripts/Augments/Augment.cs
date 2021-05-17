@@ -280,6 +280,11 @@ public class Augment
         return c;
     }
 
+    public float GetAugmentLevelModifier(int level)
+    {
+        return(1 / ((0.00053f * -level) - 0.01969f)) + 50.46f;
+    }
+
     private static T[] CombineFusionArrays<T>(T[] _a, T[] _b)
     {
         bool aNull = Utils.ArrayIsNullOrZero(_a);

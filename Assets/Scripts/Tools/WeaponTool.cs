@@ -93,7 +93,7 @@ public class WeaponTool : ToolBase
 
     protected float GetAugmentLevelModifier(int level)
     {
-        return (1 / ((0.00053f * -level) + 0.0336f)) + 30.3f;
+        return (1 / ((0.00053f * -level) - 0.01969f)) + 50.46f;
     }
 
     public virtual bool AddStatChanges(Augment aug)
