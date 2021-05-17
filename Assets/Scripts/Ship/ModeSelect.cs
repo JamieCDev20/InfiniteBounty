@@ -12,7 +12,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
     [SerializeField] private LoadIntoLevel lil_teleportButton;
     [Space, SerializeField] private GameObject[] goA_highlightPositions = new GameObject[3];
     [Space, SerializeField] private string[] sA_sceneNames = new string[3];
-    private string[] A_levelNames = new string[] { "Nugget Run", "Mother Lode", "De Escalation" };
+    private string[] A_levelNames = new string[] { "Nugget Run", "Mother Lode", "De-Escalation" };
 
     private void Start()
     {
@@ -40,7 +40,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         goA_highlightPositions[i_currentIndex].SetActive(true);
 
         photonView.RPC(nameof(SetCurrentMode), RpcTarget.Others, i_currentIndex);
-        InfoText.x?.OnNotify(new InfoTextEvent("Shift Changed To: " + A_levelNames[i_currentIndex]));
+        InfoText.x?.OnNotify(new InfoTextEvent(PhotonNetwork.NickName + " changed the shift to: " + A_levelNames[i_currentIndex]));
 
         as_source.Play();
         TutorialManager.x.UsedShiftChanger();
@@ -54,7 +54,7 @@ public class ModeSelect : MonoBehaviourPun, IInteractible
         i_currentIndex = _i_newMode;
 
         goA_highlightPositions[i_currentIndex].SetActive(true);
-        InfoText.x?.OnNotify(new InfoTextEvent("Shift Changed To: " + A_levelNames[i_currentIndex]));
+        InfoText.x?.OnNotify(new InfoTextEvent(PhotonNetwork.NickName + " changed the shift to: " + A_levelNames[i_currentIndex]));
     }
 
     public string GetModeName()

@@ -21,8 +21,8 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
 
         ChangeDifficulty(-1);
 
-        for (int i = 0; i < DifficultyManager.x.MaximumDifficulty; i++)
-            ChangeDifficulty(1);
+        //for (int i = 0; i < DifficultyManager.x.MaximumDifficulty; i++)
+            //ChangeDifficulty(1);
 
     }
 
@@ -59,7 +59,7 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
             t_textParent.position += Vector3.up * _i_change * 0.05f;
         }
         NetworkManager.x.SetDiffDisplay(DifficultyManager.x.ReturnCurrentDifficultyInt());
-        InfoText.x?.OnNotify(new InfoTextEvent("Difficulty changed to " + DifficultyManager.x.ReturnCurrentDifficulty().s_name));
+        InfoText.x?.OnNotify(new InfoTextEvent(PhotonNetwork.NickName + " changed the difficulty to " + DifficultyManager.x.ReturnCurrentDifficulty().s_name));
     }
 
     internal void SetScreenView(int _i)
@@ -84,7 +84,7 @@ public class DifficultySelector : MonoBehaviourPun, IInteractible
             tmp_difficultyBelow.text = DifficultyManager.x.ReturnDifficultyByIndex(DifficultyManager.x.ReturnCurrentDifficultyInt() - 1).s_name;
         else tmp_difficultyBelow.text = "";
         if (i_difficultyChangeOnClick > 0)
-            InfoText.x?.OnNotify(new InfoTextEvent("Difficulty changed to " + DifficultyManager.x.ReturnCurrentDifficulty().s_name));
+            InfoText.x?.OnNotify(new InfoTextEvent(PhotonNetwork.NickName + " changed the difficulty to " + DifficultyManager.x.ReturnCurrentDifficulty().s_name));
 
 
     }
