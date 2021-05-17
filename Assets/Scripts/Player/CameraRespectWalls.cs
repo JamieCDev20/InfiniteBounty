@@ -18,7 +18,6 @@ public class CameraRespectWalls : MonoBehaviour
     private Vector3 v_targetPos;
     private Transform t_root;
     private Vector3 v_currentOffset;
-    private float f_lastTime;
 
     #endregion
 
@@ -52,9 +51,7 @@ public class CameraRespectWalls : MonoBehaviour
 
     internal void CameraShake(float _f_severity, float _f_time, bool _b_onlyUp)
     {
-        f_lastTime = _f_time;
         v_currentOffset += new Vector3(0/*Random.Range(-_f_severity, _f_severity)*/, Random.Range(_b_onlyUp ? 0 : -_f_severity, _f_severity), Random.Range(-_f_severity, _f_severity));
-        StopCoroutine(ReturnToNeutral(f_lastTime));
         StartCoroutine(ReturnToNeutral(_f_time));
     }
 
