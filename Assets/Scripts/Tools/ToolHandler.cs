@@ -565,9 +565,9 @@ public class ToolHandler : SubjectBase
                         if (hit.distance > 7)
                             dir = hit.point - A_toolTransforms[(int)ts].position;
                     }
-                    float spread = A_tools[(int)ts].GetSpread() * (rb.velocity.magnitude * 0.05f);
-                    dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.up) * dir;
-                    dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.right) * dir;
+                    //float spread = A_tools[(int)ts].GetSpread() * (rb.velocity.magnitude * 0.05f);
+                    //dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.up) * dir;
+                    //dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.right) * dir;
                     view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
                     A_tools[(int)ts].Use(dir);
                 }
