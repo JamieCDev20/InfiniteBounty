@@ -264,7 +264,7 @@ public class Workbench : SubjectBase, IInteractible
                 {
                     // Save the augment
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    AugmentSave _savedAug = new AugmentSave(_aug);
+                    AugmentSave _savedAug = new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, _aug.Stage == AugmentStage.full ? new int[] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) } : AugmentManager.x.GetIndicesByName(_aug.Name));
                     SendAttachSave(_aug, _savedAug);
                     AbleToAugment(_aug.Name + " attached");
                 }
@@ -282,7 +282,7 @@ public class Workbench : SubjectBase, IInteractible
                 if (ct.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    AugmentSave _savedAug = new AugmentSave(_aug);
+                    AugmentSave _savedAug = new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, _aug.Stage == AugmentStage.full ? new int[] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) } : AugmentManager.x.GetIndicesByName(_aug.Name));
                     SendAttachSave(_aug, _savedAug);
                     AbleToAugment(_aug.Name + " attached");
                 }
@@ -300,7 +300,8 @@ public class Workbench : SubjectBase, IInteractible
                 if (wt.AddStatChanges(aL_allAugmentsOwned[apd.CurrentAugIndex]))
                 {
                     Augment _aug = aL_allAugmentsOwned[apd.CurrentAugIndex];
-                    AugmentSave _savedAug = new AugmentSave(_aug);
+                    AugmentSave _savedAug = new AugmentSave(_aug.Stage, _aug.at_type, _aug.Level, _aug.Stage == AugmentStage.full ? new int[] { AugmentManager.x.GetAugmentIndex(_aug.at_type, _aug.Name) } : AugmentManager.x.GetIndicesByName(_aug.Name));
+                    //AugmentSave _savedAug = new AugmentSave(_aug);
                     SendAttachSave(_aug, _savedAug);
                     AbleToAugment(_aug.Name + " attached");
                 }
