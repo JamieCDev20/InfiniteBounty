@@ -167,7 +167,7 @@ public class ProjectileTool : WeaponTool
         i_damage += aug.GetAugmentProperties().i_damage;
         i_lodeDamage += aug.GetAugmentProperties().i_lodeDamage;
 
-        f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 100);
+        f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25);
 
         return true;
     }
