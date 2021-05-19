@@ -21,6 +21,7 @@ public class NugSucker : ConeTool
             {
                 ParticleSystem.ShapeModule sm = ps_cone.shape;
                 sm.angle = f_angle * 0.5f;
+                sm.length = f_radius;
             }
             PlayParticles(true);
         }

@@ -121,7 +121,10 @@ public class ProjectileTool : WeaponTool
 
     public void SpawnBullet(Vector3 _v_direction)
     {
-        float spread = f_spreadAngle * (pim.ReturnVelocity(f_spreadAngle) * 0.05f);
+        float spread = 0;
+
+        if (pim != null)
+            spread = f_spreadAngle * (pim.ReturnVelocity(f_spreadAngle) * 0.05f);
         for (int i = 0; i < i_shotsPerRound; i++)
         {
             _v_direction = Quaternion.AngleAxis(Random.Range(-spread, spread), pim.transform.up) * _v_direction;
@@ -162,6 +165,10 @@ public class ProjectileTool : WeaponTool
         eo_element = elementList.ToArray();
 
         i_damage += aug.GetAugmentProperties().i_damage;
+        i_lodeDamage += aug.GetAugmentProperties().i_lodeDamage;
+
+        f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25);
+
         return true;
     }
 

@@ -52,13 +52,16 @@ public class Bullet : MonoBehaviour, IPoolable
             transform.localScale = Vector3.one * _ap.f_bulletScale;
         else
             transform.localScale = Vector3.one;
+
+        rb.useGravity = _ap.f_gravity > 0;        
+
         if (_ap.pm_phys != null)
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
 
         if (!Utils.ArrayIsNullOrZero(_trKeys))
         {
             GradientColorKey[] gck = new GradientColorKey[_trKeys.Length > 8 ? 8 : _trKeys.Length];
-            GradientAlphaKey[] gak = new GradientAlphaKey[_trKeys.Length > 8? 8 : _trKeys.Length];
+            GradientAlphaKey[] gak = new GradientAlphaKey[_trKeys.Length > 8 ? 8 : _trKeys.Length];
             for (int i = 0; i < gak.Length; i++)
             {
                 gck[i].color = _trKeys[i];
@@ -73,7 +76,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
         // If there's an explosion to be had, create a hiteffect here
         ae_explosion = _ae;
-        if(!Utils.ArrayIsNullOrZero(_elem))
+        if (!Utils.ArrayIsNullOrZero(_elem))
             elements.Init(_elem);
         transform.rotation = Quaternion.identity;
         StartCoroutine(DeathTimer(f_lifeTime));
