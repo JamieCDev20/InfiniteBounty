@@ -28,7 +28,6 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (send)
             {
-                Debug.Log($" <color=green> {photonView.ViewID} </color> ");
                 stream.SendNext(transform.position.x);
                 stream.SendNext(transform.position.y);
                 stream.SendNext(transform.position.z);
@@ -37,7 +36,6 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                Debug.Log($" <color=red> {photonView.ViewID} </color> ");
                 stream.SendNext(false);
             }
 
@@ -46,16 +44,14 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (stream.PeekNext() is bool)
             {
-                Debug.Log($" <color=red> {photonView.ViewID} </color> ");
                 stream.ReceiveNext();
                 return;
             }
             else
             {
-                Debug.Log($" <color=green> {photonView.ViewID} </color> ");
-                v_pos.x = (float)stream.ReceiveNext();
-                v_pos.y = (float)stream.ReceiveNext();
-                v_pos.z = (float)stream.ReceiveNext();
+                v_pos.x = Mathf.Lerp(v_pos.x, (float)stream.ReceiveNext(), 0.3f);
+                v_pos.y = Mathf.Lerp(v_pos.y, (float)stream.ReceiveNext(), 0.3f);
+                v_pos.z = Mathf.Lerp(v_pos.z, (float)stream.ReceiveNext(), 0.3f);
 
                 v_rot.y = (float)stream.ReceiveNext();
 
