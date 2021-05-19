@@ -164,9 +164,7 @@ public class ProjectileTool : WeaponTool
         elementList.AddRange(aug.AugElement);
         eo_element = elementList.ToArray();
 
-        Debug.Log(i_damage);
         i_damage += aug.GetAugmentProperties().i_damage;
-        Debug.Log(i_damage);
         i_lodeDamage += aug.GetAugmentProperties().i_lodeDamage;
 
         f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25);
