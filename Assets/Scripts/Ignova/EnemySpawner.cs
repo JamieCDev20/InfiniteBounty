@@ -132,9 +132,15 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     internal void SpawnEnemy(GameObject _go_enemyToSpawn, Vector3 _v_spawnPos, bool _b_isFlyingEnemy)
     {
+        photonView.RPC(nameof(SpawnEnemyRPC), RpcTarget.MasterClient, _go_enemyToSpawn.name, _v_spawnPos);
+    }
+
+    [PunRPC]
+    private void SpawnEnemyRPC(string _go_enemyToSpawnName, Vector3 _v_spawnPos)
+    {
         if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)// || _go_enemyToSpawn == go_miniboss)
         {
-            PhotonNetwork.Instantiate(_go_enemyToSpawn.name, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
+            PhotonNetwork.Instantiate(_go_enemyToSpawnName, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
             i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
             Collider[] _cA = Physics.OverlapSphere(_v_spawnPos, 3, lm_notEnemyLayer);
@@ -143,6 +149,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
         }
     }
+
 
     internal void EnemyDied(bool _b_isBoss)
     {
