@@ -45,8 +45,12 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         }
         else
             x = this;
-        PhotonNetwork.SerializationRate = 15;
-        PhotonNetwork.SendRate = 15;
+        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.ObjectsInOneUpdate = 15;
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 100000;
+        PhotonNetwork.MaxResendsBeforeDisconnect = 1000000;
+
         if (!b_die)
             Init();
     }
