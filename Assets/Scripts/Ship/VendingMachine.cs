@@ -44,7 +44,6 @@ public class VendingMachine : SubjectBase, IInteractible
 
     private void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        aA_avaliableAugments = new AugmentGo[0];
         GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
     }
 
