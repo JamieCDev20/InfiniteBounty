@@ -384,10 +384,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 RemoveAugmentProperties();
                 try
                 {
-                SetFitIcon((int)wt_toolToCheck.Augs[_i_augmentIndexClicked].at_type);
-                ad_display.t_augmentName.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Name;
-                ad_display.t_levelNumber.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Level.ToString();
-                UpdatePropertyText(wt_toolToCheck.Augs[_i_augmentIndexClicked]);
+                    SetFitIcon((int)wt_toolToCheck.Augs[_i_augmentIndexClicked].at_type);
+                    ad_display.t_augmentName.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Name;
+                    ad_display.t_levelNumber.text = wt_toolToCheck.Augs[_i_augmentIndexClicked].Level.ToString();
+                    UpdatePropertyText(wt_toolToCheck.Augs[_i_augmentIndexClicked]);
 
                 }
                 catch
@@ -578,6 +578,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             if (augmentProperties.f_gravity != 0)
                 PlaceAugmentProperties(go_propertyText).text = "Bullet Weight " + (augmentProperties.f_gravity * mod).ToString("F1");
         }
+        Debug.Log("Should do cone next");
         if (_aug is ConeAugment)
         {
             ConeAugment coneCast;
@@ -589,8 +590,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 int[] inds = AugmentManager.x.GetIndicesByName(_aug.Name);
                 coneCast = AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, inds);
             }
+            Debug.Log("Is Cone Augment");
 
             AugmentCone coneProperties = coneCast.GetConeData();
+            Debug.Log(coneProperties.f_angle * mod);
             if (coneProperties.f_angle != 0)
                 PlaceAugmentProperties(go_propertyText).text = "Cone Width " + (coneProperties.f_angle * mod).ToString("F1");
             if (coneProperties.f_radius != 0)

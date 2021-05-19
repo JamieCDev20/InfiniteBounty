@@ -66,7 +66,11 @@ public class AugmentLoader : MonoBehaviour
                 }
                 else if (typeof(T).Equals(typeof(ConeAugment)))
                 {
+                    Debug.Log((theme[i] as ConeAugment).GetConeData().f_radius);
+
                     fusedAugs.Add((T)(Augment)AugmentFuser.VerbCombine((ConeAugment)(Augment)theme[i], (ConeAugment)(Augment)augType[j]));
+
+                    Debug.Log((fusedAugs[fusedAugs.Count - 1] as ConeAugment).Name + " : " + (fusedAugs[fusedAugs.Count-1] as ConeAugment).GetConeData().f_radius);
                 }
                 else if (typeof(T).Equals(typeof(Augment)))
                 {

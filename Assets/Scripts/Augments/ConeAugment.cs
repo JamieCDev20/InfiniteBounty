@@ -31,7 +31,7 @@ public class ConeAugment : Augment
         if (a.as_stage == AugmentStage.full && a.s_name != b.s_name)
             c.as_stage = AugmentStage.fused;
         List<string[]> audioClips = ac.GetAudioProperties();
-        c.Level = 1;
+        c.Level = a.Level + b.Level;
         c.eo_element = ac.AugElement;
         c.s_name = ac.Name;
         c.Cost = ac.Cost;
