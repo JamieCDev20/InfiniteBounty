@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
     [SerializeField] private Collider c_myCollider;
+    private bool b_shouldDieOnCollide = true;
 
     [Header("TrailEffects")]
     [SerializeField] private TrailRenderer tr_bulletTrail;
@@ -53,7 +54,18 @@ public class Bullet : MonoBehaviour, IPoolable
         else
             transform.localScale = Vector3.one;
 
-        rb.useGravity = _ap.f_gravity > 0;        
+        rb.useGravity = _ap.f_gravity > 0;
+
+        if (_ae.f_detonationTime > 0)
+        {            
+            b_shouldDieOnCollide = false;
+            f_lifeTime = _ae.f_detonationTime;
+        }
+        else
+        {
+            b_shouldDieOnCollide = true;
+            f_lifeTime = 60;
+        }
 
         if (_ap.pm_phys != null)
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
@@ -141,7 +153,8 @@ public class Bullet : MonoBehaviour, IPoolable
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
 
-        Die();
+        if (b_shouldDieOnCollide)
+            Die();
     }
 
     private void SpawnOnHit(GameObject _go_objToSpawn, Vector3 _v_direction)
