@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour, IPoolable
         rb.useGravity = _ap.f_gravity > 0;
 
         if (_ae.f_detonationTime > 0)
-        {            
+        {
             b_shouldDieOnCollide = false;
             f_lifeTime = _ae.f_detonationTime;
         }
@@ -150,11 +150,12 @@ public class Bullet : MonoBehaviour, IPoolable
         if (go_spawnItem != null)
             SpawnOnHit(go_spawnItem, collision.contacts[0].normal);
 
+        if (!b_shouldDieOnCollide) return;
+
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
 
-        if (b_shouldDieOnCollide)
-            Die();
+        Die();
     }
 
     private void SpawnOnHit(GameObject _go_objToSpawn, Vector3 _v_direction)
