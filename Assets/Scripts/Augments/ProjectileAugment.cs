@@ -58,6 +58,12 @@ public class ProjectileAugment : Augment
         c.f_bulletScale = a.f_bulletScale + b.f_bulletScale;
         c.i_damage = ac.GetAugmentProperties().i_damage;
         c.i_lodeDamage = ac.GetAugmentProperties().i_lodeDamage;
+
+        AugmentExplosion e = ac.GetExplosionProperties();
+        c.f_detonationTime = e.f_detonationTime;
+        c.f_explockBack = e.f_explockBack;
+        c.f_expRad = e.f_radius;
+
         // Ask John and Nick what it do
         c.pm_physMat = a.pm_physMat;
         return c;

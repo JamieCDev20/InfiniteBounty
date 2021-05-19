@@ -578,7 +578,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             if (augmentProperties.f_gravity != 0)
                 PlaceAugmentProperties(go_propertyText).text = "Bullet Weight " + (augmentProperties.f_gravity * mod).ToString("F1");
         }
-        Debug.Log("Should do cone next");
         if (_aug is ConeAugment)
         {
             ConeAugment coneCast;
@@ -590,7 +589,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 int[] inds = AugmentManager.x.GetIndicesByName(_aug.Name);
                 coneCast = AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, inds);
             }
-            Debug.Log("Is Cone Augment");
 
             AugmentCone coneProperties = coneCast.GetConeData();
             Debug.Log(coneProperties.f_angle * mod);
