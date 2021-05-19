@@ -13,4 +13,6 @@ public interface IHitable
 
     void TakeDamage(int damage, bool activatesThunder, float delay);
 
+    bool IsNug();
+
 }

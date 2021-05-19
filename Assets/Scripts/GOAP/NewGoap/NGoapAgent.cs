@@ -216,4 +216,9 @@ public class NGoapAgent : MonoBehaviourPun, IHitable, IPoolable
 
     #endregion
 
+    public bool IsNug()
+    {
+        return false;
+    }
+
 }

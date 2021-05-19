@@ -217,4 +217,9 @@ public class LodeBase : Enemy, IHitable
         return i_currentHealth;
     }
 
+    public bool IsNug()
+    {
+        return false;
+    }
+
 }

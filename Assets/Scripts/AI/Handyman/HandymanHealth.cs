@@ -98,4 +98,8 @@ public class HandymanHealth : MonoBehaviourPun, IHitable
     {
 
     }
+    public bool IsNug()
+    {
+        return false;
+    }
 }

@@ -188,4 +188,9 @@ public class NugGO : SubjectBase, IPoolable, ISuckable, IHitable
         Die();
     }
 
+    public bool IsNug()
+    {
+        return true;
+    }
+
 }

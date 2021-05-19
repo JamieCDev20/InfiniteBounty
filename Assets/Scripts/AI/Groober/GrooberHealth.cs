@@ -104,4 +104,8 @@ public class GrooberHealth : MonoBehaviourPun, IHitable
         transform.localScale *= DiversifierManager.x.ReturnGrooberScaler();
         i_maxHealth = Mathf.RoundToInt(i_maxHealth * DiversifierManager.x.ReturnGrooberScaler());
     }
+    public bool IsNug()
+    {
+        return false;
+    }
 }

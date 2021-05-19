@@ -107,4 +107,8 @@ public class JukeBox : MonoBehaviour, IHitable
     public void Die() { }
 
     public void TakeDamage(int damage, bool activatesThunder, float delay) { }
+    public bool IsNug()
+    {
+        return false;
+    }
 }

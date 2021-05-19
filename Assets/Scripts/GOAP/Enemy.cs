@@ -67,4 +67,8 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
         LocationController.x.UnloadArea();
     }
     */
+    public bool IsNug()
+    {
+        return false;
+    }
 }

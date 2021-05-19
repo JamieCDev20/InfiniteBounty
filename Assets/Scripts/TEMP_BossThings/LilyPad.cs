@@ -72,4 +72,8 @@ public class LilyPad : MonoBehaviour, IHitable
     }
 
     public void TakeDamage(int damage, bool activatesThunder, float delay) { }
+    public bool IsNug()
+    {
+        return false;
+    }
 }

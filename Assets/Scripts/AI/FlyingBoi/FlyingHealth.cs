@@ -105,4 +105,8 @@ public class FlyingHealth : MonoBehaviourPun, IHitable
     {
 
     }
+    public bool IsNug()
+    {
+        return false;
+    }
 }

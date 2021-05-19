@@ -168,5 +168,9 @@ public class BossHealth : MonoBehaviourPun, IHitable
         if (iA_armourHealths[_i_armourIndex] < 0)
             lpA_armourPlates[_i_armourIndex].Die();
     }
+    public bool IsNug()
+    {
+        return false;
+    }
 
 }

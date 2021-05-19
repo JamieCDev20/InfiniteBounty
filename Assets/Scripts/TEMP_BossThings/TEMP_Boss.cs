@@ -243,4 +243,8 @@ public class TEMP_Boss : MonoBehaviourPunCallbacks, IHitable
     {
         throw new System.NotImplementedException();
     }
+    public bool IsNug()
+    {
+        return false;
+    }
 }

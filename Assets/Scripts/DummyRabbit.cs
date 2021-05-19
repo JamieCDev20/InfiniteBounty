@@ -56,4 +56,9 @@ public class DummyRabbit : MonoBehaviour, IHitable
     {
         Die();
     }
+
+    public bool IsNug()
+    {
+        return false;
+    }
 }

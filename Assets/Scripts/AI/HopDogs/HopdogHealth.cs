@@ -134,5 +134,8 @@ public class HopdogHealth : MonoBehaviourPun, IHitable
     {
         return true;
     }
-
+    public bool IsNug()
+    {
+        return false;
+    }
 }

@@ -362,4 +362,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         return f_currentHealth;
     }
 
+    public bool IsNug()
+    {
+        return false;
+    }
+
 }

@@ -36,5 +36,8 @@ public class EmptyHittable : MonoBehaviour, IHitable
         yield return new WaitForSeconds(delay);
         TakeDamage(damage, thunder);
     }
-
+    public bool IsNug()
+    {
+        return false;
+    }
 }
