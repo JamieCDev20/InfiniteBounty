@@ -61,7 +61,6 @@ public class SaveManager : SubjectBase, ObserverBase
                         {
                             // An argument is erroring
                             saveData = UpdateSaveData(saveString);
-                            Debug.Log(saveData);
                             File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
                         }
                         else
@@ -73,7 +72,6 @@ public class SaveManager : SubjectBase, ObserverBase
                             } catch (FileNotFoundException fnfe) { Debug.Log("File wasn't found. Creating new File."); }
                             FileStream file = File.Create(Application.persistentDataPath + sv);
                             file.Close();
-                            Debug.Log(e);
                         }
                     }
                 }

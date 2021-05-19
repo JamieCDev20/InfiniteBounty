@@ -5,7 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class ConeAugment : Augment
 {
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] float f_angle;
+    [Newtonsoft.Json.JsonProperty]
     [SerializeField] float f_radius;
 
     public void InitCone(float _f_ang, float _f_rad)
