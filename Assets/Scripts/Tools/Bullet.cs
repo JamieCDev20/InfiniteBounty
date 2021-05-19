@@ -39,6 +39,7 @@ public class Bullet : MonoBehaviour, IPoolable
     private AudioSource as_source;
     [SerializeField] private float f_knockBack = 5;
     [SerializeField] ElementalObject elements;
+    
 
     public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae, Element[] _elem, Color[] _trKeys)
     {
@@ -65,8 +66,10 @@ public class Bullet : MonoBehaviour, IPoolable
             f_lifeTime = 60;
         }
 
+        //Physics Material
         if (_ap.pm_phys != null)
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
+        c_myCollider.material = pm_mat;
 
         if (!Utils.ArrayIsNullOrZero(_trKeys))
         {
