@@ -38,11 +38,15 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            v_pos.x = (float)stream.ReceiveNext();
-            v_pos.y = (float)stream.ReceiveNext();
-            v_pos.z = (float)stream.ReceiveNext();
+            if(stream.Count > 0)
+            {
+                v_pos.x = (float)stream.ReceiveNext();
+                v_pos.y = (float)stream.ReceiveNext();
+                v_pos.z = (float)stream.ReceiveNext();
 
-            v_rot.y = (float)stream.ReceiveNext();
+                v_rot.y = (float)stream.ReceiveNext();
+
+            }
         }
 
     }
