@@ -108,7 +108,6 @@ public class FuseSaver : MonoBehaviour, ObserverBase
                             fusedCone[fusedCone.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
                             break;
                         case AugmentType.standard:
-                            Debug.Log("And yet somehow I get here?");
                             fusedAugs = Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
                             fusedAugs[fusedAugs.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
                             break;
