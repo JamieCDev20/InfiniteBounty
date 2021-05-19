@@ -60,12 +60,9 @@ public class KillBox : MonoBehaviour
     {
         if (enabled)
         {
-            if (other.tag == "Nugget")
-                return;
-
             IHitable _h = other.GetComponent<IHitable>();
 
-            if (_h != null)
+            if (_h != null && !_h.IsNug())
                 hL_thingsWithinCloud.Add(_h);
 
             _h?.TakeDamage(i_damageToDeal, false);
@@ -113,7 +110,7 @@ public class KillBox : MonoBehaviour
         if (enabled)
             for (int i = 0; i < hL_thingsWithinCloud.Count; i++)
             {
-                if (hL_thingsWithinCloud[i].IsDead())
+                if (hL_thingsWithinCloud[i].IsDead() || hL_thingsWithinCloud[i].IsNug())
                 {
                     hL_thingsWithinCloud.RemoveAt(i);
                     i -= 1;
