@@ -10,23 +10,31 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_pos;
     private Vector3 v_rot;
     private float t;
+    private bool send;
 
     private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoad;
+        //SceneManager.sceneLoaded += OnSceneLoad;
+        if (PhotonNetwork.IsMasterClient)
+            send = Random.Range(0f, 1f) > 0.5f;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         v_rot = transform.eulerAngles;
+        send = !send;
 
         if (stream.IsWriting)
         {
-            stream.SendNext(transform.position.x);
-            stream.SendNext(transform.position.y);
-            stream.SendNext(transform.position.z);
+            if (send)
+            {
+                stream.SendNext(transform.position.x);
+                stream.SendNext(transform.position.y);
+                stream.SendNext(transform.position.z);
 
-            stream.SendNext(v_rot.y);
+                stream.SendNext(v_rot.y);
+            }
+                
         }
         else
         {
