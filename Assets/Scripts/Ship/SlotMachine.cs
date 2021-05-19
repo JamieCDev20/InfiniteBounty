@@ -69,13 +69,13 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         yield return new WaitForSeconds(3);
 
+            
         if (PhotonNetwork.IsMasterClient)
-            anim.SetBool("PullLever", true);
-               view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
-                   UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
-                   UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
-                   UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                   DifficultyManager.x.ReturnCurrentDifficultyInt());
+        view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+            UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+            DifficultyManager.x.ReturnCurrentDifficultyInt());
 
     }
 
@@ -85,11 +85,11 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         base.OnPlayerEnteredRoom(newPlayer);
         if (PhotonNetwork.IsMasterClient)
             anim.SetBool("PullLever", true);
-                 view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
-                     UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
-                     UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
-                     UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                     DifficultyManager.x.ReturnCurrentDifficultyInt());
+        view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+            UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+            UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+            DifficultyManager.x.ReturnCurrentDifficultyInt());
 
         if (b_isBeingUsed)
             EndInteract();
