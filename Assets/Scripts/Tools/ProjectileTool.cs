@@ -157,14 +157,16 @@ public class ProjectileTool : WeaponTool
             return false;
         ProjectileAugment pa = (ProjectileAugment)AugmentManager.x.GetProjectileAugmentAt(aug.Stage, aug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug.Name) : new int[] { AugmentManager.x.GetAugmentIndex(aug.at_type, aug.Name) });
         AugmentProjectile augData = pa.GetProjectileData();
-        i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level) * 0.25f));
+        i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level)));
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
         ap_projAugment.f_bulletScale += Mathf.RoundToInt(augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level) * 0.25f));
         elementList.AddRange(aug.AugElement);
         eo_element = elementList.ToArray();
 
+        Debug.Log(i_damage);
         i_damage += aug.GetAugmentProperties().i_damage;
+        Debug.Log(i_damage);
         i_lodeDamage += aug.GetAugmentProperties().i_lodeDamage;
 
         f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25);
