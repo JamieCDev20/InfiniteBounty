@@ -78,13 +78,19 @@ public class ToolHandler : SubjectBase
                     switch (s.SavedAugment.augType)
                     {
                         case AugmentType.standard:
-                            (t as WeaponTool).AddStatChanges(AugmentManager.x.GetStandardAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies));
+                            Augment _aug = AugmentManager.x.GetStandardAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies);
+                            _aug.Level = s.SavedAugment.level;
+                            (t as WeaponTool).AddStatChanges(_aug);
                             break;
                         case AugmentType.projectile:
-                            (t as WeaponTool).AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies));
+                            ProjectileAugment _projAug = AugmentManager.x.GetProjectileAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies);
+                            _projAug.Level = s.SavedAugment.level;
+                            (t as WeaponTool).AddStatChanges(_projAug);
                             break;
                         case AugmentType.cone:
-                            (t as WeaponTool).AddStatChanges(AugmentManager.x.GetConeAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies));
+                            ConeAugment _coneAug = AugmentManager.x.GetConeAugmentAt(s.SavedAugment.augStage, s.SavedAugment.indicies);
+                            _coneAug.Level = s.SavedAugment.level;
+                            (t as WeaponTool).AddStatChanges(_coneAug);
                             break;
                         default:
                             break;
@@ -120,13 +126,19 @@ public class ToolHandler : SubjectBase
                                 switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
                                 {
                                     case AugmentType.projectile:
-                                        wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        ProjectileAugment _projAug = AugmentManager.x.GetProjectileAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                                        _projAug.Level = _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.level;
+                                        wt.AddStatChanges(_projAug);
                                         break;
                                     case AugmentType.cone:
-                                        wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        ConeAugment _coneAug = AugmentManager.x.GetConeAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                                        _coneAug.Level = _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.level;
+                                        wt.AddStatChanges(_coneAug);
                                         break;
                                     case AugmentType.standard:
-                                        wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        Augment _aug = AugmentManager.x.GetStandardAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                                        _aug.Level = _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.level;
+                                        wt.AddStatChanges(_aug);
                                         break;
                                 }
                                 break;
@@ -134,13 +146,19 @@ public class ToolHandler : SubjectBase
                                 switch (_sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.augType)
                                 {
                                     case AugmentType.projectile:
-                                        wt.AddStatChanges(AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        ProjectileAugment _projAug = AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                                        _projAug.Level = _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.level;
+                                        wt.AddStatChanges(_projAug);
                                         break;
                                     case AugmentType.cone:
-                                        wt.AddStatChanges(AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        ConeAugment _coneAug = AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                                        _coneAug.Level = _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.level;
+                                        wt.AddStatChanges(_coneAug);
                                         break;
                                     case AugmentType.standard:
-                                        wt.AddStatChanges(AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies));
+                                        Augment _aug = AugmentManager.x.GetStandardAugmentAt(AugmentStage.full, _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.indicies);
+                                        _aug.Level = _sm.SaveData.tu_equippedAugments[i].equippedAugs[j].SavedAugment.level;
+                                        wt.AddStatChanges(_aug);
                                         break;
                                 }
                                 break;
@@ -149,18 +167,7 @@ public class ToolHandler : SubjectBase
                     //}
                 }
         }
-        catch (System.InvalidCastException e) { Debug.Log("FUCKED IT"); return; }
-
-        Debug.Log("SHOW ME WHAT YOU GOT");
-        string s = "";
-        for (int j = 0; j < wt.Augs.Length; j++)
-        {
-            s += $"{j}: ";
-            s += wt.Augs[j];
-            s += "\n";
-
-        }
-        Debug.Log(s);
+        catch (System.InvalidCastException e) { return; }
     }
 
     public void RemoveAllAugmentsOnWeapon()
