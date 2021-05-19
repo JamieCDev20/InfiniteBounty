@@ -10,7 +10,7 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 v_pos;
     private Vector3 v_rot;
     private float t;
-    private bool send;
+    private bool send = true;
 
     private void Start()
     {
