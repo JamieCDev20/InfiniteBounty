@@ -22,7 +22,10 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         v_rot = transform.eulerAngles;
-        send = !send;
+        if (gameObject.activeInHierarchy)
+            send = !send;
+        else
+            send = false;
 
         if (stream.IsWriting)
         {
