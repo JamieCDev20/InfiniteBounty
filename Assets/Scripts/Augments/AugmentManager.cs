@@ -58,7 +58,7 @@ public class AugmentManager : MonoBehaviour
             if (fuseSave.FusedCones != null)
                 A_coneAugs = Utils.CombineArrays(A_coneAugs, fuseSave.FusedCones);
         }
-        if(Utils.ArrayIsNullOrZero(go_augments.ToArray()))
+        if (Utils.ArrayIsNullOrZero(go_augments.ToArray()))
             GetAllAugmentGameObjects();
         SpawnPhysicalAugments();
         InitAugmentScripts();
@@ -233,24 +233,29 @@ public class AugmentManager : MonoBehaviour
     public AugmentGo[] GetRandomAugments(int _i_size, Transform[] _transforms)
     {
         AugmentGo[] augs = new AugmentGo[_i_size];
-        for (int i = 0; i < augs.Length; i++)
+        for (int i = 0; i < _i_size - 3; i++)
         {
             augs[i] = PoolManager.x.SpawnObject(augRef, _transforms[i].position).GetComponent<AugmentGo>();
             augs[i].GetComponent<Rigidbody>().isKinematic = true;
-            int augIndex = UnityEngine.Random.Range(0, A_augs.Length + A_projAugs.Length + A_coneAugs.Length);
-            if (augIndex < A_augs.Length)
-            {
-                augs[i].Aug = A_augs[augIndex];
-            }
-            else if (augIndex < A_augs.Length + A_projAugs.Length)
-            {
-                augs[i].Aug = A_projAugs[augIndex - A_augs.Length];
-            }
-            else if (augIndex < A_augs.Length + A_projAugs.Length + A_coneAugs.Length)
-            {
-                augs[i].Aug = A_coneAugs[augIndex - (A_augs.Length + A_projAugs.Length)];
-            }
+            int augIndex = UnityEngine.Random.Range(0, A_projAugs.Length);
+            augs[i].Aug = A_projAugs[augIndex];
         }
+
+        int a = UnityEngine.Random.Range(0, A_augs.Length);
+        augs[_i_size - 3] = PoolManager.x.SpawnObject(augRef, _transforms[_i_size - 3].position).GetComponent<AugmentGo>();
+        augs[_i_size - 3].GetComponent<Rigidbody>().isKinematic = true;
+        augs[_i_size - 3].Aug = A_augs[a];
+
+        a = UnityEngine.Random.Range(0, A_augs.Length);
+        augs[_i_size - 2] = PoolManager.x.SpawnObject(augRef, _transforms[_i_size - 2].position).GetComponent<AugmentGo>();
+        augs[_i_size - 2].GetComponent<Rigidbody>().isKinematic = true;
+        augs[_i_size - 2].Aug = A_augs[a];
+
+        a = UnityEngine.Random.Range(0, A_coneAugs.Length);
+        augs[_i_size - 1] = PoolManager.x.SpawnObject(augRef, _transforms[_i_size - 1].position).GetComponent<AugmentGo>();
+        augs[_i_size - 1].GetComponent<Rigidbody>().isKinematic = true;
+        augs[_i_size - 1].Aug = A_coneAugs[a];
+
         return augs;
     }
 
