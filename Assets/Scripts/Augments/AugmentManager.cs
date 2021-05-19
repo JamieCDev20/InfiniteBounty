@@ -174,16 +174,25 @@ public class AugmentManager : MonoBehaviour
 
     public Augment GetStandardAugmentAt(AugmentStage _stage, int[] _index)
     {
+        foreach (int ind in _index)
+            if (ind > A_augs.Length)
+                return null;
         return _stage == AugmentStage.full ? A_augs[_index[0]] : Augment.Combine(A_augs[_index[0]], A_augs[_index[1]]);
     }
 
     public ProjectileAugment GetProjectileAugmentAt(AugmentStage _stage, int[] _index)
     {
-        return _index.Length < 2 ? A_projAugs[_index[0]] : ProjectileAugment.Combine(A_projAugs[_index[0]], A_projAugs[_index[1]]);
+        foreach (int ind in _index)
+            if (ind > A_projAugs.Length)
+                return null;
+        return _stage == AugmentStage.full ? A_projAugs[_index[0]] : ProjectileAugment.Combine(A_projAugs[_index[0]], A_projAugs[_index[1]]);
     }
 
     public ConeAugment GetConeAugmentAt(AugmentStage _stage, int[] _index)
     {
+        foreach (int ind in _index)
+            if (ind > A_coneAugs.Length)
+                return null;
         return _stage == AugmentStage.full ? A_coneAugs[_index[0]] : ConeAugment.Combine(A_coneAugs[_index[0]], A_coneAugs[_index[1]]);
     }
 

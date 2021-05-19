@@ -10,6 +10,7 @@ public class Workbench : SubjectBase, IInteractible
 
     private PlayerInputManager pim;
     private bool b_isBeingUsed;
+    private bool b_initted = false;
     private Transform t_camPositionToReturnTo;
     private SaveManager saveMan;
     [SerializeField] private ToolLoader tl;
@@ -49,9 +50,12 @@ public class Workbench : SubjectBase, IInteractible
     {
         saveMan = _sm;
         tl.LoadTools(transform);
-        
-        AddObserver(saveMan);
-        AddObserver(FindObjectOfType<FuseSaver>());
+        if (!b_initted)
+        {
+            AddObserver(saveMan);
+            AddObserver(FindObjectOfType<FuseSaver>());
+            b_initted = true;
+        }
         apd.Init();
     }
 
@@ -349,8 +353,6 @@ public class Workbench : SubjectBase, IInteractible
     private void SendAttachSave(Augment _aug, AugmentSave _save)
     {
         // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
-        if (_save.SavedAugment.indicies.Length > 1)
-            Debug.Log(_save.SavedAugment.indicies[0] + " " + _save.SavedAugment.indicies[1]);
         RemoveAugmentEvent rae = new RemoveAugmentEvent(new AugmentSave(_aug));
         Notify(rae);
         EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetToolBase(i_currentWeaponIndex).ToolID, i_currentWeaponIndex, new AugmentSave[] { _save }));
