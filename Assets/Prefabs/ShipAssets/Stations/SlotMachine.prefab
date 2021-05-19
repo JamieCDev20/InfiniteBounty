@@ -3297,7 +3297,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   as_audioSource: {fileID: 1023704226559350763}
   ac_moneySound: {fileID: 8300000, guid: 2ad3e985676600b4fb22127741b8eede, type: 3}
-  ac_reelSound: {fileID: 0}
+  ac_reelSound: {fileID: 8300000, guid: 09c6ff6153f5a104ebdac7ecb1983c44, type: 3}
+  ac_leverSound: {fileID: 8300000, guid: db9063e291978456a84acf3267786cea, type: 3}
+  ac_spinningSound: {fileID: 8300000, guid: 91d42df7a1994d443a7fa5b84624fe46, type: 3}
   t_playerPos: {fileID: 7624987216371651269}
   t_camParent: {fileID: 3907819214282533183}
   f_lerpTime: 0.5
@@ -3409,12 +3411,13 @@ AudioSource:
   m_GameObject: {fileID: 5222077155159377339}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a8176709bbf996c48a0235a5e2f0fd06,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

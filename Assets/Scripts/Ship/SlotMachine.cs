@@ -14,6 +14,8 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     [SerializeField] private AudioSource as_audioSource;
     [SerializeField] private AudioClip ac_moneySound;
     [SerializeField] private AudioClip ac_reelSound;
+    [SerializeField] private AudioClip ac_leverSound;
+    [SerializeField] private AudioClip ac_spinningSound;
 
     [Header("Interactable Things That Moves the Camera")]
     [SerializeField] private Transform t_playerPos;
@@ -69,13 +71,13 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         yield return new WaitForSeconds(3);
 
-            
+
         if (PhotonNetwork.IsMasterClient)
-        view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
-            UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
-            UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
-            UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-            DifficultyManager.x.ReturnCurrentDifficultyInt());
+            view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+                UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+                UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+                UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+                DifficultyManager.x.ReturnCurrentDifficultyInt());
 
     }
 
@@ -83,13 +85,15 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+
+        anim.SetBool("PullLever", true);
+
         if (PhotonNetwork.IsMasterClient)
-            anim.SetBool("PullLever", true);
-        view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
-            UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
-            UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
-            UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-            DifficultyManager.x.ReturnCurrentDifficultyInt());
+            view.RPC(nameof(SyncedRollsRPC), RpcTarget.All,
+                UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
+                UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
+                UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
+                DifficultyManager.x.ReturnCurrentDifficultyInt());
 
         if (b_isBeingUsed)
             EndInteract();
@@ -248,6 +252,9 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         yield return new WaitForSeconds(_f_startDelay);
         int _i_currentIndex = 0;
         b_isSpinning = true;
+        as_audioSource.clip = ac_spinningSound;
+        as_audioSource.Play();
+
         for (int i = 0; i < 100; i++)
         {
             yield return new WaitForSeconds(0.009f);
@@ -296,6 +303,9 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             _wd_wheel.go_wheelSpinner.transform.Rotate(-Vector3.right * 22.5f, Space.Self);
         }
 
+        as_audioSource.Stop();
+        as_audioSource.PlayOneShot(ac_reelSound);
+
         int _i = _i_currentIndex;
         _wd_wheel.srL_wheelSprites[0].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_diversifierToRoll]].s_image;
 
@@ -316,6 +326,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
         DisplayDiversifierInfo(2);
         LockInDivers();
 
+        as_audioSource.PlayOneShot(ac_leverSound);
         anim.SetBool("PullLever", false);
         tmp_costText.text = "£" + i_currentCost;
         b_isSpinning = false;
@@ -336,6 +347,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
         if (nm_nugMan.Nugs >= i_currentCost)
         {
+            as_audioSource.PlayOneShot(ac_leverSound);
             PlayCoinsAudio();
             nm_nugMan.CollectNugs(-i_currentCost, false);
 
