@@ -61,6 +61,7 @@ public class VendingMachine : SubjectBase, IInteractible
         if (!b_initted)
         {
             AddObserver(FindObjectOfType<SaveManager>());
+            AddObserver(FindObjectOfType<FuseSaver>());
             b_initted = true;
         }
         apd.Init();
@@ -222,10 +223,19 @@ public class VendingMachine : SubjectBase, IInteractible
                     grabbedAugment[0] = aA_avaliableAugments[i_currentAugmentIndex].Aug;
                     InfoText.x?.OnNotify(new InfoTextEvent("You've purchased a " + grabbedAugment[0].Name));
                     pim.GetComponent<NugManager>().CollectNugs(-grabbedAugment[0].Cost, false);
-                    SaveEvent se = new SaveEvent(new PlayerSaveData(pim.GetComponent<NugManager>().Nugs, -1, -1, null, null, null, null,
-                        new AugmentSave[] { new AugmentSave(grabbedAugment[0].Stage, grabbedAugment[0].at_type, 1, new int[1] { AugmentManager.x.GetAugmentIndex(grabbedAugment[0].at_type, grabbedAugment[0].Name) }) },
-                        null, 0)); ;
-                    Notify(se);
+                    switch (grabbedAugment[0].Stage)
+                    {
+                        case AugmentStage.full:
+                            SaveEvent se = new SaveEvent(new PlayerSaveData(pim.GetComponent<NugManager>().Nugs, -1, -1, null, null, null, null,
+                                new AugmentSave[] { new AugmentSave(grabbedAugment[0].Stage, grabbedAugment[0].at_type, 1, new int[1] { AugmentManager.x.GetAugmentIndex(grabbedAugment[0].at_type, grabbedAugment[0].Name) }) },
+                                    null, 0));
+                            Notify(se);
+                            break;
+                        case AugmentStage.fused:
+                            FuseEvent fe = new FuseEvent(new AugmentSave(grabbedAugment[0]), AugmentStage.fused);
+                            Notify(fe);
+                            break;
+                    }
                     aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
                     rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
                 }
