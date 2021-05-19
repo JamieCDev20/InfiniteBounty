@@ -7,6 +7,7 @@ public class Microwave : SubjectBase, IInteractible
 {
     private int i_currentlyClickedAugment;
     private bool b_inUse;
+    private bool b_initted = false;
     private Transform t_camPositionToReturnTo;
     private Augment aug_slotA;
     private Augment aug_slotB;
@@ -39,6 +40,7 @@ public class Microwave : SubjectBase, IInteractible
     {
         AddObserver(FindObjectOfType<SaveManager>());
         AddObserver(FindObjectOfType<FuseSaver>());
+
     }
 
     public void Interacted(Transform interactor)

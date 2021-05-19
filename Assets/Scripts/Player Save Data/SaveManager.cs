@@ -463,7 +463,6 @@ public class SaveManager : SubjectBase, ObserverBase
                         AugmentSave augB = new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.ALevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[1] });
                         int bInd = GetAugmentSaveIndex(augB);
                         saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, bInd);
-                        Debug.Log(string.Format("A Index: {0} | B Index: {1}", aInd, bInd));
                         if (fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.full)
                         {
                             saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, new AugmentSave[] { new AugmentSave( AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] }) });
@@ -478,7 +477,6 @@ public class SaveManager : SubjectBase, ObserverBase
 
     private int GetAugmentSaveIndex(AugmentSave _augSave, params int[] levels)
     {
-        Debug.Log("Getting Augment Index");
         for (int i = 0; i < saveData.purchasedAugments.Length; i++)
         {
             if (_augSave.SavedAugment.indicies.Length == 1)
