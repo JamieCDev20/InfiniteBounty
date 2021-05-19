@@ -577,6 +577,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 PlaceAugmentProperties(go_propertyText).text = "Bullet Size " + (augmentProperties.f_bulletScale * mod).ToString("F1");
             if (augmentProperties.f_gravity != 0)
                 PlaceAugmentProperties(go_propertyText).text = "Bullet Weight " + (augmentProperties.f_gravity * mod).ToString("F1");
+
+            if(augmentProperties.pm_phys == "Bouncy")
+                PlaceAugmentProperties(go_propertyText).text = "Bouncy Bullets";
+
         }
         if (_aug is ConeAugment)
         {
