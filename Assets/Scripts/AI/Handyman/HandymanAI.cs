@@ -86,7 +86,7 @@ public partial class HandymanAI : AIBase
         //float dist = (transform.position - _pos).magnitude;
         //float distPecent = (dist / 2000);
         //float force = (distPecent * (throwForceRange.y - throwForceRange.x)) + throwForceRange.x;
-        float force = go_currentThrowable.name.Contains("ode")? 100;
+        float force = 100;
 
         //float height = force * Mathf.Rad2Deg * Mathf.Tan(Mathf.Deg2Rad * angle);
 
