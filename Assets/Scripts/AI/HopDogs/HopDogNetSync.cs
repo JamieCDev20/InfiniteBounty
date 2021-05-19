@@ -34,19 +34,24 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
 
                 stream.SendNext(v_rot.y);
             }
-                
+            else
+                stream.SendNext(false);
+
         }
         else
         {
-            if(stream.Count > 0)
+            if (stream.PeekNext() is bool)
             {
-                v_pos.x = (float)stream.ReceiveNext();
-                v_pos.y = (float)stream.ReceiveNext();
-                v_pos.z = (float)stream.ReceiveNext();
-
-                v_rot.y = (float)stream.ReceiveNext();
-
+                stream.ReceiveNext();
+                return;
             }
+
+            v_pos.x = (float)stream.ReceiveNext();
+            v_pos.y = (float)stream.ReceiveNext();
+            v_pos.z = (float)stream.ReceiveNext();
+
+            v_rot.y = (float)stream.ReceiveNext();
+
         }
 
     }
@@ -59,10 +64,10 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v_rot, 0.3f);
     }
 
-    
+
     private void OnSceneLoad(Scene s, LoadSceneMode m)
     {
         //GetComponent<IHitable>().Die();
     }
-    
+
 }
