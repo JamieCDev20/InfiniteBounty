@@ -49,10 +49,8 @@ public class Bullet : MonoBehaviour, IPoolable
         rb = GetComponent<Rigidbody>();
         // Apply bullet augments here
         rb.mass = _ap.f_gravity;
-        if (_ap.f_gravity > 0)
-            transform.localScale = Vector3.one * _ap.f_bulletScale;
-        else
-            transform.localScale = Vector3.one;
+
+        transform.localScale = Vector3.one * _ap.f_bulletScale;
 
         rb.useGravity = _ap.f_gravity > 0;
 

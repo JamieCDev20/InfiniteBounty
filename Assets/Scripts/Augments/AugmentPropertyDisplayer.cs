@@ -551,7 +551,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         {
             if (ae.f_detonationTime != 0)
             {
-                PlaceAugmentProperties(go_propertyText).text = "Explosion Detonation Time " + ae.f_detonationTime.ToString("F1");
+                PlaceAugmentProperties(go_propertyText).text = "Lifetime " + ae.f_detonationTime.ToString("F1");
             }
         }
 
