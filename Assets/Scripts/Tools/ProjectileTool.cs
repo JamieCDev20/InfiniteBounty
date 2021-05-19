@@ -160,7 +160,7 @@ public class ProjectileTool : WeaponTool
         i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level)));
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
-        ap_projAugment.f_bulletScale += Mathf.RoundToInt(augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level) * 0.25f));
+        ap_projAugment.f_bulletScale += augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level));
         elementList.AddRange(aug.AugElement);
         eo_element = elementList.ToArray();
 

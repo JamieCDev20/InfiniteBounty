@@ -27,9 +27,6 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private GameObject go_electricTrails;
 
     [SerializeField] private PhysicMaterial pm_mat;
-    private bool b_explosive;
-    private bool b_gooey;
-    private bool b_soaked;
     private Rigidbody rb;
 
     protected bool b_inPool;
