@@ -38,16 +38,19 @@ public class VendingMachine : SubjectBase, IInteractible
     [SerializeField] private GameObject go_augmentPrefab;
     [SerializeField] private Transform t_augmentSpawnPoint;
     private Animator anim;
+    private bool b_initted = false;
 
     public bool IsBeingUsed { get { return b_isBeingUsed; } }
 
     private void OnSceneLoad(Scene s, LoadSceneMode m)
     {
+        aA_avaliableAugments = new AugmentGo[0];
         GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
     }
 
     public void Init(AugmentManager _am)
     {
+
         anim = GetComponent<Animator>();
         as_source = GetComponent<AudioSource>();
         augMan = _am;
@@ -56,7 +59,11 @@ public class VendingMachine : SubjectBase, IInteractible
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = 0;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
-        AddObserver(FindObjectOfType<SaveManager>());
+        if (!b_initted)
+        {
+            AddObserver(FindObjectOfType<SaveManager>());
+            b_initted = true;
+        }
         apd.Init();
         if(aA_avaliableAugments.Length > 0)
             apd.UpdatePropertyText(aA_avaliableAugments[i_currentAugmentIndex].Aug);
