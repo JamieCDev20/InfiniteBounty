@@ -77,7 +77,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
                 UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
                 UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
                 UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                DifficultyManager.x.ReturnCurrentDifficultyInt());
+                DifficultyManager.x.ReturnCurrentDifficultyInt(), false);
 
     }
 
@@ -93,7 +93,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
                 UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
                 UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
                 UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                DifficultyManager.x.ReturnCurrentDifficultyInt());
+                DifficultyManager.x.ReturnCurrentDifficultyInt(), false);
 
         if (b_isBeingUsed)
             EndInteract();

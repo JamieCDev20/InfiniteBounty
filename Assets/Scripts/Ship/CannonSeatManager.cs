@@ -95,26 +95,26 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
                 _pa.StopWalking();
                 _pa.WalkInDropPod();
 
+                HUDController.x.StopShowing();
+
                 //This should be how long the player's animation is
                 yield return new WaitForSeconds(2);
             }
 
             anim.SetTrigger("DoorClose");
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1);
             StartedSitting();
             _pa.StartWalking();
             _pa.SetShootability(true);
-            yield return new WaitForSeconds(1);
-            Camera.main.GetComponent<CameraRespectWalls>().enabled = true;
-            Camera.main.transform.localEulerAngles = Vector3.right * 5;
+            yield return new WaitForSeconds(1);            
         }
     }
 
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove)
     {
-        Transform _t = Camera.main.transform;
-        _t.GetComponent<CameraRespectWalls>().enabled = false;
+        Transform _t = Camera.main.transform;        
+            Camera.main.GetComponent<CameraRespectWalls>().Stop();
         float t = 0;
 
         Vector3 start = _t.position;
