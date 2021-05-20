@@ -26,7 +26,7 @@ public class HammerHitbox : MonoBehaviour
         f_knockBack = _f_knockback;
         i_lodeDamage = _i_lode;
         v_forward = _v_forward;
-        if(!Utils.ArrayIsNullOrZero(_elems))
+        if (!Utils.ArrayIsNullOrZero(_elems))
             elements.Init(_elems);
     }
 
@@ -34,15 +34,16 @@ public class HammerHitbox : MonoBehaviour
     {
         hammerSource.clip = hammerClip;
         hammerSource.Play();
+        IHitable hit = other.GetComponent<IHitable>();
 
         if (other.CompareTag("Enemy"))
         {
+            hit.TakeDamage(i_damage, true);
             p_hitParticles.Play();
-            other.GetComponent<IHitable>().TakeDamage(i_damage, true);
         }
         else if (other.GetComponent<LodeBase>() || other.GetComponent<GenericHittable>())
         {
-            other.GetComponent<IHitable>().TakeDamage(i_lodeDamage, true);
+            hit.TakeDamage(i_lodeDamage, true);
             p_hitParticles.Play();
         }
         else if (other.CompareTag("Player"))
@@ -56,11 +57,12 @@ public class HammerHitbox : MonoBehaviour
             other.attachedRigidbody?.AddForce(v_forward * f_knockBack, ForceMode.Impulse);
             p_hitParticles.Play();
         }
+        else if (hit != null)
+            hit.TakeDamage(i_damage, true);
+
         IElementable ie = other.gameObject.GetComponent<IElementable>();
-        if (ie != null)
-        {
-            ie.ReceiveElements(elements.GetActiveElements());
-        }
+        if (ie != null)        
+            ie.ReceiveElements(elements.GetActiveElements());        
     }
 
     internal void SetHitBoxActive(bool _b_active)

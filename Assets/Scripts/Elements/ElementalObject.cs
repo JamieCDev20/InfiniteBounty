@@ -66,7 +66,7 @@ public class ElementalObject : MonoBehaviour, IElementable
 
     }
 
-    private void OnCollisionEnter(Collision col)
+    private void OnColisionEnter(Collision col)
     {
         float t = Time.realtimeSinceStartup;
         if (t - lastCollided < 0.1f)
@@ -74,16 +74,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         IElementable ie = col.gameObject.GetComponentInChildren<IElementable>();
         if (ie != null)
         {
-            if (!usedIDs.Contains(ie.ID()))
-            {
-                AddToUsed(ie.ID());
-                ie.AddToUsed(id);
-
-                ie.ReceiveElements(GetActiveElements());
-                ReceiveElements(ie.GetActiveElements());
-                ie.ActivateElement(true);
-                ActivateElement(true);
-            }
+            
         }
         lastCollided = t;
     }
