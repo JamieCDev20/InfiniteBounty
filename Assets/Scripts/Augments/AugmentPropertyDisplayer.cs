@@ -423,6 +423,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
         //basically this looks through and checks all of the properties to see if they are different, if so then display them
 
+        SetFitIcon((int)_aug.at_type);
+        ad_display.t_augmentName.text = _aug.Name;
+        ad_display.t_levelNumber.text = _aug.Level.ToString();
+
         //regular effects
         if (ap.f_weight != 0)
         {
