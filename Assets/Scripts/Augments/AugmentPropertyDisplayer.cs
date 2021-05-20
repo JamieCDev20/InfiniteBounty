@@ -336,7 +336,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
         switch (adt_currentDisplayType)
         {
             case AugmentDisplayType.ShowEquipped:
-                Debug.Log(wt_toolToCheck);
                 if (!Utils.ArrayIsNullOrZero(wt_toolToCheck.Augs))
                     for (int i = 0; i < wt_toolToCheck.Augs.Length; i++)
                     {
@@ -595,7 +594,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             }
 
             AugmentCone coneProperties = coneCast.GetConeData();
-            Debug.Log(coneProperties.f_angle * mod);
             if (coneProperties.f_angle != 0)
                 PlaceAugmentProperties(go_propertyText).text = "Cone Width " + (coneProperties.f_angle * mod).ToString("F1");
             if (coneProperties.f_radius != 0)
