@@ -9,6 +9,8 @@ public class ToolRack : Shop
     [SerializeField] private ToolLoader tl_mobTools;
     [SerializeField] private List<EmptyToolSlot> L_weaponToolPos;
     [SerializeField] private List<EmptyToolSlot> L_mobToolPos;
+    [SerializeField] private List<Transform> L_weaponTextPos;
+    [SerializeField] private List<Transform> L_mobTextPos;
     [SerializeField] private Material m_silhouette;
     [SerializeField] private TMP_Text txt_exampleText;
     [SerializeField] private Vector3 t_textOffset;
@@ -67,7 +69,7 @@ public class ToolRack : Shop
                 TMP_Text moneyText = Instantiate<TMP_Text>(txt_exampleText);
                 moneyText.gameObject.SetActive(true);
                 moneyText.gameObject.transform.parent = tb.transform;
-                moneyText.gameObject.transform.position = new Vector3(tb.transform.position.x + t_textOffset.x, tb.transform.position.y + t_textOffset.y, tb.transform.position.z + t_textOffset.z);
+                moneyText.gameObject.transform.position = isWeapon ? L_weaponTextPos[i].position : L_mobTextPos[i].position;
                 moneyText.text = tb.Cost.ToString();
             }
 
@@ -82,23 +84,29 @@ public class ToolRack : Shop
             {
                 L_weaponRackIDs.Add(toolRackID);
                 WeaponTool wt = (WeaponTool)tb;
-                if (wt.RackUpgrade)
+
+                ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1].transform.root);
+                dupe.transform.position = _t_toolTransform[i * 2 + 1].transform.position;
+                dupe.transform.rotation = _t_toolTransform[i * 2 + 1].transform.rotation;
+                L_weaponMaterial.Add(dupe.GetComponentInChildren<MeshRenderer>().sharedMaterials);
+                toolRackID++;
+                dupe.RackID = toolRackID;
+                if (!dupe.Purchased)
                 {
-                    ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1].transform.root);
-                    dupe.transform.position = _t_toolTransform[i * 2 + 1].transform.position;
-                    dupe.transform.rotation = _t_toolTransform[i * 2 + 1].transform.rotation;
-                    L_weaponMaterial.Add(dupe.GetComponentInChildren<MeshRenderer>().sharedMaterials);
-                    toolRackID++;
-                    dupe.RackID = toolRackID;
-                    dupe.Purchased = true;
+                    TMP_Text dupeMoney = Instantiate<TMP_Text>(txt_exampleText);
+                    dupeMoney.gameObject.SetActive(true);
+                    dupeMoney.gameObject.transform.parent = dupe.transform;
+                    dupeMoney.gameObject.transform.position = L_weaponTextPos[i * 2 + 1].position;
+                    dupeMoney.text = dupe.Cost.ToString();
                     ApplyMaterials(dupe, toolRackID);
-                    dupe.gameObject.SetActive(true);
-                    L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
-                    L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
-                    L_weaponToolPos[i * 2 + 1].gameObject.SetActive(false);
-                    L_weaponRackIDs.Add(toolRackID);
-                    dupe.enabled = false;
                 }
+
+                dupe.gameObject.SetActive(true);
+                L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
+                L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
+                L_weaponToolPos[i * 2 + 1].gameObject.SetActive(false);
+                L_weaponRackIDs.Add(toolRackID);
+                dupe.enabled = false;
             }
             else
             {
