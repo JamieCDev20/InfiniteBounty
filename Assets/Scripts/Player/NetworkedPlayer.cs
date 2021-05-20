@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
+public class NetworkedPlayer : MonoBehaviourPunCallbacks
 {
 
     public static NetworkedPlayer x;
@@ -180,8 +180,4 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         return null;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        throw new System.NotImplementedException();
-    }
 }

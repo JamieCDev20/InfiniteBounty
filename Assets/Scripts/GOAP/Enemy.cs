@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
+public class Enemy : MonoBehaviourPun, IHitable
 {
     [Header("Enemy Fields")]
     [SerializeField] protected int i_maxHealth;
@@ -63,10 +63,5 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
     public bool IsNug()
     {
         return false;
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        throw new NotImplementedException();
     }
 }
