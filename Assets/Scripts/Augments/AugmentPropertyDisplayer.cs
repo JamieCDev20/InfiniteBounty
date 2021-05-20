@@ -567,7 +567,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             else
             {
                 int[] inds = AugmentManager.x.GetIndicesByName(_aug.Name);
-                projectileCast = AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, inds);
+                projectileCast = _aug as ProjectileAugment;
             }
 
             projectileCast.Level = _aug.Level;
@@ -594,7 +594,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             else
             {
                 int[] inds = AugmentManager.x.GetIndicesByName(_aug.Name);
-                coneCast = AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, inds);
+                coneCast = _aug as ConeAugment;
             }
 
             AugmentCone coneProperties = coneCast.GetConeData();
