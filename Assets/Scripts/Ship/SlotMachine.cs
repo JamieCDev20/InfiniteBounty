@@ -247,13 +247,16 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
 
     #endregion
 
-    private IEnumerator RollWheel(WheelData _wd_wheel, float _f_startDelay, int _i_diversifierToRoll)
+    private IEnumerator RollWheel(WheelData _wd_wheel, float _f_startDelay, int _i_diversifierToRoll, bool _b_shouldSound)
     {
         yield return new WaitForSeconds(_f_startDelay);
         int _i_currentIndex = 0;
         b_isSpinning = true;
-        as_audioSource.clip = ac_spinningSound;
-        as_audioSource.Play();
+        if (_b_shouldSound)
+        {
+            as_audioSource.clip = ac_spinningSound;
+            as_audioSource.Play();
+        }
 
         for (int i = 0; i < 100; i++)
         {
@@ -303,8 +306,11 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             _wd_wheel.go_wheelSpinner.transform.Rotate(-Vector3.right * 22.5f, Space.Self);
         }
 
-        as_audioSource.Stop();
-        as_audioSource.PlayOneShot(ac_reelSound);
+        if (_b_shouldSound)
+        {
+            as_audioSource.Stop();
+            as_audioSource.PlayOneShot(ac_reelSound);
+        }
 
         int _i = _i_currentIndex;
         _wd_wheel.srL_wheelSprites[0].sprite = DiversifierManager.x.diA_diversifiers[(int)_wd_wheel.dA_wheelDiversifiers[_i_diversifierToRoll]].s_image;
@@ -333,12 +339,12 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
     }
 
     [PunRPC]
-    public void SyncedRollsRPC(int _i_firstRoll, int _i_secondRoll, int _i_thirdRoll, int _i_newDiff)
+    public void SyncedRollsRPC(int _i_firstRoll, int _i_secondRoll, int _i_thirdRoll, int _i_newDiff, bool _b_shouldSound)
     {
         DifficultyManager.x.SetCurrentDifficulty(_i_newDiff);
-        StartCoroutine(RollWheel(wdA_wheels[0], 0.19f, _i_firstRoll));
-        StartCoroutine(RollWheel(wdA_wheels[1], 0.28f, _i_secondRoll));
-        StartCoroutine(RollWheel(wdA_wheels[2], 0.37f, _i_thirdRoll));
+        StartCoroutine(RollWheel(wdA_wheels[0], 0.19f, _i_firstRoll, _b_shouldSound));
+        StartCoroutine(RollWheel(wdA_wheels[1], 0.28f, _i_secondRoll, _b_shouldSound));
+        StartCoroutine(RollWheel(wdA_wheels[2], 0.37f, _i_thirdRoll, _b_shouldSound));
     }
 
     internal void PullLever()
@@ -357,7 +363,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
                 UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
                 UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
                 UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                DifficultyManager.x.ReturnCurrentDifficultyInt());
+                DifficultyManager.x.ReturnCurrentDifficultyInt(), true);
 
             DisplayDiversifierInfo(0, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
             DisplayDiversifierInfo(1, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
@@ -378,7 +384,7 @@ public class SlotMachine : MonoBehaviourPunCallbacks, IInteractible
             UnityEngine.Random.Range(0, wdA_wheels[0].dA_wheelDiversifiers.Length),
             UnityEngine.Random.Range(0, wdA_wheels[1].dA_wheelDiversifiers.Length),
             UnityEngine.Random.Range(0, wdA_wheels[2].dA_wheelDiversifiers.Length),
-                DifficultyManager.x.ReturnCurrentDifficultyInt());
+                DifficultyManager.x.ReturnCurrentDifficultyInt(), false);
 
         DisplayDiversifierInfo(0, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
         DisplayDiversifierInfo(1, "SPINNING", "Sit tight whilst Infinite Bounty's patented, copyrighted & trademarked DMSN-HPR finds you a new dimension to harvest!", s_spinningSprite);
