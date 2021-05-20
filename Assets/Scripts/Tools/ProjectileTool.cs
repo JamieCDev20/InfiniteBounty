@@ -80,7 +80,7 @@ public class ProjectileTool : WeaponTool
         if (f_currentHeat > 0 && (!(b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold) || b_isOverheating))
             f_currentHeat -= Time.deltaTime * f_heatsink;
 
-        if (f_currentHeat >= f_energyGauge)
+        if (f_currentHeat >= Mathf.Clamp(f_energyGauge, 10, Mathf.Infinity))
             StartOverheating();
 
         if (f_currentHeat <= 0)
@@ -187,10 +187,25 @@ public class ProjectileTool : WeaponTool
 
         ProjectileAugment pa = (ProjectileAugment)AugmentManager.x.GetProjectileAugmentAt(aug.Stage, aug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug.Name) : new int[] { AugmentManager.x.GetAugmentIndex(aug.at_type, aug.Name) });
         float mod = GetAugmentLevelModifier(aug.Level);
-        AugmentProjectile data = pa.GetProjectileData();
-        ap_projAugment.f_gravity -= data.f_gravity;
+        AugmentProjectile projData = pa.GetProjectileData();
+        AugmentProperties augData = aug.GetAugmentProperties();
+        ap_projAugment.f_gravity -= projData.f_gravity;
 
-        ap_projAugment.f_bulletScale -= data.f_bulletScale * mod;
+        ap_projAugment.f_bulletScale -= projData.f_bulletScale * mod;
+        foreach (Element e in aug.AugElement)
+        {
+            try
+            {
+                elementList.Remove(e);
+            }
+            catch { }
+        }
+
+        eo_element = elementList.ToArray();
+
+        i_shotsPerRound -= Mathf.RoundToInt(projData.i_shotsPerRound * mod);
+        f_shotSpeed -= augData.f_speed - (projData.f_gravity * 25);
+        f_timeBetweenUsage *= augData.f_speed;
 
     }
 
