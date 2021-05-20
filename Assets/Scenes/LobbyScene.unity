@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.060437262, g: 0.09646908, b: 0.2268049, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 8357237}
   - component: {fileID: 8357239}
   - component: {fileID: 8357238}
+  - component: {fileID: 8357240}
   m_Layer: 0
   m_Name: Monitor_LevelSelect
   m_TagString: Untagged
@@ -296,6 +297,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8357236}
   m_Mesh: {fileID: -5072188773914483968, guid: a9d8f6777f2c54b4095d7c9a0995ae34, type: 3}
+--- !u!65 &8357240
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8357236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.39795727, y: 0.43176565, z: 0.48974204}
+  m_Center: {x: 0.0000009536743, y: 0.000000059604645, z: 0.00000011920929}
 --- !u!1 &16654467
 GameObject:
   m_ObjectHideFlags: 0
@@ -72690,6 +72704,25 @@ Transform:
   m_Father: {fileID: 904761566}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1147135448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4238715221626264924, guid: a9d8f6777f2c54b4095d7c9a0995ae34,
+    type: 3}
+  m_PrefabInstance: {fileID: 1931700639}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1147135449
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147135448}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.39795732, y: 0.43176565, z: 0.48974204}
+  m_Center: {x: 0.00000047683716, y: 0, z: -0.000000059604645}
 --- !u!1001 &1153164439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -103283,7 +103316,7 @@ PrefabInstance:
     - target: {fileID: 3342240575966913476, guid: 487fa609e9418cf478b11fa0fa84192c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000030517578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3342240576200553068, guid: 487fa609e9418cf478b11fa0fa84192c,
         type: 3}
@@ -111628,7 +111661,7 @@ PrefabInstance:
     - target: {fileID: 3565259527052178646, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 207.5
+      value: 207.49994
       objectReference: {fileID: 0}
     - target: {fileID: 7211629806612318130, guid: 717dab0a65a3a0540b9b2485d386840c,
         type: 3}
