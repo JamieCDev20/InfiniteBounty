@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -114,6 +115,9 @@ public partial class GrooberAI : AIBase
 
     private void MoveTowardTarget()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         Vector3 _v_offset = t_target.transform.right * f_runType * f_flankDistance;
         if (f_runType == 0 || IsWithinFlankRangeQuery())
             mover.Move((AttackOnCooldownQuery() ? (transform.position - t_target.position) : (t_target.position - transform.position)).normalized);
@@ -123,11 +127,17 @@ public partial class GrooberAI : AIBase
 
     private void MoveTowardHorde()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         mover.Move((GrooberSquadManager.AverageGrooberPosition() - transform.position).normalized);
     }
 
     private void MoveAwayFromTarget()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         mover.Move((transform.position - t_target.position).normalized);
     }
 

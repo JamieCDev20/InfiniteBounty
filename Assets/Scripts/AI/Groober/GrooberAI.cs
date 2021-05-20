@@ -25,8 +25,7 @@ public partial class GrooberAI : AIBase
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
-            tree.DoTreeIteration();
+        tree.DoTreeIteration();
         f_currentTime -= Time.deltaTime;
     }
 
