@@ -64,4 +64,9 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
     {
         return false;
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -180,4 +180,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         return null;
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 }
