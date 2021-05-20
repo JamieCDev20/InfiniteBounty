@@ -163,11 +163,6 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
             x.playerCamera?.SetActive(val);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //throw new System.NotImplementedException();
-    }
-
     public NugManager GetLocalNugManager()
     {
         return nMan;

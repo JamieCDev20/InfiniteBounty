@@ -47,13 +47,6 @@ public class Enemy : MonoBehaviourPun, IPunObservable, IHitable
 
     }
 
-    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-
-
-    }
-
     public bool IsDead()
     {
         return i_currentHealth > 0;
