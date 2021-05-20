@@ -169,19 +169,29 @@ public class ProjectileTool : WeaponTool
             return false;
         ProjectileAugment pa = (ProjectileAugment)AugmentManager.x.GetProjectileAugmentAt(aug.Stage, aug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug.Name) : new int[] { AugmentManager.x.GetAugmentIndex(aug.at_type, aug.Name) });
         AugmentProjectile augData = pa.GetProjectileData();
-        i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level)));
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
         ap_projAugment.f_bulletScale += augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level));
         elementList.AddRange(aug.AugElement);
         eo_element = elementList.ToArray();
 
-        i_damage += aug.GetAugmentProperties().i_damage;
-        i_lodeDamage += aug.GetAugmentProperties().i_lodeDamage;
-
+        i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level)));
         f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25);
         f_timeBetweenUsage /= aug.GetAugmentProperties().f_speed;
         return true;
+    }
+
+    public override void RemoveStatChanges(Augment aug)
+    {
+        base.RemoveStatChanges(aug);
+
+        ProjectileAugment pa = (ProjectileAugment)AugmentManager.x.GetProjectileAugmentAt(aug.Stage, aug.Stage == AugmentStage.fused ? AugmentManager.x.GetIndicesByName(aug.Name) : new int[] { AugmentManager.x.GetAugmentIndex(aug.at_type, aug.Name) });
+        float mod = GetAugmentLevelModifier(aug.Level);
+        AugmentProjectile data = pa.GetProjectileData();
+        ap_projAugment.f_gravity -= data.f_gravity;
+
+        ap_projAugment.f_bulletScale -= data.f_bulletScale * mod;
+
     }
 
 }

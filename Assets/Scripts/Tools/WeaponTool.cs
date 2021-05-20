@@ -179,6 +179,7 @@ public class WeaponTool : ToolBase
         return -1;
     }
 
+    //add
     private void AddToAugmentProperties(AugmentProperties ap, float mod)
     {
         i_damage += Mathf.RoundToInt(mod * ap.i_damage);
@@ -188,19 +189,8 @@ public class WeaponTool : ToolBase
         f_speed += mod * ap.f_speed;
         f_heatsink += mod * ap.f_heatsink;
         f_knockback += mod * ap.f_knockback;
-        f_energyGauge += mod * ap.f_energyGauge;
-    }
-
-    private void RemoveToAugmentProperties(AugmentProperties ap, float mod)
-    {
-        i_damage -= Mathf.RoundToInt(mod * ap.i_damage);
-        i_lodeDamage -= Mathf.RoundToInt(mod * ap.i_lodeDamage);
-        f_weight -= mod * ap.f_weight;
-        f_recoil -= mod * ap.f_recoil;
-        f_speed -= mod * ap.f_speed;
-        f_heatsink -= mod * ap.f_heatsink;
-        f_knockback -= mod * ap.f_knockback;
-        f_energyGauge -= mod * ap.f_energyGauge;
+        f_energyGauge = Mathf.Clamp(f_energyGauge + mod * ap.f_energyGauge, 10, Mathf.Infinity);
+        
     }
 
     private void AddToPhysicalProperties(AugmentPhysicals ap)
@@ -218,17 +208,6 @@ public class WeaponTool : ToolBase
 
     }
 
-    private void RemoveToPhysicalProperties(AugmentPhysicals ap)
-    {
-        if (tr_trail != null)
-        {
-            //tr_trail.startWidth = ap.f_trWidth;
-            //tr_trail.endWidth = ap.f_trWidth;
-            //tr_trail.time = ap.f_trLifetime;
-            //dont know what these were originally
-        }
-    }
-
     protected void AddToAudioProperties(List<string[]> _sL_audio)
     {
         string[] use = _sL_audio[0];
@@ -242,11 +221,6 @@ public class WeaponTool : ToolBase
             LoadAndAddObjectArray<AudioClip>(ac_hitSound, hit);
     }
 
-    protected void RemoveToAudioProperties(List<string[]> _sL_audio)
-    {
-        //dont know how to undo these...
-    }
-
     protected void AddToExplosionProperties(AugmentExplosion ae, float mod)
     {
         ae_explode.b_impact = ae_explode.b_impact == true || ae.b_impact == true ? true : false;
@@ -257,6 +231,39 @@ public class WeaponTool : ToolBase
         ae_explode.i_lodeDamage += ae.i_lodeDamage;
         if (go_explarticles != null && go_explarticles.Length > 0)
             LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
+    }
+
+    //remove
+    private void RemoveToAugmentProperties(AugmentProperties ap, float mod)
+    {
+        Debug.Log("Removing augment properties");
+        Debug.Log(i_damage);
+        i_damage -= Mathf.RoundToInt(mod * ap.i_damage);
+        i_lodeDamage -= Mathf.RoundToInt(mod * ap.i_lodeDamage);
+        f_weight -= mod * ap.f_weight;
+        f_recoil -= mod * ap.f_recoil;
+        f_speed -= mod * ap.f_speed;
+        f_heatsink -= mod * ap.f_heatsink;
+        f_knockback -= mod * ap.f_knockback;
+        f_energyGauge -= mod * ap.f_energyGauge;
+        Debug.Log(i_damage);
+    }
+
+    private void RemoveToPhysicalProperties(AugmentPhysicals ap)
+    {
+        Debug.Log("Removing physical properties");
+        if (tr_trail != null)
+        {
+            //tr_trail.startWidth = ap.f_trWidth;
+            //tr_trail.endWidth = ap.f_trWidth;
+            //tr_trail.time = ap.f_trLifetime;
+            //dont know what these were originally
+        }
+    }
+
+    protected void RemoveToAudioProperties(List<string[]> _sL_audio)
+    {
+        //dont know how to undo these...
     }
 
     protected void RemoveToExplosionProperties(AugmentExplosion ae, float mod)
