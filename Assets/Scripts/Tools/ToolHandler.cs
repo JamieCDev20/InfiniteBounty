@@ -685,6 +685,8 @@ public class ToolHandler : SubjectBase
 
     public void SyncAllAugments()
     {
+        if (!view.IsMine)
+            return;
         for (int i = 0; i < 2; i++)
         {
             if (A_tools[i] == null)

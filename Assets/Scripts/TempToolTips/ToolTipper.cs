@@ -21,12 +21,14 @@ public class ToolTipper : MonoBehaviour
     }
 
     // Update is called once per frame
+
     void Update()
     {
         if (t_cam == null)
         {
             t_cam = NetworkedPlayer.x?.GetCamera()?.transform;
-            pim = NetworkedPlayer.x.GetPlayer().GetComponent<PlayerInputManager>();
+            pim = NetworkedPlayer.x.GetPlayer()?.GetComponent<PlayerInputManager>();
+
             return;
         }
         if (b_shouldShow)
