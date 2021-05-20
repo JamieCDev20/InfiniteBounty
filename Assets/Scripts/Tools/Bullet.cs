@@ -93,6 +93,11 @@ public class Bullet : MonoBehaviour, IPoolable
         BecomeCollidable(_c_playerCol);
     }
 
+    public void SetPhysicsMat(PhysicMaterial mat)
+    {
+        c_myCollider.material = mat;
+    }
+
     private void Update()
     {
         if (rb.velocity.sqrMagnitude < f_minimumSpeedForSound * f_minimumSpeedForSound)

@@ -48,7 +48,6 @@ public class CameraRespectWalls : MonoBehaviour
                 transform.localPosition = v_targetPos + v_currentOffset;
         }
 
-        print(b_active + " camera");
     }
 
     private void SceneLoaded(Scene arg0, LoadSceneMode arg1)

@@ -66,7 +66,6 @@ public class ProjectileTool : WeaponTool
             pa_anim?.GunRecoil(b_isLeftHandWeapon, f_recoil, f_timeBetweenUsage);
 
             PlayAudio(ac_activationSound);
-            f_currentHeat += f_heatPerShot;
         }
     }
 
@@ -81,7 +80,9 @@ public class ProjectileTool : WeaponTool
             f_currentHeat -= Time.deltaTime * f_heatsink;
 
         if (f_currentHeat >= Mathf.Clamp(f_energyGauge, 10, Mathf.Infinity))
+        {
             StartOverheating();
+        }
 
         if (f_currentHeat <= 0)
             EndOverHeat();
@@ -104,7 +105,6 @@ public class ProjectileTool : WeaponTool
         ps_overHeatEffects?.Stop();
         b_isOverheating = false;
     }
-
 
     public void DoHeatSound()
     {
@@ -139,11 +139,13 @@ public class ProjectileTool : WeaponTool
         }
         for (int i = 0; i < i_shotsPerRound; i++)
         {
+            f_currentHeat += f_heatPerShot;
             _v_direction = Quaternion.AngleAxis(Random.Range(-spread, spread), up) * _v_direction;
             _v_direction = Quaternion.AngleAxis(Random.Range(-spread, spread), right) * _v_direction;
 
             Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox[0], t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
             newBullet.Setup(Mathf.RoundToInt(i_damage / i_shotsPerRound) * 2, Mathf.RoundToInt(i_lodeDamage / i_shotsPerRound) * 2, c_playerCollider, ap_projAugment, ae_explode, eo_element, c_trail);
+            newBullet.SetPhysicsMat(pm_physicsMat);
             newBullet.MoveBullet(_v_direction, f_shotSpeed);
         }
     }
@@ -175,9 +177,12 @@ public class ProjectileTool : WeaponTool
         elementList.AddRange(aug.AugElement);
         eo_element = elementList.ToArray();
 
+        if (augData.pm_phys != "")
+            pm_physicsMat = Resources.Load<PhysicMaterial>($"{augData.pm_phys}");
+
         i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level)));
-        f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25);
-        f_timeBetweenUsage /= aug.GetAugmentProperties().f_speed;
+        f_shotSpeed = Mathf.Clamp(f_shotSpeed + aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25), 1, 100000000000);
+        f_timeBetweenUsage /= aug.GetAugmentProperties().f_speed > 0 ? aug.GetAugmentProperties().f_speed : 1;
         return true;
     }
 
@@ -205,7 +210,7 @@ public class ProjectileTool : WeaponTool
 
         i_shotsPerRound -= Mathf.RoundToInt(projData.i_shotsPerRound * mod);
         f_shotSpeed -= augData.f_speed - (projData.f_gravity * 25);
-        f_timeBetweenUsage *= augData.f_speed;
+        f_timeBetweenUsage *= Mathf.Clamp(augData.f_speed, 0.1f, 10000);
 
     }
 
