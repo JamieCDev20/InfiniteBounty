@@ -180,7 +180,7 @@ public class ProjectileTool : WeaponTool
         i_lodeDamage += aug.GetAugmentProperties().i_lodeDamage;
 
         f_shotSpeed += aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25);
-
+        f_timeBetweenUsage /= aug.GetAugmentProperties().f_speed;
         return true;
     }
 
