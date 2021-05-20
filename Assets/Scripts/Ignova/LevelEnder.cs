@@ -28,7 +28,7 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
     [SerializeField] private AudioClip ac_buttonPressed;
     [SerializeField] private AudioClip ac_shipArriving;
     private AudioSource as_source;
-
+    [SerializeField] private ParticleSystem ps_signalParticleEffect;
 
     private void Start()
     {
@@ -44,14 +44,18 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
     public void Interacted(Transform interactor)
     {
         if (!b_active)
-            photonView.RPC(nameof(Countdown), RpcTarget.All, Random.Range(0, 999999));
+            photonView.RPC(nameof(Countdown), RpcTarget.All, Random.Range(0, 999999), PhotonNetwork.NickName);
     }
 
     #endregion
 
     [PunRPC]
-    private IEnumerator Countdown(int _i_seed)
+    private IEnumerator Countdown(int _i_seed, string _s_nickName)
     {
+        InfoText.x?.OnNotify(new InfoTextEvent(_s_nickName + " has called your ship for pickup!"));
+
+        ps_signalParticleEffect.Play();
+
         as_source.PlayOneShot(ac_buttonPressed);
         b_active = true;
         float _f_currentTime = 0;
@@ -78,6 +82,8 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
                 a_shipAnimator.SetBool("Entry", true);
                 as_source.PlayOneShot(ac_shipArriving);
                 _b_shouldShip = false;
+                InfoText.x?.OnNotify(new InfoTextEvent("Your ship is entering the atmosphere now."));
+                ps_signalParticleEffect.Stop();
             }
 
             yield return new WaitForEndOfFrame();
