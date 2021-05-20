@@ -97,23 +97,20 @@ public class FuseSaver : MonoBehaviour, ObserverBase
                 if(fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.fused)
                 {
                     _savedData = Utils.AddToArray(_savedData, fuseEvent.SavedAug);
-                    if(!new List<AugmentSave>(_savedData).Contains(fuseEvent.SavedAug))
+                    switch (fuseEvent.SavedAug.SavedAugment.augType)
                     {
-                        switch (fuseEvent.SavedAug.SavedAugment.augType)
-                        {
-                            case AugmentType.projectile:
-                                fusedProj = Utils.AddToArray(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                                fusedProj[fusedProj.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
-                                break;
-                            case AugmentType.cone:
-                                fusedCone = Utils.AddToArray(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                                fusedCone[fusedCone.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
-                                break;
-                            case AugmentType.standard:
-                                fusedAugs = Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
-                                fusedAugs[fusedAugs.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
-                                break;
-                        }
+                        case AugmentType.projectile:
+                            fusedProj = Utils.AddToArray(fusedProj, AugmentManager.x.GetProjectileAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                            fusedProj[fusedProj.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
+                            break;
+                        case AugmentType.cone:
+                            fusedCone = Utils.AddToArray(fusedCone, AugmentManager.x.GetConeAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                            fusedCone[fusedCone.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
+                            break;
+                        case AugmentType.standard:
+                            fusedAugs = Utils.AddToArray(fusedAugs, AugmentManager.x.GetStandardAugmentAt(AugmentStage.fused, fuseEvent.SavedAug.SavedAugment.indicies));
+                            fusedAugs[fusedAugs.Length - 1].Level = fuseEvent.SavedAug.SavedAugment.level;
+                            break;
                     }
                     SaveFusedAugments();
                 }
