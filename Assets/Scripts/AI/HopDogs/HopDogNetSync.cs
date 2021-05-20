@@ -21,7 +21,6 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        /*
         v_rot = transform.eulerAngles;
         if (gameObject.activeInHierarchy)
             send = !send;
@@ -32,10 +31,7 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (send)
             {
-                stream.SendNext(transform.position.x);
-                stream.SendNext(transform.position.y);
-                stream.SendNext(transform.position.z);
-
+                stream.SendNext(transform.position);
                 stream.SendNext(v_rot.y);
             }
             else
@@ -53,16 +49,13 @@ public class HopDogNetSync : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                v_pos.x = Mathf.Lerp(v_pos.x, (float)stream.ReceiveNext(), 0.3f);
-                v_pos.y = Mathf.Lerp(v_pos.y, (float)stream.ReceiveNext(), 0.3f);
-                v_pos.z = Mathf.Lerp(v_pos.z, (float)stream.ReceiveNext(), 0.3f);
+                v_pos = Vector3.Lerp(v_pos, (Vector3)stream.ReceiveNext(), 0.3f);
 
                 v_rot.y = (float)stream.ReceiveNext();
 
             }
 
         }
-        */
     }
 
     private void LateUpdate()
