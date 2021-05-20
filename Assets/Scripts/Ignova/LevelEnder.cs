@@ -35,6 +35,9 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
         as_source = GetComponent<AudioSource>();
         go_looker = new GameObject("EndLevelLooker");
         go_looker.transform.position = transform.position;
+
+        t_progressBar.localPosition = new Vector3(0, -1, 0);
+        t_progressBar.transform.localScale = new Vector3(1, 0, 1);
     }
 
     #region Interactions
