@@ -219,7 +219,7 @@ public class LodeBase : Enemy, IHitable
 
     public bool IsNug()
     {
-        return false;
+        return true;
     }
 
 }
