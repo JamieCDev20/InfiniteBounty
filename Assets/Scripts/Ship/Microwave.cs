@@ -151,6 +151,18 @@ public class Microwave : SubjectBase, IInteractible
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.None, false);
             go_listCanvas.SetActive(false);
             go_detailsCanvas.SetActive(true);
+            switch (aug_slotA.at_type)
+            {
+                case AugmentType.projectile:
+                    apd.UpdatePropertyText(ProjectileAugment.Combine((ProjectileAugment)aug_slotA, (ProjectileAugment)aug_slotB));
+                    break;
+                case AugmentType.cone:
+                    apd.UpdatePropertyText(ConeAugment.Combine((ConeAugment)aug_slotA, (ConeAugment)aug_slotB));
+                    break;
+                case AugmentType.standard:
+                    apd.UpdatePropertyText(Augment.Combine(aug_slotA, aug_slotB));
+                    break;
+            }
             RevealFuseButton();
         }
         else
