@@ -102,19 +102,19 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
             }
 
             anim.SetTrigger("DoorClose");
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             StartedSitting();
             _pa.StartWalking();
-            _pa.SetShootability(true);
-            yield return new WaitForSeconds(1);            
+            _pa.SetShootability(true);            
         }
     }
 
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove)
     {
-        Transform _t = Camera.main.transform;        
-            Camera.main.GetComponent<CameraRespectWalls>().Stop();
+        Transform _t = Camera.main.transform;
+        Camera.main.GetComponent<CameraRespectWalls>().Stop();
+
         float t = 0;
 
         Vector3 start = _t.position;

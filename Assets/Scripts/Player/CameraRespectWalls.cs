@@ -39,14 +39,16 @@ public class CameraRespectWalls : MonoBehaviour
 
     private void Update()
     {
-        if (!b_active)
-            return;
+        if (b_active)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(t_root.position, t_root.TransformPoint(v_targetPos) - t_root.position, out hit, f_targetDistance, lm_playerMask))
+                transform.localPosition = Vector3.Lerp(transform.localPosition, (v_targetPos.normalized * (hit.distance - 0.35f)) + v_currentOffset, 0.9f);
+            else
+                transform.localPosition = v_targetPos + v_currentOffset;
+        }
 
-        RaycastHit hit;
-        if (Physics.Raycast(t_root.position, t_root.TransformPoint(v_targetPos) - t_root.position, out hit, f_targetDistance, lm_playerMask))
-            transform.localPosition = Vector3.Lerp(transform.localPosition, (v_targetPos.normalized * (hit.distance - 0.35f)) + v_currentOffset, 0.9f);
-        else
-            transform.localPosition = v_targetPos + v_currentOffset;
+        print(b_active + " camera");
     }
 
     private void SceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -85,6 +87,7 @@ public class CameraRespectWalls : MonoBehaviour
     {
         HUDController.x.StartShowing();
         b_active = true;
+        transform.localEulerAngles = Vector3.right * 5;
     }
 
     internal void Stop()
