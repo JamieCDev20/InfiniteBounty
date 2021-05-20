@@ -21,6 +21,8 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private Canvas microwaveCanvas;
     [SerializeField] private Button fuseButton;
     [SerializeField] private AugmentFuser fuser;
+    [SerializeField] private GameObject go_detailsCanvas;
+    [SerializeField] private GameObject go_listCanvas;
     [SerializeField] private GameObject go_augButtonA;
     [SerializeField] private GameObject go_augButtonB;
 
@@ -147,6 +149,8 @@ public class Microwave : SubjectBase, IInteractible
         if (aug_slotA != null && aug_slotB != null)
         {
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.None, false);
+            go_listCanvas.SetActive(false);
+            go_detailsCanvas.SetActive(true);
             RevealFuseButton();
         }
         else
@@ -199,7 +203,8 @@ public class Microwave : SubjectBase, IInteractible
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, type, false, _slotID ? (aug_slotB.Name, aug_slotB.Level) : (aug_slotA.Name, aug_slotA.Level));
         else
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
-
+        go_detailsCanvas.SetActive(false);
+        go_listCanvas.SetActive(true);
         UnrevealFuseButton();
     }
 
