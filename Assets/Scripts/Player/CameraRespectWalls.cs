@@ -20,7 +20,7 @@ public class CameraRespectWalls : MonoBehaviour
     private Vector3 v_targetPos;
     private Transform t_root;
     private Vector3 v_currentOffset;
-    private bool b_active;
+    private bool b_active = true;
 
     #endregion
 
