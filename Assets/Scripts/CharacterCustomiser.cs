@@ -52,7 +52,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
             ac_user.GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<ToolTip>().enabled = false;
             pim.b_shouldPassInputs = false;
-
+            HUDController.x.StopShowing();
 
 
             Cursor.lockState = CursorLockMode.None;
@@ -92,6 +92,7 @@ public class CharacterCustomiser : MonoBehaviourPunCallbacks, IInteractible
         b_isBeingUsed = false;
         GetComponent<ToolTip>().enabled = true;
         ac_user.GetComponent<Rigidbody>().isKinematic = false;
+        HUDController.x.StartShowing();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
