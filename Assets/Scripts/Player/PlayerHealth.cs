@@ -114,8 +114,17 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         if (!view.IsMine || isDead || NetworkedPlayer.x.GetPlayer() != transform)
             return;
 
-        if (damage != 0)
+        if (damage >= 0)
+        {
             as_mainAudioSource.PlayOneShot(acA_hurtClips[Random.Range(0, acA_hurtClips.Length)]);
+
+            for (int i = 0; i < mA_mySkinRenderers.Length; i++)
+                mA_mySkinRenderers[i].material.SetFloat("DamageFlash", 1);
+            for (int i = 0; i < mA_myRenderers.Length; i++)
+                mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
+
+            StartCoroutine(DamageFlash());
+        }
 
         f_currentHealth = Mathf.Clamp(f_currentHealth - damage, -1, i_maxHealth);
         HUDController.x.SetHealthBarValue(f_currentHealth, i_maxHealth);
@@ -127,12 +136,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IHitable
         b_canRegen = false;
         f_currentCount = f_afterHitRegenTime;
 
-        for (int i = 0; i < mA_mySkinRenderers.Length; i++)
-            mA_mySkinRenderers[i].material.SetFloat("DamageFlash", 1);
-        for (int i = 0; i < mA_myRenderers.Length; i++)
-            mA_myRenderers[i].material.SetFloat("DamageFlash", 1);
-
-        StartCoroutine(DamageFlash());
     }
     private IEnumerator DamageFlash()
     {
