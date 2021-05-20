@@ -189,7 +189,7 @@ public class WeaponTool : ToolBase
         f_speed += mod * ap.f_speed;
         f_heatsink += mod * ap.f_heatsink;
         f_knockback += mod * ap.f_knockback;
-        f_energyGauge = Mathf.Clamp(f_energyGauge + mod * ap.f_energyGauge, 10, Mathf.Infinity);
+        f_energyGauge += mod * ap.f_energyGauge;
         
     }
 
