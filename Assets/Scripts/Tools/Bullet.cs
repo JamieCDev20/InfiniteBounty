@@ -36,7 +36,6 @@ public class Bullet : MonoBehaviour, IPoolable
     private AudioSource as_source;
     [SerializeField] private float f_knockBack = 5;
     [SerializeField] ElementalObject elements;
-    
 
     public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae, Element[] _elem, Color[] _trKeys)
     {
@@ -152,6 +151,16 @@ public class Bullet : MonoBehaviour, IPoolable
 
         if (tr_bulletTrail)
             tr_bulletTrail.gameObject.transform.parent = null;
+
+        IElementable ie = collision.gameObject.GetComponent<IElementable>();
+
+        if (ie != null)
+        {
+            ie.ReceiveElements(elements.GetActiveElements());
+            elements.ReceiveElements(ie.GetActiveElements());
+            ie.ActivateElement(true);
+            elements.ActivateElement(true);
+        }
 
         Die();
     }
