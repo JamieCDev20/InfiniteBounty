@@ -73,7 +73,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
 
         NetworkManager.x.SetCanLoad(true);
         if (scene.name.Contains("obby"))
-            FindObjectOfType<ToolRack>().Init();
+            FindObjectOfType<ToolRack>()?.Init();
     }
 
     public override void OnJoinedRoom()
