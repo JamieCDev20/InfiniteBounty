@@ -30,6 +30,11 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject go_miniboss;
     private List<int> iL_minibossZones = new List<int>();
 
+    [Header("Burrowing")]
+    [SerializeField] private GameObject go_burrowingPrefab;
+    private List<GameObject> goL_burrowingMarkers = new List<GameObject>();
+
+
     private IEnumerator Start()
     {
         x = this;
@@ -38,9 +43,15 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
         iL_minibossZones = new List<int>();
         for (int i = 0; i < ds_currentDifficulty.i_numberOfMiniBosses; i++)
-            iL_minibossZones.Add(Random.Range(0, eszA_allEnemyZones.Length));
+            iL_minibossZones.Add(UnityEngine.Random.Range(0, eszA_allEnemyZones.Length));
         //Adds the middle arena to the list
         iL_minibossZones.Add(7);
+
+        for (int i = 0; i < 40; i++)
+        {
+            goL_burrowingMarkers.Add(Instantiate(go_burrowingPrefab, transform));
+            goL_burrowingMarkers[i].SetActive(false);
+        }
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -86,7 +97,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private IEnumerator CheckZoneForPlayers()
     {
-        yield return new WaitForSeconds(Random.Range(v_timeBetweenWaves.x, v_timeBetweenWaves.y) * ds_currentDifficulty.f_spawnFrequencyMult);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(v_timeBetweenWaves.x, v_timeBetweenWaves.y) * ds_currentDifficulty.f_spawnFrequencyMult);
         bool _b_spawnedWave = false;
 
         for (int i = 0; i < eszA_allEnemyZones.Length; i++)
@@ -123,25 +134,29 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     private GameObject PickRandomGroundWaveEnemy()
     {
-        return goA_groundWaveEnemies[Random.Range(0, goA_groundWaveEnemies.Length)];
+        return goA_groundWaveEnemies[UnityEngine.Random.Range(0, goA_groundWaveEnemies.Length)];
     }
     private GameObject PickRandomFlyingWaveEnemy()
     {
-        return goA_flyingWaveEnemies[Random.Range(0, goA_flyingWaveEnemies.Length)];
+        return goA_flyingWaveEnemies[UnityEngine.Random.Range(0, goA_flyingWaveEnemies.Length)];
     }
 
     internal void SpawnEnemy(GameObject _go_enemyToSpawn, Vector3 _v_spawnPos, bool _b_isFlyingEnemy)
     {
-        photonView.RPC(nameof(SpawnEnemyRPC), RpcTarget.MasterClient, _go_enemyToSpawn.name, _v_spawnPos);
+        photonView.RPC(nameof(SpawnEnemyRPC), RpcTarget.MasterClient, _go_enemyToSpawn.name, _v_spawnPos, _b_isFlyingEnemy);
     }
 
     [PunRPC]
-    private void SpawnEnemyRPC(string _go_enemyToSpawnName, Vector3 _v_spawnPos)
+    private IEnumerator SpawnEnemyRPC(string _go_enemyToSpawnName, Vector3 _v_spawnPos, bool _b_isFlying)
     {
-        print(i_numberOfEnemies + "/" + ds_currentDifficulty.f_maxNumberOfEnemies);
+        if (!_b_isFlying)
+            StartCoroutine(PlaceTunnelingMarker(_v_spawnPos));
+
+        yield return new WaitForSeconds(2);
+
         if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)// || _go_enemyToSpawn == go_miniboss)
         {
-            PhotonNetwork.Instantiate(_go_enemyToSpawnName, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
+            PhotonNetwork.Instantiate(_go_enemyToSpawnName, _v_spawnPos, new Quaternion(0, UnityEngine.Random.value, 0, UnityEngine.Random.value));
             i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
             Collider[] _cA = Physics.OverlapSphere(_v_spawnPos, 3, lm_notEnemyLayer);
@@ -151,6 +166,17 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         }
     }
 
+    private IEnumerator PlaceTunnelingMarker(Vector3 _v_spawnPos)
+    {
+        GameObject _go = goL_burrowingMarkers[0];
+        goL_burrowingMarkers.RemoveAt(0);
+        _go.transform.position = _v_spawnPos;
+        _go.SetActive(true);
+
+        yield return new WaitForSeconds(5);
+
+        goL_burrowingMarkers.Add(_go);
+    }
 
     internal void EnemyDied(bool _b_isBoss)
     {
