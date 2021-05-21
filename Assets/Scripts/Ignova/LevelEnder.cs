@@ -101,7 +101,7 @@ public class LevelEnder : MonoBehaviourPun, IInteractible
         go_looker.transform.rotation = new Quaternion(0, Random.value, 0, Random.value);
         for (int i = 0; i < _f_enemyCount; i++)
         {
-            EnemySpawner.x.SpawnEnemy(goA_grooberTypes[Random.Range(0, goA_grooberTypes.Length)], (transform.position + go_looker.transform.forward * f_grooberSpawnDistance) + new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f) + Vector3.up), false);
+            EnemySpawner.x.SpawnEnemy(goA_grooberTypes[Random.Range(0, goA_grooberTypes.Length)], (transform.position + go_looker.transform.forward * f_grooberSpawnDistance) + new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f)) + Vector3.up, false);
             go_looker.transform.Rotate(Vector3.up * 3);
         }
 
