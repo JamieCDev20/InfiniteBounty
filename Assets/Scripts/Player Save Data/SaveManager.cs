@@ -33,6 +33,7 @@ public class SaveManager : SubjectBase, ObserverBase
         CreateSaveData();
         FindObjectOfType<Workbench>().Init(this);
         AddObserver(FindObjectOfType<FuseSaver>());
+        FindObjectOfType<ToolRack>().Init();
         DontDestroyOnLoad(gameObject);
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ToolRack : Shop
 {
@@ -12,6 +13,7 @@ public class ToolRack : Shop
     [SerializeField] private List<Transform> L_weaponTextPos;
     [SerializeField] private List<Transform> L_mobTextPos;
     [SerializeField] private Material m_silhouette;
+    [SerializeField] private GameObject I_bbSymbol;
     [SerializeField] private TMP_Text txt_exampleText;
     [SerializeField] private Vector3 t_textOffset;
     [SerializeField] private float f_maxShake;
@@ -27,7 +29,7 @@ public class ToolRack : Shop
     private List<int> L_mobilityRackIDs = new List<int>();
     private bool b_currentlyShaking = false;
 
-    private void OnEnable()
+    public void Init()
     {
         SetToolInRack(tl_weaponTools, L_weaponToolPos);
         SetToolInRack(tl_mobTools, L_mobToolPos);
@@ -94,6 +96,10 @@ public class ToolRack : Shop
                 moneyText.gameObject.transform.parent = tb.transform;
                 moneyText.gameObject.transform.position = isWeapon ? L_weaponTextPos[i].position : L_mobTextPos[i].position;
                 moneyText.text = tb.Cost.ToString();
+                GameObject bountyBucks = Instantiate(I_bbSymbol);
+                bountyBucks.transform.localScale = Vector3.one;// * 0.9f;
+                bountyBucks.transform.parent = moneyText.transform;
+                bountyBucks.transform.position = new Vector3(moneyText.transform.position.x - moneyText.renderedWidth, moneyText.transform.position.y, moneyText.transform.position.z);
             }
 
             if (isWeapon)
