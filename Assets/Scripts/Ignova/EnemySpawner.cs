@@ -138,10 +138,9 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SpawnEnemyRPC(string _go_enemyToSpawnName, Vector3 _v_spawnPos)
     {
-        if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)// || _go_enemyToSpawn == go_miniboss)
+        if (TagManager.x.GetTagSet("Enemy").Count < ds_currentDifficulty.f_maxNumberOfEnemies)
         {
             PhotonNetwork.Instantiate(_go_enemyToSpawnName, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
-            i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
 
             Collider[] _cA = Physics.OverlapSphere(_v_spawnPos, 3, lm_notEnemyLayer);
             for (int i = 0; i < _cA.Length; i++)
@@ -153,9 +152,6 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     internal void EnemyDied(bool _b_isBoss)
     {
-        //if (PhotonNetwork.IsMasterClient)
-        i_numberOfEnemies = TagManager.x.GetTagSet("Enemy").Count;
-
         if (i_numberOfEnemies < 5)
             DynamicAudioManager.x.EndCombat();
 
