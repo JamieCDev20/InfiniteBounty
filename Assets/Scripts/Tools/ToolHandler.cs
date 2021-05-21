@@ -35,6 +35,7 @@ public class ToolHandler : SubjectBase
     private PlayerHealth ph_health;
     private PhotonView view;
     private ToolSlot ts_removeToolSlot;
+    private ToolSlot ts_global;
     private int i_removableRackSlot;
     private Rigidbody rb;
     private bool b_ableToBuy = true;
@@ -211,17 +212,18 @@ public class ToolHandler : SubjectBase
                 ts_removeToolSlot = ts;
                 if (ets != null)
                 {
-                    if (A_tools[(int)ts] == null)
+                    if (A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts] == null)
                     {
                         return true;
                     }
-                    Debug.Log("Empty Rack Slot: " + ets.RackID + " Tool RackID: " + A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts].RackID);
-                    //if(ets.Slot == ToolSlot.moblility)
-                    if (A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts].RackID == ets.RackID)
+                    if (ets.Slot == ToolSlot.moblility)
+                        ts = ToolSlot.moblility;
+                    if (A_tools[(int)ts].RackID == ets.RackID)
                     {
-                        CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
+                        Debug.Log(ets.Slot + " " + ts);
+                        CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, ts == ToolSlot.moblility ? false : true, ts);
                         ToolRack tr = (ToolRack)sr;
-                        tr.ReturnToRack(ets.RackID, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false, false);
+                        tr.ReturnToRack(ets.RackID, ts == ToolSlot.moblility ? false : true, false);
                         ac_changer.SetArmActive((int)ts, true);
                         SendSave(-1, ts);
                         return true;
@@ -387,6 +389,13 @@ public class ToolHandler : SubjectBase
         //}
 
     }
+
+    public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType, ToolSlot _globalTs)
+    {
+        ts_global = _globalTs;
+        CallSwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
+    }
+
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)
     {
         SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
@@ -446,7 +455,7 @@ public class ToolHandler : SubjectBase
                 AddTool(ToolSlot.moblility, _i_toolID, tr);
                 break;
             case ToolSlot.rack:
-                RemoveTool(ts_removeToolSlot);
+                RemoveTool(ts_global);
                 break;
             default:
                 break;
@@ -504,6 +513,7 @@ public class ToolHandler : SubjectBase
         {
             A_tools[(int)_ts_slot].gameObject.SetActive(false);
             A_tools[(int)_ts_slot] = null;
+            Debug.Log(_ts_slot);
         }
     }
 
