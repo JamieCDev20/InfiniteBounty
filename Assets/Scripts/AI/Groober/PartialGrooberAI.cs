@@ -90,7 +90,7 @@ public partial class GrooberAI : AIBase
             yield return new WaitForSeconds(f_attackStartup);
             f_currentTime = f_timeBetweenAttacks + f_attackStartup;
 
-            foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, 1f))
+            foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, transform.localScale.y))
             {
                 if (item.transform == transform)
                     continue;
