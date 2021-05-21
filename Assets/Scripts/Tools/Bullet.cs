@@ -107,6 +107,8 @@ public class Bullet : MonoBehaviour, IPoolable
     {
         if (rb.velocity.sqrMagnitude < f_minimumSpeedForSound * f_minimumSpeedForSound)
             as_source.Pause();
+
+        transform.forward = rb.velocity;
     }
 
     private void BecomeCollidable(Collider playerCollider)
