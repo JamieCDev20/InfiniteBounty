@@ -123,7 +123,7 @@ public class ProjectileTool : WeaponTool
     IEnumerator FireCoroutine(Vector3 _v_for)
     {
         yield return new WaitForSeconds(Time.deltaTime * 2);
-        if (pim.GetToolBools().b_LToolHold)
+        if ((b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold))
             SpawnBullet(_v_for);
     }
 

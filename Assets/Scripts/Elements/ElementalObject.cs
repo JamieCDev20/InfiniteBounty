@@ -8,6 +8,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     [SerializeField] private List<Element> eL_activeElements = new List<Element>(); //The elements on this object
     [SerializeField] private List<Element> eL_elementImmunities = new List<Element>(); //The elemental immunities of this object
     [SerializeField] private Mesh mesh;
+    [SerializeField] private bool immuneToFireDamage = false;
 
     private bool[] bA_statuses = new bool[7] 
     //Goo   Hydro   Tasty Thunder Boom    Fire  Lava
@@ -83,6 +84,11 @@ public class ElementalObject : MonoBehaviour, IElementable
     {
         running = true;
         StartCoroutine(EOFCleanup());
+        float t = Time.realtimeSinceStartup;
+        for (int i = 0; i < starteds.Length; i++)
+        {
+            starteds[i] = t;
+        }
     }
 
     private void OnDisable()
@@ -186,7 +192,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void CalculateDamages()
     {
         float t = Time.realtimeSinceStartup;
-        if (bA_statuses[(int)Element.Fire])
+        if (bA_statuses[(int)Element.Fire] && !immuneToFireDamage)
         {
             if (t - lastTook[5] > ElementManager.x.fireInterval)
             {
