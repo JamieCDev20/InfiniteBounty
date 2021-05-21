@@ -151,7 +151,10 @@ public class ElementalObject : MonoBehaviour, IElementable
     private void Init(Element _startingElement)
     {
         if (!eL_activeElements.Contains(_startingElement))
+        {
             eL_activeElements.Add(_startingElement);
+            bA_statuses[(int)_startingElement] = true;
+        }
     }
 
     private IEnumerator EOFCleanup()
@@ -175,7 +178,8 @@ public class ElementalObject : MonoBehaviour, IElementable
         float t = Time.realtimeSinceStartup;
         for (int i = 0; i < starteds.Length - 1; i++)
         {
-            bA_statuses[i] = t - starteds[i] < ElementManager.x?.durations[i];
+            bA_statuses[i] = eL_activeElements.Contains((Element)i);
+            //bA_statuses[i] = t - starteds[i] < ElementManager.x?.durations[i];
         }
     }
 
@@ -200,11 +204,15 @@ public class ElementalObject : MonoBehaviour, IElementable
             {
                 if (goA_effects[i] == null)
                 {
-                    goA_effects[i] = PoolManager.x.SpawnObject(ElementManager.x.effects[i], transform);
-                    goA_effects[i].transform.localPosition = Vector3.zero;
-                    ParticleSystem ps = goA_effects[i].GetComponent<ParticleSystem>();
-                    ParticleSystem.ShapeModule sh = ps.shape;
-                    sh.mesh = mesh;
+                    if (ElementManager.x.effects[i])
+                    {
+                        goA_effects[i] = PoolManager.x.SpawnObject(ElementManager.x.effects[i], transform);
+                        goA_effects[i].transform.localPosition = Vector3.zero;
+                        ParticleSystem ps = goA_effects[i].GetComponent<ParticleSystem>();
+                        ParticleSystem.ShapeModule sh = ps.shape;
+                        sh.mesh = mesh;
+
+                    }
                 }
             }
             else
@@ -368,14 +376,20 @@ public class ElementalObject : MonoBehaviour, IElementable
         if (add)
         {
             if (!eL_activeElements.Contains(_elem))
+            {
                 eL_activeElements.Add(_elem);
+                bA_statuses[(int)_elem] = true;
+            }
             activated -= activations[(int)_elem];
             activated += activations[(int)_elem];
         }
         else
         {
             if (eL_activeElements.Contains(_elem))
+            {
                 eL_activeElements.Remove(_elem);
+                bA_statuses[(int)_elem] = false;
+            }
             activated -= activations[(int)_elem];
         }
     }
