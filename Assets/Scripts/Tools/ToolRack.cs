@@ -63,7 +63,6 @@ public class ToolRack : Shop
             else
                 L_utilityMaterial.Add(tb.GetComponentInChildren<MeshRenderer>().sharedMaterials);
             // Unpurchased weapons set their material to a silhouette
-            ApplyMaterials(tb, i);
             tb.RackID = toolRackID;
 
             parent.ToolID = tb.ToolID;
@@ -85,6 +84,7 @@ public class ToolRack : Shop
                 parent.gameObject.SetActive(false);
             }
             tb.Purchased = CheckSavePurchased(tb.ToolID, toolRackID, isWeapon);
+            ApplyMaterials(tb, i);
             if (!tb.Purchased)
             {
                 TMP_Text moneyText = Instantiate<TMP_Text>(txt_exampleText);
@@ -113,7 +113,6 @@ public class ToolRack : Shop
                     dupeMoney.gameObject.transform.position = L_weaponTextPos[i * 2 + 1].position;
                     dupeMoney.text = dupe.Cost.ToString();
                 }
-                ApplyMaterials(dupe, i);
 
                 L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
                 L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
@@ -132,6 +131,8 @@ public class ToolRack : Shop
                     dupe.gameObject.SetActive(true);
                     L_weaponToolPos[i * 2 + 1].gameObject.SetActive(false);
                 }
+                ApplyMaterials(dupe, i);
+
                 L_weaponRackIDs.Add(toolRackID);
                 dupe.enabled = false;
             }

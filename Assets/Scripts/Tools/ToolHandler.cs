@@ -285,7 +285,7 @@ public class ToolHandler : SubjectBase
                                     //TutorialManager Section
                                     TutorialManager.x.PickedUpBackPack();
                                     SendSave(currentNugs, ToolSlot.moblility, tb.RackID, false);
-                                    Notify(new PurchaseToolEvent(A_tools[(int)ts].ToolID, mobRackID, false));
+                                    Notify(new PurchaseToolEvent(A_tools[(int)ToolSlot.moblility].ToolID, mobRackID, false));
                                     return true;
                             }
                         }
