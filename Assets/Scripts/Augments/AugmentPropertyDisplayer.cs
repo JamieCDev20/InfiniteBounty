@@ -545,18 +545,15 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             PlaceAugmentProperties(go_propertyText).text = "Explosion Radius " + (ae.f_radius * mod).ToString("F1");
 
         }
-        if (ae.b_impact)
+        if (ae.go_explarticles != null)
         {
-            PlaceAugmentProperties(go_propertyText).text = "Impact Explosion";
+            PlaceAugmentProperties(go_propertyText).text = "Explosive";
+        }
+        if (ae.f_detonationTime != 0)
+        {
+            PlaceAugmentProperties(go_propertyText).text = "Lifetime " + ae.f_detonationTime.ToString("F1");
+        }
 
-        }
-        else
-        {
-            if (ae.f_detonationTime != 0)
-            {
-                PlaceAugmentProperties(go_propertyText).text = "Lifetime " + ae.f_detonationTime.ToString("F1");
-            }
-        }
 
         if (_aug is ProjectileAugment)
         {
@@ -581,7 +578,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             if (augmentProperties.f_gravity != 0)
                 PlaceAugmentProperties(go_propertyText).text = "Bullet Weight " + (augmentProperties.f_gravity * mod).ToString("F1");
 
-            if(augmentProperties.pm_phys == "Bouncy")
+            if (augmentProperties.pm_phys == "Bouncy")
                 PlaceAugmentProperties(go_propertyText).text = "Bouncy Bullets";
 
         }
