@@ -151,11 +151,11 @@ public class Bullet : MonoBehaviour, IPoolable
                 _iSuck.GetRigidbody().AddForce(transform.forward * f_knockBack);
         }
 
-        if (go_hitEffect != null)
-        {
-            // Apply explosion augments
-            SpawnOnHit(go_hitEffect, collision.contacts[0].normal);
-        }
+
+
+
+        SpawnOnHit(go_hitEffect, collision.contacts[0].normal);
+
 
 
         if (b_shouldDieOnCollide)
@@ -182,8 +182,8 @@ public class Bullet : MonoBehaviour, IPoolable
         GameObject spawned = PoolManager.x.SpawnObject(_go_objToSpawn);
 
         spawned.SetActive(false);
-        spawned.transform.parent = transform;
-        spawned.transform.localPosition = Vector3.zero;
+        //spawned.transform.parent = transform;
+        spawned.transform.position = transform.position;
         spawned.transform.forward = _v_direction;
         spawned.transform.parent = null;
         spawned.SetActive(true);
@@ -226,7 +226,7 @@ public class Bullet : MonoBehaviour, IPoolable
     public void Die()
     {
         StopAllCoroutines();
-        SpawnOnHit(go_hitEffect, transform.forward);
+        //SpawnOnHit(go_hitEffect, transform.forward);
 
         for (int i = 0; i < goA_spawnItems.Length; i++)
         {
