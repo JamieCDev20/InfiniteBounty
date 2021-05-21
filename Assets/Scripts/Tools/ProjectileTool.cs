@@ -15,6 +15,7 @@ public class ProjectileTool : WeaponTool
     public override AugmentType AugType { get { return augType; } }
     AugmentProjectile ap_projAugment;
     [SerializeField] private float f_recoilTime;
+    [SerializeField] private GameObject exploEffects;
 
     [Header("Heat")]
     [SerializeField] private float f_heatPerShot;
@@ -144,8 +145,9 @@ public class ProjectileTool : WeaponTool
             _v_direction = Quaternion.AngleAxis(Random.Range(-spread, spread), right) * _v_direction;
 
             Bullet newBullet = PoolManager.x.SpawnObject(go_hitBox[0], t_firePoint.position, t_firePoint.rotation).GetComponent<Bullet>();
-            newBullet.Setup(Mathf.RoundToInt(i_damage / i_shotsPerRound) * 2, Mathf.RoundToInt(i_lodeDamage / i_shotsPerRound) * 2, c_playerCollider, ap_projAugment, ae_explode, eo_element, c_trail);
+            newBullet.Setup(Mathf.RoundToInt(i_damage / i_shotsPerRound) * 2, Mathf.RoundToInt(i_lodeDamage / i_shotsPerRound) * 2, c_playerCollider, ap_projAugment, ref ae_explode, eo_element, c_trail);
             newBullet.SetPhysicsMat(pm_physicsMat);
+            newBullet.SetObjectsToSpawn(goA_explarticles);
             newBullet.MoveBullet(_v_direction, f_shotSpeed);
         }
     }

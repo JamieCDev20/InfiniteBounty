@@ -545,7 +545,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             PlaceAugmentProperties(go_propertyText).text = "Explosion Radius " + (ae.f_radius * mod).ToString("F1");
 
         }
-        if (ae.go_explarticles != null)
+        if (ae.sA_explarticles != null)
         {
             PlaceAugmentProperties(go_propertyText).text = "Explosive";
         }

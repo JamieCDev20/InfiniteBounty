@@ -337,9 +337,9 @@ public class AugmentWindow : EditorWindow
         {
             if(go_explarticles.Length > 0)
             {
-                ae_splosion.go_explarticles = new string[go_explarticles.Length];
+                ae_splosion.sA_explarticles = new string[go_explarticles.Length];
                 for(int i = 0; i < go_explarticles.Length; i++)
-                    ae_splosion.go_explarticles[i] = go_explarticles[i].name;
+                    ae_splosion.sA_explarticles[i] = go_explarticles[i].name;
             }
             outputAug.InitExplosion(ae_splosion);
         }

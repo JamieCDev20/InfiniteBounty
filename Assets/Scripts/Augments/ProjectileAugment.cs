@@ -63,6 +63,7 @@ public class ProjectileAugment : Augment
         c.f_detonationTime = e.f_detonationTime;
         c.f_explockBack = e.f_explockBack;
         c.f_expRad = e.f_radius;
+        c.go_explarticles = e.sA_explarticles;
 
         // Ask John and Nick what it do
         c.pm_physMat = a.pm_physMat;

@@ -22,7 +22,7 @@ public class WeaponTool : ToolBase
     [SerializeField] protected float f_elementFrequency;
     [Header("Explosion Stats")]
     [SerializeField] protected AugmentExplosion ae_explode;
-    [SerializeField] protected GameObject[] go_explarticles;
+    [SerializeField] protected GameObject[] goA_explarticles;
     #endregion
     [SerializeField] protected bool b_rackUpgrade;
     [SerializeField] protected Collider c_playerCollider;
@@ -44,7 +44,7 @@ public class WeaponTool : ToolBase
     protected Color[] c_trail = new Color[0];
     protected GameObject[] physicals = new GameObject[8];
     protected Element[] eo_element;
-    
+
     #endregion
 
 
@@ -132,14 +132,14 @@ public class WeaponTool : ToolBase
 
     public virtual void RemoveStatChanges(Augment aug)
     {
-        if(A_augs != null && A_augs.Length >= 0)
+        if (A_augs != null && A_augs.Length >= 0)
         {
             (string nam, int lev) thing = (aug.Name, aug.Level);
 
             int i = -1;
             for (int j = 0; j < Augs.Length; j++)
             {
-                if(Augs[j]?.Tup == thing)
+                if (Augs[j]?.Tup == thing)
                 {
                     i = j;
                     break;
@@ -190,7 +190,7 @@ public class WeaponTool : ToolBase
         f_heatsink += mod * ap.f_heatsink;
         f_knockback += mod * ap.f_knockback;
         f_energyGauge += mod * ap.f_energyGauge;
-        
+
     }
 
     private void AddToPhysicalProperties(AugmentPhysicals ap)
@@ -229,8 +229,9 @@ public class WeaponTool : ToolBase
         ae_explode.f_radius += ae.f_radius;
         ae_explode.i_damage += ae.i_damage;
         ae_explode.i_lodeDamage += ae.i_lodeDamage;
-        if (go_explarticles != null && go_explarticles.Length > 0)
-            LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
+        if (ae.sA_explarticles != null && ae.sA_explarticles.Length > 0)
+            goA_explarticles = LoadAndAddObjectArray(goA_explarticles, ae.sA_explarticles);
+        goA_explarticles = Utils.RemoveDuplicates<GameObject>(goA_explarticles);
     }
 
     //remove
@@ -276,15 +277,18 @@ public class WeaponTool : ToolBase
         ae_explode.i_damage -= ae.i_damage;
         ae_explode.i_lodeDamage -= ae.i_lodeDamage;
         //if (go_explarticles != null && go_explarticles.Length > 0)
-            //LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
+        //LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
     }
 
-    protected void LoadAndAddObjectArray<T>(T[] _tA_existingObjects, string[] _s_newObjectPaths) where T : Object
+    protected T[] LoadAndAddObjectArray<T>(T[] _tA_existingObjects, string[] _s_newObjectPaths) where T : Object
     {
         T[] tempObjects = new T[_s_newObjectPaths.Length];
         for (int i = 0; i < _s_newObjectPaths.Length; i++)
+        {
             tempObjects[i] = Resources.Load<T>(_s_newObjectPaths[i]);
+        }
         _tA_existingObjects = Utils.CombineArrays(_tA_existingObjects, tempObjects);
+        return _tA_existingObjects;
     }
 
     public Augment[] GetAugments()

@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour, IPoolable
     // Hit effect is the explosion, or particle that plays when hitting an enemy
     [SerializeField] private GameObject go_hitEffect;
     // Spawn Item is the item that gets spawned, like a daisy or shoe
-    [SerializeField] private GameObject go_spawnItem;
+    [SerializeField] private GameObject[] goA_spawnItems;
     [SerializeField] private LayerMask lm_placementLayer;
     [SerializeField] private bool b_isNetworkedObject = true;
     [SerializeField] private string s_resourcePath;
@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField] private float f_knockBack = 5;
     [SerializeField] ElementalObject elements;
 
-    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, AugmentExplosion _ae, Element[] _elem, Color[] _trKeys)
+    public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, ref AugmentExplosion _ae, Element[] _elem, Color[] _trKeys)
     {
         as_source = GetComponent<AudioSource>();
         c_myCollider.isTrigger = true;
@@ -66,10 +66,6 @@ public class Bullet : MonoBehaviour, IPoolable
         if (_ap.pm_phys != null)
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
         c_myCollider.material = pm_mat;
-
-        //print("\\NetworkPrefabs\\Bullets\\" + _ae.go_explarticles[0]);
-        if (_ae.go_explarticles != null)
-            go_spawnItem = Resources.Load<GameObject>("\\NetworkPrefabs\\Bullets\\" + _ae.go_explarticles[0]);
 
         if (!Utils.ArrayIsNullOrZero(_trKeys))
         {
@@ -100,6 +96,11 @@ public class Bullet : MonoBehaviour, IPoolable
     public void SetPhysicsMat(PhysicMaterial mat)
     {
         c_myCollider.material = mat;
+    }
+
+    public void SetObjectsToSpawn(GameObject[] spawns)
+    {
+        goA_spawnItems = spawns;
     }
 
     private void Update()
@@ -225,8 +226,12 @@ public class Bullet : MonoBehaviour, IPoolable
         StopAllCoroutines();
         SpawnOnHit(go_hitEffect, transform.forward);
 
-        if (go_spawnItem != null)
-            SpawnOnHit(go_spawnItem, transform.forward);
+        for (int i = 0; i < goA_spawnItems.Length; i++)
+        {
+            if (goA_spawnItems[i] != null)
+                SpawnOnHit(goA_spawnItems[i], transform.forward);
+
+        }
 
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
         if (tr_bulletTrail != null)

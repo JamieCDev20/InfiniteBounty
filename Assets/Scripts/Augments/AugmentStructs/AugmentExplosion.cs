@@ -10,7 +10,7 @@ public struct AugmentExplosion
     public float f_detonationTime;
     public float f_radius;
     public bool b_impact;
-    public string[] go_explarticles;
+    public string[] sA_explarticles;
 
     public AugmentExplosion(int _dmg, int _lode, float _f_kb, float _f_dt, float _rad, bool _b_imp, string[] _particles)
     {
@@ -20,6 +20,6 @@ public struct AugmentExplosion
         f_detonationTime = _f_dt;
         f_radius = _rad;
         b_impact = _b_imp;
-        go_explarticles = _particles;
+        sA_explarticles = _particles;
     }
 }

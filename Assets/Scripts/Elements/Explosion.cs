@@ -36,7 +36,9 @@ public class Explosion : MonoBehaviour
                 else
                 {
                     _i.TakeDamage(i_damage, true);
-                    _cA[i].GetComponent<Rigidbody>()?.AddExplosionForce(f_knockBack, transform.position, f_radius, -1);
+                    Rigidbody r = _cA[i].GetComponent<Rigidbody>();
+                    if (r != null)
+                        r.AddExplosionForce(f_knockBack, transform.position, f_radius, -1);
                 }
             }
         }

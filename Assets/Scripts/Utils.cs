@@ -163,6 +163,17 @@ public class Utils
 
     }
 
+    public static T[] RemoveDuplicates<T>(T[] _arrayToRemove)
+    {
+        List<T> temp = new List<T>();
+        for (int i = 0; i < _arrayToRemove.Length; i++)
+        {
+            if (!temp.Contains(_arrayToRemove[i]))
+                temp.Add(_arrayToRemove[i]);
+        }
+        return temp.ToArray();
+    }
+
     public static Vector3 RandomUnitVector()
     {
         return new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)).normalized;

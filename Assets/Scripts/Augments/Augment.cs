@@ -184,7 +184,7 @@ public class Augment
         f_detonationTime    = _ae_boom.f_detonationTime;
         f_expRad            = _ae_boom.f_radius;
         b_impact            = _ae_boom.b_impact;
-        go_explarticles     = _ae_boom.go_explarticles;
+        go_explarticles     = _ae_boom.sA_explarticles;
     }
 
     public List<string[]> GetAudioProperties()
