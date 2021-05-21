@@ -11,6 +11,8 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
 
     public static UniversalOverlord x;
 
+    [SerializeField] private GameObject lamb;
+
     //Variables
     #region Serialised
 
@@ -130,7 +132,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
     }
     public void Reset()
     {
-        if(InfoText.x != null)
+        if (InfoText.x != null)
             InfoText.x.Reset();
         PoolManager.x.Reset();
         NetworkedPlayer.x.Reset();
@@ -138,6 +140,7 @@ public class UniversalOverlord : MonoBehaviourPunCallbacks
         TagManager.x.Reset();
         NetworkManager.x.Reset();
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+
         //SceneManager.LoadScene(0);
     }
 

@@ -260,6 +260,11 @@ public class PauseMenuController : SubjectBase
 
     #region Options
 
+    public void WaitOutToMenu()
+    {
+        Invoke(nameof(Quit), 0.1f);
+    }
+
     public void InitOptions(bool _b_inv, float[] _options)
     {
         if (s_sensitivitySliderX != null)

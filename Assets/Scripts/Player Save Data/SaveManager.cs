@@ -56,9 +56,9 @@ public class SaveManager : SubjectBase, ObserverBase
                         // Get data
                         saveData = JsonConvert.DeserializeObject<PlayerSaveData>(saveString);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        if(e is JsonException || e is ArgumentException)
+                        if (e is JsonException || e is ArgumentException)
                         {
                             // An argument is erroring
                             saveData = UpdateSaveData(saveString);
@@ -70,9 +70,14 @@ public class SaveManager : SubjectBase, ObserverBase
                             try
                             {
                                 File.Delete(Application.persistentDataPath + sv);
-                            } catch (FileNotFoundException fnfe) { Debug.Log("File wasn't found. Creating new File."); }
+                            }
+                            catch (FileNotFoundException fnfe) { Debug.Log("File wasn't found. Creating new File."); }
                             FileStream file = File.Create(Application.persistentDataPath + sv);
                             file.Close();
+
+                            OnNotify(new PurchaseToolEvent(1, 0, true));
+                            OnNotify(new PurchaseToolEvent(3, 1, true));
+                            OnNotify(new PurchaseToolEvent(2, 2, false));
                         }
                     }
                 }
@@ -88,6 +93,11 @@ public class SaveManager : SubjectBase, ObserverBase
         {
             FileStream file = File.Create(Application.persistentDataPath + sv);
             file.Close();
+
+            OnNotify(new PurchaseToolEvent(1, 0, true));
+            OnNotify(new PurchaseToolEvent(3, 1, true));
+            OnNotify(new PurchaseToolEvent(2, 2, false));
+
         }
     }
 
@@ -128,7 +138,11 @@ public class SaveManager : SubjectBase, ObserverBase
             File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
             InfoText.x.OnNotify(new InfoTextEvent("Save Data Cleared"));
         }
-        
+
+        OnNotify(new PurchaseToolEvent(1, 0, true));
+        OnNotify(new PurchaseToolEvent(3, 1, true));
+        OnNotify(new PurchaseToolEvent(2, 2, false));
+
     }
 
     /// <summary>
@@ -150,7 +164,8 @@ public class SaveManager : SubjectBase, ObserverBase
                 try
                 {
                     psd.i_totalNugs = int.Parse(totalNugsString[i + 1].Split(',')[0]);
-                }catch (FormatException fe) { dataLost += " Nuggets "; psd.i_totalNugs = 0; }
+                }
+                catch (FormatException fe) { dataLost += " Nuggets "; psd.i_totalNugs = 0; }
             }
             // Rip: Current Nugs (Unused)
             if (totalNugsString[i].Contains("i_currentNugs"))
@@ -158,7 +173,8 @@ public class SaveManager : SubjectBase, ObserverBase
                 try
                 {
                     psd.i_currentNugs = int.Parse(totalNugsString[i + 1].Split(',')[0]);
-                }catch (FormatException fe) {  psd.i_currentNugs = 0; }
+                }
+                catch (FormatException fe) { psd.i_currentNugs = 0; }
             }
             // Rip: Zippy Bank
             if (totalNugsString[i].Contains("i_zippyBank"))
@@ -166,7 +182,8 @@ public class SaveManager : SubjectBase, ObserverBase
                 try
                 {
                     psd.i_zippyBank = int.Parse(totalNugsString[i + 1].Split(',')[0]);
-                } catch (FormatException fe) { dataLost += "Zippy Bank Money"; psd.i_zippyBank = 0; }
+                }
+                catch (FormatException fe) { dataLost += "Zippy Bank Money"; psd.i_zippyBank = 0; }
             }
             // Rip: Appearence
             if (totalNugsString[i].Contains("A_appearance"))
@@ -208,7 +225,8 @@ public class SaveManager : SubjectBase, ObserverBase
                 try
                 {
                     psd.b_inverted = bool.Parse(totalNugsString[i + 1]);
-                } catch(FormatException){ dataLost += " Inverted Settings "; psd.b_inverted = false; }
+                }
+                catch (FormatException) { dataLost += " Inverted Settings "; psd.b_inverted = false; }
             }
             // Rip: Display Settings
             if (totalNugsString[i].Contains("A_displaySettings"))
@@ -226,7 +244,8 @@ public class SaveManager : SubjectBase, ObserverBase
                 try
                 {
                     psd.i_difficulty = int.Parse(nugString);
-                } catch (FormatException fe) { dataLost += " Difficulty Settings "; ; psd.i_difficulty = 1; }
+                }
+                catch (FormatException fe) { dataLost += " Difficulty Settings "; ; psd.i_difficulty = 1; }
             }
         }
         if (dataLost != string.Empty)
@@ -256,9 +275,9 @@ public class SaveManager : SubjectBase, ObserverBase
             {
                 newT[i] = JsonConvert.DeserializeObject<T>(splitArray[i] + "}");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(e is JsonException || e is ArgumentException)
+                if (e is JsonException || e is ArgumentException)
                 {
                     newT[i] = default(T);
                     debugText += _saveSeperator + " " + i;
@@ -270,7 +289,7 @@ public class SaveManager : SubjectBase, ObserverBase
 
     private T[] ReadArrayFromJson<T>(string _saveData, string _saveSeperator, char _lineSeperator, string debugText)
     {
-        string[] newData = _saveData.Split(new string[] { ":[", "]"}, System.StringSplitOptions.None);
+        string[] newData = _saveData.Split(new string[] { ":[", "]" }, System.StringSplitOptions.None);
         string arrayData = "";
         for (int i = 0; i < newData.Length; i++)
             if (newData[i].Contains(_saveSeperator))
@@ -282,14 +301,15 @@ public class SaveManager : SubjectBase, ObserverBase
             }
         string[] splitArray = arrayData.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
         T[] newT = new T[splitArray.Length];
-        for(int i = 0; i < splitArray.Length; i++)
+        for (int i = 0; i < splitArray.Length; i++)
         {
             if (splitArray[i].StartsWith(","))
                 splitArray[i] = splitArray[i].Substring(1);
             try
             {
                 newT[i] = JsonConvert.DeserializeObject<T>(splitArray[i]);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 if (e is JsonException || e is ArgumentException)
                 {
@@ -307,10 +327,10 @@ public class SaveManager : SubjectBase, ObserverBase
         {
             case SaveEvent psd:
                 // Get current and Total nuggets
-                if(psd.SaveData.i_currentNugs != -1)
+                if (psd.SaveData.i_currentNugs != -1)
                     saveData.i_currentNugs = psd.SaveData.i_currentNugs;
 
-                if(psd.SaveData.i_totalNugs != -1)
+                if (psd.SaveData.i_totalNugs != -1)
                     saveData.i_totalNugs = psd.SaveData.i_totalNugs;
 
                 if (psd.SaveData.i_zippyBank != -1)
@@ -321,13 +341,13 @@ public class SaveManager : SubjectBase, ObserverBase
                 if (psd.SaveData.tu_equipped != null)
                 {
                     // if there's no previously equipped tools, then just equip the tool.
-                    if(saveData.tu_equipped == null)
+                    if (saveData.tu_equipped == null)
                     {
                         saveData.tu_equipped = psd.SaveData.tu_equipped;
                     }
-                    else if(psd.SaveData.tu_equipped != null)
+                    else if (psd.SaveData.tu_equipped != null)
                     {
-                        foreach((int toolID, int slotID) tool in psd.SaveData.tu_equipped)
+                        foreach ((int toolID, int slotID) tool in psd.SaveData.tu_equipped)
                         {
                             // TODO:
                             // Create a new ToolBase[3] and read any existing tools into it
@@ -364,13 +384,13 @@ public class SaveManager : SubjectBase, ObserverBase
                     }
                 }
 
-                if(saveData.tu_equippedAugments == null && psd.SaveData.tu_equippedAugments != null)
+                if (saveData.tu_equippedAugments == null && psd.SaveData.tu_equippedAugments != null)
                 {
                     saveData.tu_equippedAugments = psd.SaveData.tu_equippedAugments;
                 }
-                else if(saveData.tu_equippedAugments != null && psd.SaveData.tu_equippedAugments != null)
+                else if (saveData.tu_equippedAugments != null && psd.SaveData.tu_equippedAugments != null)
                 {
-                    foreach((int, int, AugmentSave[]) blaug in psd.SaveData.tu_equippedAugments)
+                    foreach ((int, int, AugmentSave[]) blaug in psd.SaveData.tu_equippedAugments)
                         EquipNewAugment(blaug);
                 }
                 if (saveData.purchasedAugments == null && psd.SaveData.purchasedAugments != null)
@@ -387,7 +407,7 @@ public class SaveManager : SubjectBase, ObserverBase
                     saveData.A_playerSliderOptions = psd.SaveData.A_playerSliderOptions;
                 }
 
-                if(psd.SaveData.A_displaySettings != null)
+                if (psd.SaveData.A_displaySettings != null)
                 {
                     saveData.A_displaySettings = psd.SaveData.A_displaySettings;
                 }
@@ -422,7 +442,7 @@ public class SaveManager : SubjectBase, ObserverBase
                 }
                 for (int i = 0; i < saveData.tu_equipped.Length; i++)
                 {
-                    if(saveData.tu_equipped[i].slotID == (int)ute.slotToEquipIn)
+                    if (saveData.tu_equipped[i].slotID == (int)ute.slotToEquipIn)
                     {
                         saveData.tu_equipped[i] = (ute.toolToEquip.ToolID, (int)ute.slotToEquipIn);
                         break;
@@ -464,13 +484,15 @@ public class SaveManager : SubjectBase, ObserverBase
                         saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, bInd);
                         if (fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.full)
                         {
-                            saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, new AugmentSave[] { new AugmentSave( AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] }) });
+                            saveData.purchasedAugments = Utils.CombineArrays(saveData.purchasedAugments, new AugmentSave[] { new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.SavedAug.SavedAugment.level, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] }) });
                         }
                         break;
                 }
                 string fusedStr = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, fusedStr);
                 break;
+
+
             case PurchaseToolEvent purchaseTool:
                 if (!Utils.ArrayIsNullOrZero(saveData.tu_toolsPurchased))
                 {
@@ -482,6 +504,8 @@ public class SaveManager : SubjectBase, ObserverBase
                 string toolString = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, toolString);
                 break;
+
+
         }
     }
 
@@ -492,9 +516,9 @@ public class SaveManager : SubjectBase, ObserverBase
             if (_augSave.SavedAugment.indicies.Length == 1)
             {
                 if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.level == (levels.Length > 0 ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
-                   return i;
+                    return i;
             }
-            else if(_augSave.SavedAugment.indicies.Length > 1)
+            else if (_augSave.SavedAugment.indicies.Length > 1)
             {
                 if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.level == (levels != null ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
                     return i;
@@ -538,13 +562,13 @@ public class SaveManager : SubjectBase, ObserverBase
     {
         //RemoveAugment();
         // Find weapon based on type and hand
-        for(int i = 0; i < saveData.tu_equippedAugments.Length; i++)
+        for (int i = 0; i < saveData.tu_equippedAugments.Length; i++)
         {
-            if(saveData.tu_equippedAugments[i].toolID == augToDetach._toolID && saveData.tu_equippedAugments[i].slotID == augToDetach._slotID)
+            if (saveData.tu_equippedAugments[i].toolID == augToDetach._toolID && saveData.tu_equippedAugments[i].slotID == augToDetach._slotID)
             {
-                for(int j = 0; j < saveData.tu_equippedAugments[i].equippedAugs.Length; j++)
+                for (int j = 0; j < saveData.tu_equippedAugments[i].equippedAugs.Length; j++)
                 {
-                    if(saveData.tu_equippedAugments[i].equippedAugs[j] == augToDetach._aug)
+                    if (saveData.tu_equippedAugments[i].equippedAugs[j] == augToDetach._aug)
                     {
                         saveData.tu_equippedAugments[i].equippedAugs = Utils.OrderedRemove(saveData.tu_equippedAugments[i].equippedAugs, j);
                     }

@@ -189,7 +189,10 @@ public class ToolRack : Shop
         if (_b_rackType)
             return tl_weaponTools.GetToolAt(_i_ID).RackID;
         else
+        {
+            Debug.Log(_i_ID);
             return tl_mobTools.GetToolAt(_i_ID).RackID;
+        }
     }
 
     public void ReturnToRack(int _i_ID, bool _b_rackType, bool b_reEquip)

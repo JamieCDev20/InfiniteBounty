@@ -86,7 +86,8 @@ public class CameraRespectWalls : MonoBehaviour
     {
         HUDController.x.StartShowing();
         b_active = true;
-        transform.localEulerAngles = Vector3.right * 5;
+        if (this)
+            transform.localEulerAngles = Vector3.right * 5;
     }
 
     internal void Stop()

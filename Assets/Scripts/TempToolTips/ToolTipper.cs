@@ -27,7 +27,7 @@ public class ToolTipper : MonoBehaviour
         if (t_cam == null)
         {
             t_cam = NetworkedPlayer.x?.GetCamera()?.transform;
-            pim = NetworkedPlayer.x.GetPlayer()?.GetComponent<PlayerInputManager>();
+            pim = NetworkedPlayer.x?.GetPlayer()?.GetComponent<PlayerInputManager>();
 
             return;
         }

@@ -21,10 +21,18 @@ public class NeverFearThisScriptIsHere : MonoBehaviourPunCallbacks
 
         foreach (var root in go.scene.GetRootGameObjects())
         {
-            if (root.GetComponent<PhotonHandler>() != null)
+            if (root.GetComponent<PhotonHandler>() != null || root.transform != transform)
                 Destroy(root);
         }
+        StartCoroutine(SaveUsLamb());
 
+    }
+
+    IEnumerator SaveUsLamb()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
+        Destroy(gameObject);
     }
 
     public override void OnLeftRoom()

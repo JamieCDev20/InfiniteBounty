@@ -144,7 +144,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     {
         if (!b_levelFinished)
             ResetValues();
-        Debug.Log(b_levelFinished);
         RefreshTotalNugCount();
         ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
         sMan?.SetValues(i2A_playerNugCounts, sA_names);
