@@ -211,7 +211,6 @@ public class ToolHandler : SubjectBase
                 ts_removeToolSlot = ts;
                 if (ets != null)
                 {
-                    Debug.Log("Empty Rack Slot: " + ets.RackID + " Tool RackID: " + A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts].RackID);
                     if (A_tools[(int)ets.Slot] == null)
                     {
                         return true;
