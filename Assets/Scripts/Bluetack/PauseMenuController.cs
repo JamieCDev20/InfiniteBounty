@@ -33,6 +33,7 @@ public class PauseMenuController : SubjectBase
     [Space, SerializeField] private Toggle b_mouseInverted;
     [SerializeField] private VolumeSliders vs_volSliders;
     [SerializeField] private Dropdown resolutionDropdown;
+    [SerializeField] private Toggle t_fullscreenToggle;
 
     [Header("Mixers")]
     [SerializeField] private AudioMixer am_masterMixer;
@@ -67,6 +68,7 @@ public class PauseMenuController : SubjectBase
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
         #endregion
+
         c_settingsMenu.enabled = false;
         c_pauseCanvas.SetActive(false);
         c_HUDCanvas.SetActive(true);
@@ -75,6 +77,7 @@ public class PauseMenuController : SubjectBase
         SetMusicVolume();
         SetSFXVolume();
 
+        t_fullscreenToggle.isOn = Screen.fullScreen;
 
         SaveManager sm = FindObjectOfType<SaveManager>();
         if (sm != null)
@@ -227,7 +230,13 @@ public class PauseMenuController : SubjectBase
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        if (resolution.width < resolutions[resolutions.Length - 1].width)
+            Screen.SetResolution(resolution.width, resolution.height, false);
+        else
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        t_fullscreenToggle.isOn = Screen.fullScreen;
     }
 
     public void SetQuality(int _i_qualityIndex)
