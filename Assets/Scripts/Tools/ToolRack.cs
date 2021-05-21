@@ -67,6 +67,8 @@ public class ToolRack : Shop
 
             parent.ToolID = tb.ToolID;
             parent.RackID = toolRackID;
+            if (!isWeapon)
+                parent.Slot = ToolSlot.moblility;
 
             if(CheckToolEquiped(isWeapon ? ToolSlot.leftHand : ToolSlot.moblility, tb.ToolID, toolRackID))
             {

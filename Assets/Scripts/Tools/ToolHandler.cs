@@ -211,9 +211,13 @@ public class ToolHandler : SubjectBase
                 ts_removeToolSlot = ts;
                 if (ets != null)
                 {
-                    if (A_tools[(int)ts] == null)
+                    Debug.Log("Empty Rack Slot: " + ets.RackID + " Tool RackID: " + A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts].RackID);
+                    if (A_tools[(int)ets.Slot] == null)
+                    {
                         return true;
-                    if (A_tools[(int)ts].RackID == ets.RackID)
+                    }
+                    //if(ets.Slot == ToolSlot.moblility)
+                    if (A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts].RackID == ets.RackID)
                     {
                         CallSwapTool(ToolSlot.rack, ets.RackID, (ToolRack)sr, (ets.Slot == ToolSlot.leftHand || ets.Slot == ToolSlot.rightHand) ? true : false);
                         ToolRack tr = (ToolRack)sr;
@@ -401,21 +405,21 @@ public class ToolHandler : SubjectBase
     }
 
     [PunRPC]
-    public void SwapTool(ToolSlot _ts_slot, int _i_toolID)
+    public void SwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr)
     {
         switch (_ts_slot)
         {
             case ToolSlot.leftHand:
                 RemoveTool(_ts_slot);
-                AddTool(_ts_slot, _i_toolID);
+                AddTool(_ts_slot, _i_toolID, tr);
                 break;
             case ToolSlot.rightHand:
                 RemoveTool(_ts_slot);
-                AddTool(_ts_slot, _i_toolID);
+                AddTool(_ts_slot, _i_toolID, tr);
                 break;
             case ToolSlot.moblility:
                 RemoveTool(ToolSlot.moblility);
-                AddTool(ToolSlot.moblility, _i_toolID);
+                AddTool(ToolSlot.moblility, _i_toolID, tr);
                 break;
         }
     }
@@ -431,15 +435,15 @@ public class ToolHandler : SubjectBase
         {
             case ToolSlot.leftHand:
                 RemoveTool(ToolSlot.leftHand, tr, _b_rackID);
-                AddTool(ToolSlot.leftHand, _i_toolID);
+                AddTool(ToolSlot.leftHand, _i_toolID, tr);
                 break;
             case ToolSlot.rightHand:
                 RemoveTool(ToolSlot.rightHand, tr, _b_rackID);
-                AddTool(ToolSlot.rightHand, _i_toolID);
+                AddTool(ToolSlot.rightHand, _i_toolID, tr);
                 break;
             case ToolSlot.moblility:
                 RemoveTool(ToolSlot.moblility, tr, _b_rackID);
-                AddTool(ToolSlot.moblility, _i_toolID);
+                AddTool(ToolSlot.moblility, _i_toolID, tr);
                 break;
             case ToolSlot.rack:
                 RemoveTool(ts_removeToolSlot);
@@ -514,18 +518,20 @@ public class ToolHandler : SubjectBase
         }
     }
 
-    private void AddTool(ToolSlot _ts_, int _i_toolID)
+    private void AddTool(ToolSlot _ts_, int _i_toolID, ToolRack tr)
     {
-        // Check here if you have enough nugs.
         A_tools[(int)_ts_] = A_toolLoaders[(int)_ts_].GetToolAt(_i_toolID);
         if (A_tools[(int)_ts_] != null)
         {
             A_tools[(int)_ts_].gameObject.SetActive(true);
+            A_tools[(int)_ts_].RackID = tr.GetRackID(A_tools[(int)_ts_].ToolID, _ts_ == ToolSlot.moblility ? false : true);
             ac_changer.SetArmActive((int)_ts_, false);
             try
             {
                 if (_ts_ != ToolSlot.moblility)
+                {
                     A_tools[(int)_ts_].GetComponent<Collider>().enabled = false;
+                }
             }
             catch (System.NullReferenceException e) { }
 
