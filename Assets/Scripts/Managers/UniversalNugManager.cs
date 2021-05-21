@@ -108,6 +108,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RemoteFinished()
     {
+        Debug.Log("remotefinish");
         b_levelFinished = true;
         //PoolManager.x.Reset();
         PlayerSaveData psd = new PlayerSaveData(localNugCount, -1, -1, null, null, null, null, null, null, -1);
@@ -144,6 +145,7 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
     {
         if (!b_levelFinished)
             ResetValues();
+        Debug.Log(b_levelFinished);
         RefreshTotalNugCount();
         ScoreboardManager sMan = FindObjectOfType<ScoreboardManager>();
         sMan?.SetValues(i2A_playerNugCounts, sA_names);

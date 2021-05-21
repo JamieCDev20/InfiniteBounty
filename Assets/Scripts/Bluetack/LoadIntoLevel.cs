@@ -133,8 +133,10 @@ public class LoadIntoLevel : MonoBehaviour, IInteractible
             return;
         foreach (NugManager n in FindObjectsOfType<NugManager>())
         {
+            Debug.Log("this things");
             UniversalNugManager.x.FinishedLevel();
             n.EndedLevel();
+            return;
         }
 
         //LoadLevel(lobbySceneName);
