@@ -1,8 +1,10 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AppearanceChanger : MonoBehaviourPunCallbacks
 {
@@ -42,16 +44,16 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
 
         if (_sm.SaveData.A_appearance != null && _sm.SaveData.A_appearance.Length == 4)
         {
-            i_currentBody = _sm.SaveData.A_appearance[0] != -1 ? _sm.SaveData.A_appearance[0] : Random.Range(0, goA_bodies.Length);
-            i_currentHead = _sm.SaveData.A_appearance[1] != -1 ? _sm.SaveData.A_appearance[1] : Random.Range(0, goA_heads.Length); ;
-            i_currentArm = _sm.SaveData.A_appearance[2] != -1 ? _sm.SaveData.A_appearance[2] : Random.Range(0, golA_arms.Length);
-            i_currentFeet = _sm.SaveData.A_appearance[3] != -1 ? _sm.SaveData.A_appearance[3] : Random.Range(0, goA_feet.Length);
+            i_currentBody = _sm.SaveData.A_appearance[0] != -1 ? _sm.SaveData.A_appearance[0] : UnityEngine.Random.Range(0, goA_bodies.Length);
+            i_currentHead = _sm.SaveData.A_appearance[1] != -1 ? _sm.SaveData.A_appearance[1] : UnityEngine.Random.Range(0, goA_heads.Length); ;
+            i_currentArm = _sm.SaveData.A_appearance[2] != -1 ? _sm.SaveData.A_appearance[2] : UnityEngine.Random.Range(0, golA_arms.Length);
+            i_currentFeet = _sm.SaveData.A_appearance[3] != -1 ? _sm.SaveData.A_appearance[3] : UnityEngine.Random.Range(0, goA_feet.Length);
         }
         else
         {
-            i_currentBody = Random.Range(0, goA_bodies.Length);
-            i_currentHead = Random.Range(0, goA_heads.Length);
-            i_currentArm = Random.Range(0, golA_arms.Length);
+            i_currentBody = UnityEngine.Random.Range(0, goA_bodies.Length);
+            i_currentHead = UnityEngine.Random.Range(0, goA_heads.Length);
+            i_currentArm = UnityEngine.Random.Range(0, golA_arms.Length);
             i_currentFeet = i_currentArm;
         }
 
@@ -67,6 +69,17 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateFeetInOthers", RpcTarget.Others, i_currentFeet);
 
         HUDController.x.ChangeHeadSpriteIcon(i_currentHead);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        if (arg0.name == "RetirmentBeach")
+        {
+            FindObjectOfType<UIScroller>().UpdateApearance(i_currentHead, i_currentBody, i_currentArm);
+            Destroy(gameObject);
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -276,6 +289,8 @@ public class AppearanceChanger : MonoBehaviourPunCallbacks
     }
 
     #endregion
+
+
 
 }
 

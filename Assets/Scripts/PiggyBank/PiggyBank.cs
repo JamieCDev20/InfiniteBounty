@@ -34,7 +34,7 @@ public class PiggyBank : SubjectBase, IInteractible
         if (i_storedAmount != 0)
             tmp_currentMoneyText.text = "£" + i_storedAmount;
         AddObserver(_sm);
-        transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
+        transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.000001f);
     }
 
     private void Update()
@@ -65,7 +65,7 @@ public class PiggyBank : SubjectBase, IInteractible
             i_storedAmount += i_inputAmount;
             SaveEvent _se = new SaveEvent(new PlayerSaveData(nugMan.Nugs, -1, i_storedAmount, null, null, null, null, null, null, -1));
             Notify(_se);
-            transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.00001f);
+            transform.localScale = Vector3.one + Vector3.one * (i_storedAmount * 0.000001f);
             tmp_currentMoneyText.text = "£" + i_storedAmount;
 
             if (i_storedAmount >= i_targetAmount)
