@@ -113,6 +113,13 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
         PlayerSaveData psd = new PlayerSaveData(localNugCount, -1, -1, null, null, null, null, null, null, -1);
         SaveEvent se = new SaveEvent(psd);
         FindObjectOfType<SaveManager>()?.OnNotify(se);
+        StartCoroutine(WaitThenScore());
+    }
+
+    IEnumerator WaitThenScore()
+    {
+        yield return new WaitForSeconds(5);
+        DoScoring();
     }
 
     private void ResetValues()

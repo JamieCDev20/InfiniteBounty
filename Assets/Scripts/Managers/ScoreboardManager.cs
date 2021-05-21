@@ -38,8 +38,8 @@ public class ScoreboardManager : MonoBehaviour
             tA_expenseCostText[i].text = "";
         }
 
-        if (PhotonNetwork.InRoom)
-            UniversalNugManager.x?.DoScoring();
+        //if (PhotonNetwork.InRoom)
+        //    UniversalNugManager.x?.DoScoring();
 
         if (FindObjectOfType<ScoreboardCamController>())
         {
@@ -57,18 +57,6 @@ public class ScoreboardManager : MonoBehaviour
         int _i_scaledMoney = 0;
         int _i_bonusScaledMoney = 0;
         float _f_currentMoneyMult = DifficultyManager.x.ReturnCurrentDifficulty().f_moneyMult;
-
-        //string s = "";
-        //for (int i = 0; i < values.Length; i++)
-        //{
-        //    for (int j = 0; j < values[i].Length; j++)
-        //    {
-        //        s += $"{values[i][j]} ";
-        //    }
-        //    s += '\n';
-        //}
-
-        //Debug.Log(s);
 
         for (int i = 0; i < pc; i++)
         {
