@@ -67,6 +67,10 @@ public class Bullet : MonoBehaviour, IPoolable
             pm_mat = Resources.Load<PhysicMaterial>(_ap.pm_phys);
         c_myCollider.material = pm_mat;
 
+        //print("\\NetworkPrefabs\\Bullets\\" + _ae.go_explarticles[0]);
+        if (_ae.go_explarticles != null)
+            go_spawnItem = Resources.Load<GameObject>("\\NetworkPrefabs\\Bullets\\" + _ae.go_explarticles[0]);
+
         if (!Utils.ArrayIsNullOrZero(_trKeys))
         {
             GradientColorKey[] gck = new GradientColorKey[_trKeys.Length > 8 ? 8 : _trKeys.Length];
@@ -149,25 +153,25 @@ public class Bullet : MonoBehaviour, IPoolable
             // Apply explosion augments
             SpawnOnHit(go_hitEffect, collision.contacts[0].normal);
         }
-        if (go_spawnItem != null)
-            SpawnOnHit(go_spawnItem, collision.contacts[0].normal);
 
-        if (!b_shouldDieOnCollide) return;
 
-        if (tr_bulletTrail)
-            tr_bulletTrail.gameObject.transform.parent = null;
-
-        IElementable ie = collision.gameObject.GetComponent<IElementable>();
-
-        if (ie != null)
+        if (b_shouldDieOnCollide)
         {
-            ie.ReceiveElements(elements.GetActiveElements());
-            elements.ReceiveElements(ie.GetActiveElements());
-            ie.ActivateElement(true);
-            elements.ActivateElement(true);
-        }
+            if (tr_bulletTrail)
+                tr_bulletTrail.gameObject.transform.parent = null;
 
-        Die();
+            IElementable ie = collision.gameObject.GetComponent<IElementable>();
+
+            if (ie != null)
+            {
+                ie.ReceiveElements(elements.GetActiveElements());
+                elements.ReceiveElements(ie.GetActiveElements());
+                ie.ActivateElement(true);
+                elements.ActivateElement(true);
+            }
+
+            Die();
+        }
     }
 
     private void SpawnOnHit(GameObject _go_objToSpawn, Vector3 _v_direction)
@@ -220,9 +224,14 @@ public class Bullet : MonoBehaviour, IPoolable
     {
         StopAllCoroutines();
         SpawnOnHit(go_hitEffect, transform.forward);
+
+        if (go_spawnItem != null)
+            SpawnOnHit(go_spawnItem, transform.forward);
+
         if (PoolManager.x != null) PoolManager.x.ReturnObjectToPool(gameObject);
         if (tr_bulletTrail != null)
             tr_bulletTrail.Clear();
+
         if (rb != null)
             rb.velocity = Vector3.zero;
     }
