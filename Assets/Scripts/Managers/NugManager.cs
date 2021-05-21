@@ -46,7 +46,7 @@ public class NugManager : SubjectBase, ObserverBase
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Equals))
-            CollectNugs(500, false);
+            CollectNugs(500000, false);
     }
 
     public void SetID(int _id)
