@@ -398,6 +398,7 @@ public class ToolHandler : SubjectBase
 
     public void CallSwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackType)
     {
+        Debug.Log("IAMTRYINGTOAPPLYTOOLS");
         SwapTool(_ts_slot, _i_toolID, tr, _b_rackType);
         b_ableToBuy = false;
         StartCoroutine(RackWait());
@@ -689,7 +690,7 @@ public class ToolHandler : SubjectBase
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Invoke(nameof(FUCKINGREAPPLYTOOLS), 1);
+        Invoke(nameof(FUCKINGREAPPLYTOOLS), 3);
     }
 
     private void FUCKINGREAPPLYTOOLS()

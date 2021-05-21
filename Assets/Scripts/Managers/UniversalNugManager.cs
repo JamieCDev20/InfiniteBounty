@@ -53,7 +53,6 @@ public class UniversalNugManager : MonoBehaviourPunCallbacks
 
     public void RecieveNugs(Nug nugCollected)
     {
-
         i2A_playerNugCounts[i_localID][(int)nugCollected.nt_type] += 1;
         localNugCount += nugCollected.i_worth;
 
