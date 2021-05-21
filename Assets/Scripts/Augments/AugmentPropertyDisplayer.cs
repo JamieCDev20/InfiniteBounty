@@ -317,7 +317,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             }
         }
 
-        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (aL_augs.Count + 1));
+        rt_augmentButtonParent.sizeDelta = new Vector2(rt_augmentButtonParent.sizeDelta.x, f_augmentButtonHeight * (_aL_augmentsToShow.Count + 1));
         s_slider.value = 1;
 
         return _aL_augmentsToShow;
