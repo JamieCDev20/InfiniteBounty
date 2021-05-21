@@ -30,6 +30,11 @@ public class UIScroller : MonoBehaviour
         goAA_bodys[3].goA[_i_limbs].SetActive(true);
         goAA_bodys[4].goA[_i_limbs].SetActive(true);
 
+    }
+
+    private IEnumerator Start()
+    {
+        yield return new WaitForEndOfFrame();
         HUDController.x.StopShowing();
     }
 
@@ -37,7 +42,7 @@ public class UIScroller : MonoBehaviour
     {
         FadeToBlack.x.ShowCover(0);
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(0);
+        UniversalOverlord.x.ReturnToMainMenu();
     }
 
     [System.Serializable]
