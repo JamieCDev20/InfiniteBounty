@@ -71,6 +71,7 @@ public class ToolRack : Shop
                 moneyText.gameObject.transform.parent = tb.transform;
                 moneyText.gameObject.transform.position = isWeapon ? L_weaponTextPos[i].position : L_mobTextPos[i].position;
                 moneyText.text = tb.Cost.ToString();
+                Debug.Log(tb.name + ": " + tb.Cost);
             }
 
             tb.RackID = toolRackID;
@@ -84,7 +85,6 @@ public class ToolRack : Shop
             {
                 L_weaponRackIDs.Add(toolRackID);
                 WeaponTool wt = (WeaponTool)tb;
-
                 ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1].transform.root);
                 dupe.transform.position = _t_toolTransform[i * 2 + 1].transform.position;
                 dupe.transform.rotation = _t_toolTransform[i * 2 + 1].transform.rotation;
@@ -98,8 +98,9 @@ public class ToolRack : Shop
                     dupeMoney.gameObject.transform.parent = dupe.transform;
                     dupeMoney.gameObject.transform.position = L_weaponTextPos[i * 2 + 1].position;
                     dupeMoney.text = dupe.Cost.ToString();
-                    ApplyMaterials(dupe, toolRackID);
+                    Debug.Log(wt.name + ": " + wt.Cost);
                 }
+                ApplyMaterials(dupe, i);
 
                 dupe.gameObject.SetActive(true);
                 L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
