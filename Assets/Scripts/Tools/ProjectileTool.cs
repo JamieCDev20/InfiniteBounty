@@ -101,6 +101,11 @@ public class ProjectileTool : WeaponTool
         }
     }
 
+    public bool OverHeat()
+    {
+        return b_isOverheating;
+    }
+
     private void EndOverHeat()
     {
         ps_overHeatEffects?.Stop();
