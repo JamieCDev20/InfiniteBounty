@@ -100,8 +100,8 @@ public class Lobby : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
         t_camera.gameObject.SetActive(false);
 
-        FindObjectOfType<ToolRack>().Init();
         SaveManager.x.CreateSaveData();
+        FindObjectOfType<ToolRack>().Init();
 
     }
 
@@ -121,8 +121,8 @@ public class Lobby : MonoBehaviourPunCallbacks
         for (int i = 0; i < bA_buttonsToSetToNonInteractableWhenHostIsClicked.Length; i++)
             bA_buttonsToSetToNonInteractableWhenHostIsClicked[i].enabled = false;
 
-        FindObjectOfType<ToolRack>().Init();
         SaveManager.x.CreateSaveData();
+        FindObjectOfType<ToolRack>().Init();
     }
 
     public void OnClickQuit()

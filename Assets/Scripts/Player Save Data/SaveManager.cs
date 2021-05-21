@@ -33,7 +33,6 @@ public class SaveManager : SubjectBase, ObserverBase
         CreateSaveData();
         FindObjectOfType<Workbench>().Init(this);
         AddObserver(FindObjectOfType<FuseSaver>());
-        FindObjectOfType<ToolRack>().Init();
         DontDestroyOnLoad(gameObject);
 
     }
@@ -139,8 +138,8 @@ public class SaveManager : SubjectBase, ObserverBase
             InfoText.x.OnNotify(new InfoTextEvent("Save Data Cleared"));
         }
 
-        OnNotify(new PurchaseToolEvent(1, 0, true));
-        OnNotify(new PurchaseToolEvent(3, 1, true));
+        OnNotify(new PurchaseToolEvent(1, 2, true));
+        OnNotify(new PurchaseToolEvent(3, 6, true));
         OnNotify(new PurchaseToolEvent(2, 2, false));
 
     }
