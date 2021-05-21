@@ -234,7 +234,8 @@ public class ToolHandler : SubjectBase
                             {
                                 case WeaponTool wt:
                                     CallSwapTool(ts, tb.ToolID, tr, true);
-                                    A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+                                    int wepRackID = tr.RemoveFromRack(tb.RackID, true);
+                                    A_tools[(int)ts].RackID = wepRackID;
 
                                     if (A_tools[0] != null && A_tools[1] != null)
                                         TutorialManager.x.PickedUpBothTools();
@@ -243,7 +244,8 @@ public class ToolHandler : SubjectBase
                                     return true;
                                 case MobilityTool mt:
                                     CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
-                                    A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                    int mobRackID = tr.RemoveFromRack(tb.RackID, false);
+                                    A_tools[(int)ToolSlot.moblility].RackID = mobRackID;
 
                                     //TutorialManager Section
                                     TutorialManager.x.PickedUpBackPack();
@@ -262,25 +264,28 @@ public class ToolHandler : SubjectBase
                                     GetComponent<NugManager>().CollectNugs(-tb.Cost, false);
                                     CallSwapTool(ts, tb.ToolID, tr, true);
                                     currentNugs = GetComponent<NugManager>().Nugs;
-                                    A_tools[(int)ts].RackID = tr.RemoveFromRack(tb.RackID, true);
+                                    int wepRackID = tr.RemoveFromRack(tb.RackID, true);
+                                    A_tools[(int)ts].RackID = wepRackID;
 
                                     //Tutorial Section
                                     if (A_tools[0] != null && A_tools[1] != null)
                                         TutorialManager.x.PickedUpBothTools();
 
                                     SendSave(currentNugs, ts, tb.RackID, true);
+                                    Notify(new PurchaseToolEvent(A_tools[(int)ts].ToolID, wepRackID, true));
                                     return true;
                                 case MobilityTool mt:
                                     tb.Purchase(gameObject, t_camTransform, sr, 0, (int)ToolSlot.moblility);
                                     GetComponent<NugManager>().CollectNugs(-mt.Cost, false);
                                     CallSwapTool(ToolSlot.moblility, tb.ToolID, tr, false);
                                     currentNugs = GetComponent<NugManager>().Nugs;
-                                    A_tools[(int)ToolSlot.moblility].RackID = tr.RemoveFromRack(tb.RackID, false);
+                                    int mobRackID = tr.RemoveFromRack(tb.RackID, false);
+                                    A_tools[(int)ToolSlot.moblility].RackID = mobRackID;
 
                                     //TutorialManager Section
                                     TutorialManager.x.PickedUpBackPack();
                                     SendSave(currentNugs, ToolSlot.moblility, tb.RackID, false);
-
+                                    Notify(new PurchaseToolEvent(A_tools[(int)ts].ToolID, mobRackID, false));
                                     return true;
                             }
                         }

@@ -470,6 +470,17 @@ public class SaveManager : SubjectBase, ObserverBase
                 string fusedStr = JsonConvert.SerializeObject(saveData);
                 File.WriteAllText(Application.persistentDataPath + sv, fusedStr);
                 break;
+            case PurchaseToolEvent purchaseTool:
+                if (!Utils.ArrayIsNullOrZero(saveData.tu_toolsPurchased))
+                {
+                    foreach ((int, int, bool) purch in saveData.tu_toolsPurchased)
+                        if (purch == purchaseTool.PurchasedTool)
+                            return;
+                }
+                saveData.tu_toolsPurchased = Utils.AddToArray(saveData.tu_toolsPurchased, purchaseTool.PurchasedTool);
+                string toolString = JsonConvert.SerializeObject(saveData);
+                File.WriteAllText(Application.persistentDataPath + sv, toolString);
+                break;
         }
     }
 

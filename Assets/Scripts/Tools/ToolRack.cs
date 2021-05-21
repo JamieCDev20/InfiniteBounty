@@ -64,6 +64,27 @@ public class ToolRack : Shop
                 L_utilityMaterial.Add(tb.GetComponentInChildren<MeshRenderer>().sharedMaterials);
             // Unpurchased weapons set their material to a silhouette
             ApplyMaterials(tb, i);
+            tb.RackID = toolRackID;
+
+            parent.ToolID = tb.ToolID;
+            parent.RackID = toolRackID;
+
+            if(CheckToolEquiped(isWeapon ? ToolSlot.leftHand : ToolSlot.moblility, tb.ToolID, toolRackID))
+            {
+                tb.gameObject.SetActive(false);
+                parent.gameObject.SetActive(true);
+            }
+            else if(CheckToolEquiped(isWeapon ? ToolSlot.rightHand : ToolSlot.moblility, tb.ToolID, toolRackID))
+            {
+                tb.gameObject.SetActive(false);
+                parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                tb.gameObject.SetActive(true);
+                parent.gameObject.SetActive(false);
+            }
+            tb.Purchased = CheckSavePurchased(tb.ToolID, toolRackID, isWeapon);
             if (!tb.Purchased)
             {
                 TMP_Text moneyText = Instantiate<TMP_Text>(txt_exampleText);
@@ -71,16 +92,8 @@ public class ToolRack : Shop
                 moneyText.gameObject.transform.parent = tb.transform;
                 moneyText.gameObject.transform.position = isWeapon ? L_weaponTextPos[i].position : L_mobTextPos[i].position;
                 moneyText.text = tb.Cost.ToString();
-                Debug.Log(tb.name + ": " + tb.Cost);
             }
 
-            tb.RackID = toolRackID;
-            tb.gameObject.SetActive(true);
-
-            parent.ToolID = tb.ToolID;
-            parent.RackID = toolRackID;
-            //Debug.Log(string.Format("Tool Rack: {0} | Parent: {1}", toolRackID, parent.RackID));
-            parent.gameObject.SetActive(false);
             if (isWeapon)
             {
                 L_weaponRackIDs.Add(toolRackID);
@@ -91,6 +104,7 @@ public class ToolRack : Shop
                 L_weaponMaterial.Add(dupe.GetComponentInChildren<MeshRenderer>().sharedMaterials);
                 toolRackID++;
                 dupe.RackID = toolRackID;
+                dupe.Purchased = CheckSavePurchased(wt.ToolID, toolRackID, isWeapon);
                 if (!dupe.Purchased)
                 {
                     TMP_Text dupeMoney = Instantiate<TMP_Text>(txt_exampleText);
@@ -98,14 +112,26 @@ public class ToolRack : Shop
                     dupeMoney.gameObject.transform.parent = dupe.transform;
                     dupeMoney.gameObject.transform.position = L_weaponTextPos[i * 2 + 1].position;
                     dupeMoney.text = dupe.Cost.ToString();
-                    Debug.Log(wt.name + ": " + wt.Cost);
                 }
                 ApplyMaterials(dupe, i);
 
-                dupe.gameObject.SetActive(true);
                 L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
                 L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
-                L_weaponToolPos[i * 2 + 1].gameObject.SetActive(false);
+                if(CheckToolEquiped(ToolSlot.leftHand, dupe.ToolID, toolRackID))
+                {
+                    dupe.gameObject.SetActive(false);
+                    L_weaponToolPos[i * 2 + 1].gameObject.SetActive(true);
+                }
+                else if(CheckToolEquiped(ToolSlot.rightHand, dupe.ToolID, toolRackID))
+                {
+                    dupe.gameObject.SetActive(false);
+                    L_weaponToolPos[i * 2 + 1].gameObject.SetActive(true);
+                }
+                else
+                {
+                    dupe.gameObject.SetActive(true);
+                    L_weaponToolPos[i * 2 + 1].gameObject.SetActive(false);
+                }
                 L_weaponRackIDs.Add(toolRackID);
                 dupe.enabled = false;
             }
@@ -116,6 +142,29 @@ public class ToolRack : Shop
             tb.enabled = false;
             toolRackID++;
         }
+    }
+
+    public bool CheckSavePurchased(int _toolID, int _rackID, bool _isWeapon)
+    {
+        PlayerSaveData psd = SaveManager.x.SaveData;
+        if (Utils.ArrayIsNullOrZero(psd.tu_toolsPurchased))
+            return false;
+        foreach ((int toolID, int rackID, bool isWeapon) pT in psd.tu_toolsPurchased)
+            if (_toolID == pT.toolID && _rackID == pT.rackID && _isWeapon == pT.isWeapon)
+                return true;
+        return false;
+    }
+
+    public bool CheckToolEquiped(ToolSlot _ts, int toolID, int rackID)
+    {
+        PlayerSaveData psd = SaveManager.x.SaveData;
+        if (Utils.ArrayIsNullOrZero(psd.tu_equipped))
+            return false;
+        if (psd.tu_equipped.Length < (int)_ts)
+            return false;
+        if (psd.tu_equipped[(int)_ts] == (toolID, rackID))
+            return true;
+        return false;
     }
 
     public void SetRackID(ToolBase _tb_, bool _b_rackType)
