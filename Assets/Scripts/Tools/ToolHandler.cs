@@ -39,6 +39,7 @@ public class ToolHandler : SubjectBase
     private int i_removableRackSlot;
     private Rigidbody rb;
     private bool b_ableToBuy = true;
+    private bool b_toolsLoaded = false;
     #endregion
 
     private void Start()
@@ -417,21 +418,26 @@ public class ToolHandler : SubjectBase
     [PunRPC]
     public void SwapTool(ToolSlot _ts_slot, int _i_toolID)
     {
-        switch (_ts_slot)
+        if (b_toolsLoaded)
         {
-            case ToolSlot.leftHand:
-                RemoveTool(_ts_slot);
-                AddTool(_ts_slot, _i_toolID);
-                break;
-            case ToolSlot.rightHand:
-                RemoveTool(_ts_slot);
-                AddTool(_ts_slot, _i_toolID);
-                break;
-            case ToolSlot.moblility:
-                RemoveTool(ToolSlot.moblility);
-                AddTool(ToolSlot.moblility, _i_toolID);
-                break;
+            switch (_ts_slot)
+            {
+                case ToolSlot.leftHand:
+                    RemoveTool(_ts_slot);
+                    AddTool(_ts_slot, _i_toolID);
+                    break;
+                case ToolSlot.rightHand:
+                    RemoveTool(_ts_slot);
+                    AddTool(_ts_slot, _i_toolID);
+                    break;
+                case ToolSlot.moblility:
+                    RemoveTool(ToolSlot.moblility);
+                    AddTool(ToolSlot.moblility, _i_toolID);
+                    break;
+            }
         }
+        else
+            StartCoroutine(WaitForToolLoaders(_ts_slot, _i_toolID));
     }
     /// <summary>
     /// Swap weapons based on which type it is and/or what hand it should be in
@@ -440,6 +446,7 @@ public class ToolHandler : SubjectBase
     /// <param name="_tb_tool">Tool to attach</param>
     public void SwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr, bool _b_rackID)
     {
+
         // Cast weapons to correct types and assign to correct slot
         switch (_ts_slot)
         {
@@ -626,7 +633,11 @@ public class ToolHandler : SubjectBase
                     //float spread = A_tools[(int)ts].GetSpread() * (rb.velocity.magnitude * 0.05f);
                     //dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.up) * dir;
                     //dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.right) * dir;
-                    view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
+                    if(A_tools[(int)ts] is ProjectileTool)
+                    {
+                        if(!(A_tools[(int)ts] as ProjectileTool).OverHeat())
+                            view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
+                    }
                     A_tools[(int)ts].Use(dir);
                 }
         }
@@ -731,6 +742,16 @@ public class ToolHandler : SubjectBase
     {
         yield return new WaitForSeconds(0.5f);
         b_ableToBuy = true;
+    }
+
+    private IEnumerator WaitForToolLoaders(ToolSlot _ts_slot, int _i_toolID)
+    {
+        while(!A_toolLoaders[0].ToolsLoaded() && !A_toolLoaders[1].ToolsLoaded() && !A_toolLoaders[2].ToolsLoaded())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        b_toolsLoaded = true;
+        SwapTool(_ts_slot, _i_toolID);
     }
 
 }

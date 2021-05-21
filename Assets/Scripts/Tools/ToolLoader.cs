@@ -58,12 +58,21 @@ public class ToolLoader : MonoBehaviour
         tb_loadedTools.Add(go_tool);
         return go_tool;
     }
+
+    public bool ToolsLoaded()
+    {
+        if (tb_loadedTools.Count < tb_tools.Length)
+            return false;
+        return true;
+    }
+
     public int ToolCount()
     {
         return tb_tools.Length;
     }
     public ToolBase GetToolAt(int _i_index)
     {
+        Debug.Log(_i_index + " " + tb_loadedTools.Count);
         return tb_loadedTools[_i_index];
     }
 
