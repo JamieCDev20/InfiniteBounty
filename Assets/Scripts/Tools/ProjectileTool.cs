@@ -56,7 +56,7 @@ public class ProjectileTool : WeaponTool
             if (b_isOverheating)
                 return;
             base.Use(_v_forwards);
-            StartCoroutine(FireCoroutine(_v_forwards));
+            StartCoroutine(FireCoroutine(_v_forwards, true));
             b_usable = false;
             StartCoroutine(TimeBetweenUsage());
             //PlayParticles(true);
@@ -117,14 +117,15 @@ public class ProjectileTool : WeaponTool
 
     public override void NetUse(Vector3 _v_forwards)
     {
-        StartCoroutine(FireCoroutine(_v_forwards));
+        StartCoroutine(FireCoroutine(_v_forwards, false));
     }
 
-    IEnumerator FireCoroutine(Vector3 _v_for)
+    IEnumerator FireCoroutine(Vector3 _v_for, bool _b_local)
     {
         yield return new WaitForSeconds(Time.deltaTime * 2);
-        if ((b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold))
-            SpawnBullet(_v_for);
+        if (_b_local)
+            if ((b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold))
+                SpawnBullet(_v_for);
     }
 
     public void SpawnBullet(Vector3 _v_direction)
