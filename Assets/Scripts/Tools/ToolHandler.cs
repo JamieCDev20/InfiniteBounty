@@ -215,6 +215,7 @@ public class ToolHandler : SubjectBase
                     {
                         return true;
                     }
+                    Debug.Log("Empty Rack Slot: " + ets.RackID + " Tool RackID: " + A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts].RackID);
                     //if(ets.Slot == ToolSlot.moblility)
                     if (A_tools[ets.Slot == ToolSlot.moblility ? (int)ToolSlot.moblility : (int)ts].RackID == ets.RackID)
                     {
@@ -404,21 +405,21 @@ public class ToolHandler : SubjectBase
     }
 
     [PunRPC]
-    public void SwapTool(ToolSlot _ts_slot, int _i_toolID, ToolRack tr)
+    public void SwapTool(ToolSlot _ts_slot, int _i_toolID)
     {
         switch (_ts_slot)
         {
             case ToolSlot.leftHand:
                 RemoveTool(_ts_slot);
-                AddTool(_ts_slot, _i_toolID, tr);
+                AddTool(_ts_slot, _i_toolID);
                 break;
             case ToolSlot.rightHand:
                 RemoveTool(_ts_slot);
-                AddTool(_ts_slot, _i_toolID, tr);
+                AddTool(_ts_slot, _i_toolID);
                 break;
             case ToolSlot.moblility:
                 RemoveTool(ToolSlot.moblility);
-                AddTool(ToolSlot.moblility, _i_toolID, tr);
+                AddTool(ToolSlot.moblility, _i_toolID);
                 break;
         }
     }
@@ -515,6 +516,11 @@ public class ToolHandler : SubjectBase
             A_tools[(int)_ts_].SetActiveState(false);
             A_tools[(int)_ts_] = null;
         }
+    }
+
+    private void AddTool(ToolSlot _ts_, int _i_toolID)
+    {
+        AddTool(_ts_, _i_toolID, FindObjectOfType<ToolRack>());
     }
 
     private void AddTool(ToolSlot _ts_, int _i_toolID, ToolRack tr)

@@ -19,7 +19,7 @@ public class OfflinePlayer : MonoBehaviour
 
     private void GiveTool()
     {
-        th.SwapTool(ToolSlot.moblility, (int)tool, FindObjectOfType<ToolRack>());
+        th.SwapTool(ToolSlot.moblility, (int)tool);
     }
 
 }
