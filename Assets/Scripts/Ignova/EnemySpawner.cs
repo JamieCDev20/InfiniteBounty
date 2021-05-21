@@ -138,6 +138,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SpawnEnemyRPC(string _go_enemyToSpawnName, Vector3 _v_spawnPos)
     {
+        print(i_numberOfEnemies + "/" + ds_currentDifficulty.f_maxNumberOfEnemies);
         if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)// || _go_enemyToSpawn == go_miniboss)
         {
             PhotonNetwork.Instantiate(_go_enemyToSpawnName, _v_spawnPos, new Quaternion(0, Random.value, 0, Random.value));
