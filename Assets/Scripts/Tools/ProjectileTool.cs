@@ -124,8 +124,14 @@ public class ProjectileTool : WeaponTool
     {
         yield return new WaitForSeconds(Time.deltaTime * 2);
         if (_b_local)
+        {
             if ((b_isLeftHandWeapon ? pim.GetToolBools().b_LToolHold : pim.GetToolBools().b_RToolHold))
-                SpawnBullet(_v_for);
+            SpawnBullet(_v_for);
+        }
+        else
+        {
+            SpawnBullet(_v_for);
+        }
     }
 
     public void SpawnBullet(Vector3 _v_direction)
