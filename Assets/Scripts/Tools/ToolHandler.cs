@@ -211,7 +211,7 @@ public class ToolHandler : SubjectBase
                 ts_removeToolSlot = ts;
                 if (ets != null)
                 {
-                    if (A_tools[(int)ets.Slot] == null)
+                    if (A_tools[(int)ts] == null)
                     {
                         return true;
                     }
