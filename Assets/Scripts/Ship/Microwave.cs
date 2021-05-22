@@ -19,8 +19,10 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private Transform t_playerPos;
     [SerializeField] private Transform t_camParent;
     [SerializeField] private Transform t_augSpawnPos;
+    [SerializeField] private Transform[] A_augCurve;
     [SerializeField] private Canvas microwaveCanvas;
     [SerializeField] private Button fuseButton;
+    [SerializeField] private Button backButton;
     [SerializeField] private AugmentFuser fuser;
     [SerializeField] private GameObject go_detailsCanvas;
     [SerializeField] private GameObject go_listCanvas;
@@ -232,7 +234,7 @@ public class Microwave : SubjectBase, IInteractible
     {
         UnrevealFuseButton();
         //unreveal cross buttons
-
+        backButton.interactable = false;
         int aLevel = aug_slotA.Level;
         int bLevel = aug_slotB.Level;
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
@@ -278,24 +280,19 @@ public class Microwave : SubjectBase, IInteractible
                 FuseSaver.x.RemoveStandardFromSave(aug_slotA);
                 break;
         }
-        RemoveAugment(true);
-        RemoveAugment(false);
-        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
-
-        //rereveal cross buttons
-        foreach (Button b in crossButtons)
-        {
-            b.interactable = true;
-        }
+        yield return new WaitForSeconds(1f);
+        go_augmentGO.GetComponentInChildren<Animation>().Play("ChilledRotating");
+        StartCoroutine(WaitUntilButtonPress());
     }
 
     private void RevealAugment(Augment _baseAug)
     {
-        GameObject aug = PoolManager.x.SpawnObject(go_augmentGO);
-        aug.transform.position = t_augSpawnPos.position;
-        aug.transform.forward = t_augSpawnPos.forward;
-        aug.GetComponent<AugmentGo>().ApplyMaterial(_baseAug.AugmentMaterial);
-        aug.GetComponent<PoolableObject>().DelayedDie(0.5f);
+        go_augmentGO.SetActive(true);
+        go_augmentGO.transform.position = t_augSpawnPos.position;
+        go_augmentGO.GetComponentInChildren<Animation>().Play("MicrowaveAugment");
+        go_augmentGO.GetComponentInChildren<AugmentGo>()?.ApplyMaterial(_baseAug.AugmentMaterial);
+        
+        //aug.GetComponent<PoolableObject>().DelayedDie(0.5f);
     }
 
     private void RevealFuseButton()
@@ -307,6 +304,25 @@ public class Microwave : SubjectBase, IInteractible
     {
         fuseButton.gameObject.SetActive(false);
         fuseButton.interactable = false;
+    }
+
+    public IEnumerator WaitUntilButtonPress()
+    {
+        while (!Input.anyKey)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        backButton.interactable = true;
+        go_augmentGO.SetActive(false);
+        RemoveAugment(true);
+        RemoveAugment(false);
+        aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.ShowAll, false);
+
+        //rereveal cross buttons
+        foreach (Button b in crossButtons)
+        {
+            b.interactable = true;
+        }
     }
 
     public IEnumerator MoveCamera(Transform _t_transformToMoveTo, Transform _t_cameraToMove, bool _b_comingIntoMachine)
