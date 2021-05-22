@@ -45,4 +45,9 @@ public class PoolableObject : MonoBehaviour, IPoolable
     {
         return s_resourcePath;
     }
+    
+    public void DelayedDie(float f_timer)
+    {
+        Invoke(nameof(Die), f_timer);
+    }
 }

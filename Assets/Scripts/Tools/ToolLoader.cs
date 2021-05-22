@@ -72,8 +72,6 @@ public class ToolLoader : MonoBehaviour
     }
     public ToolBase GetToolAt(int _i_index)
     {
-        Debug.Log(tb_loadedTools.Count);
-        Debug.Log(gameObject.name);
         return tb_loadedTools[_i_index];
     }
 

@@ -18,6 +18,7 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private AugmentPropertyDisplayer apd;
     [SerializeField] private Transform t_playerPos;
     [SerializeField] private Transform t_camParent;
+    [SerializeField] private Transform t_augSpawnPos;
     [SerializeField] private Canvas microwaveCanvas;
     [SerializeField] private Button fuseButton;
     [SerializeField] private AugmentFuser fuser;
@@ -25,7 +26,7 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private GameObject go_listCanvas;
     [SerializeField] private GameObject go_augButtonA;
     [SerializeField] private GameObject go_augButtonB;
-
+    [SerializeField] private GameObject go_augmentGO;
     [SerializeField] private AudioClip fuseSound;
     [SerializeField] private AudioSource fuseSource;
     [SerializeField] private GameObject nuclearParts;
@@ -254,7 +255,7 @@ public class Microwave : SubjectBase, IInteractible
         nuclearParts?.SetActive(false);
         anim?.SetBool("IsCooking?", false);
         fuseParts.Play();
-
+        RevealAugment(aug_slotA);
         apd.UpdatePropertyText(fusedAug);
         FuseEvent fe = new FuseEvent(new AugmentSave(fusedAug.Stage, fusedAug.at_type, fusedAug.Level, fusedAug.Stage == AugmentStage.fused ?
             AugmentManager.x.GetIndicesByName(fusedAug.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name),
@@ -286,6 +287,15 @@ public class Microwave : SubjectBase, IInteractible
         {
             b.interactable = true;
         }
+    }
+
+    private void RevealAugment(Augment _baseAug)
+    {
+        GameObject aug = PoolManager.x.SpawnObject(go_augmentGO);
+        aug.transform.position = t_augSpawnPos.position;
+        aug.transform.forward = t_augSpawnPos.forward;
+        aug.GetComponent<AugmentGo>().ApplyMaterial(_baseAug.AugmentMaterial);
+        aug.GetComponent<PoolableObject>().DelayedDie(0.5f);
     }
 
     private void RevealFuseButton()

@@ -194,7 +194,6 @@ public class ToolRack : Shop
             return tl_weaponTools.GetToolAt(_i_ID).RackID;
         else
         {
-            Debug.Log(_i_ID);
             return tl_mobTools.GetToolAt(_i_ID).RackID;
         }
     }
