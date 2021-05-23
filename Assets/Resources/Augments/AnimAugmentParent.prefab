@@ -31,8 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5106176506696211224}
+  m_Children: []
   m_Father: {fileID: 480541756734852745}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -189,6 +188,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3267621791198107578}
+  - {fileID: 5106176506696211224}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -197,12 +197,17 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3267621791198107578}
+    m_TransformParent: {fileID: 480541756734852745}
     m_Modifications:
     - target: {fileID: 3937942339109385140, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}
       propertyPath: m_Name
       value: MicrowaveGlow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3937942339109385140, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8264223750150864974, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}
@@ -222,17 +227,17 @@ PrefabInstance:
     - target: {fileID: 8264223750150864974, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8264223750150864974, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8264223750150864974, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8264223750150864974, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}
@@ -242,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 8264223750150864974, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8264223750150864974, guid: bfeae1e6ca7aa1a41bf4d793f327e4e1,
         type: 3}

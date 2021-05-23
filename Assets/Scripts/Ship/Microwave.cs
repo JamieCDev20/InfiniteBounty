@@ -29,6 +29,7 @@ public class Microwave : SubjectBase, IInteractible
     [SerializeField] private GameObject go_augButtonA;
     [SerializeField] private GameObject go_augButtonB;
     [SerializeField] private GameObject go_augmentGO;
+    [SerializeField] private GameObject go_augParticals;
     [SerializeField] private AudioClip fuseSound;
     [SerializeField] private AudioSource fuseSource;
     [SerializeField] private GameObject nuclearParts;
@@ -282,6 +283,9 @@ public class Microwave : SubjectBase, IInteractible
         }
         yield return new WaitForSeconds(1f);
         go_augmentGO.GetComponentInChildren<Animation>().Play("ChilledRotating");
+        go_augParticals.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        go_augParticals.transform.localPosition = new Vector3(-0.12f, 0.25f, 0.5f);
         StartCoroutine(WaitUntilButtonPress());
     }
 
@@ -313,6 +317,7 @@ public class Microwave : SubjectBase, IInteractible
             yield return new WaitForEndOfFrame();
         }
         backButton.interactable = true;
+        go_augParticals.SetActive(false);
         go_augmentGO.SetActive(false);
         RemoveAugment(true);
         RemoveAugment(false);
