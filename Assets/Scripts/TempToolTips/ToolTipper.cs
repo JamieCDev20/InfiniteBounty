@@ -13,6 +13,8 @@ public class ToolTipper : MonoBehaviour
     private PlayerInputManager pim;
     [SerializeField] private LayerMask lm_mask;
     private bool b_shouldShow = true;
+    [SerializeField] private GameObject go_hasHelp;
+
 
     private void Start()
     {
@@ -46,12 +48,23 @@ public class ToolTipper : MonoBehaviour
                     ta_canvasText.text = _tt_.Tip;
                     goA_buttonPrompts[_tt_.i_buttonSpriteIndex].SetActive(true);
 
+                    if (_tt_.b_hasHelpData)
+                    {
+                        go_hasHelp.SetActive(true);
+
+                        if (Input.GetKeyDown(KeyCode.H))
+                            HUDController.x.ShowHelpText(_tt_.HelpText);
+                    }
+                    else
+                        go_hasHelp.SetActive(false);
                 }
                 else
                 {
                     ta_canvasText.text = "";
                     for (int i = 0; i < goA_buttonPrompts.Length; i++)
                         goA_buttonPrompts[i].SetActive(false);
+
+                    go_hasHelp.SetActive(false);
                 }
             }
             else
@@ -59,6 +72,8 @@ public class ToolTipper : MonoBehaviour
                 ta_canvasText.text = "";
                 for (int i = 0; i < goA_buttonPrompts.Length; i++)
                     goA_buttonPrompts[i].SetActive(false);
+
+                go_hasHelp.SetActive(false);
             }
     }
 

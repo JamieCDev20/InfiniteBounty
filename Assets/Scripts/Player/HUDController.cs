@@ -67,6 +67,10 @@ public class HUDController : MonoBehaviourPunCallbacks
     private float i_lastHealth;
     [SerializeField] private float f_flashLength;
 
+    [Header("Help Text")]
+    [SerializeField] private Text t_helpText;
+    [SerializeField] private GameObject go_helpText;
+
 
     private void Awake()
     {
@@ -165,6 +169,7 @@ public class HUDController : MonoBehaviourPunCallbacks
 
         StopCoroutine(VignetteFade());
         StartCoroutine(VignetteFade());
+
         */
         i_lastHealth = _i_currentHealth;
 
@@ -323,5 +328,26 @@ public class HUDController : MonoBehaviourPunCallbacks
         t_killTimerText.text = Mathf.RoundToInt(_f_time).ToString();
         i_killWarningImage.color = new Color(1, 0, 0, Mathf.Abs(Mathf.Sin(_f_time + _f_time)) * 0.1f);
     }
+
+
+    #region Help Text
+
+
+    internal void ShowHelpText(string helpText)
+    {
+        t_helpText.text = helpText;
+        go_helpText.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (go_helpText.activeInHierarchy)
+            if (Input.anyKeyDown)
+                go_helpText.SetActive(false);
+    }
+
+
+    #endregion
+
 
 }

@@ -72,6 +72,7 @@ public class ToolLoader : MonoBehaviour
     }
     public ToolBase GetToolAt(int _i_index)
     {
+        print(_i_index + "/" + tb_loadedTools.Count + " - " + name);
         return tb_loadedTools[_i_index];
     }
 
