@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
 
     [Header("Burrowing")]
     [SerializeField] private GameObject go_burrowingPrefab;
-    private List<GameObject> goL_burrowingMarkers = new List<GameObject>();
+    private List<GameObject> goL_burrowingMarkers = new List<GameObject>();    
 
 
     private IEnumerator Start()
@@ -152,7 +152,7 @@ public class EnemySpawner : MonoBehaviourPunCallbacks
         if (!_b_isFlying)
             StartCoroutine(PlaceTunnelingMarker(_v_spawnPos));
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
 
         if (i_numberOfEnemies < ds_currentDifficulty.f_maxNumberOfEnemies)// || _go_enemyToSpawn == go_miniboss)
         {
