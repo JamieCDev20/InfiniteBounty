@@ -89,7 +89,8 @@ public class Lobby : MonoBehaviourPunCallbacks
         Debug.Log("Joined a room!!");
         if_gameTitleInput.interactable = false;
         if_playerName.interactable = false;
-
+        SaveManager.x.CreateSaveData();
+        FindObjectOfType<ToolRack>().Init();
         gr_menuRaycaster.enabled = false;
         for (int i = 0; i < bA_buttonsToSetToNonInteractableWhenHostIsClicked.Length; i++)
             bA_buttonsToSetToNonInteractableWhenHostIsClicked[i].enabled = false;
@@ -100,8 +101,7 @@ public class Lobby : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(if_gameTitleInput.text);
         t_camera.gameObject.SetActive(false);
 
-        SaveManager.x.CreateSaveData();
-        FindObjectOfType<ToolRack>().Init();
+
 
     }
 
