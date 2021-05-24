@@ -25,6 +25,10 @@ public partial class GrooberAI : AIBase
 
     private float lastGroupCheck;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip ac_attackClip;
+    private AudioSource as_source;
+
 
     #region Queries
 
@@ -88,6 +92,7 @@ public partial class GrooberAI : AIBase
 
             anim.Headbutt();
             yield return new WaitForSeconds(f_attackStartup);
+            as_source.PlayOneShot(ac_attackClip);
             f_currentTime = f_timeBetweenAttacks + f_attackStartup;
 
             foreach (Collider item in Physics.OverlapSphere(transform.position + transform.forward, transform.localScale.y))
