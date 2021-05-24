@@ -22,6 +22,7 @@ public partial class HandymanAI : AIBase
         {
             toggleHurtboxes += hurtBoxes[i].SetHurtboxActive;
         }
+        PlayRoar();
     }
 
     private void Update()
@@ -77,7 +78,7 @@ public partial class HandymanAI : AIBase
     {
         QueryNode inRange = new QueryNode(IsInPunchRangeQuery);
         ActionNode punch = new ActionNode(PunchAction);
-        
+
         return new SequencerNode(inRange, punch);
     }
 

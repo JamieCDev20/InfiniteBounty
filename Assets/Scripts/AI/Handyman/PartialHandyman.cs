@@ -22,8 +22,10 @@ public partial class HandymanAI : AIBase
     [SerializeField] private GameObject go_centreofPickup;
     [SerializeField] private float f_throwWindup;
 
+    [Header("Audio")]
     [SerializeField] private AudioSource handymanSource;
     [SerializeField] private AudioClip whipClip;
+    [SerializeField] private AudioClip ac_roar;
 
     private HandymanAnimator anim;
 
@@ -184,5 +186,11 @@ public partial class HandymanAI : AIBase
     }
 
     #endregion
+
+    private void PlayRoar()
+    {
+        handymanSource.PlayOneShot(ac_roar);
+        Invoke(nameof(PlayRoar), Random.Range(10, 15));
+    }
 
 }
