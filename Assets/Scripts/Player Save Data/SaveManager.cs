@@ -74,8 +74,8 @@ public class SaveManager : SubjectBase, ObserverBase
                             FileStream file = File.Create(Application.persistentDataPath + sv);
                             file.Close();
 
-                            OnNotify(new PurchaseToolEvent(1, 0, true));
-                            OnNotify(new PurchaseToolEvent(3, 1, true));
+                            OnNotify(new PurchaseToolEvent(1, 2, true));
+                            OnNotify(new PurchaseToolEvent(3, 6, true));
                             OnNotify(new PurchaseToolEvent(2, 2, false));
                         }
                     }
@@ -93,8 +93,8 @@ public class SaveManager : SubjectBase, ObserverBase
             FileStream file = File.Create(Application.persistentDataPath + sv);
             file.Close();
 
-            OnNotify(new PurchaseToolEvent(1, 0, true));
-            OnNotify(new PurchaseToolEvent(3, 1, true));
+            OnNotify(new PurchaseToolEvent(1, 2, true));
+            OnNotify(new PurchaseToolEvent(3, 6, true));
             OnNotify(new PurchaseToolEvent(2, 2, false));
 
         }

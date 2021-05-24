@@ -247,7 +247,7 @@ public class PlayerInputManager : MonoBehaviourPunCallbacks
     IEnumerator GoToSpawnDelay()
     {
         yield return new WaitForSeconds(0.1f);
-        foreach (GameObject spawn in TagManager.x.GetTagSet("Spawn"))
+        foreach (GameObject spawn in TagManager.x?.GetTagSet("Spawn"))
         {
             transform.position = spawn.transform.GetChild(playerID).position;
             try

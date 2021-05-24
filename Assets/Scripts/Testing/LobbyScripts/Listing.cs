@@ -23,6 +23,9 @@ public class Listing : MonoBehaviour
     public void OnClick()
     {
         PhotonNetwork.JoinRoom(t_titleText.text);
+
+        SaveManager.x.CreateSaveData();
+        FindObjectOfType<ToolRack>().Init();
     }
 
     public void Destroy()
