@@ -18521,13 +18521,18 @@ MonoBehaviour:
   apd: {fileID: 3793062968306426027}
   t_playerPos: {fileID: 4881664573087159159}
   t_camParent: {fileID: 6941162516917111562}
+  t_augSpawnPos: {fileID: 0}
+  A_augCurve: []
   microwaveCanvas: {fileID: 6941162517799286579}
   fuseButton: {fileID: 6941162518177268805}
+  backButton: {fileID: 0}
   fuser: {fileID: 4436794540123110132}
   go_detailsCanvas: {fileID: 6941162518908318377}
   go_listCanvas: {fileID: 6941162518449312335}
   go_augButtonA: {fileID: 4073019669361157296}
   go_augButtonB: {fileID: 4073019670056248167}
+  go_augmentGO: {fileID: 0}
+  go_augParticals: {fileID: 0}
   fuseSound: {fileID: 8300000, guid: 735e6c166c74642819ea45a13b0f4656, type: 3}
   fuseSource: {fileID: 4133272788413949456}
   nuclearParts: {fileID: 0}
@@ -18599,6 +18604,10 @@ MonoBehaviour:
   s_toolTip: Fuse Augments
   i_buttonSpriteIndex: 0
   b_hostOnly: 0
+  b_hasHelpData: 1
+  s_helpText: Fuse Augments together here! Select two Augments and press Fuse. Fusing
+    Augments of the same name increases their Level, whilst fusing two of the same
+    type with different names combines their effects into one Augment.
 --- !u!65 &2076397248
 BoxCollider:
   m_ObjectHideFlags: 0
