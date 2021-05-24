@@ -72,7 +72,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks, IPunObservable
         FindObjectOfType<CameraController>().SetFollow(x.t_thisPlayer);
 
         NetworkManager.x.SetCanLoad(true);
-        if (scene.name.Contains("obby"))
+        if (scene.buildIndex == 0)
             FindObjectOfType<ToolRack>()?.Init();
     }
 

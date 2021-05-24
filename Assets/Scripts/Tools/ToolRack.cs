@@ -28,11 +28,17 @@ public class ToolRack : Shop
     private List<int> L_weaponRackIDs = new List<int>();
     private List<int> L_mobilityRackIDs = new List<int>();
     private bool b_currentlyShaking = false;
+    private bool b_initted = false;
 
     public void Init()
     {
-        SetToolInRack(tl_weaponTools, L_weaponToolPos);
-        SetToolInRack(tl_mobTools, L_mobToolPos);
+        Debug.Log("I am being initted");
+        if (!b_initted)
+        {
+            SetToolInRack(tl_weaponTools, L_weaponToolPos);
+            SetToolInRack(tl_mobTools, L_mobToolPos);
+            b_initted = true;
+        }
     }
 
     /// <summary>
