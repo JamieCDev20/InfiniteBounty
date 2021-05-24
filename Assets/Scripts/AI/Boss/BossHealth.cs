@@ -32,8 +32,14 @@ public class BossHealth : MonoBehaviourPun, IHitable
     [SerializeField] private LilyPad[] lpA_armourPlates = new LilyPad[0];
     [SerializeField] private int[] iA_armourHealths = new int[0];
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip ac_deathClip;
+    private AudioSource as_source;
+
+
     private IEnumerator Start()
     {
+        as_source = GetComponent<AudioSource>();
         yield return new WaitForSeconds(1);
 
         boss = GetComponent<BossAI>();
@@ -86,6 +92,7 @@ public class BossHealth : MonoBehaviourPun, IHitable
     }
     private IEnumerator ActualDie()
     {
+        as_source.PlayOneShot(ac_deathClip);
         yield return new WaitForSeconds(5);
 
         go_deathParticles.SetActive(true);
