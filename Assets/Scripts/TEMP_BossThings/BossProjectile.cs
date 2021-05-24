@@ -10,10 +10,13 @@ public abstract class BossProjectile : MonoBehaviourPunCallbacks
     protected int i_actualDamage;
     [SerializeField] protected int i_padDamage;
     [SerializeField] private bool b_isDestroyedOnImpact;
+    private AudioSource as_source;
+    [SerializeField] private AudioClip ac_burstClip;
 
 
     private void Start()
     {
+        as_source = GetComponent<AudioSource>();
         i_actualDamage = Mathf.RoundToInt(i_playerDamage * DifficultyManager.x.ReturnCurrentDifficulty().f_damageMult);
     }
 
@@ -35,6 +38,8 @@ public abstract class BossProjectile : MonoBehaviourPunCallbacks
 
     internal virtual void Die()
     {
+        as_source.PlayOneShot(ac_burstClip);
+
         gameObject.SetActive(false);
     }
 }
