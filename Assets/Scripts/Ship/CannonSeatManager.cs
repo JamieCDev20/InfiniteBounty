@@ -13,7 +13,7 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
     private float f_lerpTime = 2;
     [SerializeField] private Transform t_camParent;
     private bool b_hasLocalInteracted;
-
+    [SerializeField] private AudioSource as_source;
 
     private void Awake()
     {
@@ -81,6 +81,7 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
             yield return new WaitForSeconds(0.5f);
             anim.SetTrigger("DoorOpen");
             pim.GetCamera().CancelInputs();
+            as_source.Play();
 
             if (pm.transform.parent == null && pm.transform != transform.root)
             {
@@ -105,7 +106,7 @@ public class CannonSeatManager : MonoBehaviourPun, IInteractible
             yield return new WaitForSeconds(2);
             StartedSitting();
             _pa.StartWalking();
-            _pa.SetShootability(true);            
+            _pa.SetShootability(true);
         }
     }
 
