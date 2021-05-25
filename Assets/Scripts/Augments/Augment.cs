@@ -257,7 +257,12 @@ public class Augment
         c.A_trKeys = CombineFusionArrays(a.A_trKeys, b.A_trKeys);
         ///TODO:
         ///figure out how to deal with projectiles
-        c.go_weaponProjectile = a.go_weaponProjectile;
+        
+        if(a.go_weaponProjectile != null)
+            c.go_weaponProjectile = a.go_weaponProjectile;
+        if (b.go_weaponProjectile != null)
+            c.go_weaponProjectile = b.go_weaponProjectile;
+
         // Explosion data
         c.i_explosionDamage = a.i_explosionDamage + b.i_explosionDamage;
         c.i_expLodeDamage = a.i_expLodeDamage + b.i_expLodeDamage;
