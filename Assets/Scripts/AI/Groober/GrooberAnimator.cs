@@ -23,8 +23,9 @@ public class GrooberAnimator : MonoBehaviour
     private void Update()
     {
         Vector3 dir = transform.position - lastPos;
-        lastPos = transform.position;
-        anim.SetFloat("movblend", b_isGrounded ? dir.sqrMagnitude : 0);
+        //Debug.Log($"{lastPos} ||| {transform.position} ||| {dir.magnitude * (1/Time.deltaTime)}");
+        lastPos = Vector3.Lerp(lastPos, transform.position, 0.1f);
+        anim.SetFloat("movblend", b_isGrounded ? dir.magnitude * (1 / Time.deltaTime) : 0);
 
         anim.SetBool("flying", !b_isGrounded);
 

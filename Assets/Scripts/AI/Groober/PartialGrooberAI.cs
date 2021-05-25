@@ -27,7 +27,7 @@ public partial class GrooberAI : AIBase
 
     [Header("Audio")]
     [SerializeField] private AudioClip ac_attackClip;
-    private AudioSource as_source;
+    [SerializeField] private AudioSource as_source;
 
 
     #region Queries
