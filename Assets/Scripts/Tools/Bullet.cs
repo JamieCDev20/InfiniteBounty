@@ -108,6 +108,7 @@ public class Bullet : MonoBehaviour, IPoolable
         if (rb.velocity.sqrMagnitude < f_minimumSpeedForSound * f_minimumSpeedForSound)
             as_source.Pause();
 
+        if(rb.velocity.magnitude > 0.3f)
         transform.forward = rb.velocity;
     }
 
