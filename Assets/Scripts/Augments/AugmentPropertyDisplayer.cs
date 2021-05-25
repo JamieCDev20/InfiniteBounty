@@ -450,7 +450,7 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                     PlaceAugmentProperties(go_propertyText).text = "Attack Speed " + (ap.f_speed * mod).ToString("F1");
                     break;
                 case AugmentType.projectile:
-                    PlaceAugmentProperties(go_propertyText).text = "Fire Rate " + (ap.f_speed * mod).ToString("F1");
+                    PlaceAugmentProperties(go_propertyText).text = "Fire Rate " + (1 + (ap.f_speed * mod)).ToString("F1") + "x";
                     break;
                 case AugmentType.cone:
                     PlaceAugmentProperties(go_propertyText).text = "Suck Speed " + (ap.f_speed * mod).ToString("F1");

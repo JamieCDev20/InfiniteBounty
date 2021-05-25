@@ -204,7 +204,10 @@ public class ProjectileTool : WeaponTool
 
         i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level)));
         f_shotSpeed = Mathf.Clamp(f_shotSpeed + aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25), 1, 100000000000);
-        f_timeBetweenUsage /= aug.GetAugmentProperties().f_speed > 0 ? aug.GetAugmentProperties().f_speed : 1;
+
+        float _f_speedMult = aug.GetAugmentProperties().f_speed + 1;
+        f_timeBetweenUsage /= _f_speedMult > 0 ? _f_speedMult : 0.001f;
+
 
         string newBullet = pa.GetPhysicalProperties().go_projectile;
         if (newBullet != null && newBullet != "")
