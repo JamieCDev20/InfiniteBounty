@@ -57,6 +57,7 @@ public class VendingMachine : SubjectBase, IInteractible
         for(int i = 0; i < aA_avaliableAugments.Length; i++)
         {
             rbA_augmentRigidbodies[i].GetComponent<AugmentGo>()?.ApplyMaterial(aA_avaliableAugments[i].Aug.AugmentMaterial);
+            aA_avaliableAugments[i].gameObject.SetActive(false);
         }
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = 0;
