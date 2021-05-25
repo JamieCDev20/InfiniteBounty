@@ -10,6 +10,9 @@ public class ConeTool : WeaponTool
     [SerializeField] protected float f_radius;
     [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected Transform t_conePoint;
+    private const AugmentType augType = AugmentType.cone;
+    public override AugmentType AugType { get { return augType; } }
+
 
     private bool CheckInCone(Transform _t_objectToCheck, Vector3 _t_camPos)
     {
