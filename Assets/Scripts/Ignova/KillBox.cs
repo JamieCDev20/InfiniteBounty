@@ -38,6 +38,10 @@ public class KillBox : MonoBehaviour
         if (go_flamePrefab)
             for (int i = 0; i < 20; i++)
                 goL_flames.Add(Instantiate(go_flamePrefab));
+
+        print(DifficultyManager.x.ReturnCurrentDifficulty().f_ashWallSpeed);
+        if (v_unitsPerSecond != Vector3.zero)
+            v_unitsPerSecond = Vector3.forward * DifficultyManager.x.ReturnCurrentDifficulty().f_ashWallSpeed;
     }
 
     private void Update()

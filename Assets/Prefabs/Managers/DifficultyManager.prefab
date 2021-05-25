@@ -49,7 +49,7 @@ MonoBehaviour:
     f_maxHealthMult: 1
     f_damageMult: 1
     f_scaleMult: 0.9
-    f_movementSpeedMult: 0.3
+    f_movementSpeedMult: 0.5
     f_decisionSpeedMult: 1
     f_accuracyMult: 1
     f_spawnFrequencyMult: 1
@@ -61,12 +61,13 @@ MonoBehaviour:
     dA_diversifierSet: 01000000020000000600000004000000050000000600000007000000
     f_bossHealthMult: 1
     vi_enemiesPerBossWave: {x: 3, y: 5}
+    f_ashWallSpeed: 2
   - s_name: Risky
     f_moneyMult: 1.1
     f_maxHealthMult: 1.25
     f_damageMult: 1.25
     f_scaleMult: 1
-    f_movementSpeedMult: 0.3
+    f_movementSpeedMult: 0.55
     f_decisionSpeedMult: 1.25
     f_accuracyMult: 1.25
     f_spawnFrequencyMult: 0.95
@@ -78,12 +79,13 @@ MonoBehaviour:
     dA_diversifierSet: 010000000200000003000000040000000500000006000000070000000800000009000000
     f_bossHealthMult: 1.25
     vi_enemiesPerBossWave: {x: 4, y: 6}
+    f_ashWallSpeed: 2.5
   - s_name: Very Risky
     f_moneyMult: 1.2
     f_maxHealthMult: 1.5
     f_damageMult: 1.5
     f_scaleMult: 1.15
-    f_movementSpeedMult: 0.5
+    f_movementSpeedMult: 0.6
     f_decisionSpeedMult: 1.5
     f_accuracyMult: 1.5
     f_spawnFrequencyMult: 0.9
@@ -95,12 +97,13 @@ MonoBehaviour:
     dA_diversifierSet: 0100000002000000030000000400000005000000060000000700000008000000090000000b0000000c0000000d0000000f0000000e000000
     f_bossHealthMult: 1.5
     vi_enemiesPerBossWave: {x: 5, y: 7}
+    f_ashWallSpeed: 3
   - s_name: Mega Risky
     f_moneyMult: 1.3
     f_maxHealthMult: 1.75
     f_damageMult: 1.75
     f_scaleMult: 1.2
-    f_movementSpeedMult: 0.6
+    f_movementSpeedMult: 0.7
     f_decisionSpeedMult: 1.75
     f_accuracyMult: 1.75
     f_spawnFrequencyMult: 0.85
@@ -112,12 +115,13 @@ MonoBehaviour:
     dA_diversifierSet: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000
     f_bossHealthMult: 1.75
     vi_enemiesPerBossWave: {x: 6, y: 8}
+    f_ashWallSpeed: 3.5
   - s_name: Ultra Risky
     f_moneyMult: 1.4
     f_maxHealthMult: 2
     f_damageMult: 2
     f_scaleMult: 1.25
-    f_movementSpeedMult: 0.7
+    f_movementSpeedMult: 0.9
     f_decisionSpeedMult: 2
     f_accuracyMult: 2
     f_spawnFrequencyMult: 0.8
@@ -129,12 +133,13 @@ MonoBehaviour:
     dA_diversifierSet: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000000c0000000d0000000e0000000f000000
     f_bossHealthMult: 2
     vi_enemiesPerBossWave: {x: 7, y: 9}
+    f_ashWallSpeed: 4
   - s_name: Danger
     f_moneyMult: 1.5
     f_maxHealthMult: 2.25
     f_damageMult: 2.25
     f_scaleMult: 1.3
-    f_movementSpeedMult: 0.8
+    f_movementSpeedMult: 1.2
     f_decisionSpeedMult: 2.25
     f_accuracyMult: 2.25
     f_spawnFrequencyMult: 0.75
@@ -146,12 +151,13 @@ MonoBehaviour:
     dA_diversifierSet: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000
     f_bossHealthMult: 2.25
     vi_enemiesPerBossWave: {x: 8, y: 10}
+    f_ashWallSpeed: 4.5
   - s_name: Big Danger
     f_moneyMult: 1.6
     f_maxHealthMult: 2.5
     f_damageMult: 2.5
     f_scaleMult: 1.35
-    f_movementSpeedMult: 0.9
+    f_movementSpeedMult: 1.5
     f_decisionSpeedMult: 2.5
     f_accuracyMult: 2.5
     f_spawnFrequencyMult: 0.7
@@ -163,11 +169,12 @@ MonoBehaviour:
     dA_diversifierSet: 01000000020000000300000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000
     f_bossHealthMult: 2.5
     vi_enemiesPerBossWave: {x: 9, y: 11}
+    f_ashWallSpeed: 5
   - s_name: Huge Danger
     f_moneyMult: 1.7
     f_maxHealthMult: 2.75
     f_damageMult: 2.75
-    f_scaleMult: 1.4
+    f_scaleMult: 2
     f_movementSpeedMult: 1
     f_decisionSpeedMult: 2.75
     f_accuracyMult: 2.75
@@ -180,12 +187,13 @@ MonoBehaviour:
     dA_diversifierSet: 0300000008000000090000000a0000000b0000000c0000000c0000000d0000000d0000000e0000000e0000000f0000000f000000
     f_bossHealthMult: 2.75
     vi_enemiesPerBossWave: {x: 10, y: 12}
+    f_ashWallSpeed: 5.5
   - s_name: Insane Danger
     f_moneyMult: 1.8
     f_maxHealthMult: 3
     f_damageMult: 3
     f_scaleMult: 1.45
-    f_movementSpeedMult: 1.1
+    f_movementSpeedMult: 2.1
     f_decisionSpeedMult: 3
     f_accuracyMult: 3
     f_spawnFrequencyMult: 0.6
@@ -197,6 +205,7 @@ MonoBehaviour:
     dA_diversifierSet: 08000000090000000a0000000a0000000b0000000c0000000c0000000d0000000d0000000e0000000e0000000f0000000f000000
     f_bossHealthMult: 3
     vi_enemiesPerBossWave: {x: 11, y: 13}
+    f_ashWallSpeed: 6
   i_amountOfAuthoredDifs: 9
   i_maximumDifficulty: 0
   ds_changeInStatsPerImpossible:
@@ -205,7 +214,7 @@ MonoBehaviour:
     f_maxHealthMult: 0.25
     f_damageMult: 0.25
     f_scaleMult: 0.01
-    f_movementSpeedMult: 0.1
+    f_movementSpeedMult: 0.5
     f_decisionSpeedMult: 0.25
     f_accuracyMult: 0.25
     f_spawnFrequencyMult: 0.01
@@ -217,3 +226,4 @@ MonoBehaviour:
     dA_diversifierSet: 0f0000000e0000000d0000000c0000000b0000000a0000000900000008000000
     f_bossHealthMult: 0.25
     vi_enemiesPerBossWave: {x: 0, y: 1}
+    f_ashWallSpeed: 0.1

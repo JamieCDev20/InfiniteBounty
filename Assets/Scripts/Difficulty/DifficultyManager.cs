@@ -9,7 +9,7 @@ public class DifficultyManager : SubjectBase
 
     [SerializeField] private List<DifficultySet> dsL_difficulties = new List<DifficultySet>();
     private int i_currentDifficulty;
-    [SerializeField]private int i_amountOfAuthoredDifs;
+    [SerializeField] private int i_amountOfAuthoredDifs;
     [Space, SerializeField] private int i_maximumDifficulty;
     //Returns maximum difficulty as an index
     internal int MaximumDifficulty { get { return i_maximumDifficulty - 1; } }
@@ -21,7 +21,7 @@ public class DifficultyManager : SubjectBase
     {
     }
 
-//#if UNITY_EDITOR
+    //#if UNITY_EDITOR
 
     private void Update()
     {
@@ -29,7 +29,7 @@ public class DifficultyManager : SubjectBase
             i_maximumDifficulty++;
     }
 
-//#endif
+    //#endif
 
     public void Init()
     {
@@ -136,6 +136,9 @@ public class DifficultyManager : SubjectBase
         impossibleX.f_bossHealthMult += (ds_changeInStatsPerImpossible.f_bossHealthMult * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_bossHealthMult;
         impossibleX.vi_enemiesPerBossWave += (ds_changeInStatsPerImpossible.vi_enemiesPerBossWave * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].vi_enemiesPerBossWave;
 
+        //Level
+        impossibleX.f_ashWallSpeed += (ds_changeInStatsPerImpossible.f_ashWallSpeed * _i_currentImpossible) + dsL_difficulties[i_amountOfAuthoredDifs - 1].f_ashWallSpeed;
+
         dsL_difficulties.Add(impossibleX);
     }
     #endregion
@@ -177,4 +180,6 @@ public struct DifficultySet
     public float f_bossHealthMult; //The boss's health is multiplied by this on start
     public Vector2Int vi_enemiesPerBossWave; //The number of flappers the boss spawns periodically
 
+    [Header("Level Things")]
+    public float f_ashWallSpeed;
 }
