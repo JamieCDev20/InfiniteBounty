@@ -94,7 +94,12 @@ public class PlayerWaypointer : MonoBehaviourPunCallbacks
 
     private void PositionWaypoint()
     {
-
+        if(t_targetPlayer == null)
+        {
+            t_targetPlayer = NetworkedPlayer.x?.GetPlayer();
+            cam = NetworkedPlayer.x?.GetCamera();
+            return;
+        }
         if ((transform.position - t_targetPlayer.position).magnitude < f_displayRange)
         {
             go_offMarker.SetActive(false);
