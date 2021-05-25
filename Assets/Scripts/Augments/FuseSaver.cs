@@ -260,6 +260,9 @@ public class FuseSaver : MonoBehaviour, ObserverBase
     public void DestroySaveData()
     {
         _savedData = new AugmentSave[0];
+        fusedAugs = new Augment[0];
+        fusedProj = new ProjectileAugment[0];
+        fusedCone = new ConeAugment[0];
         string emptyFuseData = JsonConvert.SerializeObject(_savedData);
         File.WriteAllText(filePath, emptyFuseData);
         //File.Delete(filePath);

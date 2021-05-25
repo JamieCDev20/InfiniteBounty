@@ -137,7 +137,6 @@ public class SaveManager : SubjectBase, ObserverBase
             File.WriteAllText(Application.persistentDataPath + sv, JsonConvert.SerializeObject(saveData));
             InfoText.x.OnNotify(new InfoTextEvent("Save Data Cleared"));
         }
-
         OnNotify(new PurchaseToolEvent(1, 2, true));
         OnNotify(new PurchaseToolEvent(3, 6, true));
         OnNotify(new PurchaseToolEvent(2, 2, false));
@@ -510,6 +509,8 @@ public class SaveManager : SubjectBase, ObserverBase
 
     private int GetAugmentSaveIndex(AugmentSave _augSave, params int[] levels)
     {
+        if (Utils.ArrayIsNullOrZero(SaveData.purchasedAugments))
+            return -1;
         for (int i = 0; i < saveData.purchasedAugments.Length; i++)
         {
             if (_augSave.SavedAugment.indicies.Length == 1)

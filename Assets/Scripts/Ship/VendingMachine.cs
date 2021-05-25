@@ -19,7 +19,6 @@ public class VendingMachine : SubjectBase, IInteractible
     private int i_currentAugmentIndex;
     private AugmentGo[] aA_avaliableAugments = new AugmentGo[9];
     [SerializeField] private Canvas go_vendingCanvas;
-    [SerializeField] private AugmentDisplay vmd_vendingMachineDisplay;
     [SerializeField] private Transform[] tA_augmentPositions = new Transform[0];
     [SerializeField] private Transform t_augmentHighlight;
     [SerializeField] private Rigidbody[] rbA_augmentRigidbodies = new Rigidbody[0];
@@ -55,6 +54,10 @@ public class VendingMachine : SubjectBase, IInteractible
         augMan = _am;
 
         GetAugments(augMan.GetRandomAugments(aA_avaliableAugments.Length < augMan.GetNumberOfAugments() ? aA_avaliableAugments.Length : augMan.GetNumberOfAugments(), tA_augmentPositions));
+        for(int i = 0; i < aA_avaliableAugments.Length; i++)
+        {
+            rbA_augmentRigidbodies[i].GetComponent<AugmentGo>()?.ApplyMaterial(aA_avaliableAugments[i].Aug.AugmentMaterial);
+        }
         int _i = UnityEngine.Random.Range(0, 9);
         i_currentAugmentIndex = 0;
         t_augmentHighlight.position = tA_augmentPositions[_i].position;
@@ -236,7 +239,6 @@ public class VendingMachine : SubjectBase, IInteractible
                             Notify(fe);
                             break;
                     }
-                    aA_avaliableAugments[i_currentAugmentIndex] = augMan.GetRandomAugment(aA_avaliableAugments.Length);
                     rbA_augmentRigidbodies[i_currentAugmentIndex] = null;
                 }
                 as_source.PlayOneShot(ac_coinsSound);

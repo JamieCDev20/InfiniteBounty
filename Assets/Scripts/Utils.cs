@@ -146,6 +146,12 @@ public class Utils
 
         if (_arrayToRemove.Length == 1)
             return new T[0];
+        if(_itemToRemove != -1)
+        {
+            Debug.Log(string.Format("Length: {0} | Index: {1}", _arrayToRemove[_itemToRemove], _itemToRemove));
+        }
+        else
+            Debug.Log(string.Format("Length: {0} | Index: {1}", _arrayToRemove.Length, _itemToRemove));
 
         bool skipped = false;
         T[] newArray = new T[_arrayToRemove.Length - 1];
@@ -156,11 +162,10 @@ public class Utils
                 skipped = true;
                 continue;
             }
+            // If this errors it means we've not found the item we wish to remove...
             newArray[skipped ? i - 1 : i] = _arrayToRemove[i];
         }
-
         return newArray;
-
     }
 
     public static T[] RemoveDuplicates<T>(T[] _arrayToRemove)
