@@ -258,9 +258,9 @@ public class Augment
         ///TODO:
         ///figure out how to deal with projectiles
         
-        if(a.go_weaponProjectile != null)
+        if(a.go_weaponProjectile != "")
             c.go_weaponProjectile = a.go_weaponProjectile;
-        if (b.go_weaponProjectile != null)
+        if (b.go_weaponProjectile != "")
             c.go_weaponProjectile = b.go_weaponProjectile;
 
         // Explosion data
