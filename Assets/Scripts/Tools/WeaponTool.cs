@@ -238,7 +238,6 @@ public class WeaponTool : ToolBase
     private void RemoveToAugmentProperties(AugmentProperties ap, float mod)
     {
         Debug.Log("Removing augment properties");
-        Debug.Log(i_damage);
         i_damage -= Mathf.RoundToInt(mod * ap.i_damage);
         i_lodeDamage -= Mathf.RoundToInt(mod * ap.i_lodeDamage);
         f_weight -= mod * ap.f_weight;
@@ -247,7 +246,6 @@ public class WeaponTool : ToolBase
         f_heatsink -= mod * ap.f_heatsink;
         f_knockback -= mod * ap.f_knockback;
         f_energyGauge -= mod * ap.f_energyGauge;
-        Debug.Log(i_damage);
     }
 
     private void RemoveToPhysicalProperties(AugmentPhysicals ap)
@@ -276,6 +274,19 @@ public class WeaponTool : ToolBase
         ae_explode.f_radius -= ae.f_radius;
         ae_explode.i_damage -= ae.i_damage;
         ae_explode.i_lodeDamage -= ae.i_lodeDamage;
+        for (int i = 0; i < ae.sA_explarticles.Length; i++)
+        {
+            string[] names = ae.sA_explarticles[i].Split('\\');
+
+            for (int j = 0; j < goA_explarticles.Length; j++)
+            {
+                if (goA_explarticles[j].name == names[names.Length-1])
+                {
+                    goA_explarticles = Utils.OrderedRemove(goA_explarticles, j);
+                    break;
+                }
+            }
+        }
         //if (go_explarticles != null && go_explarticles.Length > 0)
         //LoadAndAddObjectArray(go_explarticles, ae.go_explarticles);
     }
