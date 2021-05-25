@@ -273,17 +273,20 @@ public class WeaponTool : ToolBase
         ae_explode.f_explockBack -= ae.f_explockBack;
         ae_explode.f_radius -= ae.f_radius;
         ae_explode.i_damage -= ae.i_damage;
-        ae_explode.i_lodeDamage -= ae.i_lodeDamage;
-        for (int i = 0; i < ae.sA_explarticles.Length; i++)
+        ae_explode.i_lodeDamage -= ae.i_lodeDamage; 
+        if(ae.sA_explarticles != null)
         {
-            string[] names = ae.sA_explarticles[i].Split('\\');
-
-            for (int j = 0; j < goA_explarticles.Length; j++)
+            for (int i = 0; i < ae.sA_explarticles.Length; i++)
             {
-                if (goA_explarticles[j].name == names[names.Length-1])
+                string[] names = ae.sA_explarticles[i].Split('\\');
+
+                for (int j = 0; j < goA_explarticles.Length; j++)
                 {
-                    goA_explarticles = Utils.OrderedRemove(goA_explarticles, j);
-                    break;
+                    if (goA_explarticles[j].name == names[names.Length-1])
+                    {
+                        goA_explarticles = Utils.OrderedRemove(goA_explarticles, j);
+                        break;
+                    }
                 }
             }
         }
