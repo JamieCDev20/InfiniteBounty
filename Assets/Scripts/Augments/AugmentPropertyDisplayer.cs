@@ -581,6 +581,9 @@ public class AugmentPropertyDisplayer : MonoBehaviour
             if (augmentProperties.pm_phys == "Bouncy")
                 PlaceAugmentProperties(go_propertyText).text = "Bouncy Bullets";
 
+            if (projectileCast.GetPhysicalProperties().go_projectile == "PainTrains")
+                PlaceAugmentProperties(go_propertyText).text = "Trains";
+
         }
         if (_aug is ConeAugment)
         {
