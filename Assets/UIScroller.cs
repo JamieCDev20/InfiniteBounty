@@ -12,7 +12,7 @@ public class UIScroller : MonoBehaviour
     void Update()
     {
 
-        if (transform.localPosition.y > 1100)
+        if (transform.localPosition.y > 3131.2)
         {
             if (Input.anyKeyDown)
                 StartCoroutine(EndScene());
