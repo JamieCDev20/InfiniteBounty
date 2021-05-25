@@ -19,7 +19,7 @@ public class UIScroller : MonoBehaviour
             return;
         }
 
-        transform.localPosition += Vector3.up * Time.deltaTime * f_scrollSpeed * (Input.anyKey ? 3 : 1);
+        transform.localPosition += Vector3.up * Time.deltaTime * f_scrollSpeed * (Input.anyKey ? 10 : 1);
     }
 
     internal void UpdateApearance(int _i_head, int _i_body, int _i_limbs)
@@ -40,7 +40,7 @@ public class UIScroller : MonoBehaviour
 
     private IEnumerator EndScene()
     {
-        FadeToBlack.x.ShowCover(0);
+        FadeToBlack.x.ShowCover(0, true);
         yield return new WaitForSeconds(3);
         UniversalOverlord.x.ReturnToMainMenu();
     }

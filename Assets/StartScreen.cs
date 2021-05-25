@@ -12,7 +12,7 @@ public class StartScreen : MonoBehaviour
 
     private IEnumerator IStartGame()
     {
-        FadeToBlack.x.ShowCover(0);
+        FadeToBlack.x.ShowCover(0, false);
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("LobbyScene");
     }

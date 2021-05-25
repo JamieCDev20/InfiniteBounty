@@ -9,6 +9,8 @@ public class FadeToBlack : MonoBehaviour
     public static FadeToBlack x;
     [SerializeField] private Image i_coverImage;
     [SerializeField] private Text t_coverText;
+    [SerializeField] private Image i_postcard;
+
 
     private void Start()
     {
@@ -21,6 +23,7 @@ public class FadeToBlack : MonoBehaviour
         else
             x = this;
 
+        i_postcard.CrossFadeAlpha(0, 0.1f, true);
         SceneManager.sceneLoaded += DefaultHideCover;
         HideCover(1);
     }
@@ -38,20 +41,28 @@ public class FadeToBlack : MonoBehaviour
     public void HideCover(float delay)
     {
         if (this)
-            StartCoroutine(IChangeCover(delay, 0));
+        {
+            StartCoroutine(IChangeCover(delay, 0, false));
+            StartCoroutine(IChangeCover(delay, 0, true));
+        }
     }
 
-    public void ShowCover(float delay)
+    public void ShowCover(float delay, bool _b_isPostCard)
     {
         if (this)
-            StartCoroutine(IChangeCover(delay, 1));
+            StartCoroutine(IChangeCover(delay, 1, _b_isPostCard));
     }
 
-    public IEnumerator IChangeCover(float delay, float _f_targetAlpha)
+    public IEnumerator IChangeCover(float delay, float _f_targetAlpha, bool _b_isPostCard)
     {
         yield return new WaitForSeconds(delay);
-        i_coverImage.CrossFadeAlpha(_f_targetAlpha, 0.7f, true);
-        t_coverText.CrossFadeAlpha(_f_targetAlpha, 0.7f, true);
+        if (_b_isPostCard)
+            i_postcard.CrossFadeAlpha(_f_targetAlpha, 0.7f, true);
+        else
+        {
+            i_coverImage.CrossFadeAlpha(_f_targetAlpha, 0.7f, true);
+            t_coverText.CrossFadeAlpha(_f_targetAlpha, 0.7f, true);
+        }
     }
 
 }
