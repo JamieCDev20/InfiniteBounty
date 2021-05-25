@@ -32,7 +32,6 @@ public class ToolRack : Shop
 
     public void Init()
     {
-        Debug.Log("I am being initted");
         if (!b_initted)
         {
             SetToolInRack(tl_weaponTools, L_weaponToolPos);

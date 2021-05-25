@@ -268,7 +268,7 @@ public class Microwave : SubjectBase, IInteractible
                 AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage, aLevel, bLevel);
 
         Notify(fe);
-        aug_slotA.Level = aLevel;
+        //aug_slotA.Level = aLevel;
         switch (aug_slotA.at_type)
         {
             case AugmentType.projectile:
