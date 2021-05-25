@@ -250,6 +250,7 @@ public class Augment
         c.f_energyGauge = a.f_energyGauge + b.f_energyGauge;
         c.f_knockback = a.f_knockback + b.f_knockback;
         c.f_heatsink = a.f_heatsink + b.f_heatsink;
+        c.f_speed = a.f_speed + b.f_speed;
         // Physical data
         c.f_trWidth = a.f_trWidth + b.f_trWidth;
         c.f_trLifetime = a.f_trLifetime + b.f_trLifetime;

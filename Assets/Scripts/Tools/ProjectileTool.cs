@@ -32,6 +32,7 @@ public class ProjectileTool : WeaponTool
     [SerializeField] private ParticleSystem ps_shotEffects;
     private List<Element> elementList = new List<Element>();
     [SerializeField] private MeshRenderer mr_renderer;
+    [SerializeField] private string defaultBulletPath;
 
 
     public override void SetActiveState(bool val)
@@ -204,6 +205,11 @@ public class ProjectileTool : WeaponTool
         i_shotsPerRound += Mathf.RoundToInt(augData.i_shotsPerRound * (GetAugmentLevelModifier(aug.Level)));
         f_shotSpeed = Mathf.Clamp(f_shotSpeed + aug.GetAugmentProperties().f_speed - (pa.GetProjectileData().f_gravity * 25), 1, 100000000000);
         f_timeBetweenUsage /= aug.GetAugmentProperties().f_speed > 0 ? aug.GetAugmentProperties().f_speed : 1;
+
+        string newBullet = pa.GetPhysicalProperties().go_projectile;
+        if (newBullet != null)
+            go_hitBox[0] = Resources.Load<GameObject>(newBullet);
+
         return true;
     }
 
@@ -232,6 +238,10 @@ public class ProjectileTool : WeaponTool
         i_shotsPerRound -= Mathf.RoundToInt(projData.i_shotsPerRound * mod);
         f_shotSpeed -= augData.f_speed - (projData.f_gravity * 25);
         f_timeBetweenUsage *= Mathf.Clamp(augData.f_speed, 0.1f, 10000);
+
+        string newBullet = pa.GetPhysicalProperties().go_projectile;
+        if (newBullet != null)
+            go_hitBox[0] = Resources.Load<GameObject>(defaultBulletPath);
 
     }
 
