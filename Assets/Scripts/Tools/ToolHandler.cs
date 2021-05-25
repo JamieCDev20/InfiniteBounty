@@ -176,7 +176,7 @@ public class ToolHandler : SubjectBase
     {
         foreach (AugmentGo ago in FindObjectsOfType<AugmentGo>(true))
         {
-            ago.GetComponent<PoolableObject>().Die();
+            ago.GetComponent<PoolableObject>()?.Die();
         }
     }
 

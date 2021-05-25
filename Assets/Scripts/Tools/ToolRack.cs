@@ -177,10 +177,8 @@ public class ToolRack : Shop
         PlayerSaveData psd = SaveManager.x.SaveData;
         if (Utils.ArrayIsNullOrZero(psd.tu_equipped))
             return false;
-        Debug.Log(psd.tu_equipped.Length);
         if (psd.tu_equipped.Length <= (int)_ts)
             return false;
-        Debug.Log(_ts);
         if (psd.tu_equipped[(int)_ts] == (toolID, rackID))
             return true;
         return false;
