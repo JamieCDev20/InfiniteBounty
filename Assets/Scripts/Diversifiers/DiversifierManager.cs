@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -98,6 +99,15 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         HUDController.x.ChangeBonusObjective(bo_currentBonusObjective);
     }
 
+    [PunRPC]
+    public void SyncDivers(int _i_firstDiver, int _i_secondDiver, int _i_thirdDiver)
+    {
+        dA_activeDivers[0] = (Diversifier)_i_firstDiver;
+        dA_activeDivers[1] = (Diversifier)_i_secondDiver;
+        dA_activeDivers[2] = (Diversifier)_i_thirdDiver;
+
+        ApplyDiversifiers(FindObjectOfType<TriggerDivers>().ziA_diversifiableZone);
+    }
 
     public bool ReturnIfDiverIsActive(Diversifier _d_toCheck)
     {
@@ -111,7 +121,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     public void ApplyDiversifiers(LodeSpawnZone[] _ziA_spawnableZones)
     {
         if (PhotonNetwork.IsMasterClient)
-            view.RPC(nameof(SyncBonusObjective), RpcTarget.All, Random.Range(1, 7));
+            view.RPC(nameof(SyncBonusObjective), RpcTarget.All, UnityEngine.Random.Range(1, 7));
 
         ziA_allZones = _ziA_spawnableZones;
 
@@ -121,7 +131,7 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
                 switch (dA_activeDivers[i])
                 {
                     case Diversifier.GeysersGalore:
-                        view.RPC(nameof(GeysersGaloreRPC), RpcTarget.All, Random.Range(0, 9999999));
+                        view.RPC(nameof(GeysersGaloreRPC), RpcTarget.All, UnityEngine.Random.Range(0, 9999999));
                         break;
 
                 }
@@ -139,14 +149,14 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
     public IEnumerator GeysersGaloreRPC(int _i_seed)
     {
         yield return null;
-        Random.InitState(_i_seed);
+        UnityEngine.Random.InitState(_i_seed);
         //Debug.LogError("MY SEED IS " + _i_seed);
 
         RaycastHit _hit;
 
-        for (int i = 0; i < Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y); i++)
+        for (int i = 0; i < UnityEngine.Random.Range(v_numberOfGeysers.x, v_numberOfGeysers.y); i++)
         {
-            Physics.Raycast(ReturnPositionWithinZone(ziA_allZones[Random.Range(0, ziA_allZones.Length)]), Vector3.down, out _hit, Mathf.Infinity, LayerMask.NameToLayer("UGG"), QueryTriggerInteraction.Ignore);
+            Physics.Raycast(ReturnPositionWithinZone(ziA_allZones[UnityEngine.Random.Range(0, ziA_allZones.Length)]), Vector3.down, out _hit, Mathf.Infinity, LayerMask.NameToLayer("UGG"), QueryTriggerInteraction.Ignore);
             if (_hit.transform.name.Contains("*")) continue;
 
             GameObject _go = PhotonNetwork.Instantiate(s_geyserPath, _hit.point, Quaternion.identity);
@@ -161,12 +171,12 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
 
     private Vector3 ReturnPositionWithinZone(LodeSpawnZone _zi_zone)
     {
-        return new Vector3(Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative()), 500, Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative())) + _zi_zone.transform.position;
+        return new Vector3(UnityEngine.Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative()), 500, UnityEngine.Random.Range(0, _zi_zone.f_zoneRadius * RandomiseToNegative())) + _zi_zone.transform.position;
     }
 
     private float RandomiseToNegative()
     {
-        return Random.Range(-1f, 1f);
+        return UnityEngine.Random.Range(-1f, 1f);
     }
 
     #endregion
@@ -295,5 +305,9 @@ public class DiversifierManager : MonoBehaviourPunCallbacks
         return _f_scaler;
     }
 
-
+    internal void SnmdDivers()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            view.RPC(nameof(SyncDivers), RpcTarget.All, (int)dA_activeDivers[0], (int)dA_activeDivers[1], (int)dA_activeDivers[2]);
+    }
 }
