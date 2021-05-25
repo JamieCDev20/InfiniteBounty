@@ -86,11 +86,16 @@ public class KillBox : MonoBehaviour
 
             IHitable _h = collision.collider.GetComponent<IHitable>();
 
+            RaycastHit hit;
+            if (Physics.Raycast(collision.transform.position, Vector3.down, out hit))
+                if (hit.collider.transform != transform)
+                    return;
+
             if (!collision.transform.CompareTag("Lilypad"))
-                _h?.TakeDamage(Mathf.RoundToInt(i_damageToDeal * DiversifierManager.x.ReturnLavaScaler()), false);
+                _h?.TakeDamage(Mathf.RoundToInt(i_damageToDeal * DiversifierManager.x.ReturnLavaScaler() * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 3 : 1)), false);
 
             if (b_shouldCauseKnockback && collision.transform.tag == "Player")
-                collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection * (DiversifierManager.x.ReturnIfDiverIsActive(Diversifier.LethalLava) ? 3 : 1), b_dealsFire);
+                collision.transform.GetComponent<PlayerHealth>().StartBurningBum(v_bounceDirection, b_dealsFire);
 
             if (am_nugMixer)
             {
