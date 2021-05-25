@@ -146,12 +146,6 @@ public class Utils
 
         if (_arrayToRemove.Length == 1)
             return new T[0];
-        if(_itemToRemove != -1)
-        {
-            Debug.Log(string.Format("Length: {0} | Index: {1}", _arrayToRemove[_itemToRemove], _itemToRemove));
-        }
-        else
-            Debug.Log(string.Format("Length: {0} | Index: {1}", _arrayToRemove.Length, _itemToRemove));
 
         bool skipped = false;
         T[] newArray = new T[_arrayToRemove.Length - 1];
