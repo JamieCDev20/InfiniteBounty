@@ -151,7 +151,7 @@ public class Utils
         T[] newArray = new T[_arrayToRemove.Length - 1];
         for (int i = 0; i < _arrayToRemove.Length; i++)
         {
-            if (i == _itemToRemove)
+            if (i == _itemToRemove && !skipped)
             {
                 skipped = true;
                 continue;

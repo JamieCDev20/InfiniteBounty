@@ -520,7 +520,7 @@ public class SaveManager : SubjectBase, ObserverBase
             }
             else if (_augSave.SavedAugment.indicies.Length > 1)
             {
-                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[0] || _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.level == (levels != null ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
+                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.level == (levels != null ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
                     return i;
             }
         }
