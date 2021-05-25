@@ -207,7 +207,7 @@ public class ProjectileTool : WeaponTool
         f_timeBetweenUsage /= aug.GetAugmentProperties().f_speed > 0 ? aug.GetAugmentProperties().f_speed : 1;
 
         string newBullet = pa.GetPhysicalProperties().go_projectile;
-        if (newBullet != null)
+        if (newBullet != null && newBullet != "")
             go_hitBox[0] = Resources.Load<GameObject>(newBullet);
 
         return true;
@@ -240,7 +240,7 @@ public class ProjectileTool : WeaponTool
         f_timeBetweenUsage *= Mathf.Clamp(augData.f_speed, 0.1f, 10000);
 
         string newBullet = pa.GetPhysicalProperties().go_projectile;
-        if (newBullet != null)
+        if (newBullet != null && newBullet != "")
             go_hitBox[0] = Resources.Load<GameObject>(defaultBulletPath);
 
     }
