@@ -476,9 +476,11 @@ public class SaveManager : SubjectBase, ObserverBase
                     case AugmentStage.full:
                         AugmentSave augA = new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.ALevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[0] });
                         int aInd = GetAugmentSaveIndex(augA);
+                        Debug.Log("Obtained Index A: " + aInd);
                         saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, aInd);
                         AugmentSave augB = new AugmentSave(AugmentStage.full, fuseEvent.SavedAug.SavedAugment.augType, fuseEvent.ALevel, new int[] { fuseEvent.SavedAug.SavedAugment.indicies[1] });
                         int bInd = GetAugmentSaveIndex(augB);
+                        Debug.Log("Obtained Index B: " + bInd);
                         saveData.purchasedAugments = Utils.OrderedRemove(saveData.purchasedAugments, bInd);
                         if (fuseEvent.SavedAug.SavedAugment.augStage == AugmentStage.full)
                         {
@@ -507,20 +509,21 @@ public class SaveManager : SubjectBase, ObserverBase
         }
     }
 
-    private int GetAugmentSaveIndex(AugmentSave _augSave, params int[] levels)
+    private int GetAugmentSaveIndex(AugmentSave _augSave)
     {
+        Debug.Log("Passed in augment: " + _augSave.SavedAugment.indicies[0]);
         if (Utils.ArrayIsNullOrZero(SaveData.purchasedAugments))
             return -1;
         for (int i = 0; i < saveData.purchasedAugments.Length; i++)
         {
             if (_augSave.SavedAugment.indicies.Length == 1)
             {
-                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.level == (levels.Length > 0 ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
+                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.level == saveData.purchasedAugments[i].SavedAugment.level)
                     return i;
             }
             else if (_augSave.SavedAugment.indicies.Length > 1)
             {
-                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.level == (levels != null ? levels[0] : saveData.purchasedAugments[i].SavedAugment.level))
+                if (_augSave.SavedAugment.indicies[0] == saveData.purchasedAugments[i].SavedAugment.indicies[0] && _augSave.SavedAugment.indicies[1] == saveData.purchasedAugments[i].SavedAugment.indicies[1] && _augSave.SavedAugment.level == saveData.purchasedAugments[i].SavedAugment.level)
                     return i;
             }
         }
