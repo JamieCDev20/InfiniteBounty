@@ -27,7 +27,7 @@ public class ProjectileAugment : Augment
         f_gravity = _nyooom.f_gravity;
         pm_physMat = _nyooom.pm_phys;
         f_bulletScale = _nyooom.f_bulletScale;
-        
+
     }
 
     public AugmentProjectile GetProjectileData()
@@ -58,6 +58,7 @@ public class ProjectileAugment : Augment
         c.f_bulletScale = a.f_bulletScale + b.f_bulletScale;
         c.i_damage = ac.GetAugmentProperties().i_damage;
         c.i_lodeDamage = ac.GetAugmentProperties().i_lodeDamage;
+        c.f_speed = ac.GetAugmentProperties().f_speed;
 
         AugmentExplosion e = ac.GetExplosionProperties();
         c.f_detonationTime = e.f_detonationTime;
