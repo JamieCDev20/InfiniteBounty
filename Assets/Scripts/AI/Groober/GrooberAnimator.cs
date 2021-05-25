@@ -8,6 +8,7 @@ public class GrooberAnimator : MonoBehaviour
     private Animator anim;
     private Rigidbody rb;
     private bool b_isGrounded = true;
+    private Vector3 lastPos;
 
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip leftFoot;
@@ -21,8 +22,9 @@ public class GrooberAnimator : MonoBehaviour
 
     private void Update()
     {
-
-        anim.SetFloat("movblend", b_isGrounded ? rb.velocity.sqrMagnitude : 0);
+        Vector3 dir = transform.position - lastPos;
+        lastPos = transform.position;
+        anim.SetFloat("movblend", b_isGrounded ? dir.sqrMagnitude : 0);
 
         anim.SetBool("flying", !b_isGrounded);
 
