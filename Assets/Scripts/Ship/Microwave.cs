@@ -263,7 +263,6 @@ public class Microwave : SubjectBase, IInteractible
         anim?.SetBool("IsCooking?", false);
         fuseParts.Play();
         RevealAugment(aug_slotA);
-        apd.UpdatePropertyText(fusedAug);
         FuseEvent fe = new FuseEvent(new AugmentSave(fusedAug.Stage, fusedAug.at_type, fusedAug.Level, fusedAug.Stage == AugmentStage.fused ?
             AugmentManager.x.GetIndicesByName(fusedAug.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name),
                 AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage, aLevel, bLevel);
