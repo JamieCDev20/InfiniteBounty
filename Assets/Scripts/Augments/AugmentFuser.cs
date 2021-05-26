@@ -18,7 +18,19 @@ public class AugmentFuser : MonoBehaviour
         }
         else if(a != b && a.Stage != AugmentStage.fused && b.Stage != AugmentStage.fused)
         {
-            newAug = Augment.Combine(a, b);
+            switch (a.at_type)
+            {
+                case AugmentType.projectile:
+                    newAug = ProjectileAugment.Combine(a, b);
+                    break;
+                case AugmentType.cone:
+                    newAug = ConeAugment.Combine(a, b);
+                    break;
+                case AugmentType.standard:
+                    newAug = Augment.Combine(a, b);
+                    break;
+            }
+            //newAug = Augment.Combine(a, b);
             newAug.Stage = AugmentStage.fused;
             newAug.Level = a.Level + b.Level;
             return newAug;

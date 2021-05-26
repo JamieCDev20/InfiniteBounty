@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Microwave : SubjectBase, IInteractible
 {
     private int i_currentlyClickedAugment;
+    private int i_aLevel;
+    private int i_bLevel;
     private bool b_inUse;
     private bool b_initted = false;
     private Transform t_camPositionToReturnTo;
@@ -159,18 +161,21 @@ public class Microwave : SubjectBase, IInteractible
             aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, AugmentDisplayType.None, false);
             go_listCanvas.SetActive(false);
             go_detailsCanvas.SetActive(true);
-            switch (aug_slotA.at_type)
-            {
-                case AugmentType.projectile:
-                    apd.UpdatePropertyText(ProjectileAugment.Combine((ProjectileAugment)aug_slotA, (ProjectileAugment)aug_slotB));
-                    break;
-                case AugmentType.cone:
-                    apd.UpdatePropertyText(ConeAugment.Combine((ConeAugment)aug_slotA, (ConeAugment)aug_slotB));
-                    break;
-                case AugmentType.standard:
-                    apd.UpdatePropertyText(Augment.Combine(aug_slotA, aug_slotB));
-                    break;
-            }
+            i_aLevel = aug_slotA.Level;
+            i_bLevel = aug_slotB.Level;
+            apd.UpdatePropertyText(fuser.FuseAugments(aug_slotA, aug_slotB));
+            //switch (aug_slotA.at_type)
+            //{
+            //    case AugmentType.projectile:
+            //        apd.UpdatePropertyText(ProjectileAugment.Combine((ProjectileAugment)aug_slotA, (ProjectileAugment)aug_slotB));
+            //        break;
+            //    case AugmentType.cone:
+            //        apd.UpdatePropertyText(ConeAugment.Combine((ConeAugment)aug_slotA, (ConeAugment)aug_slotB));
+            //        break;
+            //    case AugmentType.standard:
+            //        apd.UpdatePropertyText(Augment.Combine(aug_slotA, aug_slotB));
+            //        break;
+            //}
             RevealFuseButton();
         }
         else
@@ -242,6 +247,7 @@ public class Microwave : SubjectBase, IInteractible
         backButton.interactable = false;
         int aLevel = aug_slotA.Level;
         int bLevel = aug_slotB.Level;
+
         fusedAug = fuser.FuseAugments(aug_slotA, aug_slotB);
         fusedAug.at_type = aug_slotA.at_type;
 
@@ -263,9 +269,10 @@ public class Microwave : SubjectBase, IInteractible
         anim?.SetBool("IsCooking?", false);
         fuseParts.Play();
         RevealAugment(aug_slotA);
+
         FuseEvent fe = new FuseEvent(new AugmentSave(fusedAug.Stage, fusedAug.at_type, fusedAug.Level, fusedAug.Stage == AugmentStage.fused ?
             AugmentManager.x.GetIndicesByName(fusedAug.Name) : new int[2] { AugmentManager.x.GetAugmentIndex(aug_slotA.at_type, aug_slotA.Name),
-                AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage, aLevel, bLevel);
+                AugmentManager.x.GetAugmentIndex(aug_slotB.at_type, aug_slotB.Name) }), aug_slotA.Stage, i_aLevel, i_bLevel);
 
         Notify(fe);
         //aug_slotA.Level = aLevel;

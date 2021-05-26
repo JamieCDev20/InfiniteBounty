@@ -10,6 +10,16 @@ public class ConeAugment : Augment
     [Newtonsoft.Json.JsonProperty]
     [SerializeField] float f_radius;
 
+    public ConeAugment() { }
+    public ConeAugment(ConeAugment _baseAug)
+    {
+        InitInfo(_baseAug.GetAugmentProperties());
+        InitPhysical(_baseAug.GetPhysicalProperties());
+        InitExplosion(_baseAug.GetExplosionProperties());
+        InitCone(_baseAug.GetConeData());
+        // Audio Unimplemented
+    }
+
     public void InitCone(float _f_ang, float _f_rad)
     {
         f_angle = _f_ang;

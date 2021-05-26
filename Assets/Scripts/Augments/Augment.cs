@@ -94,6 +94,16 @@ public class Augment
 
     public AugmentType at_type;
 
+    public Augment() { }
+
+    public Augment(Augment _baseAug)
+    {
+        InitInfo(_baseAug.GetAugmentProperties());
+        InitPhysical(_baseAug.GetPhysicalProperties());
+        InitExplosion(_baseAug.GetExplosionProperties());
+        // Audio Unimplemented
+    }
+
     public void InitAudio(AudioClip[] _ac_use, AudioClip[] _ac_travel, AudioClip[] _ac_hit)
     {
         if(_ac_use != null)

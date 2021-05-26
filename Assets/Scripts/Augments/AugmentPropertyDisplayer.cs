@@ -49,9 +49,10 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     public List<Augment> InitAugmentList(List<Augment> aL_augs, AugmentDisplayType adt, bool _b_shouldAddToExistingList, params (string nam, int lv)[] toExclude)
     {
+        Debug.Log(adt);
         // Init some lists
         List<Augment> _augmentsInList = new List<Augment>();
-
+        List<int> _augLevels = new List<int>();
         RemoveAugmentProperties();
 
         // Clear the display <<<< THIS NEEDS STUFF DONE TO IT
@@ -78,79 +79,35 @@ public class AugmentPropertyDisplayer : MonoBehaviour
                 switch (saveMan.SaveData.purchasedAugments[i].SavedAugment.augType)
                 {
                     case AugmentType.projectile:
-                        augs[i] = AugmentManager.x.GetProjectileAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
+                        augs[i] = new ProjectileAugment(AugmentManager.x.GetProjectileAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies));
                         break;
                     case AugmentType.cone:
-                        augs[i] = AugmentManager.x.GetConeAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
+                        augs[i] = new ConeAugment(AugmentManager.x.GetConeAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies));
                         break;
                     case AugmentType.standard:
-                        augs[i] = AugmentManager.x.GetStandardAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies);
+                        augs[i] = new Augment(AugmentManager.x.GetStandardAugmentAt(as_data[i].SavedAugment.augStage, as_data[i].SavedAugment.indicies));
                         break;
                 }
-                augs[i].at_type = saveMan.SaveData.purchasedAugments[i].SavedAugment.augType;
-                augs[i].Level = saveMan.SaveData.purchasedAugments[i].SavedAugment.level;
+                augs[i].at_type = as_data[i].SavedAugment.augType;
+                augs[i].Stage = as_data[i].SavedAugment.augStage;
+                augs[i].Level = as_data[i].SavedAugment.level;
+                _augLevels.Add(as_data[i].SavedAugment.level);
             }
-
 
             FuseSaver fs = FuseSaver.x;
 
             if (!Utils.ArrayIsNullOrZero(augs))
-                _augmentsInList.AddRange(augs);
+                for(int i = 0; i < augs.Length; i++)
+                    _augmentsInList.Add(augs[i]);
             if (!Utils.ArrayIsNullOrZero(fs.FusedAugments))
-                _augmentsInList.AddRange(fs.FusedAugments);
+                for(int i = 0; i < fs.FusedAugments.Length; i++)
+                    _augmentsInList.Add(fs.FusedAugments[i]);
             if (!Utils.ArrayIsNullOrZero(fs.FusedProjectiles))
-                _augmentsInList.AddRange(fs.FusedProjectiles);
+                for(int i = 0; i < fs.FusedProjectiles.Length; i++)
+                    _augmentsInList.Add(fs.FusedProjectiles[i]);
             if (!Utils.ArrayIsNullOrZero(fs.FusedCones))
-                _augmentsInList.AddRange(fs.FusedCones);
-
-            // ^^ this is everything in the "Old" region but just compressed for space and niceness
-
-            #region Old
-            /*
-                //if you have fused augments and you have regular augments
-                if (!Utils.ArrayIsNullOrZero(fs.FusedAugments) && !Utils.ArrayIsNullOrZero(augs))
-                {
-                    augs = Utils.CombineArrays(augs, fs.FusedAugments);
-                    //fused augments is added to the list
-                }
-                //if you have fused augments and no regular augments
-                else if(!Utils.ArrayIsNullOrZero(fs.FusedAugments) && Utils.ArrayIsNullOrZero(augs))
-                {
-                    augs = fs.FusedAugments;
-                    //fused augments the list
-                }
-
-                //if you have fused projectile augments and regular augments
-                if (!Utils.ArrayIsNullOrZero(fs.FusedProjectiles) && !Utils.ArrayIsNullOrZero(augs))
-                {
-                    augs = Utils.CombineArrays(augs, fs.FusedProjectiles);
-                    //fused projectiles gets added
-                }
-                //if you have no augments and you have fused projectiles
-                else if(!Utils.ArrayIsNullOrZero(fs.FusedProjectiles) && Utils.ArrayIsNullOrZero(augs))
-                {
-                    augs = fs.FusedProjectiles;
-                    //fused projectiles is the list
-                }
-
-                //if you have fused cones and augments
-                if (!Utils.ArrayIsNullOrZero(fs.FusedCones) && !Utils.ArrayIsNullOrZero(augs))
-                {
-                    augs = Utils.CombineArrays(augs, fs.FusedCones);
-                    //fused cones gets added
-                }
-                //if you have fused cones and no augments
-                else if(!Utils.ArrayIsNullOrZero(fs.FusedCones) && Utils.ArrayIsNullOrZero(augs))
-                {
-                    augs = fs.FusedCones;
-                    //the list is fused cones
-                }
-
-                //the augments list then gets added to another list
-                _augmentsInList.AddRange(augs);
-                */
-            #endregion
-
+                for(int i = 0; i < fs.FusedCones.Length; i++)
+                    _augmentsInList.Add(fs.FusedCones[i]);
         }
         // Update display from save file
         aL_allAugmentsOwned.AddRange(_augmentsInList);
@@ -233,7 +190,6 @@ public class AugmentPropertyDisplayer : MonoBehaviour
     private List<Augment> UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow, params (string nam, int lv)[] _toExclude)
     {
         List<Augment> _aL_augmentsToShow = new List<Augment>();
-
         //based on display type _aL_augmentsToShow is added to with different size stuff
         switch (_adt_whichToShow)
         {
@@ -324,12 +280,12 @@ public class AugmentPropertyDisplayer : MonoBehaviour
 
     }
 
-    private List<Augment> UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
-    {
+    //private List<Augment> UpdateAugmentListDisplay(List<Augment> aL_augs, AugmentDisplayType _adt_whichToShow)
+    //{
 
-        return UpdateAugmentListDisplay(aL_augs, _adt_whichToShow, ("", 0));
+    //    return UpdateAugmentListDisplay(aL_augs, _adt_whichToShow, ("", 0));
 
-    }
+    //}
 
     private int FindAugmentToShowIndexFromOwned(string _name, int _level)
     {

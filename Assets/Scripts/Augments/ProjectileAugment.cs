@@ -14,6 +14,18 @@ public class ProjectileAugment : Augment
     [Newtonsoft.Json.JsonProperty]
     [SerializeField] protected float f_bulletScale;
 
+    public ProjectileAugment() { }
+
+    public ProjectileAugment(ProjectileAugment _augBase)
+    {
+        InitProjectile(_augBase.GetProjectileData());
+        InitPhysical(_augBase.GetPhysicalProperties());
+        InitInfo(_augBase.GetAugmentProperties());
+        InitExplosion(_augBase.GetExplosionProperties());
+        // AUDIO NOT IMPLEMENTED IN THIS CONSTRUCTOR
+        //InitAudio();
+    }
+
     public void InitProjectile(int _i_shots, float _f_grav, string _pm_mat, float _f_scale)
     {
         i_shotsPerRound = _i_shots;
