@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,6 +32,7 @@ public class ElementalObject : MonoBehaviour, IElementable
     private LineRenderer lrend;
     private PoolableObject pO; //To store the line renderer object
     private bool b_activatedThisFrame = false; //only activate once per frame <<Not sure if i actually need this anymore.. but better safe than sorry
+
     private bool flag; // ^^
     [SerializeField] private GameObject hittableObject;
     private IHitable ourHitable;
@@ -75,7 +77,7 @@ public class ElementalObject : MonoBehaviour, IElementable
         IElementable ie = col.gameObject.GetComponentInChildren<IElementable>();
         if (ie != null)
         {
-            
+
         }
         lastCollided = t;
     }
@@ -645,6 +647,11 @@ public class ElementalObject : MonoBehaviour, IElementable
     public bool[] GetStatuses()
     {
         return bA_statuses;
+    }
+
+    internal void Clear()
+    {
+        eL_activeElements.Clear();
     }
 
 }

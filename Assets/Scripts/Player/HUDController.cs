@@ -306,6 +306,7 @@ public class HUDController : MonoBehaviourPunCallbacks
     internal void ShowTeleportSign()
     {
         go_teleportSign?.SetActive(true);
+        go_teleportSign.transform.Rotate(Vector3.forward * -90 * Time.deltaTime);
     }
 
     #endregion
