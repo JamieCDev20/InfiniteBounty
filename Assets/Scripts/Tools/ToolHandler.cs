@@ -631,11 +631,13 @@ public class ToolHandler : SubjectBase
                     //float spread = A_tools[(int)ts].GetSpread() * (rb.velocity.magnitude * 0.05f);
                     //dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.up) * dir;
                     //dir = Quaternion.AngleAxis(Random.Range(-spread, spread), transform.right) * dir;
-                    if(A_tools[(int)ts] is ProjectileTool)
+                    if (A_tools[(int)ts] is ProjectileTool)
                     {
-                        if(!(A_tools[(int)ts] as ProjectileTool).OverHeat())
+                        if (!(A_tools[(int)ts] as ProjectileTool).OverHeat())
                             view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
                     }
+                    else
+                        view.RPC(nameof(UseTool), RpcTarget.Others, ts, dir);
                     A_tools[(int)ts].Use(dir);
                 }
         }
@@ -744,7 +746,7 @@ public class ToolHandler : SubjectBase
 
     private IEnumerator WaitForToolLoaders(ToolSlot _ts_slot, int _i_toolID)
     {
-        while(!A_toolLoaders[0].ToolsLoaded() && !A_toolLoaders[1].ToolsLoaded() && !A_toolLoaders[2].ToolsLoaded())
+        while (!A_toolLoaders[0].ToolsLoaded() && !A_toolLoaders[1].ToolsLoaded() && !A_toolLoaders[2].ToolsLoaded())
         {
             yield return new WaitForEndOfFrame();
         }
