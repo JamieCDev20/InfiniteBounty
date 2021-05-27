@@ -231,16 +231,19 @@ public class ProjectileTool : WeaponTool
         ap_projAugment.f_gravity -= projData.f_gravity;
 
         ap_projAugment.f_bulletScale -= projData.f_bulletScale * mod;
-        foreach (Element e in aug.AugElement)
-        {
-            try
+        if(elementList != null)
+            if(elementList.Count > 0)
             {
-                elementList.Remove(e);
+                foreach (Element e in aug.AugElement)
+                {
+                    try
+                    {
+                        elementList.Remove(e);
+                    }
+                    catch { }
+                }
+                eo_element = elementList.ToArray();
             }
-            catch { }
-        }
-
-        eo_element = elementList.ToArray();
 
         i_shotsPerRound -= Mathf.RoundToInt(projData.i_shotsPerRound * mod);
         f_shotSpeed -= augData.f_speed - (projData.f_gravity * 25);
