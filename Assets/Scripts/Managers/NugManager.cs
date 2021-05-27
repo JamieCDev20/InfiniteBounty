@@ -30,7 +30,7 @@ public class NugManager : SubjectBase, ObserverBase
         }
 
         SaveManager _sm = FindObjectOfType<SaveManager>();
-        if(_sm != null)
+        if (_sm != null)
         {
             i_totalNugs = _sm.SaveData.i_totalNugs;
             //i_inLevelNugs = 
@@ -45,8 +45,18 @@ public class NugManager : SubjectBase, ObserverBase
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Equals))
-            CollectNugs(500000, false);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (Input.GetKeyDown(KeyCode.Equals))
+                photonView.RPC(nameof(GiveMovey), RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void GiveMovey()
+    {
+        CollectNugs(10000, false);
+
     }
 
     public void SetID(int _id)
