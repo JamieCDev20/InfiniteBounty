@@ -39,6 +39,9 @@ public class Bullet : MonoBehaviour, IPoolable
 
     public void Setup(int _i_damage, int _i_lodeDamage, Collider _c_playerCol, AugmentProjectile _ap, ref AugmentExplosion _ae, Element[] _elem, Color[] _trKeys)
     {
+
+        elements.Clear();
+
         as_source = GetComponent<AudioSource>();
         c_myCollider.isTrigger = true;
         i_damage = _i_damage;
