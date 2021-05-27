@@ -352,14 +352,10 @@ public class Workbench : SubjectBase, IInteractible
 
     private void SendAttachSave(Augment _aug, AugmentSave _save)
     {
-        // apd.CurrentAugIndex might not be the correct thing to send but we'll see.
         RemoveAugmentEvent rae = new RemoveAugmentEvent(new AugmentSave(_aug));
         Notify(rae);
         EquipAugEvent eae = new EquipAugEvent((th_currentTh.GetToolBase(i_currentWeaponIndex).ToolID, i_currentWeaponIndex, new AugmentSave[] { _save }));
-        //WeaponTool weaponToEq = (WeaponTool)th_currentTh.GetToolBase(i_currentWeaponIndex);
-        
         Notify(eae);
-        
         aL_allAugmentsOwned = apd.InitAugmentList(aL_allAugmentsOwned, apd.CurrentDisplayType, false);
     }
 

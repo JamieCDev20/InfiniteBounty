@@ -196,8 +196,12 @@ public class ProjectileTool : WeaponTool
         ap_projAugment.f_gravity += augData.f_gravity;
         //augData.pm_phys;
         ap_projAugment.f_bulletScale += augData.f_bulletScale * (GetAugmentLevelModifier(aug.Level));
-        elementList.AddRange(aug.AugElement);
-        eo_element = elementList.ToArray();
+        if(elementList != null)
+            if(elementList.Count > 0)
+            {
+                elementList.AddRange(aug.AugElement);
+                eo_element = elementList.ToArray();
+            }
 
         if (augData.pm_phys != "")
             pm_physicsMat = Resources.Load<PhysicMaterial>($"{augData.pm_phys}");
