@@ -57,6 +57,7 @@ public class ToolRack : Shop
         }
         catch (System.InvalidCastException) { isWeapon = false; }
 
+        int textPos = 0;
         for (int i = 0; i < tlLength; i++)
         {
             // Mobility and weapon transforms are set to different transforms
@@ -99,36 +100,37 @@ public class ToolRack : Shop
                 TMP_Text moneyText = Instantiate<TMP_Text>(txt_exampleText);
                 moneyText.gameObject.SetActive(true);
                 moneyText.gameObject.transform.parent = tb.transform;
-                moneyText.gameObject.transform.position = isWeapon ? L_weaponTextPos[i].position : L_mobTextPos[i].position;
+                moneyText.gameObject.transform.position = isWeapon ? L_weaponTextPos[textPos].position : L_mobTextPos[textPos].position;
                 moneyText.text = tb.Cost.ToString();
                 GameObject bountyBucks = Instantiate(I_bbSymbol);
                 bountyBucks.transform.localScale = Vector3.one;// * 0.9f;
                 bountyBucks.transform.parent = moneyText.transform;
                 bountyBucks.transform.position = new Vector3(moneyText.transform.position.x - moneyText.renderedWidth, moneyText.transform.position.y, moneyText.transform.position.z);
             }
-
+            textPos++;
             if (isWeapon)
             {
                 L_weaponRackIDs.Add(toolRackID);
+                toolRackID++;
+
                 WeaponTool wt = (WeaponTool)tb;
                 ToolBase dupe = _tl_loader.LoadTool(i, _t_toolTransform[i * 2 + 1].transform.root);
                 dupe.transform.position = _t_toolTransform[i * 2 + 1].transform.position;
                 dupe.transform.rotation = _t_toolTransform[i * 2 + 1].transform.rotation;
                 L_weaponMaterial.Add(dupe.GetComponentInChildren<MeshRenderer>().sharedMaterials);
-                toolRackID++;
                 dupe.RackID = toolRackID;
                 dupe.Purchased = CheckSavePurchased(wt.ToolID, toolRackID, isWeapon);
+                L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
+                L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
                 if (!dupe.Purchased)
                 {
                     TMP_Text dupeMoney = Instantiate<TMP_Text>(txt_exampleText);
                     dupeMoney.gameObject.SetActive(true);
                     dupeMoney.gameObject.transform.parent = dupe.transform;
-                    dupeMoney.gameObject.transform.position = L_weaponTextPos[i * 2 + 1].position;
+                    dupeMoney.gameObject.transform.position = L_weaponTextPos[textPos].position;
                     dupeMoney.text = dupe.Cost.ToString();
                 }
 
-                L_weaponToolPos[i * 2 + 1].RackID = dupe.RackID;
-                L_weaponToolPos[i * 2 + 1].ToolID = dupe.ToolID;
                 if(CheckToolEquiped(ToolSlot.leftHand, dupe.ToolID, toolRackID))
                 {
                     dupe.gameObject.SetActive(false);
@@ -148,6 +150,7 @@ public class ToolRack : Shop
 
                 L_weaponRackIDs.Add(toolRackID);
                 dupe.enabled = false;
+                textPos++;
             }
             else
             {
